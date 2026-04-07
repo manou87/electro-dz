@@ -1,107 +1,114 @@
-/* Electro DZ — main.js */
+// ElectroDZ - main.js
 
-// ── Nav active link ──────────────────────────────────────────
-document.querySelectorAll('.nav-main a').forEach(link => {
-  if (link.href === location.href) {
-    link.setAttribute('aria-current', 'page');
-  }
+// ---- HAMBURGER MENU ----
+const hamburger = document.getElementById('hamburger');
+const mainNav = document.getElementById('main-nav');
+if (hamburger && mainNav) {
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mainNav.classList.toggle('open');
+  });
+  mainNav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mainNav.classList.remove('open');
+    });
+  });
+}
+
+// ---- ACTIVE NAV LINK ----
+document.querySelectorAll('.main-nav a').forEach(link => {
+  if (link.href === window.location.href) link.classList.add('active');
 });
 
-// ── Calc tabs ────────────────────────────────────────────────
-const tabBtns = document.querySelectorAll('.calc-tabs button');
-const calcBlocks = document.querySelectorAll('.calc-block');
-
+// ---- CALC TABS ----
+const tabBtns = document.querySelectorAll('.tab-btn');
+const calcPanels = document.querySelectorAll('.calc-panel');
 if (tabBtns.length) {
-  // Show only first block by default
-  calcBlocks.forEach((b, i) => { b.style.display = i === 0 ? '' : 'none'; });
-  tabBtns[0].classList.add('active');
-
-  tabBtns.forEach((btn, idx) => {
+  tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       tabBtns.forEach(b => b.classList.remove('active'));
+      calcPanels.forEach(p => p.classList.remove('active'));
       btn.classList.add('active');
-      calcBlocks.forEach((b, i) => { b.style.display = i === idx ? '' : 'none'; });
+      const target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
     });
   });
 }
 
-// ── Generic calculate button ──────────────────────────────────
-document.querySelectorAll('button[data-calc]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const block = btn.closest('.calc-block');
-    const inputs = {};
-    block.querySelectorAll('input[data-var]').forEach(inp => {
-      inputs[inp.dataset.var] = parseFloat(inp.value);
-    });
-    const resultEl = block.querySelector('.result');
-    if (!resultEl) return;
-    const type = btn.dataset.calc;
-    let res = '';
-    try {
-      if (type === 'ohm') {
-        const {U, I, R} = inputs;
-        if (!isNaN(U) && !isNaN(I)) res = 'R = ' + (U/I).toFixed(3) + ' Ω';
-        else if (!isNaN(U) && !isNaN(R)) res = 'I = ' + (U/R).toFixed(3) + ' A';
-        else if (!isNaN(I) && !isNaN(R)) res = 'U = ' + (I*R).toFixed(3) + ' V';
-      } else if (type === 'puissance') {
-        const {U, I, P} = inputs;
-        if (!isNaN(U) && !isNaN(I)) res = 'P = ' + (U*I).toFixed(2) + ' W';
-        else if (!isNaN(P) && !isNaN(U)) res = 'I = ' + (P/U).toFixed(3) + ' A';
-        else if (!isNaN(P) && !isNaN(I)) res = 'U = ' + (P/I).toFixed(3) + ' V';
-      } else if (type === 'resistance') {
-        const {rho, L, S} = inputs;
-        if (!isNaN(rho) && !isNaN(L) && !isNaN(S)) res = 'R = ' + (rho*L/S).toFixed(4) + ' Ω';
-      } else if (type === 'chute') {
-        const {rho, L, S, I} = inputs;
-        if (!isNaN(rho) && !isNaN(L) && !isNaN(S) && !isNaN(I))
-          res = 'ΔU = ' + (2*rho*L*I/S).toFixed(3) + ' V';
-      } else if (type === 'section') {
-        const {rho, L, I, dU} = inputs;
-        if (!isNaN(rho) && !isNaN(L) && !isNaN(I) && !isNaN(dU))
-          res = 'S = ' + (2*rho*L*I/dU).toFixed(2) + ' mm²';
-      } else if (type === 'selectivite') {
-        const {Ia, Ib} = inputs;
-        if (!isNaN(Ia) && !isNaN(Ib))
-          res = Ia < Ib ? '✔ Sélectivité assurée (Ia < Ib)' : '✘ Pas de sélectivité (Ia ≥ Ib)';
-      } else if (type === 'icc') {
-        const {U, Z} = inputs;
-        if (!isNaN(U) && !isNaN(Z)) res = 'Icc = ' + (U/Z).toFixed(2) + ' A';
-      } else if (type === 'coupure') {
-        const {I, k, S} = inputs;
-        if (!isNaN(I) && !isNaN(k) && !isNaN(S))
-          res = 't ≤ ' + ((k*S/I)**2).toFixed(4) + ' s';
-      } else if (type === 'bilan') {
-        let total = 0;
-        block.querySelectorAll('input[data-power]').forEach(inp => {
-          const v = parseFloat(inp.value); if (!isNaN(v)) total += v;
-        });
-        res = 'Puissance totale = ' + total.toFixed(1) + ' W = ' + (total/1000).toFixed(2) + ' kW';
-      }
-      resultEl.textContent = res || 'Renseignez les valeurs nécessaires.';
-    } catch(e) { resultEl.textContent = 'Erreur de calcul.'; }
+// ---- CALCULATRICE OHM ----
+window.calcOhm = function() {
+  const tension = parseFloat(document.getElementById('ohm-tension')?.value);
+  const resistance = parseFloat(document.getElementById('ohm-resistance')?.value);
+  const result = document.getElementById('ohm-result');
+  if (!result) return;
+  if (isNaN(tension) || isNaN(resistance) || resistance === 0) {
+    result.textContent = 'Veuillez entrer des valeurs valides.';
+    return;
+  }
+  const courant = tension / resistance;
+  result.textContent = `Courant (I) = ${courant.toFixed(4)} A | Puissance (P) = ${(tension * courant).toFixed(2)} W`;
+};
+
+// ---- CHUTE DE TENSION ----
+window.calcChute = function() {
+  const courant = parseFloat(document.getElementById('chute-courant')?.value);
+  const longueur = parseFloat(document.getElementById('chute-longueur')?.value);
+  const section = parseFloat(document.getElementById('chute-section')?.value);
+  const result = document.getElementById('chute-result');
+  if (!result) return;
+  if (isNaN(courant) || isNaN(longueur) || isNaN(section) || section === 0) {
+    result.textContent = 'Veuillez entrer des valeurs valides.';
+    return;
+  }
+  const rho = 0.0225; // cuivre
+  const chute = (2 * rho * longueur * courant) / section;
+  result.textContent = `Chute de tension = ${chute.toFixed(3)} V (${((chute/230)*100).toFixed(2)}%)`;
+};
+
+// ---- SECTION CABLE ----
+window.calcSection = function() {
+  const courant = parseFloat(document.getElementById('sec-courant')?.value);
+  const longueur = parseFloat(document.getElementById('sec-longueur')?.value);
+  const chuteMax = parseFloat(document.getElementById('sec-chute')?.value) || 3;
+  const result = document.getElementById('sec-result');
+  if (!result) return;
+  if (isNaN(courant) || isNaN(longueur)) {
+    result.textContent = 'Veuillez entrer des valeurs valides.';
+    return;
+  }
+  const rho = 0.0225;
+  const chuteMaxV = (chuteMax / 100) * 230;
+  const section = (2 * rho * longueur * courant) / chuteMaxV;
+  const sections = [1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95];
+  const normalise = sections.find(s => s >= section) || sections[sections.length - 1];
+  result.textContent = `Section calculee = ${section.toFixed(3)} mm² | Section normalisee = ${normalise} mm²`;
+};
+
+// ---- ICC COURT-CIRCUIT ----
+window.calcIcc = function() {
+  const tension = parseFloat(document.getElementById('icc-tension')?.value) || 230;
+  const impedance = parseFloat(document.getElementById('icc-impedance')?.value);
+  const result = document.getElementById('icc-result');
+  if (!result) return;
+  if (isNaN(impedance) || impedance === 0) {
+    result.textContent = 'Veuillez entrer une impedance valide.';
+    return;
+  }
+  const icc = tension / impedance;
+  result.textContent = `Icc = ${icc.toFixed(2)} A | Pouvoir de coupure minimum recommande : ${Math.ceil(icc/1000)*1000} A`;
+};
+
+// ---- FAQ ACCORDION ----
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const answer = q.nextElementSibling;
+    const isOpen = answer.classList.contains('open');
+    document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+    document.querySelectorAll('.faq-q').forEach(qq => qq.classList.remove('open'));
+    if (!isOpen) {
+      answer.classList.add('open');
+      q.classList.add('open');
+    }
   });
 });
-
-// ── Contact form (mailto fallback) ───────────────────────────
-const contactForm = document.getElementById('contact-form');
-if (contactForm) {
-  contactForm.addEventListener('submit', e => {
-    e.preventDefault();
-    const data = new FormData(contactForm);
-    const msg = encodeURIComponent(`Nom: ${data.get('name')||''}
-Message: ${data.get('message')||''}`);
-    window.location.href = `mailto:contact@electro-dz.com?subject=Contact%20site&body=${msg}`;
-  });
-}
-
-// ── Smooth scroll for anchor links ───────────────────────────
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const target = document.querySelector(a.getAttribute('href'));
-    if (target) { e.preventDefault(); target.scrollIntoView({behavior:'smooth', block:'start'}); }
-  });
-});
-
-// ── Year in copyright ─────────────────────────────────────────
-const yr = document.querySelector('.copyright');
-if (yr) yr.innerHTML = yr.innerHTML.replace(/\d{4}/, new Date().getFullYear());
