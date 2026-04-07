@@ -1,179 +1,150 @@
 <!DOCTYPE html>
-<!-- Site officiel : déployer sur https://electro-dz.com/ — Prévisualisation : npm run site:preview -->
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Electro DZ — application et ressources pour électriciens professionnels. Calculs, devis PDF, projets, formation et documentation. Algérie et francophonie." />
-  <title>Electro DZ — Outils numériques pour électriciens professionnels</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Electro DZ - Application et ressources pour électriciens professionnels en Algérie." />
+  <title>Electro DZ – Outils numériques pour électriciens</title>
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231e40af'/%3E%3Cpath fill='white' d='M18 6L8 18h6l-2 8 12-14h-7l1-8z'/%3E%3C/svg%3E" />
   <link rel="canonical" href="https://electro-dz.com/" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="header-inner">
-      <a class="logo" href="index.html">
-        <span class="logo-mark" aria-hidden="true">⚡</span>
-        Electro DZ
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <a class="logo" href="index.html">
+      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="36" height="36" rx="8" fill="#F5C518"/>
+        <polygon points="20,4 10,20 18,20 16,32 26,16 18,16" fill="#0d1b2a"/>
+      </svg>
+      <span class="logo-text">Electro<strong>DZ</strong></span>
+    </a>
+    <nav class="main-nav" id="main-nav">
+      <a href="formations.html">Formations</a>
+      <a href="documentation.html">Documentation</a>
+      <a href="calcul-electrique.html">Calculs</a>
+      <a href="emploi.html">Emploi</a>
+      <a href="contact.html">Contact</a>
+      <a href="support.html">Support</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">&#9889; Application Professionnelle</div>
+    <h1>L&apos;outil num&eacute;rique des <span class="accent">électriciens algériens</span></h1>
+    <p class="hero-sub">Formations, calculs électriques, documentation technique et offres d'emploi — tout en un seul endroit.</p>
+    <div class="store-buttons">
+      <a href="https://play.google.com/store" target="_blank" class="btn-store google">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.83 1-.83 1.5-.5l15 8.5-15 8.5C3.5 21.33 3 21.33 3 20.5z"/></svg>
+        Google Play
       </a>
-      <nav class="nav-main" aria-label="Navigation principale">
-        <a href="index.html" aria-current="page">Accueil</a>
-        <a href="formations.html">Formations</a>
-        <a href="documentation.html">Documentation</a>
-        <a href="calcul-electrique.html">Calcul électrique</a>
-        <a href="emploi.html">Emploi</a>
-        <a href="contact.html">Contact</a>
-        <a class="btn btn-primary" href="#app">L’application</a>
-      </nav>
+      <a href="https://apps.apple.com" target="_blank" class="btn-store apple">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        App Store
+      </a>
     </div>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="hero-inner">
-        <p class="ar-note" lang="ar">قريبًا المزيد من المحتوى والدورات — معكم خطوة بخطوة في خدمة الكهربائيين</p>
-        <div class="badge-row">
-          <span class="badge">Installation électrique</span>
-          <span class="badge">Second œuvre &amp; chantier</span>
-          <span class="badge">Devis &amp; gestion</span>
+  </div>
+  <div class="hero-visual">
+    <div class="phone-mockup">
+      <div class="phone-screen">
+        <div class="app-ui">
+          <div class="app-header-ui">&#9889; Electro DZ</div>
+          <div class="app-card">&#128161; Calcul Ohm</div>
+          <div class="app-card">&#128218; Documentation</div>
+          <div class="app-card">&#127891; Formations</div>
+          <div class="app-card">&#128188; Emploi</div>
         </div>
-        <h1>Moins de paperasse, plus de clarté : une application faite pour le terrain</h1>
-        <p class="hero-lead">
-          <strong>Electro DZ</strong> accompagne les électriciens, autoentrepreneurs et petites équipes qui veulent <strong>chiffrer vite</strong>, <strong>présenter des devis lisibles</strong> et <strong>suivre leurs chantiers</strong> sans se perdre dans des tableurs complexes. Nous combinons outils de calcul, module devis PDF, gestion de projets et ressources électrotechniques — au même endroit, sur mobile.
-        </p>
-        <div class="hero-cta">
-          <a class="btn btn-primary" href="#fonctionnalites">Voir ce que fait l’app</a>
-          <a class="btn btn-outline" href="formations.html">Formations &amp; apprentissage</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="pour-qui">
-      <div class="section-inner">
-        <h2 class="section-title">À qui s’adresse Electro DZ ?</h2>
-        <p class="section-sub">
-          Notre contenu et nos outils visent d’abord le <strong>métier d’électricien</strong> : ceux qui posent le matériel, règlent les protections et expliquent au client ce qu’ils facturent.
-        </p>
-        <div class="grid-3">
-          <article class="card">
-            <div class="card-icon" aria-hidden="true">👷</div>
-            <h3>Artisans &amp; petites entreprises</h3>
-            <p>Devis structurés, catégories de matériel, impression ou partage PDF pour valider un prix avant d’intervenir.</p>
-          </article>
-          <article class="card">
-            <div class="card-icon" aria-hidden="true">📱</div>
-            <h3>Équipes sur la route</h3>
-            <p>Calculatrice et fiches utiles sur le téléphone, sans dépendre d’un bureau pour une estimation rapide.</p>
-          </article>
-          <article class="card">
-            <div class="card-icon" aria-hidden="true">🎓</div>
-            <h3>Apprenants &amp; reconvertis</h3>
-            <p>Module électrotechnique et simulateur pour comprendre les schémas et les grandeurs — complément aux formations du site.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="fonctionnalites">
-      <div class="section-inner">
-        <h2 class="section-title">Ce que vous trouvez dans l’application</h2>
-        <p class="section-sub">
-          L’app regroupe les fonctions les plus demandées par les utilisateurs : du premier chiffrage au dossier projet.
-        </p>
-        <div class="grid-3">
-          <article class="card">
-            <h3>Calculatrice &amp; outils</h3>
-            <p>Grandeurs électriques, conversions et aides au calcul pour gagner du temps avant d’ouvrir un cahier des charges. Sur le web : page <a href="calcul-electrique.html">Calcul électrique</a> (loi d’Ohm, chute de tension, Icc, temps de coupure, etc.).</p>
-          </article>
-          <article class="card">
-            <h3>Devis professionnels</h3>
-            <p>Rédaction des lignes de prestation, totaux, TVA, export <strong>PDF</strong> avec mise en page propre — idéal pour WhatsApp ou e-mail.</p>
-          </article>
-          <article class="card">
-            <h3>Projets &amp; chantiers</h3>
-            <p>Classement des dossiers par client ou chantier, suivi des éléments importants pour ne rien oublier sur le terrain.</p>
-          </article>
-          <article class="card">
-            <h3>Électrotechnique</h3>
-            <p>Rappels de cours, repères techniques et liens vers des ressources pour consolider vos bases.</p>
-          </article>
-          <article class="card">
-            <h3>Simulation &amp; schémas</h3>
-            <p>Accès à un environnement de type <strong>Falstad</strong> pour visualiser des circuits et apprendre en manipulant.</p>
-          </article>
-          <article class="card">
-            <h3>Réseaux &amp; communauté</h3>
-            <p>Raccourcis vers <strong>Facebook</strong>, <strong>YouTube</strong>, <strong>TikTok</strong> et <strong>WhatsApp</strong> pour suivre l’actualité Electro DZ et échanger avec d’autres pros.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="vision" style="background: #0c1222;">
-      <div class="section-inner">
-        <h2 class="section-title">Notre vision : l’écosystème Electro DZ</h2>
-        <p class="section-sub">
-          Le site <strong>electro-dz.com</strong> et l’application se complètent : le web présente le programme (formations, offres, articles), l’app reste votre outil quotidien sur chantier.
-        </p>
-        <ul class="idea-list">
-          <li><strong>1.</strong> <span><strong>Formations gratuites et payantes</strong> — fiches PDF, vidéos courtes et sessions live sur la sécurité, le matériel et la méthode de devis.</span></li>
-          <li><strong>2.</strong> <span><strong>Base documentaire</strong> — articles de fond, mémentos et liens vers les ressources officielles adaptées à votre contexte.</span></li>
-          <li><strong>3.</strong> <span><strong>Emploi</strong> — espace où les entreprises publient des besoins et où les profils qualifiés se manifestent.</span></li>
-          <li><strong>4.</strong> <span><strong>Newsletter</strong> — une fois par mois : nouveautés app, dates de live, bonnes pratiques terrain.</span></li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="app">
-      <div class="section-inner">
-        <h2 class="section-title">Télécharger &amp; nous suivre</h2>
-        <p class="section-sub">
-          L’application est disponible selon vos habitudes : <strong>Google Play</strong>, <strong>App Store</strong> (selon publications), ou test via <strong>Expo Go</strong> pour les versions en développement.
-        </p>
-        <div class="grid-3">
-          <article class="card">
-            <h3>Obtenir l’app</h3>
-            <p>Les liens directs vers les stores peuvent être ajoutés ici dès qu’ils sont publics. En attendant, utilisez la page <a href="contact.html">Contact</a> pour demander le mode d’installation adapté à votre téléphone.</p>
-          </article>
-          <article class="card">
-            <h3>Site officiel</h3>
-            <p>Vous êtes sur le site officiel : <strong>https://electro-dz.com</strong>. Ajoutez-le à vos favoris et partagez-le sur vos devis ou cartes de visite numériques.</p>
-          </article>
-          <article class="card">
-            <h3>Besoin d’aide ?</h3>
-            <p>Consultez la page <a href="support.html">Support</a> pour les questions fréquentes, ou écrivez-nous via <a href="contact.html">Contact</a>.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div>
-        <h4>Electro DZ</h4>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">Outils numériques et ressources pour électriciens — <a href="https://electro-dz.com/">electro-dz.com</a></p>
-      </div>
-      <div>
-        <h4>Navigation</h4>
-        <ul>
-          <li><a href="formations.html">Formations</a></li>
-          <li><a href="documentation.html">Documentation</a></li>
-          <li><a href="emploi.html">Emploi</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Légal &amp; aide</h4>
-        <ul>
-          <li><a href="support.html">Support</a></li>
-          <li><a href="privacy.html">Confidentialité</a></li>
-        </ul>
       </div>
     </div>
-    <p class="copyright">© 2026 Electro DZ — Tous droits réservés.</p>
-  </footer>
-  <script src="js/main.js" defer></script>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stat"><span class="stat-num">10K+</span><span class="stat-label">Utilisateurs</span></div>
+  <div class="stat"><span class="stat-num">500+</span><span class="stat-label">Ressources</span></div>
+  <div class="stat"><span class="stat-num">50+</span><span class="stat-label">Formations</span></div>
+  <div class="stat"><span class="stat-num">4.8★</span><span class="stat-label">Note moyenne</span></div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <h2>Tout ce dont vous avez besoin</h2>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">&#9889;</div>
+      <h3>Calculs électriques</h3>
+      <p>Loi d'Ohm, chute de tension, courant de court-circuit, section de câble et plus encore.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#128218;</div>
+      <h3>Documentation</h3>
+      <p>Normes, schémas et guides techniques pour les professionnels du secteur électrique.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#127891;</div>
+      <h3>Formations</h3>
+      <p>Parcours d'apprentissage structurés pour débutants et professionnels confirmés.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#128188;</div>
+      <h3>Offres d'emploi</h3>
+      <p>Retrouvez les meilleures opportunités dans le secteur électrique en Algérie.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Prêt à booster votre carrière ?</h2>
+  <p>Téléchargez l'application gratuitement et rejoignez la communauté des électriciens professionnels.</p>
+  <div class="store-buttons">
+    <a href="https://play.google.com/store" target="_blank" class="btn-store google">Google Play</a>
+    <a href="https://apps.apple.com" target="_blank" class="btn-store apple">App Store</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <div class="footer-logo">
+        <svg width="28" height="28" viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="8" fill="#F5C518"/><polygon points="20,4 10,20 18,20 16,32 26,16 18,16" fill="#0d1b2a"/></svg>
+        <span>Electro<strong>DZ</strong></span>
+      </div>
+      <p>L'outil num&eacute;rique des &eacute;lectriciens alg&eacute;riens.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <a href="formations.html">Formations</a>
+      <a href="documentation.html">Documentation</a>
+      <a href="calcul-electrique.html">Calculs</a>
+      <a href="emploi.html">Emploi</a>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <a href="contact.html">Contact</a>
+      <a href="support.html">Support</a>
+      <a href="privacy.html">Confidentialit&eacute;</a>
+    </div>
+    <div class="footer-col">
+      <h4>T&eacute;l&eacute;charger</h4>
+      <a href="https://play.google.com/store" target="_blank" class="btn-store google sm">Google Play</a>
+      <a href="https://apps.apple.com" target="_blank" class="btn-store apple sm">App Store</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 ElectroDZ. Tous droits r&eacute;serv&eacute;s.</p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
 </body>
 </html>
