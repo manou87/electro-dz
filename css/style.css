@@ -146,3 +146,29 @@ img{max-width:100%}
   .footer-inner{grid-template-columns:1fr}
   .hero{padding:40px 16px}
 }
+
+/* SOCIAL BUTTONS */
+.social-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.social-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:8px;font-size:.88rem;font-weight:600;transition:.2s;border:1px solid var(--border)}
+.social-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.3)}
+.social-btn.tiktok{background:#010101;color:#fff;border-color:#333}
+.social-btn.youtube{background:#FF0000;color:#fff;border-color:#cc0000}
+.social-btn.facebook{background:#1877F2;color:#fff;border-color:#1565d8}
+
+/* CTA BADGE */
+.cta-badge{display:inline-block;background:rgba(245,197,24,0.15);color:var(--accent);border:1px solid rgba(245,197,24,0.4);padding:8px 20px;border-radius:20px;font-size:.9rem;font-weight:700;margin-bottom:16px;letter-spacing:.03em}
+
+/* FOOTER SOCIAL */
+.footer-social{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.footer-social a{display:inline-block;padding:6px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;font-size:.8rem;color:var(--text-muted);transition:.2s}
+.footer-social a:hover{color:var(--accent);border-color:var(--accent)}
+
+/* CONTACT INFO */
+.contact-info{display:flex;flex-direction:column;gap:14px}
+.contact-item{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px}
+.contact-item .icon{font-size:1.4rem;min-width:32px}
+.contact-item a{color:var(--accent);font-weight:600}
+
+@media(max-width:600px){
+  .social-links{justify-content:center}
+}
