@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Calcul électrique en ligne — Loi d’Ohm, puissance, chute de tension, section câble, Icc transformateur, temps de coupure, bilan. Electro DZ, electro-dz.com" />
+  <title>Calcul électrique — Electro DZ | electro-dz.com</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/calcul-electrique.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231e40af'/%3E%3Cpath fill='white' d='M18 6L8 18h6l-2 8 12-14h-7l1-8z'/%3E%3C/svg%3E" />
+  <link rel="canonical" href="https://electro-dz.com/calcul-electrique.html" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="index.html"><span class="logo-mark">⚡</span> Electro DZ</a>
+      <nav class="nav-main" aria-label="Navigation principale">
+        <a href="index.html">Accueil</a>
+        <a href="formations.html">Formations</a>
+        <a href="documentation.html">Documentation</a>
+        <a href="calcul-electrique.html" aria-current="page">Calcul électrique</a>
+        <a href="emploi.html">Emploi</a>
+        <a href="contact.html">Contact</a>
+        <a class="btn btn-primary" href="index.html#app">L’app</a>
+      </nav>
+    </div>
+  </header>
+
+  <header class="page-hero">
+    <h1>Calcul électrique</h1>
+    <p>Outils gratuits alignés sur les familles de calcul de l’application <strong>Electro DZ</strong> : loi d’Ohm, puissance, résistivity cuivre/aluminium, chute de tension, section indicative, sélectivité, court-circuit transformateur, temps de coupure (norme &amp; disjoncteur), bilan de puissance.</p>
+  </header>
+
+  <section>
+    <div class="section-inner">
+      <div class="calc-disclaimer" role="note">
+        <strong>Avertissement.</strong> Les résultats sont <strong>indicatifs</strong> (ordres de grandeur, hypothèses simplifiées). Ils ne remplacent pas une étude conforme aux textes en vigueur, aux guides d’installation et aux données constructeur. Pour des scénarios avancés (dérivation, méthodes de pose, tableaux complets), utilisez l’app mobile Electro DZ.
+      </div>
+
+      <div class="calc-tabs-wrap">
+        <div class="calc-tabs" role="tablist" aria-label="Types de calcul">
+          <button type="button" class="calc-tab is-active" role="tab" aria-selected="true" data-tab="ohm">Loi d’Ohm</button>
+          <button type="button" class="calc-tab" role="tab" aria-selected="false" data-tab="power">Puissance / énergie</button>
+          <button type="button" class="calc-tab" role="tab" aria-selected="false" data-tab="copper">Résistance conducteur</button>
+          <button type="button" class="calc-tab" role="tab" aria-selected="false" data-tab="drop">Chute de tension</button>
+          <button type="button" class="calc-tab" role="tab" aria-selected="false" data-tab="section">Section câble</button>
+          <button type="button" class="calc-tab" role="tab" aria-selected="false" data-tab="selectivity">Sélectivité</button>
+          <button type="button" class="calc-tab" role="tab" aria-selected="false" data-tab="icc">Court-circuit (trafo)</button>
+          <button type="button" class="calc-tab" role="tab" aria-selected="false" data-tab="breaking">Temps de coupure</button>
+          <button type="button" class="calc-tab" role="tab" aria-selected="false" data-tab="balance">Bilan de puissance</button>
+        </div>
+      </div>
+
+      <div class="calc-panels">
+        <div id="panel-ohm" class="calc-panel is-active" role="tabpanel">
+          <h2 class="section-title" style="font-size:1.15rem;margin-top:0;">U = R × I</h2>
+          <p class="calc-page-intro">Saisissez deux grandeurs sur trois ; la troisième sera calculée.</p>
+          <div class="calc-form calc-grid-2">
+            <label>U (V) <input type="number" id="ohm-u" step="any" placeholder="ex. 230" /></label>
+            <label>I (A) <input type="number" id="ohm-i" step="any" placeholder="ex. 16" /></label>
+            <label>R (Ω) <input type="number" id="ohm-r" step="any" placeholder="ex. 14.4" /></label>
+          </div>
+          <div class="calc-actions"><button type="button" class="btn btn-primary" id="btn-ohm">Calculer</button></div>
+          <div id="ohm-result" class="calc-result" aria-live="polite"></div>
+        </div>
+
+        <div id="panel-power" class="calc-panel" role="tabpanel" hidden>
+          <h2 class="section-title" style="font-size:1.15rem;margin-top:0;">Puissance et énergie</h2>
+          <div class="calc-form">
+            <label>Schéma
+              <select id="power-mode">
+                <option value="mono">Monophasé</option>
+                <option value="tri">Triphasé (équilibré)</option>
+              </select>
+            </label>
+            <div class="calc-grid-2">
+              <label>U (V) <input type="number" id="power-u" step="any" placeholder="230 ou 400" /></label>
+              <label>I (A) <input type="number" id="power-i" step="any" placeholder="optionnel si P connu" /></label>
+              <label>cos φ <input type="number" id="power-cos" step="any" value="1" min="0" max="1" /></label>
+              <label>P (kW) <input type="number" id="power-p" step="any" placeholder="mono : si I absent" /></label>
+            </div>
+            <label>Durée (s) pour l’énergie <input type="number" id="power-t" step="any" placeholder="optionnel" /></label>
+          </div>
+          <div class="calc-actions"><button type="button" class="btn btn-primary" id="btn-power">Calculer</button></div>
+          <div id="power-result" class="calc-result" aria-live="polite"></div>
+        </div>
+
+        <div id="panel-copper" class="calc-panel" role="tabpanel" hidden>
+          <h2 class="section-title" style="font-size:1.15rem;margin-top:0;">Résistance d’un conducteur</h2>
+          <p class="calc-page-intro">R = ρ L / S — ρ cuivre ≈ 0,01786 Ω·mm²/m à 20 °C (ajustement linéaire si température saisie).</p>
+          <div class="calc-form calc-grid-2">
+            <label>Matériau
+              <select id="cu-mat">
+                <option value="Cu">Cuivre</option>
+                <option value="Al">Aluminium</option>
+              </select>
+            </label>
+            <label>Longueur L (m) <input type="number" id="cu-l" step="any" /></label>
+            <label>Section S (mm²) <input type="number" id="cu-s" step="any" /></label>
+            <label>θ conducteur (°C), Cu seulement <input type="number" id="cu-theta" step="any" placeholder="ex. 70" /></label>
+          </div>
+          <div class="calc-actions"><button type="button" class="btn btn-primary" id="btn-cu">Calculer</button></div>
+          <div id="cu-result" class="calc-result" aria-live="polite"></div>
+        </div>
+
+        <div id="panel-drop" class="calc-panel" role="tabpanel" hidden>
+          <h2 class="section-title" style="font-size:1.15rem;margin-top:0;">Chute de tension (résistive, mono)</h2>
+          <p class="calc-page-intro">ΔU ≈ 2 ρ L I / S (aller-retour). Pour le triphasé ou les réseaux complexes, utilisez l’app.</p>
+          <div class="calc-form calc-grid-2">
+            <label>U nominale (V) <input type="number" id="drop-u" step="any" value="230" /></label>
+            <label>I (A) <input type="number" id="drop-i" step="any" /></label>
+            <label>Longueur L (m) <input type="number" id="drop-l" step="any" /></label>
+            <label>Section S (mm²) <input type="number" id="drop-s" step="any" /></label>
+            <label>Matériau
+              <select id="drop-mat">
+                <option value="Cu">Cuivre</option>
+                <option value="Al">Aluminium</option>
+              </select>
+            </label>
+          </div>
+          <div class="calc-actions"><button type="button" class="btn btn-primary" id="btn-drop">Calculer</button></div>
+          <div id="drop-result" class="calc-result" aria-live="polite"></div>
+        </div>
+
+        <div id="panel-section" class="calc-panel" role="tabpanel" hidden>
+          <h2 class="section-title" style="font-size:1.15rem;margin-top:0;">Section câble (indicatif)</h2>
+          <p class="calc-page-intro">Déduit I<sub>b</sub> à partir de P, propose un calibre disjoncteur normalisé et une section Cu indicative (Iz approximatif).</p>
+          <div class="calc-form">
+            <label>Schéma
+              <select id="sec-mode">
+                <option value="mono">Monophasé</option>
+                <option value="tri">Triphasé</option>
+              </select>
+            </label>
+            <div class="calc-grid-2">
+              <label>Puissance P (kW) <input type="number" id="sec-p" step="any" /></label>
+              <label>U (V) <input type="number" id="sec-u" step="any" placeholder="230 ou 400" /></label>
+              <label>cos φ <input type="number" id="sec-cos" step="any" value="1" /></label>
+            </div>
+          </div>
+          <div class="calc-actions"><button type="button" class="btn btn-primary" id="btn-sec">Calculer</button></div>
+          <div id="sec-result" class="calc-result" aria-live="polite"></div>
+        </div>
+
+        <div id="panel-selectivity" class="calc-panel" role="tabpanel" hidden>
+          <h2 class="section-title" style="font-size:1.15rem;margin-top:0;">Sélectivité (ordre de grandeur)</h2>
+          <p class="calc-page-intro">Ratio des courants nominaux des protections ; interprétation indicative.</p>
+          <div class="calc-form calc-grid-2">
+            <label>I<sub>n</sub> amont (A) <input type="number" id="sel-up" step="any" /></label>
+            <label>I<sub>n</sub> aval (A) <input type="number" id="sel-down" step="any" /></label>
+          </div>
+          <div class="calc-actions"><button type="button" class="btn btn-primary" id="btn-sel">Calculer</button></div>
+          <div id="sel-result" class="calc-result" aria-live="polite"></div>
+        </div>
+
+        <div id="panel-icc" class="calc-panel" role="tabpanel" hidden>
+          <h2 class="section-title" style="font-size:1.15rem;margin-top:0;">Court-circuit côté BT (transformateur seul)</h2>
+          <p class="calc-page-intro">I<sub>cc</sub> ≈ (100 / U<sub>cc</sub>%) × I<sub>n</sub> avec I<sub>n</sub> = S / (√3 U). Câbles et autres impédances non pris en compte.</p>
+          <div class="calc-form calc-grid-2">
+            <label>S nominal (kVA) <input type="number" id="icc-sn" step="any" /></label>
+            <label>U<sub>cc</sub> (%) <input type="number" id="icc-ucc" step="any" placeholder="ex. 4" /></label>
+            <label>U ligne-ligne (V) <input type="number" id="icc-u" step="any" placeholder="400" /></label>
+          </div>
+          <div class="calc-actions"><button type="button" class="btn btn-primary" id="btn-icc">Calculer</button></div>
+          <div id="icc-result" class="calc-result" aria-live="polite"></div>
+        </div>
+
+        <div id="panel-breaking" class="calc-panel" role="tabpanel" hidden>
+          <h2 class="section-title" style="font-size:1.15rem;margin-top:0;">Temps de coupure</h2>
+
+          <h3 style="font-size:1rem;margin:1.25rem 0 0.5rem;color:var(--text-muted);">1. Temps maximal (logique type protection des personnes)</h3>
+          <div class="calc-form">
+            <div class="calc-grid-2">
+              <label>Schéma de liaison à la terre
+                <select id="bt-earthing">
+                  <option value="TN">TN</option>
+                  <option value="TT">TT</option>
+                  <option value="IT">IT</option>
+                </select>
+              </label>
+              <label>U₀ (V) <input type="number" id="bt-u0" step="any" value="230" /></label>
+              <label>Type de circuit
+                <select id="bt-circuit">
+                  <option value="socket_32">Prises ≤ 32 A</option>
+                  <option value="fixed_final">Circuits fixes usage final</option>
+                  <option value="distribution">Distribution</option>
+                  <option value="portable">Matériel portable / extérieur</option>
+                </select>
+              </label>
+            </div>
+          </div>
+          <div class="calc-actions"><button type="button" class="btn btn-primary" id="btn-bt-norm">Calculer</button></div>
+          <div id="bt-norm-result" class="calc-result" aria-live="polite"></div>
+
+          <h3 style="font-size:1rem;margin:1.5rem 0 0.5rem;color:var(--text-muted);">2. Disjoncteur magnéto-thermique (IEC 60898-1, ordre de grandeur)</h3>
+          <div class="calc-form">
+            <div class="calc-grid-2">
+              <label>I<sub>n</sub> (A)
+                <input type="number" id="bt-in" step="any" list="breaker-calibers" placeholder="ex. 32" />
+                <datalist id="breaker-calibers">
+                  <option value="6"></option><option value="10"></option><option value="16"></option><option value="20"></option>
+                  <option value="25"></option><option value="32"></option><option value="40"></option><option value="50"></option>
+                  <option value="63"></option><option value="80"></option><option value="100"></option>
+                </datalist>
+              </label>
+              <label>Courbe
+                <select id="bt-curve">
+                  <option value="B">B</option>
+                  <option value="C" selected>C</option>
+                  <option value="D">D</option>
+                </select>
+              </label>
+            </div>
+            <label>Mode I<sub>k</sub>
+              <select id="bt-ik-mode">
+                <option value="manual">Saisie manuelle (kA)</option>
+                <option value="line">Estimation fin de ligne</option>
+              </select>
+            </label>
+            <div id="bt-ik-manual">
+              <label>I<sub>k</sub> (kA) <input type="number" id="bt-ik" step="any" placeholder="ex. 1.2" /></label>
+            </div>
+            <div id="bt-ik-line" hidden>
+              <div class="calc-grid-2">
+                <label>U₀ (V) <input type="number" id="bt-line-u0" step="any" value="230" /></label>
+                <label>Longueur L (m) <input type="number" id="bt-line-l" step="any" /></label>
+                <label>Section S (mm²) <input type="number" id="bt-line-s" step="any" /></label>
+                <label>Matériau
+                  <select id="bt-line-mat">
+                    <option value="Cu">Cuivre</option>
+                    <option value="Al">Aluminium</option>
+                  </select>
+                </label>
+                <label>Z<sub>e</sub> (Ω), impédance amont <input type="number" id="bt-line-ze" step="any" value="0.35" min="0" /></label>
+              </div>
+              <p class="calc-muted" style="margin:0;">I<sub>k</sub> ≈ U₀ / (Z<sub>e</sub> + 2ρL/S), schéma simplifié comme dans l’app Electro DZ.</p>
+            </div>
+          </div>
+          <div id="bt-line-detail"></div>
+          <div class="calc-actions"><button type="button" class="btn btn-primary" id="btn-bt-dev">Calculer</button></div>
+          <div id="bt-dev-result" class="calc-result" aria-live="polite"></div>
+        </div>
+
+        <div id="panel-balance" class="calc-panel" role="tabpanel" hidden>
+          <h2 class="section-title" style="font-size:1.15rem;margin-top:0;">Bilan de puissance</h2>
+          <p class="calc-page-intro">Somme des P × K<sub>u</sub> × K<sub>s</sub> (kW) par ligne.</p>
+          <div id="balance-rows"></div>
+          <div class="calc-actions" style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+            <button type="button" class="btn btn-outline" id="btn-balance-add">Ajouter une ligne</button>
+            <button type="button" class="btn btn-primary" id="btn-balance">Calculer le total</button>
+          </div>
+          <div id="balance-result" class="calc-result" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <p class="calc-page-intro" style="margin-top:2rem;">
+        Application mobile avec calculs plus poussés et mémorisation : <a href="index.html#app">Electro DZ — téléchargement</a>.
+      </p>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <h4>Electro DZ</h4>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">Outils numériques et ressources pour électriciens — <a href="https://electro-dz.com/">electro-dz.com</a></p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="formations.html">Formations</a></li>
+          <li><a href="documentation.html">Documentation</a></li>
+          <li><a href="calcul-electrique.html" aria-current="page">Calcul électrique</a></li>
+          <li><a href="emploi.html">Emploi</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Légal &amp; aide</h4>
+        <ul>
+          <li><a href="support.html">Support</a></li>
+          <li><a href="privacy.html">Confidentialité</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="copyright">© 2026 Electro DZ — Tous droits réservés.</p>
+  </footer>
+  <script src="js/main.js" defer></script>
+  <script src="js/calcul-electrique.js" defer></script>
+</body>
+</html>
