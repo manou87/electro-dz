@@ -1,85 +1,61 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Documentation technique pour électriciens : sécurité, matériel, méthodes — Electro DZ." />
-  <title>Documentation — Electro DZ | electro-dz.com</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231e40af'/%3E%3Cpath fill='white' d='M18 6L8 18h6l-2 8 12-14h-7l1-8z'/%3E%3C/svg%3E" />
-  <link rel="canonical" href="https://electro-dz.com/documentation.html" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation technique pour électriciens : monophasé, triphasé, magnétisme, énergie et ressources.">
+    <title>Documentation - Electro DZ</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="header-inner">
-      <a class="logo" href="index.html"><span class="logo-mark">⚡</span> Electro DZ</a>
-      <nav class="nav-main">
-        <a href="index.html">Accueil</a>
-        <a href="formations.html">Formations</a>
-        <a href="documentation.html" aria-current="page">Documentation</a>
-        <a href="calcul-electrique.html">Calcul électrique</a>
-        <a href="emploi.html">Emploi</a>
-        <a href="contact.html">Contact</a>
-        <a class="btn btn-primary" href="index.html#app">L’app</a>
-      </nav>
-    </div>
-  </header>
-
-  <header class="page-hero">
-    <h1>Documentation &amp; ressources techniques</h1>
-    <p>Cette section rassemble des synthèses, des mémentos et des pistes de lecture. Elle complète le module <strong>Électrotechnique</strong> et les outils de l’application Electro DZ.</p>
-  </header>
-
-  <section>
-    <div class="section-inner">
-      <div class="content-block prose" style="max-width: 46rem;">
-        <h2>Sécurité des personnes et des biens</h2>
-        <p>Toute intervention sur une installation sous tension ou supposée hors tension doit suivre une <strong>procédure claire</strong> : coupure, verrouillage, identification, mesure de tension aux points utiles, et remise en service contrôlée. Les fiches Electro DZ résument ces étapes pour le résidentiel et le petit tertiaire ; elles ne remplacent pas la réglementation locale ni la formation à l’habilitation.</p>
-        <p><strong>À retenir :</strong> ne jamais se fier au seul positionnement d’un interrupteur ; toujours vérifier absence de tension sur les conducteurs de travail.</p>
-
-        <h2>Matériel : tableaux, protections, câblage</h2>
-        <p>Le choix d’un <strong>disjoncteur divisionnaire</strong> ou d’un <strong>différentiel</strong> dépend du courant de service, du type de réseau (TT, TN, IT selon votre pays) et de la coordination des protections. Nos articles détaillent les critères usuels : courant assigné, pouvoir de coupure, sensibilité différentielle (30 mA pour les circuits domestiques courants en protection des personnes, etc.).</p>
-        <p>Les tableaux doivent rester <strong>lisibles</strong> : étiquetage des circuits, chemin de câbles ordonné, réservation pour évolutions. C’est aussi un argument commercial dans un devis « clé en main ».</p>
-
-        <h2>Méthode chantier &amp; dossier technique</h2>
-        <p>Un bon dossier commence sur le terrain : relevé des dimensions, photos des existants, contraintes d’accès. Nous décrivons comment passer à une <strong>liste de quantités</strong> puis à une <strong>offre chiffrée</strong> dans l’application (lignes de prestation, remises éventuelles, conditions).</p>
-
-        <h2>Outils numériques dans l’app</h2>
-        <ul>
-          <li><strong>Calculatrice</strong> — grandeurs et conversions utiles au quotidien.</li>
-          <li><strong>Devis PDF</strong> — présentation client, totaux, TVA.</li>
-          <li><strong>Simulateur de circuits</strong> — exploration pédagogique des schémas.</li>
-          <li><strong>Projets</strong> — suivi par chantier ou client.</li>
-        </ul>
-
-        <div class="cta-box">
-          <h3>Article ou fiche à suggérer ?</h3>
-          <p style="color: var(--text-muted); margin: 0 0 1rem;">Vous manquez d’un mémento précis (ex. : sélectivité, harmoniques, VMC, chauffe-eau) ? Écrivez-nous : nous priorisons les sujets les plus demandés par la communauté.</p>
-          <a class="btn btn-primary" href="contact.html">Suggérer un sujet</a>
+    <header class="site-header">
+        <div class="header-inner container">
+            <a href="index.html" class="logo"><span class="logo-icon">⚡</span><span class="logo-text">Electro<span class="accent">DZ</span></span></a>
+            <nav class="main-nav"><ul>
+                <li><a href="formations.html">Formations</a></li>
+                <li><a href="documentation.html" class="active">Documentation</a></li>
+                <li><a href="calcul-electrique.html">Calculs</a></li>
+                <li><a href="emploi.html">Emploi</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="support.html" class="nav-btn">Support</a></li>
+            </ul></nav>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div>
-        <h4>Electro DZ</h4>
-        <ul>
-          <li><a href="index.html">Accueil</a></li>
-          <li><a href="formations.html">Formations</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Légal</h4>
-        <ul>
-          <li><a href="support.html">Support</a></li>
-          <li><a href="privacy.html">Confidentialité</a></li>
-        </ul>
-      </div>
-    </div>
-    <p class="copyright">© 2026 Electro DZ — <a href="https://electro-dz.com/">electro-dz.com</a></p>
-  </footer>
-  <script src="js/main.js" defer></script>
+    </header>
+    <main>
+        <section class="page-hero"><div class="container"><h1>Documentation Électrotechnique</h1><p>Ressources techniques pour électriciens professionnels.</p></div></section>
+        <section class="docs container section-padding">
+            <h2>Monophasé</h2>
+            <ul>
+                <li><a href="https://electrons.ch/data/files/electrotech/diagrammevecteur_1770372925.pdf">Phaseurs en alternatif (80 formules)</a></li>
+                <li><a href="https://electrons.ch/data/files/electrotech/diagrammevecteur2a5.pdf">Phaseurs - version 2 par page</a></li>
+                <li><a href="https://electrons.ch/data/files/electrotech/diagrammevecteurcomplexe3.pdf">Phaseurs complexes</a></li>
+                <li><a href="https://electrons.ch/data/files/filtredupremierordrebodes2pages.pdf">Filtres passifs passe haut/bas</a></li>
+                <li><a href="https://www.dropbox.com/s/916y1pa761ymztc/RLC%20série.xls?dl=0">Circuit RLC série (Excel)</a></li>
+                <li><a href="https://www.dropbox.com/s/9dvm7fl68feljhn/Calcul%20ex%20cos%20phi%20perte%20en%20ligne.xls?dl=0">Correction cos φ (Excel)</a></li>
+            </ul>
+            <p><strong>Applications Geogebra :</strong> <a href="https://www.geogebra.org/m/u2uvtqyt">Sinus/Cosinus</a> | <a href="https://www.geogebra.org/m/GBdCKqN2">Sinus U/I</a> | <a href="https://ggbm.at/prXpuWtT">RL série</a> | <a href="https://ggbm.at/XwYRqxHW">RC série</a> | <a href="https://ggbm.at/FarWYcGm">RLC série</a></p>
+            <h2>Triphasé</h2>
+            <ul>
+                <li><a href="https://www.dropbox.com/s/kic6t9nx6kkb7za/Calcul%20ex%20cos%20phi%20perte%20en%20ligne%20triphase.xls?dl=0">Correction cos φ triphasé (Excel)</a></li>
+                <li><a href="https://electrons.ch/data/files/electrotech/triphasdnominationsusuelles2x.pdf">Dénominations usuelles</a></li>
+            </ul>
+            <p><strong>Applications Geogebra :</strong> <a href="https://ggbm.at/CyPYRgRy">Phaseurs triphasés</a> | <a href="https://ggbm.at/Ps43Rr3B">Étoile déséquilibré</a></p>
+            <h2>Magnétisme</h2>
+            <ul>
+                <li><a href="https://electrons.ch/data/files/electrotech/deuxmains.png">Force de Laplace / Loi de Faraday</a></li>
+                <li><a href="https://www.dropbox.com/s/r7ja6hjdigdb6n0/Effet%20Pelliculaire.pdf?dl=0">Effet pelliculaire</a></li>
+                <li><a href="https://www.dropbox.com/s/sn5k0yxp4q1u3pa/Comparaison%20synchrone%20asynchrone.pdf?dl=0">Moteurs synchrone/asynchrone</a></li>
+                <li><a href="https://www.dropbox.com/s/abxdiujj2vvikj7/Courbes_aiment.tif?dl=0">Courbes B/H</a></li>
+                <li><a href="https://electrons.ch/data/files/electrotech/rsumdumagntisme1.pdf">Grandeurs magnétiques/électriques</a></li>
+            </ul>
+            <h2>Énergie</h2>
+            <ul>
+                <li><a href="https://electrons.ch/data/files/electrotech/diagrammeenergiesuisse24a4.pdf">Diagramme énergie Suisse (corrigé)</a></li>
+                <li><a href="https://www.bfe.admin.ch/bfe/fr/home/approvisionnement/statistiques-et-geodonnees/statistiques-de-lenergie/statistique-globale-de-l-energie.html/">Statistiques OFEN officielles</a></li>
+            </ul>
+            <p class="attribution"><em>Ressources techniques référencées depuis <a href="https://electrons.ch/electrotechnique">Electrons.ch</a></em></p>
+        </section>
+    </main>
+    <footer class="site-footer"><div class="footer-inner container"><div class="footer-info"><a href="#" class="logo footer-logo">⚡ ElectroDZ</a><p>L'outil numérique des électriciens algériens. 100% gratuit.</p></div><div class="footer-nav"><h4>Navigation</h4><ul><li><a href="formations.html">Formations</a></li><li><a href="documentation.html">Documentation</a></li><li><a href="calcul-electrique.html">Calculs</a></li></ul></div><div class="footer-nav"><h4>Support</h4><ul><li><a href="contact.html">Contact</a></li><li><a href="support.html">Support</a></li><li><a href="privacy.html">Confidentialité</a></li></ul></div></div><div class="footer-bottom container"><p>&copy; 2026 ElectroDZ. Tous droits réservés.</p></div></footer>
 </body>
 </html>
