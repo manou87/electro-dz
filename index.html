@@ -1,153 +1,79 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Electro DZ - L'outil numérique gratuit pour les électriciens algériens : formations, documentation, calculs électriques et offres d'emploi.">
-    <title>Electro DZ - Outils numériques pour électriciens</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" href="favicon.ico">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="description" content="ELECTRO DZ CH - Votre plateforme complète d'outils électriques, calculs, formations et documentation pour électriciens en Suisse et Algérie"/>
+  <title>ELECTRO DZ CH - Outils numériques pour électriciens</title>
+  <style>
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f172a;color:#e2e8f0;line-height:1.6}.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 5%;background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.07);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px)}.logo{color:#facc15;font-size:1.1rem;font-weight:800;letter-spacing:1px;text-decoration:none;line-height:1.3}.logo span{display:block;font-size:0.5rem;letter-spacing:2px;font-weight:300;color:#cbd5e1}.nav-links{display:flex;gap:32px;list-style:none}.nav-links a{color:#cbd5e1;text-decoration:none;font-size:0.95rem;transition:color 0.2s}.nav-links a:hover{color:#facc15}.btn-primary{background:#facc15;color:#0f172a;padding:10px 24px;border-radius:8px;font-weight:700;border:none;cursor:pointer;transition:all 0.2s}.btn-primary:hover{background:#fbbf24;transform:translateY(-1px)}.hero{text-align:center;padding:80px 5% 60px;max-width:900px;margin:0 auto}.badge{display:inline-block;background:rgba(250,204,21,0.15);color:#facc15;padding:6px 14px;border-radius:20px;font-size:0.85rem;font-weight:600;margin-bottom:20px}.hero h1{font-size:3.2rem;font-weight:900;margin-bottom:20px;line-height:1.2;background:linear-gradient(135deg,#fff,#cbd5e1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.hero p{font-size:1.15rem;color:#94a3b8;margin-bottom:32px;max-width:650px;margin-left:auto;margin-right:auto}.cta-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}.btn-download{display:inline-flex;align-items:center;gap:8px;background:#facc15;color:#0f172a;padding:14px 28px;border-radius:10px;text-decoration:none;font-weight:700;font-size:1rem;transition:all 0.2s}.btn-download:hover{background:#fbbf24;transform:translateY(-2px);box-shadow:0 8px 20px rgba(250,204,21,0.3)}.btn-secondary{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);color:#e2e8f0;padding:14px 28px;border-radius:10px;text-decoration:none;font-weight:600;border:1px solid rgba(255,255,255,0.1);transition:all 0.2s}.btn-secondary:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.2)}.social{display:flex;gap:16px;justify-content:center;margin-top:28px}.social a{color:#94a3b8;font-size:0.9rem;text-decoration:none;transition:color 0.2s}.social a:hover{color:#facc15}.features{padding:60px 5%;max-width:1200px;margin:0 auto}.section-title{text-align:center;font-size:2.2rem;font-weight:800;margin-bottom:48px;color:#fff}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}.card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:32px;transition:all 0.3s}.card:hover{background:rgba(255,255,255,0.05);border-color:rgba(250,204,21,0.3);transform:translateY(-4px)}.card-icon{font-size:2.5rem;margin-bottom:16px}.card h3{font-size:1.3rem;font-weight:700;margin-bottom:12px;color:#facc15}.card p{color:#94a3b8;font-size:0.95rem;line-height:1.7}.footer{text-align:center;padding:40px 5%;border-top:1px solid rgba(255,255,255,0.07);margin-top:60px}.footer p{color:#64748b;font-size:0.9rem}@media(max-width:768px){.hero h1{font-size:2.2rem}.nav-links{display:none}.cta-buttons{flex-direction:column}}
+  </style>
 </head>
 <body>
-    <header class="site-header">
-        <div class="header-inner container">
-            <a href="index.html" class="logo">
-                <span class="logo-icon">⚡</span>
-                <span class="logo-text">Electro<span class="accent">DZ</span></span>
-            </a>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="formations.html">Formations</a></li>
-                    <li><a href="documentation.html">Documentation</a></li>
-                    <li><a href="calcul-electrique.html">Calculs</a></li>
-                    <li><a href="emploi.html">Emploi</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="support.html" class="nav-btn">Support</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+  <nav class="nav">
+    <a href="index.html" class="logo">ELECTRO DZ CH<span>ELECTROTECHNIQUE</span></a>
+    <ul class="nav-links">
+      <li><a href="#features">Fonctionnalités</a></li>
+      <li><a href="calcul-electrique.html">Calculs</a></li>
+      <li><a href="login.html">Connexion</a></li>
+    </ul>
+    <a href="register.html" class="btn-primary">S'inscrire</a>
+  </nav>
 
-    <main>
-        <section class="hero">
-            <div class="hero-content container">
-                <div class="hero-text">
-                    <span class="badge">Application 100% Gratuite</span>
-                    <h1>L'outil numérique des électriciens algériens</h1>
-                    <p>Formations, calculs électriques, documentation technique et offres d'emploi. Un cadeau pour tous les artisans algériens !</p>
-                    <div class="cta-group">
-                        <a href="https://play.google.com/store/apps/details?id=com.electrodz.app" class="btn btn-primary">
-                            <span class="btn-icon">▶</span> Google Play
-                        </a>
-                        <a href="https://apps.apple.com/ch/app/electrodz/id6752301246" class="btn btn-secondary">
-                            <span class="btn-icon"></span> App Store
-                        </a>
-                    </div>
-                    <div class="social-links">
-                        <a href="https://www.tiktok.com/@elektrodzch" title="TikTok">TikTok</a>
-                        <a href="https://youtube.com/@elektro-dz-suisse" title="YouTube">YouTube</a>
-                        <a href="https://www.facebook.com/share/1TXqM56Ncd/" title="Facebook">Facebook</a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <div class="phone-mockup">
-                        <div class="phone-screen">
-                            <div class="app-header">⚡ Electro DZ</div>
-                            <div class="app-menu">
-                                <div class="app-item active">💡 Calcul Ohm</div>
-                                <div class="app-item">📚 Documentation</div>
-                                <div class="app-item">🎓 Formations</div>
-                                <div class="app-item">💼 Emploi</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+  <section class="hero">
+    <div class="badge">🚀 Application 100% Gratuite</div>
+    <h1>L'outil numérique des électriciens</h1>
+    <p>Formations, calculs électriques, documentation technique et offres d'emploi. Un cadeau pour tous les artisans électriciens en Suisse et Algérie !</p>
+    <div class="cta-buttons">
+      <a href="https://play.google.com/store" class="btn-download">📱 Google Play</a>
+      <a href="https://apps.apple.com" class="btn-download">🍎 App Store</a>
+      <a href="register.html" class="btn-secondary">✨ Créer un compte</a>
+    </div>
+    <div class="social">
+      <a href="#">TikTok</a>
+      <a href="#">YouTube</a>
+      <a href="#">Facebook</a>
+    </div>
+  </section>
 
-        <section class="stats container">
-            <div class="stat-item">
-                <span class="stat-number">100%</span>
-                <span class="stat-label">Gratuit</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">500+</span>
-                <span class="stat-label">Ressources</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">50+</span>
-                <span class="stat-label">Formations</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">4.8★</span>
-                <span class="stat-label">Note moyenne</span>
-            </div>
-        </section>
+  <section id="features" class="features">
+    <h2 class="section-title">Ce que vous offre Electro DZ</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <h3>Calculs électriques</h3>
+        <p>Calculez rapidement la section de câbles, chutes de tension, courants de court-circuit et dimensionnement d'installations selon les normes suisses et algériennes.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📚</div>
+        <h3>Documentation technique</h3>
+        <p>Accédez à une bibliothèque complète de normes (NIBT, NFC 15-100, IEC), schémas électriques, fiches techniques et guides pratiques.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎓</div>
+        <h3>Formations professionnelles</h3>
+        <p>Suivez des cours vidéo gratuits sur l'installation électrique, la sécurité, les automatismes et les nouvelles technologies du secteur.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💼</div>
+        <h3>Offres d'emploi</h3>
+        <p>Consultez les dernières opportunités d'emploi pour électriciens en Suisse et Algérie. Postulez directement depuis l'application.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔧</div>
+        <h3>Outils de simulation</h3>
+        <p>Simulez des circuits électriques, testez vos montages et validez vos schémas avant installation sur chantier.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌍</div>
+        <h3>Communauté active</h3>
+        <p>Échangez avec des milliers d'électriciens, posez vos questions et partagez vos expériences sur notre plateforme collaborative.</p>
+      </div>
+    </div>
+  </section>
 
-        <section class="features container">
-            <div class="section-title">
-                <h2>Tout ce dont vous avez besoin</h2>
-                <p>Une suite complète d'outils pour faciliter votre travail quotidien sur le terrain.</p>
-            </div>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Calculs électriques</h3>
-                    <p>Loi d'Ohm, chute de tension, courant de court-circuit, section de câble et plus encore.</p>
-                    <a href="calcul-electrique.html" class="learn-more">Découvrir →</a>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📚</div>
-                    <h3>Documentation</h3>
-                    <p>Normes, schémas et guides techniques pour les professionnels du secteur électrique.</p>
-                    <a href="documentation.html" class="learn-more">Découvrir →</a>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎓</div>
-                    <h3>Formations</h3>
-                    <p>Parcours d'apprentissage structurés pour débutants et professionnels confirmés.</p>
-                    <a href="formations.html" class="learn-more">Découvrir →</a>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💼</div>
-                    <h3>Offres d'emploi</h3>
-                    <p>Retrouvez les meilleures opportunités dans le secteur électrique en Algérie.</p>
-                    <a href="emploi.html" class="learn-more">Découvrir →</a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="site-footer">
-        <div class="footer-inner container">
-            <div class="footer-info">
-                <a href="#" class="logo footer-logo">⚡ ElectroDZ</a>
-                <p>L'outil numérique des électriciens algériens. 100% gratuit.</p>
-                <div class="footer-social">
-                    <a href="#">FB</a> <a href="#">YT</a> <a href="#">TK</a>
-                </div>
-            </div>
-            <div class="footer-nav">
-                <h4>Navigation</h4>
-                <ul>
-                    <li><a href="formations.html">Formations</a></li>
-                    <li><a href="documentation.html">Documentation</a></li>
-                    <li><a href="calcul-electrique.html">Calculs</a></li>
-                    <li><a href="emploi.html">Emploi</a></li>
-                </ul>
-            </div>
-            <div class="footer-nav">
-                <h4>Support</h4>
-                <ul>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="support.html">Support</a></li>
-                    <li><a href="privacy.html">Confidentialité</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom container">
-            <p>&copy; 2026 ElectroDZ. Tous droits réservés. | Tel: +213 555 429 960</p>
-        </div>
-    </footer>
+  <footer class="footer">
+    <p>© 2026 ELECTRO DZ CH - Tous droits réservés | <a href="privacy.html" style="color:#64748b;text-decoration:none">Confidentialité</a></p>
+  </footer>
 </body>
 </html>
