@@ -91,8 +91,7 @@ footer{text-align:center;padding:20px;color:#334155;font-size:.75rem;border-top:
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SB_URL='https://wxiqqcnzcxswdqzubxyt.supabase.co';
-const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4aXFxY256Y3hzd2RxenVieHl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ0NTQ5NzcsImV4cCI6MjA2MDAzMDk3N30.YFkBDCmHIcTmjRJrYWuMbbfQgQkRIFa6PoLtl7Ml1UE';
-const sb=supabase.createClient(SB_URL,SB_KEY);
+const SB_KEY='sb_publishable_kEfm0tZfrZ8xXCx_PyWfhg_R93sPJkR';
 sb.auth.getSession().then(({data:{session}})=>{if(session)location.href='dashboard.html';});
 const msg=(t,c)=>{const e=document.getElementById('msg');e.innerHTML=t;e.className='msg '+c;e.style.display='block';};
 document.getElementById('pwd').addEventListener('input',function(){
