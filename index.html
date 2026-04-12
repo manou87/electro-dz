@@ -13,6 +13,11 @@
         .nav-links{display:flex;gap:32px;list-style:none}
         .nav-links a{color:#cbd5e1;text-decoration:none;font-size:0.95rem;transition:color 0.2s}
         .nav-links a:hover{color:#facc15}
+        .nav-right{display:flex;align-items:center;gap:16px}
+        .lang-switch{display:flex;gap:8px;align-items:center}
+        .lang-btn{background:none;border:1px solid #cbd5e1;color:#cbd5e1;padding:4px 10px;border-radius:6px;cursor:pointer;font-weight:700;font-size:0.85rem;transition:all 0.2s}
+        .lang-btn.active{background:#facc15;color:#0f172a;border-color:#facc15}
+        .lang-btn:hover{border-color:#facc15;color:#facc15}
         .btn-primary{background:#facc15;color:#0f172a;padding:10px 24px;border-radius:8px;font-weight:700;border:none;cursor:pointer;text-decoration:none;transition:all 0.2s}
         .btn-primary:hover{background:#fbbf24;transform:translateY(-1px)}
         .hero{text-align:center;padding:80px 5% 60px;max-width:900px;margin:0 auto}
@@ -32,7 +37,7 @@
         .card h3{font-size:1.3rem;font-weight:700;margin-bottom:12px;color:#facc15}
         .card p{color:#94a3b8;font-size:0.95rem;line-height:1.7}
         .footer{text-align:center;padding:40px;border-top:1px solid rgba(255,255,255,0.07);margin-top:60px}
-        @media(max-width:768px){.hero h1{font-size:2.2rem}.nav-links{display:none}}
+        @media(max-width:768px){.hero h1{font-size:2.2rem}.nav-links{display:none}.nav-right{gap:8px}}
     </style>
 </head>
 <body>
@@ -46,8 +51,15 @@
             <li><a href="calcul-electrique.html">الحسابات</a></li>
             <li><a href="login.html">دخول</a></li>
         </ul>
-        <a href="register.html" class="btn-primary">إنضم إلينا</a>
+        <div class="nav-right">
+            <div class="lang-switch">
+                <button class="lang-btn active" onclick="setLang('ar')">AR</button>
+                <button class="lang-btn" onclick="setLang('fr')">FR</button>
+            </div>
+            <a href="register.html" class="btn-primary">إنضم إلينا</a>
+        </div>
     </nav>
+
     <section class="hero">
         <div class="badge">🚀 تطبيق مجاني 100%</div>
         <h1>الأداة الرقمية المثالية للكهربائيين</h1>
@@ -58,6 +70,7 @@
             <a href="register.html" class="btn-secondary">✨ أنشئ حسابك</a>
         </div>
     </section>
+
     <section id="features" class="features">
         <h2 class="section-title">ماذا يقدم لك تطبيق Electro DZ؟</h2>
         <div class="grid">
@@ -69,8 +82,19 @@
             <div class="card"><div class="card-icon">🌍</div><h3>مجتمع نشط</h3><p>تواصل مع آلاف الكهربائيين وشارك خبراتك في بيئة تعاونية.</p></div>
         </div>
     </section>
+
     <footer class="footer">
         <p>© 2026 ELECTRO DZ CH - جميع الحقوق محفوظة | <a href="privacy.html" style="color:#64748b;text-decoration:none">الخصوصية</a></p>
     </footer>
+
+    <script>
+        function setLang(lang) {
+            if(lang === 'fr') {
+                window.location.href = 'index-fr.html';
+            } else {
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
 </body>
 </html>
