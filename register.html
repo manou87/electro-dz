@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Inscription - Electro DZ</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f172a;min-height:100vh;display:flex;flex-direction:column}
+nav{display:flex;align-items:center;justify-content:space-between;padding:15px 28px;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.07)}
+.logo{color:#facc15;font-weight:800;font-size:1.05rem;text-decoration:none}
+.nav-a{color:#94a3b8;font-size:.84rem;text-decoration:none}
+.nav-a:hover{color:#facc15}
+.page{flex:1;display:flex;align-items:center;justify-content:center;padding:32px 16px}
+.card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:40px 36px;width:100%;max-width:430px}
+.ico{text-align:center;font-size:2rem;margin-bottom:6px}
+h1{color:#f1f5f9;font-size:1.4rem;font-weight:800;text-align:center;margin-bottom:4px}
+.sub{color:#64748b;font-size:.83rem;text-align:center;margin-bottom:20px}
+.feats{display:flex;gap:8px;margin-bottom:20px}
+.feat{flex:1;background:rgba(250,204,21,.06);border:1px solid rgba(250,204,21,.14);border-radius:9px;padding:10px 6px;text-align:center}
+.feat-i{font-size:1.2rem;display:block;margin-bottom:3px}
+.feat-t{color:#94a3b8;font-size:.68rem;line-height:1.3}
+.fg{margin-bottom:14px}
+.fg label{display:block;color:#94a3b8;font-size:.73rem;font-weight:700;letter-spacing:.7px;text-transform:uppercase;margin-bottom:6px}
+.fg input{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#f1f5f9;font-size:.91rem;padding:12px 15px;outline:none;transition:border-color .2s,box-shadow .2s}
+.fg input:focus{border-color:#facc15;box-shadow:0 0 0 3px rgba(250,204,21,.1)}
+.fg input::placeholder{color:#475569}
+.bar{height:3px;border-radius:3px;background:rgba(255,255,255,.07);margin-top:6px;overflow:hidden}
+.bar-f{height:100%;width:0;border-radius:3px;transition:width .3s,background .3s}
+.btn{width:100%;background:#facc15;color:#0f172a;font-weight:800;font-size:.93rem;padding:13px;border:none;border-radius:11px;cursor:pointer;transition:all .2s;margin-top:6px}
+.btn:hover:not(:disabled){background:#fde047;transform:translateY(-1px)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.sep{display:flex;align-items:center;gap:10px;margin:18px 0}
+.sep::before,.sep::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.07)}
+.sep span{color:#475569;font-size:.78rem}
+.btn-g{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.11);color:#e2e8f0;font-weight:600;font-size:.86rem;padding:11px;border-radius:11px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:9px}
+.btn-g:hover{background:rgba(255,255,255,.08)}
+.msg{padding:12px 15px;border-radius:9px;font-size:.83rem;margin-bottom:14px;display:none;line-height:1.5}
+.msg.e{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.28);color:#fca5a5}
+.msg.s{background:rgba(34,197,94,.09);border:1px solid rgba(34,197,94,.28);color:#86efac}
+.foot{text-align:center;color:#475569;font-size:.83rem;margin-top:18px}
+.foot a{color:#facc15;text-decoration:none;font-weight:600}
+footer{text-align:center;padding:20px;color:#334155;font-size:.75rem;border-top:1px solid rgba(255,255,255,.05)}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">&#9889; Electro DZ</a>
+  <a href="login.html" class="nav-a">Connexion &rarr;</a>
+</nav>
+<div class="page">
+  <div class="card">
+    <div class="ico">&#9889;</div>
+    <h1>Creer un compte</h1>
+    <p class="sub">Videos, cours et documents exclusifs</p>
+    <div class="feats">
+      <div class="feat"><span class="feat-i">&#127916;</span><div class="feat-t">Videos</div></div>
+      <div class="feat"><span class="feat-i">&#128196;</span><div class="feat-t">PDF</div></div>
+      <div class="feat"><span class="feat-i">&#9889;</span><div class="feat-t">Calculs</div></div>
+    </div>
+    <div class="msg" id="msg"></div>
+    <form id="form">
+      <div class="fg">
+        <label>Prenom &amp; Nom</label>
+        <input type="text" id="name" placeholder="Ahmed Benali" required/>
+      </div>
+      <div class="fg">
+        <label>Adresse e-mail</label>
+        <input type="email" id="email" placeholder="vous@exemple.com" required/>
+      </div>
+      <div class="fg">
+        <label>Mot de passe</label>
+        <input type="password" id="pwd" placeholder="Min. 8 caracteres" required/>
+        <div class="bar"><div class="bar-f" id="bf"></div></div>
+      </div>
+      <div class="fg">
+        <label>Confirmer</label>
+        <input type="password" id="pwd2" placeholder="Repetez le mot de passe" required/>
+      </div>
+      <button type="submit" class="btn" id="btn">Creer mon compte gratuitement</button>
+    </form>
+    <div class="sep"><span>ou</span></div>
+    <button class="btn-g" id="gBtn">
+      <svg width="17" height="17" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.35-8.16 2.35-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      Continuer avec Google
+    </button>
+    <p class="foot">Deja un compte ? <a href="login.html">Se connecter</a></p>
+  </div>
+</div>
+<footer>&copy; 2026 Electro DZ</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SB_URL='https://wxiqqcnzcxswdqzubxyt.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4aXFxY256Y3hzd2RxenVieHl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ0NTQ5NzcsImV4cCI6MjA2MDAzMDk3N30.YFkBDCmHIcTmjRJrYWuMbbfQgQkRIFa6PoLtl7Ml1UE';
+const sb=supabase.createClient(SB_URL,SB_KEY);
+sb.auth.getSession().then(({data:{session}})=>{if(session)location.href='dashboard.html';});
+const msg=(t,c)=>{const e=document.getElementById('msg');e.innerHTML=t;e.className='msg '+c;e.style.display='block';};
+document.getElementById('pwd').addEventListener('input',function(){
+  const v=this.value;let s=0;
+  if(v.length>=8)s++;if(/[A-Z]/.test(v))s++;if(/[0-9]/.test(v))s++;if(/[^A-Za-z0-9]/.test(v))s++;
+  const f=document.getElementById('bf');
+  f.style.width=(s*25)+'%';
+  f.style.background=['','#ef4444','#f97316','#eab308','#22c55e'][s]||'';
+});
+document.getElementById('form').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const b=document.getElementById('btn');
+  const name=document.getElementById('name').value.trim();
+  const email=document.getElementById('email').value.trim();
+  const pwd=document.getElementById('pwd').value;
+  const pwd2=document.getElementById('pwd2').value;
+  if(pwd!==pwd2){msg('Les mots de passe ne correspondent pas.','e');return;}
+  if(pwd.length<8){msg('Minimum 8 caracteres requis.','e');return;}
+  b.textContent='Creation...';b.disabled=true;
+  const {error}=await sb.auth.signUp({email,password:pwd,options:{data:{full_name:name},emailRedirectTo:'https://electro-dz.com/dashboard.html'}});
+  if(error){msg(error.message,'e');b.textContent='Creer mon compte gratuitement';b.disabled=false;}
+  else{msg('Compte cree ! Verifiez votre e-mail pour confirmer.','s');b.textContent='Compte cree !';}  
+});
+document.getElementById('gBtn').addEventListener('click',()=>{
+  sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:'https://electro-dz.com/dashboard.html'}});
+});
+</script>
+</body>
+</html>
