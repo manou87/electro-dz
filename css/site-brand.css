@@ -1,0 +1,11 @@
+/* Logo site = même icône que l'application (assets/app-icon.png) */
+.logo-img{
+  width:40px;height:40px;border-radius:50%;
+  object-fit:cover;flex-shrink:0;display:block;
+  border:2px solid rgba(250,204,21,0.45);
+  background:#000;
+}
+.logo.logo--with-icon,
+a.logo:has(.logo-img){
+  display:inline-flex;align-items:center;gap:10px;
+}

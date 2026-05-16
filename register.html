@@ -4,11 +4,14 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Inscription - DZSWISS ELEC</title>
+<link rel="icon" href="assets/app-icon.png" type="image/png"/>
+<link rel="stylesheet" href="css/site-brand.css"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f172a;min-height:100vh;display:flex;flex-direction:column}
 nav{display:flex;align-items:center;justify-content:space-between;padding:15px 28px;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.07)}
-.logo{color:#facc15;font-weight:800;font-size:1.05rem;text-decoration:none}
+.logo{color:#facc15;font-weight:800;font-size:1.05rem;text-decoration:none;display:inline-flex;align-items:center;gap:10px}
+.logo-card{display:block;width:72px;height:72px;margin:0 auto 12px;border-radius:50%;object-fit:cover;border:2px solid rgba(250,204,21,.45);background:#000}
 .nav-a{color:#94a3b8;font-size:.84rem;text-decoration:none}
 .nav-a:hover{color:#facc15}
 .page{flex:1;display:flex;align-items:center;justify-content:center;padding:32px 16px}
@@ -45,12 +48,12 @@ footer{text-align:center;padding:20px;color:#334155;font-size:.75rem;border-top:
 </head>
 <body>
 <nav>
-  <a href="index.html" class="logo">&#9889; DZSWISS ELEC</a>
+  <a href="index.html" class="logo"><img src="assets/app-icon.png" alt="" class="logo-img" width="36" height="36" decoding="async"/> DZSWISS ELEC</a>
   <a href="login.html" class="nav-a">Connexion &rarr;</a>
 </nav>
 <div class="page">
   <div class="card">
-      <div class="ico" style="font-size:1.3rem;font-weight:800;letter-spacing:1px;">DZSWISS ELEC<br><span style="font-size:0.55rem;letter-spacing:1px;font-weight:600;color:#94a3b8;">Précision suisse, passion algérienne</span></div>
+      <img src="assets/app-icon.png" alt="DZSWISS ELEC" class="logo-card" width="72" height="72" decoding="async"/>
     <p style="text-align:center;font-size:.8rem;color:#64748b;font-style:italic;margin:-8px 0 18px">Bientôt, les surprises…</p>
     <h1>Creer un compte</h1>
     <p class="sub">Videos, cours et documents exclusifs</p>

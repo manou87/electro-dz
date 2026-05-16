@@ -4,11 +4,13 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Dashboard - DZSWISS ELEC</title>
+<link rel="icon" href="assets/app-icon.png" type="image/png"/>
+<link rel="stylesheet" href="css/site-brand.css"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh}
 nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.07);position:sticky;top:0;z-index:100}
-.logo{color:#facc15;font-weight:800;font-size:1.05rem;text-decoration:none}
+.logo{color:#facc15;font-weight:800;font-size:1.05rem;text-decoration:none;display:inline-flex;align-items:center;gap:10px}
 .nav-r{display:flex;align-items:center;gap:12px}
 .nav-u{color:#94a3b8;font-size:.82rem}
 .btn-out{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.28);color:#fca5a5;font-size:.78rem;font-weight:600;padding:6px 14px;border-radius:8px;cursor:pointer;transition:all .2s}
@@ -51,7 +53,7 @@ footer{text-align:center;padding:20px;color:#334155;font-size:.75rem;border-top:
 </head>
 <body>
 <nav>
-    <a href="index.html" class="logo" style="font-size:0.9rem;font-weight:800;letter-spacing:1px;line-height:1.2;">DZSWISS ELEC<br><span style="font-size:0.45rem;letter-spacing:1px;font-weight:600;color:#94a3b8;">Précision suisse, passion algérienne</span></a>  <div class="nav-r">
+    <a href="index.html" class="logo"><img src="assets/app-icon.png" alt="" class="logo-img" width="36" height="36" decoding="async"/> DZSWISS ELEC</a>  <div class="nav-r">
     <span class="nav-u" id="user"></span>
     <button class="btn-out" id="out">Deconnexion</button>
   </div>
