@@ -44,7 +44,13 @@ if (!useQl && !usePpm) {
   process.exit(1);
 }
 
-async function download(url, dest) {
+async function materializePdf(url, dest) {
+  if (/^pdf\//i.test(url) || url.startsWith("assets/")) {
+    const local = path.join(root, url);
+    if (!fs.existsSync(local)) throw new Error("Fichier introuvable — " + local);
+    fs.copyFileSync(local, dest);
+    return;
+  }
   const res = await fetch(url);
   if (!res.ok) throw new Error("HTTP " + res.status + " — " + url);
   const buf = Buffer.from(await res.arrayBuffer());
@@ -82,7 +88,7 @@ for (const book of catalog.books) {
   const tmpPdf = path.join(tmpdir(), `electrodz-${book.id}.pdf`);
   try {
     console.log("→", book.id, "…");
-    await download(url, tmpPdf);
+    await materializePdf(url, tmpPdf);
     if (useQl) thumbFromQl(tmpPdf, book.id);
     else thumbFromPpm(tmpPdf, book.id);
     book.coverPreview = "assets/covers/previews/" + book.id + ".png";
