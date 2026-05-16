@@ -1,101 +1,542 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-default-lang="ar">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-    <meta name="description" content="ELECTRO DZ CH - منصة شاملة للأدوات الكهربائية، الحسابات، التكوينات والتوظيف في سويسرا والجزائر"/>
-    <title>ELECTRO DZ CH - أدوات رقمية للكهربائيين</title>
-    <style>
-        *{box-sizing:border-box;margin:0;padding:0}
-        body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f172a;color:#e2e8f0;line-height:1.6}
-        .nav{display:flex;align-items:center;justify-content:space-between;padding:20px 5%;background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.07);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px)}
-        .logo{color:#facc15;text-decoration:none;display:flex;align-items:center;gap:10px}
-        .nav-links{display:flex;gap:32px;list-style:none}
-        .nav-links a{color:#cbd5e1;text-decoration:none;font-size:0.95rem;transition:color 0.2s}
-        .nav-links a:hover{color:#facc15}
-        .nav-right{display:flex;align-items:center;gap:16px}
-        .lang-switch{display:flex;gap:8px;align-items:center}
-        .lang-btn{background:none;border:1px solid #cbd5e1;color:#cbd5e1;padding:4px 10px;border-radius:6px;cursor:pointer;font-weight:700;font-size:0.85rem;transition:all 0.2s}
-        .lang-btn.active{background:#facc15;color:#0f172a;border-color:#facc15}
-        .lang-btn:hover{border-color:#facc15;color:#facc15}
-        .btn-primary{background:#facc15;color:#0f172a;padding:10px 24px;border-radius:8px;font-weight:700;border:none;cursor:pointer;text-decoration:none;transition:all 0.2s}
-        .btn-primary:hover{background:#fbbf24;transform:translateY(-1px)}
-        .hero{text-align:center;padding:80px 5% 60px;max-width:900px;margin:0 auto}
-        .badge{display:inline-block;background:rgba(250,204,21,0.15);color:#facc15;padding:6px 14px;border-radius:20px;font-size:0.85rem;font-weight:600;margin-bottom:20px}
-        .hero h1{font-size:3.2rem;font-weight:900;margin-bottom:20px;line-height:1.2;background:linear-gradient(135deg,#fff,#cbd5e1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-        .hero p{font-size:1.15rem;color:#94a3b8;margin-bottom:32px;max-width:650px;margin-left:auto;margin-right:auto}
-        .cta-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-        .btn-download{display:inline-flex;align-items:center;gap:8px;background:#facc15;color:#0f172a;padding:14px 28px;border-radius:10px;text-decoration:none;font-weight:700;font-size:1rem;transition:all 0.2s}
-        .btn-download:hover{background:#fbbf24;transform:translateY(-2px);box-shadow:0 8px 20px rgba(250,204,21,0.3)}
-        .btn-secondary{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);color:#e2e8f0;padding:14px 28px;border-radius:10px;text-decoration:none;font-weight:600;border:1px solid rgba(255,255,255,0.1);transition:all 0.2s}
-        .features{padding:60px 5%;max-width:1200px;margin:0 auto}
-        .section-title{text-align:center;font-size:2.2rem;font-weight:800;margin-bottom:48px;color:#fff}
-        .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
-        .card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:32px;transition:all 0.3s;text-align:center}
-        .card:hover{background:rgba(255,255,255,0.05);border-color:rgba(250,204,21,0.3);transform:translateY(-4px)}
-        .card-icon{font-size:2.5rem;margin-bottom:16px}
-        .card h3{font-size:1.3rem;font-weight:700;margin-bottom:12px;color:#facc15}
-        .card p{color:#94a3b8;font-size:0.95rem;line-height:1.7}
-        .footer{text-align:center;padding:40px;border-top:1px solid rgba(255,255,255,0.07);margin-top:60px}
-        @media(max-width:768px){.hero h1{font-size:2.2rem}.nav-links{display:none}.nav-right{gap:8px}}
-    </style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="description" content="ELECTRO DZ CH — PDF, calculs électriques, formations, emploi et outils pour électriciens en Suisse et Algérie."/>
+  <link rel="canonical" href="https://electro-dz.com/"/>
+  <title>ELECTRO DZ CH — Outils pour électriciens</title>
+  <style>
+    :root{
+      --bg:#0a0f1a;
+      --bg2:#0f172a;
+      --surface:rgba(255,255,255,0.05);
+      --border:rgba(255,255,255,0.1);
+      --accent:#facc15;
+      --accent-glow:rgba(250,204,21,0.35);
+      --text:#f1f5f9;
+      --muted:#94a3b8;
+      --radius:16px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:'Segoe UI',system-ui,sans-serif;
+      background:var(--bg);
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -20%,rgba(250,204,21,0.12),transparent),
+        radial-gradient(ellipse 60% 40% at 100% 50%,rgba(59,130,246,0.06),transparent);
+      color:var(--text);line-height:1.6;min-height:100vh;
+    }
+    a{color:inherit;text-decoration:none}
+
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:10px 5%;background:rgba(10,15,26,0.92);
+      border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;
+      backdrop-filter:blur(14px);
+    }
+    .logo{color:var(--accent);display:flex;align-items:center;gap:8px;font-weight:800;font-size:.92rem}
+    .logo svg{width:24px;height:24px;flex-shrink:0}
+    .logo small{display:block;font-size:.45rem;color:var(--muted);letter-spacing:1.5px}
+    .nav-right{display:flex;align-items:center;gap:6px}
+    .lang-btn{
+      background:none;border:1px solid var(--muted);color:var(--muted);
+      padding:2px 7px;border-radius:5px;font-weight:700;font-size:.68rem;
+      cursor:pointer;line-height:1.3;min-width:28px;
+    }
+    .lang-btn.active{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+    .btn-nav{background:var(--accent);color:var(--bg);padding:5px 11px;border-radius:6px;font-weight:700;font-size:.75rem}
+
+    .wrap{max-width:1140px;margin:0 auto;padding:0 5%}
+
+    /* Hero minimal — une seule ligne, ne bloque pas l'écran */
+    .hero{
+      padding:10px 0 6px;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    }
+    .hero-text{flex:1;min-width:0}
+    .hero-text h1{
+      font-size:clamp(1rem,3vw,1.25rem);font-weight:800;line-height:1.25;margin-bottom:2px;
+    }
+    .hero-text p{
+      font-size:.78rem;color:var(--muted);line-height:1.35;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .hero-cta{flex-shrink:0;display:flex;gap:8px;flex-wrap:wrap}
+    .btn-dl{
+      display:inline-flex;align-items:center;gap:4px;
+      background:var(--accent);color:var(--bg);
+      padding:5px 10px;border-radius:6px;font-weight:700;font-size:.7rem;
+      transition:transform .2s,box-shadow .2s;white-space:nowrap;
+    }
+    .btn-dl:hover{transform:translateY(-1px);box-shadow:0 6px 16px var(--accent-glow)}
+    .btn-dl--apple{
+      background:var(--surface);color:var(--text);
+      border:1px solid var(--border);
+    }
+    .btn-dl--apple:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 6px 16px rgba(0,0,0,0.3)}
+
+    /* Accès rapide — grille 4×2, icônes voyantes */
+    .quick-access{
+      margin:0 0 28px;padding:14px 0 8px;
+      border-top:1px solid var(--border);
+      background:rgba(255,255,255,0.02);
+    }
+    .quick-access h2{
+      font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;
+      color:var(--accent);margin-bottom:12px;font-weight:800;
+    }
+    .quick-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+    }
+    .quick-item{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:8px;min-height:88px;padding:12px 8px;
+      background:linear-gradient(165deg,rgba(255,255,255,0.07),rgba(255,255,255,0.02));
+      border:1px solid var(--border);border-radius:12px;
+      border-top:3px solid var(--quick-accent,var(--accent));
+      transition:transform .2s,border-color .2s,box-shadow .2s,background .2s;
+    }
+    .quick-item:hover{
+      transform:translateY(-3px);
+      border-color:rgba(250,204,21,0.45);
+      box-shadow:0 8px 24px rgba(0,0,0,0.35);
+      background:linear-gradient(165deg,rgba(250,204,21,0.1),rgba(255,255,255,0.04));
+    }
+    .quick-item--calc{--quick-accent:#facc15}
+    .quick-item--pdf{--quick-accent:#f87171}
+    .quick-item--docs{--quick-accent:#60a5fa}
+    .quick-item--train{--quick-accent:#a78bfa}
+    .quick-item--job{--quick-accent:#34d399}
+    .quick-item--quote{--quick-accent:#fb923c}
+    .quick-item--social{--quick-accent:#c084fc}
+    .quick-item--help{--quick-accent:#38bdf8}
+    /* Icônes SVG — taille site web (compact) */
+    .ico-wrap{
+      width:34px;height:34px;border-radius:8px;flex-shrink:0;
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(250,204,21,0.1);border:1px solid rgba(250,204,21,0.35);
+    }
+    .ico{width:18px;height:18px;stroke:var(--accent);fill:none;stroke-width:1.75;
+      stroke-linecap:round;stroke-linejoin:round}
+    .ico-wrap--pdf .ico{stroke:#f87171}
+    .ico-wrap--pdf{background:rgba(239,68,68,0.12);border-color:rgba(239,68,68,0.35)}
+    .ico-wrap--job .ico{stroke:#6ee7b7}
+    .ico-wrap--job{background:rgba(52,211,153,0.12);border-color:rgba(52,211,153,0.35)}
+    .ico-wrap--social .ico{stroke:#d8b4fe}
+    .ico-wrap--social{background:rgba(168,85,247,0.12);border-color:rgba(168,85,247,0.35)}
+    .ico-wrap--wa .ico{stroke:#4ade80}
+    .ico-wrap--wa{background:rgba(37,211,102,0.12);border-color:rgba(37,211,102,0.4)}
+    .ico-wrap--tt .ico{stroke:#f1f5f9}
+    .ico-wrap--tt{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.25)}
+    .ico--fill{fill:currentColor;stroke:none}
+    .ico-wrap--yt .ico--fill{color:#f87171}
+    .ico-wrap--yt .ico{stroke:#f87171}
+    .ico-wrap--yt{background:rgba(239,68,68,0.12);border-color:rgba(239,68,68,0.35)}
+    .ico-wrap--fb .ico{stroke:#60a5fa}
+    .ico-wrap--fb{background:rgba(59,130,246,0.12);border-color:rgba(59,130,246,0.35)}
+    .quick-item .ico-wrap{width:42px;height:42px;border-radius:11px}
+    .quick-item .ico{width:22px;height:22px;stroke-width:2}
+    .quick-item .ico-label{
+      font-size:.72rem;font-weight:800;text-align:center;color:var(--text);
+      line-height:1.2;max-width:100%;word-break:break-word;
+    }
+
+    /* Mise en avant — 3 grosses tuiles */
+    .spotlight{margin-bottom:40px}
+    .spotlight-label{
+      font-size:1.15rem;font-weight:800;margin-bottom:16px;
+      display:flex;align-items:center;gap:10px;
+    }
+    .spotlight-label::after{content:'';flex:1;height:1px;background:var(--border)}
+    .spotlight-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+    }
+    .spot-card{
+      position:relative;display:block;padding:16px 14px;
+      border-radius:var(--radius);overflow:hidden;
+      border:1px solid var(--border);min-height:130px;
+      transition:transform .25s,box-shadow .25s;
+    }
+    .spot-card:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,0.5)}
+    .spot-card--calc{background:linear-gradient(145deg,rgba(250,204,21,0.18),rgba(15,23,42,0.9))}
+    .spot-card--pdf{background:linear-gradient(145deg,rgba(239,68,68,0.15),rgba(15,23,42,0.9))}
+    .spot-card--job{background:linear-gradient(145deg,rgba(52,211,153,0.15),rgba(15,23,42,0.9))}
+    .spot-tag{
+      display:inline-block;font-size:.65rem;font-weight:800;text-transform:uppercase;
+      letter-spacing:.08em;padding:3px 8px;border-radius:4px;margin-bottom:10px;
+      background:rgba(0,0,0,0.35);color:var(--accent);
+    }
+    .spot-card h3{font-size:1rem;font-weight:800;margin-bottom:4px;color:#fff}
+    .spot-card p{font-size:.78rem;color:var(--muted);max-width:200px}
+    .spot-card .spot-go{
+      position:absolute;bottom:12px;inset-inline-end:12px;
+      width:26px;height:26px;border-radius:50%;
+      background:var(--accent);color:var(--bg);
+      display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;
+    }
+    .spot-card .ico-wrap{
+      position:absolute;inset-inline-end:10px;top:50%;transform:translateY(-50%);
+      width:38px;height:38px;border-radius:9px;
+    }
+    html[dir="rtl"] body{font-family:'Segoe UI','Tahoma',system-ui,sans-serif}
+    html[dir="rtl"] .quick-access h2{letter-spacing:.06em}
+    html[dir="rtl"] .hub-pill,
+    html[dir="rtl"] .spot-tag{letter-spacing:0}
+    .spot-card .ico{width:20px;height:20px}
+
+    /* Sections thématiques */
+    .hub-block{margin-bottom:36px}
+    .hub-block-head{margin-bottom:14px}
+    .hub-block-head h2{font-size:1.05rem;font-weight:800;color:var(--accent)}
+    .hub-block-head p{font-size:.85rem;color:var(--muted)}
+    .hub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+
+    .hub-card{
+      position:relative;display:flex;flex-direction:column;
+      padding:14px 12px;border-radius:12px;
+      background:var(--surface);border:1px solid var(--border);
+      transition:transform .22s,border-color .22s,box-shadow .22s;
+      min-height:140px;
+    }
+    .hub-card:hover{
+      transform:translateY(-4px);
+      border-color:rgba(250,204,21,0.5);
+      box-shadow:0 12px 32px rgba(0,0,0,0.4);
+    }
+    .hub-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;gap:10px}
+    .hub-card .ico-wrap{width:36px;height:36px;border-radius:8px}
+    .hub-card .ico{width:19px;height:19px}
+    .hub-pill{
+      font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;
+      padding:3px 7px;border-radius:4px;flex-shrink:0;
+    }
+    .pill-pdf{background:rgba(239,68,68,0.2);color:#fca5a5}
+    .pill-calc{background:rgba(250,204,21,0.2);color:var(--accent)}
+    .pill-free{background:rgba(34,197,94,0.2);color:#86efac}
+    .pill-app{background:rgba(96,165,250,0.2);color:#93c5fd}
+    .pill-job{background:rgba(52,211,153,0.2);color:#6ee7b7}
+    .pill-social{background:rgba(168,85,247,0.2);color:#d8b4fe}
+    .hub-card h3{font-size:.98rem;font-weight:800;margin-bottom:4px;color:#fff}
+    .hub-card p{font-size:.8rem;color:var(--muted);flex:1;line-height:1.4}
+    .hub-card .hub-link{
+      margin-top:10px;font-size:.72rem;font-weight:800;color:var(--accent);
+      letter-spacing:.04em;
+    }
+
+    /* Réseaux — bande dédiée très visible */
+    .social-band{
+      margin:32px 0;padding:20px 16px;
+      border-radius:calc(var(--radius) + 6px);
+      background:linear-gradient(135deg,rgba(250,204,21,0.08),rgba(168,85,247,0.08));
+      border:1px solid rgba(250,204,21,0.25);
+    }
+    .social-band h2{font-size:1.2rem;font-weight:900;text-align:center;margin-bottom:6px}
+    .social-band .social-sub{text-align:center;color:var(--muted);font-size:.9rem;margin-bottom:20px}
+    .social-grid{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+    }
+    .social-card{
+      display:flex;flex-direction:column;align-items:center;text-align:center;
+      padding:14px 10px;border-radius:10px;
+      background:rgba(0,0,0,0.35);border:1px solid var(--border);
+      transition:transform .2s,box-shadow .2s;
+    }
+    .social-card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,0.4)}
+    .social-card .ico-wrap{width:36px;height:36px;margin-bottom:8px}
+    .social-card .ico{width:19px;height:19px}
+    .social-card strong{font-size:.8rem;display:block;margin-bottom:2px;color:#fff}
+    .social-card span{font-size:.68rem;color:var(--muted)}
+    .social-card--wa:hover{border-color:#25d366;box-shadow:0 8px 24px rgba(37,211,102,0.25)}
+    .social-card--tt:hover{border-color:#fff;box-shadow:0 8px 24px rgba(255,255,255,0.15)}
+    .social-card--yt:hover{border-color:#ff0000;box-shadow:0 8px 24px rgba(255,0,0,0.25)}
+    .social-card--fb:hover{border-color:#1877f2;box-shadow:0 8px 24px rgba(24,119,242,0.25)}
+
+    .compare-note{
+      margin:32px 0;padding:14px 18px;text-align:center;
+      background:rgba(59,130,246,0.1);border:1px solid rgba(96,165,250,0.3);
+      border-radius:12px;font-size:.85rem;color:#93c5fd;
+    }
+    .compare-note a{color:var(--accent);font-weight:700;text-decoration:underline}
+
+    .footer{text-align:center;padding:28px 5% 40px;border-top:1px solid var(--border);color:var(--muted);font-size:.82rem}
+
+    @media(max-width:900px){
+      .spotlight-grid,.hub-grid{grid-template-columns:repeat(2,1fr)}
+      .social-grid{grid-template-columns:repeat(2,1fr)}
+      .quick-grid{grid-template-columns:repeat(4,1fr);gap:8px}
+    }
+    @media(max-width:520px){
+      .quick-grid{grid-template-columns:repeat(2,1fr)}
+      .quick-item{min-height:80px;padding:10px 6px}
+      .quick-item .ico-wrap{width:38px;height:38px}
+      .spotlight-grid,.hub-grid{grid-template-columns:1fr}
+      .spot-card .ico-wrap{display:none}
+      .hero-text p{white-space:normal}
+      .hero{flex-direction:column;align-items:flex-start;gap:8px}
+    }
+  </style>
 </head>
 <body>
-    <nav class="nav">
-        <a href="index.html" class="logo">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><rect x="8" y="2" width="8" height="4" rx="1" fill="#facc15"/><rect x="7" y="6" width="10" height="12" rx="2" stroke="#facc15" stroke-width="2" fill="none"/><circle cx="10" cy="11" r="1" fill="#facc15"/><circle cx="14" cy="11" r="1" fill="#facc15"/><line x1="12" y1="13" x2="12" y2="16" stroke="#facc15" stroke-width="2" stroke-linecap="round"/></svg>
-            <div style="line-height:1.2"><div style="font-weight:800;font-size:1.1rem">ELECTRO DZ CH</div><div style="font-size:0.5rem;color:#cbd5e1;letter-spacing:2px">ELECTROTECHNIQUE</div></div>
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="ico-calc" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h2M12 10h2M8 14h2M12 14h2M8 18h8"/></symbol>
+    <symbol id="ico-pdf" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></symbol>
+    <symbol id="ico-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></symbol>
+    <symbol id="ico-school" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-6 10 6-10 6z"/><path d="M6 12v5c0 1 2 3 6 3s6-2 6-3v-5"/></symbol>
+    <symbol id="ico-briefcase" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></symbol>
+    <symbol id="ico-clipboard" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 12h6M9 16h6"/></symbol>
+    <symbol id="ico-circuit" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M8 6h8M6 8v4M18 8v4M12 14v2"/></symbol>
+    <symbol id="ico-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="ico-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></symbol>
+    <symbol id="ico-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></symbol>
+    <symbol id="ico-wa" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></symbol>
+    <symbol id="ico-play" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></symbol>
+    <symbol id="ico-fb" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></symbol>
+    <symbol id="ico-tt" viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></symbol>
+  </svg>
+
+  <nav class="nav">
+    <a href="index.html" class="logo">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <rect x="8" y="2" width="8" height="4" rx="1" fill="#facc15"/>
+        <rect x="7" y="6" width="10" height="12" rx="2" stroke="#facc15" stroke-width="2" fill="none"/>
+        <circle cx="10" cy="11" r="1" fill="#facc15"/><circle cx="14" cy="11" r="1" fill="#facc15"/>
+      </svg>
+      <div>ELECTRO DZ<small data-i18n="logo.sub">ELECTROTECHNIQUE</small></div>
+    </a>
+    <div class="nav-right">
+      <button type="button" class="lang-btn" data-lang="fr" aria-label="Français">FR</button>
+      <button type="button" class="lang-btn active" data-lang="ar" aria-label="العربية">AR</button>
+      <a href="register.html" class="btn-nav" data-i18n="nav.join">Rejoindre</a>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="hero" aria-label="Introduction">
+      <div class="hero-text">
+        <h1 data-i18n="hero.title">Electro DZ — outils pour électriciens</h1>
+        <p data-i18n="hero.sub">PDF · Calculs · Emploi · Formations · Réseaux</p>
+      </div>
+      
+      <div class="hero-cta">
+        <a href="https://play.google.com/store/apps/details?id=com.electrodz.app" class="btn-dl" target="_blank" rel="noopener noreferrer" data-i18n="hero.android">Android</a>
+        <a href="https://apps.apple.com/ch/app/electrodz/id6752301246?l=fr-FR" class="btn-dl btn-dl--apple" target="_blank" rel="noopener noreferrer" data-i18n="hero.apple">Apple</a>
+      </div>
+    </section>
+
+    <section class="quick-access" id="outils" aria-label="Accès rapide">
+      <h2 data-i18n="quick.title">Accès rapide</h2>
+      <div class="quick-grid">
+        <a class="quick-item quick-item--calc" href="calcul-electrique.html">
+          <span class="ico-wrap"><svg class="ico"><use href="#ico-calc"/></svg></span>
+          <span class="ico-label" data-i18n="quick.calc">Calculs</span>
         </a>
-        <ul class="nav-links">
-            <li><a href="#features">المميزات</a></li>
-            <li><a href="bibliotheque.html">مكتبة PDF</a></li>
-            <li><a href="calcul-electrique.html">الحسابات</a></li>
-            <li><a href="login.html">دخول</a></li>
-        </ul>
-        <div class="nav-right">
-            <div class="lang-switch">
-                <button class="lang-btn active" onclick="setLang('ar')">AR</button>
-                <button class="lang-btn" onclick="setLang('fr')">FR</button>
-            </div>
-            <a href="register.html" class="btn-primary">إنضم إلينا</a>
-        </div>
-    </nav>
-
-    <section class="hero">
-        <div class="badge">🚀 تطبيق مجاني 100%</div>
-        <h1>الأداة الرقمية المثالية للكهربائيين</h1>
-        <p>تكوينات، حسابات كهربائية، وثائق تقنية وعروض عمل. هدية لكل حرفي في سويسرا والجزائر!</p>
-        <div class="cta-buttons">
-            <a href="https://play.google.com" class="btn-download">📱 Google Play</a>
-            <a href="https://apps.apple.com" class="btn-download">🍎 App Store</a>
-            <a href="register.html" class="btn-secondary">✨ أنشئ حسابك</a>
-        </div>
+        <a class="quick-item quick-item--pdf" href="bibliotheque.html">
+          <span class="ico-wrap ico-wrap--pdf"><svg class="ico"><use href="#ico-pdf"/></svg></span>
+          <span class="ico-label" data-i18n="quick.pdf">PDF</span>
+        </a>
+        <a class="quick-item quick-item--docs" href="documentation.html">
+          <span class="ico-wrap"><svg class="ico"><use href="#ico-book"/></svg></span>
+          <span class="ico-label" data-i18n="quick.docs">Documentation</span>
+        </a>
+        <a class="quick-item quick-item--train" href="formations.html">
+          <span class="ico-wrap"><svg class="ico"><use href="#ico-school"/></svg></span>
+          <span class="ico-label" data-i18n="quick.training">Formations</span>
+        </a>
+        <a class="quick-item quick-item--job" href="emploi.html">
+          <span class="ico-wrap ico-wrap--job"><svg class="ico"><use href="#ico-briefcase"/></svg></span>
+          <span class="ico-label" data-i18n="quick.job">Emploi</span>
+        </a>
+        <a class="quick-item quick-item--quote" href="register.html">
+          <span class="ico-wrap"><svg class="ico"><use href="#ico-clipboard"/></svg></span>
+          <span class="ico-label" data-i18n="quick.quote">Devis</span>
+        </a>
+        <a class="quick-item quick-item--social" href="#communaute">
+          <span class="ico-wrap ico-wrap--social"><svg class="ico"><use href="#ico-users"/></svg></span>
+          <span class="ico-label" data-i18n="quick.social">Réseaux</span>
+        </a>
+        <a class="quick-item quick-item--help" href="support.html">
+          <span class="ico-wrap"><svg class="ico"><use href="#ico-help"/></svg></span>
+          <span class="ico-label" data-i18n="quick.support">Support</span>
+        </a>
+      </div>
     </section>
 
-    <section id="features" class="features">
-        <h2 class="section-title">ماذا يقدم لك تطبيق Electro DZ؟</h2>
-        <div class="grid">
-            <div class="card"><div class="card-icon">⚡</div><h3>حسابات كهربائية</h3><p>احسب مقاس الكابلات، هبوط الجهد، وتيارات القصر حسب المعايير المعمول بها.</p></div>
-            <div class="card"><div class="card-icon">📚</div><h3>وثائق تقنية</h3><p>مكتبة كاملة من المعايير (NIBT, NFC 15-100) والمخططات والكتيبات العملية.</p></div>
-            <div class="card"><div class="card-icon">🎓</div><h3>تكوينات مهنية</h3><p>دروس فيديو مجانية حول التركيبات الكهربائية والأمن والأتمتة.</p></div>
-            <div class="card"><div class="card-icon">💼</div><h3>عروض عمل</h3><p>اكتشف أحدث فرص العمل للكهربائيين في سويسرا والجزائر.</p></div>
-            <div class="card"><div class="card-icon">🔧</div><h3>أدوات محاكاة</h3><p>حاكي الدوائر الكهربائية واختبر توصيلاتك قبل التنفيذ في الموقع.</p></div>
-            <div class="card"><div class="card-icon">🌍</div><h3>مجتمع نشط</h3><p>تواصل مع آلاف الكهربائيين وشارك خبراتك في بيئة تعاونية.</p></div>
-        </div>
+    <!-- 3 options phares -->
+    <section class="spotlight">
+      <p class="spotlight-label" data-i18n="spot.label">Les plus demandés</p>
+      <div class="spotlight-grid">
+        <a class="spot-card spot-card--calc" href="calcul-electrique.html">
+          <span class="spot-tag" data-i18n="spot.calc.tag">Outil pro</span>
+          <h3 data-i18n="spot.calc.title">Calculs électriques</h3>
+          <p data-i18n="spot.calc.desc">Câbles, chute de tension, cos φ, court-circuit — normes CH et DZ</p>
+          <span class="spot-go" data-i18n="arrow">→</span>
+          <span class="ico-wrap"><svg class="ico"><use href="#ico-calc"/></svg></span>
+        </a>
+        <a class="spot-card spot-card--pdf" href="bibliotheque.html">
+          <span class="spot-tag" data-i18n="spot.pdf.tag">PDF gratuits</span>
+          <h3 data-i18n="spot.pdf.title">Bibliothèque technique</h3>
+          <p data-i18n="spot.pdf.desc">Normes, manuels et ouvrages à lire en ligne</p>
+          <span class="spot-go" data-i18n="arrow">→</span>
+          <span class="ico-wrap ico-wrap--pdf"><svg class="ico"><use href="#ico-pdf"/></svg></span>
+        </a>
+        <a class="spot-card spot-card--job" href="emploi.html">
+          <span class="spot-tag" data-i18n="spot.job.tag">Carrière</span>
+          <h3 data-i18n="spot.job.title">Offres d'emploi</h3>
+          <p data-i18n="spot.job.desc">Opportunités pour électriciens — Suisse et Algérie</p>
+          <span class="spot-go" data-i18n="arrow">→</span>
+          <span class="ico-wrap ico-wrap--job"><svg class="ico"><use href="#ico-briefcase"/></svg></span>
+        </a>
+      </div>
     </section>
 
-    <footer class="footer">
-        <p>© 2026 ELECTRO DZ CH - جميع الحقوق محفوظة | <a href="privacy.html" style="color:#64748b;text-decoration:none">الخصوصية</a></p>
-    </footer>
+    <!-- Documents -->
+    <section class="hub-block">
+      <div class="hub-block-head">
+        <h2 data-i18n="docs.title">Documents et PDF</h2>
+        <p data-i18n="docs.sub">Fiches, normes et ressources à consulter ou télécharger</p>
+      </div>
+      <div class="hub-grid">
+        <a class="hub-card" href="bibliotheque.html">
+          <div class="hub-card-top">
+            <span class="ico-wrap ico-wrap--pdf"><svg class="ico"><use href="#ico-pdf"/></svg></span>
+            <span class="hub-pill pill-pdf" data-i18n="pill.pdf">PDF</span>
+          </div>
+          <h3 data-i18n="docs.lib.title">Bibliothèque PDF</h3>
+          <p data-i18n="docs.lib.desc">Livres et normes (NIBT, NFC…) classés par thème</p>
+          <span class="hub-link" data-i18n="docs.lib.link">Parcourir la bibliothèque →</span>
+        </a>
+        <a class="hub-card" href="documentation.html">
+          <div class="hub-card-top">
+            <span class="ico-wrap"><svg class="ico"><use href="#ico-book"/></svg></span>
+            <span class="hub-pill pill-pdf" data-i18n="docs.doc.pill">PDF + GeoGebra</span>
+          </div>
+          <h3 data-i18n="docs.doc.title">Documentation</h3>
+          <p data-i18n="docs.doc.desc">Monophasé, triphasé, magnétisme, énergie</p>
+          <span class="hub-link" data-i18n="docs.doc.link">Voir les modules →</span>
+        </a>
+        <a class="hub-card" href="formations.html">
+          <div class="hub-card-top">
+            <span class="ico-wrap"><svg class="ico"><use href="#ico-school"/></svg></span>
+            <span class="hub-pill pill-free" data-i18n="pill.free">Gratuit</span>
+          </div>
+          <h3 data-i18n="docs.train.title">Formations vidéo</h3>
+          <p data-i18n="docs.train.desc">Installations, sécurité, automatisation</p>
+          <span class="hub-link" data-i18n="docs.train.link">Commencer →</span>
+        </a>
+      </div>
+    </section>
 
-    <script>
-        function setLang(lang) {
-            if(lang === 'fr') {
-                window.location.href = 'index-fr.html';
-            } else {
-                window.location.href = 'index.html';
-            }
-        }
-    </script>
+    <!-- Outils -->
+    <section class="hub-block">
+      <div class="hub-block-head">
+        <h2 data-i18n="tools.title">Outils professionnels</h2>
+        <p data-i18n="tools.sub">Calculer, simuler et gérer vos chantiers</p>
+      </div>
+      <div class="hub-grid">
+        <a class="hub-card" href="calcul-electrique.html">
+          <div class="hub-card-top">
+            <span class="ico-wrap"><svg class="ico"><use href="#ico-calc"/></svg></span>
+            <span class="hub-pill pill-calc" data-i18n="pill.calc">Calcul</span>
+          </div>
+          <h3 data-i18n="tools.calc.title">Calculs en ligne</h3>
+          <p data-i18n="tools.calc.desc">Ohm, puissance, sections, chute de tension</p>
+          <span class="hub-link" data-i18n="tools.calc.link">Lancer un calcul →</span>
+        </a>
+        <a class="hub-card" href="register.html">
+          <div class="hub-card-top">
+            <span class="ico-wrap"><svg class="ico"><use href="#ico-clipboard"/></svg></span>
+            <span class="hub-pill pill-app" data-i18n="pill.app">Application</span>
+          </div>
+          <h3 data-i18n="tools.quote.title">Devis et chantiers</h3>
+          <p data-i18n="tools.quote.desc">Créez des devis et suivez vos projets (compte requis)</p>
+          <span class="hub-link" data-i18n="tools.quote.link">Créer un compte →</span>
+        </a>
+        <a class="hub-card" href="https://play.google.com/store/apps/details?id=com.electrodz.app">
+          <div class="hub-card-top">
+            <span class="ico-wrap"><svg class="ico"><use href="#ico-circuit"/></svg></span>
+            <span class="hub-pill pill-app" data-i18n="pill.sim">Simulateur</span>
+          </div>
+          <h3 data-i18n="tools.sim.title">Circuits interactifs</h3>
+          <p data-i18n="tools.sim.desc">Testez vos montages avant le chantier</p>
+          <span class="hub-link" data-i18n="tools.sim.link">Dans l'application →</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Emploi -->
+    <section class="hub-block">
+      <div class="hub-block-head">
+        <h2 data-i18n="job.title">Emploi et réseau pro</h2>
+        <p data-i18n="job.sub">Trouvez une mission ou contactez l'équipe</p>
+      </div>
+      <div class="hub-grid">
+        <a class="hub-card" href="emploi.html">
+          <div class="hub-card-top">
+            <span class="ico-wrap ico-wrap--job"><svg class="ico"><use href="#ico-briefcase"/></svg></span>
+            <span class="hub-pill pill-job" data-i18n="pill.job">Offres</span>
+          </div>
+          <h3 data-i18n="job.offers.title">Offres de travail</h3>
+          <p data-i18n="job.offers.desc">Annonces pour électriciens en Suisse et en Algérie</p>
+          <span class="hub-link" data-i18n="job.offers.link">Voir les offres →</span>
+        </a>
+        <a class="hub-card" href="contact.html">
+          <div class="hub-card-top">
+            <span class="ico-wrap"><svg class="ico"><use href="#ico-mail"/></svg></span>
+            <span class="hub-pill pill-free" data-i18n="pill.contact">Contact</span>
+          </div>
+          <h3 data-i18n="job.contact.title">Nous écrire</h3>
+          <p data-i18n="job.contact.desc">Questions, partenariats, signalement</p>
+          <span class="hub-link" data-i18n="job.contact.link">Page contact →</span>
+        </a>
+        <a class="hub-card" href="support.html">
+          <div class="hub-card-top">
+            <span class="ico-wrap"><svg class="ico"><use href="#ico-help"/></svg></span>
+            <span class="hub-pill pill-free" data-i18n="pill.help">Aide</span>
+          </div>
+          <h3 data-i18n="job.help.title">Support</h3>
+          <p data-i18n="job.help.desc">FAQ et assistance technique</p>
+          <span class="hub-link" data-i18n="job.help.link">Obtenir de l'aide →</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Communauté / réseaux sociaux -->
+    <section class="social-band" id="communaute">
+      <h2 data-i18n="social.title">Notre communauté Electro DZ</h2>
+      <p class="social-sub" data-i18n="social.sub">Suivez-nous — tutoriels, astuces chantier et actualités</p>
+      <div class="social-grid">
+        <a class="social-card social-card--wa" href="https://wa.me/213555429960" target="_blank" rel="noopener noreferrer">
+          <span class="ico-wrap ico-wrap--wa"><svg class="ico"><use href="#ico-wa"/></svg></span>
+          <strong>WhatsApp</strong>
+          <span>+213 555 429 960</span>
+        </a>
+        <a class="social-card social-card--tt" href="https://www.tiktok.com/@elektrodzch" target="_blank" rel="noopener noreferrer">
+          <span class="ico-wrap ico-wrap--tt"><svg class="ico"><use href="#ico-tt"/></svg></span>
+          <strong>TikTok</strong>
+          <span>@elektrodzch</span>
+        </a>
+        <a class="social-card social-card--yt" href="https://youtube.com/@electro-dz-suisse" target="_blank" rel="noopener noreferrer">
+          <span class="ico-wrap ico-wrap--yt"><svg class="ico ico--fill"><use href="#ico-play"/></svg></span>
+          <strong>YouTube</strong>
+          <span>@electro-dz-suisse</span>
+        </a>
+        <a class="social-card social-card--fb" href="https://www.facebook.com/share/1TXqM56Ncd/" target="_blank" rel="noopener noreferrer">
+          <span class="ico-wrap ico-wrap--fb"><svg class="ico"><use href="#ico-fb"/></svg></span>
+          <strong>Facebook</strong>
+          <span data-i18n="social.fb">Page ElectroDZ</span>
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <p data-i18n="footer">© 2026 ELECTRO DZ CH — electro-dz.com</p>
+  </footer>
+
+  <script src="js/accueil-i18n.js"></script>
 </body>
 </html>
