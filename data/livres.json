@@ -1,0 +1,116 @@
+{
+  "version": 1,
+  "updated": "2026-04-19",
+  "categories": {
+    "normes": {
+      "labelFr": "Normes & réglementation",
+      "labelAr": "المعايير واللوائح",
+      "icon": "📋"
+    },
+    "installation": {
+      "labelFr": "Installation & câblage",
+      "labelAr": "التركيب والكابلات",
+      "icon": "🔌"
+    },
+    "securite": {
+      "labelFr": "Sécurité & habilitation",
+      "labelAr": "السلامة والتأهيل",
+      "icon": "🦺"
+    },
+    "formation": {
+      "labelFr": "Formation & pédagogie",
+      "labelAr": "التكوين والتعليم",
+      "icon": "🎓"
+    },
+    "knx": {
+      "labelFr": "KNX & domotique",
+      "labelAr": "KNX والمنزل الذكي",
+      "icon": "🏠"
+    },
+    "autres": {
+      "labelFr": "Autres ressources",
+      "labelAr": "موارد أخرى",
+      "icon": "📚"
+    }
+  },
+  "books": [
+    {
+      "id": "memento-ddr",
+      "category": "normes",
+      "titleFr": "Mémento — différentiels & DDR",
+      "titleAr": "مذكرة — التفاضلي و DDR",
+      "descriptionFr": "Synthèse des sensibilités (30 mA, 300 mA), types AC/A, et repères de choix pour le résidentiel.",
+      "descriptionAr": "ملخص الحساسيات (30 mA، 300 mA)، الأنواع AC/A، ومعايير الاختيار للمنازل.",
+      "lang": ["fr", "ar"],
+      "pages": 18,
+      "year": 2026,
+      "pdfUrl": "",
+      "featured": true
+    },
+    {
+      "id": "guide-tableau",
+      "category": "installation",
+      "titleFr": "Guide tableau domestique — dimensionnement",
+      "titleAr": "دليل لوحة المنزل — التحجيم",
+      "descriptionFr": "Organisation des rangées, répartition des circuits, étiquetage et réservation pour extensions.",
+      "descriptionAr": "تنظيم الصفوف، توزيع الدوائر، التسمية والاحتياط للتوسعات.",
+      "lang": ["fr"],
+      "pages": 32,
+      "year": 2026,
+      "pdfUrl": "",
+      "featured": true
+    },
+    {
+      "id": "habilitation-rappels",
+      "category": "securite",
+      "titleFr": "Rappels habilitation & consignation",
+      "titleAr": "تذكير التأهيل والتأمين",
+      "descriptionFr": "Procédure coupure, verrouillage, VAT, EPI — fiche terrain (ne remplace pas la formation officielle).",
+      "descriptionAr": "إجراء القطع، القفل، قياس الجهد، معدات الوقاية — ورقة ميدانية.",
+      "lang": ["fr", "ar"],
+      "pages": 12,
+      "year": 2025,
+      "pdfUrl": "",
+      "featured": false
+    },
+    {
+      "id": "cables-iec",
+      "category": "installation",
+      "titleFr": "Câbles — sections & chute de tension",
+      "titleAr": "الكابلات — المقاطع وهبوط الجهد",
+      "descriptionFr": "Tableaux de sections usuels, facteurs d’installation et exemples de calcul (complément à l’app).",
+      "descriptionAr": "جداول المقاطع الشائعة، معاملات التركيب وأمثلة حسابية.",
+      "lang": ["fr", "ar"],
+      "pages": 24,
+      "year": 2026,
+      "pdfUrl": "",
+      "featured": false
+    },
+    {
+      "id": "knx-initiation",
+      "category": "knx",
+      "titleFr": "KNX — initiation installateur",
+      "titleAr": "KNX — مقدمة للمثبت",
+      "descriptionFr": "Bus, alimentation, topologie ligne/étoile, premiers paramétrages ETS (aperçu).",
+      "descriptionAr": "الناقل، التغذية، الطوبولوجيا، أول إعدادات ETS (نظرة عامة).",
+      "lang": ["fr"],
+      "pages": 40,
+      "year": 2026,
+      "pdfUrl": "",
+      "featured": true
+    },
+    {
+      "id": "mise-terre-tt",
+      "category": "securite",
+      "titleFr": "Mise à la terre — schémas TT",
+      "titleAr": "التأريض — مخططات TT",
+      "descriptionFr": "Prise de terre, liaison équipotentielle, mesures usuelles et erreurs fréquentes sur chantier.",
+      "descriptionAr": "ماسة الأرض، الربط المتساوي للجهود، القياسات والأخطاء الشائعة.",
+      "lang": ["fr", "ar"],
+      "pages": 20,
+      "year": 2025,
+      "pdfUrl": "",
+      "featured": false
+    }
+  ]
+}

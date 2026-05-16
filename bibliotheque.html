@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="مكتبة PDF للكهربائيين — Electro DZ" />
+  <title>مكتبة PDF — ELECTRO DZ CH</title>
+  <link rel="canonical" href="https://electro-dz.com/bibliotheque.html" />
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f172a;color:#e2e8f0;line-height:1.6}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:20px 5%;background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.07);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px)}
+    .logo{color:#facc15;text-decoration:none;display:flex;align-items:center;gap:10px}
+    .nav-links{display:flex;gap:24px;list-style:none;flex-wrap:wrap}
+    .nav-links a{color:#cbd5e1;text-decoration:none;font-size:0.95rem}
+    .nav-links a:hover,.nav-links a.active{color:#facc15}
+    .nav-right{display:flex;align-items:center;gap:12px}
+    .lang-btn{background:none;border:1px solid #cbd5e1;color:#cbd5e1;padding:4px 10px;border-radius:6px;cursor:pointer;font-weight:700;font-size:0.85rem}
+    .lang-btn.active{background:#facc15;color:#0f172a;border-color:#facc15}
+    .page{padding:40px 5% 60px;max-width:1100px;margin:0 auto}
+  </style>
+  <link rel="stylesheet" href="css/library-extra.css" />
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="logo">
+      <span style="font-weight:800;font-size:1.1rem">ELECTRO DZ CH</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" data-i18n-fr="Accueil" data-i18n-ar="الرئيسية">الرئيسية</a></li>
+      <li><a href="calcul-electrique.html" data-i18n-fr="Calculs" data-i18n-ar="الحسابات">الحسابات</a></li>
+      <li><a href="bibliotheque.html" class="active" data-i18n-fr="Bibliothèque" data-i18n-ar="مكتبة PDF">مكتبة PDF</a></li>
+      <li><a href="login.html" data-i18n-fr="Connexion" data-i18n-ar="دخول">دخول</a></li>
+    </ul>
+    <div class="nav-right">
+      <button type="button" class="lang-btn" data-lang-fr>FR</button>
+      <button type="button" class="lang-btn active" data-lang-ar>AR</button>
+    </div>
+  </nav>
+
+  <main class="page">
+    <header class="library-hero-row" style="margin-bottom:1.5rem">
+      
+      <div>
+        <h1 style="font-size:2rem;color:#facc15;margin-bottom:0.5rem" data-i18n-fr="Bibliothèque PDF" data-i18n-ar="مكتبة الكتب PDF">مكتبة الكتب PDF</h1>
+        <p style="color:#94a3b8" data-i18n-fr="Mémentos et guides pour électriciens." data-i18n-ar="مذكرات وأدلة ونشرات تقنية للكهربائيين.">مذكرات وأدلة ونشرات تقنية للكهربائيين.</p>
+        <p class="catalog-updated" data-catalog-updated style="color:#64748b;font-size:0.85rem;margin-top:0.5rem"></p>
+      </div>
+    </header>
+
+    <div class="library-toolbar">
+      <label class="library-search-wrap" style="flex:1">
+        <input type="search" class="library-search" data-books-search data-placeholder-fr="Rechercher…" data-placeholder-ar="بحث عن كتاب…" placeholder="بحث عن كتاب…" />
+      </label>
+      <p class="library-count" data-books-count></p>
+    </div>
+
+    <div class="book-filters-scroll"><div class="book-filters" data-books-filters></div></div>
+
+    <section class="library-featured" data-books-featured hidden>
+      <h2 class="section-title" style="color:#fff;margin:1.5rem 0 1rem" data-i18n-fr="À la une" data-i18n-ar="مميز">مميز</h2>
+      <div class="book-grid book-grid--featured" data-featured-grid></div>
+    </section>
+
+    <h2 class="section-title" style="color:#fff;margin:1.5rem 0 1rem" data-i18n-fr="Tous les ouvrages" data-i18n-ar="كل الكتب">كل الكتب</h2>
+    <div class="book-grid" data-books-grid></div>
+    <p class="library-empty" data-books-empty hidden style="text-align:center;padding:2rem;color:#94a3b8">لا يوجد كتاب.</p>
+  </main>
+
+  <footer style="text-align:center;padding:40px;border-top:1px solid rgba(255,255,255,0.07);margin-top:40px">
+    <p>© 2026 ELECTRO DZ CH</p>
+  </footer>
+
+  <script src="js/bibliotheque.js" defer></script>
+</body>
+</html>
