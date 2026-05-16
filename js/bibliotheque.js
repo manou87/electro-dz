@@ -27,6 +27,10 @@
   const COVER_COLORS = {
     normes: "#1e40af",
     installation: "#0d9488",
+    monophase: "#ca8a04",
+    triphase: "#059669",
+    magnetisme: "#7c3aed",
+    energie: "#dc2626",
     securite: "#b45309",
     formation: "#7c3aed",
     knx: "#4f46e5",
@@ -49,13 +53,45 @@
     return escapeHtml(s).replace(/'/g, "&#39;");
   }
 
+  function pdfViewerHref(book) {
+    const q = new URLSearchParams();
+    q.set("src", book.pdfUrl);
+    q.set("titleFr", book.titleFr || "");
+    q.set("titleAr", book.titleAr || book.titleFr || "");
+    return "lecteur-pdf.html?" + q.toString();
+  }
+
+  function resolveAssetUrl(relativePath) {
+    if (!relativePath || /^https?:\/\//i.test(relativePath)) return relativePath || "";
+    try {
+      return new URL(relativePath, window.location.href).href;
+    } catch (_e) {
+      return relativePath;
+    }
+  }
+
+  /** Aperçu réel (1re page PDF) en priorité, puis couverture SVG */
+  function bookCoverSrc(book) {
+    if (book.coverPreview) return book.coverPreview;
+    if (lang === "ar" && book.coverImageAr) return book.coverImageAr;
+    if (book.coverImageFr) return book.coverImageFr;
+    if (book.coverImageAr) return book.coverImageAr;
+    return book.coverImage || "";
+  }
+
   function setLang(next) {
     lang = next === "ar" ? "ar" : "fr";
     localStorage.setItem(STORAGE_LANG, lang);
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
-    if (els.langFr) els.langFr.setAttribute("aria-pressed", lang === "fr" ? "true" : "false");
-    if (els.langAr) els.langAr.setAttribute("aria-pressed", lang === "ar" ? "true" : "false");
+    if (els.langFr) {
+      els.langFr.classList.toggle("active", lang === "fr");
+      els.langFr.setAttribute("aria-pressed", lang === "fr" ? "true" : "false");
+    }
+    if (els.langAr) {
+      els.langAr.classList.toggle("active", lang === "ar");
+      els.langAr.setAttribute("aria-pressed", lang === "ar" ? "true" : "false");
+    }
     document.querySelectorAll("[data-i18n-fr]").forEach(function (node) {
       const fr = node.getAttribute("data-i18n-fr");
       const ar = node.getAttribute("data-i18n-ar");
@@ -66,6 +102,9 @@
         els.search.getAttribute("data-placeholder-fr") || "",
         els.search.getAttribute("data-placeholder-ar") || ""
       );
+    }
+    if (els.empty) {
+      els.empty.textContent = t("Aucun ouvrage trouvé.", "لا يوجد كتاب.");
     }
     render();
   }
@@ -120,13 +159,61 @@
     inner.className = "book-card-inner";
 
     const coverDiv = document.createElement("div");
-    coverDiv.className = "book-cover";
-    coverDiv.style.background = "linear-gradient(135deg," + coverBg + ",#0f172a)";
-    const coverIcon = document.createElement("span");
-    coverIcon.className = "book-cover-icon";
-    coverIcon.setAttribute("aria-hidden", "true");
-    coverIcon.textContent = categoryIcon(catKey);
-    coverDiv.appendChild(coverIcon);
+    coverDiv.className = "book-cover" + (book.coverPreview ? " book-cover--preview" : "");
+    const coverSrc = bookCoverSrc(book).trim();
+    const svgFallback =
+      (lang === "ar" && book.coverImageAr) ||
+      book.coverImageFr ||
+      book.coverImageAr ||
+      book.coverImage ||
+      "";
+    if (coverSrc) {
+      coverDiv.style.background = "#0f172a";
+      const img = document.createElement("img");
+      img.className = "book-cover-img";
+      img.src = resolveAssetUrl(coverSrc);
+      img.alt = title;
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.onerror = function () {
+        if (book.coverPreview && svgFallback && img.src.indexOf(".svg") === -1) {
+          img.src = resolveAssetUrl(svgFallback);
+          return;
+        }
+        img.remove();
+        coverDiv.classList.remove("book-cover--preview");
+        coverDiv.style.background = "linear-gradient(135deg," + coverBg + ",#0f172a)";
+        const coverIcon = document.createElement("span");
+        coverIcon.className = "book-cover-icon";
+        coverIcon.setAttribute("aria-hidden", "true");
+        coverIcon.textContent = categoryIcon(catKey);
+        coverDiv.appendChild(coverIcon);
+      };
+      coverDiv.appendChild(img);
+      if (hasPdf) {
+        coverDiv.style.cursor = "pointer";
+        coverDiv.setAttribute("role", "button");
+        coverDiv.setAttribute("tabindex", "0");
+        coverDiv.setAttribute("aria-label", t("Lire le PDF", "قراءة PDF") + " — " + title);
+        function openReader() {
+          window.location.href = pdfViewerHref(book);
+        }
+        coverDiv.addEventListener("click", openReader);
+        coverDiv.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            openReader();
+          }
+        });
+      }
+    } else {
+      coverDiv.style.background = "linear-gradient(135deg," + coverBg + ",#0f172a)";
+      const coverIcon = document.createElement("span");
+      coverIcon.className = "book-cover-icon";
+      coverIcon.setAttribute("aria-hidden", "true");
+      coverIcon.textContent = categoryIcon(catKey);
+      coverDiv.appendChild(coverIcon);
+    }
     inner.appendChild(coverDiv);
 
     const body = document.createElement("div");
@@ -160,21 +247,11 @@
     const actions = document.createElement("div");
     actions.className = "book-actions";
     if (hasPdf) {
-      const dl = document.createElement("a");
-      dl.className = "btn btn-primary btn-sm";
-      dl.href = book.pdfUrl;
-      dl.target = "_blank";
-      dl.rel = "noopener noreferrer";
-      dl.textContent = t("Télécharger PDF", "تحميل PDF");
-      actions.appendChild(dl);
-
-      const open = document.createElement("a");
-      open.className = "btn btn-outline btn-sm";
-      open.href = book.pdfUrl;
-      open.target = "_blank";
-      open.rel = "noopener noreferrer";
-      open.textContent = t("Ouvrir", "فتح");
-      actions.appendChild(open);
+      const read = document.createElement("a");
+      read.className = "btn btn-primary btn-sm";
+      read.href = pdfViewerHref(book);
+      read.textContent = t("Lire le PDF", "قراءة PDF");
+      actions.appendChild(read);
     } else {
       const soon = document.createElement("span");
       soon.className = "book-soon";
