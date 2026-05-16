@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Inscription - Electro DZ</title>
+<title>Inscription - DZSWISS ELEC</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f172a;min-height:100vh;display:flex;flex-direction:column}
@@ -45,12 +45,14 @@ footer{text-align:center;padding:20px;color:#334155;font-size:.75rem;border-top:
 </head>
 <body>
 <nav>
-  <a href="index.html" class="logo">&#9889; Electro DZ</a>
+  <a href="index.html" class="logo">&#9889; DZSWISS ELEC</a>
   <a href="login.html" class="nav-a">Connexion &rarr;</a>
 </nav>
 <div class="page">
   <div class="card">
-      <div class="ico" style="font-size:1.3rem;font-weight:800;letter-spacing:1px;">ELECTRO DZ CH<br><span style="font-size:0.55rem;letter-spacing:3px;font-weight:400;">ELECTROTECHNIQUE</span></div>    <h1>Creer un compte</h1>
+      <div class="ico" style="font-size:1.3rem;font-weight:800;letter-spacing:1px;">DZSWISS ELEC<br><span style="font-size:0.55rem;letter-spacing:1px;font-weight:600;color:#94a3b8;">Précision suisse, passion algérienne</span></div>
+    <p style="text-align:center;font-size:.8rem;color:#64748b;font-style:italic;margin:-8px 0 18px">Bientôt, les surprises…</p>
+    <h1>Creer un compte</h1>
     <p class="sub">Videos, cours et documents exclusifs</p>
     <div class="feats">
       <div class="feat"><span class="feat-i">&#127916;</span><div class="feat-t">Videos</div></div>
@@ -86,37 +88,9 @@ footer{text-align:center;padding:20px;color:#334155;font-size:.75rem;border-top:
     <p class="foot">Deja un compte ? <a href="login.html">Se connecter</a></p>
   </div>
 </div>
-<footer>&copy; 2026 Electro DZ</footer>
+<footer>&copy; 2026 DZSWISS ELEC</footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const SB_URL='https://wxiqqcnzcxswdqzubxyt.supabase.co';
-const SB_KEY='sb_publishable_kEfm0tZfrZ8xXCx_PyWfhg_R93sPJkR';
-sb.auth.getSession().then(({data:{session}})=>{if(session)location.href='dashboard.html';});
-const msg=(t,c)=>{const e=document.getElementById('msg');e.innerHTML=t;e.className='msg '+c;e.style.display='block';};
-document.getElementById('pwd').addEventListener('input',function(){
-  const v=this.value;let s=0;
-  if(v.length>=8)s++;if(/[A-Z]/.test(v))s++;if(/[0-9]/.test(v))s++;if(/[^A-Za-z0-9]/.test(v))s++;
-  const f=document.getElementById('bf');
-  f.style.width=(s*25)+'%';
-  f.style.background=['','#ef4444','#f97316','#eab308','#22c55e'][s]||'';
-});
-document.getElementById('form').addEventListener('submit',async e=>{
-  e.preventDefault();
-  const b=document.getElementById('btn');
-  const name=document.getElementById('name').value.trim();
-  const email=document.getElementById('email').value.trim();
-  const pwd=document.getElementById('pwd').value;
-  const pwd2=document.getElementById('pwd2').value;
-  if(pwd!==pwd2){msg('Les mots de passe ne correspondent pas.','e');return;}
-  if(pwd.length<8){msg('Minimum 8 caracteres requis.','e');return;}
-  b.textContent='Creation...';b.disabled=true;
-  const {error}=await sb.auth.signUp({email,password:pwd,options:{data:{full_name:name},emailRedirectTo:'https://electro-dz.com/dashboard.html'}});
-  if(error){msg(error.message,'e');b.textContent='Creer mon compte gratuitement';b.disabled=false;}
-  else{msg('Compte cree ! Verifiez votre e-mail pour confirmer.','s');b.textContent='Compte cree !';}  
-});
-document.getElementById('gBtn').addEventListener('click',()=>{
-  sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:'https://electro-dz.com/dashboard.html'}});
-});
-</script>
+<script src="js/supabase-client.js"></script>
+<script src="js/auth-register.js"></script>
 </body>
 </html>

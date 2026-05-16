@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Dashboard - Electro DZ</title>
+<title>Dashboard - DZSWISS ELEC</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh}
@@ -51,7 +51,7 @@ footer{text-align:center;padding:20px;color:#334155;font-size:.75rem;border-top:
 </head>
 <body>
 <nav>
-    <a href="index.html" class="logo" style="font-size:0.9rem;font-weight:800;letter-spacing:1px;line-height:1.2;">ELECTRO DZ CH<br><span style="font-size:0.45rem;letter-spacing:2px;font-weight:300;">ELECTROTECHNIQUE</span></a>  <div class="nav-r">
+    <a href="index.html" class="logo" style="font-size:0.9rem;font-weight:800;letter-spacing:1px;line-height:1.2;">DZSWISS ELEC<br><span style="font-size:0.45rem;letter-spacing:1px;font-weight:600;color:#94a3b8;">Précision suisse, passion algérienne</span></a>  <div class="nav-r">
     <span class="nav-u" id="user"></span>
     <button class="btn-out" id="out">Deconnexion</button>
   </div>
@@ -77,68 +77,9 @@ footer{text-align:center;padding:20px;color:#334155;font-size:.75rem;border-top:
   </div>
   <div class="grid" id="grid"></div>
 </div>
-<footer>&copy; 2026 Electro DZ - <a href="privacy.html" style="color:#475569;text-decoration:none">Confidentialite</a></footer>
+<footer>&copy; 2026 DZSWISS ELEC - <a href="privacy.html" style="color:#475569;text-decoration:none">Confidentialite</a></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const SB_URL='https://wxiqqcnzcxswdqzubxyt.supabase.co';
-const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4aXFxY256Y3hzd2RxenVieHl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ0NTQ5NzcsImV4cCI6MjA2MDAzMDk3N30.YFkBDCmHIcTmjRJrYWuMbbfQgQkRIFa6PoLtl7Ml1UE';
-const sb=supabase.createClient(SB_URL,SB_KEY);
-const msg=(t,c)=>{const e=document.getElementById('msg');e.innerHTML=t;e.className='msg '+c;e.style.display='block';};
-const icons={'video/mp4':'&#127916;','application/pdf':'&#128196;'};
-  if(!session){location.href='login.html';return;}
-  const name=(session.user.user_metadata?.full_name||session.user.email).split('@')[0];
-  document.getElementById('name').textContent=name;
-  document.getElementById('user').textContent=session.user.email;
-  msg('Chargement...','i');
-  const{data,error}=await sb.storage.from('media').list();
-  if(error){msg('Erreur de chargement: '+error.message,'e');return;}
-  if(!data||data.length===0){msg('Aucun fichier disponible pour le moment.','i');return;}
-  files=data.filter(f=>f.name!=='.emptyFolderPlaceholder');
-  if(files.length===0){msg('Aucun fichier disponible.','i');return;}
-  renderFiles(files);
-  document.getElementById('vid').textContent=files.filter(f=>f.metadata?.mimetype?.includes('video')).length;
-  document.getElementById('doc').textContent=files.filter(f=>f.metadata?.mimetype?.includes('pdf')).length;
-  document.getElementById('tot').textContent=files.length;
-  document.getElementById('msg').style.display='none';
-});
-function renderFiles(list){
-  const g=document.getElementById('grid');
-  g.innerHTML=list.map(f=>{
-    const type=f.metadata?.mimetype||'';
-    const icon=icons[type]||'&#128462;';
-    const size=((f.metadata?.size||0)/1024/1024).toFixed(1)+'MB';
-    return `<div class="file">
-      <div class="file-top">
-        <span class="file-i">${icon}</span>
-        <div class="file-info">
-          <div class="file-name">${f.name}</div>
-          <div class="file-meta">${size}</div>
-        </div>
-      </div>
-      <div class="file-act">
-        <button class="file-btn" onclick="dl('${f.name}')">&#8595; Telecharger</button>
-      </div>
-    </div>`;
-  }).join('');
-}
-function dl(name){
-  sb.storage.from('media').download(name).then(({data,error})=>{
-    if(error){msg('Erreur: '+error.message,'e');return;}
-    const url=URL.createObjectURL(data);
-    const a=document.createElement('a');
-    a.href=url;a.download=name;a.click();
-    URL.revokeObjectURL(url);
-  });
-}
-document.getElementById('srch').addEventListener('input',e=>{
-  const q=e.target.value.toLowerCase();
-  const f=files.filter(x=>x.name.toLowerCase().includes(q));
-  renderFiles(f);
-});
-document.getElementById('out').addEventListener('click',async()=>{
-  await sb.auth.signOut();
-  location.href='login.html';
-});
-</script>
+<script src="js/supabase-client.js"></script>
+<script src="js/auth-dashboard.js"></script>
 </body>
 </html>

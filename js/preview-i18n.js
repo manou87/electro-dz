@@ -1,15 +1,17 @@
 (function () {
   var T = {
     fr: {
-      'meta.title': 'APERÇU — Accueil Hub | Electro DZ',
+      'meta.title': 'APERÇU — Accueil Hub | DZSWISS ELEC',
       'banner.main': 'APERÇU — Accueil amélioré',
       'banner.sub': ' · PDF, calculs, emploi, réseaux… · Pas encore publié',
-      'logo.sub': 'ELECTROTECHNIQUE',
+      'logo.sub': 'Précision suisse, passion algérienne',
       'nav.join': 'Rejoindre',
-      'hero.title': 'Electro DZ — outils pour électriciens',
-      'hero.sub': 'PDF · Calculs · Emploi · Formations · Réseaux',
-      'hero.android': 'Android',
-      'hero.apple': 'Apple',
+      'hero.title': 'DZSWISS ELEC',
+      'hero.tagline': 'Précision suisse, passion algérienne',
+      'hero.surprise': 'Bientôt, les surprises…',
+      'hero.sub': 'Du schéma au chantier : calculs fiables, normes claires — pensés pour les pros exigeants',
+      'hero.androidLabel': 'Télécharger sur Google Play',
+      'hero.appleLabel': "Télécharger sur l'App Store",
       'quick.title': 'Accès rapide',
       'quick.calc': 'Calculs',
       'quick.pdf': 'PDF',
@@ -19,6 +21,7 @@
       'quick.quote': 'Devis',
       'quick.social': 'Réseaux',
       'quick.support': 'Support',
+      'more.toggle': 'Autres rubriques',
       'spot.label': 'Les plus demandés',
       'spot.calc.tag': 'Outil pro',
       'spot.calc.title': 'Calculs électriques',
@@ -71,25 +74,27 @@
       'job.help.desc': 'FAQ et assistance technique',
       'job.help.link': "Obtenir de l'aide →",
       'pill.help': 'Aide',
-      'social.title': 'Notre communauté Electro DZ',
+      'social.title': 'Notre communauté DZSWISS ELEC',
       'social.sub': 'Suivez-nous — tutoriels, astuces chantier et actualités',
-      'social.fb': 'Page ElectroDZ',
+      'social.fb': 'Page DZSWISS ELEC',
       'compare': 'Aperçu uniquement —',
       'compare.fr': 'accueil actuel FR',
       'compare.ar': 'accueil actuel AR',
-      'footer': '© 2026 ELECTRO DZ — Aperçu hub (non déployé)',
+      'footer': '© 2026 DZSWISS ELEC — Aperçu hub (non déployé)',
       'arrow': '→'
     },
     ar: {
-      'meta.title': 'معاينة — الصفحة الرئيسية | Electro DZ',
+      'meta.title': 'معاينة — الصفحة الرئيسية | DZSWISS ELEC',
       'banner.main': 'معاينة — الصفحة الرئيسية المحسّنة',
       'banner.sub': ' · PDF، حسابات، عمل، شبكات… · غير منشور بعد',
-      'logo.sub': 'الكهرباء والتقنيات',
+      'logo.sub': 'دقة سويسرية، شغف جزائري',
       'nav.join': 'انضم إلينا',
-      'hero.title': 'Electro DZ — أدوات الكهربائيين',
-      'hero.sub': 'PDF · حسابات · عمل · تكوين · شبكات',
-      'hero.android': 'أندرويد',
-      'hero.apple': 'آبل',
+      'hero.title': 'DZSWISS ELEC',
+      'hero.tagline': 'دقة سويسرية، شغف جزائري',
+      'hero.surprise': 'قريباً… مفاجآت قادمة',
+      'hero.sub': 'من المخطط إلى الموقع: حسابات دقيقة ومعايير واضحة — لكل كهربائي محترف',
+      'hero.androidLabel': 'تنزيل من Google Play',
+      'hero.appleLabel': 'تنزيل من App Store',
       'quick.title': 'وصول سريع',
       'quick.calc': 'حسابات',
       'quick.pdf': 'PDF',
@@ -99,6 +104,7 @@
       'quick.quote': 'عروض أسعار',
       'quick.social': 'شبكات',
       'quick.support': 'دعم',
+      'more.toggle': 'أقسام أخرى',
       'spot.label': 'الأكثر طلباً',
       'spot.calc.tag': 'أداة احترافية',
       'spot.calc.title': 'حسابات كهربائية',
@@ -151,13 +157,13 @@
       'job.help.desc': 'أسئلة شائعة ومساعدة تقنية',
       'job.help.link': 'الحصول على المساعدة ←',
       'pill.help': 'مساعدة',
-      'social.title': 'مجتمعنا Electro DZ',
+      'social.title': 'مجتمعنا DZSWISS ELEC',
       'social.sub': 'تابعنا — دروس، نصائح موقع وآخر الأخبار',
-      'social.fb': 'صفحة ElectroDZ',
+      'social.fb': 'صفحة DZSWISS ELEC',
       'compare': 'معاينة فقط —',
       'compare.fr': 'الصفحة الحالية FR',
       'compare.ar': 'الصفحة الحالية AR',
-      'footer': '© 2026 ELECTRO DZ — معاينة (غير منشور)',
+      'footer': '© 2026 DZSWISS ELEC — معاينة (غير منشور)',
       'arrow': '←'
     }
   };
@@ -172,6 +178,11 @@
     document.querySelectorAll('[data-i18n]').forEach(function (el) {
       var key = el.getAttribute('data-i18n');
       if (T[lang][key] !== undefined) el.textContent = T[lang][key];
+    });
+
+    document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n-aria');
+      if (T[lang][key] !== undefined) el.setAttribute('aria-label', T[lang][key]);
     });
 
     document.querySelectorAll('.lang-btn').forEach(function (btn) {

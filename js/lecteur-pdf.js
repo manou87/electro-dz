@@ -100,7 +100,7 @@
     }
 
     const src = normalizePdfUrl(decodeURIComponent(pdfSrc));
-    document.title = (lang === "ar" ? titleAr : titleFr) + " — Electro DZ";
+    document.title = (lang === "ar" ? titleAr : titleFr) + " — DZSWISS ELEC";
 
     if (els.download) {
       els.download.href = src;

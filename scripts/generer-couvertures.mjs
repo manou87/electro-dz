@@ -78,7 +78,7 @@ function makeSvg(book, langKey) {
   <text x="${textX}" y="88" fill="#f8fafc" font-family="${font}" font-size="${isAr ? 16 : 17}" font-weight="700" text-anchor="${anchor}">
     ${lineEls}
   </text>
-  <text x="${textX}" y="200" fill="#facc15" font-family="${font}" font-size="11" font-weight="700" letter-spacing="1" text-anchor="${anchor}">ELECTRO DZ</text>
+  <text x="${textX}" y="200" fill="#facc15" font-family="${font}" font-size="11" font-weight="700" letter-spacing="1" text-anchor="${anchor}">DZSWISS ELEC</text>
   <rect x="300" y="16" width="${soon && isAr ? 72 : 84}" height="26" rx="6" fill="${soon ? "rgba(251,191,36,0.25)" : "rgba(239,68,68,0.9)"}"/>
   <text x="342" y="33" text-anchor="middle" fill="#fff" font-family="${font}" font-size="12" font-weight="800">${esc(badgeLabel)}</text>
 </svg>`;

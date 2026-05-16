@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <meta name="robots" content="noindex,nofollow"/>
-  <title>APERÇU — Accueil Hub | Electro DZ</title>
+  <title>APERÇU — Accueil Hub | DZSWISS ELEC</title>
   <style>
     :root{
       --bg:#0a0f1a;
@@ -54,52 +54,73 @@
     .btn-nav{background:var(--accent);color:var(--bg);padding:5px 11px;border-radius:6px;font-weight:700;font-size:.75rem}
 
     .wrap{max-width:1140px;margin:0 auto;padding:0 5%}
+    .launcher-page{
+      display:flex;flex-direction:column;
+      min-height:calc(100dvh - 52px);
+    }
 
     /* Hero minimal — une seule ligne, ne bloque pas l'écran */
     .hero{
-      padding:10px 0 6px;
+      padding:8px 0 4px;
       display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
     }
     .hero-text{flex:1;min-width:0}
     .hero-text h1{
-      font-size:clamp(1rem,3vw,1.25rem);font-weight:800;line-height:1.25;margin-bottom:2px;
+      font-size:clamp(1.1rem,3.2vw,1.45rem);font-weight:900;line-height:1.2;margin-bottom:4px;
+      letter-spacing:.02em;color:#fff;
     }
-    .hero-text p{
-      font-size:.78rem;color:var(--muted);line-height:1.35;
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    .hero-tagline{
+      font-size:clamp(.82rem,2.2vw,.95rem);color:var(--accent);font-weight:700;
+      line-height:1.35;margin-bottom:2px;
     }
+    .hero-surprise{
+      font-size:.76rem;color:var(--muted);font-style:italic;margin-bottom:4px;
+    }
+    .hero-text .hero-sub{
+      font-size:.74rem;color:var(--muted);line-height:1.35;
+      max-width:36rem;
+    }
+    @media(max-width:640px){
+      .hero-surprise,.hero-sub{display:none}
+    }
+    .logo small{display:block;font-size:.52rem;letter-spacing:.04em;color:var(--muted);font-weight:600;margin-top:2px;max-width:11rem;line-height:1.25}
     .hero-cta{flex-shrink:0;display:flex;gap:8px;flex-wrap:wrap}
     .btn-dl{
-      display:inline-flex;align-items:center;gap:4px;
-      background:var(--accent);color:var(--bg);
-      padding:5px 10px;border-radius:6px;font-weight:700;font-size:.7rem;
-      transition:transform .2s,box-shadow .2s;white-space:nowrap;
+      display:inline-flex;align-items:center;justify-content:center;
+      width:42px;height:42px;padding:0;border-radius:10px;
+      transition:transform .2s,box-shadow .2s,border-color .2s;
     }
+    .btn-dl .store-ico{width:22px;height:22px;display:block}
     .btn-dl:hover{transform:translateY(-1px);box-shadow:0 6px 16px var(--accent-glow)}
+    .btn-dl--play{background:var(--accent);color:#0f172a;border:1px solid var(--accent)}
     .btn-dl--apple{
       background:var(--surface);color:var(--text);
       border:1px solid var(--border);
     }
     .btn-dl--apple:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 6px 16px rgba(0,0,0,0.3)}
 
-    /* Accès rapide — grille 4×2, icônes voyantes */
+    /* Accès rapide — lanceur principal (occupe l'écran) */
     .quick-access{
-      margin:0 0 28px;padding:14px 0 8px;
+      flex:1;display:flex;flex-direction:column;
+      margin:0 0 10px;padding:10px 0 6px;
       border-top:1px solid var(--border);
       background:rgba(255,255,255,0.02);
+      min-height:0;
     }
     .quick-access h2{
-      font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;
-      color:var(--accent);margin-bottom:12px;font-weight:800;
+      font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;
+      color:var(--accent);margin-bottom:10px;font-weight:800;flex-shrink:0;
     }
     .quick-grid{
-      display:grid;
+      flex:1;display:grid;
       grid-template-columns:repeat(4,1fr);
-      gap:10px;
+      grid-template-rows:repeat(2,minmax(0,1fr));
+      gap:12px;
+      min-height:min(68vh,560px);
     }
     .quick-item{
       display:flex;flex-direction:column;align-items:center;justify-content:center;
-      gap:8px;min-height:88px;padding:12px 8px;
+      gap:10px;min-height:0;height:100%;padding:14px 10px;
       background:linear-gradient(165deg,rgba(255,255,255,0.07),rgba(255,255,255,0.02));
       border:1px solid var(--border);border-radius:12px;
       border-top:3px solid var(--quick-accent,var(--accent));
@@ -143,30 +164,51 @@
     .ico-wrap--yt{background:rgba(239,68,68,0.12);border-color:rgba(239,68,68,0.35)}
     .ico-wrap--fb .ico{stroke:#60a5fa}
     .ico-wrap--fb{background:rgba(59,130,246,0.12);border-color:rgba(59,130,246,0.35)}
-    .quick-item .ico-wrap{width:42px;height:42px;border-radius:11px}
-    .quick-item .ico{width:22px;height:22px;stroke-width:2}
+    .quick-item .ico-wrap{width:52px;height:52px;border-radius:13px}
+    .quick-item .ico{width:28px;height:28px;stroke-width:2}
     .quick-item .ico-label{
-      font-size:.72rem;font-weight:800;text-align:center;color:var(--text);
+      font-size:.84rem;font-weight:800;text-align:center;color:var(--text);
       line-height:1.2;max-width:100%;word-break:break-word;
     }
 
-    /* Mise en avant — 3 grosses tuiles */
-    .spotlight{margin-bottom:40px}
+    /* Rubriques secondaires — repliées par défaut */
+    .accueil-more{
+      margin:0 0 12px;border:1px solid var(--border);
+      border-radius:12px;background:rgba(255,255,255,0.02);
+    }
+    .accueil-more>summary{
+      cursor:pointer;list-style:none;padding:10px 14px;
+      font-size:.78rem;font-weight:800;color:var(--muted);
+      text-transform:uppercase;letter-spacing:.06em;
+    }
+    .accueil-more>summary::-webkit-details-marker{display:none}
+    .accueil-more>summary::after{
+      content:'＋';float:inline-end;color:var(--accent);font-weight:900;
+    }
+    html[dir="rtl"] .accueil-more>summary::after{float:left}
+    .accueil-more[open]>summary::after{content:'−'}
+    .accueil-more[open]>summary{
+      border-bottom:1px solid var(--border);color:var(--accent);
+    }
+    .accueil-more__inner{padding:12px 14px 6px}
+
+    /* Mise en avant — version compacte */
+    .spotlight{margin-bottom:18px}
     .spotlight-label{
-      font-size:1.15rem;font-weight:800;margin-bottom:16px;
-      display:flex;align-items:center;gap:10px;
+      font-size:.78rem;font-weight:800;margin-bottom:8px;
+      display:flex;align-items:center;gap:8px;color:var(--muted);
     }
     .spotlight-label::after{content:'';flex:1;height:1px;background:var(--border)}
     .spotlight-grid{
-      display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+      display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
     }
     .spot-card{
-      position:relative;display:block;padding:16px 14px;
-      border-radius:var(--radius);overflow:hidden;
-      border:1px solid var(--border);min-height:130px;
-      transition:transform .25s,box-shadow .25s;
+      position:relative;display:block;padding:10px 12px;
+      border-radius:10px;overflow:hidden;
+      border:1px solid var(--border);min-height:72px;
+      transition:transform .2s,box-shadow .2s;
     }
-    .spot-card:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,0.5)}
+    .spot-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.35)}
     .spot-card--calc{background:linear-gradient(145deg,rgba(250,204,21,0.18),rgba(15,23,42,0.9))}
     .spot-card--pdf{background:linear-gradient(145deg,rgba(239,68,68,0.15),rgba(15,23,42,0.9))}
     .spot-card--job{background:linear-gradient(145deg,rgba(52,211,153,0.15),rgba(15,23,42,0.9))}
@@ -175,17 +217,17 @@
       letter-spacing:.08em;padding:3px 8px;border-radius:4px;margin-bottom:10px;
       background:rgba(0,0,0,0.35);color:var(--accent);
     }
-    .spot-card h3{font-size:1rem;font-weight:800;margin-bottom:4px;color:#fff}
-    .spot-card p{font-size:.78rem;color:var(--muted);max-width:200px}
+    .spot-card h3{font-size:.82rem;font-weight:800;margin-bottom:0;color:#fff}
+    .spot-card p{display:none}
     .spot-card .spot-go{
-      position:absolute;bottom:12px;inset-inline-end:12px;
-      width:26px;height:26px;border-radius:50%;
+      position:absolute;bottom:8px;inset-inline-end:8px;
+      width:22px;height:22px;border-radius:50%;
       background:var(--accent);color:var(--bg);
       display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;
     }
     .spot-card .ico-wrap{
-      position:absolute;inset-inline-end:10px;top:50%;transform:translateY(-50%);
-      width:38px;height:38px;border-radius:9px;
+      position:absolute;inset-inline-end:8px;top:50%;transform:translateY(-50%);
+      width:30px;height:30px;border-radius:8px;
     }
     html[dir="rtl"] body{font-family:'Segoe UI','Tahoma',system-ui,sans-serif}
     html[dir="rtl"] .quick-access h2{letter-spacing:.06em}
@@ -193,24 +235,24 @@
     html[dir="rtl"] .spot-tag{letter-spacing:0}
     .spot-card .ico{width:20px;height:20px}
 
-    /* Sections thématiques */
-    .hub-block{margin-bottom:36px}
-    .hub-block-head{margin-bottom:14px}
-    .hub-block-head h2{font-size:1.05rem;font-weight:800;color:var(--accent)}
-    .hub-block-head p{font-size:.85rem;color:var(--muted)}
-    .hub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    /* Sections thématiques — compactes */
+    .hub-block{margin-bottom:14px}
+    .hub-block-head{margin-bottom:8px}
+    .hub-block-head h2{font-size:.82rem;font-weight:800;color:var(--accent)}
+    .hub-block-head p{display:none}
+    .hub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 
     .hub-card{
       position:relative;display:flex;flex-direction:column;
-      padding:14px 12px;border-radius:12px;
+      padding:10px;border-radius:10px;
       background:var(--surface);border:1px solid var(--border);
-      transition:transform .22s,border-color .22s,box-shadow .22s;
-      min-height:140px;
+      transition:transform .2s,border-color .2s,box-shadow .2s;
+      min-height:88px;
     }
     .hub-card:hover{
-      transform:translateY(-4px);
-      border-color:rgba(250,204,21,0.5);
-      box-shadow:0 12px 32px rgba(0,0,0,0.4);
+      transform:translateY(-2px);
+      border-color:rgba(250,204,21,0.45);
+      box-shadow:0 8px 20px rgba(0,0,0,0.35);
     }
     .hub-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;gap:10px}
     .hub-card .ico-wrap{width:36px;height:36px;border-radius:8px}
@@ -225,28 +267,28 @@
     .pill-app{background:rgba(96,165,250,0.2);color:#93c5fd}
     .pill-job{background:rgba(52,211,153,0.2);color:#6ee7b7}
     .pill-social{background:rgba(168,85,247,0.2);color:#d8b4fe}
-    .hub-card h3{font-size:.98rem;font-weight:800;margin-bottom:4px;color:#fff}
-    .hub-card p{font-size:.8rem;color:var(--muted);flex:1;line-height:1.4}
+    .hub-card h3{font-size:.8rem;font-weight:800;margin-bottom:0;color:#fff}
+    .hub-card p{display:none}
     .hub-card .hub-link{
-      margin-top:10px;font-size:.72rem;font-weight:800;color:var(--accent);
-      letter-spacing:.04em;
+      margin-top:6px;font-size:.65rem;font-weight:800;color:var(--accent);
+      letter-spacing:.03em;
     }
 
-    /* Réseaux — bande dédiée très visible */
+    /* Réseaux — bande légère */
     .social-band{
-      margin:32px 0;padding:20px 16px;
-      border-radius:calc(var(--radius) + 6px);
-      background:linear-gradient(135deg,rgba(250,204,21,0.08),rgba(168,85,247,0.08));
-      border:1px solid rgba(250,204,21,0.25);
+      margin:8px 0 16px;padding:12px 10px;
+      border-radius:12px;
+      background:linear-gradient(135deg,rgba(250,204,21,0.06),rgba(168,85,247,0.06));
+      border:1px solid rgba(250,204,21,0.2);
     }
-    .social-band h2{font-size:1.2rem;font-weight:900;text-align:center;margin-bottom:6px}
-    .social-band .social-sub{text-align:center;color:var(--muted);font-size:.9rem;margin-bottom:20px}
+    .social-band h2{font-size:.88rem;font-weight:800;text-align:center;margin-bottom:4px}
+    .social-band .social-sub{text-align:center;color:var(--muted);font-size:.72rem;margin-bottom:10px}
     .social-grid{
-      display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+      display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
     }
     .social-card{
       display:flex;flex-direction:column;align-items:center;text-align:center;
-      padding:14px 10px;border-radius:10px;
+      padding:10px 8px;border-radius:8px;
       background:rgba(0,0,0,0.35);border:1px solid var(--border);
       transition:transform .2s,box-shadow .2s;
     }
@@ -268,20 +310,29 @@
     .compare-note a{color:var(--accent);font-weight:700;text-decoration:underline}
 
     .footer{text-align:center;padding:28px 5% 40px;border-top:1px solid var(--border);color:var(--muted);font-size:.82rem}
+    .visitor-stats{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 14px;margin-top:10px;font-size:.78rem}
+    .visitor-stats strong{color:var(--accent);font-weight:800;font-variant-numeric:tabular-nums}
+    .visitor-sep{opacity:.45}
 
     @media(max-width:900px){
       .spotlight-grid,.hub-grid{grid-template-columns:repeat(2,1fr)}
       .social-grid{grid-template-columns:repeat(2,1fr)}
-      .quick-grid{grid-template-columns:repeat(4,1fr);gap:8px}
+      .quick-grid{grid-template-columns:repeat(4,1fr);min-height:min(62vh,480px)}
     }
     @media(max-width:520px){
-      .quick-grid{grid-template-columns:repeat(2,1fr)}
-      .quick-item{min-height:80px;padding:10px 6px}
-      .quick-item .ico-wrap{width:38px;height:38px}
+      .quick-grid{
+        grid-template-columns:repeat(2,1fr);
+        grid-template-rows:repeat(4,minmax(0,1fr));
+        min-height:min(72vh,520px);gap:10px;
+      }
+      .quick-item{padding:12px 8px}
+      .quick-item .ico-wrap{width:48px;height:48px}
+      .quick-item .ico{width:26px;height:26px}
+      .quick-item .ico-label{font-size:.8rem}
       .spotlight-grid,.hub-grid{grid-template-columns:1fr}
       .spot-card .ico-wrap{display:none}
       .hero-text p{white-space:normal}
-      .hero{flex-direction:column;align-items:flex-start;gap:8px}
+      .hero{flex-direction:column;align-items:flex-start;gap:6px}
     }
   </style>
 </head>
@@ -317,7 +368,7 @@
         <rect x="7" y="6" width="10" height="12" rx="2" stroke="#facc15" stroke-width="2" fill="none"/>
         <circle cx="10" cy="11" r="1" fill="#facc15"/><circle cx="14" cy="11" r="1" fill="#facc15"/>
       </svg>
-      <div>ELECTRO DZ<small data-i18n="logo.sub">ELECTROTECHNIQUE</small></div>
+      <div>DZSWISS ELEC<small data-i18n="logo.sub">Précision suisse, passion algérienne</small></div>
     </a>
     <div class="nav-right">
       <button type="button" class="lang-btn active" data-lang="fr" aria-label="Français">FR</button>
@@ -326,16 +377,22 @@
     </div>
   </nav>
 
-  <div class="wrap">
+  <div class="wrap launcher-page">
     <section class="hero" aria-label="Introduction">
       <div class="hero-text">
-        <h1 data-i18n="hero.title">Electro DZ — outils pour électriciens</h1>
-        <p data-i18n="hero.sub">PDF · Calculs · Emploi · Formations · Réseaux</p>
+        <h1 data-i18n="hero.title">DZSWISS ELEC</h1>
+        <p class="hero-tagline" data-i18n="hero.tagline">Précision suisse, passion algérienne</p>
+        <p class="hero-surprise" data-i18n="hero.surprise">Bientôt, les surprises…</p>
+        <p class="hero-sub" data-i18n="hero.sub">Du schéma au chantier : calculs fiables, normes claires — pensés pour les pros exigeants</p>
       </div>
       
       <div class="hero-cta">
-        <a href="https://play.google.com/store/apps/details?id=com.electrodz.app" class="btn-dl" target="_blank" rel="noopener noreferrer" data-i18n="hero.android">Android</a>
-        <a href="https://apps.apple.com/ch/app/electrodz/id6752301246?l=fr-FR" class="btn-dl btn-dl--apple" target="_blank" rel="noopener noreferrer" data-i18n="hero.apple">Apple</a>
+        <a href="https://play.google.com/store/apps/details?id=com.electrodz.app" class="btn-dl btn-dl--play" target="_blank" rel="noopener noreferrer" data-i18n-aria="hero.androidLabel" aria-label="Télécharger sur Google Play">
+          <svg class="store-ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 20.5V3.5c0-.69.49-1.21 1.17-1.21.32 0 .63.12.86.35l13.13 7.5c.72.42.72 1.46 0 1.88L5.03 20.15c-.23.23-.54.35-.86.35-.68 0-1.17-.52-1.17-1.21z"/></svg>
+        </a>
+        <a href="https://apps.apple.com/ch/app/electrodz/id6752301246?l=fr-FR" class="btn-dl btn-dl--apple" target="_blank" rel="noopener noreferrer" data-i18n-aria="hero.appleLabel" aria-label="Télécharger sur l'App Store">
+          <svg class="store-ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+        </a>
       </div>
     </section>
 
@@ -377,6 +434,9 @@
       </div>
     </section>
 
+    <details class="accueil-more">
+      <summary data-i18n="more.toggle">Autres rubriques</summary>
+      <div class="accueil-more__inner">
     <!-- 3 options phares -->
     <section class="spotlight">
       <p class="spotlight-label" data-i18n="spot.label">Les plus demandés</p>
@@ -516,9 +576,12 @@
       </div>
     </section>
 
+      </div>
+    </details>
+
     <!-- Communauté / réseaux sociaux -->
     <section class="social-band" id="communaute">
-      <h2 data-i18n="social.title">Notre communauté Electro DZ</h2>
+      <h2 data-i18n="social.title">Notre communauté DZSWISS ELEC</h2>
       <p class="social-sub" data-i18n="social.sub">Suivez-nous — tutoriels, astuces chantier et actualités</p>
       <div class="social-grid">
         <a class="social-card social-card--wa" href="https://wa.me/213555429960" target="_blank" rel="noopener noreferrer">
@@ -539,7 +602,7 @@
         <a class="social-card social-card--fb" href="https://www.facebook.com/share/1TXqM56Ncd/" target="_blank" rel="noopener noreferrer">
           <span class="ico-wrap ico-wrap--fb"><svg class="ico"><use href="#ico-fb"/></svg></span>
           <strong>Facebook</strong>
-          <span data-i18n="social.fb">Page ElectroDZ</span>
+          <span data-i18n="social.fb">Page DZSWISS ELEC</span>
         </a>
       </div>
     </section>
@@ -552,7 +615,7 @@
   </div>
 
   <footer class="footer">
-    <p data-i18n="footer">© 2026 ELECTRO DZ — Aperçu hub (non déployé)</p>
+    <p data-i18n="footer">© 2026 DZSWISS ELEC — Aperçu hub (non déployé)</p>
   </footer>
 
   <script src="js/preview-i18n.js"></script>

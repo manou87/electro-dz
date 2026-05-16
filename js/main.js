@@ -1,4 +1,4 @@
-// ElectroDZ - main.js
+// DZSWISS ELEC - main.js
 
 // ---- HAMBURGER MENU ----
 const hamburger = document.getElementById('hamburger');

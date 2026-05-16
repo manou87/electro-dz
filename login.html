@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Connexion — Electro DZ</title>
+<title>Connexion — DZSWISS ELEC</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f172a;min-height:100vh;display:flex;flex-direction:column}
@@ -43,12 +43,14 @@ footer a{color:#475569;text-decoration:none}
 </head>
 <body>
 <nav>
-  <a href="index.html" class="logo">&#9889; Electro DZ</a>
+  <a href="index.html" class="logo">&#9889; DZSWISS ELEC</a>
   <a href="register.html" class="nav-a">Creer un compte &rarr;</a>
 </nav>
 <div class="page">
   <div class="card">
-      <div class="ico" style="font-size:1.3rem;font-weight:800;letter-spacing:1px;">ELECTRO DZ CH<br><span style="font-size:0.55rem;letter-spacing:3px;font-weight:400;">ELECTROTECHNIQUE</span></div>    <h1>Connexion</h1>
+      <div class="ico" style="font-size:1.3rem;font-weight:800;letter-spacing:1px;">DZSWISS ELEC<br><span style="font-size:0.55rem;letter-spacing:1px;font-weight:600;color:#94a3b8;">Précision suisse, passion algérienne</span></div>
+    <p style="text-align:center;font-size:.8rem;color:#64748b;font-style:italic;margin:-8px 0 18px">Bientôt, les surprises…</p>
+    <h1>Connexion</h1>
     <p class="sub">Accedez a votre espace membre</p>
     <div class="msg" id="msg"></div>
     <form id="form">
@@ -71,23 +73,9 @@ footer a{color:#475569;text-decoration:none}
     <p class="foot">Pas encore de compte ? <a href="register.html">S'inscrire gratuitement</a></p>
   </div>
 </div>
-<footer>&copy; 2026 Electro DZ &mdash; <a href="privacy.html">Confidentialite</a></footer>
+<footer>&copy; 2026 DZSWISS ELEC &mdash; <a href="privacy.html">Confidentialite</a></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const SB_URL='https://wxiqqcnzcxswdqzubxyt.supabase.co';
-const SB_KEY='sb_publishable_kEfm0tZfrZ8xXCx_PyWfhg_R93sPJkR';
-const sb=supabase.createClient(SB_URL,SB_KEY);
-sb.auth.getSession().then(({data:{session}})=>{if(session)location.href='dashboard.html';});
-const msg=(t,c)=>{const e=document.getElementById('msg');e.innerHTML=t;e.className='msg '+c;e.style.display='block';};
-  const b=document.getElementById('btn');
-  b.textContent='Connexion...';b.disabled=true;
-  const {error}=await sb.auth.signInWithPassword({email:document.getElementById('email').value.trim(),password:document.getElementById('pwd').value});
-  if(error){msg('&#10060; Email ou mot de passe incorrect.','e');b.textContent='Se connecter';b.disabled=false;}
-  else location.href='dashboard.html';
-});
-document.getElementById('gBtn').addEventListener('click',()=>{
-  sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:'https://electro-dz.com/dashboard.html'}});
-});
-</script>
+<script src="js/supabase-client.js"></script>
+<script src="js/auth-login.js"></script>
 </body>
 </html>

@@ -3,14 +3,14 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-echo "=== Electro DZ — déploiement site ==="
+echo "=== DZSWISS ELEC — déploiement site ==="
 echo ""
 
 if ! git diff --quiet || ! git diff --cached --quiet; then
   echo "⚠️  Modifications non commitées. Commit automatique…"
   git add -A
   git -c user.name="${GIT_AUTHOR_NAME:-Othman}" -c user.email="${GIT_AUTHOR_EMAIL:-ot21@gmx.ch}" \
-    commit -m "Mise à jour site Electro DZ" || true
+    commit -m "Mise à jour site DZSWISS ELEC" || true
 fi
 
 if command -v gh >/dev/null 2>&1; then
