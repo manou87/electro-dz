@@ -32,7 +32,7 @@
     langBtns: document.querySelectorAll("[data-lang]"),
   };
 
-  let lang = localStorage.getItem(STORAGE_LANG) || "fr";
+  let lang = localStorage.getItem(STORAGE_LANG) || "ar";
 
   function t(key) {
     const entry = I18N[key];

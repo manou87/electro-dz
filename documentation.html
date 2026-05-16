@@ -1,29 +1,40 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Documentation technique pour électriciens : monophasé, triphasé, magnétisme, énergie et ressources.">
-  <title>Documentation — Electro DZ | electro-dz.com</title>
+  <meta name="description" content="توثيق تقني للكهربائيين: أحادي الطور، ثلاثي الطور، مغناطيسية، طاقة وموارد.">
+  <title>التوثيق التقني — Electro DZ</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="canonical" href="https://electro-dz.com/documentation.html">
+  <style>
+    .docs-lang-switch{display:flex;gap:6px;margin-inline-start:auto;align-items:center}
+    .docs-lang-switch .lang-btn{background:none;border:1px solid rgba(255,255,255,0.35);color:#cbd5e1;padding:4px 10px;border-radius:6px;cursor:pointer;font-weight:700;font-size:.85rem}
+    .docs-lang-switch .lang-btn.active{background:#facc15;color:#0f172a;border-color:#facc15}
+    .header-inner{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+  </style>
 </head>
 <body>
   <header class="site-header">
     <div class="header-inner container">
-      <a href="index-fr.html" class="logo"><span class="logo-icon">⚡</span><span class="logo-text">Electro<span class="accent">DZ</span></span></a>
+      <a href="index.html" class="logo"><span class="logo-icon">⚡</span><span class="logo-text">Electro<span class="accent">DZ</span></span></a>
+      <div class="docs-lang-switch">
+        <button type="button" class="lang-btn" data-lang="fr" aria-label="Français">FR</button>
+        <button type="button" class="lang-btn active" data-lang="ar" aria-label="العربية">AR</button>
+      </div>
       <button type="button" class="hamburger" id="navToggle" aria-label="Menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
       <nav class="main-nav" id="mainNav" aria-label="Navigation principale">
         <ul>
-          <li><a href="formations.html">Formations</a></li>
-          <li><a href="documentation.html" class="active">Documentation</a></li>
-          <li><a href="bibliotheque.html">Bibliothèque</a></li>
-          <li><a href="calcul-electrique.html">Calculs</a></li>
-          <li><a href="emploi.html">Emploi</a></li>
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="support.html" class="nav-btn">Support</a></li>
+          <li><a href="index.html" data-i18n="nav.home">الرئيسية</a></li>
+          <li><a href="formations.html" data-i18n="nav.train">التكوين</a></li>
+          <li><a href="documentation.html" class="active" data-i18n="nav.docs">التوثيق</a></li>
+          <li><a href="bibliotheque.html" data-i18n="nav.lib">مكتبة PDF</a></li>
+          <li><a href="calcul-electrique.html" data-i18n="nav.calc">الحسابات</a></li>
+          <li><a href="emploi.html" data-i18n="nav.job">العمل</a></li>
+          <li><a href="contact.html" data-i18n="nav.contact">اتصال</a></li>
+          <li><a href="support.html" class="nav-btn" data-i18n="nav.support">الدعم</a></li>
         </ul>
       </nav>
     </div>
@@ -32,18 +43,18 @@
   <main class="docs-page">
     <section class="page-hero docs-hero">
       <div class="container">
-        <p class="docs-hero-badge">4 modules · PDF, Excel &amp; GeoGebra</p>
-        <h1>Documentation électrotechnique</h1>
-        <p>Ressources classées par thème pour réviser, calculer et visualiser sur le terrain ou en formation.</p>
+        <p class="docs-hero-badge" data-i18n="hero.badge">4 وحدات · PDF و Excel و GeoGebra</p>
+        <h1 data-i18n="hero.title">التوثيق الكهربائي والتقني</h1>
+        <p data-i18n="hero.sub">موارد مصنّفة حسب الموضوع للمراجعة والحساب والتصور في الموقع أو أثناء التكوين.</p>
       </div>
     </section>
 
     <div class="docs-shell container">
-      <nav class="docs-jump" aria-label="Aller au module">
-        <a class="docs-jump-pill" href="#mono"><span class="docs-jump-icon">〰️</span> Monophasé</a>
-        <a class="docs-jump-pill" href="#tri"><span class="docs-jump-icon">🔺</span> Triphasé</a>
-        <a class="docs-jump-pill" href="#mag"><span class="docs-jump-icon">🧲</span> Magnétisme</a>
-        <a class="docs-jump-pill" href="#nrj"><span class="docs-jump-icon">⚡</span> Énergie</a>
+      <nav class="docs-jump" data-i18n-attr="aria-label:jump.label" aria-label="الانتقال إلى الوحدة">
+        <a class="docs-jump-pill" href="#mono"><span class="docs-jump-icon">〰️</span> <span data-i18n="jump.mono">أحادي الطور</span></a>
+        <a class="docs-jump-pill" href="#tri"><span class="docs-jump-icon">🔺</span> <span data-i18n="jump.tri">ثلاثي الطور</span></a>
+        <a class="docs-jump-pill" href="#mag"><span class="docs-jump-icon">🧲</span> <span data-i18n="jump.mag">المغناطيسية</span></a>
+        <a class="docs-jump-pill" href="#nrj"><span class="docs-jump-icon">⚡</span> <span data-i18n="jump.nrj">الطاقة</span></a>
       </nav>
 
       <div class="docs-modules-grid">
@@ -51,50 +62,50 @@
           <header class="doc-module-header">
             <div class="doc-module-icon-wrap doc-module-icon-wrap--mono">〰️</div>
             <div>
-              <h2>Monophasé</h2>
-              <p class="doc-module-meta">6 fiches · 5 simulations GeoGebra</p>
+              <h2 data-i18n="mono.title">أحادي الطور</h2>
+              <p class="doc-module-meta" data-i18n="mono.meta">6 بطاقات · 5 محاكاة GeoGebra</p>
             </div>
           </header>
           <div class="doc-resource-grid">
-            <a class="doc-resource doc-resource--pdf" href="https://electrons.ch/data/files/electrotech/diagrammevecteur_1770372925.pdf" target="_blank" rel="noopener noreferrer">
-              <span class="doc-resource-tag">PDF</span>
-              <span class="doc-resource-title">Phaseurs en alternatif (80 formules)</span>
-              <span class="doc-resource-arrow" aria-hidden="true">↗</span>
+            <a class="doc-resource doc-resource--pdf" data-pdf-src="https://electrons.ch/data/files/electrotech/diagrammevecteur_1770372925.pdf" data-res-key="res.mono.1" href="#">
+              <span class="doc-resource-tag" data-i18n="tag.pdf">PDF</span>
+              <span class="doc-resource-title" data-i18n="res.mono.1">الأطوار في التيار المتناوب (80 صيغة)</span>
+              <span class="doc-resource-arrow" aria-hidden="true">←</span>
             </a>
-            <a class="doc-resource doc-resource--pdf" href="https://electrons.ch/data/files/electrotech/diagrammevecteur2a5.pdf" target="_blank" rel="noopener noreferrer">
-              <span class="doc-resource-tag">PDF</span>
-              <span class="doc-resource-title">Phaseurs — version 2 par page</span>
-              <span class="doc-resource-arrow" aria-hidden="true">↗</span>
+            <a class="doc-resource doc-resource--pdf" data-pdf-src="https://electrons.ch/data/files/electrotech/diagrammevecteur2a5.pdf" data-res-key="res.mono.2" href="#">
+              <span class="doc-resource-tag" data-i18n="tag.pdf">PDF</span>
+              <span class="doc-resource-title" data-i18n="res.mono.2">الأطوار — نسخة صفحتين</span>
+              <span class="doc-resource-arrow" aria-hidden="true">←</span>
             </a>
-            <a class="doc-resource doc-resource--pdf" href="https://electrons.ch/data/files/electrotech/diagrammevecteurcomplexe3.pdf" target="_blank" rel="noopener noreferrer">
-              <span class="doc-resource-tag">PDF</span>
-              <span class="doc-resource-title">Phaseurs complexes</span>
-              <span class="doc-resource-arrow" aria-hidden="true">↗</span>
+            <a class="doc-resource doc-resource--pdf" data-pdf-src="https://electrons.ch/data/files/electrotech/diagrammevecteurcomplexe3.pdf" data-res-key="res.mono.3" href="#">
+              <span class="doc-resource-tag" data-i18n="tag.pdf">PDF</span>
+              <span class="doc-resource-title" data-i18n="res.mono.3">أطوار مركبة</span>
+              <span class="doc-resource-arrow" aria-hidden="true">←</span>
             </a>
-            <a class="doc-resource doc-resource--pdf" href="https://electrons.ch/data/files/filtredupremierordrebodes2pages.pdf" target="_blank" rel="noopener noreferrer">
-              <span class="doc-resource-tag">PDF</span>
-              <span class="doc-resource-title">Filtres passifs passe haut / bas</span>
-              <span class="doc-resource-arrow" aria-hidden="true">↗</span>
+            <a class="doc-resource doc-resource--pdf" data-pdf-src="https://electrons.ch/data/files/filtredupremierordrebodes2pages.pdf" data-res-key="res.mono.4" href="#">
+              <span class="doc-resource-tag" data-i18n="tag.pdf">PDF</span>
+              <span class="doc-resource-title" data-i18n="res.mono.4">مرشحات سلبية عالية/منخفضة التردد</span>
+              <span class="doc-resource-arrow" aria-hidden="true">←</span>
             </a>
             <a class="doc-resource doc-resource--xls" href="https://www.dropbox.com/s/916y1pa761ymztc/RLC%20série.xls?dl=0" target="_blank" rel="noopener noreferrer">
-              <span class="doc-resource-tag">Excel</span>
-              <span class="doc-resource-title">Circuit RLC série</span>
+              <span class="doc-resource-tag" data-i18n="tag.xls">Excel</span>
+              <span class="doc-resource-title" data-i18n="res.mono.5">دائرة RLC متسلسلة</span>
               <span class="doc-resource-arrow" aria-hidden="true">↗</span>
             </a>
             <a class="doc-resource doc-resource--xls" href="https://www.dropbox.com/s/9dvm7fl68feljhn/Calcul%20ex%20cos%20phi%20perte%20en%20ligne.xls?dl=0" target="_blank" rel="noopener noreferrer">
-              <span class="doc-resource-tag">Excel</span>
-              <span class="doc-resource-title">Correction cos φ</span>
+              <span class="doc-resource-tag" data-i18n="tag.xls">Excel</span>
+              <span class="doc-resource-title" data-i18n="res.mono.6">تصحيح معامل القدرة cos φ</span>
               <span class="doc-resource-arrow" aria-hidden="true">↗</span>
             </a>
           </div>
           <div class="doc-tools">
-            <p class="doc-tools-label">Applications GeoGebra</p>
+            <p class="doc-tools-label" data-i18n="tools.label">تطبيقات GeoGebra</p>
             <div class="doc-tools-chips">
-              <a class="doc-chip doc-chip--geo" href="https://www.geogebra.org/m/u2uvtqyt" target="_blank" rel="noopener noreferrer">Sinus / Cosinus</a>
-              <a class="doc-chip doc-chip--geo" href="https://www.geogebra.org/m/GBdCKqN2" target="_blank" rel="noopener noreferrer">Sinus U/I</a>
-              <a class="doc-chip doc-chip--geo" href="https://ggbm.at/prXpuWtT" target="_blank" rel="noopener noreferrer">RL série</a>
-              <a class="doc-chip doc-chip--geo" href="https://ggbm.at/XwYRqxHW" target="_blank" rel="noopener noreferrer">RC série</a>
-              <a class="doc-chip doc-chip--geo" href="https://ggbm.at/FarWYcGm" target="_blank" rel="noopener noreferrer">RLC série</a>
+              <a class="doc-chip doc-chip--geo" href="https://www.geogebra.org/m/u2uvtqyt" target="_blank" rel="noopener noreferrer" data-i18n="geo.mono.1">جيب / جيب تمام</a>
+              <a class="doc-chip doc-chip--geo" href="https://www.geogebra.org/m/GBdCKqN2" target="_blank" rel="noopener noreferrer" data-i18n="geo.mono.2">جيب U/I</a>
+              <a class="doc-chip doc-chip--geo" href="https://ggbm.at/prXpuWtT" target="_blank" rel="noopener noreferrer" data-i18n="geo.mono.3">RL متسلسل</a>
+              <a class="doc-chip doc-chip--geo" href="https://ggbm.at/XwYRqxHW" target="_blank" rel="noopener noreferrer" data-i18n="geo.mono.4">RC متسلسل</a>
+              <a class="doc-chip doc-chip--geo" href="https://ggbm.at/FarWYcGm" target="_blank" rel="noopener noreferrer" data-i18n="geo.mono.5">RLC متسلسل</a>
             </div>
           </div>
         </article>
@@ -103,27 +114,27 @@
           <header class="doc-module-header">
             <div class="doc-module-icon-wrap doc-module-icon-wrap--tri">🔺</div>
             <div>
-              <h2>Triphasé</h2>
-              <p class="doc-module-meta">2 fiches · 2 simulations</p>
+              <h2 data-i18n="tri.title">ثلاثي الطور</h2>
+              <p class="doc-module-meta" data-i18n="tri.meta">بطاقتان · محاكاتان</p>
             </div>
           </header>
           <div class="doc-resource-grid">
             <a class="doc-resource doc-resource--xls" href="https://www.dropbox.com/s/kic6t9nx6kkb7za/Calcul%20ex%20cos%20phi%20perte%20en%20ligne%20triphase.xls?dl=0" target="_blank" rel="noopener noreferrer">
-              <span class="doc-resource-tag">Excel</span>
-              <span class="doc-resource-title">Correction cos φ triphasé</span>
+              <span class="doc-resource-tag" data-i18n="tag.xls">Excel</span>
+              <span class="doc-resource-title" data-i18n="res.tri.1">تصحيح cos φ ثلاثي الطور</span>
               <span class="doc-resource-arrow" aria-hidden="true">↗</span>
             </a>
-            <a class="doc-resource doc-resource--pdf" href="https://electrons.ch/data/files/electrotech/triphasdnominationsusuelles2x.pdf" target="_blank" rel="noopener noreferrer">
-              <span class="doc-resource-tag">PDF</span>
-              <span class="doc-resource-title">Dénominations usuelles</span>
-              <span class="doc-resource-arrow" aria-hidden="true">↗</span>
+            <a class="doc-resource doc-resource--pdf" data-pdf-src="https://electrons.ch/data/files/electrotech/triphasdnominationsusuelles2x.pdf" data-res-key="res.tri.2" href="#">
+              <span class="doc-resource-tag" data-i18n="tag.pdf">PDF</span>
+              <span class="doc-resource-title" data-i18n="res.tri.2">التسميات الشائعة</span>
+              <span class="doc-resource-arrow" aria-hidden="true">←</span>
             </a>
           </div>
           <div class="doc-tools">
-            <p class="doc-tools-label">Applications GeoGebra</p>
+            <p class="doc-tools-label" data-i18n="tools.label">تطبيقات GeoGebra</p>
             <div class="doc-tools-chips">
-              <a class="doc-chip doc-chip--geo" href="https://ggbm.at/CyPYRgRy" target="_blank" rel="noopener noreferrer">Phaseurs triphasés</a>
-              <a class="doc-chip doc-chip--geo" href="https://ggbm.at/Ps43Rr3B" target="_blank" rel="noopener noreferrer">Étoile déséquilibrée</a>
+              <a class="doc-chip doc-chip--geo" href="https://ggbm.at/CyPYRgRy" target="_blank" rel="noopener noreferrer" data-i18n="geo.tri.1">أطوار ثلاثية الطور</a>
+              <a class="doc-chip doc-chip--geo" href="https://ggbm.at/Ps43Rr3B" target="_blank" rel="noopener noreferrer" data-i18n="geo.tri.2">نجمة غير متوازنة</a>
             </div>
           </div>
         </article>
@@ -132,35 +143,35 @@
           <header class="doc-module-header">
             <div class="doc-module-icon-wrap doc-module-icon-wrap--mag">🧲</div>
             <div>
-              <h2>Magnétisme</h2>
-              <p class="doc-module-meta">5 ressources</p>
+              <h2 data-i18n="mag.title">المغناطيسية</h2>
+              <p class="doc-module-meta" data-i18n="mag.meta">5 موارد</p>
             </div>
           </header>
           <div class="doc-resource-grid">
             <a class="doc-resource doc-resource--img" href="https://electrons.ch/data/files/electrotech/deuxmains.png" target="_blank" rel="noopener noreferrer">
-              <span class="doc-resource-tag">Image</span>
-              <span class="doc-resource-title">Force de Laplace / Loi de Faraday</span>
+              <span class="doc-resource-tag" data-i18n="tag.img">صورة</span>
+              <span class="doc-resource-title" data-i18n="res.mag.1">قوة لابلاس / قانون فاراداي</span>
               <span class="doc-resource-arrow" aria-hidden="true">↗</span>
             </a>
-            <a class="doc-resource doc-resource--pdf" href="https://www.dropbox.com/s/r7ja6hjdigdb6n0/Effet%20Pelliculaire.pdf?dl=0" target="_blank" rel="noopener noreferrer">
-              <span class="doc-resource-tag">PDF</span>
-              <span class="doc-resource-title">Effet pelliculaire</span>
-              <span class="doc-resource-arrow" aria-hidden="true">↗</span>
+            <a class="doc-resource doc-resource--pdf" data-pdf-src="https://www.dropbox.com/s/r7ja6hjdigdb6n0/Effet%20Pelliculaire.pdf?dl=0" data-res-key="res.mag.2" href="#">
+              <span class="doc-resource-tag" data-i18n="tag.pdf">PDF</span>
+              <span class="doc-resource-title" data-i18n="res.mag.2">التأثير السطحي</span>
+              <span class="doc-resource-arrow" aria-hidden="true">←</span>
             </a>
-            <a class="doc-resource doc-resource--pdf" href="https://www.dropbox.com/s/sn5k0yxp4q1u3pa/Comparaison%20synchrone%20asynchrone.pdf?dl=0" target="_blank" rel="noopener noreferrer">
-              <span class="doc-resource-tag">PDF</span>
-              <span class="doc-resource-title">Moteurs synchrone / asynchrone</span>
-              <span class="doc-resource-arrow" aria-hidden="true">↗</span>
+            <a class="doc-resource doc-resource--pdf" data-pdf-src="https://www.dropbox.com/s/sn5k0yxp4q1u3pa/Comparaison%20synchrone%20asynchrone.pdf?dl=0" data-res-key="res.mag.3" href="#">
+              <span class="doc-resource-tag" data-i18n="tag.pdf">PDF</span>
+              <span class="doc-resource-title" data-i18n="res.mag.3">محركات متزامنة / غير متزامنة</span>
+              <span class="doc-resource-arrow" aria-hidden="true">←</span>
             </a>
             <a class="doc-resource doc-resource--img" href="https://www.dropbox.com/s/abxdiujj2vvikj7/Courbes_aiment.tif?dl=0" target="_blank" rel="noopener noreferrer">
-              <span class="doc-resource-tag">Image</span>
-              <span class="doc-resource-title">Courbes B/H</span>
+              <span class="doc-resource-tag" data-i18n="tag.img">صورة</span>
+              <span class="doc-resource-title" data-i18n="res.mag.4">منحنيات B/H</span>
               <span class="doc-resource-arrow" aria-hidden="true">↗</span>
             </a>
-            <a class="doc-resource doc-resource--pdf" href="https://electrons.ch/data/files/electrotech/rsumdumagntisme1.pdf" target="_blank" rel="noopener noreferrer">
-              <span class="doc-resource-tag">PDF</span>
-              <span class="doc-resource-title">Grandeurs magnétiques / électriques</span>
-              <span class="doc-resource-arrow" aria-hidden="true">↗</span>
+            <a class="doc-resource doc-resource--pdf" data-pdf-src="https://electrons.ch/data/files/electrotech/rsumdumagntisme1.pdf" data-res-key="res.mag.5" href="#">
+              <span class="doc-resource-tag" data-i18n="tag.pdf">PDF</span>
+              <span class="doc-resource-title" data-i18n="res.mag.5">الكميات المغناطيسية / الكهربائية</span>
+              <span class="doc-resource-arrow" aria-hidden="true">←</span>
             </a>
           </div>
         </article>
@@ -169,19 +180,19 @@
           <header class="doc-module-header">
             <div class="doc-module-icon-wrap doc-module-icon-wrap--nrj">⚡</div>
             <div>
-              <h2>Énergie</h2>
-              <p class="doc-module-meta">2 ressources officielles</p>
+              <h2 data-i18n="nrj.title">الطاقة</h2>
+              <p class="doc-module-meta" data-i18n="nrj.meta">موردان رسميان</p>
             </div>
           </header>
           <div class="doc-resource-grid">
-            <a class="doc-resource doc-resource--pdf" href="https://electrons.ch/data/files/electrotech/diagrammeenergiesuisse24a4.pdf" target="_blank" rel="noopener noreferrer">
-              <span class="doc-resource-tag">PDF</span>
-              <span class="doc-resource-title">Diagramme énergie Suisse (corrigé)</span>
-              <span class="doc-resource-arrow" aria-hidden="true">↗</span>
+            <a class="doc-resource doc-resource--pdf" data-pdf-src="https://electrons.ch/data/files/electrotech/diagrammeenergiesuisse24a4.pdf" data-res-key="res.nrj.1" href="#">
+              <span class="doc-resource-tag" data-i18n="tag.pdf">PDF</span>
+              <span class="doc-resource-title" data-i18n="res.nrj.1">مخطط الطاقة سويسرا (مصحح)</span>
+              <span class="doc-resource-arrow" aria-hidden="true">←</span>
             </a>
             <a class="doc-resource doc-resource--web" href="https://www.bfe.admin.ch/bfe/fr/home/approvisionnement/statistiques-et-geodonnees/statistiques-de-lenergie/statistique-globale-de-l-energie.html/" target="_blank" rel="noopener noreferrer">
-              <span class="doc-resource-tag">Web</span>
-              <span class="doc-resource-title">Statistiques OFEN officielles</span>
+              <span class="doc-resource-tag" data-i18n="tag.web">ويب</span>
+              <span class="doc-resource-title" data-i18n="res.nrj.2">إحصائيات OFEN الرسمية</span>
               <span class="doc-resource-arrow" aria-hidden="true">↗</span>
             </a>
           </div>
@@ -189,7 +200,7 @@
       </div>
 
       <p class="docs-attribution">
-        Ressources techniques référencées depuis
+        <span data-i18n="attr.before">موارد تقنية من</span>
         <a href="https://electrons.ch/electrotechnique" target="_blank" rel="noopener noreferrer">Electrons.ch</a>
       </p>
     </div>
@@ -198,29 +209,29 @@
   <footer class="site-footer">
     <div class="footer-inner container">
       <div class="footer-info">
-        <a href="index-fr.html" class="logo footer-logo">⚡ ElectroDZ</a>
-        <p>L'outil numérique des électriciens algériens. 100% gratuit.</p>
+        <a href="index.html" class="logo footer-logo">⚡ ElectroDZ</a>
+        <p data-i18n="footer.tagline">الأداة الرقمية للكهربائيين الجزائريين. مجاني 100%.</p>
       </div>
       <div class="footer-nav footer-col">
-        <h4>Navigation</h4>
+        <h4 data-i18n="footer.nav">التنقل</h4>
         <ul>
-          <li><a href="formations.html">Formations</a></li>
-          <li><a href="documentation.html">Documentation</a></li>
-          <li><a href="bibliotheque.html">Bibliothèque</a></li>
-          <li><a href="calcul-electrique.html">Calculs</a></li>
+          <li><a href="formations.html" data-i18n="nav.train">التكوين</a></li>
+          <li><a href="documentation.html" data-i18n="nav.docs">التوثيق</a></li>
+          <li><a href="bibliotheque.html" data-i18n="nav.lib">مكتبة PDF</a></li>
+          <li><a href="calcul-electrique.html" data-i18n="nav.calc">الحسابات</a></li>
         </ul>
       </div>
       <div class="footer-nav footer-col">
-        <h4>Support</h4>
+        <h4 data-i18n="footer.support">الدعم</h4>
         <ul>
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="support.html">Support</a></li>
-          <li><a href="privacy.html">Confidentialité</a></li>
+          <li><a href="contact.html" data-i18n="nav.contact">اتصال</a></li>
+          <li><a href="support.html" data-i18n="nav.support">الدعم</a></li>
+          <li><a href="privacy.html" data-i18n="footer.privacy">الخصوصية</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom container">
-      <p>&copy; 2026 ElectroDZ. Tous droits réservés.</p>
+      <p data-i18n="footer.copy">© 2026 ElectroDZ. جميع الحقوق محفوظة.</p>
     </div>
   </footer>
 
@@ -235,27 +246,8 @@
           btn.setAttribute('aria-expanded', open ? 'true' : 'false');
         });
       }
-
-      document.querySelectorAll('a.doc-resource--pdf[href]').forEach(function (link) {
-        var src = link.getAttribute('href');
-        if (!src || src.indexOf('lecteur-pdf.html') === 0) return;
-        var titleEl = link.querySelector('.doc-resource-title');
-        var title = titleEl ? titleEl.textContent.trim() : 'PDF';
-        link.href =
-          'lecteur-pdf.html?src=' +
-          encodeURIComponent(src) +
-          '&titleFr=' +
-          encodeURIComponent(title) +
-          '&titleAr=' +
-          encodeURIComponent(title) +
-          '&from=' +
-          encodeURIComponent('documentation.html');
-        link.removeAttribute('target');
-        link.removeAttribute('rel');
-        var arrow = link.querySelector('.doc-resource-arrow');
-        if (arrow) arrow.textContent = '→';
-      });
     })();
   </script>
+  <script src="js/documentation-i18n.js"></script>
 </body>
 </html>

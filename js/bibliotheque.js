@@ -20,7 +20,7 @@
   if (!els.grid) return;
 
   let catalog = null;
-  let lang = localStorage.getItem(STORAGE_LANG) || "fr";
+  let lang = localStorage.getItem(STORAGE_LANG) || "ar";
   let category = "all";
   let query = "";
 
