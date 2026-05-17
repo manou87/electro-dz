@@ -1,22 +1,37 @@
-ERREUR « Invalid API key » = la clé dans js/site-config.js est fausse ou révoquée.
+ERREUR « Invalid API key » = mauvaise clé dans js/site-config.js
 
-ÉTAPES (2 minutes)
-------------------
+Supabase n’affiche plus toujours le mot « anon ».
+Utilisez l’UNE de ces clés (clé PUBLIQUE seulement) :
+
+══════════════════════════════════════════════════════════════
+OPTION A — Clé « Publishable » (nouveau nom, 2025+)
+══════════════════════════════════════════════════════════════
 1. Ouvrez :
-   https://supabase.com/dashboard/project/wxiqqcnzcxswdqzubxyt/settings/api
+   https://supabase.com/dashboard/project/wxiqqcnzcxswdqzubxyt/settings/api-keys
 
-2. Section « Project API keys »
-   Copiez la clé « anon » / « public » (longue chaîne commençant par eyJ…)
-   NE PAS copier service_role (secret).
+2. Onglet par défaut (API Keys) → section « Publishable key »
+   Format : sb_publishable_xxxxxxxx...
+   Cliquez sur Copier (icône copie).
 
-3. Dans le terminal, depuis le dossier website/ :
-   node scripts/set-anon-key.mjs COLLEZ_LA_CLE_ICI
+   OU menu Connect (en haut) → choisissez « Web » / JavaScript
+   → copiez la « Publishable key ».
 
-4. Publiez le site :
-   git add js/site-config.js
-   git commit -m "Mise à jour clé anon Supabase"
-   git push origin main
+══════════════════════════════════════════════════════════════
+OPTION B — Clé « anon » ancienne (JWT)
+══════════════════════════════════════════════════════════════
+Même page → onglet en bas :
+   « Legacy anon, service_role API keys »
+   Copiez « anon » « public » (commence par eyJhbGci...)
 
-5. Attendez 3–5 min, retestez Google sur login.html
+NE JAMAIS copier : service_role, sb_secret_, secret
 
-Alternative : remplacez à la main la ligne SUPABASE_ANON_KEY dans js/site-config.js
+══════════════════════════════════════════════════════════════
+INSTALLER LA CLÉ SUR LE SITE
+══════════════════════════════════════════════════════════════
+cd website
+node scripts/set-anon-key.mjs COLLEZ_LA_CLE_ICI
+git add js/site-config.js
+git commit -m "Clé API Supabase (publishable)"
+git push origin main
+
+Attendre 3–5 min → retester login.html → Google

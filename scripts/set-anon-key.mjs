@@ -11,7 +11,8 @@ const key = process.argv[2]?.trim();
 if (!key || key.length < 20) {
   console.error('Usage : node scripts/set-anon-key.mjs VOTRE_CLE_ANON');
   console.error('  Dashboard : https://supabase.com/dashboard/project/wxiqqcnzcxswdqzubxyt/settings/api');
-  console.error('  Copiez « anon » / « publishable » (clé publique longue commençant par eyJ…)');
+  console.error('  Publishable : sb_publishable_…  OU  Legacy : eyJhbGci… (onglet Legacy anon)');
+  console.error('  https://supabase.com/dashboard/project/wxiqqcnzcxswdqzubxyt/settings/api-keys');
   process.exit(1);
 }
 

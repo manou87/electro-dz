@@ -65,7 +65,7 @@
     if (/invalid api key/i.test(msg)) {
       return (
         'Clé API Supabase invalide (site-config.js). ' +
-        'Copiez la clé « anon » depuis le dashboard Supabase → Settings → API.'
+        'Copiez la clé « Publishable » (sb_publishable_…) ou legacy « anon » (eyJ…) : Settings → API Keys.'
       );
     }
     if (/provider is not enabled/i.test(msg)) {
