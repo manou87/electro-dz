@@ -38,8 +38,11 @@
       "tag.xls": "Excel",
       "tag.img": "Image",
       "tag.web": "Web",
-      "tools.label": "Applications GeoGebra",
-      "attr.before": "Ressources techniques référencées depuis",
+      "tools.label": "Applications GeoGebra (en ligne)",
+      "attr.before": "Ressources hébergées sur",
+      "attr.lib": "la bibliothèque du site",
+      "attr.and": " · Crédits ",
+      "attr.credit": "Electrons.ch",
       "footer.tagline": "L'outil numérique des électriciens algériens. 100% gratuit.",
       "footer.nav": "Navigation",
       "footer.support": "Support",
@@ -101,8 +104,11 @@
       "tag.xls": "Excel",
       "tag.img": "صورة",
       "tag.web": "ويب",
-      "tools.label": "تطبيقات GeoGebra",
-      "attr.before": "موارد تقنية من",
+      "tools.label": "تطبيقات GeoGebra (عبر الإنترنت)",
+      "attr.before": "موارد مستضافة على",
+      "attr.lib": "مكتبة الموقع",
+      "attr.and": " · مصدر ",
+      "attr.credit": "Electrons.ch",
       "footer.tagline": "الأداة الرقمية للكهربائيين الجزائريين. مجاني 100%.",
       "footer.nav": "التنقل",
       "footer.support": "الدعم",
@@ -139,6 +145,12 @@
     return (T[lang] && T[lang][key]) || (T.fr[key] || key);
   }
 
+  window.ElectroDzDocsI18n = {
+    t: function (lng, key) {
+      return (T[lng] && T[lng][key]) || (T.fr[key] || key);
+    },
+  };
+
   function applyLang(next) {
     lang = next === "fr" ? "fr" : "ar";
     var root = document.documentElement;
@@ -160,23 +172,12 @@
     var jumpNav = document.querySelector(".docs-jump");
     if (jumpNav) jumpNav.setAttribute("aria-label", t("jump.label"));
 
-    document.querySelectorAll("a.doc-resource--pdf[data-pdf-src]").forEach(function (link) {
-      var src = link.getAttribute("data-pdf-src");
-      if (!src) return;
-      var key = link.getAttribute("data-res-key");
-      var titleFr = (key && T.fr[key]) || "";
-      var titleAr = (key && T.ar[key]) || titleFr;
-      link.href =
-        "lecteur-pdf.html?src=" +
-        encodeURIComponent(src) +
-        "&titleFr=" +
-        encodeURIComponent(titleFr) +
-        "&titleAr=" +
-        encodeURIComponent(titleAr) +
-        "&from=" +
-        encodeURIComponent("documentation.html");
-      var arrow = link.querySelector(".doc-resource-arrow");
-      if (arrow) arrow.textContent = lang === "ar" ? "←" : "→";
+    if (window.ElectroDzDocsWire && window.ElectroDzDocsWire.refresh) {
+      window.ElectroDzDocsWire.refresh();
+    }
+
+    document.querySelectorAll("a.doc-resource--pdf[data-pdf-src] .doc-resource-arrow").forEach(function (arrow) {
+      arrow.textContent = lang === "ar" ? "←" : "→";
     });
 
     try {
