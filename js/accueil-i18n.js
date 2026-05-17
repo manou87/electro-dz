@@ -2,8 +2,7 @@
   var T = {
     fr: {
       "meta.title": "DZSWISS ELEC — Outils pour électriciens",
-      "logo.sub":
-        "Savoir-faire suisse, énergie algérienne : le duo qui fait la différence.",
+      "logo.sub": "La qualité suisse en Algérie.",
       "nav.login": "Connexion",
       "nav.join": "Rejoindre",
       "hero.title": "DZSWISS ELEC",
@@ -90,7 +89,7 @@
     },
     ar: {
       "meta.title": "DZSWISS ELEC — أدوات للكهربائيين",
-      "logo.sub": "خبرة سويسرية، طاقة جزائرية : الثنائي الذي يصنع الفرق.",
+      "logo.sub": "الجودة السويسرية في الجزائر.",
       "nav.login": "دخول",
       "nav.join": "انضم إلينا",
       "hero.title": "DZSWISS ELEC",

@@ -4,8 +4,7 @@
       'meta.title': 'APERÇU — Accueil Hub | DZSWISS ELEC',
       'banner.main': 'APERÇU — Accueil amélioré',
       'banner.sub': ' · PDF, calculs, emploi, réseaux… · Pas encore publié',
-      'logo.sub':
-        'Savoir-faire suisse, énergie algérienne : le duo qui fait la différence.',
+      'logo.sub': 'La qualité suisse en Algérie.',
       'nav.join': 'Rejoindre',
       'hero.title': 'DZSWISS ELEC',
       'hero.tagline': 'Précision suisse, passion algérienne',
@@ -90,7 +89,7 @@
       'meta.title': 'معاينة — الصفحة الرئيسية | DZSWISS ELEC',
       'banner.main': 'معاينة — الصفحة الرئيسية المحسّنة',
       'banner.sub': ' · PDF، حسابات، عمل، شبكات… · غير منشور بعد',
-      'logo.sub': 'خبرة سويسرية، طاقة جزائرية : الثنائي الذي يصنع الفرق.',
+      'logo.sub': 'الجودة السويسرية في الجزائر.',
       'nav.join': 'انضم إلينا',
       'hero.title': 'DZSWISS ELEC',
       'hero.tagline': 'دقة سويسرية، شغف جزائري',
