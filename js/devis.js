@@ -14,6 +14,9 @@
   let searchQuery = '';
   let openCategories = {};
   let catalogGrouped = null;
+  /** Saisie qty / prix avant ajout au devis (comme l'app) */
+  const tableInputs = {};
+  let catalogEventsBound = false;
 
   function getLang() {
     try {
@@ -84,6 +87,20 @@
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;');
+  }
+
+  function escAttr(s) {
+    return escHtml(s).replace(/'/g, '&#39;');
+  }
+
+  function getCategoryCount(category) {
+    const catalog = window.DEVIS_CATALOG || [];
+    const q = searchQuery.trim().toLowerCase();
+    return catalog.filter((row) => {
+      if (category && row.category !== category) return false;
+      if (q && !row.description.toLowerCase().includes(q) && !row.category.toLowerCase().includes(q)) return false;
+      return true;
+    }).length;
   }
 
   function loadList() {
@@ -272,19 +289,85 @@
       .map((cat) => ({ cat, items: byCat[cat] }));
   }
 
+  function catalogRowHtml(desc) {
+    const inp = tableInputs[desc] || {};
+    const q = inp.quantity != null && inp.quantity !== '' ? inp.quantity : '';
+    const p = inp.price != null && inp.price !== '' ? inp.price : '';
+    return `<div class="catalog-row" data-desc="${escAttr(desc)}">
+      <div class="catalog-row-desc">${escHtml(desc)}</div>
+      <input type="number" class="catalog-inp-qty" min="0" step="1" inputmode="numeric" placeholder="1" value="${escAttr(String(q))}" aria-label="${escAttr(tr('qty'))}"/>
+      <input type="number" class="catalog-inp-price" min="0" step="1" inputmode="numeric" placeholder="0" value="${escAttr(String(p))}" aria-label="${escAttr(tr('unitPrice'))}"/>
+      <button type="button" class="catalog-add-btn" title="${escAttr(tr('catalogColAdd'))}">+</button>
+    </div>`;
+  }
+
+  function bindCatalogEvents() {
+    const root = document.getElementById('catalog-root');
+    if (!root || catalogEventsBound) return;
+    catalogEventsBound = true;
+
+    root.addEventListener('input', (e) => {
+      const row = e.target.closest('.catalog-row');
+      if (!row) return;
+      const desc = row.getAttribute('data-desc');
+      if (!desc) return;
+      if (!tableInputs[desc]) tableInputs[desc] = {};
+      if (e.target.classList.contains('catalog-inp-qty')) {
+        tableInputs[desc].quantity = e.target.value;
+      }
+      if (e.target.classList.contains('catalog-inp-price')) {
+        tableInputs[desc].price = e.target.value;
+      }
+    });
+
+    root.addEventListener('click', (e) => {
+      const btn = e.target.closest('.catalog-add-btn');
+      if (!btn) return;
+      const row = btn.closest('.catalog-row');
+      if (!row) return;
+      const desc = row.getAttribute('data-desc');
+      const quantity = parseFloat(tableInputs[desc]?.quantity || '1') || 1;
+      const unitPrice = parseFloat(tableInputs[desc]?.price || '0') || 0;
+      addItem(desc, quantity, unitPrice);
+      delete tableInputs[desc];
+      renderCatalog();
+    });
+
+    root.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter') return;
+      const row = e.target.closest('.catalog-row');
+      if (!row) return;
+      if (!e.target.classList.contains('catalog-inp-qty') && !e.target.classList.contains('catalog-inp-price')) return;
+      e.preventDefault();
+      row.querySelector('.catalog-add-btn')?.click();
+    });
+  }
+
   function renderCatalog() {
     const strip = document.getElementById('cat-strip');
     const root = document.getElementById('catalog-root');
+    const meta = document.getElementById('catalog-meta');
+    const hint = document.getElementById('cat-hint');
     if (!strip || !root) return;
 
+    bindCatalogEvents();
+
     const cats = window.DEVIS_CATEGORIES || [];
+    const countLabel = tr('articlesShown');
+
     strip.innerHTML =
-      `<button type="button" class="cat-chip${selectedCategory === '' ? ' active' : ''}" data-cat="">${escHtml(tr('catAll'))}</button>` +
+      `<button type="button" class="cat-chip${selectedCategory === '' ? ' active' : ''}" data-cat="">
+        <span>${escHtml(tr('catAll'))}</span>
+        <span class="cat-chip-count">${getCategoryCount('')} ${escHtml(countLabel)}</span>
+      </button>` +
       cats
-        .map(
-          (c) =>
-            `<button type="button" class="cat-chip${selectedCategory === c ? ' active' : ''}" data-cat="${escHtml(c)}">${escHtml(catLabel(c))}</button>`
-        )
+        .map((c) => {
+          const n = getCategoryCount(c);
+          return `<button type="button" class="cat-chip${selectedCategory === c ? ' active' : ''}" data-cat="${escAttr(c)}">
+            <span>${escHtml(catLabel(c))}</span>
+            <span class="cat-chip-count">${n} ${escHtml(countLabel)}</span>
+          </button>`;
+        })
         .join('');
 
     strip.querySelectorAll('.cat-chip').forEach((chip) => {
@@ -295,38 +378,51 @@
     });
 
     catalogGrouped = buildCatalogGroups();
+    const shown = catalogGrouped.reduce((s, g) => s + g.items.length, 0);
+    if (meta) meta.textContent = `${shown} ${countLabel}`;
+    if (hint) hint.classList.toggle('hidden', selectedCategory !== '' || !!searchQuery.trim());
+
     if (!catalogGrouped.length) {
-      root.innerHTML = `<p class="empty" style="padding:16px">—</p>`;
+      root.innerHTML = `<p class="empty" style="padding:20px">—</p>`;
       return;
     }
 
-    root.innerHTML = catalogGrouped
-      .map((g) => {
-        const open = openCategories[g.cat] !== false;
-        return `<div class="cat-block${open ? ' open' : ''}" data-cat-block="${escHtml(g.cat)}">
-          <div class="cat-head"><span>${escHtml(catLabel(g.cat))}</span><span>${g.items.length}</span></div>
-          <div class="cat-body">${g.items
-            .map(
-              (desc) =>
-                `<button type="button" class="catalog-item" data-desc="${escHtml(desc)}">${escHtml(desc)}</button>`
-            )
-            .join('')}</div>
-        </div>`;
-      })
-      .join('');
+    if (selectedCategory) {
+      const rows = [];
+      catalogGrouped.forEach((g) => g.items.forEach((desc) => rows.push(catalogRowHtml(desc))));
+      root.innerHTML = rows.join('');
+    } else {
+      root.innerHTML = catalogGrouped
+        .map((g) => {
+          const open = openCategories[g.cat] === true;
+          return `<div class="cat-block${open ? ' open' : ''}" data-cat-block="${escAttr(g.cat)}">
+            <div class="cat-head" role="button" tabindex="0" aria-expanded="${open}">
+              <span class="cat-chevron" aria-hidden="true">▶</span>
+              <span class="cat-title">${escHtml(catLabel(g.cat))}</span>
+              <span class="cat-count">${g.items.length}</span>
+            </div>
+            <div class="cat-body">${g.items.map((desc) => catalogRowHtml(desc)).join('')}</div>
+          </div>`;
+        })
+        .join('');
 
-    root.querySelectorAll('.cat-head').forEach((head) => {
-      head.addEventListener('click', () => {
-        const block = head.closest('.cat-block');
-        const cat = block.getAttribute('data-cat-block');
-        const isOpen = block.classList.toggle('open');
-        openCategories[cat] = isOpen;
+      root.querySelectorAll('.cat-head').forEach((head) => {
+        const toggle = () => {
+          const block = head.closest('.cat-block');
+          const cat = block.getAttribute('data-cat-block');
+          const isOpen = block.classList.toggle('open');
+          openCategories[cat] = isOpen;
+          head.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        };
+        head.addEventListener('click', toggle);
+        head.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggle();
+          }
+        });
       });
-    });
-
-    root.querySelectorAll('.catalog-item').forEach((btn) => {
-      btn.addEventListener('click', () => addItem(btn.getAttribute('data-desc'), 1, 0));
-    });
+    }
   }
 
   function saveCurrent(silent) {
