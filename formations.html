@@ -1,1 +1,124 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="تكوين الكهربائيين: PDF وقريباً فيديوهات الجزائر — DZSWISS ELEC" />
+  <title>التكوين — DZSWISS ELEC</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/library-extra.css" />
+  <link rel="icon" href="assets/app-icon.png" type="image/png" />
+  <link rel="canonical" href="https://electro-dz.com/formations.html" />
+  <style>
+    :root{
+      --max:1100px;
+      --primary:#facc15;
+      --accent:#facc15;
+      --bg-card:rgba(255,255,255,0.05);
+      --border:rgba(255,255,255,0.1);
+      --radius:12px;
+    }
+    .docs-lang-switch{display:flex;gap:6px;margin-inline-start:auto;align-items:center}
+    .docs-lang-switch .lang-btn{background:none;border:1px solid rgba(255,255,255,0.35);color:#cbd5e1;padding:4px 10px;border-radius:6px;cursor:pointer;font-weight:700;font-size:.85rem}
+    .docs-lang-switch .lang-btn.active{background:#facc15;color:#0f172a;border-color:#facc15}
+    .header-inner{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+    .soon-hero-badge{display:inline-block;margin-bottom:.75rem;padding:.35rem .85rem;border-radius:999px;background:rgba(250,204,21,.2);color:#fde047;font-weight:700;font-size:.85rem}
+    .formations-shell{max-width:1100px;margin:0 auto;padding:0 24px 48px}
+    .formations-block{margin-top:2.5rem}
+    .formations-block h2{color:#facc15;font-size:1.35rem;margin-bottom:.35rem}
+    .formations-block .sub{color:var(--text-muted);margin-bottom:1rem}
+    .formation-soon-box{padding:1.25rem 1.5rem;border-radius:var(--radius);background:rgba(250,204,21,.08);border:1px solid rgba(250,204,21,.25);margin-bottom:1rem}
+    .cta-row{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1rem}
+    .formation-count{font-size:.9rem;color:var(--text-muted);margin-bottom:.75rem}
+    .library-empty{text-align:center;padding:2rem;color:var(--text-muted)}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner container">
+      <a href="index.html" class="logo"><img src="assets/app-icon.png" alt="" class="logo-img" width="40" height="40" decoding="async"/><span class="logo-text">DZSWISS <span class="accent">ELEC</span></span></a>
+      <div class="docs-lang-switch">
+        <button type="button" class="lang-btn" data-lang="fr" aria-label="Français">FR</button>
+        <button type="button" class="lang-btn active" data-lang="ar" aria-label="العربية">AR</button>
+      </div>
+      <button type="button" class="hamburger" id="navToggle" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="main-nav" id="mainNav" aria-label="Navigation principale">
+        <ul>
+          <li><a href="index.html" data-i18n="nav.home">الرئيسية</a></li>
+          <li><a href="formations.html" class="active" data-i18n="nav.train">التكوين</a></li>
+          <li><a href="documentation.html" data-i18n="nav.docs">التوثيق</a></li>
+          <li><a href="bibliotheque.html" data-i18n="nav.lib">مكتبة PDF</a></li>
+          <li><a href="calcul-electrique.html" data-i18n="nav.calc">الحسابات</a></li>
+          <li><a href="emploi.html" data-i18n="nav.job">العمل</a></li>
+          <li><a href="contact.html" data-i18n="nav.contact">اتصال</a></li>
+          <li><a href="support.html" data-i18n="nav.support">الدعم</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
+  <main>
+    <section class="page-hero">
+      <div class="container formations-shell" style="padding-top:0;padding-bottom:0">
+        <p class="soon-hero-badge" data-i18n="soon.badge">إعلان قريب</p>
+        <h1 data-i18n="hero.title">تكوين بالفيديو</h1>
+        <p data-i18n="hero.sub">قريباً أخبار رائعة في الجزائر — مسارات ميدانية، سلامة، أتمتة وشهادات قيد الإعداد.</p>
+      </div>
+    </section>
+
+    <div class="formations-shell">
+      <section class="formations-block" data-formation-videos-block>
+        <h2 data-i18n="section.video">فيديوهات الجزائر</h2>
+        <div class="formation-soon-box">
+          <p data-i18n="section.video.soon">قريباً أخبار رائعة في الجزائر — أول الفيديوهات ستُنشر هنا.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="https://wa.me/213555429960" target="_blank" rel="noopener noreferrer" data-i18n="cta.wa">واتساب</a>
+            <a class="btn btn-outline" href="https://www.facebook.com/share/1TXqM56Ncd/" target="_blank" rel="noopener noreferrer" data-i18n="cta.fb">فيسبوك Electro DZ</a>
+          </div>
+        </div>
+        <div class="book-grid" data-formation-videos hidden></div>
+      </section>
+
+      <section class="formations-block">
+        <h2 data-i18n="section.pdf">دعم PDF (متاح الآن)</h2>
+        <p class="sub" data-i18n="section.pdf.sub">دروس ووحدات سويسرية — تُفتح في قارئ الموقع.</p>
+        <p class="formation-count" data-formation-count></p>
+        <div class="book-grid" data-formation-books></div>
+        <p class="library-empty" data-formation-books-empty hidden data-i18n="section.empty">لا يوجد PDF تكوين حالياً.</p>
+        <p style="margin-top:1.25rem"><a href="bibliotheque.html" data-i18n="link.library">كل مكتبة PDF ←</a></p>
+      </section>
+
+      <section class="formations-block">
+        <h2 data-i18n="block.topics.title">محاور متوقعة</h2>
+        <ul class="prose" style="color:var(--text-muted);padding-inline-start:1.25rem">
+          <li data-i18n="block.topics.li1">تركيبات سكنية ومهنية</li>
+          <li data-i18n="block.topics.li2">لوحات، حمايات وتمديدات</li>
+          <li data-i18n="block.topics.li3">أتمتة وإصلاح الأعطال</li>
+          <li data-i18n="block.topics.li4">تربصات وشراكات مع مراكز التكوين</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p class="copyright" data-i18n="footer.copy">© 2026 DZSWISS ELEC — electro-dz.com</p>
+  </footer>
+  <script>
+    (function () {
+      var btn = document.getElementById("navToggle");
+      var nav = document.getElementById("mainNav");
+      if (btn && nav) {
+        btn.addEventListener("click", function () {
+          var open = nav.classList.toggle("open");
+          btn.classList.toggle("open", open);
+          btn.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+      }
+    })();
+  </script>
+  <script src="js/formations-i18n.js" defer></script>
+  <script src="js/formations.js" defer></script>
+</body>
+</html>
