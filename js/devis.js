@@ -164,7 +164,7 @@
         const img = new Image();
         img.onerror = () => reject(new Error('img'));
         img.onload = () => {
-          const size = 160;
+          const size = 224;
           const canvas = document.createElement('canvas');
           canvas.width = size;
           canvas.height = size;
@@ -196,9 +196,18 @@
     }
   }
 
-  function signatureLogoPrintHtml(co) {
-    if (!co.showLogoOnDevis || !co.logoDataUrl) return '';
-    return `<img src="${co.logoDataUrl}" class="print-signature-logo" alt=""/>`;
+  function installerSignaturePrintHtml(co) {
+    const label = escHtml(tr('printSigInstaller'));
+    if (co.showLogoOnDevis && co.logoDataUrl) {
+      return `<div class="print-signature-installer">
+<div class="print-signature-row">
+<img src="${co.logoDataUrl}" class="print-signature-logo" alt=""/>
+<div class="print-signature-line-inline"></div>
+</div>
+<div class="print-signature-label">${label}</div>
+</div>`;
+    }
+    return `<div class="print-signature-line"></div><div class="print-signature-label">${label}</div>`;
   }
 
   function showView(name) {
@@ -559,10 +568,11 @@ body{font-family:Segoe UI,Arial,sans-serif;padding:20px;color:#000;background:#f
 .print-totals-table td{padding:12px;font-size:18px;font-weight:700}
 .print-signatures-container{display:flex;justify-content:space-between;margin-top:60px;gap:40px}
 .print-signature-column{flex:1;text-align:center}
-.print-signature-with-logo{display:flex;align-items:flex-end;justify-content:center;gap:12px}
-.print-signature-block{flex:1;min-width:0;max-width:220px}
-.print-signature-logo{width:80px;height:80px;border-radius:50%;object-fit:cover;flex-shrink:0}
-.print-signature-line{border-top:1px solid #000;height:60px;margin-bottom:8px}
+.print-signature-installer{display:flex;flex-direction:column;align-items:center;width:100%}
+.print-signature-row{display:flex;align-items:center;justify-content:center;gap:16px;width:100%;max-width:380px}
+.print-signature-logo{width:112px;height:112px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.print-signature-line-inline{flex:1;min-width:120px;border-top:1px solid #000;height:0;align-self:center}
+.print-signature-line{border-top:1px solid #000;height:60px;margin-bottom:8px;max-width:280px;width:100%;margin-left:auto;margin-right:auto}
 .print-signature-label{font-size:12px;font-weight:600}
 .print-footer{margin-top:40px;text-align:center;font-size:12px;border-top:1px solid #E5E7EB;padding-top:15px}
 </style></head><body>
@@ -595,10 +605,7 @@ ${d.clientAddress ? `<p><strong>${escHtml(tr('labelAddress'))}:</strong> ${escHt
 <table class="print-totals-table"><tr><td>${escHtml(tr('printTotal'))}</td><td>${formatDzd(d.total)} DZD</td></tr></table>
 <div class="print-signatures-container">
 <div class="print-signature-column">
-<div class="print-signature-with-logo">
-${signatureLogoPrintHtml(co)}
-<div class="print-signature-block"><div class="print-signature-line"></div><div class="print-signature-label">${escHtml(tr('printSigInstaller'))}</div></div>
-</div>
+${installerSignaturePrintHtml(co)}
 </div>
 <div class="print-signature-column"><div class="print-signature-line"></div><div class="print-signature-label">${escHtml(tr('printSigClient'))}</div></div>
 </div>
