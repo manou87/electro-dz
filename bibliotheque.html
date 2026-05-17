@@ -45,7 +45,9 @@
       <li><a href="index.html" data-i18n-fr="Accueil" data-i18n-ar="الرئيسية">الرئيسية</a></li>
       <li><a href="calcul-electrique.html" data-i18n-fr="Calculs" data-i18n-ar="الحسابات">الحسابات</a></li>
       <li><a href="bibliotheque.html" class="active" data-i18n-fr="Bibliothèque" data-i18n-ar="مكتبة PDF">مكتبة PDF</a></li>
-      <li><a href="login.html" data-i18n-fr="Connexion" data-i18n-ar="دخول">دخول</a></li>
+      <li><a href="login.html" data-nav-login data-i18n-fr="Connexion" data-i18n-ar="دخول">دخول</a></li>
+      <li hidden><a href="dashboard.html" data-nav-dashboard data-i18n-fr="Mon espace" data-i18n-ar="مساحتي">مساحتي</a></li>
+      <li hidden><a href="bibliotheque.html?favorites=1" data-nav-favorites data-i18n-fr="Mes favoris" data-i18n-ar="مفضلتي">مفضلتي</a></li>
     </ul>
     <div class="nav-right">
       <button type="button" class="lang-btn" data-lang-fr>FR</button>
@@ -86,8 +88,12 @@
     <p>© 2026 DZSWISS ELEC</p>
   </footer>
 
+  <script src="js/site-config.js"></script>
+  <script src="js/oauth-return.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-client.js"></script>
+  <script src="js/pdf-stats.js"></script>
+  <script src="js/user-favorites.js"></script>
   <script src="js/visitor-counter.js"></script>
   <script src="js/bibliotheque.js" defer></script>
 </body>

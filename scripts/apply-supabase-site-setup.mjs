@@ -157,6 +157,7 @@ async function main() {
   console.log('DZSWISS ELEC — réglages Supabase SITE WEB\n');
 
   await runSqlFile('visitor-stats.sql');
+  await runSqlFile('pdf-stats-and-favorites.sql');
   await runSqlFile('site-setup.sql');
   await patchAuthConfig();
   await syncAnonKeyToSiteConfig();

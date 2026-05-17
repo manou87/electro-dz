@@ -23,6 +23,10 @@
   let lang = localStorage.getItem(STORAGE_LANG) || "ar";
   let category = "all";
   let query = "";
+  let favoritesOnly = new URLSearchParams(location.search).get("favorites") === "1";
+  let favoriteIds = new Set();
+  let pdfStatsMap = {};
+  let sessionLoggedIn = false;
 
   const COVER_COLORS = {
     normes: "#1e40af",
@@ -56,6 +60,7 @@
   function pdfViewerHref(book) {
     const q = new URLSearchParams();
     q.set("src", book.pdfUrl);
+    q.set("id", book.id || "");
     q.set("titleFr", book.titleFr || "");
     q.set("titleAr", book.titleAr || book.titleFr || "");
     return "lecteur-pdf.html?" + q.toString();
@@ -129,9 +134,20 @@
     if (!catalog) return [];
     return catalog.books.filter(function (book) {
       if (filterFeatured && !book.featured) return false;
+      if (favoritesOnly && !favoriteIds.has(book.id)) return false;
       if (category !== "all" && book.category !== category) return false;
       return matchesSearch(book);
     });
+  }
+
+  function formatStat(n) {
+    const v = Number(n);
+    if (!Number.isFinite(v) || v <= 0) return "0";
+    try {
+      return new Intl.NumberFormat(lang === "ar" ? "ar-DZ" : "fr-CH").format(v);
+    } catch (_e) {
+      return String(v);
+    }
   }
 
   function categoryLabel(key) {
@@ -244,8 +260,32 @@
       body.appendChild(pMeta);
     }
 
+    const stats = pdfStatsMap[book.id] || { views: 0, downloads: 0 };
+    const pStats = document.createElement("p");
+    pStats.className = "book-stats";
+    pStats.textContent =
+      "👁 " + formatStat(stats.views) + " · ↓ " + formatStat(stats.downloads);
+    body.appendChild(pStats);
+
     const actions = document.createElement("div");
     actions.className = "book-actions";
+
+    const favBtn = document.createElement("button");
+    favBtn.type = "button";
+    favBtn.className =
+      "btn-fav" + (favoriteIds.has(book.id) ? " btn-fav--on" : "");
+    favBtn.setAttribute(
+      "aria-label",
+      t("Ajouter aux favoris", "إضافة إلى المفضلة")
+    );
+    favBtn.textContent = favoriteIds.has(book.id) ? "★" : "☆";
+    favBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleFavoriteUi(book, favBtn);
+    });
+    actions.appendChild(favBtn);
+
     if (hasPdf) {
       const read = document.createElement("a");
       read.className = "btn btn-primary btn-sm";
@@ -290,9 +330,82 @@
     }
 
     makeFilter("all", t("Toutes", "الكل"));
+    if (sessionLoggedIn) {
+      const favLabel = t("★ Mes favoris", "★ مفضلتي");
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className =
+        "book-filter" + (favoritesOnly ? " book-filter--active" : "");
+      btn.textContent = favLabel;
+      btn.addEventListener("click", function () {
+        favoritesOnly = !favoritesOnly;
+        const u = new URL(location.href);
+        if (favoritesOnly) u.searchParams.set("favorites", "1");
+        else u.searchParams.delete("favorites");
+        history.replaceState({}, "", u.pathname + u.search);
+        render();
+      });
+      els.filters.appendChild(btn);
+    }
     Object.keys(catalog.categories).forEach(function (key) {
       makeFilter(key, categoryIcon(key) + " " + categoryLabel(key));
     });
+  }
+
+  function toggleFavoriteUi(book, btn) {
+    if (!window.ElectroDzFavorites) return;
+    window.ElectroDzFavorites.toggleFavorite(book)
+      .then(function (res) {
+        if (res.needLogin) {
+          if (
+            confirm(
+              t(
+                "Connectez-vous (e-mail ou Google) pour enregistrer vos favoris.",
+                "سجّل الدخول (بريد أو Google) لحفظ المفضلة."
+              )
+            )
+          ) {
+            location.href = window.ElectroDzFavorites.loginUrl();
+          }
+          return;
+        }
+        if (!res.ok) return;
+        if (res.favorited) favoriteIds.add(book.id);
+        else favoriteIds.delete(book.id);
+        btn.textContent = res.favorited ? "★" : "☆";
+        btn.classList.toggle("btn-fav--on", res.favorited);
+        if (favoritesOnly) render();
+      })
+      .catch(function () {
+        alert(t("Impossible d'enregistrer le favori.", "تعذر حفظ المفضلة."));
+      });
+  }
+
+  async function loadSideData() {
+    if (window.ElectroDzPdfStats?.fetchAllBookStats) {
+      try {
+        pdfStatsMap = await window.ElectroDzPdfStats.fetchAllBookStats();
+      } catch (_) {
+        pdfStatsMap = {};
+      }
+    }
+    if (window.ElectroDzFavorites?.listFavorites) {
+      try {
+        const fav = await window.ElectroDzFavorites.listFavorites();
+        sessionLoggedIn = fav.loggedIn;
+        favoriteIds = fav.ids;
+        const navFav = document.querySelector("[data-nav-favorites]");
+        const navDash = document.querySelector("[data-nav-dashboard]");
+        const navLogin = document.querySelector("[data-nav-login]");
+        if (fav.loggedIn) {
+          if (navLogin) navLogin.hidden = true;
+          if (navDash) navDash.hidden = false;
+          if (navFav) navFav.hidden = false;
+        }
+      } catch (_) {
+        sessionLoggedIn = false;
+      }
+    }
   }
 
   function render() {
@@ -301,7 +414,8 @@
 
     const all = getBooks(false);
     const featured = getBooks(true);
-    const showFeatured = featured.length > 0 && category === "all" && !query.trim();
+    const showFeatured =
+      featured.length > 0 && category === "all" && !query.trim() && !favoritesOnly;
 
     if (els.featured) els.featured.hidden = !showFeatured;
     if (showFeatured && els.featuredGrid) renderGrid(els.featuredGrid, featured);
@@ -326,6 +440,9 @@
             "آخر تحديث: " + data.updated
           );
         }
+        return loadSideData();
+      })
+      .then(function () {
         render();
       })
       .catch(function () {

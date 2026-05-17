@@ -7,6 +7,7 @@
   const params = new URLSearchParams(window.location.search);
   const fromPage = params.get("from") || "bibliotheque.html";
   const pdfSrc = params.get("src") || "";
+  const bookId = params.get("id") || "";
   const titleFr = params.get("titleFr") || params.get("title") || "PDF";
   const titleAr = params.get("titleAr") || titleFr;
 
@@ -44,6 +45,7 @@
     pageInput: document.getElementById("page-input"),
     btnPrev: document.getElementById("btn-prev"),
     btnNext: document.getElementById("btn-next"),
+    btnFavorite: document.getElementById("btn-favorite"),
     langBtns: document.querySelectorAll("[data-lang]"),
   };
 
@@ -294,6 +296,9 @@
         showReader();
         applyI18n();
         if (totalPages <= 1 && els.btnNext) els.btnNext.disabled = true;
+        if (bookId && window.ElectroDzPdfStats) {
+          window.ElectroDzPdfStats.trackView(bookId);
+        }
       })
       .catch(function () {
         if (els.openFallback) els.openFallback.href = src;
@@ -302,9 +307,59 @@
       });
   }
 
+  function setupFavorite() {
+    if (!els.btnFavorite) return;
+    if (!bookId) {
+      els.btnFavorite.hidden = true;
+      return;
+    }
+    const book = {
+      id: bookId,
+      titleFr: titleFr,
+      titleAr: titleAr,
+      pdfUrl: pdfSrc,
+    };
+    function refreshStar(on) {
+      els.btnFavorite.textContent = on ? "★" : "☆";
+      els.btnFavorite.classList.toggle("btn-fav--on", !!on);
+    }
+    if (window.ElectroDzFavorites) {
+      window.ElectroDzFavorites.isFavorite(bookId)
+        .then(refreshStar)
+        .catch(function () {});
+    }
+    els.btnFavorite.addEventListener("click", function () {
+      if (!window.ElectroDzFavorites) return;
+      window.ElectroDzFavorites.toggleFavorite(book).then(function (res) {
+        if (res.needLogin) {
+          if (
+            confirm(
+              lang === "ar"
+                ? "سجّل الدخول لحفظ المفضلة."
+                : "Connectez-vous (e-mail ou Google) pour enregistrer ce PDF."
+            )
+          ) {
+            location.href = window.ElectroDzFavorites.loginUrl();
+          }
+          return;
+        }
+        if (res.ok) refreshStar(res.favorited);
+      });
+    });
+  }
+
   function init() {
     setBackLinks();
     applyI18n();
+    setupFavorite();
+
+    if (els.download && bookId) {
+      els.download.addEventListener("click", function () {
+        if (window.ElectroDzPdfStats) {
+          window.ElectroDzPdfStats.trackDownload(bookId);
+        }
+      });
+    }
 
     if (!pdfSrc) {
       showError();

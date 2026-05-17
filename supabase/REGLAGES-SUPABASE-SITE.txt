@@ -26,8 +26,9 @@ AUTOMATIQUE (recommandé)
 ÉTAPE 1 — SQL (manuel si pas de script)
 --------------------------------------------------------------------------------
   SQL Editor → coller et exécuter :
-    • supabase/visitor-stats.sql  (compteur visiteurs)
-    • supabase/site-setup.sql     (bucket media + politiques)
+    • supabase/visitor-stats.sql         (compteur visiteurs)
+    • supabase/pdf-stats-and-favorites.sql (stats PDF + favoris)
+    • supabase/site-setup.sql            (bucket media + politiques)
 
 --------------------------------------------------------------------------------
 ÉTAPE 2 — URLs du site (Authentication → URL Configuration)

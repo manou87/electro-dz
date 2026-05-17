@@ -91,6 +91,9 @@
       }
 
       if (statusEl) statusEl.textContent = 'Connexion réussie, redirection…';
+      try {
+        await window.ElectroDzFavorites?.mergeLocalAfterLogin?.();
+      } catch (_) {}
       location.replace(window.ElectroDzAuth.redirectAfterAuth());
     } catch (e) {
       fail(e?.message || String(e));
