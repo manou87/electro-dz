@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Autorisation — DZSWISS ELEC</title>
+  <link rel="icon" href="../../assets/app-icon.png" type="image/png"/>
+  <link rel="stylesheet" href="../../css/site-brand.css"/>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh;display:flex;flex-direction:column}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:15px 28px;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.07)}
+    .logo{color:#facc15;font-weight:800;text-decoration:none;display:inline-flex;align-items:center;gap:10px}
+    .page{flex:1;display:flex;align-items:center;justify-content:center;padding:32px 16px}
+    .card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:32px 28px;width:100%;max-width:440px}
+    .logo-card{display:block;width:64px;height:64px;margin:0 auto 14px;border-radius:50%;object-fit:cover;border:2px solid rgba(250,204,21,.45)}
+    h1{color:#f1f5f9;font-size:1.25rem;font-weight:800;text-align:center;margin-bottom:6px}
+    .sub{color:#94a3b8;font-size:.88rem;text-align:center;margin-bottom:20px;line-height:1.5}
+    .meta{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px;margin-bottom:18px;font-size:.85rem}
+    .meta p{margin-bottom:8px}
+    .meta strong{color:#facc15}
+    .scopes{list-style:none;margin-top:8px}
+    .scopes li{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.06);color:#cbd5e1}
+    .scopes li:last-child{border:none}
+    .actions{display:flex;gap:10px;margin-top:8px}
+    .btn{flex:1;padding:12px;border:none;border-radius:10px;font-weight:800;cursor:pointer;font-size:.9rem}
+    .btn-ok{background:#facc15;color:#0f172a}
+    .btn-no{background:rgba(255,255,255,.06);color:#e2e8f0;border:1px solid rgba(255,255,255,.12)}
+    .btn:disabled{opacity:.5;cursor:not-allowed}
+    .msg{padding:12px;border-radius:9px;font-size:.85rem;margin-bottom:14px;display:none;line-height:1.5}
+    .msg.e{display:block;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.28);color:#fca5a5}
+    .msg.i{display:block;background:rgba(59,130,246,.1);border:1px solid rgba(96,165,250,.3);color:#93c5fd}
+    .preview-badge{text-align:center;font-size:.72rem;color:#64748b;margin-top:12px}
+    footer{text-align:center;padding:16px;color:#475569;font-size:.75rem}
+    footer a{color:#facc15}
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="../../index.html" class="logo">
+      <img src="../../assets/app-icon.png" alt="" class="logo-img" width="36" height="36" decoding="async"/>
+      DZSWISS ELEC
+    </a>
+  </nav>
+
+  <div class="page">
+    <div class="card" id="preview">
+      <img src="../../assets/app-icon.png" alt="" class="logo-card" width="64" height="64" decoding="async"/>
+      <h1>Connexion sécurisée</h1>
+      <p class="sub">
+        Page d’autorisation OAuth pour <strong>DZSWISS ELEC</strong> (electro-dz.com).
+        Lors d’une connexion, vous choisirez ici les accès accordés à l’application.
+      </p>
+      <div class="meta">
+        <p><strong>Application :</strong> DZSWISS ELEC</p>
+        <p><strong>Accès demandés (exemple) :</strong></p>
+        <ul class="scopes">
+          <li>Profil (nom, photo)</li>
+          <li>Adresse e-mail</li>
+        </ul>
+      </div>
+      <p class="preview-badge">Aperçu — en attente d’une demande <code>authorization_id</code></p>
+      <p class="sub" style="margin-top:14px;margin-bottom:0">
+        <a href="../../privacy.html" style="color:#facc15">Confidentialité</a>
+        · <a href="../../login.html" style="color:#facc15">Connexion membre</a>
+      </p>
+    </div>
+
+    <div class="card" id="flow" style="display:none">
+      <img src="../../assets/app-icon.png" alt="" class="logo-card" width="64" height="64" decoding="async"/>
+      <h1 id="flow-title">Autoriser l’application</h1>
+      <p class="sub" id="flow-sub">Cette application demande l’accès à votre compte DZSWISS ELEC.</p>
+      <div class="msg" id="msg"></div>
+      <div class="meta" id="details" style="display:none"></div>
+      <div class="actions" id="actions" style="display:none">
+        <button type="button" class="btn btn-no" id="btn-deny">Refuser</button>
+        <button type="button" class="btn btn-ok" id="btn-approve">Autoriser</button>
+      </div>
+      <p class="sub" id="loading">Chargement…</p>
+    </div>
+  </div>
+
+  <footer>
+    <a href="../../privacy.html">Confidentialité</a> — © DZSWISS ELEC
+  </footer>
+
+  <script src="../../js/site-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../js/supabase-client.js"></script>
+  <script src="../../js/oauth-consent.js"></script>
+</body>
+</html>

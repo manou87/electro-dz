@@ -1,0 +1,95 @@
+================================================================================
+RÉGLAGES SUPABASE — SITE WEB UNIQUEMENT (electro-dz.com)
+L'application mobile : à configurer plus tard, projet séparé ou même projet mais
+URLs / redirect différents.
+================================================================================
+
+PROJET SUPABASE
+  URL : https://wxiqqcnzcxswdqzubxyt.supabase.co
+  Dashboard : https://supabase.com/dashboard/project/wxiqqcnzcxswdqzubxyt
+
+--------------------------------------------------------------------------------
+AUTOMATIQUE (recommandé)
+--------------------------------------------------------------------------------
+  1. Créer un token : https://supabase.com/dashboard/account/tokens
+     (droits database + auth, ou « All »)
+  2. Dans le terminal :
+       cd website
+       echo "VOTRE_TOKEN" > .supabase-access-token
+       node scripts/apply-supabase-site-setup.mjs
+  3. (Optionnel Google) :
+       export GOOGLE_CLIENT_ID=...
+       export GOOGLE_CLIENT_SECRET=...
+       node scripts/apply-supabase-site-setup.mjs
+
+--------------------------------------------------------------------------------
+ÉTAPE 1 — SQL (manuel si pas de script)
+--------------------------------------------------------------------------------
+  SQL Editor → coller et exécuter :
+    • supabase/visitor-stats.sql  (compteur visiteurs)
+    • supabase/site-setup.sql     (bucket media + politiques)
+
+--------------------------------------------------------------------------------
+ÉTAPE 2 — URLs du site (Authentication → URL Configuration)
+--------------------------------------------------------------------------------
+  Site URL :
+    https://electro-dz.com
+
+  Authorization Path (OAuth Server → si activé) :
+    /oauth/consent
+  Page implémentée sur le site :
+    https://electro-dz.com/oauth/consent
+    (fichiers : oauth/consent/index.html)
+
+  Redirect URLs (ajouter toutes ces lignes) :
+    https://electro-dz.com/auth-callback.html
+    https://www.electro-dz.com/auth-callback.html
+    http://localhost:5500/auth-callback.html
+    http://127.0.0.1:5500/auth-callback.html
+
+--------------------------------------------------------------------------------
+ÉTAPE 3 — Google (OBLIGATOIRE si erreur « provider is not enabled »)
+--------------------------------------------------------------------------------
+  Lien direct :
+    https://supabase.com/dashboard/project/wxiqqcnzcxswdqzubxyt/auth/providers
+
+  1. Cliquer sur « Google »
+  2. Activer le bouton « Enable Sign in with Google » (vert / ON)
+  3. Coller Client ID et Client Secret (voir Google Cloud ci-dessous)
+  4. Enregistrer (Save)
+
+  Sans ces 3 points, le site affiche :
+    Unsupported provider: provider is not enabled
+
+  Google Cloud Console → APIs & Services → Credentials → Create OAuth client ID
+  Type : Application Web
+    Authorized redirect URIs (UNE seule ligne Supabase) :
+      https://wxiqqcnzcxswdqzubxyt.supabase.co/auth/v1/callback
+
+    Authorized JavaScript origins :
+      https://electro-dz.com
+      https://www.electro-dz.com
+      http://localhost:8765
+
+--------------------------------------------------------------------------------
+ÉTAPE 4 — Fichiers membres (Storage)
+--------------------------------------------------------------------------------
+  Créer ou vérifier le bucket : media (privé)
+  Y déposer vidéos / PDF pour le dashboard
+  Les visiteurs non connectés ne peuvent pas télécharger (policy site-setup.sql)
+
+--------------------------------------------------------------------------------
+ÉTAPE 5 — Test sur le site
+--------------------------------------------------------------------------------
+  1. https://electro-dz.com/login.html → Continuer avec Google
+  2. Retour sur auth-callback.html → dashboard.html
+  3. Barre en bas : chiffres visiteurs (pas de tiret — si SQL OK)
+
+--------------------------------------------------------------------------------
+PAGES SITE QUI UTILISENT SUPABASE
+--------------------------------------------------------------------------------
+  Auth : login.html, register.html, auth-callback.html, dashboard.html
+  Stats : toutes les pages avec visitor-counter.js (accueil, calcul, devis…)
+  Config centralisée : js/site-config.js (scope: website)
+
+================================================================================

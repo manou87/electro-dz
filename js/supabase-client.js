@@ -1,28 +1,97 @@
 /**
- * Client Supabase partagé — site web DZSWISS ELEC (login, register, dashboard).
- * Clé anon : publique côté navigateur (normal pour Supabase).
+ * Client Supabase — SITE WEB uniquement (login, Google, dashboard, compteur).
+ * Réglages dashboard : voir supabase/REGLAGES-SUPABASE-SITE.txt
  */
 (function (g) {
   'use strict';
 
-  const SUPABASE_URL = 'https://wxiqqcnzcxswdqzubxyt.supabase.co';
-  const SUPABASE_ANON_KEY =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4aXFxY256Y3hzd2RxenVieHl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ0NTQ5NzcsImV4cCI6MjA2MDAzMDk3N30.YFkBDCmHIcTmjRJrYWuMbbfQgQkRIFa6PoLtl7Ml1UE';
+  const cfg = g.ElectroDzSite || {};
+  const SUPABASE_URL = cfg.supabase?.url || 'https://wxiqqcnzcxswdqzubxyt.supabase.co';
+  const SUPABASE_ANON_KEY = cfg.supabase?.anonKey || '';
+
+  function oauthCallbackUrl() {
+    if (cfg.url?.oauthCallback) return cfg.url.oauthCallback();
+    return (cfg.resolveSiteBase?.() || 'https://electro-dz.com') + '/auth-callback.html';
+  }
+
+  const POST_AUTH_REDIRECT_KEY = 'electro_post_auth_redirect';
 
   function redirectAfterAuth() {
-    if (typeof location === 'undefined') return 'https://electro-dz.com/dashboard.html';
-    const base = location.origin + location.pathname.replace(/\/[^/]*$/, '');
-    return base + '/dashboard.html';
+    try {
+      const saved = sessionStorage.getItem(POST_AUTH_REDIRECT_KEY);
+      if (saved) {
+        sessionStorage.removeItem(POST_AUTH_REDIRECT_KEY);
+        return saved;
+      }
+    } catch (_) {}
+    if (cfg.url?.dashboard) return cfg.url.dashboard();
+    return (cfg.resolveSiteBase?.() || 'https://electro-dz.com') + '/dashboard.html';
   }
+
+  function savePostAuthRedirect(url) {
+    if (!url) return;
+    try {
+      sessionStorage.setItem(POST_AUTH_REDIRECT_KEY, url);
+    } catch (_) {}
+  }
+
+  let client;
 
   function getClient() {
     if (!g.supabase) throw new Error('SDK Supabase non chargé');
-    return g.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    if (!SUPABASE_ANON_KEY) throw new Error('Configuration site manquante (site-config.js)');
+    if (!client) {
+      client = g.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+        auth: {
+          flowType: 'pkce',
+          detectSessionInUrl: true,
+          persistSession: true,
+          autoRefreshToken: true,
+        },
+      });
+    }
+    return client;
+  }
+
+  function formatAuthError(error) {
+    const msg = error?.msg || error?.message || String(error);
+    if (/provider is not enabled/i.test(msg)) {
+      return (
+        'Google n’est pas activé dans Supabase. Ouvrez le dashboard → Authentication → ' +
+        'Providers → Google → activer + renseigner Client ID et Secret (Google Cloud).'
+      );
+    }
+    return msg;
+  }
+
+  async function signInWithGoogle() {
+    const sb = getClient();
+    const { data, error } = await sb.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: oauthCallbackUrl(),
+        queryParams: {
+          access_type: 'offline',
+          prompt: 'select_account',
+        },
+      },
+    });
+    if (error) {
+      const e = new Error(formatAuthError(error));
+      e.cause = error;
+      throw e;
+    }
+    if (data?.url) window.location.assign(data.url);
+    else throw new Error('Réponse Google vide — vérifiez la config Supabase.');
   }
 
   g.ElectroDzAuth = {
+    scope: 'website',
     url: SUPABASE_URL,
+    oauthCallbackUrl,
     redirectAfterAuth,
+    savePostAuthRedirect,
     getClient,
+    signInWithGoogle,
   };
 })(typeof window !== 'undefined' ? window : globalThis);

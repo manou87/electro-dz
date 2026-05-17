@@ -62,7 +62,16 @@
       });
   }
 
-  sb.auth.getSession().then(async ({ data: { session } }) => {
+  (async () => {
+    const code = new URLSearchParams(location.search).get('code');
+    if (code) {
+      await sb.auth.exchangeCodeForSession(code);
+      history.replaceState({}, document.title, location.pathname);
+    }
+
+    const {
+      data: { session },
+    } = await sb.auth.getSession();
     if (!session) {
       location.href = 'login.html';
       return;
@@ -103,7 +112,7 @@
     if (doc) doc.textContent = String(files.filter((f) => f.metadata?.mimetype?.includes('pdf')).length);
     if (tot) tot.textContent = String(files.length);
     if (msgEl) msgEl.style.display = 'none';
-  });
+  })();
 
   document.getElementById('srch')?.addEventListener('input', (e) => {
     const q = e.target.value.toLowerCase();

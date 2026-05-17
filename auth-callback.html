@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Connexion en cours… | DZSWISS ELEC</title>
+  <link rel="icon" href="assets/app-icon.png" type="image/png"/>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+    .box{text-align:center;max-width:360px}
+  .spinner{width:44px;height:44px;border:3px solid rgba(250,204,21,.25);border-top-color:#facc15;border-radius:50%;margin:0 auto 18px;animation:spin .8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    h1{font-size:1.1rem;font-weight:800;color:#facc15;margin-bottom:8px}
+    p{font-size:.9rem;color:#94a3b8;line-height:1.5}
+    .err{color:#fca5a5;margin-top:12px;font-size:.85rem;display:none}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="spinner" id="spin"></div>
+    <h1>Connexion Google</h1>
+    <p id="status">Finalisation de votre connexion…</p>
+    <p class="err" id="err"></p>
+  </div>
+  <script src="js/site-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/auth-callback.js"></script>
+</body>
+</html>
