@@ -23,12 +23,19 @@ AUTOMATIQUE (recommandé)
        node scripts/apply-supabase-site-setup.mjs
 
 --------------------------------------------------------------------------------
-ÉTAPE 1 — SQL (manuel si pas de script)
+ÉTAPE 1 — SQL (OBLIGATOIRE pour 👁 vues / ↓ téléchargements PDF)
 --------------------------------------------------------------------------------
-  SQL Editor → coller et exécuter :
-    • supabase/visitor-stats.sql         (compteur visiteurs)
-    • supabase/pdf-stats-and-favorites.sql (stats PDF + favoris)
-    • supabase/site-setup.sql            (bucket media + politiques)
+  Sans cette étape, les compteurs restent à 0 sur le site en ligne (table absente).
+
+  SQL Editor → coller et exécuter EN UNE FOIS :
+    • supabase/TOUT-EXECUTER-UNE-FOIS.sql   (recommandé : tout en un)
+
+  Ou fichier par fichier :
+    • supabase/visitor-stats.sql
+    • supabase/pdf-stats-and-favorites.sql   ← stats 👁 ↓ par livre
+    • supabase/site-setup.sql
+
+  Vérification : après exécution, les compteurs augmentent quand vous ouvrez un PDF.
 
 --------------------------------------------------------------------------------
 ÉTAPE 2 — URLs du site (Authentication → URL Configuration)

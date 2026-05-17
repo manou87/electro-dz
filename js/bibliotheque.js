@@ -504,7 +504,10 @@
       });
   }
 
-  async function loadSideData() {
+  async function refreshPdfStats() {
+    if (window.ElectroDzPdfStats?.invalidateAll) {
+      window.ElectroDzPdfStats.invalidateAll();
+    }
     if (window.ElectroDzPdfStats?.fetchAllBookStats) {
       try {
         pdfStatsMap = await window.ElectroDzPdfStats.fetchAllBookStats();
@@ -512,6 +515,10 @@
         pdfStatsMap = {};
       }
     }
+  }
+
+  async function loadSideData() {
+    await refreshPdfStats();
     if (window.ElectroDzFavorites?.listFavorites) {
       try {
         const fav = await window.ElectroDzFavorites.listFavorites();
@@ -595,6 +602,22 @@
 
   if (els.langFr) els.langFr.addEventListener("click", function () { setLang("fr"); });
   if (els.langAr) els.langAr.addEventListener("click", function () { setLang("ar"); });
+
+  window.addEventListener("pageshow", function (ev) {
+    if (!catalog) return;
+    if (ev.persisted || document.visibilityState === "visible") {
+      refreshPdfStats().then(function () {
+        render();
+      });
+    }
+  });
+
+  document.addEventListener("visibilitychange", function () {
+    if (!catalog || document.visibilityState !== "visible") return;
+    refreshPdfStats().then(function () {
+      render();
+    });
+  });
 
   setLang(lang);
   loadCatalog();
