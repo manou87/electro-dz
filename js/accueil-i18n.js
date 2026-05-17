@@ -2,7 +2,8 @@
   var T = {
     fr: {
       "meta.title": "DZSWISS ELEC — Outils pour électriciens",
-      "logo.sub": "Site officiel · page Facebook « Electro DZ »",
+      "logo.sub":
+        "Précision et expérience suisse, passion et courage entre mains algériennes",
       "nav.login": "Connexion",
       "nav.join": "Rejoindre",
       "hero.title": "DZSWISS ELEC",
@@ -89,7 +90,7 @@
     },
     ar: {
       "meta.title": "DZSWISS ELEC — أدوات للكهربائيين",
-      "logo.sub": "الموقع الرسمي · صفحة فيسبوك Electro DZ",
+      "logo.sub": "دقة وخبرة سويسرية، شغف وشجاعة بين أيدٍ جزائرية",
       "nav.login": "دخول",
       "nav.join": "انضم إلينا",
       "hero.title": "DZSWISS ELEC",

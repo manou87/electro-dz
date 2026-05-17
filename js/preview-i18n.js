@@ -4,7 +4,8 @@
       'meta.title': 'APERÇU — Accueil Hub | DZSWISS ELEC',
       'banner.main': 'APERÇU — Accueil amélioré',
       'banner.sub': ' · PDF, calculs, emploi, réseaux… · Pas encore publié',
-      'logo.sub': 'Site officiel · page Facebook « Electro DZ »',
+      'logo.sub':
+        'Précision et expérience suisse, passion et courage entre mains algériennes',
       'nav.join': 'Rejoindre',
       'hero.title': 'DZSWISS ELEC',
       'hero.tagline': 'Précision suisse, passion algérienne',
@@ -89,7 +90,7 @@
       'meta.title': 'معاينة — الصفحة الرئيسية | DZSWISS ELEC',
       'banner.main': 'معاينة — الصفحة الرئيسية المحسّنة',
       'banner.sub': ' · PDF، حسابات، عمل، شبكات… · غير منشور بعد',
-      'logo.sub': 'الموقع الرسمي · صفحة فيسبوك Electro DZ',
+      'logo.sub': 'دقة وخبرة سويسرية، شغف وشجاعة بين أيدٍ جزائرية',
       'nav.join': 'انضم إلينا',
       'hero.title': 'DZSWISS ELEC',
       'hero.tagline': 'دقة سويسرية، شغف جزائري',
