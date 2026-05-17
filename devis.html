@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="description" id="meta-desc" content="DZSWISS ELEC - عروض أسعار كهربائية"/>
+  <title>عروض الأسعار | DZSWISS ELEC</title>
+  <link rel="icon" href="assets/app-icon.png" type="image/png"/>
+  <link rel="stylesheet" href="css/site-brand.css"/>
+  <style>
+    :root{--primary:#facc15;--bg:#0f172a;--surface:rgba(255,255,255,0.04);--text:#e2e8f0;--muted:#94a3b8;--danger:#f87171}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:15px 5%;background:rgba(15,23,42,0.9);border-bottom:1px solid rgba(255,255,255,0.07);position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
+    .logo{color:var(--primary);text-decoration:none;display:flex;align-items:center;gap:12px}
+    .nav-links{display:flex;gap:24px;list-style:none;flex-wrap:wrap}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:0.9rem;font-weight:600}
+    .nav-links a:hover,.nav-links a.active{color:var(--primary)}
+    .hero{text-align:center;padding:40px 5% 20px;max-width:900px;margin:0 auto}
+    .hero h1{font-size:2rem;font-weight:900;color:#fff}
+    .hero p{color:var(--muted);margin-top:8px;font-size:0.95rem}
+    .container{max-width:1100px;margin:0 auto;padding:0 5% 60px}
+    .toolbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;align-items:center}
+    .btn{background:var(--primary);color:#0f172a;border:none;padding:10px 16px;border-radius:8px;font-weight:800;cursor:pointer;font-size:0.9rem}
+    .btn--ghost{background:rgba(255,255,255,0.06);color:#fff;border:1px solid rgba(255,255,255,0.12)}
+    .btn--danger{background:rgba(248,113,113,0.15);color:var(--danger);border:1px solid rgba(248,113,113,0.35)}
+    .panel{background:var(--surface);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:20px;margin-bottom:16px}
+    .panel h2{font-size:1.1rem;color:var(--primary);margin-bottom:14px;font-weight:800}
+    .devis-list{display:grid;gap:12px}
+    .devis-card{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);cursor:pointer;transition:.2s}
+    .devis-card:hover{border-color:var(--primary)}
+    .devis-card strong{color:#fff;display:block}
+    .devis-card small{color:var(--muted)}
+    .devis-card .amount{color:var(--primary);font-weight:800;white-space:nowrap}
+    .empty{text-align:center;color:var(--muted);padding:40px 20px}
+    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+    label{font-size:0.82rem;color:var(--muted);font-weight:600;display:block;margin-bottom:4px}
+    input,textarea{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);padding:10px 12px;border-radius:8px;color:#fff;font-size:1rem;outline:none;width:100%}
+    input:focus,textarea:focus{border-color:var(--primary)}
+    .items-table{width:100%;border-collapse:collapse;font-size:0.88rem}
+    .items-table th,.items-table td{padding:8px 6px;border-bottom:1px solid rgba(255,255,255,0.08);text-align:start;vertical-align:middle}
+    .items-table th{color:var(--muted);font-weight:700;font-size:0.78rem}
+    .items-table input{padding:6px 8px;font-size:0.88rem}
+    .items-table .col-qty,.items-table .col-price{width:90px}
+    .items-table .col-total{width:100px;text-align:end;color:var(--primary);font-weight:700}
+    .items-table .btn-row{background:none;border:none;color:var(--danger);cursor:pointer;font-size:1.1rem;padding:4px}
+    .totals-row{display:flex;justify-content:flex-end;align-items:center;gap:16px;margin-top:12px;padding-top:12px;border-top:1px dashed rgba(250,204,21,0.35)}
+    .totals-row strong{font-size:1.25rem;color:var(--primary)}
+    .catalog-search{margin-bottom:10px}
+    .cat-strip{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:12px;-webkit-overflow-scrolling:touch}
+    .cat-chip{flex:0 0 auto;padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:var(--muted);cursor:pointer;font-size:0.8rem;font-weight:700;white-space:nowrap}
+    .cat-chip.active{background:var(--primary);color:#0f172a;border-color:var(--primary)}
+    .cat-block{margin-bottom:10px;border:1px solid rgba(255,255,255,0.06);border-radius:10px;overflow:hidden}
+    .cat-head{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:rgba(255,255,255,0.03);cursor:pointer;font-weight:700;font-size:0.85rem}
+    .cat-body{display:none;padding:8px;max-height:220px;overflow-y:auto}
+    .cat-block.open .cat-body{display:block}
+    .catalog-item{display:block;width:100%;text-align:start;padding:8px 10px;border:none;background:transparent;color:var(--text);cursor:pointer;border-radius:6px;font-size:0.85rem}
+    .catalog-item:hover{background:rgba(250,204,21,0.1);color:var(--primary)}
+    .edit-layout{display:grid;grid-template-columns:1fr;gap:16px}
+    @media(min-width:960px){.edit-layout{grid-template-columns:1fr 340px}}
+    .lang-switcher{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;font-weight:600}
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:200;align-items:center;justify-content:center;padding:20px}
+    .modal-overlay.show{display:flex}
+    .modal{background:#1e293b;border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:24px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto}
+    .modal h3{color:var(--primary);margin-bottom:16px}
+    .modal-actions{display:flex;gap:10px;margin-top:16px;justify-content:flex-end}
+    .hidden{display:none!important}
+    @media(max-width:768px){.nav-links{display:none}.items-table{font-size:0.8rem}}
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="logo">
+      <img src="assets/app-icon.png" alt="" class="logo-img" width="44" height="44" decoding="async"/>
+      <div style="line-height:1.2">
+        <div style="font-weight:900;display:block">DZSWISS ELEC</div>
+        <small id="brand-tagline" style="display:block;font-size:0.55rem;color:#94a3b8;font-weight:600;margin-top:2px"></small>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" data-i18n="navHome"></a></li>
+      <li><a href="formations.html" data-i18n="navFormations"></a></li>
+      <li><a href="documentation.html" data-i18n="navDocs"></a></li>
+      <li><a href="calcul-electrique.html" data-i18n="navCalc"></a></li>
+      <li><a href="devis.html" class="active" data-i18n="navDevis"></a></li>
+    </ul>
+    <button class="lang-switcher" type="button" id="lang-toggle">FR</button>
+  </nav>
+
+  <header class="hero">
+    <h1 id="hero-title"></h1>
+    <p id="hero-sub"></p>
+    <p id="saved-count" style="color:var(--primary);font-weight:700;margin-top:6px;font-size:0.9rem"></p>
+  </header>
+
+  <div class="container">
+    <div id="view-list">
+      <div class="toolbar">
+        <button type="button" class="btn" id="btn-new" data-i18n="btnNew"></button>
+        <button type="button" class="btn btn--ghost" id="btn-company" data-i18n="btnCompany"></button>
+      </div>
+      <div class="panel">
+        <div id="devis-list" class="devis-list"></div>
+      </div>
+    </div>
+
+    <div id="view-edit" class="hidden">
+      <div class="toolbar">
+        <button type="button" class="btn btn--ghost" id="btn-back" data-i18n="btnBack"></button>
+        <button type="button" class="btn" id="btn-save" data-i18n="btnSave"></button>
+        <button type="button" class="btn btn--ghost" id="btn-print" data-i18n="btnPrint"></button>
+        <button type="button" class="btn btn--danger" id="btn-delete" data-i18n="btnDelete"></button>
+      </div>
+
+      <div class="edit-layout">
+        <div>
+          <div class="panel">
+            <h2 data-i18n="clientName"></h2>
+            <div class="form-grid">
+              <div>
+                <label data-i18n="clientName"></label>
+                <input id="client-name" type="text" autocomplete="name"/>
+              </div>
+              <div>
+                <label data-i18n="clientPhone"></label>
+                <input id="client-phone" type="tel" autocomplete="tel"/>
+              </div>
+              <div style="grid-column:1/-1">
+                <label data-i18n="clientAddress"></label>
+                <input id="client-address" type="text"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h2 data-i18n="itemsTitle"></h2>
+            <div style="overflow-x:auto">
+              <table class="items-table">
+                <thead>
+                  <tr>
+                    <th data-i18n="printColDesc"></th>
+                    <th class="col-qty" data-i18n="qty"></th>
+                    <th class="col-price" data-i18n="unitPrice"></th>
+                    <th class="col-total" data-i18n="lineTotal"></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="items-tbody"></tbody>
+              </table>
+            </div>
+            <button type="button" class="btn btn--ghost" id="btn-custom" style="margin-top:12px" data-i18n="addCustom"></button>
+            <div class="totals-row">
+              <span data-i18n="total"></span>
+              <strong id="edit-total">0 DZD</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2 data-i18n="catalogTitle"></h2>
+          <input class="catalog-search" id="catalog-search" type="search" data-i18n-placeholder="searchPlaceholder"/>
+          <div class="cat-strip" id="cat-strip"></div>
+          <div id="catalog-root"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer style="text-align:center;padding:40px;color:var(--muted)"><p data-i18n="footerCopy"></p></footer>
+
+  <div class="modal-overlay" id="modal-company" aria-hidden="true">
+    <div class="modal" role="dialog">
+      <h3 data-i18n="companyTitle"></h3>
+      <div class="form-grid" style="grid-template-columns:1fr">
+        <div><label data-i18n="companyName"></label><input id="co-name" type="text"/></div>
+        <div><label data-i18n="companyServices"></label><input id="co-services" type="text"/></div>
+        <div><label data-i18n="companyPhone"></label><input id="co-phone" type="tel"/></div>
+        <div><label data-i18n="companyEmail"></label><input id="co-email" type="email"/></div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn--ghost" id="co-close" data-i18n="btnClose"></button>
+        <button type="button" class="btn" id="co-save" data-i18n="btnSaveCompany"></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/site-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/devis-catalog.js"></script>
+  <script src="js/devis-i18n.js"></script>
+  <script src="js/visitor-counter.js"></script>
+  <script src="js/devis.js" defer></script>
+</body>
+</html>
