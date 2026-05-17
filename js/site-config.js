@@ -45,11 +45,39 @@
     return resolveSiteBase() + '/' + String(filename).replace(/^\//, '');
   }
 
+  /**
+   * PDF protégés (bibliothèque). Mots de passe par défaut :
+   * — FET 1–3 : DZSWISS-FET
+   * — AE professionnel : DZSWISS-AE
+   * Pour changer : SHA-256 du nouveau mot de passe (hex) dans passwordSha256.
+   */
+  const LIBRARY_PROTECTED = {
+    groups: [
+      {
+        key: 'fet',
+        bookIds: ['fet1-2014', 'fet2-2013', 'fet3-2014'],
+        passwordSha256:
+          'd5c86339a450038ca96787f78db4edbcef8f6774f0d4518998926bf55c11e9f5',
+        labelFr: 'FET 1, 2 et 3',
+        labelAr: 'FET 1 و 2 و 3',
+      },
+      {
+        key: 'ae-prof',
+        bookIds: ['ae-prof-2019'],
+        passwordSha256:
+          '071a51aa208c43df5218ec197b713668cbc859d73dd94fa78107c6ed496a7a09',
+        labelFr: 'AE professionnel',
+        labelAr: 'التكوين المهني AE',
+      },
+    ],
+  };
+
   g.ElectroDzSite = {
     scope: SCOPE,
     siteOrigin: SITE_ORIGIN,
     resolveSiteBase,
     pageUrl,
+    libraryProtected: LIBRARY_PROTECTED,
     supabase: {
       url: SUPABASE_URL,
       anonKey: SUPABASE_ANON_KEY,

@@ -68,6 +68,20 @@
     return "lecteur-pdf.html?" + q.toString();
   }
 
+  function isBookLocked(book) {
+    const lock = window.ElectroDzLibraryLock;
+    return !!(lock && book.id && lock.isProtected(book.id) && !lock.isUnlocked(book.id));
+  }
+
+  function withBookAccess(book, fn) {
+    const lock = window.ElectroDzLibraryLock;
+    if (!lock || !book.id || !lock.isProtected(book.id) || lock.isUnlocked(book.id)) {
+      fn();
+      return;
+    }
+    lock.guardAccess(book.id, fn);
+  }
+
   function resolveAssetUrl(relativePath) {
     if (!relativePath || /^https?:\/\//i.test(relativePath)) return relativePath || "";
     try {
@@ -168,11 +182,12 @@
     const title = t(book.titleFr, book.titleAr);
     const desc = t(book.descriptionFr, book.descriptionAr);
     const hasPdf = Boolean(book.pdfUrl && book.pdfUrl.trim() && book.pdfUrl !== "#");
+    const locked = hasPdf && isBookLocked(book);
     const catKey = book.category || "autres";
     const coverBg = COVER_COLORS[catKey] || COVER_COLORS.autres;
 
     const card = document.createElement("article");
-    card.className = "book-card";
+    card.className = "book-card" + (locked ? " book-card--locked" : "");
 
     const inner = document.createElement("div");
     inner.className = "book-card-inner";
@@ -215,7 +230,9 @@
         coverDiv.setAttribute("tabindex", "0");
         coverDiv.setAttribute("aria-label", t("Lire le PDF", "قراءة PDF") + " — " + title);
         function openReader() {
-          window.location.href = pdfViewerHref(book);
+          withBookAccess(book, function () {
+            window.location.href = pdfViewerHref(book);
+          });
         }
         coverDiv.addEventListener("click", openReader);
         coverDiv.addEventListener("keydown", function (e) {
@@ -249,6 +266,13 @@
     catSpan.className = "book-category";
     catSpan.textContent = categoryLabel(catKey);
     body.appendChild(catSpan);
+
+    if (locked) {
+      const lockBadge = document.createElement("span");
+      lockBadge.className = "book-lock-badge";
+      lockBadge.textContent = t("🔒 Accès protégé", "🔒 وصول محمي");
+      body.appendChild(lockBadge);
+    }
 
     const h3 = document.createElement("h3");
     h3.className = "book-title";
@@ -300,15 +324,40 @@
       const read = document.createElement("a");
       read.className = "btn btn-primary btn-sm";
       read.href = pdfViewerHref(book);
-      read.textContent = t("Lire le PDF", "قراءة PDF");
+      read.textContent = locked
+        ? t("Mot de passe", "كلمة المرور")
+        : t("Lire le PDF", "قراءة PDF");
+      read.addEventListener("click", function (e) {
+        if (!isBookLocked(book)) return;
+        e.preventDefault();
+        withBookAccess(book, function () {
+          window.location.href = pdfViewerHref(book);
+        });
+      });
       actions.appendChild(read);
 
       const dl = document.createElement("a");
       dl.className = "btn btn-download btn-sm";
-      dl.href = resolveAssetUrl(book.pdfUrl);
-      dl.setAttribute("download", "");
+      dl.href = locked ? "#" : resolveAssetUrl(book.pdfUrl);
+      if (!locked) dl.setAttribute("download", "");
       dl.textContent = t("Télécharger PDF", "تنزيل PDF");
-      dl.addEventListener("click", function () {
+      dl.addEventListener("click", function (e) {
+        if (isBookLocked(book)) {
+          e.preventDefault();
+          withBookAccess(book, function () {
+            const a = document.createElement("a");
+            a.href = resolveAssetUrl(book.pdfUrl);
+            a.setAttribute("download", "");
+            a.rel = "noopener";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            if (book.id && window.ElectroDzPdfStats) {
+              window.ElectroDzPdfStats.trackDownload(book.id);
+            }
+          });
+          return;
+        }
         if (book.id && window.ElectroDzPdfStats) {
           window.ElectroDzPdfStats.trackDownload(book.id);
         }

@@ -367,6 +367,34 @@
     }
 
     const src = normalizePdfUrl(decodeURIComponent(pdfSrc));
+    const lock = window.ElectroDzLibraryLock;
+    if (
+      bookId &&
+      lock &&
+      lock.isProtected(bookId) &&
+      !lock.isUnlocked(bookId)
+    ) {
+      if (els.download) els.download.hidden = true;
+      if (els.openFallback) els.openFallback.hidden = true;
+      showLoading(lang === "ar" ? "وصول محمي…" : "Accès protégé…");
+      lock.promptUnlock(bookId).then(function (ok) {
+        if (!ok) {
+          showError();
+          if (els.error) {
+            els.error.textContent =
+              lang === "ar"
+                ? "هذا المستند محمي بكلمة مرور. ارجع إلى المكتبة وأدخل كلمة المرور."
+                : "Ce document est protégé par mot de passe. Retournez à la bibliothèque pour le déverrouiller.";
+          }
+          return;
+        }
+        if (els.download) els.download.hidden = false;
+        if (els.openFallback) els.openFallback.hidden = false;
+        initPdf(src);
+      });
+      return;
+    }
+
     initPdf(src);
   }
 
