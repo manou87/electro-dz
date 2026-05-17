@@ -130,6 +130,30 @@ const MANIFEST = [
     lang: ["ar"], featured: true },
 ];
 
+for (let i = 1; i <= 8; i++) {
+  MANIFEST.push({
+    id: `control-oibt-${i}`,
+    collection: "suisse",
+    category: "normes",
+    src: path.join(ASSETS, `Controle alger /control${i}.pdf`),
+    titleFr: `OIBT — document contrôle ${i}`,
+    titleAr: `OIBT — وثيقة فحص ${i}`,
+    descriptionFr: `Fiche de contrôle / mesure OIBT (série control${i}).`,
+    descriptionAr: `ورقة فحص / قياس OIBT (control${i}).`,
+    lang: ["fr"],
+  });
+}
+
+const EXTRA_AR = [
+  { id: "livre-arabe-book2", collection: "arabe", category: "installation", src: path.join(ASSETS, "livre arabe/book2.pdf"),
+    titleFr: "Livre arabe — électrotechnique (2)", titleAr: "كتاب عربي — كهروتقنية (2)",
+    descriptionFr: "Ressource en arabe.", descriptionAr: "مورد بالعربية.", lang: ["ar"] },
+  { id: "mesures-sina-2002", collection: "suisse", category: "normes", src: path.join(ASSETS, "Controle alger /M___P_SiNa_2002_10_133-f.pdf"),
+    titleFr: "Mesures SiNa 2002", titleAr: "قياسات SiNa 2002",
+    descriptionFr: "Procédure de mesures SiNa.", descriptionAr: "إجراء قياسات SiNa.", lang: ["fr"], year: 2002 },
+];
+MANIFEST.push(...EXTRA_AR);
+
 const ELECTRONS_BOOKS = [
   { id: "phaseurs-80", collection: "francais", category: "monophase",
     titleFr: "Phaseurs en alternatif (80 formules)", titleAr: "الأطوار في التيار المتناوب (80 صيغة)",

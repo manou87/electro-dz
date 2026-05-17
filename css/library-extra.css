@@ -149,10 +149,27 @@
   color: #fff;
 }
 
-.book-grid {
+.library-books-root {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.library-collection-heading {
+  width: 100%;
+}
+
+.book-grid,
+.book-grid--section {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 1rem;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.book-grid {
   margin-bottom: 1.5rem;
 }
 

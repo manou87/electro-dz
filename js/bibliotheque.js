@@ -483,31 +483,8 @@
     if (els.featured) els.featured.hidden = !showFeatured;
     if (showFeatured && els.featuredGrid) renderGrid(els.featuredGrid, featured);
 
-    if (collection === "all" && !query.trim() && !favoritesOnly && catalog.collections) {
-      els.grid.innerHTML = "";
-      const order = Object.keys(catalog.collections).sort(function (a, b) {
-        return (catalog.collections[a].order || 0) - (catalog.collections[b].order || 0);
-      });
-      order.forEach(function (colKey) {
-        const colBooks = all.filter(function (b) {
-          return b.collection === colKey;
-        });
-        if (!colBooks.length) return;
-        const heading = document.createElement("h2");
-        heading.className = "section-title library-collection-heading";
-        heading.style.cssText = "color:#fff;margin:1.75rem 0 0.75rem;padding:0 0.25rem";
-        const icon = catalog.collections[colKey].icon || "";
-        heading.textContent = icon + " " + collectionLabel(colKey);
-        els.grid.appendChild(heading);
-        const sub = document.createElement("div");
-        sub.className = "book-grid book-grid--section";
-        sub.style.marginBottom = "0.5rem";
-        renderGrid(sub, colBooks);
-        els.grid.appendChild(sub);
-      });
-    } else {
-      renderGrid(els.grid, all);
-    }
+    els.grid.classList.add("book-grid");
+    renderGrid(els.grid, all);
 
     if (els.count) els.count.textContent = t(all.length + " ouvrage(s)", all.length + " كتاب");
     if (els.empty) els.empty.hidden = all.length > 0;
