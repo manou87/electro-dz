@@ -213,4 +213,8 @@
   } catch (e) {}
   if (saved !== "fr" && saved !== "ar") saved = defaultLang;
   applyLang(saved);
+
+  window.ElectroDzAccueilI18n = { applyLang: applyLang, t: function (lang, key) {
+    return T[lang] && T[lang][key] !== undefined ? T[lang][key] : key;
+  }};
 })();

@@ -406,13 +406,17 @@
         const fav = await window.ElectroDzFavorites.listFavorites();
         sessionLoggedIn = fav.loggedIn;
         favoriteIds = fav.ids;
-        const navFav = document.querySelector("[data-nav-favorites]");
-        const navDash = document.querySelector("[data-nav-dashboard]");
-        const navLogin = document.querySelector("[data-nav-login]");
-        if (fav.loggedIn) {
-          if (navLogin) navLogin.hidden = true;
-          if (navDash) navDash.hidden = false;
-          if (navFav) navFav.hidden = false;
+        if (window.ElectroDzAuthUi?.refresh) {
+          await window.ElectroDzAuthUi.refresh();
+        } else {
+          const navFav = document.querySelector("[data-nav-favorites]");
+          const navDash = document.querySelector("[data-nav-dashboard]");
+          const navLogin = document.querySelector("[data-nav-login]");
+          if (fav.loggedIn) {
+            if (navLogin) navLogin.hidden = true;
+            if (navDash) navDash.hidden = false;
+            if (navFav) navFav.hidden = false;
+          }
         }
       } catch (_) {
         sessionLoggedIn = false;

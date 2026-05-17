@@ -62,6 +62,13 @@
       background:var(--accent);color:var(--bg);font-weight:700;font-size:.62rem;
       padding:4px 8px;
     }
+    .nav-extra--user{
+      background:rgba(250,204,21,0.12);
+      border:1px solid rgba(250,204,21,0.35);
+      color:var(--accent);
+      max-width:9rem;
+      overflow:hidden;text-overflow:ellipsis;
+    }
     @media(max-width:640px){
       .logo-text{display:none}
       .logo-img{width:36px;height:36px}
@@ -385,8 +392,9 @@
         <button type="button" class="lang-btn" data-lang="fr" aria-label="Français">FR</button>
         <button type="button" class="lang-btn active" data-lang="ar" aria-label="العربية">AR</button>
       </div>
-      <a href="login.html" class="nav-extra" data-i18n="nav.login">Connexion</a>
-      <a href="register.html" class="nav-extra nav-extra--cta" data-i18n="nav.join">Rejoindre</a>
+      <a href="login.html" class="nav-extra" data-nav-login data-i18n="nav.login">Connexion</a>
+      <a href="register.html" class="nav-extra nav-extra--cta" data-nav-register data-i18n="nav.join">Rejoindre</a>
+      <a href="dashboard.html" class="nav-extra nav-extra--user" data-nav-dashboard hidden><span data-nav-user-name></span></a>
     </div>
   </nav>
 
@@ -531,14 +539,14 @@
           <p data-i18n="tools.calc.desc">Ohm, puissance, sections, chute de tension</p>
           <span class="hub-link" data-i18n="tools.calc.link">Lancer un calcul →</span>
         </a>
-        <a class="hub-card" href="login.html">
+        <a class="hub-card" href="login.html" data-hub-member>
           <div class="hub-card-top">
             <span class="ico-wrap"><svg class="ico"><use href="#ico-users"/></svg></span>
             <span class="hub-pill pill-app" data-i18n="pill.member">Membre</span>
           </div>
           <h3 data-i18n="tools.member.title">Espace membre</h3>
-          <p data-i18n="tools.member.desc">Google ou e-mail — favoris PDF</p>
-          <span class="hub-link" data-i18n="tools.member.link">Connexion →</span>
+          <p data-i18n="tools.member.desc" data-hub-member-desc>Google ou e-mail — favoris PDF</p>
+          <span class="hub-link" data-i18n="tools.member.link" data-hub-member-link>Connexion →</span>
         </a>
         <a class="hub-card" href="devis.html">
           <div class="hub-card-top">
@@ -638,6 +646,7 @@
   <script src="js/oauth-return.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-client.js"></script>
+  <script src="js/site-auth-ui.js"></script>
   <script src="js/visitor-counter.js"></script>
   <script src="js/accueil-i18n.js"></script>
 </body>
