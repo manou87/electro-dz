@@ -34,7 +34,7 @@
 
   const urlError = new URLSearchParams(location.search).get('error');
   if (urlError) {
-    showMsg(decodeURIComponent(urlError), 'e');
+    showMsg('<strong>Connexion Google</strong><br>' + decodeURIComponent(urlError), 'e');
   }
 
   document.getElementById('form')?.addEventListener('submit', async (e) => {

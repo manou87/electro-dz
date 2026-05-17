@@ -44,9 +44,10 @@
       client = g.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
         auth: {
           flowType: 'pkce',
-          detectSessionInUrl: true,
+          detectSessionInUrl: false,
           persistSession: true,
           autoRefreshToken: true,
+          storage: typeof g.localStorage !== 'undefined' ? g.localStorage : undefined,
         },
       });
     }

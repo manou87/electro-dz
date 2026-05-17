@@ -65,8 +65,8 @@
   (async () => {
     const code = new URLSearchParams(location.search).get('code');
     if (code) {
-      await sb.auth.exchangeCodeForSession(code);
-      history.replaceState({}, document.title, location.pathname);
+      location.replace('auth-callback.html' + location.search);
+      return;
     }
 
     const {
