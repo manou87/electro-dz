@@ -10,8 +10,7 @@
 
   const SUPABASE_URL = 'https://wxiqqcnzcxswdqzubxyt.supabase.co';
   /** Clé publique : sb_publishable_… (nouveau) OU eyJ… (legacy anon) — voir supabase/COPIER-CLE-ANON.txt */
-  const SUPABASE_ANON_KEY =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4aXFxY256Y3hzd2RxenVieHl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ0NTQ5NzcsImV4cCI6MjA2MDAzMDk3N30.YFkBDCmHIcTmjRJrYWuMbbfQgQkRIFa6PoLtl7Ml1UE';
+  const SUPABASE_ANON_KEY = 'sb_publishable_kEfm0tZfrZ8xXCx_PyWfhg_R93sPJkR';
 
   /** URLs à copier dans Supabase → Authentication → URL Configuration */
   const SUPABASE_REDIRECT_URLS = [
