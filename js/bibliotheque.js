@@ -603,6 +603,19 @@
   if (els.langFr) els.langFr.addEventListener("click", function () { setLang("fr"); });
   if (els.langAr) els.langAr.addEventListener("click", function () { setLang("ar"); });
 
+  function maybeRefreshStatsFromSession() {
+    if (!catalog) return;
+    try {
+      if (!sessionStorage.getItem("electrodz-stats-changed")) return;
+      sessionStorage.removeItem("electrodz-stats-changed");
+    } catch (_) {
+      return;
+    }
+    refreshPdfStats().then(function () {
+      render();
+    });
+  }
+
   window.addEventListener("pageshow", function (ev) {
     if (!catalog) return;
     if (ev.persisted || document.visibilityState === "visible") {
@@ -614,9 +627,18 @@
 
   document.addEventListener("visibilitychange", function () {
     if (!catalog || document.visibilityState !== "visible") return;
+    maybeRefreshStatsFromSession();
     refreshPdfStats().then(function () {
       render();
     });
+  });
+
+  window.addEventListener("storage", function (e) {
+    if (e.key === "electrodz-pdf-stats-v1") {
+      refreshPdfStats().then(function () {
+        render();
+      });
+    }
   });
 
   setLang(lang);

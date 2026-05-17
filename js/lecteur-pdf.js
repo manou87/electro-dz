@@ -297,7 +297,11 @@
         applyI18n();
         if (totalPages <= 1 && els.btnNext) els.btnNext.disabled = true;
         if (bookId && window.ElectroDzPdfStats) {
-          window.ElectroDzPdfStats.trackView(bookId);
+          window.ElectroDzPdfStats.trackView(bookId).then(function () {
+            try {
+              sessionStorage.setItem("electrodz-stats-changed", String(Date.now()));
+            } catch (_) { /* ignore */ }
+          });
         }
       })
       .catch(function () {

@@ -172,12 +172,24 @@ async function verifyPublicApi() {
   }
 }
 
-async function main() {
-  console.log('DZSWISS ELEC — réglages Supabase SITE WEB\n');
-
+async function runAllSql() {
+  const allPath = path.join(SUPABASE_DIR, 'TOUT-EXECUTER-UNE-FOIS.sql');
+  if (fs.existsSync(allPath)) {
+    console.log('→ SQL TOUT-EXECUTER-UNE-FOIS.sql');
+    const query = fs.readFileSync(allPath, 'utf8');
+    await mgmt('/database/query', { method: 'POST', body: JSON.stringify({ query }) });
+    console.log('  OK');
+    return;
+  }
   await runSqlFile('visitor-stats.sql');
   await runSqlFile('pdf-stats-and-favorites.sql');
   await runSqlFile('site-setup.sql');
+}
+
+async function main() {
+  console.log('DZSWISS ELEC — réglages Supabase SITE WEB\n');
+
+  await runAllSql();
   await patchAuthConfig();
   await syncAnonKeyToSiteConfig();
   await verifyPublicApi();
