@@ -1,5 +1,5 @@
 /**
- * Documentation — ouverture PDF dans lecteur-pdf.html (fichiers locaux).
+ * Documentation — ouverture PDF dans lecteur-pdf.html + vignettes aperçu.
  */
 (function () {
   "use strict";
@@ -12,6 +12,101 @@
     if (resKey) q.set("titleAr", titleAr || titleFr || "");
     if (bookId) q.set("id", bookId);
     return "lecteur-pdf.html?" + q.toString();
+  }
+
+  function previewSrcForPdf(link) {
+    const id = (link.getAttribute("data-book-id") || "").trim();
+    if (id) return "assets/covers/previews/" + id + ".png";
+    const pdf = (link.getAttribute("data-pdf-src") || "").trim();
+    if (/^pdf\/.+\.pdf$/i.test(pdf)) {
+      const base = pdf.replace(/^pdf\//i, "").replace(/\.pdf$/i, "");
+      return "assets/covers/previews/" + base + ".png";
+    }
+    return "";
+  }
+
+  function createThumbElement(link) {
+    const thumb = document.createElement("span");
+    thumb.className = "doc-resource-thumb";
+
+    if (link.classList.contains("doc-resource--pdf")) {
+      const src = previewSrcForPdf(link);
+      if (!src) return null;
+      const img = document.createElement("img");
+      img.className = "doc-resource-thumb-img";
+      img.src = src;
+      img.alt = "";
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.onerror = function () {
+        thumb.classList.add("doc-resource-thumb--fallback");
+        img.remove();
+        const fb = document.createElement("span");
+        fb.className = "doc-resource-thumb-fallback";
+        fb.setAttribute("aria-hidden", "true");
+        fb.textContent = "PDF";
+        thumb.appendChild(fb);
+      };
+      thumb.appendChild(img);
+      return thumb;
+    }
+
+    if (link.classList.contains("doc-resource--img")) {
+      const src = (link.getAttribute("href") || "").trim();
+      if (!src || !/^assets\//i.test(src)) return null;
+      const img = document.createElement("img");
+      img.className = "doc-resource-thumb-img";
+      img.src = src;
+      img.alt = "";
+      img.loading = "lazy";
+      img.decoding = "async";
+      thumb.appendChild(img);
+      return thumb;
+    }
+
+    if (link.classList.contains("doc-resource--file")) {
+      thumb.classList.add("doc-resource-thumb--xls");
+      const fb = document.createElement("span");
+      fb.className = "doc-resource-thumb-fallback";
+      fb.setAttribute("aria-hidden", "true");
+      fb.textContent = "XLS";
+      thumb.appendChild(fb);
+      return thumb;
+    }
+
+    if (link.classList.contains("doc-resource--web")) {
+      thumb.classList.add("doc-resource-thumb--web");
+      const fb = document.createElement("span");
+      fb.className = "doc-resource-thumb-fallback";
+      fb.setAttribute("aria-hidden", "true");
+      fb.textContent = "↗";
+      thumb.appendChild(fb);
+      return thumb;
+    }
+
+    return null;
+  }
+
+  function applyResourcePreviews() {
+    document.querySelectorAll("a.doc-resource").forEach(function (link) {
+      if (link.classList.contains("doc-resource--has-preview")) return;
+
+      const thumb = createThumbElement(link);
+      if (!thumb) return;
+
+      const tag = link.querySelector(".doc-resource-tag");
+      const title = link.querySelector(".doc-resource-title");
+      const arrow = link.querySelector(".doc-resource-arrow");
+
+      const body = document.createElement("span");
+      body.className = "doc-resource-body";
+      if (tag) body.appendChild(tag);
+      if (title) body.appendChild(title);
+
+      link.classList.add("doc-resource--has-preview");
+      link.insertBefore(thumb, link.firstChild);
+      link.insertBefore(body, arrow || null);
+    });
   }
 
   function wirePdfLinks() {
@@ -44,15 +139,21 @@
     });
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", function () {
-      wirePdfLinks();
-      wireLocalFiles();
-    });
-  } else {
+  function init() {
+    applyResourcePreviews();
     wirePdfLinks();
     wireLocalFiles();
   }
 
-  window.ElectroDzDocsWire = { refresh: wirePdfLinks };
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+
+  window.ElectroDzDocsWire = {
+    refresh: function () {
+      wirePdfLinks();
+    },
+  };
 })();

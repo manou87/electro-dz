@@ -200,9 +200,22 @@ img{max-width:100%}
 .doc-module-icon-wrap--nrj{background:linear-gradient(135deg,rgba(245,197,24,0.25),rgba(245,197,24,0.08))}
 .doc-module h2{font-size:1.35rem;font-weight:800;margin-bottom:4px}
 .doc-module-meta{font-size:.88rem;color:var(--text-muted)}
-.doc-resource-grid{display:flex;flex-direction:column;gap:8px}
+.doc-resource-grid{display:flex;flex-direction:column;gap:10px}
 .doc-resource{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;background:var(--bg2);border:1px solid transparent;transition:.2s}
+.doc-resource--has-preview{align-items:stretch;gap:14px;padding:10px 12px 10px 10px}
 .doc-resource:hover{border-color:var(--accent);background:var(--surface2);transform:translateX(4px)}
+.doc-resource-thumb{
+  flex-shrink:0;width:88px;min-height:72px;max-height:110px;
+  border-radius:8px;overflow:hidden;background:#0f172a;
+  border:1px solid rgba(255,255,255,0.08);
+  display:flex;align-items:center;justify-content:center;
+}
+.doc-resource-thumb-img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.doc-resource-thumb--fallback,.doc-resource-thumb--xls,.doc-resource-thumb--web{background:linear-gradient(145deg,var(--surface2),var(--bg2))}
+.doc-resource-thumb-fallback{font-size:.72rem;font-weight:800;color:var(--text-muted);letter-spacing:.04em}
+.doc-resource-body{flex:1;display:flex;flex-direction:column;justify-content:center;gap:6px;min-width:0}
+.doc-resource--has-preview .doc-resource-tag{align-self:flex-start}
+.doc-resource--has-preview .doc-resource-title{flex:unset}
 .doc-resource-tag{flex-shrink:0;min-width:52px;text-align:center;font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;padding:4px 8px;border-radius:6px}
 .doc-resource--pdf .doc-resource-tag{background:rgba(239,68,68,0.15);color:#f87171}
 .doc-resource--xls .doc-resource-tag{background:rgba(34,197,94,0.15);color:#4ade80}
@@ -228,5 +241,6 @@ img{max-width:100%}
   .doc-module{padding:20px 16px}
   .docs-jump-pill{padding:8px 12px;font-size:.82rem}
   .doc-resource{flex-wrap:wrap}
+  .doc-resource-thumb{width:72px;min-height:64px}
   .doc-resource-tag{min-width:44px}
 }
