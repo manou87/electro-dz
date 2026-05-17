@@ -3,7 +3,7 @@
     fr: {
       "meta.title": "DZSWISS ELEC — Outils pour électriciens",
       "logo.sub":
-        "Précision et expérience suisse, passion et courage entre mains algériennes",
+        "Savoir-faire suisse, énergie algérienne : le duo qui fait la différence.",
       "nav.login": "Connexion",
       "nav.join": "Rejoindre",
       "hero.title": "DZSWISS ELEC",
@@ -90,7 +90,7 @@
     },
     ar: {
       "meta.title": "DZSWISS ELEC — أدوات للكهربائيين",
-      "logo.sub": "دقة وخبرة سويسرية، شغف وشجاعة بين أيدٍ جزائرية",
+      "logo.sub": "خبرة سويسرية، طاقة جزائرية : الثنائي الذي يصنع الفرق.",
       "nav.login": "دخول",
       "nav.join": "انضم إلينا",
       "hero.title": "DZSWISS ELEC",
