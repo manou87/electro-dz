@@ -115,12 +115,15 @@ async function syncAnonKeyToSiteConfig() {
   console.log('→ Récupération clé anon API');
   const keys = await mgmt('/api-keys?reveal=true', { method: 'GET' });
   const list = Array.isArray(keys) ? keys : keys?.data || [];
+  const pub =
+    list.find((k) => String(k.name || '').toLowerCase().includes('publishable')) ||
+    list.find((k) => String(k.api_key || '').startsWith('sb_publishable_'));
   const anon =
     list.find((k) => k.name === 'anon' || k.type === 'anon' || k.prefix === 'anon') ||
     list.find((k) => String(k.name || '').toLowerCase().includes('anon'));
-  const apiKey = anon?.api_key;
+  const apiKey = pub?.api_key || anon?.api_key;
   if (!apiKey) {
-    console.warn('  Clé anon non trouvée dans la réponse — mettez à jour js/site-config.js à la main.');
+    console.warn('  Clé publishable/anon non trouvée — gardez site-config.js actuel.');
     return;
   }
 
@@ -141,15 +144,31 @@ async function verifyPublicApi() {
   const anon = m?.[1];
   if (!anon) return;
 
-  const url = `https://${PROJECT_REF}.supabase.co/rest/v1/site_visitor_stats?id=eq.1&select=total_visits,today_visits`;
-  const res = await fetch(url, {
-    headers: { apikey: anon, Authorization: `Bearer ${anon}` },
-  });
-  const text = await res.text();
-  if (res.ok) {
-    console.log('→ Test API publique compteur : OK', text.slice(0, 120));
+  const headers = { apikey: anon, 'Content-Type': 'application/json' };
+  if (!anon.startsWith('sb_publishable_')) {
+    headers.Authorization = `Bearer ${anon}`;
+  }
+
+  const resPdf = await fetch(
+    `https://${PROJECT_REF}.supabase.co/rest/v1/rpc/get_pdf_stats_totals`,
+    { method: 'POST', headers, body: '{}' }
+  );
+  const pdfText = await resPdf.text();
+  if (resPdf.ok) {
+    console.log('→ Test stats PDF : OK', pdfText.slice(0, 80));
   } else {
-    console.warn('→ Test API publique :', res.status, text.slice(0, 200));
+    console.warn('→ Test stats PDF :', resPdf.status, pdfText.slice(0, 120));
+  }
+
+  const resVis = await fetch(
+    `https://${PROJECT_REF}.supabase.co/rest/v1/site_visitor_stats?id=eq.1&select=total_visits,today_visits`,
+    { headers: { apikey: anon, ...(headers.Authorization ? { Authorization: headers.Authorization } : {}) } }
+  );
+  const visText = await resVis.text();
+  if (resVis.ok) {
+    console.log('→ Test compteur visiteurs : OK', visText.slice(0, 120));
+  } else {
+    console.warn('→ Test compteur visiteurs :', resVis.status, visText.slice(0, 200));
   }
 }
 
