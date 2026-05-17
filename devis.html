@@ -81,6 +81,13 @@
     .modal h3{color:var(--primary);margin-bottom:16px}
     .modal-actions{display:flex;gap:10px;margin-top:16px;justify-content:flex-end}
     .hidden{display:none!important}
+    .co-logo-section{margin:16px 0;text-align:center}
+    .co-logo-preview{width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--primary);display:none;margin:0 auto 10px}
+    .co-logo-preview.visible{display:block}
+    .co-logo-actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+    .co-logo-toggle{display:flex;align-items:center;gap:10px;margin-top:14px;cursor:pointer;font-size:0.9rem}
+    .co-logo-toggle input{width:18px;height:18px;accent-color:var(--primary)}
+    .co-logo-hint{font-size:0.78rem;color:var(--muted);margin:6px 0 0;line-height:1.35}
     @media(max-width:768px){.nav-links{display:none}.items-table{font-size:0.8rem}}
   </style>
 </head>
@@ -203,6 +210,20 @@
         <div><label data-i18n="companyServices"></label><input id="co-services" type="text"/></div>
         <div><label data-i18n="companyPhone"></label><input id="co-phone" type="tel"/></div>
         <div><label data-i18n="companyEmail"></label><input id="co-email" type="email"/></div>
+        <div class="co-logo-section">
+          <label data-i18n="companyLogo"></label>
+          <p class="co-logo-hint" data-i18n="companyLogoHint"></p>
+          <img id="co-logo-preview" class="co-logo-preview" alt="" width="80" height="80"/>
+          <input type="file" id="co-logo-file" accept="image/*" class="hidden"/>
+          <div class="co-logo-actions">
+            <button type="button" class="btn btn--ghost" id="co-logo-pick" data-i18n="companyLogoChoose"></button>
+            <button type="button" class="btn btn--ghost hidden" id="co-logo-remove" data-i18n="companyLogoRemove"></button>
+          </div>
+          <label class="co-logo-toggle">
+            <input type="checkbox" id="co-show-logo"/>
+            <span data-i18n="companyLogoShow"></span>
+          </label>
+        </div>
       </div>
       <div class="modal-actions">
         <button type="button" class="btn btn--ghost" id="co-close" data-i18n="btnClose"></button>

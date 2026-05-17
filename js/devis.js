@@ -155,6 +155,52 @@
     } catch (_) { /* ignore */ }
   }
 
+  /** Redimensionne une image en logo rond 80×80 (JPEG) pour le devis imprimé */
+  function resizeLogoToDataUrl(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = () => reject(new Error('read'));
+      reader.onload = () => {
+        const img = new Image();
+        img.onerror = () => reject(new Error('img'));
+        img.onload = () => {
+          const size = 160;
+          const canvas = document.createElement('canvas');
+          canvas.width = size;
+          canvas.height = size;
+          const ctx = canvas.getContext('2d');
+          const min = Math.min(img.width, img.height);
+          const sx = (img.width - min) / 2;
+          const sy = (img.height - min) / 2;
+          ctx.drawImage(img, sx, sy, min, min, 0, 0, size, size);
+          resolve(canvas.toDataURL('image/jpeg', 0.82));
+        };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function updateCompanyLogoPreview(dataUrl) {
+    const preview = document.getElementById('co-logo-preview');
+    const removeBtn = document.getElementById('co-logo-remove');
+    if (!preview) return;
+    if (dataUrl) {
+      preview.src = dataUrl;
+      preview.classList.add('visible');
+      if (removeBtn) removeBtn.classList.remove('hidden');
+    } else {
+      preview.removeAttribute('src');
+      preview.classList.remove('visible');
+      if (removeBtn) removeBtn.classList.add('hidden');
+    }
+  }
+
+  function signatureLogoPrintHtml(co) {
+    if (!co.showLogoOnDevis || !co.logoDataUrl) return '';
+    return `<img src="${co.logoDataUrl}" class="print-signature-logo" alt=""/>`;
+  }
+
   function showView(name) {
     document.getElementById('view-list').classList.toggle('hidden', name !== 'list');
     document.getElementById('view-edit').classList.toggle('hidden', name !== 'edit');
@@ -512,7 +558,12 @@ body{font-family:Segoe UI,Arial,sans-serif;padding:20px;color:#000;background:#f
 .print-totals-table{margin-left:auto;border-collapse:collapse}
 .print-totals-table td{padding:12px;font-size:18px;font-weight:700}
 .print-signatures-container{display:flex;justify-content:space-between;margin-top:60px;gap:40px}
+.print-signature-column{flex:1;text-align:center}
+.print-signature-with-logo{display:flex;align-items:flex-end;justify-content:center;gap:12px}
+.print-signature-block{flex:1;min-width:0;max-width:220px}
+.print-signature-logo{width:80px;height:80px;border-radius:50%;object-fit:cover;flex-shrink:0}
 .print-signature-line{border-top:1px solid #000;height:60px;margin-bottom:8px}
+.print-signature-label{font-size:12px;font-weight:600}
 .print-footer{margin-top:40px;text-align:center;font-size:12px;border-top:1px solid #E5E7EB;padding-top:15px}
 </style></head><body>
 <div class="print-header-corner">
@@ -543,8 +594,13 @@ ${d.clientAddress ? `<p><strong>${escHtml(tr('labelAddress'))}:</strong> ${escHt
 </tr></thead><tbody>${rows}</tbody></table>
 <table class="print-totals-table"><tr><td>${escHtml(tr('printTotal'))}</td><td>${formatDzd(d.total)} DZD</td></tr></table>
 <div class="print-signatures-container">
-<div style="flex:1;text-align:center"><div class="print-signature-line"></div><div>${escHtml(tr('printSigInstaller'))}</div></div>
-<div style="flex:1;text-align:center"><div class="print-signature-line"></div><div>${escHtml(tr('printSigClient'))}</div></div>
+<div class="print-signature-column">
+<div class="print-signature-with-logo">
+${signatureLogoPrintHtml(co)}
+<div class="print-signature-block"><div class="print-signature-line"></div><div class="print-signature-label">${escHtml(tr('printSigInstaller'))}</div></div>
+</div>
+</div>
+<div class="print-signature-column"><div class="print-signature-line"></div><div class="print-signature-label">${escHtml(tr('printSigClient'))}</div></div>
 </div>
 <div class="print-footer">${escHtml(tr('printValidity'))}</div>
 </body></html>`
@@ -568,6 +624,10 @@ ${d.clientAddress ? `<p><strong>${escHtml(tr('labelAddress'))}:</strong> ${escHt
     document.getElementById('co-services').value = co.services || '';
     document.getElementById('co-phone').value = co.phone || '';
     document.getElementById('co-email').value = co.email || '';
+    const showLogo = document.getElementById('co-show-logo');
+    if (showLogo) showLogo.checked = !!co.showLogoOnDevis;
+    updateCompanyLogoPreview(co.logoDataUrl || '');
+    document.getElementById('modal-company').dataset.logoDataUrl = co.logoDataUrl || '';
     document.getElementById('modal-company').classList.add('show');
   }
 
@@ -596,11 +656,16 @@ ${d.clientAddress ? `<p><strong>${escHtml(tr('labelAddress'))}:</strong> ${escHt
     document.getElementById('btn-company').addEventListener('click', openCompanyModal);
     document.getElementById('co-close').addEventListener('click', closeCompanyModal);
     document.getElementById('co-save').addEventListener('click', () => {
+      const modal = document.getElementById('modal-company');
+      const logoDataUrl = modal?.dataset.logoDataUrl || '';
+      const showLogoEl = document.getElementById('co-show-logo');
       saveCompany({
         companyName: document.getElementById('co-name').value.trim(),
         services: document.getElementById('co-services').value.trim(),
         phone: document.getElementById('co-phone').value.trim(),
         email: document.getElementById('co-email').value.trim(),
+        logoDataUrl,
+        showLogoOnDevis: !!(showLogoEl && showLogoEl.checked && logoDataUrl),
       });
       closeCompanyModal();
     });
@@ -611,6 +676,37 @@ ${d.clientAddress ? `<p><strong>${escHtml(tr('labelAddress'))}:</strong> ${escHt
     document.getElementById('modal-company').addEventListener('click', (e) => {
       if (e.target.id === 'modal-company') closeCompanyModal();
     });
+
+    const logoPick = document.getElementById('co-logo-pick');
+    const logoFile = document.getElementById('co-logo-file');
+    const logoRemove = document.getElementById('co-logo-remove');
+    if (logoPick && logoFile) {
+      logoPick.addEventListener('click', () => logoFile.click());
+      logoFile.addEventListener('change', async () => {
+        const file = logoFile.files && logoFile.files[0];
+        logoFile.value = '';
+        if (!file || !file.type.startsWith('image/')) return;
+        try {
+          const dataUrl = await resizeLogoToDataUrl(file);
+          const modal = document.getElementById('modal-company');
+          if (modal) modal.dataset.logoDataUrl = dataUrl;
+          updateCompanyLogoPreview(dataUrl);
+          const showLogo = document.getElementById('co-show-logo');
+          if (showLogo) showLogo.checked = true;
+        } catch (_) {
+          alert(tr('companyLogo') + ' — erreur');
+        }
+      });
+    }
+    if (logoRemove) {
+      logoRemove.addEventListener('click', () => {
+        const modal = document.getElementById('modal-company');
+        if (modal) delete modal.dataset.logoDataUrl;
+        updateCompanyLogoPreview('');
+        const showLogo = document.getElementById('co-show-logo');
+        if (showLogo) showLogo.checked = false;
+      });
+    }
 
     const langBtn = document.getElementById('lang-toggle');
     if (langBtn) langBtn.textContent = getLang() === 'fr' ? 'AR' : 'FR';
