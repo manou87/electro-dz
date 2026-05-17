@@ -1,6 +1,26 @@
 {
-  "version": 2,
-  "updated": "2026-05-16",
+  "version": 3,
+  "updated": "2026-05-17",
+  "collections": {
+    "suisse": {
+      "labelFr": "PDF Suisse",
+      "labelAr": "كتب سويسرية",
+      "icon": "🇨🇭",
+      "order": 1
+    },
+    "francais": {
+      "labelFr": "PDF Français",
+      "labelAr": "كتب فرنسية",
+      "icon": "🇫🇷",
+      "order": 2
+    },
+    "arabe": {
+      "labelFr": "PDF Arabe",
+      "labelAr": "كتب عربية",
+      "icon": "🇩🇿",
+      "order": 3
+    }
+  },
   "categories": {
     "normes": {
       "labelFr": "Normes & réglementation",
@@ -11,6 +31,11 @@
       "labelFr": "Installation & câblage",
       "labelAr": "التركيب والكابلات",
       "icon": "🔌"
+    },
+    "formation": {
+      "labelFr": "Formation",
+      "labelAr": "تكوين",
+      "icon": "🎓"
     },
     "monophase": {
       "labelFr": "Monophasé",
@@ -45,30 +70,484 @@
   },
   "books": [
     {
-      "id": "phaseurs-80",
-      "category": "monophase",
-      "titleFr": "Phaseurs en alternatif (80 formules)",
-      "titleAr": "الأطوار في التيار المتناوب (80 صيغة)",
-      "descriptionFr": "Diagrammes vectoriels et formules pour l’alternatif monophasé.",
-      "descriptionAr": "مخططات متجهة وصيغ للتيار المتناوب أحادي الطور.",
+      "id": "ae-prof-2019",
+      "collection": "suisse",
+      "category": "formation",
+      "titleFr": "AE professionnel 2019",
+      "titleAr": "تكوين مهني AE 2019",
+      "descriptionFr": "Support de formation professionnelle électricité 2019.",
+      "descriptionAr": "دعم التكوين المهني في الكهرباء 2019.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2019,
+      "pdfUrl": "pdf/ae-prof-2019.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/ae-prof-2019-fr.svg",
+      "coverImageAr": "assets/covers/ae-prof-2019-ar.svg"
+    },
+    {
+      "id": "energie-suisse",
+      "collection": "suisse",
+      "category": "energie",
+      "titleFr": "Diagramme énergie Suisse",
+      "titleAr": "مخطط الطاقة سويسرا",
+      "descriptionFr": "Vue d'ensemble des flux énergétiques.",
+      "descriptionAr": "نظرة عامة على تدفقات الطاقة.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2026,
+      "pdfUrl": "https://electrons.ch/data/files/electrotech/diagrammeenergiesuisse24a4.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/energie-suisse-fr.svg",
+      "coverImageAr": "assets/covers/energie-suisse-ar.svg",
+      "coverPreview": "assets/covers/previews/energie-suisse.png"
+    },
+    {
+      "id": "electrotechnique-ch11-2018",
+      "collection": "suisse",
+      "category": "formation",
+      "titleFr": "Électrotechnique ch. 11 (2018)",
+      "titleAr": "الكهروتقنية الفصل 11 (2018)",
+      "descriptionFr": "Cours d'électrotechnique — chapitre 11, programme suisse.",
+      "descriptionAr": "درس الكهروتقنية — الفصل 11، المنهج السويسري.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2018,
+      "pdfUrl": "pdf/electrotechnique-ch11-2018.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/electrotechnique-ch11-2018-fr.svg",
+      "coverImageAr": "assets/covers/electrotechnique-ch11-2018-ar.svg"
+    },
+    {
+      "id": "explication-nibt-2020",
+      "collection": "suisse",
+      "category": "normes",
+      "titleFr": "Explication NIBT 2020 (partie 1)",
+      "titleAr": "شرح NIBT 2020 (الجزء 1)",
+      "descriptionFr": "Commentaire et explications sur la norme NIBT 2020.",
+      "descriptionAr": "تعليق وشروح لمعيار NIBT 2020.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2020,
+      "pdfUrl": "pdf/explication-nibt-2020.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/explication-nibt-2020-fr.svg",
+      "coverImageAr": "assets/covers/explication-nibt-2020-ar.svg"
+    },
+    {
+      "id": "fet1-2014",
+      "collection": "suisse",
+      "category": "formation",
+      "titleFr": "FET 1 — Formation électricien (2014)",
+      "titleAr": "FET 1 — تكوين كهربائي (2014)",
+      "descriptionFr": "Module de formation professionnelle suisse FET 1.",
+      "descriptionAr": "وحدة التكوين المهني السويسري FET 1.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2014,
+      "pdfUrl": "pdf/fet1-2014.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/fet1-2014-fr.svg",
+      "coverImageAr": "assets/covers/fet1-2014-ar.svg"
+    },
+    {
+      "id": "fet2-2013",
+      "collection": "suisse",
+      "category": "formation",
+      "titleFr": "FET 2 — Formation électricien (2013)",
+      "titleAr": "FET 2 — تكوين كهربائي (2013)",
+      "descriptionFr": "Module de formation professionnelle suisse FET 2.",
+      "descriptionAr": "وحدة التكوين المهني السويسري FET 2.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2013,
+      "pdfUrl": "pdf/fet2-2013.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/fet2-2013-fr.svg",
+      "coverImageAr": "assets/covers/fet2-2013-ar.svg"
+    },
+    {
+      "id": "fet3-2014",
+      "collection": "suisse",
+      "category": "formation",
+      "titleFr": "FET 3 — Formation électricien (2014)",
+      "titleAr": "FET 3 — تكوين كهربائي (2014)",
+      "descriptionFr": "Module de formation professionnelle suisse FET 3.",
+      "descriptionAr": "وحدة التكوين المهني السويسري FET 3.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2014,
+      "pdfUrl": "pdf/fet3-2014.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/fet3-2014-fr.svg",
+      "coverImageAr": "assets/covers/fet3-2014-ar.svg"
+    },
+    {
+      "id": "hager-normen",
+      "collection": "suisse",
+      "category": "normes",
+      "titleFr": "Hager — normes (référence)",
+      "titleAr": "Hager — المعايير",
+      "descriptionFr": "Document Hager sur les normes d'installation.",
+      "descriptionAr": "وثيقة Hager حول معايير التركيب.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/hager-normen.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/hager-normen-fr.svg",
+      "coverImageAr": "assets/covers/hager-normen-ar.svg"
+    },
+    {
+      "id": "la-terre-suisse-norme",
+      "collection": "suisse",
+      "category": "normes",
+      "titleFr": "Mise à la terre — norme suisse",
+      "titleAr": "التأريض — المعيار السويسري",
+      "descriptionFr": "Prescriptions suisses pour la mise à la terre des installations.",
+      "descriptionAr": "اشتراطات التأريض للتركيبات وفق المعايير السويسرية.",
       "lang": [
         "fr",
         "ar"
       ],
       "pages": 0,
-      "year": 2026,
-      "pdfUrl": "https://electrons.ch/data/files/electrotech/diagrammevecteur_1770372925.pdf",
+      "year": 2020,
+      "pdfUrl": "pdf/la-terre-suisse-norme.pdf",
       "featured": true,
-      "coverImageFr": "assets/covers/phaseurs-80-fr.svg",
-      "coverImageAr": "assets/covers/phaseurs-80-ar.svg",
-      "coverPreview": "assets/covers/previews/phaseurs-80.png"
+      "coverImageFr": "assets/covers/la-terre-suisse-norme-fr.svg",
+      "coverImageAr": "assets/covers/la-terre-suisse-norme-ar.svg"
+    },
+    {
+      "id": "nibt-nouveautes-2022",
+      "collection": "suisse",
+      "category": "normes",
+      "titleFr": "NIBT — nouveautés 2022",
+      "titleAr": "NIBT — مستجدات 2022",
+      "descriptionFr": "Évolutions réglementaires NIBT 2022.",
+      "descriptionAr": "تطورات NIBT 2022.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2022,
+      "pdfUrl": "pdf/nibt-nouveautes-2022.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/nibt-nouveautes-2022-fr.svg",
+      "coverImageAr": "assets/covers/nibt-nouveautes-2022-ar.svg"
+    },
+    {
+      "id": "nibt-nouveautes-2025",
+      "collection": "suisse",
+      "category": "normes",
+      "titleFr": "NIBT — nouveautés 2025 (JT Cinelec)",
+      "titleAr": "NIBT — مستجدات 2025",
+      "descriptionFr": "Synthèse des nouveautés NIBT 2025.",
+      "descriptionAr": "ملخص مستجدات NIBT 2025.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2025,
+      "pdfUrl": "pdf/nibt-nouveautes-2025.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/nibt-nouveautes-2025-fr.svg",
+      "coverImageAr": "assets/covers/nibt-nouveautes-2025-ar.svg"
+    },
+    {
+      "id": "oibt-icc",
+      "collection": "suisse",
+      "category": "normes",
+      "titleFr": "OIBT — courants de court-circuit (ICC)",
+      "titleAr": "OIBT — تيارات القصر (ICC)",
+      "descriptionFr": "Procédure OIBT pour le calcul des courants de court-circuit.",
+      "descriptionAr": "إجراء OIBT لحساب تيارات القصر.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2022,
+      "pdfUrl": "pdf/oibt-icc.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/oibt-icc-fr.svg",
+      "coverImageAr": "assets/covers/oibt-icc-ar.svg"
+    },
+    {
+      "id": "oibt-mesures-jt22",
+      "collection": "suisse",
+      "category": "normes",
+      "titleFr": "OIBT — procédure des mesures (JT22)",
+      "titleAr": "OIBT — إجراء القياسات (JT22)",
+      "descriptionFr": "Mesures et contrôles selon la procédure OIBT JT22.",
+      "descriptionAr": "القياسات والفحوص وفق إجراء OIBT JT22.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2022,
+      "pdfUrl": "pdf/oibt-mesures-jt22.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/oibt-mesures-jt22-fr.svg",
+      "coverImageAr": "assets/covers/oibt-mesures-jt22-ar.svg"
+    },
+    {
+      "id": "pdie-2018-01",
+      "collection": "suisse",
+      "category": "normes",
+      "titleFr": "PDIE 2018-01",
+      "titleAr": "وثيقة PDIE 2018-01",
+      "descriptionFr": "Document technique installation et protection (PDIE).",
+      "descriptionAr": "وثيقة التركيب والحماية PDIE.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2018,
+      "pdfUrl": "pdf/pdie-2018-01.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/pdie-2018-01-fr.svg",
+      "coverImageAr": "assets/covers/pdie-2018-01-ar.svg"
+    },
+    {
+      "id": "premiere-verification-oibt",
+      "collection": "suisse",
+      "category": "normes",
+      "titleFr": "Première vérification OIBT",
+      "titleAr": "الفحص الأول OIBT",
+      "descriptionFr": "Première vérification des installations électriques.",
+      "descriptionAr": "الفحص الأول للتركيبات الكهربائية.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/premiere-verification-oibt.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/premiere-verification-oibt-fr.svg",
+      "coverImageAr": "assets/covers/premiere-verification-oibt-ar.svg"
+    },
+    {
+      "id": "protocole-ep-2018",
+      "collection": "suisse",
+      "category": "normes",
+      "titleFr": "Protocole EP 2018",
+      "titleAr": "بروتوكول EP 2018",
+      "descriptionFr": "Verzeichnis et protocole de contrôle EP 2018.",
+      "descriptionAr": "فهرس وبروتوكول فحص EP 2018.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2018,
+      "pdfUrl": "pdf/protocole-ep-2018.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/protocole-ep-2018-fr.svg",
+      "coverImageAr": "assets/covers/protocole-ep-2018-ar.svg"
+    },
+    {
+      "id": "com-katalog-22-fr",
+      "collection": "francais",
+      "category": "installation",
+      "titleFr": "Catalogue COM 2022",
+      "titleAr": "كتالوج COM 2022",
+      "descriptionFr": "Catalogue composants électriques.",
+      "descriptionAr": "كتالوج المكونات الكهربائية.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2022,
+      "pdfUrl": "pdf/com-katalog-22-fr.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/com-katalog-22-fr-fr.svg",
+      "coverImageAr": "assets/covers/com-katalog-22-fr-ar.svg"
+    },
+    {
+      "id": "filtres-passe",
+      "collection": "francais",
+      "category": "monophase",
+      "titleFr": "Filtres passifs passe haut / bas",
+      "titleAr": "مرشحات سلبية عالية/منخفضة التردد",
+      "descriptionFr": "Synthèse des filtres du premier ordre (Bode).",
+      "descriptionAr": "ملخص مرشحات الدرجة الأولى.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2026,
+      "pdfUrl": "https://electrons.ch/data/files/filtredupremierordrebodes2pages.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/filtres-passe-fr.svg",
+      "coverImageAr": "assets/covers/filtres-passe-ar.svg",
+      "coverPreview": "assets/covers/previews/filtres-passe.png"
+    },
+    {
+      "id": "fortec-formulaire-1987",
+      "collection": "francais",
+      "category": "installation",
+      "titleFr": "Formulaire technique Fortec (1987)",
+      "titleAr": "نموذج Fortec التقني (1987)",
+      "descriptionFr": "Formulaire Charle Pache.",
+      "descriptionAr": "نموذج Charle Pache.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 1987,
+      "pdfUrl": "pdf/fortec-formulaire-1987.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/fortec-formulaire-1987-fr.svg",
+      "coverImageAr": "assets/covers/fortec-formulaire-1987-ar.svg"
+    },
+    {
+      "id": "mise-a-la-terre-fr",
+      "collection": "francais",
+      "category": "installation",
+      "titleFr": "La mise à la terre",
+      "titleAr": "التأريض",
+      "descriptionFr": "Principes et mise en œuvre de la mise à la terre.",
+      "descriptionAr": "مبادئ وتنفيذ التأريض.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/mise-a-la-terre-fr.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/mise-a-la-terre-fr-fr.svg",
+      "coverImageAr": "assets/covers/mise-a-la-terre-fr-ar.svg"
+    },
+    {
+      "id": "manuel-principes-protection",
+      "collection": "francais",
+      "category": "securite",
+      "titleFr": "Manuel — principes de protection",
+      "titleAr": "دليل — مبادئ الحماية",
+      "descriptionFr": "Protection des installations.",
+      "descriptionAr": "حماية التركيبات.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/manuel-principes-protection.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/manuel-principes-protection-fr.svg",
+      "coverImageAr": "assets/covers/manuel-principes-protection-ar.svg"
+    },
+    {
+      "id": "memento-ddr",
+      "collection": "francais",
+      "category": "normes",
+      "titleFr": "Mémento — différentiels & DDR",
+      "titleAr": "مذكرة — التفاضلي و DDR",
+      "descriptionFr": "Sensibilités 30 mA / 300 mA — à publier.",
+      "descriptionAr": "حساسيات 30 mA / 300 mA — قريبًا.",
+      "lang": [
+        "fr",
+        "ar"
+      ],
+      "pages": 18,
+      "year": 2026,
+      "pdfUrl": "",
+      "featured": false,
+      "coverImageFr": "assets/covers/memento-ddr-fr.svg",
+      "coverImageAr": "assets/covers/memento-ddr-ar.svg"
+    },
+    {
+      "id": "nf-c10-120",
+      "collection": "francais",
+      "category": "normes",
+      "titleFr": "NF C 10-120",
+      "titleAr": "المعيار NF C 10-120",
+      "descriptionFr": "Sécurité des personnes — installations électriques à basse tension.",
+      "descriptionAr": "سلامة الأشخاص — التركيبات الكهربائية منخفضة الجهد.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2024,
+      "pdfUrl": "pdf/nf-c10-120.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/nf-c10-120-fr.svg",
+      "coverImageAr": "assets/covers/nf-c10-120-ar.svg"
+    },
+    {
+      "id": "nf-c13-100",
+      "collection": "francais",
+      "category": "normes",
+      "titleFr": "NF C 13-100",
+      "titleAr": "المعيار NF C 13-100",
+      "descriptionFr": "Installations électriques à basse tension — prescriptions.",
+      "descriptionAr": "التركيبات الكهربائية منخفضة الجهد.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2024,
+      "pdfUrl": "pdf/nf-c13-100.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/nf-c13-100-fr.svg",
+      "coverImageAr": "assets/covers/nf-c13-100-ar.svg"
+    },
+    {
+      "id": "nf-c15-100",
+      "collection": "francais",
+      "category": "normes",
+      "titleFr": "NF C 15-100",
+      "titleAr": "المعيار NF C 15-100",
+      "descriptionFr": "Installations électriques — locaux d'habitation.",
+      "descriptionAr": "التركيبات الكهربائية — مساكن.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2025,
+      "pdfUrl": "pdf/nf-c15-100.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/nf-c15-100-fr.svg",
+      "coverImageAr": "assets/covers/nf-c15-100-ar.svg"
+    },
+    {
+      "id": "nf-c20-010",
+      "collection": "francais",
+      "category": "normes",
+      "titleFr": "NF C 20-010",
+      "titleAr": "المعيار NF C 20-010",
+      "descriptionFr": "Installations électriques à basse tension — règles.",
+      "descriptionAr": "قواعد التركيبات الكهربائية منخفضة الجهد.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2024,
+      "pdfUrl": "pdf/nf-c20-010.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/nf-c20-010-fr.svg",
+      "coverImageAr": "assets/covers/nf-c20-010-ar.svg"
     },
     {
       "id": "phaseurs-2pp",
+      "collection": "francais",
       "category": "monophase",
       "titleFr": "Phaseurs — version 2 par page",
       "titleAr": "الأطوار — نسخة صفحتين",
-      "descriptionFr": "Même contenu, mise en page 2 fiches par page pour l’impression.",
+      "descriptionFr": "Même contenu, mise en page 2 fiches par page.",
       "descriptionAr": "نفس المحتوى، تخطيط صفحتين للطباعة.",
       "lang": [
         "fr"
@@ -83,11 +562,12 @@
     },
     {
       "id": "phaseurs-complexes",
+      "collection": "francais",
       "category": "monophase",
       "titleFr": "Phaseurs complexes",
       "titleAr": "أطوار مركبة",
-      "descriptionFr": "Représentation complexe des grandeurs alternatives sinusoïdales.",
-      "descriptionAr": "تمثيل مركب للكميات المتناوبة الجيبية.",
+      "descriptionFr": "Représentation complexe des grandeurs alternatives.",
+      "descriptionAr": "تمثيل مركب للكميات المتناوبة.",
       "lang": [
         "fr"
       ],
@@ -100,49 +580,51 @@
       "coverPreview": "assets/covers/previews/phaseurs-complexes.png"
     },
     {
-      "id": "filtres-passe",
+      "id": "phaseurs-80",
+      "collection": "francais",
       "category": "monophase",
-      "titleFr": "Filtres passifs passe haut / bas",
-      "titleAr": "مرشحات سلبية عالية/منخفضة التردد",
-      "descriptionFr": "Synthèse des filtres du premier ordre (Bode).",
-      "descriptionAr": "ملخص مرشحات الدرجة الأولى (بود).",
-      "lang": [
-        "fr"
-      ],
-      "pages": 0,
-      "year": 2026,
-      "pdfUrl": "https://electrons.ch/data/files/filtredupremierordrebodes2pages.pdf",
-      "featured": false,
-      "coverImageFr": "assets/covers/filtres-passe-fr.svg",
-      "coverImageAr": "assets/covers/filtres-passe-ar.svg",
-      "coverPreview": "assets/covers/previews/filtres-passe.png"
-    },
-    {
-      "id": "triphase-denom",
-      "category": "triphase",
-      "titleFr": "Triphasé — dénominations usuelles",
-      "titleAr": "ثلاثي الطور — التسميات الشائعة",
-      "descriptionFr": "Schémas et vocabulaire étoile, triangle, déséquilibre.",
-      "descriptionAr": "مخططات ومفردات النجمة والمثلث وعدم التوازن.",
+      "titleFr": "Phaseurs en alternatif (80 formules)",
+      "titleAr": "الأطوار في التيار المتناوب (80 صيغة)",
+      "descriptionFr": "Diagrammes vectoriels et formules pour l'alternatif monophasé.",
+      "descriptionAr": "مخططات متجهة وصيغ للتيار المتناوب أحادي الطور.",
       "lang": [
         "fr",
         "ar"
       ],
       "pages": 0,
       "year": 2026,
-      "pdfUrl": "https://electrons.ch/data/files/electrotech/triphasdnominationsusuelles2x.pdf",
+      "pdfUrl": "https://electrons.ch/data/files/electrotech/diagrammevecteur_1770372925.pdf",
       "featured": true,
-      "coverImageFr": "assets/covers/triphase-denom-fr.svg",
-      "coverImageAr": "assets/covers/triphase-denom-ar.svg",
-      "coverPreview": "assets/covers/previews/triphase-denom.png"
+      "coverImageFr": "assets/covers/phaseurs-80-fr.svg",
+      "coverImageAr": "assets/covers/phaseurs-80-ar.svg",
+      "coverPreview": "assets/covers/previews/phaseurs-80.png"
+    },
+    {
+      "id": "ie-pos-5-plan-pq22",
+      "collection": "francais",
+      "category": "installation",
+      "titleFr": "Plan d'installation Expert — IE Pos. 5",
+      "titleAr": "مخطط تركيب Expert — IE Pos. 5",
+      "descriptionFr": "Travail d'expert 2022.",
+      "descriptionAr": "عمل خبير 2022.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2022,
+      "pdfUrl": "pdf/ie-pos-5-plan-pq22.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/ie-pos-5-plan-pq22-fr.svg",
+      "coverImageAr": "assets/covers/ie-pos-5-plan-pq22-ar.svg"
     },
     {
       "id": "magnetisme-resume",
+      "collection": "francais",
       "category": "magnetisme",
       "titleFr": "Résumé du magnétisme",
       "titleAr": "ملخص المغناطيسية",
-      "descriptionFr": "Grandeurs magnétiques et électriques, repères essentiels.",
-      "descriptionAr": "الكميات المغناطيسية والكهربائية، المعالم الأساسية.",
+      "descriptionFr": "Grandeurs magnétiques et électriques.",
+      "descriptionAr": "الكميات المغناطيسية والكهربائية.",
       "lang": [
         "fr",
         "ar"
@@ -156,174 +638,33 @@
       "coverPreview": "assets/covers/previews/magnetisme-resume.png"
     },
     {
-      "id": "energie-suisse",
-      "category": "energie",
-      "titleFr": "Diagramme énergie Suisse (corrigé)",
-      "titleAr": "مخطط الطاقة سويسرا (مصحح)",
-      "descriptionFr": "Vue d’ensemble des flux énergétiques.",
-      "descriptionAr": "نظرة عامة على تدفقات الطاقة.",
+      "id": "triphase-denom",
+      "collection": "francais",
+      "category": "triphase",
+      "titleFr": "Triphasé — dénominations usuelles",
+      "titleAr": "ثلاثي الطور — التسميات",
+      "descriptionFr": "Schémas et vocabulaire étoile, triangle.",
+      "descriptionAr": "مخططات ومفردات النجمة والمثلث.",
       "lang": [
-        "fr"
+        "fr",
+        "ar"
       ],
       "pages": 0,
       "year": 2026,
-      "pdfUrl": "https://electrons.ch/data/files/electrotech/diagrammeenergiesuisse24a4.pdf",
-      "featured": false,
-      "coverImageFr": "assets/covers/energie-suisse-fr.svg",
-      "coverImageAr": "assets/covers/energie-suisse-ar.svg",
-      "coverPreview": "assets/covers/previews/energie-suisse.png"
-    },
-    {
-      "id": "pdie-2018-01",
-      "category": "normes",
-      "titleFr": "PDIE 2018-01",
-      "titleAr": "وثيقة PDIE 2018-01 — التركيب والحماية",
-      "descriptionFr": "Document technique installation électrique et protection (PDIE).",
-      "descriptionAr": "وثيقة تقنية للتركيب الكهربائي والحماية (PDIE).",
-      "lang": [
-        "fr"
-      ],
-      "pages": 0,
-      "year": 2018,
-      "pdfUrl": "pdf/pdie-2018-01.pdf",
+      "pdfUrl": "https://electrons.ch/data/files/electrotech/triphasdnominationsusuelles2x.pdf",
       "featured": true,
-      "coverImageFr": "assets/covers/pdie-2018-01-fr.svg",
-      "coverImageAr": "assets/covers/pdie-2018-01-ar.svg",
-      "coverPreview": "assets/covers/previews/pdie-2018-01.png"
-    },
-    {
-      "id": "nf-c15-100",
-      "category": "normes",
-      "titleFr": "NF C 15-100",
-      "titleAr": "المعيار NF C 15-100 — التركيبات الكهربائية",
-      "descriptionFr": "Norme française — installations électriques à basse tension.",
-      "descriptionAr": "المعيار الفرنسي — التركيبات الكهربائية منخفضة الجهد.",
-      "lang": [
-        "fr"
-      ],
-      "pages": 0,
-      "year": 2025,
-      "pdfUrl": "pdf/nf-c15-100.pdf",
-      "featured": true,
-      "coverImageFr": "assets/covers/nf-c15-100-fr.svg",
-      "coverImageAr": "assets/covers/nf-c15-100-ar.svg",
-      "coverPreview": "assets/covers/previews/nf-c15-100.png"
-    },
-    {
-      "id": "fortec-formulaire-1987",
-      "category": "installation",
-      "titleFr": "Formulaire technique Fortec (1987)",
-      "titleAr": "نموذج Fortec التقني (1987)",
-      "descriptionFr": "Formulaire technique Charle Pache — référence installation et calculs.",
-      "descriptionAr": "نموذج Charle Pache التقني — مرجع للتركيب والحسابات.",
-      "lang": [
-        "fr"
-      ],
-      "pages": 0,
-      "year": 1987,
-      "pdfUrl": "pdf/fortec-formulaire-1987.pdf",
-      "featured": false,
-      "coverImageFr": "assets/covers/fortec-formulaire-1987-fr.svg",
-      "coverImageAr": "assets/covers/fortec-formulaire-1987-ar.svg",
-      "coverPreview": "assets/covers/previews/fortec-formulaire-1987.png"
-    },
-    {
-      "id": "ie-pos-5-pq22",
-      "category": "installation",
-      "titleFr": "Plan d’installation Expert — IE Pos. 5 (PQ22)",
-      "titleAr": "مخطط تركيب Expert — IE Pos. 5 (PQ22)",
-      "descriptionFr": "Travail d’expert 2022 — plan d’installation électrique.",
-      "descriptionAr": "عمل خبير 2022 — مخطط التركيب الكهربائي.",
-      "lang": [
-        "fr"
-      ],
-      "pages": 0,
-      "year": 2022,
-      "pdfUrl": "pdf/ie-pos-5-plan-pq22.pdf",
-      "featured": false,
-      "coverImageFr": "assets/covers/ie-pos-5-pq22-fr.svg",
-      "coverImageAr": "assets/covers/ie-pos-5-pq22-ar.svg",
-      "coverPreview": "assets/covers/previews/ie-pos-5-pq22.png"
-    },
-    {
-      "id": "manuel-principes-protection",
-      "category": "securite",
-      "titleFr": "Manuel technique — Principes de protection",
-      "titleAr": "دليل تقني — مبادئ الحماية",
-      "descriptionFr": "Principes et règles de protection des installations électriques.",
-      "descriptionAr": "مبادئ وقواعد حماية التركيبات الكهربائية.",
-      "lang": [
-        "fr"
-      ],
-      "pages": 0,
-      "year": 0,
-      "pdfUrl": "pdf/manuel-principes-protection.pdf",
-      "featured": false,
-      "coverImageFr": "assets/covers/manuel-principes-protection-fr.svg",
-      "coverImageAr": "assets/covers/manuel-principes-protection-ar.svg",
-      "coverPreview": "assets/covers/previews/manuel-principes-protection.png"
-    },
-    {
-      "id": "com-katalog-22-fr",
-      "category": "installation",
-      "titleFr": "Catalogue COM 2022 (FR)",
-      "titleAr": "كتالوج COM 2022 (فرنسي)",
-      "descriptionFr": "Catalogue composants et matériel électrique COM.",
-      "descriptionAr": "كتالوج مكونات ومعدات كهربائية COM.",
-      "lang": [
-        "fr"
-      ],
-      "pages": 0,
-      "year": 2022,
-      "pdfUrl": "pdf/com-katalog-22-fr.pdf",
-      "featured": false,
-      "coverImageFr": "assets/covers/com-katalog-22-fr-fr.svg",
-      "coverImageAr": "assets/covers/com-katalog-22-fr-ar.svg",
-      "coverPreview": "assets/covers/previews/com-katalog-22-fr.png"
-    },
-    {
-      "id": "diagnostic-moteurs-ac",
-      "category": "autres",
-      "titleFr": "Diagnostic des pannes — moteurs à courant alternatif",
-      "titleAr": "تشخيص الأعطال الكهربائية لمحركات التيار المتردد",
-      "descriptionFr": "Guide de diagnostic des défauts sur moteurs AC.",
-      "descriptionAr": "دليل تشخيص أعطال محركات التيار المتردد.",
-      "lang": [
-        "ar"
-      ],
-      "pages": 0,
-      "year": 2021,
-      "pdfUrl": "pdf/diagnostic-moteurs-ac.pdf",
-      "featured": true,
-      "coverImageFr": "assets/covers/diagnostic-moteurs-ac-fr.svg",
-      "coverImageAr": "assets/covers/diagnostic-moteurs-ac-ar.svg",
-      "coverPreview": "assets/covers/previews/diagnostic-moteurs-ac.png"
-    },
-    {
-      "id": "generateurs-electriques",
-      "category": "energie",
-      "titleFr": "Génératrices électriques",
-      "titleAr": "المولدات الكهربائية",
-      "descriptionFr": "Fonctionnement et caractéristiques des génératrices.",
-      "descriptionAr": "تشغيل وخصائص المولدات الكهربائية.",
-      "lang": [
-        "ar"
-      ],
-      "pages": 0,
-      "year": 2022,
-      "pdfUrl": "pdf/generateurs-electriques.pdf",
-      "featured": false,
-      "coverImageFr": "assets/covers/generateurs-electriques-fr.svg",
-      "coverImageAr": "assets/covers/generateurs-electriques-ar.svg",
-      "coverPreview": "assets/covers/previews/generateurs-electriques.png"
+      "coverImageFr": "assets/covers/triphase-denom-fr.svg",
+      "coverImageAr": "assets/covers/triphase-denom-ar.svg",
+      "coverPreview": "assets/covers/previews/triphase-denom.png"
     },
     {
       "id": "plc-hassan-elshhat",
+      "collection": "arabe",
       "category": "installation",
-      "titleFr": "Automatisme — API (Hassan El Chahat)",
+      "titleFr": "API — Hassan El Chahat",
       "titleAr": "التحكم المنطقي المبرمج — م. حسن الشحات",
-      "descriptionFr": "Commande logique programmée et automatismes industriels.",
-      "descriptionAr": "التحكم المنطقي المبرمج والأتمتة الصناعية.",
+      "descriptionFr": "Automatisme et API.",
+      "descriptionAr": "الأتمتة والتحكم المنطقي المبرمج.",
       "lang": [
         "ar"
       ],
@@ -332,43 +673,97 @@
       "pdfUrl": "pdf/plc-hassan-elshhat.pdf",
       "featured": true,
       "coverImageFr": "assets/covers/plc-hassan-elshhat-fr.svg",
-      "coverImageAr": "assets/covers/plc-hassan-elshhat-ar.svg",
-      "coverPreview": "assets/covers/previews/plc-hassan-elshhat.png"
+      "coverImageAr": "assets/covers/plc-hassan-elshhat-ar.svg"
     },
     {
-      "id": "memento-ddr",
-      "category": "normes",
-      "titleFr": "Mémento — différentiels & DDR",
-      "titleAr": "مذكرة — التفاضلي و DDR",
-      "descriptionFr": "Sensibilités 30 mA / 300 mA, types AC/A — fiche DZSWISS ELEC (à publier).",
-      "descriptionAr": "حساسيات 30 mA / 300 mA، أنواع AC/A — ورقة DZSWISS ELEC (قريبًا).",
+      "id": "apprentissage-automatisme",
+      "collection": "arabe",
+      "category": "installation",
+      "titleFr": "Apprendre à lire les schémas d'automatisme",
+      "titleAr": "تعلم كيف تقرأ دوائر التحكم الآلي",
+      "descriptionFr": "Lecture et compréhension des circuits de commande automatisée.",
+      "descriptionAr": "قراءة وفهم دوائر التحكم الآلي.",
       "lang": [
-        "fr",
         "ar"
       ],
-      "pages": 18,
-      "year": 2026,
-      "pdfUrl": "",
-      "featured": false,
-      "coverImageFr": "assets/covers/memento-ddr-fr.svg",
-      "coverImageAr": "assets/covers/memento-ddr-ar.svg"
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/apprentissage-automatisme.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/apprentissage-automatisme-fr.svg",
+      "coverImageAr": "assets/covers/apprentissage-automatisme-ar.svg"
     },
     {
-      "id": "guide-tableau",
-      "category": "installation",
-      "titleFr": "Guide tableau domestique",
-      "titleAr": "دليل لوحة المنزل",
-      "descriptionFr": "Dimensionnement et étiquetage — document interne à venir.",
-      "descriptionAr": "التحجيم والتسمية — وثيقة داخلية قريبًا.",
+      "id": "diagnostic-moteurs-ac",
+      "collection": "arabe",
+      "category": "autres",
+      "titleFr": "Diagnostic moteurs AC",
+      "titleAr": "تشخيص الأعطال الكهربائية لمحركات التيار المتردد",
+      "descriptionFr": "Diagnostic des pannes sur moteurs à courant alternatif.",
+      "descriptionAr": "تشخيص أعطال محركات التيار المتردد.",
       "lang": [
-        "fr"
+        "ar"
       ],
-      "pages": 32,
-      "year": 2026,
-      "pdfUrl": "",
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/diagnostic-moteurs-ac.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/diagnostic-moteurs-ac-fr.svg",
+      "coverImageAr": "assets/covers/diagnostic-moteurs-ac-ar.svg"
+    },
+    {
+      "id": "generateurs-electriques",
+      "collection": "arabe",
+      "category": "energie",
+      "titleFr": "Génératrices électriques",
+      "titleAr": "المولدات الكهربائية",
+      "descriptionFr": "Fonctionnement des génératrices.",
+      "descriptionAr": "تشغيل المولدات الكهربائية.",
+      "lang": [
+        "ar"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/generateurs-electriques.pdf",
       "featured": false,
-      "coverImageFr": "assets/covers/guide-tableau-fr.svg",
-      "coverImageAr": "assets/covers/guide-tableau-ar.svg"
+      "coverImageFr": "assets/covers/generateurs-electriques-fr.svg",
+      "coverImageAr": "assets/covers/generateurs-electriques-ar.svg"
+    },
+    {
+      "id": "fichier-electrique-ar",
+      "collection": "arabe",
+      "category": "installation",
+      "titleFr": "Le dossier électrique (AR)",
+      "titleAr": "الملف الكهربي",
+      "descriptionFr": "Constitution et contenu du dossier électrique.",
+      "descriptionAr": "تكوين ومحتوى الملف الكهربي.",
+      "lang": [
+        "ar"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/fichier-electrique-ar.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/fichier-electrique-ar-fr.svg",
+      "coverImageAr": "assets/covers/fichier-electrique-ar-ar.svg"
+    },
+    {
+      "id": "variateur-moteurs-ar",
+      "collection": "arabe",
+      "category": "energie",
+      "titleFr": "Variateur et moteurs à induction",
+      "titleAr": "الإنفرتر وتنظيم سرعة المحركات الحثية",
+      "descriptionFr": "Variation de vitesse des moteurs asynchrones.",
+      "descriptionAr": "تنظيم سرعة المحركات الحثية.",
+      "lang": [
+        "ar"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/variateur-moteurs-ar.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/variateur-moteurs-ar-fr.svg",
+      "coverImageAr": "assets/covers/variateur-moteurs-ar-ar.svg"
     }
   ]
 }

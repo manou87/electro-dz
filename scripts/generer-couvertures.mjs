@@ -14,6 +14,7 @@ const outDir = path.join(root, "assets/covers");
 
 const GRADIENTS = {
   normes: ["#1e40af", "#0f172a"],
+  formation: ["#0369a1", "#0f172a"],
   installation: ["#0d9488", "#0f172a"],
   monophase: ["#ca8a04", "#713f12"],
   triphase: ["#059669", "#064e3b"],
