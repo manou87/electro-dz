@@ -1,11 +1,18 @@
 (function () {
   'use strict';
 
+  const qs = location.search || '';
+  const hash = location.hash || '';
+  if (new URLSearchParams(qs).get('code') || hash.includes('access_token=')) {
+    location.replace('auth-callback.html' + qs + hash);
+    return;
+  }
+
   const sb = window.ElectroDzAuth.getClient();
-  const redirectTo = window.ElectroDzAuth.redirectAfterAuth();
+  const redirectTo = window.ElectroDzAuth.oauthCallbackUrl();
 
   sb.auth.getSession().then(({ data: { session } }) => {
-    if (session) location.href = 'dashboard.html';
+    if (session) location.href = window.ElectroDzAuth.redirectAfterAuth();
   });
 
   const msgEl = document.getElementById('msg');
@@ -73,10 +80,20 @@
     if (btn) btn.textContent = 'Compte créé !';
   });
 
-  document.getElementById('gBtn')?.addEventListener('click', () => {
-    sb.auth.signInWithOAuth({
-      provider: 'google',
-      options: { redirectTo },
-    });
+  document.getElementById('gBtn')?.addEventListener('click', async () => {
+    const btn = document.getElementById('gBtn');
+    if (btn) {
+      btn.disabled = true;
+      btn.style.opacity = '0.7';
+    }
+    try {
+      await window.ElectroDzAuth.signInWithGoogle();
+    } catch (err) {
+      showMsg(err?.message || 'Connexion Google indisponible.', 'e');
+      if (btn) {
+        btn.disabled = false;
+        btn.style.opacity = '';
+      }
+    }
   });
 })();

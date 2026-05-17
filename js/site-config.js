@@ -16,8 +16,13 @@
   const SUPABASE_REDIRECT_URLS = [
     'https://electro-dz.com/auth-callback.html',
     'https://www.electro-dz.com/auth-callback.html',
+    'https://electro-dz.com/**',
+    'https://www.electro-dz.com/**',
+    'https://electro-dz.com/oauth/consent',
+    'https://electro-dz.com/oauth/consent/',
     'http://localhost:5500/auth-callback.html',
     'http://127.0.0.1:5500/auth-callback.html',
+    'http://localhost:8765/auth-callback.html',
   ];
 
   const SUPABASE_SITE_URL = 'https://electro-dz.com';

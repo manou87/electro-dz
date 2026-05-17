@@ -10,8 +10,11 @@
   const SUPABASE_ANON_KEY = cfg.supabase?.anonKey || '';
 
   function oauthCallbackUrl() {
+    if (typeof g.location !== 'undefined' && g.location.origin) {
+      return g.location.origin + '/auth-callback.html';
+    }
     if (cfg.url?.oauthCallback) return cfg.url.oauthCallback();
-    return (cfg.resolveSiteBase?.() || 'https://electro-dz.com') + '/auth-callback.html';
+    return 'https://electro-dz.com/auth-callback.html';
   }
 
   const POST_AUTH_REDIRECT_KEY = 'electro_post_auth_redirect';
@@ -24,8 +27,11 @@
         return saved;
       }
     } catch (_) {}
+    if (typeof g.location !== 'undefined' && g.location.origin) {
+      return g.location.origin + '/dashboard.html';
+    }
     if (cfg.url?.dashboard) return cfg.url.dashboard();
-    return (cfg.resolveSiteBase?.() || 'https://electro-dz.com') + '/dashboard.html';
+    return 'https://electro-dz.com/dashboard.html';
   }
 
   function savePostAuthRedirect(url) {

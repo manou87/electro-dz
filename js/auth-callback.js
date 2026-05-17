@@ -51,7 +51,9 @@
         if (error) {
           fail(
             error.message +
-              ' — Ajoutez https://electro-dz.com/auth-callback.html dans Supabase → Redirect URLs.'
+              ' — Vérifiez Supabase → Redirect URLs : ' +
+              location.origin +
+              '/auth-callback.html'
           );
           return;
         }
@@ -61,9 +63,19 @@
           fail(error.message);
           return;
         }
+      } else {
+        await new Promise((resolve) => {
+          const { data: { subscription } } = sb.auth.onAuthStateChange((event, session) => {
+            if (event === 'SIGNED_IN' && session) {
+              subscription.unsubscribe();
+              resolve();
+            }
+          });
+          setTimeout(resolve, 2500);
+        });
       }
 
-      const session = await waitForSession(sb, 4000);
+      const session = await waitForSession(sb, 3000);
       if (!session) {
         fail(
           'Session introuvable après Google. Vérifiez Redirect URLs : https://electro-dz.com/auth-callback.html'
