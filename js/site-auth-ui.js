@@ -20,6 +20,28 @@
 
   let currentUser = null;
 
+  function injectStyles() {
+    if (document.getElementById('edz-auth-ui-style')) return;
+    const s = document.createElement('style');
+    s.id = 'edz-auth-ui-style';
+    s.textContent =
+      '.nav-extra.edz-auth-off,[data-nav-login].edz-auth-off,[data-nav-register].edz-auth-off{display:none!important}';
+    document.head.appendChild(s);
+  }
+
+  function setNavVisible(el, visible) {
+    if (!el) return;
+    if (visible) {
+      el.hidden = false;
+      el.classList.remove('edz-auth-off');
+      el.removeAttribute('aria-hidden');
+    } else {
+      el.hidden = true;
+      el.classList.add('edz-auth-off');
+      el.setAttribute('aria-hidden', 'true');
+    }
+  }
+
   function getLang() {
     try {
       if (localStorage.getItem('electrodz-site-lang') === 'fr') return 'fr';
@@ -42,13 +64,13 @@
     const dash = DASHBOARD_URL();
 
     document.querySelectorAll('[data-nav-login]').forEach((el) => {
-      el.hidden = true;
+      setNavVisible(el, false);
     });
     document.querySelectorAll('[data-nav-register]').forEach((el) => {
-      el.hidden = true;
+      setNavVisible(el, false);
     });
     document.querySelectorAll('[data-nav-dashboard]').forEach((el) => {
-      el.hidden = false;
+      setNavVisible(el, true);
       if (el.tagName === 'A') el.href = dash;
       el.title = user?.email || '';
     });
@@ -74,14 +96,14 @@
     const login = LOGIN_URL();
 
     document.querySelectorAll('[data-nav-login]').forEach((el) => {
-      el.hidden = false;
+      setNavVisible(el, true);
       if (el.tagName === 'A') el.href = login;
     });
     document.querySelectorAll('[data-nav-register]').forEach((el) => {
-      el.hidden = false;
+      setNavVisible(el, true);
     });
     document.querySelectorAll('[data-nav-dashboard]').forEach((el) => {
-      el.hidden = true;
+      setNavVisible(el, false);
     });
 
     document.querySelectorAll('[data-hub-member]').forEach((el) => {
@@ -104,6 +126,7 @@
   }
 
   async function init() {
+    injectStyles();
     if (!g.ElectroDzAuth?.getClient) return;
     let sb;
     try {
@@ -112,16 +135,16 @@
       return;
     }
 
+    sb.auth.onAuthStateChange((_event, nextSession) => {
+      if (nextSession?.user) applyLoggedIn(nextSession.user);
+      else applyLoggedOut();
+    });
+
     const {
       data: { session },
     } = await sb.auth.getSession();
     if (session?.user) applyLoggedIn(session.user);
     else applyLoggedOut();
-
-    sb.auth.onAuthStateChange((_event, nextSession) => {
-      if (nextSession?.user) applyLoggedIn(nextSession.user);
-      else applyLoggedOut();
-    });
 
     document.querySelectorAll('.lang-btn[data-lang]').forEach((btn) => {
       btn.addEventListener('click', () => {

@@ -72,8 +72,8 @@
     @media(max-width:640px){
       .logo-text{display:none}
       .logo-img{width:36px;height:36px}
-      .nav-extra{display:inline-flex;align-items:center;font-size:.58rem;padding:4px 7px}
-      .nav-extra--cta{font-size:.56rem;padding:4px 7px}
+      .nav-extra:not(.edz-auth-off):not([hidden]){display:inline-flex;align-items:center;font-size:.58rem;padding:4px 7px}
+      .nav-extra--cta:not(.edz-auth-off):not([hidden]){font-size:.56rem;padding:4px 7px}
       .lang-btn{padding:3px 6px;font-size:.58rem;min-width:24px}
     }
     @media(min-width:641px){
