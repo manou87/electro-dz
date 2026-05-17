@@ -91,13 +91,29 @@
     }
   }
 
-  /** Aperçu réel (1re page PDF) en priorité, puis couverture SVG */
+  function defaultPreviewPath(book) {
+    if (!book.id) return "";
+    const url = (book.pdfUrl || "").trim();
+    if (!url || url === "#") return "";
+    return "assets/covers/previews/" + book.id + ".png";
+  }
+
+  /** Vignette 1re page PDF en priorité, puis couverture SVG */
   function bookCoverSrc(book) {
     if (book.coverPreview) return book.coverPreview;
+    const preview = defaultPreviewPath(book);
+    if (preview) return preview;
     if (lang === "ar" && book.coverImageAr) return book.coverImageAr;
     if (book.coverImageFr) return book.coverImageFr;
     if (book.coverImageAr) return book.coverImageAr;
     return book.coverImage || "";
+  }
+
+  function usesPdfPreview(book) {
+    return !!(
+      book.coverPreview ||
+      defaultPreviewPath(book)
+    );
   }
 
   function setLang(next) {
@@ -193,7 +209,8 @@
     inner.className = "book-card-inner";
 
     const coverDiv = document.createElement("div");
-    coverDiv.className = "book-cover" + (book.coverPreview ? " book-cover--preview" : "");
+    const wantsPreview = usesPdfPreview(book);
+    coverDiv.className = "book-cover" + (wantsPreview ? " book-cover--preview" : "");
     const coverSrc = bookCoverSrc(book).trim();
     const svgFallback =
       (lang === "ar" && book.coverImageAr) ||
@@ -209,9 +226,12 @@
       img.alt = title;
       img.loading = "lazy";
       img.decoding = "async";
+      let triedSvg = false;
       img.onerror = function () {
-        if (book.coverPreview && svgFallback && img.src.indexOf(".svg") === -1) {
+        if (!triedSvg && svgFallback && img.src.indexOf(".svg") === -1) {
+          triedSvg = true;
           img.src = resolveAssetUrl(svgFallback);
+          coverDiv.classList.remove("book-cover--preview");
           return;
         }
         img.remove();
