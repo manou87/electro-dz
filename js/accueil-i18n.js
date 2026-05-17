@@ -2,7 +2,7 @@
   var T = {
     fr: {
       "meta.title": "DZSWISS ELEC — Outils pour électriciens",
-      "logo.sub": "Précision suisse, passion algérienne",
+      "logo.sub": "Site officiel · page Facebook « Electro DZ »",
       "nav.login": "Connexion",
       "nav.join": "Rejoindre",
       "hero.title": "DZSWISS ELEC",
@@ -79,7 +79,7 @@
       "pill.help": "Aide",
       "social.title": "Notre communauté DZSWISS ELEC",
       "social.sub": "Suivez-nous — tutoriels, astuces chantier et actualités",
-      "social.fb": "Page Facebook",
+      "social.fb": "Electro DZ",
       "footer": "© 2026 DZSWISS ELEC — electro-dz.com",
       "stats.today": "Visiteurs aujourd'hui",
       "stats.total": "Visites totales",
@@ -87,7 +87,7 @@
     },
     ar: {
       "meta.title": "DZSWISS ELEC — أدوات للكهربائيين",
-      "logo.sub": "دقة سويسرية، شغف جزائري",
+      "logo.sub": "الموقع الرسمي · صفحة فيسبوك Electro DZ",
       "nav.login": "دخول",
       "nav.join": "انضم إلينا",
       "hero.title": "DZSWISS ELEC",
@@ -164,7 +164,7 @@
       "pill.help": "مساعدة",
       "social.title": "مجتمعنا DZSWISS ELEC",
       "social.sub": "تابعنا — دروس، نصائح موقع وآخر الأخبار",
-      "social.fb": "صفحة فيسبوك",
+      "social.fb": "Electro DZ",
       "footer": "© 2026 DZSWISS ELEC — electro-dz.com",
       "stats.today": "زوار اليوم",
       "stats.total": "إجمالي الزيارات",
