@@ -1,12 +1,10 @@
 /**
- * Page Formations — PDF (livres.json) + modules vidéo (formations.json)
+ * Page Formations — PDF (livres.json) ; école Algérie annoncée sur la page (pas de vidéos)
  * PDF protégés : même codes que la bibliothèque (library-protected.js)
  */
 (function () {
   var STORAGE = "electrodz-site-lang";
   var grid = document.querySelector("[data-formation-books]");
-  var videoGrid = document.querySelector("[data-formation-videos]");
-  var videoBlock = document.querySelector("[data-formation-videos-block]");
   var emptyBooks = document.querySelector("[data-formation-books-empty]");
   var countEl = document.querySelector("[data-formation-count]");
 
@@ -193,35 +191,6 @@
     });
   }
 
-  function renderVideoModules(modules) {
-    if (!videoGrid || !videoBlock) return;
-    videoGrid.innerHTML = "";
-    var list = (modules || []).filter(function (m) {
-      return m && (m.videoUrl || m.youtubeUrl);
-    });
-    if (!list.length) {
-      videoBlock.hidden = false;
-      return;
-    }
-    videoBlock.hidden = false;
-    list.forEach(function (mod) {
-      var title = lang === "ar" ? mod.titleAr || mod.titleFr : mod.titleFr;
-      var el = document.createElement("article");
-      el.className = "formation-video-card";
-      var href = mod.youtubeUrl || mod.videoUrl;
-      el.innerHTML =
-        "<h3>" +
-        escapeHtml(title || "") +
-        "</h3>" +
-        '<a class="btn btn-primary" href="' +
-        escapeHtml(href) +
-        '" target="_blank" rel="noopener noreferrer">' +
-        escapeHtml(t("Voir la vidéo", "مشاهدة الفيديو")) +
-        "</a>";
-      videoGrid.appendChild(el);
-    });
-  }
-
   function load() {
     fetch("data/livres.json", { cache: "no-store" })
       .then(function (r) {
@@ -229,20 +198,6 @@
         return r.json();
       })
       .then(function (catalog) {
-        return fetch("data/formations.json", { cache: "no-store" })
-          .then(function (r) {
-            return r.ok ? r.json() : { modules: [] };
-          })
-          .catch(function () {
-            return { modules: [] };
-          })
-          .then(function (formations) {
-            return { catalog: catalog, formations: formations };
-          });
-      })
-      .then(function (results) {
-        var catalog = results.catalog;
-        var formations = results.formations;
         var books = (catalog.books || []).filter(function (b) {
           return b.category === "formation" && b.pdfUrl && b.pdfUrl !== "#";
         });
@@ -250,7 +205,6 @@
           return (b.year || 0) - (a.year || 0);
         });
         renderBooks(books);
-        renderVideoModules(formations.modules);
       })
       .catch(function () {
         if (emptyBooks) {

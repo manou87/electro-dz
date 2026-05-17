@@ -1,26 +1,15 @@
-Dossier des futures formations vidéo (Algérie)
-==============================================
+Formations en école (Algérie) — pas de vidéos sur le site
+============================================================
 
-Placez ici les fichiers publiés sur le site :
-  - videos/     → fichiers .mp4 ou liens YouTube à référencer dans data/formations.json
-  - supports/   → PDF de cours, fiches, exercices
+Le parcours formation Electro DZ en Algérie sera en présentiel
+dans une école partenaire (salle, atelier, terrain) — pas de cours
+publiés en vidéo sur electro-dz.com.
 
-Le catalogue affiché sur formations.html est piloté par :
-  - data/formations.json   (modules vidéo « Algérie »)
-  - data/livres.json       (PDF catégorie « formation », déjà listés automatiquement)
+Ce dossier sert aux documents internes ou supports remis en classe
+si besoin (PDF, fiches) — pas à un catalogue vidéo en ligne.
 
-Après ajout d’un module, éditez data/formations.json, par exemple :
+Les PDF de révision restent listés sur formations.html (catégorie
+« formation » dans data/livres.json), avec les mêmes codes d’accès
+que la bibliothèque (FET, AE professionnel).
 
-  {
-    "id": "install-dom-dz-01",
-    "titleFr": "Installation domestique — partie 1",
-    "titleAr": "تركيب منزلي — الجزء 1",
-    "type": "video",
-    "videoUrl": "files/formations/videos/install-dom-dz-01.mp4",
-    "thumb": "assets/covers/formations/install-dom-dz-01.jpg",
-    "lang": ["fr", "ar"],
-    "country": "DZ",
-    "featured": true
-  }
-
-Puis commit + push du site (dépôt website/).
+Annonces : page Facebook Electro DZ · WhatsApp +213 555 429 960
