@@ -49,9 +49,16 @@
       if (code) {
         const { error } = await sb.auth.exchangeCodeForSession(code);
         if (error) {
+          const msg = error.message || '';
+          if (/invalid api key/i.test(msg)) {
+            fail(
+              'Clé API Supabase invalide sur le site. Dashboard → Settings → API → copiez la clé « anon public », puis : node scripts/set-anon-key.mjs VOTRE_CLE (voir supabase/COPIER-CLE-ANON.txt).'
+            );
+            return;
+          }
           fail(
-            error.message +
-              ' — Vérifiez Supabase → Redirect URLs : ' +
+            msg +
+              ' — Vérifiez aussi Redirect URLs : ' +
               location.origin +
               '/auth-callback.html'
           );

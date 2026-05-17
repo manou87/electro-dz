@@ -62,6 +62,12 @@
 
   function formatAuthError(error) {
     const msg = error?.msg || error?.message || String(error);
+    if (/invalid api key/i.test(msg)) {
+      return (
+        'Clé API Supabase invalide (site-config.js). ' +
+        'Copiez la clé « anon » depuis le dashboard Supabase → Settings → API.'
+      );
+    }
     if (/provider is not enabled/i.test(msg)) {
       return (
         'Google n’est pas activé dans Supabase. Ouvrez le dashboard → Authentication → ' +

@@ -1,0 +1,22 @@
+ERREUR « Invalid API key » = la clé dans js/site-config.js est fausse ou révoquée.
+
+ÉTAPES (2 minutes)
+------------------
+1. Ouvrez :
+   https://supabase.com/dashboard/project/wxiqqcnzcxswdqzubxyt/settings/api
+
+2. Section « Project API keys »
+   Copiez la clé « anon » / « public » (longue chaîne commençant par eyJ…)
+   NE PAS copier service_role (secret).
+
+3. Dans le terminal, depuis le dossier website/ :
+   node scripts/set-anon-key.mjs COLLEZ_LA_CLE_ICI
+
+4. Publiez le site :
+   git add js/site-config.js
+   git commit -m "Mise à jour clé anon Supabase"
+   git push origin main
+
+5. Attendez 3–5 min, retestez Google sur login.html
+
+Alternative : remplacez à la main la ligne SUPABASE_ANON_KEY dans js/site-config.js
