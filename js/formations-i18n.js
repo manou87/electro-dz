@@ -38,7 +38,7 @@
       "section.pdf.sub": "Modules du programme suisse (FET, AE…) — lecture en ligne avec code d'accès.",
       "section.school": "École en Algérie",
       "section.school.soon":
-        "Pas de formation par vidéo sur ce site. Le parcours prévu se fera en école : programmes suisses, gestes professionnels suisses, matériel et méthodes adaptés aux chantiers algériens. Projet en préparation.",
+        "Programmes suisses, savoir-faire suisse, matériel et méthodes adaptés aux chantiers algériens. Projet en préparation.",
       "section.empty": "Aucun PDF formation pour le moment.",
       "link.library": "Toute la bibliothèque PDF →",
       "footer.copy": "© 2026 DZSWISS ELEC — electro-dz.com",
@@ -76,7 +76,7 @@
       "section.pdf.sub": "وحدات البرنامج السويسري (FET، AE…) — قراءة على الموقع برمز وصول.",
       "section.school": "مدرسة في الجزائر",
       "section.school.soon":
-        "لا تكوين بالفيديو على هذا الموقع. المسار المخطط حضورياً في مدرسة: برامج سويسرية، أسلوب عمل سويسري، معدات وأساليب ملائمة لورش الجزائر. المشروع قيد الإعداد.",
+        "برامج سويسرية، أسلوب عمل سويسري، معدات وأساليب ملائمة لورش الجزائر. المشروع قيد الإعداد.",
       "section.empty": "لا يوجد PDF تكوين حالياً.",
       "link.library": "كل مكتبة PDF ←",
       "footer.copy": "© 2026 DZSWISS ELEC — electro-dz.com",
