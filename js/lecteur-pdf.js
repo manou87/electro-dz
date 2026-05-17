@@ -16,7 +16,7 @@
       fr: fromPage.indexOf("documentation") !== -1 ? "← Doc" : "← Biblio",
       ar: fromPage.indexOf("documentation") !== -1 ? "← وثائق" : "← مكتبة",
     },
-    download: { fr: "↓", ar: "↓" },
+    download: { fr: "Télécharger PDF", ar: "تنزيل PDF" },
     openExternal: { fr: "Ouvrir le PDF", ar: "فتح PDF" },
     loading: { fr: "Chargement…", ar: "جاري التحميل…" },
     loadingPage: { fr: "Page", ar: "صفحة" },

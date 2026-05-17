@@ -6,6 +6,7 @@
 <title>Inscription - DZSWISS ELEC</title>
 <link rel="icon" href="assets/app-icon.png" type="image/png"/>
 <link rel="stylesheet" href="css/site-brand.css"/>
+<link rel="stylesheet" href="css/auth-pages.css"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f172a;min-height:100vh;display:flex;flex-direction:column}
@@ -14,7 +15,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:15px 2
 .logo-card{display:block;width:72px;height:72px;margin:0 auto 12px;border-radius:50%;object-fit:cover;border:2px solid rgba(250,204,21,.45);background:#000}
 .nav-a{color:#94a3b8;font-size:.84rem;text-decoration:none}
 .nav-a:hover{color:#facc15}
-.page{flex:1;display:flex;align-items:center;justify-content:center;padding:32px 16px}
+.page{flex:1;display:flex}
 .card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:40px 36px;width:100%;max-width:430px}
 .ico{text-align:center;font-size:2rem;margin-bottom:6px}
 h1{color:#f1f5f9;font-size:1.4rem;font-weight:800;text-align:center;margin-bottom:4px}
@@ -51,8 +52,8 @@ footer{text-align:center;padding:20px;color:#334155;font-size:.75rem;border-top:
   <a href="index.html" class="logo"><img src="assets/app-icon.png" alt="" class="logo-img" width="36" height="36" decoding="async"/> DZSWISS ELEC</a>
   <a href="login.html" class="nav-a">Connexion &rarr;</a>
 </nav>
-<div class="page">
-  <div class="card">
+<div class="page auth-page">
+  <div class="card auth-card auth-card-layout">
       <img src="assets/app-icon.png" alt="DZSWISS ELEC" class="logo-card" width="72" height="72" decoding="async"/>
     <p style="text-align:center;font-size:.8rem;color:#64748b;font-style:italic;margin:-8px 0 18px">Bientôt, les surprises…</p>
     <h1>Creer un compte</h1>
@@ -63,7 +64,13 @@ footer{text-align:center;padding:20px;color:#334155;font-size:.75rem;border-top:
       <div class="feat"><span class="feat-i">&#9889;</span><div class="feat-t">Calculs</div></div>
     </div>
     <div class="msg" id="msg"></div>
-    <form id="form">
+    <p class="auth-hint-google">Inscription rapide avec Google</p>
+    <button type="button" class="btn-g auth-google-first" id="gBtn">
+      <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.35-8.16 2.35-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      Continuer avec Google
+    </button>
+    <div class="sep auth-sep-first"><span>ou avec e-mail</span></div>
+    <form id="form" class="auth-form-block">
       <div class="fg">
         <label>Prenom &amp; Nom</label>
         <input type="text" id="name" placeholder="Ahmed Benali" required/>
@@ -83,11 +90,6 @@ footer{text-align:center;padding:20px;color:#334155;font-size:.75rem;border-top:
       </div>
       <button type="submit" class="btn" id="btn">Creer mon compte gratuitement</button>
     </form>
-    <div class="sep"><span>ou</span></div>
-    <button class="btn-g" id="gBtn">
-      <svg width="17" height="17" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.35-8.16 2.35-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-      Continuer avec Google
-    </button>
     <p class="foot">Deja un compte ? <a href="login.html">Se connecter</a></p>
   </div>
 </div>

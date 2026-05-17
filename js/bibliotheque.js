@@ -292,6 +292,18 @@
       read.href = pdfViewerHref(book);
       read.textContent = t("Lire le PDF", "قراءة PDF");
       actions.appendChild(read);
+
+      const dl = document.createElement("a");
+      dl.className = "btn btn-download btn-sm";
+      dl.href = resolveAssetUrl(book.pdfUrl);
+      dl.setAttribute("download", "");
+      dl.textContent = t("Télécharger PDF", "تنزيل PDF");
+      dl.addEventListener("click", function () {
+        if (book.id && window.ElectroDzPdfStats) {
+          window.ElectroDzPdfStats.trackDownload(book.id);
+        }
+      });
+      actions.appendChild(dl);
     } else {
       const soon = document.createElement("span");
       soon.className = "book-soon";

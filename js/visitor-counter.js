@@ -1,5 +1,6 @@
 /**
- * Compteur de visites — SITE WEB uniquement (barre fixe en bas, Supabase).
+ * Compteur de visites — barre fixe (toutes pages sauf lecteur PDF).
+ * Stats PDF (lectures / téléchargements) : uniquement sur bibliotheque.html.
  */
 (function () {
   'use strict';
@@ -11,6 +12,10 @@
   const SESSION_COUNTED = 'edz_visit_counted';
   const SESSION_STATS = 'edz_visitor_stats';
 
+  const path = location.pathname || '';
+  const isLibraryPage = /bibliotheque\.html$/i.test(path);
+  const skipFixedBar = /lecteur-pdf\.html$/i.test(path);
+
   const LABELS = {
     fr: { today: "Visiteurs aujourd'hui", total: 'Visites totales' },
     ar: { today: 'زوار اليوم', total: 'إجمالي الزيارات' },
@@ -20,8 +25,6 @@
     fr: { views: 'Lectures PDF', downloads: 'Téléchargements PDF' },
     ar: { views: 'قراءات PDF', downloads: 'تنزيلات PDF' },
   };
-
-  const skipFixedBar = /lecteur-pdf\.html$/i.test(location.pathname || '');
 
   function getLang() {
     try {
@@ -84,6 +87,17 @@
       body.edz-has-visitor-bar{
         padding-bottom:calc(52px + env(safe-area-inset-bottom,0px));
       }
+      .library-pdf-stats{
+        display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;
+        margin-top:12px;padding:10px 14px;
+        font-size:.85rem;color:#94a3b8;
+        background:rgba(255,255,255,0.04);
+        border:1px solid rgba(250,204,21,0.22);
+        border-radius:10px;
+      }
+      .library-pdf-stats strong{
+        color:#facc15;font-weight:800;font-variant-numeric:tabular-nums;
+      }
       footer .visitor-stats{display:none!important}
     `;
     document.head.appendChild(s);
@@ -93,9 +107,8 @@
     return PDF_LABELS[lang] || PDF_LABELS.fr;
   }
 
-  function statsHtml(lang) {
+  function visitorBarHtml(lang) {
     const t = labelsForLang(lang);
-    const p = pdfLabels(lang);
     return (
       '<span>' +
       t.today +
@@ -103,8 +116,13 @@
       '<span class="visitor-sep" aria-hidden="true">·</span>' +
       '<span>' +
       t.total +
-      ' : <strong data-edz-visitors-total>…</strong></span>' +
-      '<span class="visitor-sep" aria-hidden="true">·</span>' +
+      ' : <strong data-edz-visitors-total>…</strong></span>'
+    );
+  }
+
+  function pdfStatsHtml(lang) {
+    const p = pdfLabels(lang);
+    return (
       '<span>' +
       p.views +
       ' : <strong data-edz-pdf-views>…</strong></span>' +
@@ -118,17 +136,31 @@
   function mountUi() {
     if (skipFixedBar) return;
     injectStyles();
-    if (document.getElementById('edz-visitor-bar')) return;
+    if (!document.getElementById('edz-visitor-bar')) {
+      const lang = getLang();
+      const bar = document.createElement('div');
+      bar.id = 'edz-visitor-bar';
+      bar.className = 'edz-visitor-bar';
+      bar.setAttribute('aria-live', 'polite');
+      bar.setAttribute('role', 'status');
+      bar.innerHTML = visitorBarHtml(lang);
+      document.body.appendChild(bar);
+      document.body.classList.add('edz-has-visitor-bar');
+    }
 
+    if (isLibraryPage) {
+      mountLibraryPdfStats();
+    }
+  }
+
+  function mountLibraryPdfStats() {
+    const host = document.querySelector('[data-library-pdf-stats]');
+    if (!host || host.querySelector('[data-edz-pdf-views]')) return;
     const lang = getLang();
-    const bar = document.createElement('div');
-    bar.id = 'edz-visitor-bar';
-    bar.className = 'edz-visitor-bar';
-    bar.setAttribute('aria-live', 'polite');
-    bar.setAttribute('role', 'status');
-    bar.innerHTML = statsHtml(lang);
-    document.body.appendChild(bar);
-    document.body.classList.add('edz-has-visitor-bar');
+    host.hidden = false;
+    host.classList.add('library-pdf-stats');
+    host.setAttribute('aria-live', 'polite');
+    host.innerHTML = pdfStatsHtml(lang);
   }
 
   function updateDOM(stats) {
@@ -237,7 +269,7 @@
       }
     } catch (_) { /* ignore */ }
 
-    if (window.ElectroDzPdfStats?.fetchTotals) {
+    if (isLibraryPage && window.ElectroDzPdfStats?.fetchTotals) {
       try {
         const pdfTotals = await window.ElectroDzPdfStats.fetchTotals();
         if (pdfTotals) updatePdfDOM(pdfTotals);

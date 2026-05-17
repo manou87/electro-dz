@@ -1,0 +1,64 @@
+/* Connexion / inscription — lisible sur iPhone (scroll + gros boutons) */
+body:has(.auth-page) {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.auth-page {
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 12px 12px calc(20px + env(safe-area-inset-bottom, 0px));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  min-height: 100dvh;
+}
+
+.auth-card {
+  margin: 8px auto 24px;
+  padding: 22px 18px 26px;
+  width: 100%;
+  max-width: 410px;
+}
+
+.auth-google-first {
+  order: -3;
+}
+
+.auth-sep-first {
+  order: -2;
+  margin: 14px 0;
+}
+
+.auth-form-block {
+  order: -1;
+}
+
+.auth-card-layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-g {
+  min-height: 48px;
+  font-size: 0.95rem;
+  -webkit-tap-highlight-color: rgba(250, 204, 21, 0.2);
+}
+
+.auth-hint-google {
+  text-align: center;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  margin: 0 0 10px;
+  order: -4;
+}
+
+@media (min-width: 480px) {
+  .auth-page {
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+  }
+  .auth-card {
+    padding: 40px 36px;
+  }
+}
