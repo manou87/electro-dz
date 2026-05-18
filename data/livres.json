@@ -15,8 +15,8 @@
       "order": 2
     },
     "algerien": {
-      "labelFr": "PDF Algérie — DTR",
-      "labelAr": "وثائق جزائرية — DTR",
+      "labelFr": "PDF Algérie",
+      "labelAr": "كتب جزائرية",
       "icon": "🇩🇿",
       "order": 3
     },
@@ -898,8 +898,8 @@
       "id": "habilitation-electrique-nonelec",
       "collection": "algerien",
       "category": "securite",
-      "titleFr": "Habilitation électrique — mémo NONELEC (DTR)",
-      "titleAr": "التأهيل الكهربائي — مذكرة NONELEC (DTR)",
+      "titleFr": "Habilitation électrique — mémo NONELEC",
+      "titleAr": "التأهيل الكهربائي — مذكرة NONELEC",
       "descriptionFr": "Mémo habilitation électrique (NONELEC).",
       "descriptionAr": "مذكرة التأهيل الكهربائي.",
       "lang": [
@@ -917,8 +917,8 @@
       "id": "habilitation-electrique",
       "collection": "algerien",
       "category": "securite",
-      "titleFr": "Habilitation électrique (DTR)",
-      "titleAr": "التأهيل الكهربائي (DTR)",
+      "titleFr": "Habilitation électrique",
+      "titleAr": "التأهيل الكهربائي",
       "descriptionFr": "Support habilitation et sécurité électrique.",
       "descriptionAr": "دعم التأهيل والسلامة الكهربائية.",
       "lang": [
@@ -955,9 +955,9 @@
       "id": "m19-moteurs-generatrices",
       "collection": "algerien",
       "category": "triphase",
-      "titleFr": "Installation et dépannage — moteurs et génératrices (DTR)",
+      "titleFr": "M19 — Moteurs et génératrices à c.a.",
       "titleAr": "M19 — محركات ومولدات التيار المتردد",
-      "descriptionFr": "Document technique de référence — moteurs et génératrices à courant alternatif.",
+      "descriptionFr": "Installation et dépannage de moteurs et génératrices.",
       "descriptionAr": "تركيب وإصلاح المحركات والمولدات.",
       "lang": [
         "fr"
@@ -994,9 +994,9 @@
       "id": "manuel-cables-mt-bt",
       "collection": "algerien",
       "category": "installation",
-      "titleFr": "Manuel technique — câbles électriques MT & BT (DTR)",
+      "titleFr": "Manuel technique — câbles électriques MT & BT",
       "titleAr": "دليل تقني — كابلات الجهد المتوسط والمنخفض",
-      "descriptionFr": "Document technique de référence — câbles moyenne et basse tension.",
+      "descriptionFr": "Câbles électriques moyenne et basse tension.",
       "descriptionAr": "كابلات الجهد المتوسط والمنخفض.",
       "lang": [
         "fr"
@@ -1008,6 +1008,25 @@
       "coverImageFr": "assets/covers/manuel-cables-mt-bt-fr.svg",
       "coverImageAr": "assets/covers/manuel-cables-mt-bt-ar.svg",
       "coverPreview": "assets/covers/previews/manuel-cables-mt-bt.png"
+    },
+    {
+      "id": "dtr-e10-1",
+      "collection": "algerien",
+      "category": "normes",
+      "titleFr": "DTR E10-1",
+      "titleAr": "DTR E10-1",
+      "descriptionFr": "Document technique de référence — édition E10-1 (Algérie).",
+      "descriptionAr": "وثيقة تقنية مرجعية — الإصدار E10-1.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/algerie/dtr-e10-1/dtr-e10-1.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/dtr-e10-1-fr.svg",
+      "coverImageAr": "assets/covers/dtr-e10-1-ar.svg",
+      "coverPreview": "assets/covers/previews/dtr-e10-1.png"
     },
     {
       "id": "knx-arguments-rbh-2025",
