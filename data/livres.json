@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "updated": "2026-05-17",
+  "updated": "2026-05-18",
   "collections": {
     "suisse": {
       "labelFr": "PDF Suisse",
@@ -9,16 +9,34 @@
       "order": 1
     },
     "francais": {
-      "labelFr": "PDF Français",
+      "labelFr": "PDF France",
       "labelAr": "كتب فرنسية",
       "icon": "🇫🇷",
       "order": 2
     },
+    "algerien": {
+      "labelFr": "PDF Algérie — DTR",
+      "labelAr": "وثائق جزائرية — DTR",
+      "icon": "🇩🇿",
+      "order": 3
+    },
+    "knx": {
+      "labelFr": "PDF KNX",
+      "labelAr": "كتب KNX",
+      "icon": "🏠",
+      "order": 6
+    },
     "arabe": {
       "labelFr": "PDF Arabe",
       "labelAr": "كتب عربية",
-      "icon": "🇩🇿",
-      "order": 3
+      "icon": "📖",
+      "order": 4
+    },
+    "anglais": {
+      "labelFr": "PDF Anglais",
+      "labelAr": "كتب إنجليزية",
+      "icon": "🇬🇧",
+      "order": 5
     }
   },
   "categories": {
@@ -66,6 +84,11 @@
       "labelFr": "Autres ressources",
       "labelAr": "موارد أخرى",
       "icon": "📚"
+    },
+    "knx": {
+      "labelFr": "KNX & domotique",
+      "labelAr": "KNX والمنزل الذكي",
+      "icon": "🏠"
     }
   },
   "books": [
@@ -316,158 +339,6 @@
       "coverImageFr": "assets/covers/oibt-icc-fr.svg",
       "coverImageAr": "assets/covers/oibt-icc-ar.svg",
       "coverPreview": "assets/covers/previews/oibt-icc.png"
-    },
-    {
-      "id": "control-oibt-1",
-      "collection": "suisse",
-      "category": "normes",
-      "titleFr": "OIBT — document contrôle 1",
-      "titleAr": "OIBT — وثيقة فحص 1",
-      "descriptionFr": "Fiche de contrôle / mesure OIBT (série control1).",
-      "descriptionAr": "ورقة فحص / قياس OIBT (control1).",
-      "lang": [
-        "fr"
-      ],
-      "pages": 0,
-      "year": 0,
-      "pdfUrl": "pdf/control-oibt-1.pdf",
-      "featured": false,
-      "coverImageFr": "assets/covers/control-oibt-1-fr.svg",
-      "coverImageAr": "assets/covers/control-oibt-1-ar.svg",
-      "coverPreview": "assets/covers/previews/control-oibt-1.png"
-    },
-    {
-      "id": "control-oibt-2",
-      "collection": "suisse",
-      "category": "normes",
-      "titleFr": "OIBT — document contrôle 2",
-      "titleAr": "OIBT — وثيقة فحص 2",
-      "descriptionFr": "Fiche de contrôle / mesure OIBT (série control2).",
-      "descriptionAr": "ورقة فحص / قياس OIBT (control2).",
-      "lang": [
-        "fr"
-      ],
-      "pages": 0,
-      "year": 0,
-      "pdfUrl": "pdf/control-oibt-2.pdf",
-      "featured": false,
-      "coverImageFr": "assets/covers/control-oibt-2-fr.svg",
-      "coverImageAr": "assets/covers/control-oibt-2-ar.svg",
-      "coverPreview": "assets/covers/previews/control-oibt-2.png"
-    },
-    {
-      "id": "control-oibt-3",
-      "collection": "suisse",
-      "category": "normes",
-      "titleFr": "OIBT — document contrôle 3",
-      "titleAr": "OIBT — وثيقة فحص 3",
-      "descriptionFr": "Fiche de contrôle / mesure OIBT (série control3).",
-      "descriptionAr": "ورقة فحص / قياس OIBT (control3).",
-      "lang": [
-        "fr"
-      ],
-      "pages": 0,
-      "year": 0,
-      "pdfUrl": "pdf/control-oibt-3.pdf",
-      "featured": false,
-      "coverImageFr": "assets/covers/control-oibt-3-fr.svg",
-      "coverImageAr": "assets/covers/control-oibt-3-ar.svg",
-      "coverPreview": "assets/covers/previews/control-oibt-3.png"
-    },
-    {
-      "id": "control-oibt-4",
-      "collection": "suisse",
-      "category": "normes",
-      "titleFr": "OIBT — document contrôle 4",
-      "titleAr": "OIBT — وثيقة فحص 4",
-      "descriptionFr": "Fiche de contrôle / mesure OIBT (série control4).",
-      "descriptionAr": "ورقة فحص / قياس OIBT (control4).",
-      "lang": [
-        "fr"
-      ],
-      "pages": 0,
-      "year": 0,
-      "pdfUrl": "pdf/control-oibt-4.pdf",
-      "featured": false,
-      "coverImageFr": "assets/covers/control-oibt-4-fr.svg",
-      "coverImageAr": "assets/covers/control-oibt-4-ar.svg",
-      "coverPreview": "assets/covers/previews/control-oibt-4.png"
-    },
-    {
-      "id": "control-oibt-5",
-      "collection": "suisse",
-      "category": "normes",
-      "titleFr": "OIBT — document contrôle 5",
-      "titleAr": "OIBT — وثيقة فحص 5",
-      "descriptionFr": "Fiche de contrôle / mesure OIBT (série control5).",
-      "descriptionAr": "ورقة فحص / قياس OIBT (control5).",
-      "lang": [
-        "fr"
-      ],
-      "pages": 0,
-      "year": 0,
-      "pdfUrl": "pdf/control-oibt-5.pdf",
-      "featured": false,
-      "coverImageFr": "assets/covers/control-oibt-5-fr.svg",
-      "coverImageAr": "assets/covers/control-oibt-5-ar.svg",
-      "coverPreview": "assets/covers/previews/control-oibt-5.png"
-    },
-    {
-      "id": "control-oibt-6",
-      "collection": "suisse",
-      "category": "normes",
-      "titleFr": "OIBT — document contrôle 6",
-      "titleAr": "OIBT — وثيقة فحص 6",
-      "descriptionFr": "Fiche de contrôle / mesure OIBT (série control6).",
-      "descriptionAr": "ورقة فحص / قياس OIBT (control6).",
-      "lang": [
-        "fr"
-      ],
-      "pages": 0,
-      "year": 0,
-      "pdfUrl": "pdf/control-oibt-6.pdf",
-      "featured": false,
-      "coverImageFr": "assets/covers/control-oibt-6-fr.svg",
-      "coverImageAr": "assets/covers/control-oibt-6-ar.svg",
-      "coverPreview": "assets/covers/previews/control-oibt-6.png"
-    },
-    {
-      "id": "control-oibt-7",
-      "collection": "suisse",
-      "category": "normes",
-      "titleFr": "OIBT — document contrôle 7",
-      "titleAr": "OIBT — وثيقة فحص 7",
-      "descriptionFr": "Fiche de contrôle / mesure OIBT (série control7).",
-      "descriptionAr": "ورقة فحص / قياس OIBT (control7).",
-      "lang": [
-        "fr"
-      ],
-      "pages": 0,
-      "year": 0,
-      "pdfUrl": "pdf/control-oibt-7.pdf",
-      "featured": false,
-      "coverImageFr": "assets/covers/control-oibt-7-fr.svg",
-      "coverImageAr": "assets/covers/control-oibt-7-ar.svg",
-      "coverPreview": "assets/covers/previews/control-oibt-7.png"
-    },
-    {
-      "id": "control-oibt-8",
-      "collection": "suisse",
-      "category": "normes",
-      "titleFr": "OIBT — document contrôle 8",
-      "titleAr": "OIBT — وثيقة فحص 8",
-      "descriptionFr": "Fiche de contrôle / mesure OIBT (série control8).",
-      "descriptionAr": "ورقة فحص / قياس OIBT (control8).",
-      "lang": [
-        "fr"
-      ],
-      "pages": 0,
-      "year": 0,
-      "pdfUrl": "pdf/control-oibt-8.pdf",
-      "featured": false,
-      "coverImageFr": "assets/covers/control-oibt-8-fr.svg",
-      "coverImageAr": "assets/covers/control-oibt-8-ar.svg",
-      "coverPreview": "assets/covers/previews/control-oibt-8.png"
     },
     {
       "id": "oibt-mesures-jt22",
@@ -865,7 +736,7 @@
       ],
       "pages": 0,
       "year": 0,
-      "pdfUrl": "pdf/plc-hassan-elshhat.pdf",
+      "pdfUrl": "pdf/arabe/plc-hassan-elshhat/plc-hassan-elshhat.pdf",
       "featured": true,
       "coverImageFr": "assets/covers/plc-hassan-elshhat-fr.svg",
       "coverImageAr": "assets/covers/plc-hassan-elshhat-ar.svg",
@@ -884,7 +755,7 @@
       ],
       "pages": 0,
       "year": 0,
-      "pdfUrl": "pdf/apprentissage-automatisme.pdf",
+      "pdfUrl": "pdf/arabe/apprentissage-automatisme/apprentissage-automatisme.pdf",
       "featured": true,
       "coverImageFr": "assets/covers/apprentissage-automatisme-fr.svg",
       "coverImageAr": "assets/covers/apprentissage-automatisme-ar.svg",
@@ -903,7 +774,7 @@
       ],
       "pages": 0,
       "year": 0,
-      "pdfUrl": "pdf/diagnostic-moteurs-ac.pdf",
+      "pdfUrl": "pdf/arabe/diagnostic-moteurs-ac/diagnostic-moteurs-ac.pdf",
       "featured": true,
       "coverImageFr": "assets/covers/diagnostic-moteurs-ac-fr.svg",
       "coverImageAr": "assets/covers/diagnostic-moteurs-ac-ar.svg",
@@ -922,7 +793,7 @@
       ],
       "pages": 0,
       "year": 0,
-      "pdfUrl": "pdf/generateurs-electriques.pdf",
+      "pdfUrl": "pdf/arabe/generateurs-electriques/generateurs-electriques.pdf",
       "featured": false,
       "coverImageFr": "assets/covers/generateurs-electriques-fr.svg",
       "coverImageAr": "assets/covers/generateurs-electriques-ar.svg",
@@ -941,30 +812,11 @@
       ],
       "pages": 0,
       "year": 0,
-      "pdfUrl": "pdf/fichier-electrique-ar.pdf",
+      "pdfUrl": "pdf/arabe/fichier-electrique-ar/fichier-electrique-ar.pdf",
       "featured": false,
       "coverImageFr": "assets/covers/fichier-electrique-ar-fr.svg",
       "coverImageAr": "assets/covers/fichier-electrique-ar-ar.svg",
       "coverPreview": "assets/covers/previews/fichier-electrique-ar.png"
-    },
-    {
-      "id": "livre-arabe-book2",
-      "collection": "arabe",
-      "category": "installation",
-      "titleFr": "Livre arabe — électrotechnique (2)",
-      "titleAr": "كتاب عربي — كهروتقنية (2)",
-      "descriptionFr": "Ressource en arabe.",
-      "descriptionAr": "مورد بالعربية.",
-      "lang": [
-        "ar"
-      ],
-      "pages": 0,
-      "year": 0,
-      "pdfUrl": "pdf/livre-arabe-book2.pdf",
-      "featured": false,
-      "coverImageFr": "assets/covers/livre-arabe-book2-fr.svg",
-      "coverImageAr": "assets/covers/livre-arabe-book2-ar.svg",
-      "coverPreview": "assets/covers/previews/livre-arabe-book2.png"
     },
     {
       "id": "variateur-moteurs-ar",
@@ -979,11 +831,449 @@
       ],
       "pages": 0,
       "year": 0,
-      "pdfUrl": "pdf/variateur-moteurs-ar.pdf",
+      "pdfUrl": "pdf/arabe/variateur-moteurs-ar/variateur-moteurs-ar.pdf",
       "featured": false,
       "coverImageFr": "assets/covers/variateur-moteurs-ar-fr.svg",
       "coverImageAr": "assets/covers/variateur-moteurs-ar-ar.svg",
       "coverPreview": "assets/covers/previews/variateur-moteurs-ar.png"
+    },
+    {
+      "id": "memento-schemas-electriques",
+      "collection": "francais",
+      "category": "installation",
+      "titleFr": "Mémento des schémas électriques",
+      "titleAr": "مذكرة المخططات الكهربائية",
+      "descriptionFr": "Gallauziaux & Fedullo — lecture et réalisation de schémas.",
+      "descriptionAr": "غالوزيو وفيدولو — قراءة وإنجاز المخططات الكهربائية.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/francais/memento-schemas-electriques/memento-schemas-electriques.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/memento-schemas-electriques-fr.svg",
+      "coverImageAr": "assets/covers/memento-schemas-electriques-ar.svg",
+      "coverPreview": "assets/covers/previews/memento-schemas-electriques.png"
+    },
+    {
+      "id": "installation-electrique-pro",
+      "collection": "francais",
+      "category": "installation",
+      "titleFr": "L'installation électrique comme un pro ! (2e éd.)",
+      "titleAr": "التركيب الكهربائي كالمحترفين (الطبعة 2)",
+      "descriptionFr": "Gallauziaux & Fedullo — guide pratique d'installation.",
+      "descriptionAr": "دليل عملي للتركيبات الكهربائية.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/francais/installation-electrique-pro/installation-electrique-pro.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/installation-electrique-pro-fr.svg",
+      "coverImageAr": "assets/covers/installation-electrique-pro-ar.svg",
+      "coverPreview": "assets/covers/previews/installation-electrique-pro.png"
+    },
+    {
+      "id": "evolutions-norme-electrique-2014",
+      "collection": "francais",
+      "category": "normes",
+      "titleFr": "Les évolutions de la norme électrique (2014)",
+      "titleAr": "تطورات المعيار الكهربائي (2014)",
+      "descriptionFr": "Gallauziaux & Fedullo — Eyrolles.",
+      "descriptionAr": "غالوزيو وفيدولو — دار إيرول.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2014,
+      "pdfUrl": "pdf/francais/evolutions-norme-electrique-2014/evolutions-norme-electrique-2014.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/evolutions-norme-electrique-2014-fr.svg",
+      "coverImageAr": "assets/covers/evolutions-norme-electrique-2014-ar.svg",
+      "coverPreview": "assets/covers/previews/evolutions-norme-electrique-2014.png"
+    },
+    {
+      "id": "habilitation-electrique-nonelec",
+      "collection": "algerien",
+      "category": "securite",
+      "titleFr": "Habilitation électrique — mémo NONELEC (DTR)",
+      "titleAr": "التأهيل الكهربائي — مذكرة NONELEC (DTR)",
+      "descriptionFr": "Mémo habilitation électrique (NONELEC).",
+      "descriptionAr": "مذكرة التأهيل الكهربائي.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/algerie/habilitation-electrique-nonelec/habilitation-electrique-nonelec.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/habilitation-electrique-nonelec-fr.svg",
+      "coverImageAr": "assets/covers/habilitation-electrique-nonelec-ar.svg",
+      "coverPreview": "assets/covers/previews/habilitation-electrique-nonelec.png"
+    },
+    {
+      "id": "habilitation-electrique",
+      "collection": "algerien",
+      "category": "securite",
+      "titleFr": "Habilitation électrique (DTR)",
+      "titleAr": "التأهيل الكهربائي (DTR)",
+      "descriptionFr": "Support habilitation et sécurité électrique.",
+      "descriptionAr": "دعم التأهيل والسلامة الكهربائية.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/algerie/habilitation-electrique/habilitation-electrique.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/habilitation-electrique-fr.svg",
+      "coverImageAr": "assets/covers/habilitation-electrique-ar.svg",
+      "coverPreview": "assets/covers/previews/habilitation-electrique.png"
+    },
+    {
+      "id": "nf-c15-106-malt",
+      "collection": "francais",
+      "category": "normes",
+      "titleFr": "NF C 15-106 — édition MALT",
+      "titleAr": "المعيار NF C 15-106 — نسخة MALT",
+      "descriptionFr": "Norme d'installation — version MALT (Maghreb).",
+      "descriptionAr": "معيار التركيب — نسخة MALT.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/francais/nf-c15-106-malt/nf-c15-106-malt.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/nf-c15-106-malt-fr.svg",
+      "coverImageAr": "assets/covers/nf-c15-106-malt-ar.svg",
+      "coverPreview": "assets/covers/previews/nf-c15-106-malt.png"
+    },
+    {
+      "id": "m19-moteurs-generatrices",
+      "collection": "algerien",
+      "category": "triphase",
+      "titleFr": "Installation et dépannage — moteurs et génératrices (DTR)",
+      "titleAr": "M19 — محركات ومولدات التيار المتردد",
+      "descriptionFr": "Document technique de référence — moteurs et génératrices à courant alternatif.",
+      "descriptionAr": "تركيب وإصلاح المحركات والمولدات.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/algerie/m19-moteurs-generatrices/m19-moteurs-generatrices.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/m19-moteurs-generatrices-fr.svg",
+      "coverImageAr": "assets/covers/m19-moteurs-generatrices-ar.svg",
+      "coverPreview": "assets/covers/previews/m19-moteurs-generatrices.png"
+    },
+    {
+      "id": "electrotechnique-algerie",
+      "collection": "francais",
+      "category": "formation",
+      "titleFr": "Électrotechnique (Algérie)",
+      "titleAr": "الكهروتقنية (الجزائر)",
+      "descriptionFr": "Cours / support électrotechnique.",
+      "descriptionAr": "درس أو دعم في الكهروتقنية.",
+      "lang": [
+        "fr",
+        "ar"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/francais/electrotechnique-algerie/electrotechnique-algerie.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/electrotechnique-algerie-fr.svg",
+      "coverImageAr": "assets/covers/electrotechnique-algerie-ar.svg",
+      "coverPreview": "assets/covers/previews/electrotechnique-algerie.png"
+    },
+    {
+      "id": "manuel-cables-mt-bt",
+      "collection": "algerien",
+      "category": "installation",
+      "titleFr": "Manuel technique — câbles électriques MT & BT (DTR)",
+      "titleAr": "دليل تقني — كابلات الجهد المتوسط والمنخفض",
+      "descriptionFr": "Document technique de référence — câbles moyenne et basse tension.",
+      "descriptionAr": "كابلات الجهد المتوسط والمنخفض.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/algerie/manuel-cables-mt-bt/manuel-cables-mt-bt.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/manuel-cables-mt-bt-fr.svg",
+      "coverImageAr": "assets/covers/manuel-cables-mt-bt-ar.svg",
+      "coverPreview": "assets/covers/previews/manuel-cables-mt-bt.png"
+    },
+    {
+      "id": "knx-arguments-rbh-2025",
+      "collection": "knx",
+      "category": "knx",
+      "titleFr": "KNX — Arguments (RBH 12.2025)",
+      "titleAr": "KNX — الحجج (RBH 12.2025)",
+      "descriptionFr": "Formation Innoval — arguments KNX.",
+      "descriptionAr": "تكوين Innoval — مقدمة KNX.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2025,
+      "pdfUrl": "pdf/knx/knx-arguments-rbh-2025/knx-arguments-rbh-2025.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/knx-arguments-rbh-2025-fr.svg",
+      "coverImageAr": "assets/covers/knx-arguments-rbh-2025-ar.svg",
+      "coverPreview": "assets/covers/previews/knx-arguments-rbh-2025.png"
+    },
+    {
+      "id": "knx-formation-chap-1-4-rbh-2025",
+      "collection": "knx",
+      "category": "knx",
+      "titleFr": "KNX — Formation ch. 1 à 4 (RBH 2025)",
+      "titleAr": "KNX — التكوين الفصول 1–4 (2025)",
+      "descriptionFr": "Chapitres 1 à 4 — domotique KNX.",
+      "descriptionAr": "الفصول 1 إلى 4 — المنزل الذكي KNX.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2025,
+      "pdfUrl": "pdf/knx/knx-formation-chap-1-4-rbh-2025/knx-formation-chap-1-4-rbh-2025.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/knx-formation-chap-1-4-rbh-2025-fr.svg",
+      "coverImageAr": "assets/covers/knx-formation-chap-1-4-rbh-2025-ar.svg",
+      "coverPreview": "assets/covers/previews/knx-formation-chap-1-4-rbh-2025.png"
+    },
+    {
+      "id": "knx-formation-chap-5-8-rbh-2025",
+      "collection": "knx",
+      "category": "knx",
+      "titleFr": "KNX — Formation ch. 5 à 8 (RBH 2025)",
+      "titleAr": "KNX — التكوين الفصول 5–8 (2025)",
+      "descriptionFr": "Chapitres 5 à 8 — domotique KNX.",
+      "descriptionAr": "الفصول 5 إلى 8.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2025,
+      "pdfUrl": "pdf/knx/knx-formation-chap-5-8-rbh-2025/knx-formation-chap-5-8-rbh-2025.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/knx-formation-chap-5-8-rbh-2025-fr.svg",
+      "coverImageAr": "assets/covers/knx-formation-chap-5-8-rbh-2025-ar.svg",
+      "coverPreview": "assets/covers/previews/knx-formation-chap-5-8-rbh-2025.png"
+    },
+    {
+      "id": "knx-formation-chap-9-10-rbh-2025",
+      "collection": "knx",
+      "category": "knx",
+      "titleFr": "KNX — Formation ch. 9 et 10 (RBH 2025)",
+      "titleAr": "KNX — التكوين الفصول 9–10 (2025)",
+      "descriptionFr": "Chapitres 9 et 10 — domotique KNX.",
+      "descriptionAr": "الفصول 9 و 10.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2025,
+      "pdfUrl": "pdf/knx/knx-formation-chap-9-10-rbh-2025/knx-formation-chap-9-10-rbh-2025.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/knx-formation-chap-9-10-rbh-2025-fr.svg",
+      "coverImageAr": "assets/covers/knx-formation-chap-9-10-rbh-2025-ar.svg",
+      "coverPreview": "assets/covers/previews/knx-formation-chap-9-10-rbh-2025.png"
+    },
+    {
+      "id": "knx-somaire-innoval-rbh-2025",
+      "collection": "knx",
+      "category": "knx",
+      "titleFr": "KNX — Sommaire formation Innoval (2025)",
+      "titleAr": "KNX — فهرس تكوين Innoval (2025)",
+      "descriptionFr": "Sommaire du classeur KNX RBH.",
+      "descriptionAr": "فهرس ملف KNX RBH.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2025,
+      "pdfUrl": "pdf/knx/knx-somaire-innoval-rbh-2025/knx-somaire-innoval-rbh-2025.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/knx-somaire-innoval-rbh-2025-fr.svg",
+      "coverImageAr": "assets/covers/knx-somaire-innoval-rbh-2025-ar.svg",
+      "coverPreview": "assets/covers/previews/knx-somaire-innoval-rbh-2025.png"
+    },
+    {
+      "id": "uk-electrical-code",
+      "collection": "anglais",
+      "category": "normes",
+      "titleFr": "UK Electrical Code",
+      "titleAr": "المعيار الكهربائي البريطاني",
+      "descriptionFr": "British electrical installation code (UK).",
+      "descriptionAr": "معيار التركيبات الكهربائية البريطاني.",
+      "lang": [
+        "en"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/anglais/uk-electrical-code/uk-electrical-code.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/uk-electrical-code-fr.svg",
+      "coverImageAr": "assets/covers/uk-electrical-code-ar.svg",
+      "coverPreview": "assets/covers/previews/uk-electrical-code.png"
+    },
+    {
+      "id": "wiring-house-usa",
+      "collection": "anglais",
+      "category": "installation",
+      "titleFr": "Wiring a House (USA)",
+      "titleAr": "تمديدات منزلية (أمريكا)",
+      "descriptionFr": "Residential wiring according to US practice.",
+      "descriptionAr": "التمديدات السكنية وفق الممارسة الأمريكية.",
+      "lang": [
+        "en"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/anglais/wiring-house-usa/wiring-house-usa.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/wiring-house-usa-fr.svg",
+      "coverImageAr": "assets/covers/wiring-house-usa-ar.svg",
+      "coverPreview": "assets/covers/previews/wiring-house-usa.png"
+    },
+    {
+      "id": "nec-code-usa-2017",
+      "collection": "anglais",
+      "category": "normes",
+      "titleFr": "NEC — National Electrical Code 2017 (USA)",
+      "titleAr": "NEC — المعيار الوطني الأمريكي 2017",
+      "descriptionFr": "National Electrical Code USA, édition 2017.",
+      "descriptionAr": "المعيار الكهربائي الوطني الأمريكي 2017.",
+      "lang": [
+        "en"
+      ],
+      "pages": 0,
+      "year": 2017,
+      "pdfUrl": "pdf/anglais/nec-code-usa-2017/nec-code-usa-2017.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/nec-code-usa-2017-fr.svg",
+      "coverImageAr": "assets/covers/nec-code-usa-2017-ar.svg",
+      "coverPreview": "assets/covers/previews/nec-code-usa-2017.png"
+    },
+    {
+      "id": "nec-handbook-usa-2020",
+      "collection": "anglais",
+      "category": "normes",
+      "titleFr": "NEC Handbook 2020 (USA)",
+      "titleAr": "دليل NEC 2020 (أمريكا)",
+      "descriptionFr": "National Electrical Code — handbook édition 2020.",
+      "descriptionAr": "دليل المعيار الكهربائي الوطني 2020.",
+      "lang": [
+        "en"
+      ],
+      "pages": 0,
+      "year": 2020,
+      "pdfUrl": "pdf/anglais/nec-handbook-usa-2020/nec-handbook-usa-2020.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/nec-handbook-usa-2020-fr.svg",
+      "coverImageAr": "assets/covers/nec-handbook-usa-2020-ar.svg",
+      "coverPreview": "assets/covers/previews/nec-handbook-usa-2020.png"
+    },
+    {
+      "id": "nf-c15-100-partie-h",
+      "collection": "francais",
+      "category": "normes",
+      "titleFr": "NF C 15-100 — partie H",
+      "titleAr": "NF C 15-100 — الجزء H",
+      "descriptionFr": "Installations électriques — locaux d'habitation, partie H.",
+      "descriptionAr": "التركيبات الكهربائية — مساكن، الجزء H.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/francais/nf-c15-100-partie-h/nf-c15-100-partie-h.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/nf-c15-100-partie-h-fr.svg",
+      "coverImageAr": "assets/covers/nf-c15-100-partie-h-ar.svg",
+      "coverPreview": "assets/covers/previews/nf-c15-100-partie-h.png"
+    },
+    {
+      "id": "nf-c15-100-partie-c",
+      "collection": "francais",
+      "category": "normes",
+      "titleFr": "NF C 15-100 — partie C",
+      "titleAr": "NF C 15-100 — الجزء C",
+      "descriptionFr": "Installations électriques — locaux d'habitation, partie C.",
+      "descriptionAr": "التركيبات الكهربائية — مساكن، الجزء C.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/francais/nf-c15-100-partie-c/nf-c15-100-partie-c.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/nf-c15-100-partie-c-fr.svg",
+      "coverImageAr": "assets/covers/nf-c15-100-partie-c-ar.svg",
+      "coverPreview": "assets/covers/previews/nf-c15-100-partie-c.png"
+    },
+    {
+      "id": "nf-c15-100-2016",
+      "collection": "francais",
+      "category": "normes",
+      "titleFr": "NF C 15-100 (2016)",
+      "titleAr": "NF C 15-100 (2016)",
+      "descriptionFr": "Norme habitation — édition 2016.",
+      "descriptionAr": "معيار المساكن — طبعة 2016.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2016,
+      "pdfUrl": "pdf/francais/nf-c15-100-2016/nf-c15-100-2016.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/nf-c15-100-2016-fr.svg",
+      "coverImageAr": "assets/covers/nf-c15-100-2016-ar.svg",
+      "coverPreview": "assets/covers/previews/nf-c15-100-2016.png"
+    },
+    {
+      "id": "nf-c13-100-2015",
+      "collection": "francais",
+      "category": "normes",
+      "titleFr": "NF C 13-100 (2015)",
+      "titleAr": "NF C 13-100 (2015)",
+      "descriptionFr": "Installations BT — prescriptions, édition 2015.",
+      "descriptionAr": "تركيبات الجهد المنخفض — طبعة 2015.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2015,
+      "pdfUrl": "pdf/francais/nf-c13-100-2015/nf-c13-100-2015.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/nf-c13-100-2015-fr.svg",
+      "coverImageAr": "assets/covers/nf-c13-100-2015-ar.svg",
+      "coverPreview": "assets/covers/previews/nf-c13-100-2015.png"
+    },
+    {
+      "id": "nf-c18-510-2012",
+      "collection": "francais",
+      "category": "normes",
+      "titleFr": "NF C 18-510 (2012)",
+      "titleAr": "NF C 18-510 (2012)",
+      "descriptionFr": "Travaux sous tension sur installations électriques.",
+      "descriptionAr": "أشغال تحت الجهد على التركيبات الكهربائية.",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2012,
+      "pdfUrl": "pdf/francais/nf-c18-510-2012/nf-c18-510-2012.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/nf-c18-510-2012-fr.svg",
+      "coverImageAr": "assets/covers/nf-c18-510-2012-ar.svg",
+      "coverPreview": "assets/covers/previews/nf-c18-510-2012.png"
     }
   ]
 }

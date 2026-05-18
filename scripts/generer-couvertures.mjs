@@ -21,6 +21,7 @@ const GRADIENTS = {
   magnetisme: ["#7c3aed", "#3b0764"],
   energie: ["#dc2626", "#450a0a"],
   securite: ["#b45309", "#451a03"],
+  knx: ["#4f46e5", "#1e1b4b"],
   autres: ["#475569", "#0f172a"],
 };
 

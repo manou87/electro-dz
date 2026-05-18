@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Copie les PDF du projet vers website/pdf/ et régénère data/livres.json
- * Collections : suisse | francais | arabe
+ * Collections : suisse | francais | algerien | knx
  */
 import fs from "fs";
 import path from "path";
@@ -21,7 +21,7 @@ const ICLOUD_CH11 = path.join(
   "Library/Mobile Documents/com~apple~CloudDocs/Installateur électricien 2024/Divers /Electrotechnique ch11_2018.pdf"
 );
 
-/** @type {Array<{id:string,collection:'suisse'|'francais'|'arabe',category:string,titleFr:string,titleAr:string,descriptionFr:string,descriptionAr:string,lang:string[],year?:number,featured?:boolean,src?:string,pdfUrl?:string}>} */
+/** @type {Array<{id:string,collection:'suisse'|'francais'|'algerien'|'arabe'|'knx',category:string,titleFr:string,titleAr:string,descriptionFr:string,descriptionAr:string,lang:string[],year?:number,featured?:boolean,src?:string,pdfUrl?:string}>} */
 const MANIFEST = [
   // —— Suisse ——
   { id: "la-terre-suisse-norme", collection: "suisse", category: "normes", src: ICLOUD_TERRE,
@@ -103,7 +103,7 @@ const MANIFEST = [
     descriptionFr: "Principes et mise en œuvre de la mise à la terre.", descriptionAr: "مبادئ وتنفيذ التأريض.",
     lang: ["fr"], featured: false },
 
-  // —— Arabe ——
+  // —— Livres arabe ——
   { id: "apprentissage-automatisme", collection: "arabe", category: "installation", src: path.join(ASSETS, "livre arabe/تعلم  كيف تقرأ دوائر التحكم الآلي.pdf"),
     titleFr: "Apprendre à lire les schémas d'automatisme", titleAr: "تعلم كيف تقرأ دوائر التحكم الآلي",
     descriptionFr: "Lecture et compréhension des circuits de commande automatisée.", descriptionAr: "قراءة وفهم دوائر التحكم الآلي.",
@@ -130,24 +130,8 @@ const MANIFEST = [
     lang: ["ar"], featured: true },
 ];
 
-for (let i = 1; i <= 8; i++) {
-  MANIFEST.push({
-    id: `control-oibt-${i}`,
-    collection: "suisse",
-    category: "normes",
-    src: path.join(ASSETS, `Controle alger /control${i}.pdf`),
-    titleFr: `OIBT — document contrôle ${i}`,
-    titleAr: `OIBT — وثيقة فحص ${i}`,
-    descriptionFr: `Fiche de contrôle / mesure OIBT (série control${i}).`,
-    descriptionAr: `ورقة فحص / قياس OIBT (control${i}).`,
-    lang: ["fr"],
-  });
-}
-
+// control1–8 dans assets = doublons d'autres PDF (ne pas réimporter).
 const EXTRA_AR = [
-  { id: "livre-arabe-book2", collection: "arabe", category: "installation", src: path.join(ASSETS, "livre arabe/book2.pdf"),
-    titleFr: "Livre arabe — électrotechnique (2)", titleAr: "كتاب عربي — كهروتقنية (2)",
-    descriptionFr: "Ressource en arabe.", descriptionAr: "مورد بالعربية.", lang: ["ar"] },
   { id: "mesures-sina-2002", collection: "suisse", category: "normes", src: path.join(ASSETS, "Controle alger /M___P_SiNa_2002_10_133-f.pdf"),
     titleFr: "Mesures SiNa 2002", titleAr: "قياسات SiNa 2002",
     descriptionFr: "Procédure de mesures SiNa.", descriptionAr: "إجراء قياسات SiNa.", lang: ["fr"], year: 2002 },
@@ -304,8 +288,11 @@ const catalog = {
   updated: new Date().toISOString().slice(0, 10),
   collections: {
     suisse: { labelFr: "PDF Suisse", labelAr: "كتب سويسرية", icon: "🇨🇭", order: 1 },
-    francais: { labelFr: "PDF Français", labelAr: "كتب فرنسية", icon: "🇫🇷", order: 2 },
-    arabe: { labelFr: "PDF Arabe", labelAr: "كتب عربية", icon: "🇩🇿", order: 3 },
+    francais: { labelFr: "PDF France", labelAr: "كتب فرنسية", icon: "🇫🇷", order: 2 },
+    algerien: { labelFr: "PDF Algérie — DTR", labelAr: "وثائق جزائرية — DTR", icon: "🇩🇿", order: 3 },
+    arabe: { labelFr: "PDF Arabe", labelAr: "كتب عربية", icon: "📖", order: 4 },
+    anglais: { labelFr: "PDF Anglais", labelAr: "كتب إنجليزية", icon: "🇬🇧", order: 5 },
+    knx: { labelFr: "PDF KNX", labelAr: "كتب KNX", icon: "🏠", order: 6 },
   },
   categories: {
     normes: { labelFr: "Normes & réglementation", labelAr: "المعايير واللوائح", icon: "📋" },
@@ -322,7 +309,7 @@ const catalog = {
 };
 
 catalog.books.sort((a, b) => {
-  const order = { suisse: 1, francais: 2, arabe: 3 };
+  const order = { suisse: 1, francais: 2, algerien: 3, arabe: 4, anglais: 5, knx: 6 };
   const oa = order[a.collection] ?? 9;
   const ob = order[b.collection] ?? 9;
   if (oa !== ob) return oa - ob;
