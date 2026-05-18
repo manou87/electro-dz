@@ -139,15 +139,15 @@ const EXTRA_AR = [
 MANIFEST.push(...EXTRA_AR);
 
 const ELECTRONS_BOOKS = [
-  { id: "phaseurs-80", collection: "francais", category: "monophase",
+  { id: "phaseurs-80", collection: "suisse", category: "monophase",
     titleFr: "Phaseurs en alternatif (80 formules)", titleAr: "الأطوار في التيار المتناوب (80 صيغة)",
     descriptionFr: "Diagrammes vectoriels et formules pour l'alternatif monophasé.", descriptionAr: "مخططات متجهة وصيغ للتيار المتناوب أحادي الطور.",
     lang: ["fr", "ar"], year: 2026, pdfUrl: "pdf/phaseurs-80.pdf", featured: true },
-  { id: "phaseurs-2pp", collection: "francais", category: "monophase",
+  { id: "phaseurs-2pp", collection: "suisse", category: "monophase",
     titleFr: "Phaseurs — version 2 par page", titleAr: "الأطوار — نسخة صفحتين",
     descriptionFr: "Même contenu, mise en page 2 fiches par page.", descriptionAr: "نفس المحتوى، تخطيط صفحتين للطباعة.",
     lang: ["fr"], year: 2026, pdfUrl: "pdf/phaseurs-2pp.pdf", featured: true },
-  { id: "phaseurs-complexes", collection: "francais", category: "monophase",
+  { id: "phaseurs-complexes", collection: "suisse", category: "monophase",
     titleFr: "Phaseurs complexes", titleAr: "أطوار مركبة",
     descriptionFr: "Représentation complexe des grandeurs alternatives.", descriptionAr: "تمثيل مركب للكميات المتناوبة.",
     lang: ["fr"], year: 2026, pdfUrl: "pdf/phaseurs-complexes.pdf" },
@@ -155,7 +155,7 @@ const ELECTRONS_BOOKS = [
     titleFr: "Filtres passifs passe haut / bas", titleAr: "مرشحات سلبية عالية/منخفضة التردد",
     descriptionFr: "Synthèse des filtres du premier ordre (Bode).", descriptionAr: "ملخص مرشحات الدرجة الأولى.",
     lang: ["fr"], year: 2026, pdfUrl: "pdf/filtres-passe.pdf" },
-  { id: "triphase-denom", collection: "francais", category: "triphase",
+  { id: "triphase-denom", collection: "suisse", category: "triphase",
     titleFr: "Triphasé — dénominations usuelles", titleAr: "ثلاثي الطور — التسميات",
     descriptionFr: "Schémas et vocabulaire étoile, triangle.", descriptionAr: "مخططات ومفردات النجمة والمثلث.",
     lang: ["fr", "ar"], year: 2026, pdfUrl: "pdf/triphase-denom.pdf", featured: true },
