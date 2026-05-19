@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="assets/app-icon.png" type="image/png" />
+  <title>Commerce — Brouillon — DZSWISS ELEC</title>
+  <link rel="stylesheet" href="css/site-brand.css" />
+  <link rel="stylesheet" href="css/library-extra.css" />
+  <link rel="stylesheet" href="css/commerce.css" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Segoe UI", system-ui, sans-serif; background: #0f172a; color: #e2e8f0; line-height: 1.6; }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 5%; border-bottom: 1px solid rgba(255,255,255,0.08); background: rgba(15,23,42,0.98); }
+    .logo { color: #facc15; text-decoration: none; display: flex; align-items: center; gap: 10px; font-weight: 800; }
+    .nav-links { display: flex; gap: 16px; list-style: none; flex-wrap: wrap; }
+    .nav-links a { color: #94a3b8; text-decoration: none; font-size: 0.9rem; }
+    .nav-links a:hover { color: #facc15; }
+    .lang-btn { background: none; border: 1px solid #64748b; color: #94a3b8; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.85rem; }
+    .lang-btn.active { background: #facc15; color: #0f172a; border-color: #facc15; }
+  </style>
+</head>
+<body>
+  <p class="commerce-draft-banner" data-i18n-fr="⚠️ BROUILLON — page non publiée sur le site. Réservée à la préparation des fiches magasins." data-i18n-ar="⚠️ مسودة — الصفحة غير منشورة على الموقع. للتحضير فقط.">
+    ⚠️ BROUILLON — page non publiée sur le site. Réservée à la préparation des fiches magasins.
+  </p>
+
+  <nav class="nav">
+    <a href="index.html" class="logo">
+      <img src="assets/app-icon.png" alt="" width="40" height="40" decoding="async" />
+      <span>DZSWISS ELEC</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" data-i18n-fr="Accueil" data-i18n-ar="الرئيسية">Accueil</a></li>
+      <li><a href="bibliotheque.html" data-i18n-fr="Bibliothèque" data-i18n-ar="مكتبة PDF">Bibliothèque</a></li>
+      <li><strong style="color:#facc15" data-i18n-fr="Commerce (brouillon)" data-i18n-ar="تجارة (مسودة)">Commerce (brouillon)</strong></li>
+    </ul>
+    <div>
+      <button type="button" class="lang-btn active" data-lang-fr>FR</button>
+      <button type="button" class="lang-btn" data-lang-ar>AR</button>
+    </div>
+  </nav>
+
+  <main class="commerce-page">
+    <header class="commerce-hero">
+      <h1 data-i18n-fr="Matériel électrique — magasins" data-i18n-ar="مواد كهربائية — متاجر">Matériel électrique — magasins</h1>
+      <p data-i18n-fr="Annuaire des magasins : adresse, contact et inventaire avec prix indicatifs (à confirmer sur place)." data-i18n-ar="دليل المتاجر: العنوان، الاتصال والمخزون مع أسعار إرشادية (يُؤكد في المتجر).">
+        Annuaire des magasins : adresse, contact et inventaire avec prix indicatifs (à confirmer sur place).
+      </p>
+      <p class="commerce-disclaimer" data-commerce-disclaimer></p>
+      <p class="catalog-updated" data-commerce-updated style="color:#64748b;font-size:0.85rem;margin-top:0.5rem"></p>
+    </header>
+
+    <div class="commerce-toolbar">
+      <input type="search" class="commerce-search" data-commerce-search data-placeholder-fr="Rechercher magasin ou produit…" data-placeholder-ar="بحث متجر أو منتج…" placeholder="Rechercher magasin ou produit…" />
+      <p class="commerce-count" data-commerce-count></p>
+    </div>
+
+    <div class="commerce-cities" data-commerce-cities></div>
+
+    <div class="commerce-stores" data-commerce-stores></div>
+    <p class="commerce-empty" data-commerce-empty hidden data-i18n-fr="Aucun magasin trouvé." data-i18n-ar="لا يوجد متجر.">Aucun magasin trouvé.</p>
+
+    <aside class="commerce-add-note">
+      <p data-i18n-fr="Pour ajouter un vrai magasin : éditez le fichier" data-i18n-ar="لإضافة متجر حقيقي: عدّل الملف">
+        Pour ajouter un vrai magasin : éditez le fichier
+        <code>data/commerce.json</code>
+        (voir <code>DRAFT-COMMERCE.md</code>). Les exemples « démo » sont fictifs.
+      </p>
+    </aside>
+  </main>
+
+  <footer style="text-align:center;padding:2rem;color:#64748b;font-size:0.85rem">
+    © 2026 DZSWISS ELEC — <span data-i18n-fr="Section commerce en préparation" data-i18n-ar="قسم التجارة قيد الإعداد">Section commerce en préparation</span>
+  </footer>
+
+  <script src="js/commerce.js" defer></script>
+</body>
+</html>

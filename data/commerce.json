@@ -1,0 +1,1131 @@
+{
+  "version": 3,
+  "status": "draft",
+  "updated": "2026-05-19",
+  "disclaimerFr": "Annuaire des distributeurs officiels Legrand (source legrand.dz). Prix et stocks non communiqués en ligne — contactez chaque magasin. Brouillon : ne pas publier sans validation.",
+  "disclaimerAr": "دليل موزعي Legrand الرسميين (مصدر legrand.dz). الأسعار والمخزون غير منشورة — اتصل بكل متجر. مسودة: لا تنشر دون موافقة.",
+  "cities": {
+    "alger": {
+      "labelFr": "Alger",
+      "labelAr": "الجزائر",
+      "order": 1
+    },
+    "blida": {
+      "labelFr": "Blida",
+      "labelAr": "البليدة",
+      "order": 2
+    },
+    "oran": {
+      "labelFr": "Oran",
+      "labelAr": "وهران",
+      "order": 3
+    },
+    "constantine": {
+      "labelFr": "Constantine",
+      "labelAr": "قسنطينة",
+      "order": 4
+    },
+    "tlemcen": {
+      "labelFr": "Tlemcen",
+      "labelAr": "تلمسان",
+      "order": 5
+    },
+    "ouargla": {
+      "labelFr": "Ouargla",
+      "labelAr": "ورقلة",
+      "order": 6
+    },
+    "tizi-ouzou": {
+      "labelFr": "Tizi Ouzou",
+      "labelAr": "تيزي وزو",
+      "order": 7
+    },
+    "bouira": {
+      "labelFr": "Bouira",
+      "labelAr": "البويرة",
+      "order": 8
+    },
+    "bejaia": {
+      "labelFr": "Béjaïa",
+      "labelAr": "بجاية",
+      "order": 9
+    },
+    "msila": {
+      "labelFr": "M'Sila",
+      "labelAr": "المسيلة",
+      "order": 10
+    },
+    "el-oued": {
+      "labelFr": "El Oued",
+      "labelAr": "الوادي",
+      "order": 11
+    },
+    "batna": {
+      "labelFr": "Batna",
+      "labelAr": "باتنة",
+      "order": 12
+    },
+    "jijel": {
+      "labelFr": "Jijel",
+      "labelAr": "جيجل",
+      "order": 13
+    }
+  },
+  "categories": {
+    "cables": {
+      "labelFr": "Câbles",
+      "labelAr": "كابلات",
+      "icon": "🔌"
+    },
+    "tableaux": {
+      "labelFr": "Tableaux & protection",
+      "labelAr": "لوحات وحماية",
+      "icon": "⚡"
+    },
+    "appareillage": {
+      "labelFr": "Appareillage",
+      "labelAr": "أجهزة كهربائية",
+      "icon": "🎛️"
+    },
+    "eclairage": {
+      "labelFr": "Éclairage",
+      "labelAr": "إضاءة",
+      "icon": "💡"
+    },
+    "outillage": {
+      "labelFr": "Outillage",
+      "labelAr": "عدد وأدوات",
+      "icon": "🔧"
+    }
+  },
+  "stores": [
+    {
+      "id": "legrand-algerie-alger",
+      "published": true,
+      "demo": false,
+      "nameFr": "Legrand Algérie Alger",
+      "nameAr": "Legrand Algérie Alger",
+      "city": "alger",
+      "wilayaFr": "Alger",
+      "wilayaAr": "الجزائر",
+      "communeFr": "Hydra",
+      "communeAr": "حيدرة",
+      "addressFr": "Rue de La Madeleine N°33B, Hydra 16000 Alger",
+      "addressAr": "Rue de La Madeleine N°33B, Hydra 16000 Alger",
+      "phone": "0770126473",
+      "email": "office.alger@legrandelectric.com",
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Rue+de+La+Madeleine+33B+Hydra+Alger",
+      "tags": [
+        "tableaux",
+        "appareillage",
+        "cables"
+      ],
+      "noteFr": "Siège / bureau Legrand — tarifs et disponibilités sur demande.",
+      "noteAr": "المقر — الأسعار والتوفر عند الطلب.",
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand (appareillage, tableaux, protection) — prix sur demande",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ]
+    },
+    {
+      "id": "bz-electrical",
+      "published": true,
+      "demo": false,
+      "nameFr": "BZ ELECTRICAL",
+      "nameAr": "BZ ELECTRICAL",
+      "city": "blida",
+      "wilayaFr": "Blida",
+      "wilayaAr": "البليدة",
+      "communeFr": "Blida",
+      "communeAr": "البليدة",
+      "addressFr": "Cité Abdelmoumen 03 n° 50, Sidi Abdelkader, 90000 Blida",
+      "addressAr": "Cité Abdelmoumen 03 n° 50, Sidi Abdelkader, 90000 Blida",
+      "phone": "0550975024",
+      "email": "info@bz-electric.com",
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Cite+Abdelmoumen+Blida+Algeria",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ]
+    },
+    {
+      "id": "hitec-elec",
+      "published": true,
+      "demo": false,
+      "nameFr": "HITEC ELEC",
+      "nameAr": "HITEC ELEC",
+      "city": "alger",
+      "wilayaFr": "Alger",
+      "wilayaAr": "الجزائر",
+      "communeFr": "Alger",
+      "communeAr": "الجزائر",
+      "addressFr": "88 Rue Hassiba Ben Bouali, Sidi M'Hamed 16000 Alger",
+      "addressAr": "88 Rue Hassiba Ben Bouali, Sidi M'Hamed 16000 Alger",
+      "phone": "0661564695 / 0661299167",
+      "email": "hitec.elec@yahoo.fr",
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=88+Rue+Hassiba+Ben+Bouali+Alger",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ]
+    },
+    {
+      "id": "ips-net",
+      "published": true,
+      "demo": false,
+      "nameFr": "IPS NET",
+      "nameAr": "IPS NET",
+      "city": "alger",
+      "wilayaFr": "Alger",
+      "wilayaAr": "الجزائر",
+      "communeFr": "El Achour",
+      "communeAr": "الأشراف",
+      "addressFr": "Cité Michele N°13B Local A Oued Terfa El Achour - Alger 16000",
+      "addressAr": "Cité Michele N°13B Local A Oued Terfa El Achour - Alger 16000",
+      "phone": "0550409439",
+      "email": "commercial@ipsnet-dz.com",
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=El+Achour+Alger",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ]
+    },
+    {
+      "id": "cdmi",
+      "published": true,
+      "demo": false,
+      "nameFr": "CDMI",
+      "nameAr": "CDMI",
+      "city": "alger",
+      "wilayaFr": "Alger",
+      "wilayaAr": "الجزائر",
+      "communeFr": "Kouba",
+      "communeAr": "القبة",
+      "addressFr": "26 Lot El Djanah Lakhdar, Garidi I, Kouba 16000 Alger",
+      "addressAr": "26 Lot El Djanah Lakhdar, Garidi I, Kouba 16000 Alger",
+      "phone": "023708838 / 0560379562",
+      "email": "contact@cdmi-dz.com",
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Kouba+Alger",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ]
+    },
+    {
+      "id": "kahlet-elec",
+      "published": true,
+      "demo": false,
+      "nameFr": "KAHLET ELEC",
+      "nameAr": "KAHLET ELEC",
+      "city": "alger",
+      "wilayaFr": "Alger",
+      "wilayaAr": "الجزائر",
+      "communeFr": "El Madania",
+      "communeAr": "المدنية",
+      "addressFr": "53, Rue Abderahman Lala, El Madania 16000 Alger",
+      "addressAr": "53, Rue Abderahman Lala, El Madania 16000 Alger",
+      "phone": "0550072188",
+      "email": "kelec.sarl@yahoo.fr",
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=El+Madania+Alger",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ]
+    },
+    {
+      "id": "alief",
+      "published": true,
+      "demo": false,
+      "nameFr": "ALIEF",
+      "nameAr": "ALIEF",
+      "city": "alger",
+      "wilayaFr": "Alger",
+      "wilayaAr": "الجزائر",
+      "communeFr": "Dar El Beida",
+      "communeAr": "دار البيضاء",
+      "addressFr": "Lot n°1, local 01, Groupe 13, El Hamiz Sud 01, Dar El Beida 16000 Alger",
+      "addressAr": "Lot n°1, local 01, Groupe 13, El Hamiz Sud 01, Dar El Beida 16000 Alger",
+      "phone": "028492219 / 0553386322",
+      "email": "alief@alief-dz.com",
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Dar+El+Beida+Alger",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ]
+    },
+    {
+      "id": "ltc",
+      "published": true,
+      "demo": false,
+      "nameFr": "LTC",
+      "nameAr": "LTC",
+      "city": "alger",
+      "wilayaFr": "Alger",
+      "wilayaAr": "الجزائر",
+      "communeFr": "Alger",
+      "communeAr": "الجزائر",
+      "addressFr": "Hai Mimouni 05, lot n°27- BEK - Alger 16000",
+      "addressAr": "Hai Mimouni 05, lot n°27- BEK - Alger 16000",
+      "phone": "0560980576",
+      "email": "ltceurl@yahoo.fr",
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Hai+Mimouni+Alger",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ]
+    },
+    {
+      "id": "fmeid",
+      "published": true,
+      "demo": false,
+      "nameFr": "F.M.E.I.D",
+      "nameAr": "F.M.E.I.D",
+      "city": "oran",
+      "wilayaFr": "Oran",
+      "wilayaAr": "وهران",
+      "communeFr": "Oran",
+      "communeAr": "وهران",
+      "addressFr": "10 rue Mohamed Boudiaf ex rue Mostaganem 31000 Oran",
+      "addressAr": "10 rue Mohamed Boudiaf ex rue Mostaganem 31000 Oran",
+      "phone": "0555994886 / 0661201661",
+      "email": "fmeid@siem-electricite.com",
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=10+rue+Mohamed+Boudiaf+Oran",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ]
+    },
+    {
+      "id": "planete-techno",
+      "published": true,
+      "demo": false,
+      "nameFr": "PLANETE TECHNO",
+      "nameAr": "PLANETE TECHNO",
+      "city": "constantine",
+      "wilayaFr": "Constantine",
+      "wilayaAr": "قسنطينة",
+      "communeFr": "Aïn El Bey",
+      "communeAr": "عين الباي",
+      "addressFr": "10, Cité Zouaghi Bt.01 Bloc B Local 09 Ain El Bey 25000 Constantine",
+      "addressAr": "10, Cité Zouaghi Bt.01 Bloc B Local 09 Ain El Bey 25000 Constantine",
+      "phone": "031692804 / 0770296129",
+      "email": "planete.techno@yahoo.fr",
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Ain+El+Bey+Constantine",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ]
+    },
+    {
+      "id": "fedelec",
+      "published": true,
+      "demo": false,
+      "nameFr": "FEDELEC (CHAIB DRAA TOUIRA)",
+      "nameAr": "FEDELEC (CHAIB DRAA TOUIRA)",
+      "city": "oran",
+      "wilayaFr": "Oran",
+      "wilayaAr": "وهران",
+      "communeFr": "Bir El Djir",
+      "communeAr": "بئر الجير",
+      "addressFr": "Coopérative Saad Mohamed N°74 Local N°03, Emir Abdelkader, Bir El Djir 31000 Oran",
+      "addressAr": "Coopérative Saad Mohamed N°74 Local N°03, Emir Abdelkader, Bir El Djir 31000 Oran",
+      "phone": "0554285551 / 0770404130",
+      "email": "fedeleclegrand@yahoo.fr",
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Bir+El+Djir+Oran",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ]
+    },
+    {
+      "id": "loval",
+      "published": true,
+      "demo": false,
+      "nameFr": "LOVAL",
+      "nameAr": "LOVAL",
+      "city": "tlemcen",
+      "wilayaFr": "Tlemcen",
+      "wilayaAr": "تلمسان",
+      "communeFr": "Tlemcen",
+      "communeAr": "تلمسان",
+      "addressFr": "300 Kiffane Central les Dahlias, 13000 Tlemcen",
+      "addressAr": "300 Kiffane Central les Dahlias, 13000 Tlemcen",
+      "phone": "0661220588 / 043278080",
+      "email": "dg@sarlloval.fr",
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Kiffane+Tlemcen",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ]
+    },
+    {
+      "id": "globaldz",
+      "published": true,
+      "demo": false,
+      "nameFr": "GLOBAL MATERIAL SOUTH",
+      "nameAr": "GLOBAL MATERIAL SOUTH",
+      "city": "ouargla",
+      "wilayaFr": "Ouargla",
+      "wilayaAr": "ورقلة",
+      "communeFr": "Hassi Messaoud",
+      "communeAr": "حاسي مسعود",
+      "addressFr": "BP 533 Cité Si El Houasse II, Hassi Messaoud 30000 Ouargla",
+      "addressAr": "BP 533 Cité Si El Houasse II, Hassi Messaoud 30000 Ouargla",
+      "phone": "0661380001",
+      "email": "com5@globaldz.com",
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Hassi+Messaoud+Ouargla",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ]
+    },
+    {
+      "published": true,
+      "demo": false,
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ],
+      "id": "etp-h-trading",
+      "nameFr": "EURL ETP / SARL H.TRADING",
+      "nameAr": "EURL ETP / SARL H.TRADING",
+      "city": "alger",
+      "wilayaFr": "Alger",
+      "wilayaAr": "الجزائر",
+      "communeFr": "Dar El Beida",
+      "communeAr": "دار البيضاء",
+      "addressFr": "Cité SNTP Groupe A Lot 28, El Hamiz, Alger 16000",
+      "addressAr": "Cité SNTP Groupe A Lot 28, El Hamiz, Alger 16000",
+      "phone": "0550470850",
+      "email": "mennasel_electric@yahoo.fr",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=El+Hamiz+Alger"
+    },
+    {
+      "published": true,
+      "demo": false,
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ],
+      "id": "soma-flamme",
+      "nameFr": "SARL SOMA FLAMME",
+      "nameAr": "SARL SOMA FLAMME",
+      "city": "alger",
+      "wilayaFr": "Alger",
+      "wilayaAr": "الجزائر",
+      "communeFr": "Dar El Beida",
+      "communeAr": "دار البيضاء",
+      "addressFr": "Cité SNTP Est 32/33, El Hamiz, Dar El Beida 16000 Alger",
+      "addressAr": "Cité SNTP Est 32/33, El Hamiz, Dar El Beida 16000 Alger",
+      "phone": "0550277780",
+      "email": "samir.hamadou1@gmail.com",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=El+Hamiz+Dar+El+Beida"
+    },
+    {
+      "published": true,
+      "demo": false,
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ],
+      "id": "cinquelec",
+      "nameFr": "EURL CINQUELEC",
+      "nameAr": "EURL CINQUELEC",
+      "city": "alger",
+      "wilayaFr": "Alger",
+      "wilayaAr": "الجزائر",
+      "communeFr": "Birkhadem",
+      "communeAr": "بئر خادم",
+      "addressFr": "12 Lot Ennahda, Birkhadem 16000 Alger",
+      "addressAr": "12 Lot Ennahda, Birkhadem 16000 Alger",
+      "phone": "0550936120 / 023548320",
+      "email": "a.lataoui@cinquel.com",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Birkhadem+Alger"
+    },
+    {
+      "published": true,
+      "demo": false,
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ],
+      "id": "golf-arabes",
+      "nameFr": "EURL GOLF ARABES",
+      "nameAr": "EURL GOLF ARABES",
+      "city": "el-oued",
+      "wilayaFr": "El Oued",
+      "wilayaAr": "الوادي",
+      "communeFr": "El Oued",
+      "communeAr": "الوادي",
+      "addressFr": "Haï Chatt, Bloc 23, local N°03, El Oued 39000",
+      "addressAr": "Haï Chatt, Bloc 23, local N°03, El Oued 39000",
+      "phone": "0557716551 / 0550509109",
+      "email": "atallah.y@hotmail.fr",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=El+Oued+Algeria"
+    },
+    {
+      "published": true,
+      "demo": false,
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ],
+      "id": "medis",
+      "nameFr": "SNC MEDIS",
+      "nameAr": "SNC MEDIS",
+      "city": "tizi-ouzou",
+      "wilayaFr": "Tizi Ouzou",
+      "wilayaAr": "تيزي وزو",
+      "communeFr": "Tizi Ouzou",
+      "communeAr": "تيزي وزو",
+      "addressFr": "Boulevard Krim Belkacem, Tizi Ouzou 15000",
+      "addressAr": "Boulevard Krim Belkacem, Tizi Ouzou 15000",
+      "phone": "0782240842 / 0770978443",
+      "email": "medis_snc@yahoo.com",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Tizi+Ouzou+Algeria"
+    },
+    {
+      "published": true,
+      "demo": false,
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ],
+      "id": "soralec",
+      "nameFr": "SARL SORALEC",
+      "nameAr": "SARL SORALEC",
+      "city": "bouira",
+      "wilayaFr": "Bouira",
+      "wilayaAr": "البويرة",
+      "communeFr": "Bouira",
+      "communeAr": "البويرة",
+      "addressFr": "Cité 34 logts LSP Bt N°1, Bouira 10000",
+      "addressAr": "Cité 34 logts LSP Bt N°1, Bouira 10000",
+      "phone": "0770338633",
+      "email": "soralec.sys@gmail.com",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Bouira+Algeria"
+    },
+    {
+      "published": true,
+      "demo": false,
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ],
+      "id": "amokrane",
+      "nameFr": "CE AMOKRANE",
+      "nameAr": "CE AMOKRANE",
+      "city": "bejaia",
+      "wilayaFr": "Béjaïa",
+      "wilayaAr": "بجاية",
+      "communeFr": "Béjaïa",
+      "communeAr": "بجاية",
+      "addressFr": "Zone Urbaine Aissou, Quatre chemins, Béjaïa 06000",
+      "addressAr": "Zone Urbaine Aissou, Quatre chemins, Béjaïa 06000",
+      "phone": "0561634246 / 0661630736",
+      "email": "am.electric06@gmail.com",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Bejaia+Algeria"
+    },
+    {
+      "published": true,
+      "demo": false,
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ],
+      "id": "cejm-algerie",
+      "nameFr": "SARL CEJM ALGERIE",
+      "nameAr": "SARL CEJM ALGERIE",
+      "city": "bejaia",
+      "wilayaFr": "Béjaïa",
+      "wilayaAr": "بجاية",
+      "communeFr": "Béjaïa",
+      "communeAr": "بجاية",
+      "addressFr": "Lieu-dit Ferme Azamoum, Béjaïa 06000",
+      "addressAr": "Lieu-dit Ferme Azamoum, Béjaïa 06000",
+      "phone": "0770978454",
+      "email": "nassim.lamiri@cejm.eu",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Bejaia+Algeria"
+    },
+    {
+      "published": true,
+      "demo": false,
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ],
+      "id": "connect-elec",
+      "nameFr": "EURL CONNECT ELEC",
+      "nameAr": "EURL CONNECT ELEC",
+      "city": "constantine",
+      "wilayaFr": "Constantine",
+      "wilayaAr": "قسنطينة",
+      "communeFr": "Constantine",
+      "communeAr": "قسنطينة",
+      "addressFr": "N° 03 et 05 UV 02, projet 265 logts Bt 02, Nouvelle Ville, Constantine 25000",
+      "addressAr": "N° 03 et 05 UV 02, projet 265 logts Bt 02, Nouvelle Ville, Constantine 25000",
+      "phone": "0661228333 / 031753133",
+      "email": "connectelec.algerie@outlook.fr",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Nouvelle+Ville+Constantine"
+    },
+    {
+      "published": true,
+      "demo": false,
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ],
+      "id": "bouaziz-fahim",
+      "nameFr": "ETS BOUAZIZ FAHIM",
+      "nameAr": "ETS BOUAZIZ FAHIM",
+      "city": "msila",
+      "wilayaFr": "M'Sila",
+      "wilayaAr": "المسيلة",
+      "communeFr": "M'Sila",
+      "communeAr": "المسيلة",
+      "addressFr": "Cité 112 Lot Promotion Zaki, M'Sila 28000",
+      "addressAr": "Cité 112 Lot Promotion Zaki, M'Sila 28000",
+      "phone": "0558547700",
+      "email": "fahimmsila@yahoo.fr",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Msila+Algeria"
+    },
+    {
+      "published": true,
+      "demo": false,
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ],
+      "id": "abdelhadi-sofiane",
+      "nameFr": "ETS ABDELHADI SOFIANE",
+      "nameAr": "ETS ABDELHADI SOFIANE",
+      "city": "jijel",
+      "wilayaFr": "Jijel",
+      "wilayaAr": "جيجل",
+      "communeFr": "Jijel",
+      "communeAr": "جيجل",
+      "addressFr": "19 Rue Chabii Mekki, Jijel 18000",
+      "addressAr": "19 Rue Chabii Mekki, Jijel 18000",
+      "phone": "0661962574",
+      "email": "soufianelec@gmail.com",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Jijel+Algeria"
+    },
+    {
+      "published": true,
+      "demo": false,
+      "brands": [
+        "Legrand"
+      ],
+      "activityFr": "Distributeur officiel Legrand",
+      "activityAr": "موزع رسمي Legrand",
+      "source": "Legrand DZ",
+      "tags": [
+        "tableaux",
+        "appareillage"
+      ],
+      "inventory": [
+        {
+          "id": "legrand-gamme",
+          "category": "appareillage",
+          "labelFr": "Gamme Legrand — prix sur demande en magasin",
+          "labelAr": "مجموعة Legrand — السعر عند الطلب",
+          "brand": "Legrand",
+          "unit": "—",
+          "price": null,
+          "currency": "DZD",
+          "stock": "contact",
+          "updated": "2026-05-19"
+        }
+      ],
+      "id": "mekki-elec",
+      "nameFr": "MEKKI ELEC",
+      "nameAr": "MEKKI ELEC",
+      "city": "batna",
+      "wilayaFr": "Batna",
+      "wilayaAr": "باتنة",
+      "communeFr": "Batna",
+      "communeAr": "باتنة",
+      "addressFr": "Boulevard KL / Route de Biskra, Batna 05000",
+      "addressAr": "Boulevard KL / Route de Biskra, Batna 05000",
+      "phone": "0661352090 / 0659293715",
+      "email": "mekki.elec@gmail.com",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Batna+Algeria"
+    }
+  ]
+}
