@@ -2,46 +2,122 @@
 <html lang="fr" dir="ltr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="robots" content="noindex" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <link rel="canonical" href="https://electro-dz.com/lecteur-pdf.html" />
   <link rel="icon" href="assets/app-icon.png" type="image/png" />
   <title>Lecteur PDF — DZSWISS ELEC</title>
   <link rel="stylesheet" href="css/lecteur-pdf.css" />
 </head>
 <body>
+  <svg xmlns="http://www.w3.org/2000/svg" class="reader-sprite" style="display:none" aria-hidden="true">
+    <symbol id="reader-ico-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></symbol>
+    <symbol id="reader-ico-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+    <symbol id="reader-ico-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+    <symbol id="reader-ico-star-filled" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+    <symbol id="reader-ico-undo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h10a5 5 0 0 1 5 5v2M3 10l4-4M3 10l4 4"/></symbol>
+    <symbol id="reader-ico-redo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10H11a5 5 0 0 0-5 5v2M21 10l-4-4M21 10l-4 4"/></symbol>
+    <symbol id="reader-ico-zoom-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M8 11h6"/></symbol>
+    <symbol id="reader-ico-zoom-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></symbol>
+    <symbol id="reader-ico-fit-width" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></symbol>
+    <symbol id="reader-ico-fit-page" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="1"/><path d="M9 7h6M9 11h6M9 15h4"/></symbol>
+    <symbol id="reader-ico-hand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0v5M14 9V4a2 2 0 0 0-4 0v6M10 9.5V5a2 2 0 0 0-4 0v8a6 6 0 0 0 6 6h1a5 5 0 0 0 5-5v-3a2 2 0 0 0-4 0"/></symbol>
+    <symbol id="reader-ico-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></symbol>
+    <symbol id="reader-ico-highlighter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11-6 6v3h3l6-6M22 2l-5 5M16 8l2 2"/></symbol>
+    <symbol id="reader-ico-eraser" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/><path d="M22 21H7M16 6l2 2"/></symbol>
+    <symbol id="reader-ico-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+    <symbol id="reader-ico-rotate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.5 0 4.8 1 6.4 2.6L21 8"/><path d="M21 3v5h-5"/></symbol>
+    <symbol id="reader-ico-fullscreen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></symbol>
+    <symbol id="reader-ico-fullscreen-exit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3M21 8h-3a2 2 0 0 1-2-2V3M3 16h3a2 2 0 0 1 2 2v3M16 21v-3a2 2 0 0 1 2-2h3"/></symbol>
+    <symbol id="reader-ico-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></symbol>
+    <symbol id="reader-ico-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></symbol>
+    <symbol id="reader-ico-thumbs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+  </svg>
+
   <header class="reader-header">
-    <a href="bibliotheque.html" class="btn" data-i18n="back" data-back-link>←</a>
+    <a href="bibliotheque.html" class="btn btn-icon" data-back-link data-i18n-title="back" aria-label="Retour">
+      <svg class="reader-ico" aria-hidden="true"><use href="#reader-ico-back"/></svg>
+    </a>
     <h1 id="doc-title">PDF</h1>
     <button type="button" class="lang-btn active" data-lang="fr">FR</button>
     <button type="button" class="lang-btn" data-lang="ar">AR</button>
-    <button type="button" class="btn" id="btn-favorite" title="Favoris" aria-label="Favoris">☆</button>
-    <a href="#" class="btn btn-primary" id="btn-download" download data-i18n="download">↓</a>
+    <button type="button" class="btn btn-icon" id="btn-favorite" data-i18n-title="fav" aria-label="Favoris">
+      <svg class="reader-ico reader-ico--star" aria-hidden="true"><use href="#reader-ico-star"/></svg>
+    </button>
+    <a href="#" class="btn btn-icon btn-primary" id="btn-download" download data-i18n-title="download" aria-label="Télécharger">
+      <svg class="reader-ico" aria-hidden="true"><use href="#reader-ico-download"/></svg>
+    </a>
   </header>
 
+  <nav class="reader-page-bar" id="reader-page-bar" hidden aria-label="Navigation pages">
+    <span class="reader-page-bar__info" id="bar-page-info">1 / 1</span>
+    <p class="reader-page-bar__hint" id="swipe-hint" data-i18n="swipeHint" hidden>Glissez le doigt ↑ ↓ sur la page pour changer de page</p>
+    <div class="reader-page-bar__actions">
+      <button type="button" class="btn reader-page-bar__reset" id="btn-reset-zoom" data-i18n-title="resetZoom" aria-label="Réinitialiser le zoom">100%</button>
+      <button type="button" class="btn btn-icon reader-page-bar__thumbs" id="btn-bar-thumbs" data-i18n-title="toggleThumbs" aria-label="Miniatures">
+        <svg class="reader-ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#reader-ico-thumbs"/></svg>
+      </button>
+      <button type="button" class="btn btn-icon reader-page-bar__fs" id="btn-fullscreen" data-i18n-title="fullscreen" aria-label="Plein écran">
+        <svg class="reader-ico reader-ico--fs" viewBox="0 0 24 24" aria-hidden="true"><use href="#reader-ico-fullscreen"/></svg>
+      </button>
+    </div>
+  </nav>
+
   <div class="reader-toolbar" id="reader-toolbar" hidden aria-label="Outils lecteur">
-    <div class="toolbar-group" aria-label="Historique pages">
-      <button type="button" class="btn" id="btn-hist-back" title="Retour" aria-label="Page précédente (historique)">↩</button>
-      <button type="button" class="btn" id="btn-hist-fwd" title="Avancer" aria-label="Page suivante (historique)">↪</button>
+    <div class="toolbar-group toolbar-group--pages toolbar-group--pages-desktop" aria-label="Navigation pages">
+      <button type="button" class="btn btn-icon btn-nav-text" id="btn-page-prev" data-i18n-title="pagePrev" aria-label="Page précédente"><span class="nav-glyph" aria-hidden="true">‹</span></button>
+      <span class="toolbar-page-info" id="toolbar-page-info">1 / 1</span>
+      <button type="button" class="btn btn-icon btn-nav-text" id="btn-page-next" data-i18n-title="pageNext" aria-label="Page suivante"><span class="nav-glyph" aria-hidden="true">›</span></button>
+      <button type="button" class="btn btn-icon" id="btn-toggle-thumbs" data-i18n-title="toggleThumbs" aria-label="Miniatures">
+        <svg class="reader-ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#reader-ico-thumbs"/></svg>
+      </button>
     </div>
-    <div class="toolbar-group" aria-label="Zoom">
-      <button type="button" class="btn" id="btn-zoom-out" title="Zoom −" aria-label="Zoom arrière">−</button>
-      <span id="zoom-label">100%</span>
-      <button type="button" class="btn" id="btn-zoom-in" title="Zoom +" aria-label="Zoom avant">+</button>
-      <button type="button" class="btn" id="btn-fit-width" data-i18n="fitWidth" title="Ajuster largeur">Largeur</button>
-      <button type="button" class="btn" id="btn-fit-page" data-i18n="fitPage" title="Ajuster page">Page</button>
+    <div class="toolbar-group toolbar-group--hist" aria-label="Historique pages">
+      <button type="button" class="btn btn-icon" id="btn-hist-back" data-i18n-title="histBack" aria-label="Page précédente (historique)">
+        <svg class="reader-ico" aria-hidden="true"><use href="#reader-ico-undo"/></svg>
+      </button>
+      <button type="button" class="btn btn-icon" id="btn-hist-fwd" data-i18n-title="histFwd" aria-label="Page suivante (historique)">
+        <svg class="reader-ico" aria-hidden="true"><use href="#reader-ico-redo"/></svg>
+      </button>
     </div>
-    <div class="toolbar-group" aria-label="Annotation">
-      <button type="button" class="btn tool-active" id="btn-tool-hand" data-i18n="toolHand" title="Déplacer">✋</button>
-      <button type="button" class="btn" id="btn-tool-pen" data-i18n="toolPen" title="Stylo">✎</button>
-      <button type="button" class="btn" id="btn-tool-highlight" data-i18n="toolHighlight" title="Surligneur">🖍</button>
-      <button type="button" class="btn" id="btn-tool-eraser" data-i18n="toolEraser" title="Gomme">⌫</button>
+    <div class="toolbar-group toolbar-group--zoom" aria-label="Zoom">
+      <button type="button" class="btn btn-icon" id="btn-zoom-out" data-i18n-title="zoomOut" aria-label="Zoom arrière">
+        <svg class="reader-ico" aria-hidden="true"><use href="#reader-ico-zoom-out"/></svg>
+      </button>
+      <button type="button" class="btn btn-reset-zoom" id="btn-reset-zoom-toolbar" data-i18n-title="resetZoom" aria-label="Réinitialiser le zoom">100%</button>
+      <span class="zoom-label" id="zoom-label" role="button" tabindex="0" title="Réinitialiser le zoom">100%</span>
+      <button type="button" class="btn btn-icon" id="btn-zoom-in" data-i18n-title="zoomIn" aria-label="Zoom avant">
+        <svg class="reader-ico" aria-hidden="true"><use href="#reader-ico-zoom-in"/></svg>
+      </button>
+      <button type="button" class="btn btn-icon" id="btn-fit-width" data-i18n-title="fitWidth" aria-label="Ajuster largeur">
+        <svg class="reader-ico" aria-hidden="true"><use href="#reader-ico-fit-width"/></svg>
+      </button>
+      <button type="button" class="btn btn-icon" id="btn-fit-page" data-i18n-title="fitPage" aria-label="Ajuster page">
+        <svg class="reader-ico" aria-hidden="true"><use href="#reader-ico-fit-page"/></svg>
+      </button>
+    </div>
+    <div class="toolbar-group toolbar-group--annotate" aria-label="Annotation">
+      <button type="button" class="btn btn-icon tool-active" id="btn-tool-hand" data-i18n-title="toolHand" aria-label="Déplacer">
+        <svg class="reader-ico" aria-hidden="true"><use href="#reader-ico-hand"/></svg>
+      </button>
+      <button type="button" class="btn btn-icon" id="btn-tool-pen" data-i18n-title="toolPen" aria-label="Stylo">
+        <svg class="reader-ico" aria-hidden="true"><use href="#reader-ico-pen"/></svg>
+      </button>
+      <button type="button" class="btn btn-icon" id="btn-tool-highlight" data-i18n-title="toolHighlight" aria-label="Surligneur">
+        <svg class="reader-ico" aria-hidden="true"><use href="#reader-ico-highlighter"/></svg>
+      </button>
+      <button type="button" class="btn btn-icon" id="btn-tool-eraser" data-i18n-title="toolEraser" aria-label="Gomme">
+        <svg class="reader-ico" aria-hidden="true"><use href="#reader-ico-eraser"/></svg>
+      </button>
       <input type="color" class="tool-color" id="ink-color" value="#ef4444" title="Couleur" aria-label="Couleur du stylo" />
       <input type="range" class="tool-size" id="ink-size" min="1" max="12" value="3" title="Épaisseur" aria-label="Épaisseur du trait" />
-      <button type="button" class="btn" id="btn-clear-ink" data-i18n="clearInk" title="Effacer tout">🗑</button>
+      <button type="button" class="btn btn-icon" id="btn-clear-ink" data-i18n-title="clearInk" aria-label="Effacer annotations">
+        <svg class="reader-ico" aria-hidden="true"><use href="#reader-ico-trash"/></svg>
+      </button>
     </div>
-    <div class="toolbar-group">
-      <button type="button" class="btn" id="btn-rotate" data-i18n="rotate" title="Rotation 90°">↻</button>
-      <button type="button" class="btn" id="btn-fullscreen" data-i18n="fullscreen" title="Plein écran">⛶</button>
+    <div class="toolbar-group toolbar-group--desktop-fs" aria-label="Affichage">
+      <button type="button" class="btn btn-icon" id="btn-fullscreen-desktop" data-i18n-title="fullscreen" aria-label="Plein écran">
+        <svg class="reader-ico reader-ico--fs" viewBox="0 0 24 24" aria-hidden="true"><use href="#reader-ico-fullscreen"/></svg>
+      </button>
     </div>
   </div>
 
@@ -54,25 +130,52 @@
     <p data-i18n="error">Impossible d’afficher ce PDF.</p>
     <div class="btn-row">
       <a href="#" class="btn btn-primary" id="btn-open-fallback" target="_blank" rel="noopener noreferrer" data-i18n="openExternal">Ouvrir le PDF</a>
-      <a href="bibliotheque.html" class="btn" data-i18n="back" data-back-link>←</a>
+      <a href="bibliotheque.html" class="btn btn-icon" data-back-link data-i18n-title="back" aria-label="Retour">
+        <svg class="reader-ico" aria-hidden="true"><use href="#reader-ico-back"/></svg>
+      </a>
     </div>
   </div>
 
   <div class="reader-body" id="reader-body" hidden>
-    <p class="mode-hint" id="mode-hint" data-i18n="swipeHint">Pincement = zoom · Glisser = déplacer · Stylo = annoter</p>
-    <div class="reader-stage-wrap" id="stage-wrap">
-      <div class="reader-stage" id="pdf-stage"></div>
+    <div class="reader-layout">
+      <aside class="thumb-sidebar is-open" id="thumb-sidebar" aria-label="Miniatures des pages">
+        <p class="thumb-sidebar__title" data-i18n="thumbsTitle">Pages</p>
+        <div class="thumb-sidebar__list" id="thumb-list"></div>
+      </aside>
+      <div class="reader-main">
+        <div class="reader-stage-area">
+          <button type="button" class="page-v-zone page-v-zone--prev" id="btn-zone-prev" data-i18n-title="pagePrev" aria-label="Page précédente">
+            <span class="page-v-zone__chev" aria-hidden="true">↑</span>
+          </button>
+          <div class="reader-stage-wrap" id="stage-wrap">
+            <div class="reader-stage" id="pdf-stage"></div>
+          </div>
+          <button type="button" class="page-v-zone page-v-zone--next" id="btn-zone-next" data-i18n-title="pageNext" aria-label="Page suivante">
+            <span class="page-v-zone__chev" aria-hidden="true">↓</span>
+          </button>
+        </div>
+      </div>
     </div>
-    <nav class="pdf-pager" id="pdf-pager" aria-label="Navigation pages">
-      <button type="button" class="btn btn-nav prev" id="btn-prev" aria-label="Page précédente">‹</button>
-      <span class="page-info" id="page-info">1 / 1</span>
-      <button type="button" class="btn btn-nav next" id="btn-next" aria-label="Page suivante">›</button>
-      <label class="page-jump">
-        <span data-i18n="goto">Page</span>
-        <input type="number" id="page-input" min="1" value="1" aria-label="Numéro de page" />
-      </label>
-    </nav>
   </div>
+
+  <nav class="pdf-pager" id="pdf-pager" hidden aria-label="Navigation pages bas">
+    <button type="button" class="btn btn-nav btn-nav-text prev" id="btn-prev" aria-label="Page précédente"><span class="nav-glyph">‹</span></button>
+    <span class="page-info" id="page-info">1 / 1</span>
+    <button type="button" class="btn btn-nav btn-nav-text next" id="btn-next" aria-label="Page suivante"><span class="nav-glyph">›</span></button>
+    <label class="page-jump">
+      <span data-i18n="goto">Page</span>
+      <input type="number" id="page-input" min="1" value="1" aria-label="Numéro de page" />
+    </label>
+  </nav>
+
+  <nav class="reader-fs-nav" id="reader-fs-nav" hidden aria-label="Navigation pages plein écran">
+    <button type="button" class="btn btn-nav btn-nav-text" id="btn-fs-prev" data-i18n-title="pagePrev" aria-label="Page précédente"><span class="nav-glyph">‹</span></button>
+    <span class="reader-fs-nav__info" id="fs-page-info">1 / 1</span>
+    <button type="button" class="btn btn-nav btn-nav-text" id="btn-fs-next" data-i18n-title="pageNext" aria-label="Page suivante"><span class="nav-glyph">›</span></button>
+    <button type="button" class="btn btn-icon reader-fs-nav__exit" id="btn-fs-exit" data-i18n-title="exitFullscreen" aria-label="Quitter le plein écran">
+      <svg class="reader-ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#reader-ico-fullscreen-exit"/></svg>
+    </button>
+  </nav>
 
   <script src="js/site-config.js"></script>
   <script src="js/oauth-return.js"></script>

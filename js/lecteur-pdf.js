@@ -18,16 +18,27 @@
       ar: fromPage.indexOf("documentation") !== -1 ? "← وثائق" : "← مكتبة",
     },
     download: { fr: "Télécharger", ar: "تنزيل" },
+    fav: { fr: "Favoris", ar: "مفضلة" },
+    histBack: { fr: "Page précédente (historique)", ar: "صفحة سابقة (سجل)" },
+    histFwd: { fr: "Page suivante (historique)", ar: "صفحة تالية (سجل)" },
+    zoomOut: { fr: "Zoom arrière", ar: "تصغير" },
+    zoomIn: { fr: "Zoom avant", ar: "تكبير" },
+    pagePrev: { fr: "Page précédente", ar: "الصفحة السابقة" },
+    pageNext: { fr: "Page suivante", ar: "الصفحة التالية" },
+    pagePrevShort: { fr: "Préc.", ar: "سابق" },
+    pageNextShort: { fr: "Suiv.", ar: "تالي" },
+    swipeHint: {
+      fr: "Glissez le doigt ↑ ↓ sur la page pour changer de page",
+      ar: "مرّر إصبعك ↑ ↓ على الصفحة لتغيير الصفحة",
+    },
+    thumbsTitle: { fr: "Pages", ar: "صفحات" },
+    toggleThumbs: { fr: "Afficher les miniatures", ar: "عرض المصغرات" },
     openExternal: { fr: "Ouvrir le PDF", ar: "فتح PDF" },
     loading: { fr: "Chargement…", ar: "جاري التحميل…" },
     loadingPage: { fr: "Page", ar: "صفحة" },
     error: {
       fr: "Ce PDF ne peut pas s’afficher ici. Appuyez sur « Ouvrir le PDF ».",
       ar: "تعذر العرض هنا. اضغط « فتح PDF ».",
-    },
-    swipeHint: {
-      fr: "Pincement = zoom · Glisser = déplacer · Stylo = annoter",
-      ar: "قرص = تكبير · سحب = تحريك · قلم = كتابة",
     },
     goto: { fr: "Page", ar: "صفحة" },
     toolHand: { fr: "Main", ar: "يد" },
@@ -36,7 +47,9 @@
     toolEraser: { fr: "Gomme", ar: "ممحاة" },
     fitWidth: { fr: "Largeur", ar: "عرض" },
     fitPage: { fr: "Page", ar: "صفحة" },
+    resetZoom: { fr: "Réinitialiser le zoom (100 %)", ar: "إعادة التكبير (100٪)" },
     fullscreen: { fr: "Plein écran", ar: "ملء الشاشة" },
+    exitFullscreen: { fr: "Quitter le plein écran", ar: "إنهاء ملء الشاشة" },
     rotate: { fr: "Rotation", ar: "دوران" },
     clearInk: { fr: "Effacer annotations", ar: "مسح التعليقات" },
   };
@@ -56,6 +69,14 @@
     pageInput: document.getElementById("page-input"),
     btnPrev: document.getElementById("btn-prev"),
     btnNext: document.getElementById("btn-next"),
+    btnPagePrev: document.getElementById("btn-page-prev"),
+    btnPageNext: document.getElementById("btn-page-next"),
+    btnBarThumbs: document.getElementById("btn-bar-thumbs"),
+    barPageInfo: document.getElementById("bar-page-info"),
+    swipeHint: document.getElementById("swipe-hint"),
+    pageBar: document.getElementById("reader-page-bar"),
+    pager: document.getElementById("pdf-pager"),
+    toolbarPageInfo: document.getElementById("toolbar-page-info"),
     btnHistBack: document.getElementById("btn-hist-back"),
     btnHistFwd: document.getElementById("btn-hist-fwd"),
     btnZoomOut: document.getElementById("btn-zoom-out"),
@@ -68,8 +89,19 @@
     btnToolHighlight: document.getElementById("btn-tool-highlight"),
     btnToolEraser: document.getElementById("btn-tool-eraser"),
     btnClearInk: document.getElementById("btn-clear-ink"),
-    btnRotate: document.getElementById("btn-rotate"),
     btnFullscreen: document.getElementById("btn-fullscreen"),
+    btnFullscreenDesktop: document.getElementById("btn-fullscreen-desktop"),
+    fsNav: document.getElementById("reader-fs-nav"),
+    btnFsPrev: document.getElementById("btn-fs-prev"),
+    btnFsNext: document.getElementById("btn-fs-next"),
+    btnFsExit: document.getElementById("btn-fs-exit"),
+    fsPageInfo: document.getElementById("fs-page-info"),
+    thumbSidebar: document.getElementById("thumb-sidebar"),
+    thumbList: document.getElementById("thumb-list"),
+    readerLayout: document.querySelector(".reader-layout"),
+    btnToggleThumbs: document.getElementById("btn-toggle-thumbs"),
+    btnZonePrev: document.getElementById("btn-zone-prev"),
+    btnZoneNext: document.getElementById("btn-zone-next"),
     inkColor: document.getElementById("ink-color"),
     inkSize: document.getElementById("ink-size"),
     btnFavorite: document.getElementById("btn-favorite"),
@@ -98,9 +130,260 @@
   let panScrollTop = 0;
   let pinchStartDist = 0;
   let pinchStartZoom = 0;
+  let zoomRerenderTimer = null;
+  let resizeRerenderTimer = null;
 
   let drawing = false;
   let currentStroke = null;
+  let pseudoFullscreen = false;
+  let fsScrollY = 0;
+  let fsTouchBlocker = null;
+  let fitModeBeforeFs = null;
+  let zoomIndexBeforeFs = null;
+
+  /** Safari iPhone/iPad : pas de vrai plein écran HTML (sauf balise video). */
+  function isIOSWebKit() {
+    if (typeof navigator === "undefined") return false;
+    const ua = navigator.userAgent || "";
+    const iOSDevice = /iPad|iPhone|iPod/.test(ua);
+    const iPadOS =
+      navigator.platform === "MacIntel" && typeof navigator.maxTouchPoints === "number" && navigator.maxTouchPoints > 1;
+    return iOSDevice || iPadOS;
+  }
+
+  function supportsElementFullscreen() {
+    if (isIOSWebKit()) return false;
+    const el = document.documentElement;
+    return !!(
+      el.requestFullscreen ||
+      el.webkitRequestFullscreen ||
+      el.mozRequestFullScreen ||
+      el.msRequestFullscreen
+    );
+  }
+
+  function getFullscreenElement() {
+    return (
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.mozFullScreenElement ||
+      document.msFullscreenElement ||
+      null
+    );
+  }
+
+  function requestFullscreenEl(el) {
+    const fn =
+      el.requestFullscreen ||
+      el.webkitRequestFullscreen ||
+      el.mozRequestFullScreen ||
+      el.msRequestFullscreen;
+    if (!fn) return Promise.reject(new Error("fullscreen unsupported"));
+    return Promise.resolve(fn.call(el));
+  }
+
+  function exitFullscreenDoc() {
+    const fn =
+      document.exitFullscreen ||
+      document.webkitExitFullscreen ||
+      document.mozCancelFullScreen ||
+      document.msExitFullscreen;
+    if (fn) fn.call(document);
+  }
+
+  function isReaderFullscreen() {
+    return !!getFullscreenElement() || pseudoFullscreen;
+  }
+
+  function lockPageScrollForFs() {
+    fsScrollY = window.scrollY || window.pageYOffset || 0;
+    document.body.style.top = "-" + fsScrollY + "px";
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
+    if (!fsTouchBlocker) {
+      fsTouchBlocker = function (e) {
+        if (!pseudoFullscreen && !isReaderFullscreen()) return;
+        if (e.target.closest(".reader-stage-wrap")) return;
+        e.preventDefault();
+      };
+    }
+    document.addEventListener("touchmove", fsTouchBlocker, { passive: false });
+  }
+
+  function unlockPageScrollForFs() {
+    document.body.style.top = "";
+    document.body.style.left = "";
+    document.body.style.right = "";
+    document.body.style.width = "";
+    document.removeEventListener("touchmove", fsTouchBlocker);
+    window.scrollTo(0, fsScrollY);
+  }
+
+  function rerenderAfterLayoutChange() {
+    if (!pdfDoc) return;
+    pageCache.clear();
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        goToPage(currentPage, true).catch(onRenderError);
+      });
+    });
+  }
+
+  function setReaderFullscreen(on) {
+    const nativeFs = !!getFullscreenElement();
+    pseudoFullscreen = on && (!nativeFs || isIOSWebKit());
+    if (on) {
+      fitModeBeforeFs = fitMode;
+      zoomIndexBeforeFs = zoomIndex;
+      fitMode = "page";
+      zoomIndex = 2;
+      updateZoomLabel();
+    } else if (fitModeBeforeFs !== null) {
+      fitMode = fitModeBeforeFs;
+      zoomIndex = zoomIndexBeforeFs !== null ? zoomIndexBeforeFs : zoomIndex;
+      fitModeBeforeFs = null;
+      zoomIndexBeforeFs = null;
+      updateZoomLabel();
+    }
+    document.body.classList.toggle("is-fullscreen", on);
+    document.body.classList.toggle("is-fs-pseudo", pseudoFullscreen);
+    document.documentElement.classList.toggle("is-reader-fs", on);
+    document.documentElement.classList.toggle("is-fs-pseudo", pseudoFullscreen);
+    document.documentElement.classList.toggle("is-ios", isIOSWebKit());
+    if (els.fsNav) {
+      els.fsNav.hidden = !on;
+      els.fsNav.setAttribute("aria-hidden", on ? "false" : "true");
+    }
+    syncPageBarVisibility();
+    syncPagerVisibility();
+    if (on && pseudoFullscreen) lockPageScrollForFs();
+    else if (!on) unlockPageScrollForFs();
+    updateFullscreenUi();
+    rerenderAfterLayoutChange();
+    if (on && pseudoFullscreen) {
+      window.requestAnimationFrame(function () {
+        window.scrollTo(0, 0);
+      });
+    }
+  }
+
+  function updateFullscreenUi() {
+    const on = isReaderFullscreen();
+    const iconId = on ? "#reader-ico-fullscreen-exit" : "#reader-ico-fullscreen";
+    const label = t(on ? "exitFullscreen" : "fullscreen");
+    [els.btnFullscreen, els.btnFullscreenDesktop].forEach(function (btn) {
+      if (!btn) return;
+      const useEl = btn.querySelector("use");
+      if (useEl) useEl.setAttribute("href", iconId);
+      btn.setAttribute("title", label);
+      btn.setAttribute("aria-label", label);
+    });
+  }
+
+  function isMobileReader() {
+    return window.matchMedia("(max-width: 1024px)").matches;
+  }
+
+  function syncMobileReaderClass() {
+    document.body.classList.toggle("is-mobile-reader", isMobileReader());
+  }
+
+  function applyMobileReaderProfile() {
+    syncMobileReaderClass();
+    if (!isMobileReader()) return;
+    fitMode = "page";
+    zoomIndex = 2;
+    updateZoomLabel();
+  }
+
+  const DEFAULT_ZOOM_INDEX = 2;
+
+  function resetView() {
+    clearTimeout(zoomRerenderTimer);
+    fitMode = isMobileReader() ? "page" : fitMode;
+    zoomIndex = DEFAULT_ZOOM_INDEX;
+    updateZoomLabel();
+    if (!pdfDoc) return;
+    pageCache.clear();
+    if (els.stageWrap) {
+      els.stageWrap.scrollLeft = 0;
+      els.stageWrap.scrollTop = 0;
+    }
+    goToPage(currentPage, true).catch(onRenderError);
+  }
+
+  function enterReaderFullscreen() {
+    if (!supportsElementFullscreen()) {
+      pseudoFullscreen = true;
+      setReaderFullscreen(true);
+      return Promise.resolve();
+    }
+    return requestFullscreenEl(document.documentElement)
+      .catch(function () {
+        return requestFullscreenEl(document.body);
+      })
+      .then(function () {
+        if (getFullscreenElement()) {
+          pseudoFullscreen = false;
+          setReaderFullscreen(true);
+        } else {
+          pseudoFullscreen = true;
+          setReaderFullscreen(true);
+        }
+      })
+      .catch(function () {
+        pseudoFullscreen = true;
+        setReaderFullscreen(true);
+      });
+  }
+
+  function leaveReaderFullscreen() {
+    if (getFullscreenElement()) exitFullscreenDoc();
+    pseudoFullscreen = false;
+    setReaderFullscreen(false);
+  }
+
+  function toggleReaderFullscreen() {
+    if (isReaderFullscreen()) leaveReaderFullscreen();
+    else enterReaderFullscreen();
+  }
+
+  function onFullscreenChange() {
+    if (isIOSWebKit()) return;
+    if (getFullscreenElement()) {
+      pseudoFullscreen = false;
+      document.body.classList.add("is-fullscreen");
+      document.body.classList.remove("is-fs-pseudo");
+      if (els.fsNav) {
+        els.fsNav.hidden = false;
+        els.fsNav.setAttribute("aria-hidden", "false");
+      }
+      if (fitModeBeforeFs === null) {
+        fitModeBeforeFs = fitMode;
+        zoomIndexBeforeFs = zoomIndex;
+        fitMode = "page";
+        zoomIndex = 2;
+        updateZoomLabel();
+      }
+      updateFullscreenUi();
+      rerenderAfterLayoutChange();
+      return;
+    }
+    if (pseudoFullscreen) return;
+    document.body.classList.remove("is-fullscreen", "is-fs-pseudo");
+    document.documentElement.classList.remove("is-reader-fs", "is-fs-pseudo");
+    if (els.fsNav) els.fsNav.hidden = true;
+    if (fitModeBeforeFs !== null) {
+      fitMode = fitModeBeforeFs;
+      zoomIndex = zoomIndexBeforeFs !== null ? zoomIndexBeforeFs : zoomIndex;
+      fitModeBeforeFs = null;
+      zoomIndexBeforeFs = null;
+      updateZoomLabel();
+    }
+    updateFullscreenUi();
+    rerenderAfterLayoutChange();
+  }
 
   function t(key) {
     const entry = I18N[key];
@@ -114,6 +397,13 @@
     document.querySelectorAll("[data-i18n]").forEach(function (node) {
       const key = node.getAttribute("data-i18n");
       if (key) node.textContent = t(key);
+    });
+    document.querySelectorAll("[data-i18n-title]").forEach(function (node) {
+      const key = node.getAttribute("data-i18n-title");
+      if (!key) return;
+      const label = t(key);
+      node.setAttribute("title", label);
+      node.setAttribute("aria-label", label);
     });
     if (els.title) els.title.textContent = lang === "ar" ? titleAr : titleFr;
     els.langBtns.forEach(function (btn) {
@@ -165,6 +455,8 @@
     if (els.loadingText && msg) els.loadingText.textContent = msg;
     if (els.body) els.body.hidden = true;
     if (els.toolbar) els.toolbar.hidden = true;
+    if (els.pageBar) els.pageBar.hidden = true;
+    if (els.pager) els.pager.hidden = true;
     if (els.error) els.error.hidden = true;
   }
 
@@ -172,6 +464,8 @@
     if (els.loading) els.loading.hidden = true;
     if (els.body) els.body.hidden = true;
     if (els.toolbar) els.toolbar.hidden = true;
+    if (els.pageBar) els.pageBar.hidden = true;
+    if (els.pager) els.pager.hidden = true;
     if (els.error) els.error.hidden = false;
   }
 
@@ -180,6 +474,36 @@
     if (els.error) els.error.hidden = true;
     if (els.body) els.body.hidden = false;
     if (els.toolbar) els.toolbar.hidden = false;
+    syncPagerVisibility();
+    syncPageBarVisibility();
+    showSwipeHintIfNeeded();
+    setStageBusy(false);
+  }
+
+  function syncPageBarVisibility() {
+    if (!els.pageBar) return;
+    const readerVisible = els.body && !els.body.hidden;
+    els.pageBar.hidden = !readerVisible || isReaderFullscreen();
+  }
+
+  function syncPagerVisibility() {
+    if (!els.pager) return;
+    const readerVisible = els.body && !els.body.hidden;
+    els.pager.hidden = !readerVisible || isReaderFullscreen() || isMobileReader();
+  }
+
+  function setStageBusy(busy) {
+    if (els.stageWrap) els.stageWrap.classList.toggle("is-busy", !!busy);
+  }
+
+  /** Rechargement page (zoom, etc.) sans masquer la barre ni les boutons ‹ › */
+  function showSoftPageLoading(msg) {
+    if (els.loadingText && msg) els.loadingText.textContent = msg;
+    if (els.body && !els.body.hidden) {
+      setStageBusy(true);
+      return;
+    }
+    showLoading(msg);
   }
 
   function setupPdfJs() {
@@ -211,17 +535,40 @@
     return fromUrl();
   }
 
+  function getStageMaxSize() {
+    const pad = 8;
+    const wrap = els.stageWrap;
+    if (wrap && wrap.clientWidth > 80 && wrap.clientHeight > 80) {
+      return {
+        maxW: Math.max(200, wrap.clientWidth - pad),
+        maxH: Math.max(200, wrap.clientHeight - pad),
+      };
+    }
+    const fs = isReaderFullscreen();
+    const thumbOpen =
+      fs &&
+      els.thumbSidebar &&
+      els.thumbSidebar.classList.contains("is-open") &&
+      window.innerWidth > 720;
+    const thumbW = thumbOpen ? 108 : 0;
+    const edgeNav = 80;
+    const chromeTop = 48 + 46 + (fs ? 0 : 24);
+    const chromeBottom = fs ? 80 : 52;
+    return {
+      maxW: Math.max(200, window.innerWidth - thumbW - edgeNav - pad),
+      maxH: Math.max(200, window.innerHeight - chromeTop - chromeBottom - pad),
+    };
+  }
+
   function computeScale(page) {
     const base = page.getViewport({ scale: 1, rotation: pageRotation });
-    const wrap = els.stageWrap;
-    const pad = 24;
-    const maxW = Math.max(200, (wrap ? wrap.clientWidth : window.innerWidth) - pad);
-    const maxH = Math.max(200, (wrap ? wrap.clientHeight : window.innerHeight) - 120);
+    const size = getStageMaxSize();
+    const usePageFit = fitMode === "page" || isReaderFullscreen();
     let fitScale;
-    if (fitMode === "page") {
-      fitScale = Math.min(maxW / base.width, maxH / base.height);
+    if (usePageFit) {
+      fitScale = Math.min(size.maxW / base.width, size.maxH / base.height);
     } else {
-      fitScale = maxW / base.width;
+      fitScale = size.maxW / base.width;
     }
     return fitScale * ZOOM_LEVELS[zoomIndex];
   }
@@ -268,22 +615,123 @@
     return inkStrokes.get(pageNum);
   }
 
+  function distToSegmentSq(px, py, x1, y1, x2, y2) {
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    const lenSq = dx * dx + dy * dy;
+    if (lenSq === 0) {
+      const ex = px - x1;
+      const ey = py - y1;
+      return ex * ex + ey * ey;
+    }
+    let t = ((px - x1) * dx + (py - y1) * dy) / lenSq;
+    t = Math.max(0, Math.min(1, t));
+    const cx = x1 + t * dx;
+    const cy = y1 + t * dy;
+    const ex = px - cx;
+    const ey = py - cy;
+    return ex * ex + ey * ey;
+  }
+
+  function inkNormFromEvent(e, canvas) {
+    const rect = canvas.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    const w = rect.width || 1;
+    const h = rect.height || 1;
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+    return { nx: x / w, ny: y / h, x: x, y: y };
+  }
+
+  function inkXY(pt, cssW, cssH) {
+    if (pt.nx != null && pt.ny != null) {
+      return { x: pt.nx * cssW, y: pt.ny * cssH };
+    }
+    return { x: pt.x, y: pt.y };
+  }
+
+  function inkNorm(pt) {
+    if (pt.nx != null && pt.ny != null) return { nx: pt.nx, ny: pt.ny };
+    return { nx: pt.x, ny: pt.y };
+  }
+
+  function pointNearEraserPathNorm(pn, eraserPoints, radiusNorm) {
+    const r2 = radiusNorm * radiusNorm;
+    for (let i = 0; i < eraserPoints.length; i++) {
+      const en = inkNorm(eraserPoints[i]);
+      let dx = pn.nx - en.nx;
+      let dy = pn.ny - en.ny;
+      if (dx * dx + dy * dy <= r2) return true;
+      if (i > 0) {
+        const prev = inkNorm(eraserPoints[i - 1]);
+        if (distToSegmentSq(pn.nx, pn.ny, prev.nx, prev.ny, en.nx, en.ny) <= r2) return true;
+      }
+    }
+    return false;
+  }
+
+  function segmentNearEraserPath(nx1, ny1, nx2, ny2, eraserPoints, radiusNorm) {
+    const span = Math.hypot(nx2 - nx1, ny2 - ny1);
+    const steps = Math.max(2, Math.ceil(span / (radiusNorm * 0.35)));
+    for (let s = 0; s <= steps; s++) {
+      const t = s / steps;
+      const pn = { nx: nx1 + t * (nx2 - nx1), ny: ny1 + t * (ny2 - ny1) };
+      if (pointNearEraserPathNorm(pn, eraserPoints, radiusNorm)) return true;
+    }
+    return false;
+  }
+
+  function strokeHitByEraser(stroke, eraserPoints, radiusNorm) {
+    if (!stroke.points || !stroke.points.length) return false;
+    const pts = stroke.points.map(inkNorm);
+    for (let i = 0; i < pts.length; i++) {
+      if (pointNearEraserPathNorm(pts[i], eraserPoints, radiusNorm)) return true;
+      if (
+        i > 0 &&
+        segmentNearEraserPath(pts[i - 1].nx, pts[i - 1].ny, pts[i].nx, pts[i].ny, eraserPoints, radiusNorm)
+      ) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /** Retire les traits touchés par la gomme (coordonnées normalisées = stable au zoom). */
+  function applyEraserToStrokes(pageNum, eraserPoints, radiusNorm) {
+    if (!eraserPoints || !eraserPoints.length) return;
+    const strokes = getStrokes(pageNum);
+    const next = strokes.filter(function (stroke) {
+      if (stroke.eraser || !stroke.points || !stroke.points.length) return false;
+      return !strokeHitByEraser(stroke, eraserPoints, radiusNorm);
+    });
+    inkStrokes.set(pageNum, next);
+  }
+
+  function markInkDirty() {
+    pageCache.clear();
+  }
+
   function redrawInk(canvas, pageNum) {
     const ctx = canvas.getContext("2d");
-    const dpr = canvas.width / parseFloat(canvas.style.width);
+    const cssW = parseFloat(canvas.style.width) || 1;
+    const cssH = parseFloat(canvas.style.height) || 1;
+    const dpr = canvas.width / cssW;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     getStrokes(pageNum).forEach(function (stroke) {
       if (!stroke.points.length) return;
+      const p0 = inkXY(stroke.points[0], cssW, cssH);
       ctx.beginPath();
       ctx.strokeStyle = stroke.color;
       ctx.lineWidth = stroke.width;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
       ctx.globalAlpha = stroke.highlight ? 0.35 : 1;
-      ctx.moveTo(stroke.points[0].x, stroke.points[0].y);
+      ctx.moveTo(p0.x, p0.y);
       for (let i = 1; i < stroke.points.length; i++) {
-        ctx.lineTo(stroke.points[i].x, stroke.points[i].y);
+        const p = inkXY(stroke.points[i], cssW, cssH);
+        ctx.lineTo(p.x, p.y);
       }
       ctx.stroke();
       ctx.globalAlpha = 1;
@@ -291,20 +739,13 @@
   }
 
   function setupInkEvents(inkCanvas, frame) {
-    function posFromEvent(e) {
-      const rect = inkCanvas.getBoundingClientRect();
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      return { x: clientX - rect.left, y: clientY - rect.top };
-    }
-
     function startDraw(e) {
       if (activeTool === "hand") return;
       if (e.cancelable) e.preventDefault();
       drawing = true;
-      const p = posFromEvent(e);
+      const p = inkNormFromEvent(e, inkCanvas);
       if (activeTool === "eraser") {
-        currentStroke = { eraser: true, width: 20, points: [p] };
+        currentStroke = { eraser: true, width: 24, points: [p] };
       } else {
         const highlight = activeTool === "highlight";
         const width = highlight ? 14 : parseInt(els.inkSize.value, 10) || 3;
@@ -312,7 +753,7 @@
           color: els.inkColor.value,
           width: width,
           highlight: highlight,
-          points: [p],
+          points: [{ nx: p.nx, ny: p.ny }],
         };
         getStrokes(currentPage).push(currentStroke);
       }
@@ -321,27 +762,41 @@
     function moveDraw(e) {
       if (!drawing || !currentStroke) return;
       if (e.cancelable) e.preventDefault();
-      const p = posFromEvent(e);
+      const p = inkNormFromEvent(e, inkCanvas);
       if (currentStroke.eraser) {
+        const cssW = parseFloat(inkCanvas.style.width) || 1;
+        const cssH = parseFloat(inkCanvas.style.height) || 1;
+        const last = currentStroke.points[currentStroke.points.length - 1];
+        const p0 = inkXY(last, cssW, cssH);
         const ctx = inkCanvas.getContext("2d");
-        const dpr = inkCanvas.width / parseFloat(inkCanvas.style.width);
+        const dpr = inkCanvas.width / cssW;
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         ctx.globalCompositeOperation = "destination-out";
         ctx.beginPath();
         ctx.lineWidth = currentStroke.width;
         ctx.lineCap = "round";
-        ctx.moveTo(currentStroke.points[currentStroke.points.length - 1].x, currentStroke.points[currentStroke.points.length - 1].y);
+        ctx.moveTo(p0.x, p0.y);
         ctx.lineTo(p.x, p.y);
         ctx.stroke();
         ctx.globalCompositeOperation = "source-over";
-        currentStroke.points.push(p);
+        currentStroke.points.push({ nx: p.nx, ny: p.ny });
       } else {
-        currentStroke.points.push(p);
+        currentStroke.points.push({ nx: p.nx, ny: p.ny });
         redrawInk(inkCanvas, currentPage);
       }
     }
 
     function endDraw() {
+      if (drawing && currentStroke) {
+        if (currentStroke.eraser && currentStroke.points.length) {
+          const cssW = parseFloat(inkCanvas.style.width) || 1;
+          const cssH = parseFloat(inkCanvas.style.height) || 1;
+          const radiusNorm = currentStroke.width * 0.5 / Math.min(cssW, cssH);
+          applyEraserToStrokes(currentPage, currentStroke.points, radiusNorm);
+          redrawInk(inkCanvas, currentPage);
+        }
+        markInkDirty();
+      }
       drawing = false;
       currentStroke = null;
     }
@@ -352,6 +807,7 @@
     inkCanvas.addEventListener("touchstart", startDraw, { passive: false });
     inkCanvas.addEventListener("touchmove", moveDraw, { passive: false });
     inkCanvas.addEventListener("touchend", endDraw);
+    inkCanvas.addEventListener("touchcancel", endDraw);
 
     updateToolUi();
   }
@@ -388,24 +844,161 @@
   }
 
   function setZoomIndex(idx, rerender) {
+    const prev = zoomIndex;
     zoomIndex = Math.max(0, Math.min(ZOOM_LEVELS.length - 1, idx));
     updateZoomLabel();
-    if (rerender && pdfDoc) {
-      pageCache.clear();
-      goToPage(currentPage, true).catch(onRenderError);
+    if (!rerender || !pdfDoc) return;
+    pageCache.clear();
+    const zoomingOut = zoomIndex < prev;
+    if (isMobileReader() && !zoomingOut) {
+      clearTimeout(zoomRerenderTimer);
+      zoomRerenderTimer = setTimeout(function () {
+        goToPage(currentPage, true).catch(onRenderError);
+      }, 280);
+      return;
     }
+    clearTimeout(zoomRerenderTimer);
+    if (els.stageWrap && zoomingOut) {
+      els.stageWrap.scrollLeft = 0;
+      els.stageWrap.scrollTop = 0;
+    }
+    if (!isMobileReader()) {
+      thumbCache.clear();
+      if (els.thumbList) buildThumbSidebar();
+    }
+    goToPage(currentPage, true).catch(onRenderError);
   }
 
   function updatePagerUi() {
-    if (els.pageInfo) els.pageInfo.textContent = currentPage + " / " + totalPages;
+    const pageLabel = currentPage + " / " + totalPages;
+    if (els.pageInfo) els.pageInfo.textContent = pageLabel;
+    if (els.toolbarPageInfo) els.toolbarPageInfo.textContent = pageLabel;
+    if (els.barPageInfo) els.barPageInfo.textContent = pageLabel;
+    if (els.fsPageInfo) els.fsPageInfo.textContent = pageLabel;
     if (els.pageInput) {
       els.pageInput.max = String(totalPages);
       els.pageInput.value = String(currentPage);
     }
-    if (els.btnPrev) els.btnPrev.disabled = currentPage <= 1;
-    if (els.btnNext) els.btnNext.disabled = currentPage >= totalPages;
+    const atStart = currentPage <= 1;
+    const atEnd = currentPage >= totalPages;
+    if (els.btnPrev) els.btnPrev.disabled = atStart;
+    if (els.btnNext) els.btnNext.disabled = atEnd;
+    if (els.btnPagePrev) els.btnPagePrev.disabled = atStart;
+    if (els.btnPageNext) els.btnPageNext.disabled = atEnd;
+    if (els.btnFsPrev) els.btnFsPrev.disabled = atStart;
+    if (els.btnFsNext) els.btnFsNext.disabled = atEnd;
+    if (els.btnZonePrev) els.btnZonePrev.disabled = atStart;
+    if (els.btnZoneNext) els.btnZoneNext.disabled = atEnd;
     if (els.btnHistBack) els.btnHistBack.disabled = historyIndex <= 0;
     if (els.btnHistFwd) els.btnHistFwd.disabled = historyIndex >= pageHistory.length - 1;
+    updateThumbActive();
+  }
+
+  function updateThumbActive() {
+    if (!els.thumbList) return;
+    els.thumbList.querySelectorAll(".thumb-item").forEach(function (btn) {
+      const n = parseInt(btn.getAttribute("data-page"), 10);
+      btn.classList.toggle("is-active", n === currentPage);
+    });
+    const active = els.thumbList.querySelector(".thumb-item.is-active");
+    if (active && typeof active.scrollIntoView === "function") {
+      active.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }
+  }
+
+  function renderThumbCanvas(pageNum, wrap) {
+    if (thumbCache.has(pageNum)) {
+      wrap.innerHTML = "";
+      wrap.appendChild(thumbCache.get(pageNum).cloneNode(true));
+      wrap.classList.remove("thumb-item__canvas--placeholder");
+      return Promise.resolve();
+    }
+    if (!pdfDoc) return Promise.resolve();
+    wrap.classList.add("thumb-item__canvas--placeholder");
+    wrap.textContent = "…";
+    return pdfDoc.getPage(pageNum).then(function (page) {
+      const base = page.getViewport({ scale: 1, rotation: pageRotation });
+      const scale = THUMB_MAX_WIDTH / base.width;
+      const viewport = page.getViewport({ scale: scale, rotation: pageRotation });
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d", { alpha: false });
+      canvas.width = Math.floor(viewport.width);
+      canvas.height = Math.floor(viewport.height);
+      return page.render({ canvasContext: ctx, viewport: viewport }).promise.then(function () {
+        thumbCache.set(pageNum, canvas);
+        wrap.classList.remove("thumb-item__canvas--placeholder");
+        wrap.innerHTML = "";
+        wrap.appendChild(canvas);
+      });
+    }).catch(function () {
+      wrap.textContent = String(pageNum);
+    });
+  }
+
+  function buildThumbSidebar() {
+    if (!els.thumbList || !pdfDoc) return;
+    if (thumbObserver) thumbObserver.disconnect();
+    els.thumbList.innerHTML = "";
+    thumbCache.clear();
+
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "thumb-item" + (i === currentPage ? " is-active" : "");
+      btn.setAttribute("data-page", String(i));
+      btn.setAttribute("aria-label", (lang === "ar" ? "صفحة " : "Page ") + i);
+      const wrap = document.createElement("div");
+      wrap.className = "thumb-item__canvas thumb-item__canvas--placeholder";
+      wrap.textContent = "…";
+      const num = document.createElement("span");
+      num.className = "thumb-item__num";
+      num.textContent = String(i);
+      btn.appendChild(wrap);
+      btn.appendChild(num);
+      btn.addEventListener("click", function () {
+        goToPage(i).catch(onRenderError);
+        if (window.innerWidth <= 720 && els.thumbSidebar && els.readerLayout) {
+          els.thumbSidebar.classList.remove("is-open");
+          els.readerLayout.classList.remove("sidebar-open");
+        }
+      });
+      els.thumbList.appendChild(btn);
+    }
+
+    thumbObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          const btn = entry.target;
+          const pageNum = parseInt(btn.getAttribute("data-page"), 10);
+          const wrap = btn.querySelector(".thumb-item__canvas");
+          if (wrap && !thumbCache.has(pageNum) && wrap.classList.contains("thumb-item__canvas--placeholder")) {
+            renderThumbCanvas(pageNum, wrap);
+          }
+          thumbObserver.unobserve(btn);
+        });
+      },
+      { root: els.thumbList, rootMargin: "120px 0px" }
+    );
+
+    els.thumbList.querySelectorAll(".thumb-item").forEach(function (btn) {
+      thumbObserver.observe(btn);
+    });
+    const preload = Math.min(6, totalPages);
+    for (let p = 1; p <= preload; p++) {
+      const btn = els.thumbList.querySelector('.thumb-item[data-page="' + p + '"]');
+      const wrap = btn && btn.querySelector(".thumb-item__canvas");
+      if (wrap) renderThumbCanvas(p, wrap);
+    }
+    updateThumbActive();
+  }
+
+  function setThumbSidebarOpen(open) {
+    if (!els.thumbSidebar) return;
+    const on = !!open;
+    els.thumbSidebar.classList.toggle("is-open", on);
+    if (els.readerLayout) els.readerLayout.classList.toggle("sidebar-open", on);
+    if (els.btnToggleThumbs) els.btnToggleThumbs.classList.toggle("tool-active", on);
   }
 
   function pushHistory(pageNum) {
@@ -463,31 +1056,59 @@
 
     if (pageCache.has(key)) {
       mountFrame(pageCache.get(key));
+      showReader();
       return Promise.resolve();
     }
 
-    showLoading(t("loadingPage") + " " + n + " / " + totalPages + "…");
+    const softReload = pdfDoc && els.body && !els.body.hidden;
+    if (softReload) {
+      showSoftPageLoading(t("loadingPage") + " " + n + " / " + totalPages + "…");
+    } else {
+      showLoading(t("loadingPage") + " " + n + " / " + totalPages + "…");
+    }
 
-    return pdfDoc.getPage(n).then(function (page) {
-      return renderPageToFrame(page).then(function (frame) {
-        pageCache.set(key, frame);
-        mountFrame(frame);
-        showReader();
+    return pdfDoc
+      .getPage(n)
+      .then(function (page) {
+        return renderPageToFrame(page).then(function (frame) {
+          pageCache.set(key, frame);
+          mountFrame(frame);
+          showReader();
+        });
+      })
+      .catch(function (err) {
+        setStageBusy(false);
+        throw err;
       });
-    });
   }
 
   function bindControls() {
-    if (els.btnPrev) {
-      els.btnPrev.addEventListener("click", function () {
-        goToPage(currentPage - 1).catch(onRenderError);
+    if (controlsBound) return;
+    controlsBound = true;
+
+    function bindPageDelta(btn, delta) {
+      if (!btn) return;
+      btn.addEventListener("click", function () {
+        goToPage(currentPage + delta).catch(onRenderError);
       });
     }
-    if (els.btnNext) {
-      els.btnNext.addEventListener("click", function () {
-        goToPage(currentPage + 1).catch(onRenderError);
+    bindPageDelta(els.btnPrev, -1);
+    bindPageDelta(els.btnNext, 1);
+    bindPageDelta(els.btnPagePrev, -1);
+    bindPageDelta(els.btnPageNext, 1);
+    bindPageDelta(els.btnZonePrev, -1);
+    bindPageDelta(els.btnZoneNext, 1);
+    bindPageDelta(els.btnFsPrev, -1);
+    bindPageDelta(els.btnFsNext, 1);
+    function bindToggleThumbs(btn) {
+      if (!btn) return;
+      btn.addEventListener("click", function () {
+        const open = els.thumbSidebar && !els.thumbSidebar.classList.contains("is-open");
+        setThumbSidebarOpen(open);
       });
     }
+    bindToggleThumbs(els.btnToggleThumbs);
+    bindToggleThumbs(els.btnBarThumbs);
     if (els.pageInput) {
       els.pageInput.addEventListener("change", function () {
         const v = parseInt(els.pageInput.value, 10);
@@ -516,9 +1137,27 @@
     }
     if (els.btnFitPage) {
       els.btnFitPage.addEventListener("click", function () {
-        fitMode = "page";
-        pageCache.clear();
-        goToPage(currentPage, true).catch(onRenderError);
+        resetView();
+      });
+    }
+    function bindResetZoom(btn) {
+      if (!btn) return;
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        resetView();
+      });
+    }
+    bindResetZoom(els.btnResetZoom);
+    bindResetZoom(els.btnResetZoomToolbar);
+    if (els.zoomLabel) {
+      els.zoomLabel.addEventListener("click", function () {
+        if (isMobileReader() || zoomIndex !== DEFAULT_ZOOM_INDEX) resetView();
+      });
+      els.zoomLabel.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          resetView();
+        }
       });
     }
     if (els.btnToolHand) els.btnToolHand.addEventListener("click", function () {
@@ -540,40 +1179,156 @@
     if (els.btnClearInk) {
       els.btnClearInk.addEventListener("click", function () {
         inkStrokes.clear();
-        pageCache.clear();
+        markInkDirty();
         goToPage(currentPage, true).catch(onRenderError);
       });
     }
-    if (els.btnRotate) {
-      els.btnRotate.addEventListener("click", function () {
-        pageRotation = (pageRotation + 90) % 360;
-        pageCache.clear();
-        goToPage(currentPage, true).catch(onRenderError);
+    let fsTapAt = 0;
+    function onFsTap(e) {
+      e.preventDefault();
+      const now = Date.now();
+      if (now - fsTapAt < 350) return;
+      fsTapAt = now;
+      toggleReaderFullscreen();
+    }
+    if (els.btnFullscreen) els.btnFullscreen.addEventListener("click", onFsTap);
+    if (els.btnFullscreenDesktop) els.btnFullscreenDesktop.addEventListener("click", onFsTap);
+    if (els.btnFsExit) {
+      els.btnFsExit.addEventListener("click", function (e) {
+        e.preventDefault();
+        leaveReaderFullscreen();
       });
     }
-    if (els.btnFullscreen) {
-      els.btnFullscreen.addEventListener("click", function () {
-        if (!document.fullscreenElement) {
-          document.documentElement.requestFullscreen().catch(function () {});
-          document.body.classList.add("is-fullscreen");
-        } else {
-          document.exitFullscreen();
-          document.body.classList.remove("is-fullscreen");
-        }
-      });
-    }
-    document.addEventListener("fullscreenchange", function () {
-      if (!document.fullscreenElement) document.body.classList.remove("is-fullscreen");
-    });
+    document.addEventListener("fullscreenchange", onFullscreenChange);
+    document.addEventListener("webkitfullscreenchange", onFullscreenChange);
 
     bindPanAndPinch();
+    bindSwipeNavigation();
     bindKeyboard();
+  }
+
+  const SWIPE_HINT_KEY = "electrodz-pdf-swipe-hint-v4";
+
+  function swipeThreshold() {
+    return isMobileReader() ? 36 : 56;
+  }
+
+  function pageDeltaFromSwipe(dx, dy) {
+    const th = swipeThreshold();
+    if (Math.abs(dy) >= Math.abs(dx)) {
+      if (Math.abs(dy) < th) return 0;
+      return dy < 0 ? 1 : -1;
+    }
+    if (Math.abs(dx) < th) return 0;
+    return dx < 0 ? 1 : -1;
+  }
+
+  function canSwipeNavigate(dx, dy) {
+    if (isMobileReader() && zoomIndex === DEFAULT_ZOOM_INDEX && fitMode === "page") {
+      return true;
+    }
+    if (!els.stageWrap) return true;
+    const wrap = els.stageWrap;
+    if (Math.abs(dy) >= Math.abs(dx)) {
+      const maxScroll = wrap.scrollHeight - wrap.clientHeight;
+      if (maxScroll <= 4) return true;
+      const st = wrap.scrollTop;
+      if (dy < 0) return st >= maxScroll - 4;
+      return st <= 4;
+    }
+    const maxScroll = wrap.scrollWidth - wrap.clientWidth;
+    if (maxScroll <= 4) return true;
+    const sl = wrap.scrollLeft;
+    if (dx < 0) return sl >= maxScroll - 4;
+    return sl <= 4;
+  }
+
+  function dismissSwipeHint() {
+    try {
+      localStorage.setItem(SWIPE_HINT_KEY, "1");
+    } catch (e) {}
+    if (els.swipeHint) els.swipeHint.hidden = true;
+  }
+
+  function showSwipeHintIfNeeded() {
+    if (!isMobileReader() || !els.swipeHint) return;
+    try {
+      if (localStorage.getItem(SWIPE_HINT_KEY)) {
+        els.swipeHint.hidden = true;
+        return;
+      }
+    } catch (e) {}
+    els.swipeHint.hidden = false;
+  }
+
+  function bindSwipeNavigation() {
+    const swipeSurface =
+      document.querySelector(".reader-stage-area") || els.stageWrap;
+    if (!swipeSurface) return;
+
+    [els.btnZonePrev, els.btnZoneNext].forEach(function (btn) {
+      if (!btn) return;
+      btn.addEventListener("click", dismissSwipeHint);
+    });
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchStartT = 0;
+    let swipeActive = false;
+
+    swipeSurface.addEventListener(
+      "touchstart",
+      function (e) {
+        if (e.target.closest(".page-v-zone__chev")) return;
+        if (e.touches.length !== 1 || activeTool !== "hand" || drawing) return;
+        swipeActive = true;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchStartT = Date.now();
+      },
+      { passive: true }
+    );
+
+    swipeSurface.addEventListener(
+      "touchcancel",
+      function () {
+        swipeActive = false;
+      },
+      { passive: true }
+    );
+
+    swipeSurface.addEventListener(
+      "touchend",
+      function (e) {
+        if (!swipeActive || activeTool !== "hand" || drawing) return;
+        swipeActive = false;
+        const t = e.changedTouches[0];
+        if (!t) return;
+        const dx = t.clientX - touchStartX;
+        const dy = t.clientY - touchStartY;
+        const dt = Date.now() - touchStartT;
+        if (dt > (isMobileReader() ? 900 : 650)) return;
+        const delta = pageDeltaFromSwipe(dx, dy);
+        if (!delta) return;
+        if (!canSwipeNavigate(dx, dy)) return;
+        dismissSwipeHint();
+        goToPage(currentPage + delta).catch(onRenderError);
+      },
+      { passive: true }
+    );
   }
 
   function bindPanAndPinch() {
     if (!els.stageWrap) return;
+    const wrap = els.stageWrap;
 
-    els.stageWrap.addEventListener("mousedown", function (e) {
+    let touchPanning = false;
+    let touchPanStartX = 0;
+    let touchPanStartY = 0;
+    let touchPanScrollLeft = 0;
+    let touchPanScrollTop = 0;
+
+    wrap.addEventListener("mousedown", function (e) {
       if (activeTool !== "hand" || drawing) return;
       if (e.target.closest(".ink-layer.canvas-drawing")) return;
       panActive = true;
@@ -646,26 +1401,32 @@
     window.addEventListener("keydown", function (e) {
       if (!pdfDoc) return;
       if (e.target.matches("input")) return;
-      if (e.key === "ArrowLeft" || e.key === "PageUp") {
+      if (e.key === "ArrowUp" || e.key === "PageUp" || e.key === "ArrowLeft") {
         e.preventDefault();
-        if (lang === "ar") goToPage(currentPage + 1).catch(onRenderError);
-        else goToPage(currentPage - 1).catch(onRenderError);
-      } else if (e.key === "ArrowRight" || e.key === "PageDown") {
+        goToPage(currentPage - 1).catch(onRenderError);
+      } else if (e.key === "ArrowDown" || e.key === "PageDown" || e.key === "ArrowRight") {
         e.preventDefault();
-        if (lang === "ar") goToPage(currentPage - 1).catch(onRenderError);
-        else goToPage(currentPage + 1).catch(onRenderError);
+        goToPage(currentPage + 1).catch(onRenderError);
       } else if (e.key === "+" || e.key === "=") {
         setZoomIndex(zoomIndex + 1, true);
       } else if (e.key === "-") {
         setZoomIndex(zoomIndex - 1, true);
+      } else if (e.key === "Escape" && isReaderFullscreen()) {
+        leaveReaderFullscreen();
       }
     });
   }
 
   window.addEventListener("resize", function () {
+    applyMobileReaderProfile();
     if (!pdfDoc) return;
-    pageCache.clear();
-    goToPage(currentPage, true).catch(onRenderError);
+    clearTimeout(resizeRerenderTimer);
+    resizeRerenderTimer = setTimeout(function () {
+      pageCache.clear();
+      thumbCache.clear();
+      buildThumbSidebar();
+      goToPage(currentPage, true).catch(onRenderError);
+    }, isMobileReader() ? 450 : 120);
   });
 
   function onRenderError() {
@@ -693,8 +1454,13 @@
         pageHistory = [1];
         historyIndex = 0;
         pageCache.clear();
+        thumbCache.clear();
+        applyMobileReaderProfile();
         bindControls();
         updateZoomLabel();
+        buildThumbSidebar();
+        if (window.innerWidth > 720) setThumbSidebarOpen(true);
+        else setThumbSidebarOpen(false);
         return goToPage(1, true);
       })
       .then(function () {
@@ -723,7 +1489,10 @@
     }
     const book = { id: bookId, titleFr: titleFr, titleAr: titleAr, pdfUrl: pdfSrc };
     function refreshStar(on) {
-      els.btnFavorite.textContent = on ? "★" : "☆";
+      const useEl = els.btnFavorite.querySelector("use");
+      if (useEl) {
+        useEl.setAttribute("href", on ? "#reader-ico-star-filled" : "#reader-ico-star");
+      }
       els.btnFavorite.classList.toggle("btn-fav--on", !!on);
     }
     if (window.ElectroDzFavorites) {
@@ -750,6 +1519,8 @@
   }
 
   function init() {
+    if (isIOSWebKit()) document.documentElement.classList.add("is-ios");
+    applyMobileReaderProfile();
     setBackLinks();
     applyI18n();
     setupFavorite();

@@ -70,18 +70,30 @@
       <label class="library-search-wrap" style="flex:1">
         <input type="search" class="library-search" data-books-search data-placeholder-fr="Rechercher…" data-placeholder-ar="بحث عن كتاب…" placeholder="بحث عن كتاب…" />
       </label>
+      <label class="library-sort-wrap">
+        <span class="library-sort-label" data-i18n-fr="Trier" data-i18n-ar="ترتيب">ترتيب</span>
+        <select class="library-sort" data-books-sort aria-label="Trier les ouvrages"></select>
+      </label>
       <p class="library-count" data-books-count></p>
     </div>
 
-    <div class="book-collections-scroll"><div class="book-collections" data-books-collections></div></div>
-    <div class="book-filters-scroll"><div class="book-filters" data-books-filters></div></div>
+    <section class="library-collections-panel" aria-label="Collections PDF">
+      <h2 class="library-collections-panel__title" data-i18n-fr="Collections" data-i18n-ar="المجموعات">المجموعات</h2>
+      <div class="book-collections-scroll"><div class="book-collections" data-books-collections></div></div>
+    </section>
+    <section class="library-filters-panel" aria-label="Filtres">
+      <h2 class="library-filters-panel__title" data-i18n-fr="Thèmes" data-i18n-ar="المواضيع">المواضيع</h2>
+      <div class="book-filters-scroll"><div class="book-filters" data-books-filters></div></div>
+    </section>
+
+    <div class="library-knx-gift" data-knx-gift hidden aria-live="polite"></div>
 
     <section class="library-featured" data-books-featured hidden>
       <h2 class="section-title" style="color:#fff;margin:1.5rem 0 1rem" data-i18n-fr="À la une" data-i18n-ar="مميز">مميز</h2>
       <div class="book-grid book-grid--featured" data-featured-grid></div>
     </section>
 
-    <h2 class="section-title" style="color:#fff;margin:1.5rem 0 1rem" data-i18n-fr="Tous les ouvrages" data-i18n-ar="كل الكتب">كل الكتب</h2>
+    <h2 class="section-title" style="color:#fff;margin:1.5rem 0 1rem" data-books-section-title data-i18n-fr="Tous les ouvrages" data-i18n-ar="كل الكتب">كل الكتب</h2>
     <div class="library-books-root" data-books-grid></div>
     <p class="library-empty" data-books-empty hidden style="text-align:center;padding:2rem;color:#94a3b8" data-i18n-fr="Aucun ouvrage trouvé." data-i18n-ar="لا يوجد كتاب.">لا يوجد كتاب.</p>
   </main>
