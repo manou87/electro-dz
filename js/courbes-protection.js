@@ -270,7 +270,7 @@
     ctx.lineWidth = 1;
     ctx.font = '10px system-ui,sans-serif';
     ctx.textBaseline = 'middle';
-    drawGridX(ctx, sx, padT, plotH);
+    drawGridX(ctx, sx, padT, plotH, plotW);
     drawGridY(ctx, sy, padL, plotW);
 
     // Axes labels
@@ -569,11 +569,12 @@
     return (s / 3600) + ' h';
   }
 
-  function drawGridX(ctx, sx, padT, plotH) {
+  function drawGridX(ctx, sx, padT, plotH, plotW) {
     // multiples étiquetés par décade : graduations riches façon courbe constructeur
     const labelMults = [1, 2, 3, 4, 5, 6, 8];
     ctx.font = '9px system-ui,sans-serif';
     ctx.textAlign = 'center';
+    // 1) tracer toutes les lignes de grille
     for (let dec = 0; dec <= 4; dec++) {
       const base = Math.pow(10, dec);
       for (let m = 1; m < 10; m++) {
@@ -587,11 +588,31 @@
         ctx.moveTo(X, padT);
         ctx.lineTo(X, padT + plotH);
         ctx.stroke();
-        if (labeled) {
-          ctx.fillStyle = m === 1 ? '#cbd5e1' : '#7c8aa0';
-          ctx.fillText(fmtCurrent(v), X, padT + plotH + 12);
-        }
       }
+    }
+    // 2) étiquettes avec espacement minimal pour éviter le chevauchement (mobile)
+    const candidates = [];
+    for (let dec = 0; dec <= 4; dec++) {
+      const base = Math.pow(10, dec);
+      for (const m of labelMults) {
+        const v = base * m;
+        if (v < X_MIN || v > X_MAX) continue;
+        candidates.push({ v, m, X: sx(v) });
+      }
+    }
+    let lastRight = -Infinity;
+    for (const c of candidates) {
+      const txt = fmtCurrent(c.v);
+      const halfW = ctx.measureText(txt).width / 2;
+      // marge mini de 6px entre deux libellés ; on garde toujours les débuts de décade (m===1)
+      if (c.X - halfW < lastRight + 6 && c.m !== 1) continue;
+      if (c.X - halfW < lastRight + 6 && c.m === 1) {
+        // décade prioritaire : on l'affiche quand même mais on évite le doublon trop proche
+        if (c.X - halfW < lastRight + 2) continue;
+      }
+      ctx.fillStyle = c.m === 1 ? '#cbd5e1' : '#7c8aa0';
+      ctx.fillText(txt, c.X, padT + plotH + 12);
+      lastRight = c.X + halfW;
     }
   }
 
