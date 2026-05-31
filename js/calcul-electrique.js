@@ -14,6 +14,7 @@
     { id: 'icc', domId: 'icc', icon: '💥', color: '#DC2626' },
     { id: 'breaking_time', domId: 'breaking', icon: '⏱️', color: '#0EA5E9' },
     { id: 'power_balance', domId: 'balance', icon: '📊', color: '#059669' },
+    { id: 'trip_curve', domId: 'tripcurve', icon: '📈', color: '#10B981' },
   ];
 
   let activeId = 'ohm_law';
@@ -153,6 +154,16 @@
     });
     updateWorkspaceLabels();
     renderTypePickers();
+
+    const isCurve = id === 'trip_curve';
+    const calcBtn = document.getElementById('btn-calculate');
+    const resBox = document.getElementById('calc-global-result');
+    if (calcBtn) calcBtn.style.display = isCurve ? 'none' : '';
+    if (resBox) resBox.style.display = isCurve ? 'none' : '';
+    if (isCurve && window.ElectroDzTripCurve) {
+      window.ElectroDzTripCurve.init();
+      window.ElectroDzTripCurve.onShow();
+    }
   }
 
   function updateWorkspaceLabels() {

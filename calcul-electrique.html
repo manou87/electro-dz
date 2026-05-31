@@ -69,7 +69,37 @@
     [data-ohm-group],[data-power-group],[data-brk-group]{display:none}
     [data-ohm-group].show,[data-power-group].show,[data-brk-group].show{display:contents}
     select.std-select{font-weight:600}
-    @media(max-width:768px){.nav-links{display:none}.types-grid{grid-template-columns:repeat(2,1fr)}.balance-row{grid-template-columns:1fr 1fr}}
+    .tc-canvas{width:100%;height:540px;background:#0b1424;border:1px solid rgba(255,255,255,0.08);border-radius:12px;margin-top:8px;display:block}
+    .tc-legend{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 4px;min-height:30px}
+    .tc-chip{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.05);border:1px solid;font-size:0.82rem;font-weight:600;color:#fff}
+    .tc-dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+    .tc-role{font-size:0.66rem;font-weight:800;padding:2px 6px;border-radius:5px;letter-spacing:0.3px;text-transform:uppercase}
+    .tc-role-amont{background:#1d4ed8;color:#fff}
+    .tc-role-aval{background:#059669;color:#fff}
+    .tc-x{background:none;border:none;color:var(--muted);cursor:pointer;font-size:0.8rem;padding:0 0 0 2px}
+    .tc-x:hover{color:#f87171}
+    .tc-note{font-size:0.75rem;color:var(--muted);margin-top:10px;line-height:1.5}
+    .tc-verdict{margin:6px 0 2px;padding:12px 14px;border-radius:10px;font-size:0.9rem;font-weight:600;line-height:1.5;display:none}
+    .tc-verdict.show{display:block}
+    .tc-verdict.total{background:rgba(74,222,128,0.1);border:1px solid #4ade80;color:#4ade80}
+    .tc-verdict.partial{background:rgba(250,204,21,0.1);border:1px solid #facc15;color:#facc15}
+    .tc-verdict.warn{background:rgba(248,113,113,0.1);border:1px solid #f87171;color:#f87171}
+    .tc-verdict small{display:block;color:var(--muted);font-weight:400;margin-top:4px}
+    .tc-pro-bar{margin:10px 0 0}
+    .tc-pro-toggle{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;border:1px solid var(--primary);background:rgba(56,189,248,0.08);color:var(--primary);font-weight:700;cursor:pointer;font-size:0.88rem}
+    .tc-pro-toggle.active{background:var(--primary);color:#0f172a}
+    .tc-pro{margin-top:12px;padding:14px;border:1px dashed rgba(56,189,248,0.4);border-radius:12px;background:rgba(56,189,248,0.04)}
+    .tc-pro[hidden]{display:none}
+    .tc-disclaimer{font-size:0.78rem;line-height:1.5;color:#fbbf24;background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.35);border-radius:8px;padding:10px 12px;margin:0 0 14px}
+    .tc-pro-result{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+    .tc-pro-line{padding:10px 12px;border-radius:8px;font-size:0.85rem;font-weight:600;line-height:1.4;border:1px solid}
+    .tc-pro-line.ok{background:rgba(74,222,128,0.1);border-color:#4ade80;color:#4ade80}
+    .tc-pro-line.bad{background:rgba(248,113,113,0.12);border-color:#f87171;color:#f87171}
+    .tc-pro-line.info{background:rgba(148,163,184,0.1);border-color:rgba(148,163,184,0.4);color:var(--muted)}
+    .tc-export{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    .tc-mini-btn{padding:7px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#e2e8f0;font-weight:600;cursor:pointer;font-size:0.82rem}
+    .tc-mini-btn:hover{border-color:var(--primary);color:var(--primary)}
+    @media(max-width:768px){.nav-links{display:none}.types-grid{grid-template-columns:repeat(2,1fr)}.balance-row{grid-template-columns:1fr 1fr}.tc-canvas{height:420px}}
   </style>
 </head>
 <body>
@@ -306,6 +336,58 @@
         </div>
       </div>
 
+      <div id="tripcurve" class="calc-section" data-calc="trip_curve">
+        <div class="form-grid">
+          <div class="input-group"><label data-i18n="tcRole"></label>
+            <select id="tc-role"><option value="aval" data-i18n-opt="tcRoleAval"></option><option value="amont" data-i18n-opt="tcRoleAmont"></option><option value="autre" data-i18n-opt="tcRoleNone"></option></select>
+          </div>
+          <div class="input-group"><label data-i18n="tcDevice"></label>
+            <select id="tc-device"><option value="mcb" data-i18n-opt="tcDevMcb"></option><option value="mccb" data-i18n-opt="tcDevMccb"></option><option value="gg" data-i18n-opt="tcDevGg"></option><option value="am" data-i18n-opt="tcDevAm"></option></select>
+          </div>
+          <div class="input-group"><label data-i18n="tcIn"></label><select id="tc-in" class="std-select" data-std="breaker" data-default="16"></select></div>
+          <div class="input-group" id="tc-curve-group"><label data-i18n="tcCurve"></label><select id="tc-curve" class="std-select" data-std="curve" data-default="C"></select></div>
+          <div class="input-group" id="tc-ir-group" style="display:none"><label data-i18n="tcIr"></label><input type="number" id="tc-ir" step="0.05" min="0.4" max="1" value="1"></div>
+          <div class="input-group" id="tc-im-group" style="display:none"><label data-i18n="tcIm"></label><input type="number" id="tc-im" step="0.5" min="1.5" max="15" value="10"></div>
+          <div class="input-group" style="align-self:end"><button type="button" class="sub-type-btn active" id="tc-add" data-i18n="tcAdd"></button></div>
+          <div class="input-group" style="align-self:end"><button type="button" class="sub-type-btn" id="tc-clear" data-i18n="tcClear"></button></div>
+          <div class="input-group"><label data-i18n="tcIcc"></label><input type="number" id="tc-icc" step="100" min="0" data-i18n-placeholder="tcIccPh"></div>
+        </div>
+        <div class="tc-pro-bar">
+          <button type="button" class="tc-pro-toggle" id="tc-pro-toggle" aria-expanded="false" data-i18n="tcProToggle"></button>
+        </div>
+        <div id="tc-pro" class="tc-pro" hidden>
+          <p class="tc-disclaimer" data-i18n="tcDisclaimer"></p>
+          <div class="form-grid">
+            <div class="input-group"><label data-i18n="tcIcu"></label><input type="number" id="tc-icu" step="0.5" min="0" data-i18n-placeholder="tcIcuPh"></div>
+            <div class="input-group"><label data-i18n="tcCableS"></label>
+              <select id="tc-cable-s">
+                <option value="" data-i18n-opt="tcCableNone"></option>
+                <option value="1.5">1,5 mm²</option><option value="2.5">2,5 mm²</option><option value="4">4 mm²</option>
+                <option value="6">6 mm²</option><option value="10">10 mm²</option><option value="16">16 mm²</option>
+                <option value="25">25 mm²</option><option value="35">35 mm²</option><option value="50">50 mm²</option>
+                <option value="70">70 mm²</option><option value="95">95 mm²</option><option value="120">120 mm²</option>
+                <option value="150">150 mm²</option><option value="185">185 mm²</option><option value="240">240 mm²</option>
+              </select>
+            </div>
+            <div class="input-group"><label data-i18n="tcCableMat"></label>
+              <select id="tc-cable-mat"><option value="cu" data-i18n-opt="tcMatCu"></option><option value="al" data-i18n-opt="tcMatAl"></option></select>
+            </div>
+            <div class="input-group"><label data-i18n="tcCableIns"></label>
+              <select id="tc-cable-ins"><option value="pvc" data-i18n-opt="tcInsPvc"></option><option value="pr" data-i18n-opt="tcInsPr"></option></select>
+            </div>
+          </div>
+          <div id="tc-pro-result" class="tc-pro-result"></div>
+        </div>
+        <div id="tc-verdict" class="tc-verdict"></div>
+        <div id="tc-legend" class="tc-legend"></div>
+        <canvas id="tc-canvas" class="tc-canvas" width="900" height="540"></canvas>
+        <div class="tc-export">
+          <button type="button" id="tc-export-png" class="tc-mini-btn" data-i18n="tcExportPng"></button>
+          <button type="button" id="tc-export-pdf" class="tc-mini-btn" data-i18n="tcExportPdf"></button>
+        </div>
+        <p class="tc-note" data-i18n="tcNote"></p>
+      </div>
+
       <button type="button" class="btn-calc" id="btn-calculate"></button>
       <div id="calc-global-result" class="result-box"></div>
 
@@ -327,6 +409,7 @@
   <script src="js/cableThermalIEC60364.js"></script>
   <script src="js/calcul-electrique-engine.js"></script>
   <script src="js/calcul-electrique-extra.js"></script>
+  <script src="js/courbes-protection.js"></script>
   <script src="js/calcul-electrique.js" defer></script>
 </body>
 </html>
