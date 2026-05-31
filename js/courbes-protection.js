@@ -106,14 +106,54 @@
   const SEL_ACCENT = { total: '#22c55e', partial: '#f97316', warn: '#ef4444' };
 
   /** Interpolation (et extrapolation) log-log entre points d'essai. */
+  // Spline cubique MONOTONE (Fritsch–Carlson) en log-log : courbe vraiment lisse
+  // passant par les points d'essai, sans oscillation ni segments droits visibles.
+  const _splineCache = new WeakMap();
+  function buildSpline(anchors) {
+    const xs = anchors.map((p) => Math.log10(p[0]));
+    const ys = anchors.map((p) => Math.log10(p[1]));
+    const n = xs.length;
+    const d = new Array(n - 1);            // pentes des sécantes
+    for (let i = 0; i < n - 1; i++) d[i] = (ys[i + 1] - ys[i]) / (xs[i + 1] - xs[i]);
+    const m = new Array(n);                // tangentes aux nœuds
+    m[0] = d[0];
+    m[n - 1] = d[n - 2];
+    for (let i = 1; i < n - 1; i++) {
+      m[i] = (d[i - 1] * d[i] <= 0) ? 0 : (d[i - 1] + d[i]) / 2;
+    }
+    for (let i = 0; i < n - 1; i++) {
+      if (d[i] === 0) { m[i] = 0; m[i + 1] = 0; continue; }
+      const a = m[i] / d[i], b = m[i + 1] / d[i];
+      const s = a * a + b * b;
+      if (s > 9) { const t = 3 / Math.sqrt(s); m[i] = t * a * d[i]; m[i + 1] = t * b * d[i]; }
+    }
+    return { xs, ys, m };
+  }
   function interpLogLog(anchors, x) {
     if (x <= anchors[0][0]) return anchors[0][1];
-    let a = anchors[anchors.length - 2], b = anchors[anchors.length - 1];
-    for (let i = 1; i < anchors.length; i++) {
-      if (x <= anchors[i][0]) { a = anchors[i - 1]; b = anchors[i]; break; }
+    const last = anchors.length - 1;
+    if (x >= anchors[last][0]) {
+      // extrapolation linéaire en log-log (au-delà du dernier point d'essai)
+      const a = anchors[last - 1], b = anchors[last];
+      const f = (Math.log10(x) - Math.log10(a[0])) / (Math.log10(b[0]) - Math.log10(a[0]));
+      return Math.pow(10, Math.log10(a[1]) + f * (Math.log10(b[1]) - Math.log10(a[1])));
     }
-    const f = (Math.log10(x) - Math.log10(a[0])) / (Math.log10(b[0]) - Math.log10(a[0]));
-    return Math.pow(10, Math.log10(a[1]) + f * (Math.log10(b[1]) - Math.log10(a[1])));
+    let sp = _splineCache.get(anchors);
+    if (!sp) { sp = buildSpline(anchors); _splineCache.set(anchors, sp); }
+    const { xs, ys, m } = sp;
+    const lx = Math.log10(x);
+    let i = 0;
+    while (i < xs.length - 1 && lx > xs[i + 1]) i++;
+    const h = xs[i + 1] - xs[i];
+    const t = (lx - xs[i]) / h;
+    const t2 = t * t, t3 = t2 * t;
+    // base de Hermite
+    const h00 = 2 * t3 - 3 * t2 + 1;
+    const h10 = t3 - 2 * t2 + t;
+    const h01 = -2 * t3 + 3 * t2;
+    const h11 = t3 - t2;
+    const ly = h00 * ys[i] + h10 * h * m[i] + h01 * ys[i + 1] + h11 * h * m[i + 1];
+    return Math.pow(10, ly);
   }
 
   /**
