@@ -72,8 +72,10 @@
       const magMult = (im * p.in) / base; // seuil magnétique en multiples de Ir
       return { base, magFast: magMult * 0.8, magSlow: magMult * 1.2 }; // ±20 % CEI 60947-2
     }
+    // Seuil magnétique = multiple HAUT garanti par la norme (déclenchement
+    // instantané certain) : B = 5·In, C = 10·In, D = 20·In, K = 14·In, Z = 3·In.
     const c = CURVES[p.curve] || CURVES.C;
-    return { base: p.in, magFast: c.mag[0], magSlow: c.mag[1] };
+    return { base: p.in, magFast: c.mag[1], magSlow: c.mag[1] };
   }
 
   function deviceTag(p) {
@@ -817,11 +819,12 @@
       let badge = '';
       if (p.role === 'amont') badge = `<b class="tc-role tc-role-amont">${tr('tcRoleAmont')}</b>`;
       else if (p.role === 'aval') badge = `<b class="tc-role tc-role-aval">${tr('tcRoleAval')}</b>`;
+      const c = CURVES[p.curve] || CURVES.C;
       const desc = isFuse(p)
         ? `${tr(p.dev === 'am' ? 'tcDevAm' : 'tcDevGg')}`
         : isMccb(p)
           ? `MCCB · Ir ${Math.round((p.ir || 1) * p.in)}A · Im ${p.im || 10}·In`
-          : `${tr('tcCurveWord')} ${deviceTag(p)}`;
+          : `${tr('tcCurveWord')} ${deviceTag(p)} · ${tr('tcMagZone')} ${c.mag[1]}·In (${Math.round(c.mag[1] * p.in)} A)`;
       return `<span class="tc-chip" style="border-color:${p.color}">
         <span class="tc-dot" style="background:${p.color}"></span>
         ${badge}${p.in} A · ${desc}
