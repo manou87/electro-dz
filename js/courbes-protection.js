@@ -43,8 +43,10 @@
   // Zone de déclenchement instantané (magnétique) — quelques millisecondes.
   // Au-delà du seuil magnétique, le temps de coupure est ~constant jusqu'au
   // pouvoir de coupure : c'est le « plancher » horizontal du tunnel.
-  const T_INST_SLOW = 0.012;  // borne lente : ~12 ms (déclenchement + arc)
-  const T_INST_FAST = 0.007;  // borne rapide : ~7 ms
+  // Temps de coupure instantané UNIQUE (~10 ms) : une seule ligne horizontale
+  // au plancher (déclenchement magnétique + temps d'arc), comme les courbes pro.
+  const T_INST_SLOW = 0.01;
+  const T_INST_FAST = 0.01;
 
   // Fusibles CEI 60269 — courbes temps/courant GÉNÉRIQUES (multiple de In → temps
   // de préarc nominal), interpolées en log-log. Valeurs indicatives, non constructeur.
@@ -507,6 +509,7 @@
       let verdict;
       if (!isFinite(tf) && !isFinite(ts)) verdict = tr('tcNoTrip');
       else if (ts > Y_MAX) verdict = '> ' + fmtTexact(Y_MAX);
+      else if (Math.abs(tf - ts) / ts < 0.02) verdict = fmtTexact(ts); // bornes confondues
       else verdict = fmtTexact(tf) + ' – ' + fmtTexact(ts);
       return { txt: `${deviceLabel(p)} : ${verdict}`, color: p.color, trips: isFinite(ts) };
     });
