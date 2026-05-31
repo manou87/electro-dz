@@ -72,10 +72,12 @@
       const magMult = (im * p.in) / base; // seuil magnétique en multiples de Ir
       return { base, magFast: magMult * 0.8, magSlow: magMult * 1.2 }; // ±20 % CEI 60947-2
     }
-    // Seuil magnétique = multiple HAUT garanti par la norme (déclenchement
-    // instantané certain) : B = 5·In, C = 10·In, D = 20·In, K = 14·In, Z = 3·In.
+    // Zone magnétique = bande de tolérance normative (forme « tunnel » pro) :
+    //  borne rapide au multiple bas (ne PAS déclencher en dessous),
+    //  borne lente au multiple haut (déclenchement instantané GARANTI).
+    //  C : 5–10·In, B : 3–5·In, D : 10–20·In.
     const c = CURVES[p.curve] || CURVES.C;
-    return { base: p.in, magFast: c.mag[1], magSlow: c.mag[1] };
+    return { base: p.in, magFast: c.mag[0], magSlow: c.mag[1] };
   }
 
   function deviceTag(p) {
@@ -311,6 +313,15 @@
       ctx.beginPath();
       ctx.moveTo(sx(p.in), sy(Y_MIN));
       ctx.lineTo(sx(p.in), sy(Y_MAX));
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // repère discret du seuil magnétique GARANTI (multiple haut, ex. C → 10·In)
+      ctx.setLineDash([2, 3]);
+      ctx.strokeStyle = hexA(p.color, 0.35);
+      ctx.beginPath();
+      ctx.moveTo(sMagX, sy(Y_MIN));
+      ctx.lineTo(sMagX, sInstY);
       ctx.stroke();
       ctx.setLineDash([]);
     });
@@ -824,7 +835,7 @@
         ? `${tr(p.dev === 'am' ? 'tcDevAm' : 'tcDevGg')}`
         : isMccb(p)
           ? `MCCB · Ir ${Math.round((p.ir || 1) * p.in)}A · Im ${p.im || 10}·In`
-          : `${tr('tcCurveWord')} ${deviceTag(p)} · ${tr('tcMagZone')} ${c.mag[1]}·In (${Math.round(c.mag[1] * p.in)} A)`;
+          : `${tr('tcCurveWord')} ${deviceTag(p)} · ${tr('tcMagZone')} ${c.mag[0]}–${c.mag[1]}·In (${Math.round(c.mag[0] * p.in)}–${Math.round(c.mag[1] * p.in)} A)`;
       return `<span class="tc-chip" style="border-color:${p.color}">
         <span class="tc-dot" style="background:${p.color}"></span>
         ${badge}${p.in} A · ${desc}
