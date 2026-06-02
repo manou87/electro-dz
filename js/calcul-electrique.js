@@ -190,6 +190,8 @@
       window.ElectroDzTripCurve.init();
       window.ElectroDzTripCurve.onShow();
     }
+    const balDock = document.getElementById('bal-export-dock');
+    if (balDock && id !== 'power_balance') balDock.hidden = true;
   }
 
   function updateWorkspaceLabels() {

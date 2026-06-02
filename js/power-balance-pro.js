@@ -100,6 +100,7 @@
     if (tpl.pi != null) set('.bal-p', tpl.pi);
     if (tpl.ku != null) set('.bal-ku', tpl.ku);
     if (tpl.ks != null) set('.bal-ks', tpl.ks);
+    if (tpl.cosPhi != null) set('.bal-cos', tpl.cosPhi);
   }
 
   function syncDesigRow(row) {
@@ -136,16 +137,17 @@
     const d = data || {};
     row.innerHTML = `
       <div class="bal-col-ref bal-field-unit-only"><input type="text" class="bal-ref" readonly tabindex="-1" aria-label="${esc(tr('balColRef'))}"><span class="bal-unit" data-bal-unit="unitRef"></span></div>
-      <div class="bal-col-schema">${withUnit(`<input type="text" class="bal-schema" maxlength="12" placeholder="${esc(tr('phBalanceSchema'))}" value="${esc(d.schemaRef || '')}" list="bal-list-schema">`, 'unitSchema')}</div>
+      <div class="bal-col-schema">${withUnit(`<input type="text" class="bal-schema" maxlength="8" placeholder="${esc(tr('phBalanceSchema'))}" value="${esc(d.schemaRef || '')}" list="bal-list-schema">`, 'unitSchema')}</div>
       <div class="bal-col-desig" data-lbl="${esc(tr('balColLabel'))}">
         ${withUnit(`<select class="bal-desig" title="${esc(tr('balColLabel'))}">${desigOptionsHtml()}</select>`, 'unitCatalog')}
         <input type="text" class="bal-label-custom" maxlength="100" hidden placeholder="${esc(tr('phBalanceLabelCustom'))}" value="${esc(d.label || '')}">
       </div>
       <div class="bal-col-location">${withUnit(`<input type="text" class="bal-location" maxlength="40" placeholder="${esc(tr('phBalanceLocation'))}" value="${esc(d.location || '')}" list="bal-list-location">`, 'unitText')}</div>
-      <div class="bal-col-board">${withUnit(`<input type="text" class="bal-board" maxlength="40" placeholder="${esc(tr('phBalanceBoard'))}" value="${esc(d.board || '')}" list="bal-list-board">`, 'unitText')}</div>
+      <div class="bal-col-board">${withUnit(`<input type="text" class="bal-board" maxlength="16" placeholder="${esc(tr('phBalanceBoard'))}" value="${esc(d.board || '')}" list="bal-list-board">`, 'unitText')}</div>
       <div class="bal-col-pi" data-lbl="${esc(tr('balColPi'))}">${withUnit(`<input type="number" class="bal-p" min="0" step="1" placeholder="0" title="${esc(tr('balPiTooltip'))}" aria-label="${esc(tr('balColPi'))}" value="${d.p != null ? esc(d.p) : ''}">`, 'unitW')}</div>
       <div class="bal-col-ku" data-lbl="${esc(tr('balColKuLong'))}">${withUnit(`<input type="number" class="bal-ku" min="0" max="1" step="0.01" title="${esc(tr('balKuTooltip'))}" aria-label="${esc(tr('balColKuLong'))}" value="${d.ku != null ? esc(d.ku) : '1'}">`, 'unitCoef')}</div>
       <div class="bal-col-ks" data-lbl="${esc(tr('balColKsLong'))}">${withUnit(`<input type="number" class="bal-ks" min="0" max="1" step="0.01" title="${esc(tr('balKsTooltip'))}" aria-label="${esc(tr('balColKsLong'))}" value="${d.ks != null ? esc(d.ks) : '1'}">`, 'unitCoef')}</div>
+      <div class="bal-col-cos" data-lbl="${esc(tr('balColCos'))}">${withUnit(`<input type="number" class="bal-cos" min="0.01" max="1" step="0.01" title="${esc(tr('balCosTooltip'))}" aria-label="${esc(tr('balColCos'))}" value="${d.cosPhi != null && d.cosPhi !== '' ? esc(d.cosPhi) : ''}" placeholder="${esc(tr('balCosPlaceholder'))}">`, 'unitCoef')}</div>
       <button type="button" class="bal-row-remove" title="${esc(tr('balRemoveRow'))}" aria-label="${esc(tr('balRemoveRow'))}"><span aria-hidden="true">×</span><span>${esc(tr('balRemoveShort'))}</span></button>`;
     const desigSel = row.querySelector('.bal-desig');
     if (desigSel) desigSel.value = d.templateId || d.desigId || 'custom';
@@ -200,6 +202,7 @@
     ['bal-col-pi', 'balColPi'],
     ['bal-col-ku', 'balColKu'],
     ['bal-col-ks', 'balColKs'],
+    ['bal-col-cos', 'balColCos'],
   ];
 
   function applyMobileLabels() {
@@ -221,6 +224,7 @@
       tr('balColPi'),
       tr('balColKu'),
       tr('balColKs'),
+      tr('balColCos'),
       tr('balColPd'),
       tr('balColQd'),
       tr('balColSd'),
@@ -237,6 +241,7 @@
       line.pi.toFixed(0),
       String(line.ku),
       String(line.ks),
+      line.cosPhi != null ? line.cosPhi.toFixed(2) : '—',
       `${line.pdem.toFixed(0)} W`,
       `${(line.qdVar / 1000).toFixed(2)} kvar`,
       `${(line.sdVA / 1000).toFixed(2)} kVA`,
@@ -290,6 +295,7 @@
         p: row.querySelector('.bal-p')?.value || '',
         ku: row.querySelector('.bal-ku')?.value || '1',
         ks: row.querySelector('.bal-ks')?.value || '1',
+        cosPhi: row.querySelector('.bal-cos')?.value?.trim() || '',
       });
     });
     return rows;
@@ -504,8 +510,11 @@ ${printScript}
 
   function setLastReport(r, meta) {
     lastReport = r?.ok ? { r, meta: meta || getMeta() } : null;
+    const show = !!lastReport;
     const bar = document.getElementById('bal-export');
-    if (bar) bar.classList.toggle('visible', !!lastReport);
+    const dock = document.getElementById('bal-export-dock');
+    if (bar) bar.classList.toggle('visible', show);
+    if (dock) dock.hidden = !show;
   }
 
   function refreshRowSelects() {

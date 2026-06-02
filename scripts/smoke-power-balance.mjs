@@ -45,7 +45,7 @@ async function main() {
 
   await page.click('#btn-calculate');
   await page.waitForSelector('#calc-global-result .bal-result-table', { timeout: 8000 });
-  await page.waitForSelector('#bal-export.visible', { timeout: 5000 });
+  await page.waitForSelector('#bal-export-dock:not([hidden])', { timeout: 5000 });
 
   const summary = await page.evaluate(() => {
     const r = window.ElectroDzCalc.calculatePowerBalance({
@@ -57,7 +57,7 @@ async function main() {
     return {
       kw: r.data?.result,
       ib: r.data?.additionalData?.ibA,
-      exportVisible: document.getElementById('bal-export')?.classList.contains('visible'),
+      exportVisible: !document.getElementById('bal-export-dock')?.hidden,
       rowCount: document.querySelectorAll('[data-balance-row]').length,
     };
   });

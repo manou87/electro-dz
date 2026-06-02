@@ -437,9 +437,25 @@
   }
 
   function parseCosPhi(v, fallback) {
-    const n = parseFloat(String(v).replace(',', '.'));
+    const n = parseFloat(String(v == null || v === '' ? NaN : v).replace(',', '.'));
     if (!Number.isFinite(n) || n <= 0 || n > 1) return fallback;
     return n;
+  }
+
+  /** cos φ indicatif par type de charge (bilan type Caneco / NFC 15-100) */
+  const USAGE_COS_PHI = {
+    lighting: 0.9,
+    sockets: 0.8,
+    motors: 0.75,
+    heating: 1,
+    welding: 0.7,
+    custom: 0.85,
+  };
+
+  function cosPhiForRow(row) {
+    const usage = row.usage || 'custom';
+    const fallback = USAGE_COS_PHI[usage] ?? USAGE_COS_PHI.custom;
+    return parseCosPhi(row.cosPhi, fallback);
   }
 
   function lineReactiveApparent(pdW, cosPhi) {
@@ -451,8 +467,6 @@
 
   function calculatePowerBalance(opts) {
     const t = getT(opts.lang);
-    /** Hypothèse de calcul pour Qd/Sd ligne ; cos φ effectif affiché après bilan uniquement */
-    const cosPhiGlobal = 0.9;
     const Uline = parseFloat(opts.voltage) || 230;
     const isTri = Uline >= 400;
     const detailRows = [];
@@ -463,7 +477,7 @@
       let ks = parseFloat(String(row.ks).replace(',', '.'));
       if (isNaN(ku) || ku < 0) ku = 1;
       if (isNaN(ks) || ks < 0) ks = 1;
-      const cosPhi = cosPhiGlobal;
+      const cosPhi = cosPhiForRow(row);
       const pdem = pi * ku * ks;
       const ra = lineReactiveApparent(pdem, cosPhi);
       const circuitRef = (row.circuitRef || '').trim();
@@ -520,7 +534,7 @@
     return {
       ok: true,
       data: {
-        formula: 'Pd = Σ (Pi × Ku × Ks) · Sd = √(Pd² + Qd²)',
+        formula: 'Pd = Σ(Pi×Ku×Ks) · Qd = Σ(Pd×tg φ) · Sd = √(Pd²+Qd²) · cos φ = Pd/Sd',
         result: pTotalKw.toFixed(2),
         unit: 'kW',
         additionalData: {

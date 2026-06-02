@@ -89,12 +89,22 @@ test('Bilan nomenclature pro', () => C.calculatePowerBalance({
 test('Bilan Qd/Sd/Ib', () => C.calculatePowerBalance({
   rows: [
     { label: 'A', p: '2000', ku: '1', ks: '1', cosPhi: '0.9' },
-    { label: 'B', p: '1000', ku: '0.5', ks: '1' },
+    { label: 'B', p: '1000', ku: '0.5', ks: '1', cosPhi: '0.8', usage: 'sockets' },
   ],
-  voltage: '400', cosPhi: '0.9', lang,
+  voltage: '400', lang,
 }), (r) => {
   const ad = r.data.additionalData;
   return parseFloat(ad.sTotalKva) > 0 && parseFloat(ad.qTotalKvar) >= 0 && parseFloat(ad.ibA) > 0;
+});
+test('Bilan cos φ global mixte', () => C.calculatePowerBalance({
+  rows: [
+    { label: 'Chauffe', p: '2000', ku: '1', ks: '1', cosPhi: '1', usage: 'heating' },
+    { label: 'Moteur', p: '2000', ku: '1', ks: '1', cosPhi: '0.75', usage: 'motors' },
+  ],
+  voltage: '230', lang: 'fr',
+}), (r) => {
+  const c = parseFloat(r.data.additionalData.cosPhiFinal);
+  return c > 0.91 && c < 0.93;
 });
 test('Temps coupure TN 230 prises', () => C.calculateBreakingTime({
   subMode: 'normative', earthing: 'TN', u0: '230', circuitKind: 'socket_32', lang,

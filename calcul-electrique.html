@@ -72,11 +72,14 @@
     .bal-pro-meta{margin-bottom:16px;padding:14px;border-radius:12px;border:1px solid rgba(5,150,105,0.25);background:rgba(5,150,105,0.06)}
     .bal-pro-meta .bal-pro-meta-title{font-size:0.8rem;font-weight:800;color:#6ee7b7;margin-bottom:10px;letter-spacing:0.02em}
     .bal-table-wrap{margin-top:12px;border:1px solid rgba(255,255,255,0.1);border-radius:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
-    .bal-table-head,.bal-row{display:grid;grid-template-columns:36px 50px minmax(150px,1.4fr) minmax(58px,0.75fr) minmax(68px,0.85fr) 58px 50px 50px 38px;gap:6px;align-items:center;padding:7px 8px;width:100%;min-width:620px;max-width:100%;box-sizing:border-box}
+    .bal-table-head,.bal-row{display:grid;grid-template-columns:32px minmax(22px,0.18fr) minmax(72px,0.55fr) minmax(36px,0.38fr) minmax(24px,0.24fr) minmax(40px,0.26fr) minmax(34px,0.2fr) minmax(34px,0.2fr) minmax(34px,0.2fr) 30px;gap:4px;align-items:center;padding:5px 6px;width:100%;min-width:430px;max-width:100%;box-sizing:border-box}
+    .bal-col-schema .bal-unit,.bal-col-board .bal-unit,.bal-col-location .bal-unit,.bal-col-pi .bal-unit,.bal-col-ku .bal-unit,.bal-col-ks .bal-unit,.bal-col-cos .bal-unit{display:none}
+    .bal-col-schema .bal-input-unit,.bal-col-board .bal-input-unit,.bal-col-location .bal-input-unit,.bal-col-pi .bal-input-unit,.bal-col-ku .bal-input-unit,.bal-col-ks .bal-input-unit,.bal-col-cos .bal-input-unit{gap:0}
     .bal-col-desig{display:flex;flex-direction:column;gap:4px;min-width:0}
-    .bal-col-desig .bal-desig{width:100%;font-size:0.82rem}
+    .bal-col-desig .bal-desig{width:100%;font-size:0.76rem}
+    .bal-col-desig .bal-label-custom{font-size:0.76rem}
     .bal-label-custom{width:100%;font-size:0.82rem}
-    .bal-row-remove{display:inline-flex;align-items:center;justify-content:center;padding:5px;width:36px;height:34px;min-height:0;font-size:1.05rem;font-weight:800}
+    .bal-row-remove{display:inline-flex;align-items:center;justify-content:center;padding:4px;width:28px;height:30px;min-height:0;font-size:0.95rem;font-weight:800}
     .bal-row-remove span:last-child{display:none}
     .bal-col-ref input.bal-ref{text-align:center;font-weight:700;color:var(--primary);background:rgba(250,204,21,0.08);cursor:default}
     .bal-table-head{font-size:0.68rem;font-weight:700;color:var(--muted);background:rgba(0,0,0,0.25);border-bottom:1px solid rgba(255,255,255,0.08)}
@@ -95,7 +98,9 @@
     .bal-col-ref.bal-field-unit-only{flex-direction:row;align-items:center}
     .bal-row{border-bottom:1px solid rgba(255,255,255,0.05)}
     .bal-row:last-child{border-bottom:none}
-    .bal-row input,.bal-row select{padding:7px 8px;font-size:0.82rem}
+    .bal-row input,.bal-row select{padding:5px 4px;font-size:0.74rem}
+    .bal-col-schema input,.bal-col-board input,.bal-col-location input{max-width:100%}
+    .bal-col-pi input,.bal-col-ku input,.bal-col-ks input,.bal-col-cos input{text-align:center;padding:5px 2px}
     .bal-col-ref.bal-field-unit-only{display:flex;align-items:center;gap:3px;min-width:0}
     .bal-col-ref.bal-field-unit-only .bal-ref{flex:1;min-width:0}
     .bal-field-unit-only .bal-unit{padding:0}
@@ -103,9 +108,19 @@
     .bal-row-remove{border-radius:6px;border:1px solid rgba(248,113,113,0.35);background:rgba(248,113,113,0.1);color:#f87171;cursor:pointer}
     .bal-row-remove:disabled{opacity:0.25;cursor:not-allowed}
     .bal-toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0;align-items:center}
-    .bal-export{display:none;flex-wrap:wrap;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.08)}
+    .bal-export-dock{margin-top:18px;padding:16px 18px;border-radius:14px;border:2px solid rgba(5,150,105,0.5);background:linear-gradient(180deg,rgba(5,150,105,0.14),rgba(5,150,105,0.06))}
+    .bal-export-dock[hidden]{display:none!important}
+    .bal-export-dock-title{margin:0 0 12px;font-size:0.95rem;font-weight:800;color:#6ee7b7;letter-spacing:0.02em}
+    .bal-export{display:none;flex-wrap:wrap;gap:10px}
     .bal-export.visible{display:flex}
-    .bal-export.visible+.bal-export-hint{display:block!important}
+    .bal-export-dock:not([hidden]) .bal-export-hint{display:block;margin-top:12px;font-size:0.78rem;color:var(--muted);line-height:1.45}
+    .bal-export-hint{display:none}
+    .bal-action-btn{flex:1 1 150px;min-height:50px;padding:12px 16px;border-radius:10px;border:none;font-size:0.9rem;font-weight:800;cursor:pointer;letter-spacing:0.02em;transition:transform .12s ease,box-shadow .12s ease,filter .12s ease}
+    .bal-action-btn:hover{transform:translateY(-2px);filter:brightness(1.08);box-shadow:0 6px 20px rgba(0,0,0,0.35)}
+    .bal-action-btn:active{transform:translateY(0)}
+    .bal-action-print,.bal-action-pdf{background:var(--primary);color:#0f172a;box-shadow:0 2px 0 rgba(0,0,0,0.2)}
+    .bal-action-html{background:#059669;color:#fff;box-shadow:0 2px 0 #047857}
+    .bal-action-txt{background:rgba(15,23,42,0.85);color:#ecfdf5;border:2px solid rgba(110,231,183,0.55)}
     .bal-result-table{width:100%;margin-top:12px;border-collapse:collapse;font-size:0.82rem;text-align:start}
     .bal-result-table th,.bal-result-table td{padding:6px 8px;border-bottom:1px solid rgba(255,255,255,0.08)}
     .bal-result-table th{color:var(--muted);font-weight:700;font-size:0.72rem}
@@ -552,6 +567,7 @@
             <span class="bal-th-cell"><span class="bal-th-lbl" data-i18n="balColPi"></span><span class="bal-th-unit" data-bal-unit="unitW"></span></span>
             <span class="bal-th-cell bal-th-coef"><span class="bal-th-lbl" data-i18n="balColKu"></span><span class="bal-th-hint" data-i18n="balColKuSub"></span><span class="bal-th-unit" data-bal-unit="unitCoef"></span></span>
             <span class="bal-th-cell bal-th-coef"><span class="bal-th-lbl" data-i18n="balColKs"></span><span class="bal-th-hint" data-i18n="balColKsSub"></span><span class="bal-th-unit" data-bal-unit="unitCoef"></span></span>
+            <span class="bal-th-cell bal-th-coef"><span class="bal-th-lbl" data-i18n="balColCos"></span><span class="bal-th-hint" data-i18n="balColCosSub"></span></span>
             <span class="bal-th-cell bal-th-actions" data-i18n="balColActions"></span>
           </div>
           <div id="balance-rows-host"></div>
@@ -559,13 +575,6 @@
         <div class="bal-toolbar">
           <button type="button" class="tc-mini-btn" id="bal-add-row" data-i18n="balAddRow"></button>
         </div>
-        <div class="bal-export" id="bal-export">
-          <button type="button" class="tc-mini-btn" id="bal-export-html" data-i18n="balExportHtml"></button>
-          <button type="button" class="tc-mini-btn" id="bal-print" data-i18n="balExportPrint"></button>
-          <button type="button" class="tc-mini-btn" id="bal-export-pdf" data-i18n="balExportPdf"></button>
-          <button type="button" class="tc-mini-btn" id="bal-export-txt" data-i18n="balExportTxt"></button>
-        </div>
-        <p class="bal-export-hint" id="bal-export-hint" style="font-size:0.72rem;color:var(--muted);margin-top:8px;line-height:1.4" data-i18n="balExportFileHint"></p>
         <p style="font-size:0.72rem;color:var(--muted);margin-top:10px;line-height:1.4" data-i18n="balDisclaimer"></p>
       </div>
 
@@ -768,6 +777,17 @@
 
       <button type="button" class="btn-calc" id="btn-calculate"></button>
       <div id="calc-global-result" class="result-box"></div>
+
+      <div id="bal-export-dock" class="bal-export-dock" hidden>
+        <p class="bal-export-dock-title" data-i18n="balExportDockTitle"></p>
+        <div class="bal-export" id="bal-export">
+          <button type="button" class="bal-action-btn bal-action-html" id="bal-export-html" data-i18n="balExportHtml"></button>
+          <button type="button" class="bal-action-btn bal-action-print" id="bal-print" data-i18n="balExportPrint"></button>
+          <button type="button" class="bal-action-btn bal-action-pdf" id="bal-export-pdf" data-i18n="balExportPdf"></button>
+          <button type="button" class="bal-action-btn bal-action-txt" id="bal-export-txt" data-i18n="balExportTxt"></button>
+        </div>
+        <p class="bal-export-hint" id="bal-export-hint" data-i18n="balExportFileHint"></p>
+      </div>
 
       <div class="calc-help" id="calc-help">
         <h4 id="calc-help-title"></h4>
