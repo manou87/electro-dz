@@ -1,0 +1,11 @@
+{
+  "revision": "2026-06-pro",
+  "standard": "IEC 60898-1 (MCB), IEC 60947-2 (MCCB), NF C 15-100 / IEC 60364 (mise en œuvre)",
+  "approachFr": "Catalogues constructeurs alimentés par documentations publiques (guides Micrologic, Tmax XT, fiches MCB). Les courbes long-time sont interpolées entre points d’essai publiés ; les zones court retard et instantané suivent les réglages Ir, Isd, Tsd, Ii du catalogue.",
+  "approachAr": "كتالوجات الصانعين من وثائق عامة. المنحنى الطويل يُستكمل بين نقاط الاختبار المنشورة؛ المناطق القصيرة والفورية حسب Ir وIsd وTsd وIi.",
+  "validationFr": "Avant dossier définitif : comparer chaque protection sur l’outil temps-courant du constructeur (liens « Valider chez le constructeur ») et sur les tables de sélectivité / filiation du fabricant (ex. compléments techniques Schneider ZXTHPLANCHF).",
+  "validationAr": "قبل الملف النهائي: قارن على أداة الصانع وجداول الانتقائية الرسمية.",
+  "limitsFr": "Ce module ne remplace pas Caneco BT, un logiciel homologué ALPI, ni une note de calcul signée. Pas d’accès à la base EDIELEC sans licence Caneco.",
+  "limitsAr": "لا يغني عن Caneco BT أو دراسة موقعة. لا قاعدة EDIELEC بدون Caneco.",
+  "dataRevision": "2026-06-public"
+}

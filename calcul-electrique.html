@@ -25,7 +25,16 @@
     .picker-mode-btns{display:flex;gap:8px}
     .picker-mode-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);color:var(--muted);padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-size:0.85rem}
     .picker-mode-btn.active{background:var(--primary);color:#0f172a;border-color:var(--primary)}
-    .types-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+    .types-priority-block{margin-bottom:18px}
+    .types-section-label{font-size:0.72rem;font-weight:800;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin:0 0 8px}
+    .types-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+    .types-grid-priority{margin-bottom:0}
+    .types-other-block .types-grid{margin-bottom:20px}
+    .type-card-featured{border-color:rgba(250,204,21,0.22)}
+    .type-card-featured.selected{border-color:var(--primary)}
+    .types-strip-sep{flex:0 0 1px;width:1px;height:28px;background:rgba(255,255,255,0.15);align-self:center;margin:0 4px}
+    .type-chip-featured{border-color:rgba(250,204,21,0.35)}
+    .focus-chip-featured{border-color:rgba(250,204,21,0.25)}
     .type-card{background:var(--surface);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 10px;text-align:center;cursor:pointer;transition:0.2s}
     .type-card:hover,.type-card.selected{border-color:var(--primary);background:rgba(250,204,21,0.08)}
     .type-card .type-icon{width:36px;height:36px;border-radius:10px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
@@ -33,7 +42,8 @@
     .types-strip{display:none;overflow-x:auto;gap:8px;padding-bottom:8px;margin-bottom:16px;-webkit-overflow-scrolling:touch}
     .types-strip .type-chip{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:var(--surface);border:1px solid rgba(255,255,255,0.1);cursor:pointer;white-space:nowrap;font-size:0.85rem;font-weight:600;color:var(--muted)}
     .types-strip .type-chip.active{background:var(--primary);color:#0f172a;border-color:var(--primary)}
-    body.picker-compact .types-grid{display:none}
+    body.picker-compact .types-priority-block,
+    body.picker-compact .types-other-block{display:none}
     body.picker-compact .types-strip{display:flex}
     body.calc-focus .types-picker-panel{display:none}
     body.calc-focus .focus-bar{display:flex}
@@ -59,9 +69,82 @@
     .voltage-btn{flex:1;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:var(--muted);cursor:pointer;text-align:center}
     .voltage-btn.active{background:rgba(250,204,21,0.15);border-color:var(--primary);color:var(--primary)}
     .voltage-btn small{display:block;font-size:0.7rem;margin-top:2px;opacity:0.8}
+    .bal-pro-meta{margin-bottom:16px;padding:14px;border-radius:12px;border:1px solid rgba(5,150,105,0.25);background:rgba(5,150,105,0.06)}
+    .bal-pro-meta .bal-pro-meta-title{font-size:0.8rem;font-weight:800;color:#6ee7b7;margin-bottom:10px;letter-spacing:0.02em}
+    .bal-table-wrap{margin-top:12px;border:1px solid rgba(255,255,255,0.1);border-radius:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+    .bal-table-head,.bal-row{display:grid;grid-template-columns:36px 50px minmax(150px,1.4fr) minmax(58px,0.75fr) minmax(68px,0.85fr) 58px 50px 50px 38px;gap:6px;align-items:center;padding:7px 8px;width:100%;min-width:620px;max-width:100%;box-sizing:border-box}
+    .bal-col-desig{display:flex;flex-direction:column;gap:4px;min-width:0}
+    .bal-col-desig .bal-desig{width:100%;font-size:0.82rem}
+    .bal-label-custom{width:100%;font-size:0.82rem}
+    .bal-row-remove{display:inline-flex;align-items:center;justify-content:center;padding:5px;width:36px;height:34px;min-height:0;font-size:1.05rem;font-weight:800}
+    .bal-row-remove span:last-child{display:none}
+    .bal-col-ref input.bal-ref{text-align:center;font-weight:700;color:var(--primary);background:rgba(250,204,21,0.08);cursor:default}
+    .bal-table-head{font-size:0.68rem;font-weight:700;color:var(--muted);background:rgba(0,0,0,0.25);border-bottom:1px solid rgba(255,255,255,0.08)}
+    .bal-th-cell{display:flex;flex-direction:column;gap:1px;line-height:1.15}
+    .bal-th-lbl{font-weight:700}
+    .bal-th-hint{font-size:0.58rem;font-weight:500;color:#94a3b8;line-height:1.2;white-space:normal}
+    .bal-th-coef .bal-th-hint{font-style:italic}
+    .bal-coef-legend{margin:0 0 10px;padding:10px 12px;border-radius:8px;background:rgba(5,150,105,0.08);border:1px solid rgba(5,150,105,0.2);font-size:0.78rem;color:var(--muted);line-height:1.45}
+    .bal-coef-legend strong{color:#6ee7b7}
+    .bal-th-unit,.bal-unit{font-size:0.65rem;font-weight:600;color:#6ee7b7;white-space:nowrap;flex-shrink:0}
+    .bal-input-unit{display:flex;flex-direction:row;align-items:center;gap:4px;min-width:0}
+    .bal-col-desig .bal-input-unit{flex-direction:column;align-items:stretch}
+    .bal-col-desig .bal-input-unit .bal-unit{align-self:flex-end}
+    .bal-input-unit input,.bal-input-unit select{flex:1;min-width:0;box-sizing:border-box}
+    .bal-input-unit .bal-unit{flex-shrink:0;line-height:1;font-size:0.62rem}
+    .bal-col-ref.bal-field-unit-only{flex-direction:row;align-items:center}
+    .bal-row{border-bottom:1px solid rgba(255,255,255,0.05)}
+    .bal-row:last-child{border-bottom:none}
+    .bal-row input,.bal-row select{padding:7px 8px;font-size:0.82rem}
+    .bal-col-ref.bal-field-unit-only{display:flex;align-items:center;gap:3px;min-width:0}
+    .bal-col-ref.bal-field-unit-only .bal-ref{flex:1;min-width:0}
+    .bal-field-unit-only .bal-unit{padding:0}
+    .input-group .bal-input-unit input{width:100%}
+    .bal-row-remove{border-radius:6px;border:1px solid rgba(248,113,113,0.35);background:rgba(248,113,113,0.1);color:#f87171;cursor:pointer}
+    .bal-row-remove:disabled{opacity:0.25;cursor:not-allowed}
+    .bal-toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0;align-items:center}
+    .bal-export{display:none;flex-wrap:wrap;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.08)}
+    .bal-export.visible{display:flex}
+    .bal-export.visible+.bal-export-hint{display:block!important}
+    .bal-result-table{width:100%;margin-top:12px;border-collapse:collapse;font-size:0.82rem;text-align:start}
+    .bal-result-table th,.bal-result-table td{padding:6px 8px;border-bottom:1px solid rgba(255,255,255,0.08)}
+    .bal-result-table th{color:var(--muted);font-weight:700;font-size:0.72rem}
+    .bal-result-table .bal-total-row td{font-weight:800;color:var(--primary);border-top:2px solid rgba(250,204,21,0.35)}
+    .bal-summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:12px}
+    .bal-summary-card{padding:10px 12px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);font-size:0.8rem}
+    .bal-summary-card strong{display:block;font-size:1rem;color:var(--primary);margin-top:2px}
     .balance-row{display:grid;grid-template-columns:1fr 1fr 70px 70px 70px;gap:8px;align-items:end;margin-bottom:10px}
     .btn-calc{background:var(--primary);color:#0f172a;border:none;padding:14px;border-radius:10px;font-weight:800;cursor:pointer;margin-top:24px;width:100%;font-size:1.05rem}
-    .result-box{margin-top:20px;padding:18px;background:rgba(250,204,21,0.05);border:1px dashed var(--primary);border-radius:12px;text-align:center;font-size:1.1rem;font-weight:700;color:var(--primary);min-height:60px}
+    .result-box{margin-top:20px;padding:18px;background:rgba(250,204,21,0.05);border:1px dashed var(--primary);border-radius:12px;text-align:center;font-size:1.1rem;font-weight:700;color:var(--primary);min-height:60px;overflow-x:auto}
+    #calc-global-result.bal-result-box{padding:0;background:#fff!important;color:#0f172a!important;border:1px solid #cbd5e1!important;border-radius:12px;text-align:start;font-weight:400;overflow-x:auto}
+    .bal-result-sheet{font-family:'Segoe UI',system-ui,sans-serif;font-size:11pt;line-height:1.4;color:#0f172a;background:#fff}
+    .bal-result-sheet .page{padding:16px 14px;max-width:100%;background:#fff}
+    .bal-result-sheet .hdr{border-bottom:3px solid #059669;padding-bottom:12px;margin-bottom:14px}
+    .bal-result-sheet .brand{font-size:11pt;font-weight:800;color:#047857;letter-spacing:0.04em}
+    .bal-result-sheet .hdr h1{margin:0;font-size:1.25rem;font-weight:800;color:#0f172a}
+    .bal-result-sheet .hdr .date{font-size:9.5pt;color:#64748b;margin-top:4px}
+    .bal-result-sheet .meta-tbl{width:100%;border-collapse:collapse;margin:0 0 14px;font-size:10pt}
+    .bal-result-sheet .meta-tbl th,.bal-result-sheet .meta-tbl td{border:1px solid #e2e8f0;padding:6px 10px;background:#fff}
+    .bal-result-sheet .meta-tbl th{width:28%;background:#f8fafc;color:#334155;font-weight:700}
+    .bal-result-sheet[dir="rtl"] .meta-tbl th,.bal-result-sheet[dir="rtl"] .meta-tbl td{text-align:right}
+    .bal-result-sheet[dir="ltr"] .meta-tbl th,.bal-result-sheet[dir="ltr"] .meta-tbl td{text-align:left}
+    .bal-result-sheet .data-tbl{width:100%;border-collapse:collapse;margin:12px 0 16px;font-size:9.5pt}
+    .bal-result-sheet .data-tbl th,.bal-result-sheet .data-tbl td{border:1px solid #94a3b8;padding:5px 7px;vertical-align:top;background:#fff}
+    .bal-result-sheet .data-tbl th{background:#ecfdf5;color:#065f46;font-weight:700;font-size:8.5pt}
+    .bal-result-sheet[dir="rtl"] .data-tbl th,.bal-result-sheet[dir="rtl"] .data-tbl td{text-align:right}
+    .bal-result-sheet[dir="ltr"] .data-tbl th,.bal-result-sheet[dir="ltr"] .data-tbl td{text-align:left}
+    .bal-result-sheet .data-tbl tr.alt td{background:#f8fafc}
+    .bal-result-sheet .data-tbl tr.tot td{background:#fef9c3;font-weight:700;border-top:2px solid #ca8a04}
+    .bal-result-sheet .data-tbl .muted{font-size:8.5pt;color:#64748b;font-weight:400}
+    .bal-result-sheet .sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin:14px 0}
+    .bal-result-sheet .sum .box{padding:10px 12px;border:2px solid #86efac;border-radius:8px;background:#f0fdf4;text-align:center}
+    .bal-result-sheet .sum .lbl{display:block;font-size:9pt;color:#047857;font-weight:600;margin-bottom:4px}
+    .bal-result-sheet .sum strong{font-size:1.15rem;color:#065f46}
+    .bal-result-sheet .sub-h{font-size:11pt;color:#047857;margin:16px 0 6px}
+    .bal-result-sheet .sub-tbl{width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:12px}
+    .bal-result-sheet .sub-tbl td,.bal-result-sheet .sub-tbl th{border:1px solid #e2e8f0;padding:5px 8px;background:#fff}
+    .bal-result-sheet .formula{font-size:9pt;color:#475569;margin:8px 0;font-style:italic}
+    .bal-result-sheet .foot{margin-top:14px;padding-top:10px;border-top:1px solid #cbd5e1;font-size:8.5pt;color:#64748b}
     .calc-help{margin-top:24px;padding:16px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06)}
     .calc-help h4{font-size:0.9rem;color:var(--primary);margin-bottom:6px}
     .calc-help p{font-size:0.85rem;color:var(--muted);line-height:1.5}
@@ -70,14 +153,53 @@
     [data-ohm-group].show,[data-power-group].show,[data-brk-group].show{display:contents}
     select.std-select{font-weight:600}
     .tc-canvas{width:100%;height:540px;background:#0b1424;border:1px solid rgba(255,255,255,0.08);border-radius:12px;margin-top:8px;display:block}
-    .tc-legend{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 4px;min-height:30px}
-    .tc-chip{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.05);border:1px solid;font-size:0.82rem;font-weight:600;color:#fff}
-    .tc-dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+    .tc-graph-studio{margin:6px 0 0;border-radius:12px;border:1px solid rgba(56,189,248,0.28);background:rgba(15,23,42,0.45);overflow:hidden}
+    .tc-graph-studio .tc-legend{margin:3px 6px 0;padding:0 0 2px;min-height:0;max-height:72px;overflow:auto}
+    .tc-graph-studio .tc-canvas{margin:0;border-radius:0;border-left:none;border-right:none;border-top:1px solid rgba(255,255,255,0.06)}
+    .tc-tune-recap{display:none;flex-wrap:wrap;gap:2px 6px;padding:2px 6px;font-size:0.65rem;font-weight:600;color:#7dd3fc;background:rgba(0,0,0,0.25);border-top:1px solid rgba(255,255,255,0.06);line-height:1.2}
+    .tc-tune-recap:has(span:not(:empty)){display:flex}
+    .tc-tune-recap span:empty{display:none}
+    .tc-tune-recap span:not(:empty)::after{content:' · ';color:rgba(148,163,184,0.6)}
+    .tc-tune-recap span:not(:empty):last-child::after{content:''}
+    .tc-graph-thresholds{margin:0;padding:3px 6px 4px;border-radius:0;border:none;border-top:1px solid rgba(56,189,248,0.2);background:rgba(56,189,248,0.05)}
+    .tc-graph-thresholds[hidden]{display:none}
+    .tc-graph-thresholds .form-grid{margin-top:0}
+    .tc-graph-thresholds .tc-pro-panel-title{display:none}
+    .tc-graph-thresholds .tc-advanced-hint{margin:1px 0 0;font-size:0.68rem;line-height:1.25}
+    #tc-graph-mfg-tune{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 5px}
+    #tc-graph-mfg-tune .input-group{margin:0;gap:1px}
+    #tc-graph-mfg-tune label{font-size:0.7rem;margin:0;line-height:1.15}
+    #tc-graph-mfg-tune input,#tc-graph-mfg-tune select{padding:5px 7px;font-size:0.82rem;border-radius:5px}
+    #tc-graph-mfg-tune #tc-ii-group{grid-column:1/-1}
+    #tc-graph-mfg-tune #tc-tsd-group{grid-column:1/-1}
+    .tc-graph-threshold-summary{display:flex;flex-wrap:wrap;gap:10px 16px;font-size:0.85rem;color:var(--muted);margin-top:6px}
+    .tc-graph-thresholds-readonly{font-size:0.82rem;color:var(--muted);line-height:1.45;margin:0}
+    .tc-threshold-range{width:100%;margin:2px 0 0;accent-color:var(--primary);height:6px}
+    .tc-tsd-stepper{display:flex;align-items:stretch;gap:3px;margin:0}
+    .tc-step-btn{flex:0 0 auto;min-width:1.85rem;font-size:1rem;line-height:1;padding:4px 6px;border-radius:5px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:#fff;cursor:pointer;font-weight:700}
+    .tc-step-btn:hover:not(:disabled){background:rgba(56,189,248,0.2);border-color:rgba(56,189,248,0.5)}
+    .tc-step-btn:disabled{opacity:0.35;cursor:not-allowed}
+    .tc-tsd-select{flex:1;min-width:0;padding:6px 8px;border-radius:6px;border:1px solid rgba(255,255,255,0.15);background:rgba(0,0,0,0.25);color:#fff;font-size:0.85rem}
+    #tc-tsd-group .tc-tsd-num{flex:1;min-width:0;padding:6px 8px;border-radius:6px;border:1px solid rgba(255,255,255,0.15);background:rgba(0,0,0,0.25);color:#fff;font-size:0.85rem}
+    #tc-tsd-group .tc-tsd-num[hidden],#tc-tsd-group .tc-tsd-select[hidden]{display:none!important}
+    .tc-threshold-live{font-size:0.75rem;color:#7dd3fc;font-weight:600}
+    .tc-ii-off-lbl{display:flex;align-items:center;gap:3px;margin-top:0;font-size:0.68rem;font-weight:500;line-height:1.15}
+    .tc-legend{display:flex;flex-wrap:nowrap;align-items:center;gap:4px;margin:0;padding:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;min-height:0}
+    .tc-legend::-webkit-scrollbar{height:4px}
+    .tc-legend::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.2);border-radius:4px}
+    .tc-chip-btn{flex:0 0 auto;display:inline-flex;align-items:center;gap:4px;padding:4px 7px 4px 6px;border-radius:6px;border:2px solid var(--tc-chip,#64748b);background:rgba(255,255,255,0.07);font:inherit;font-size:0.74rem;font-weight:700;color:#fff;cursor:pointer;white-space:nowrap;line-height:1.15;min-height:30px;touch-action:manipulation}
+    .tc-chip-btn:hover{background:rgba(255,255,255,0.12)}
+    .tc-chip-btn.tc-chip-edit{box-shadow:0 0 0 2px rgba(250,204,21,0.65);background:rgba(250,204,21,0.12)}
+    .tc-chip-btn.tc-chip-preview{opacity:0.8;border-style:dashed}
+    .tc-chip-btn.tc-role-amont{border-left-width:4px;border-left-color:#3b82f6}
+    .tc-chip-btn.tc-role-aval{border-left-width:4px;border-left-color:#10b981}
+    .tc-chip-lbl{pointer-events:none}
+    .tc-chip-remove{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;margin:0 -1px 0 1px;border-radius:4px;background:rgba(0,0,0,0.25);color:#94a3b8;font-size:0.9rem;line-height:1;font-weight:700;pointer-events:auto}
+    .tc-chip-remove:hover{color:#f87171;background:rgba(248,113,113,0.2)}
+    .tc-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
     .tc-role{font-size:0.66rem;font-weight:800;padding:2px 6px;border-radius:5px;letter-spacing:0.3px;text-transform:uppercase}
     .tc-role-amont{background:#1d4ed8;color:#fff}
     .tc-role-aval{background:#059669;color:#fff}
-    .tc-x{background:none;border:none;color:var(--muted);cursor:pointer;font-size:0.8rem;padding:0 0 0 2px}
-    .tc-x:hover{color:#f87171}
     .tc-note{font-size:0.75rem;color:var(--muted);margin-top:10px;line-height:1.5}
     .tc-verdict{margin:6px 0 2px;padding:12px 14px;border-radius:10px;font-size:0.9rem;font-weight:600;line-height:1.5;display:none}
     .tc-verdict.show{display:block}
@@ -99,7 +221,75 @@
     .tc-export{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
     .tc-mini-btn{padding:7px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.05);color:#e2e8f0;font-weight:600;cursor:pointer;font-size:0.82rem}
     .tc-mini-btn:hover{border-color:var(--primary);color:var(--primary)}
-    @media(max-width:768px){.nav-links{display:none}.types-grid{grid-template-columns:repeat(2,1fr)}.balance-row{grid-template-columns:1fr 1fr}.tc-canvas{height:420px}}
+    .tc-mfg-disclaimer{font-size:0.78rem;line-height:1.5;color:#7dd3fc;background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.35);border-radius:8px;padding:10px 12px;margin:0 0 12px}
+    .tc-mfg-disclaimer[hidden]{display:none}
+    .tc-settings-hint{font-size:0.75rem;color:#fbbf24;margin:4px 0 0;min-height:1.2em}
+    .tc-pro-docs{margin:0 0 12px}
+    .tc-pro-docs summary{cursor:pointer;font-size:0.82rem;color:var(--muted);font-weight:600}
+    .tc-mfg-provenance{font-size:0.78rem;line-height:1.5;color:#cbd5e1;margin:8px 0}
+    .tc-prov-lead{margin:0 0 8px;color:#94a3b8}
+    .tc-prov-source,.tc-prov-sel,.tc-prov-rev{margin:4px 0}
+    .tc-prov-tools{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:8px}
+    .tc-prov-tools-label{font-size:0.75rem;font-weight:600;color:#7dd3fc;margin-right:4px}
+    .tc-pro-advanced{margin-top:10px;font-size:0.8rem}
+    .tc-pro-panel-title{font-size:0.8rem;font-weight:700;color:#7dd3fc;margin:0 0 8px}
+    .tc-pro-icc-results{margin:8px 0 0;padding:8px 10px;border-radius:8px;background:rgba(0,0,0,0.2);border:1px solid rgba(56,189,248,0.25);font-size:0.78rem;line-height:1.35}
+    .tc-pro-icc-results[hidden]{display:none}
+    .tc-pro-icc-results h4{margin:0 0 6px;font-size:0.76rem;font-weight:700;color:#7dd3fc}
+    .tc-pro-icc-table{width:100%;border-collapse:collapse;font-size:0.76rem}
+    .tc-pro-icc-table th,.tc-pro-icc-table td{padding:4px 6px;text-align:start;border-bottom:1px solid rgba(255,255,255,0.06)}
+    .tc-pro-icc-table th{color:#94a3b8;font-weight:600}
+    .tc-pro-icc-table td:last-child,.tc-pro-icc-table th:last-child{text-align:end}
+    .tc-pro-icc-apply-row{margin-top:6px}
+    .tc-pro-panel-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+    .tc-advanced-hint{font-size:0.75rem;color:#94a3b8;margin:8px 0}
+    .tc-pro-advanced summary{cursor:pointer;color:#fde68a;font-weight:600}
+    .tc-ref-block,.tc-chars-block{grid-column:1/-1;margin:0 0 8px;padding:8px 10px;border-radius:10px;border:1px solid rgba(56,189,248,0.22);background:rgba(15,23,42,0.35)}
+    .tc-ref-block .form-grid,.tc-chars-block .form-grid{margin-top:4px;gap:10px}
+    #tripcurve .tc-ref-block .form-grid .input-group,#tripcurve .tc-chars-block .form-grid .input-group{gap:3px}
+    .tc-pro-panel-title{margin:0 0 4px}
+    #tc-ref-mfg{display:contents}
+    #tc-ref-mfg.tc-mfg-hidden{display:none}
+    #tc-mfg-settings-wrap{display:contents}
+    #tc-mfg-settings-wrap.tc-mfg-hidden{display:none!important}
+    .tc-custom-catalog{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:8px;padding:8px 0 0;border-top:1px solid rgba(255,255,255,0.08)}
+    .tc-custom-catalog label{font-size:0.78rem;font-weight:600;color:#fde68a;margin:0}
+    #tc-custom-catalog-status{font-size:0.75rem;color:#86efac;flex:1 1 100%}
+    #tc-tr-group[hidden],#tc-ir-group[hidden],#tc-isd-group[hidden],#tc-tsd-group[hidden],#tc-ii-group[hidden]{display:none!important}
+    #tripcurve > .form-grid{gap:10px 12px}
+    #tripcurve > .form-grid > .input-group{gap:3px}
+    #tripcurve > .form-grid > .input-group .sub-type-btn{padding:7px 10px;font-size:0.84rem}
+    #tripcurve .tc-settings-hint{margin:1px 0 0;line-height:1.3}
+    #tripcurve .tc-pro-bar{margin:4px 0 0}
+    @media(max-width:768px){
+      .nav-links{display:none}
+      .types-grid{grid-template-columns:repeat(2,1fr)}
+      .balance-row{grid-template-columns:1fr 1fr}
+      .bal-table-head,.bal-row{grid-template-columns:1fr 1fr;gap:8px}
+      .bal-table-head{display:none}
+      .bal-row [data-lbl]::before{content:attr(data-lbl);display:block;font-size:0.65rem;color:var(--muted);margin-bottom:2px}
+      #tripcurve .tc-ref-block>.tc-settings-hint,#tripcurve .tc-chars-block>.tc-settings-hint,#tc-mfg-in-hint{display:none}
+      #tripcurve .tc-ref-block,#tripcurve .tc-chars-block{padding:8px 10px;margin-bottom:8px}
+      #tripcurve .tc-ref-block .form-grid,#tripcurve .tc-chars-block .form-grid{gap:6px}
+      #tripcurve>.form-grid>.input-group .sub-type-btn{padding:7px 8px;font-size:0.8rem;min-width:0}
+      .tc-graph-studio{margin-top:4px}
+      .tc-graph-studio .tc-canvas{height:420px}
+      .tc-graph-studio .tc-legend{margin:2px 4px 0;padding-bottom:1px;gap:3px}
+      .tc-chip-btn{padding:4px 6px;min-height:28px;font-size:0.7rem}
+      .tc-chip-remove{width:16px;height:16px;font-size:0.85rem}
+      .tc-graph-thresholds{padding:2px 4px 3px}
+      .tc-graph-thresholds .tc-advanced-hint,.tc-graph-thresholds #tc-tr-hint{display:none}
+      #tc-graph-mfg-tune{gap:2px 4px}
+      #tripcurve > .form-grid{gap:6px 8px}
+      #tc-graph-mfg-tune label{font-size:0.68rem}
+      #tc-graph-mfg-tune input,#tc-graph-mfg-tune select{padding:5px 7px;font-size:0.8rem}
+      .tc-step-btn{min-width:1.75rem;padding:4px 6px;font-size:0.95rem}
+      .tc-tsd-select{padding:5px 7px;font-size:0.8rem}
+      .tc-ii-off-lbl{font-size:0.68rem;margin-top:1px}
+      .tc-tune-recap{padding:3px 6px;font-size:0.65rem}
+      .tc-verdict{margin-top:8px;padding:8px 10px;font-size:0.82rem}
+      .tc-verdict small{font-size:0.72rem}
+    }
   </style>
 </head>
 <body>
@@ -136,7 +326,14 @@
           <button type="button" class="picker-mode-btn" data-picker="compact" id="picker-compact"></button>
         </div>
       </div>
-      <div class="types-grid" id="types-grid"></div>
+      <div class="types-priority-block">
+        <p class="types-section-label" id="types-priority-label"></p>
+        <div class="types-grid types-grid-priority" id="types-grid-priority"></div>
+      </div>
+      <div class="types-other-block">
+        <p class="types-section-label" id="types-other-label"></p>
+        <div class="types-grid" id="types-grid-other"></div>
+      </div>
       <div class="types-strip" id="types-strip"></div>
     </div>
 
@@ -148,7 +345,7 @@
     <div class="calc-workspace">
       <h2 class="calc-workspace-title" id="calc-active-title"></h2>
 
-      <div id="ohm" class="calc-section active" data-calc="ohm_law">
+      <div id="ohm" class="calc-section" data-calc="ohm_law">
         <div class="sub-type-selector">
           <button type="button" class="sub-type-btn active" data-ohm-sub="voltage" data-i18n="ohmSub_voltage"></button>
           <button type="button" class="sub-type-btn" data-ohm-sub="current" data-i18n="ohmSub_current"></button>
@@ -258,6 +455,8 @@
       </div>
 
       <div id="selectivity" class="calc-section" data-calc="selectivity">
+        <p style="font-size:0.82rem;color:var(--muted);margin:0 0 12px" data-i18n="selTripCurveHint"></p>
+        <button type="button" class="sub-type-btn" id="sel-open-trip-curves" style="margin-bottom:14px" data-i18n="selOpenTripCurves"></button>
         <div class="form-grid">
           <div class="input-group"><label data-i18n="selUpBreaker"></label><select id="sel-up-b" class="std-select" data-std="breaker" data-default="63"></select></div>
           <div class="input-group"><label data-i18n="selDownBreaker"></label><select id="sel-down-b" class="std-select" data-std="breaker" data-default="16"></select></div>
@@ -310,7 +509,20 @@
         </div>
       </div>
 
-      <div id="balance" class="calc-section" data-calc="power_balance">
+      <!-- CANECO_BT_DISABLED — Étude BT (type Caneco) : réactiver avec ENABLE_CANECO_BT dans js/calcul-electrique.js
+      <div id="caneco" class="calc-section" data-calc="caneco_bt">…</div>
+      -->
+
+      <div id="balance" class="calc-section active" data-calc="power_balance">
+        <div class="bal-pro-meta">
+          <p class="bal-pro-meta-title" data-i18n="balProProjectTitle"></p>
+          <div class="form-grid">
+            <div class="input-group"><label data-i18n="balProRef"></label><input type="text" id="bal-pro-ref" maxlength="80"></div>
+            <div class="input-group"><label data-i18n="balProSite"></label><input type="text" id="bal-pro-site" maxlength="120"></div>
+            <div class="input-group"><label data-i18n="balProClient"></label><input type="text" id="bal-pro-client" maxlength="120"></div>
+            <div class="input-group"><label data-i18n="balProEngineer"></label><input type="text" id="bal-pro-engineer" maxlength="80"></div>
+          </div>
+        </div>
         <div class="form-grid">
           <div class="input-group full"><label data-i18n="labelVoltage"></label>
             <div class="voltage-selector" data-voltage-target="balance-u">
@@ -319,44 +531,166 @@
             </div>
             <input type="hidden" id="balance-u" value="230">
           </div>
-          <div class="input-group"><label data-i18n="labelCosPhi"></label><input type="number" id="balance-cos" value="0.9"></div>
         </div>
-        <p style="font-size:0.8rem;color:var(--muted);margin:12px 0 8px" data-i18n="balanceHint"></p>
-        <div data-balance-row class="balance-row">
-          <input class="bal-label" data-i18n-placeholder="phBalanceLabel" aria-label="label">
-          <input class="bal-p" type="number" data-i18n-placeholder="phBalancePi">
-          <input class="bal-ku" type="number" value="1" data-i18n-placeholder="phBalanceKu" aria-label="Ku">
-          <input class="bal-ks" type="number" value="1" data-i18n-placeholder="phBalanceKs" aria-label="Ks">
+        <p style="font-size:0.78rem;color:var(--muted);margin:12px 0 6px" data-i18n="balanceHint"></p>
+        <p class="bal-coef-legend" data-i18n="balCoefHelp"></p>
+        <datalist id="bal-list-board"></datalist>
+        <datalist id="bal-list-location"></datalist>
+        <datalist id="bal-list-label"></datalist>
+        <datalist id="bal-list-schema">
+          <option value="Q1"></option><option value="Q2"></option><option value="Q3"></option>
+          <option value="F1"></option><option value="F2"></option><option value="F3"></option>
+          <option value="W1"></option><option value="W2"></option><option value="W3"></option>
+        </datalist>
+        <div class="bal-table-wrap">
+          <div class="bal-table-head">
+            <span class="bal-th-cell"><span class="bal-th-lbl" data-i18n="balColRef"></span><span class="bal-th-unit" data-bal-unit="unitRef"></span></span>
+            <span class="bal-th-cell"><span class="bal-th-lbl" data-i18n="balColSchema"></span><span class="bal-th-unit" data-bal-unit="unitSchema"></span></span>
+            <span class="bal-th-cell"><span class="bal-th-lbl" data-i18n="balColLabel"></span><span class="bal-th-unit" data-bal-unit="unitCatalog"></span></span>
+            <span class="bal-th-cell"><span class="bal-th-lbl" data-i18n="balColLocation"></span><span class="bal-th-unit" data-bal-unit="unitText"></span></span>
+            <span class="bal-th-cell"><span class="bal-th-lbl" data-i18n="balColBoard"></span><span class="bal-th-unit" data-bal-unit="unitText"></span></span>
+            <span class="bal-th-cell"><span class="bal-th-lbl" data-i18n="balColPi"></span><span class="bal-th-unit" data-bal-unit="unitW"></span></span>
+            <span class="bal-th-cell bal-th-coef"><span class="bal-th-lbl" data-i18n="balColKu"></span><span class="bal-th-hint" data-i18n="balColKuSub"></span><span class="bal-th-unit" data-bal-unit="unitCoef"></span></span>
+            <span class="bal-th-cell bal-th-coef"><span class="bal-th-lbl" data-i18n="balColKs"></span><span class="bal-th-hint" data-i18n="balColKsSub"></span><span class="bal-th-unit" data-bal-unit="unitCoef"></span></span>
+            <span class="bal-th-cell bal-th-actions" data-i18n="balColActions"></span>
+          </div>
+          <div id="balance-rows-host"></div>
         </div>
-        <div data-balance-row class="balance-row">
-          <input class="bal-label" data-i18n-placeholder="phBalanceLabel">
-          <input class="bal-p" type="number">
-          <input class="bal-ku" type="number" value="1" data-i18n-placeholder="phBalanceKu">
-          <input class="bal-ks" type="number" value="1" data-i18n-placeholder="phBalanceKs">
+        <div class="bal-toolbar">
+          <button type="button" class="tc-mini-btn" id="bal-add-row" data-i18n="balAddRow"></button>
         </div>
+        <div class="bal-export" id="bal-export">
+          <button type="button" class="tc-mini-btn" id="bal-export-html" data-i18n="balExportHtml"></button>
+          <button type="button" class="tc-mini-btn" id="bal-print" data-i18n="balExportPrint"></button>
+          <button type="button" class="tc-mini-btn" id="bal-export-pdf" data-i18n="balExportPdf"></button>
+          <button type="button" class="tc-mini-btn" id="bal-export-txt" data-i18n="balExportTxt"></button>
+        </div>
+        <p class="bal-export-hint" id="bal-export-hint" style="font-size:0.72rem;color:var(--muted);margin-top:8px;line-height:1.4" data-i18n="balExportFileHint"></p>
+        <p style="font-size:0.72rem;color:var(--muted);margin-top:10px;line-height:1.4" data-i18n="balDisclaimer"></p>
       </div>
 
       <div id="tripcurve" class="calc-section" data-calc="trip_curve">
+        <p id="tc-mfg-disclaimer" class="tc-mfg-disclaimer" hidden data-i18n="tcMfgDisclaimer"></p>
         <div class="form-grid">
-          <div class="input-group"><label data-i18n="tcRole"></label>
-            <select id="tc-role"><option value="aval" data-i18n-opt="tcRoleAval"></option><option value="amont" data-i18n-opt="tcRoleAmont"></option><option value="autre" data-i18n-opt="tcRoleNone"></option></select>
+          <div class="tc-ref-block">
+            <p class="tc-pro-panel-title" data-i18n="tcRefBlockTitle"></p>
+            <p class="tc-settings-hint" data-i18n="tcRefBlockHint"></p>
+            <div class="form-grid">
+              <div class="input-group full"><label data-i18n="tcMode"></label>
+                <select id="tc-mode">
+                  <option value="norm" data-i18n-opt="tcModeNorm"></option>
+                  <option value="mfg" selected data-i18n-opt="tcModeMfg"></option>
+                </select>
+                <p class="tc-settings-hint" data-i18n="tcModeHint"></p>
+              </div>
+              <div id="tc-ref-iec" class="tc-norm-only input-group full">
+                <label data-i18n="tcRefModel"></label>
+                <select id="tc-ref-model">
+                  <option value="mcb" data-i18n-opt="tcRefMcb"></option>
+                  <option value="mccb-a" data-i18n-opt="tcRefMccbA"></option>
+                  <option value="mccb-b" data-i18n-opt="tcRefMccbB"></option>
+                  <option value="gg" data-i18n-opt="tcRefGg"></option>
+                  <option value="am" data-i18n-opt="tcRefAm"></option>
+                </select>
+              </div>
+              <div id="tc-ref-mfg" class="tc-mfg-hidden">
+                <div class="input-group"><label data-i18n="tcMfgBrand"></label>
+                  <select id="tc-mfg-brand">
+                    <option value="schneider" data-i18n-opt="tcBrandSchneider"></option>
+                    <option value="abb" data-i18n-opt="tcBrandAbb"></option>
+                    <option value="hager" data-i18n-opt="tcBrandHager"></option>
+                  </select>
+                </div>
+                <div class="input-group"><label data-i18n="tcMfgFamily"></label><select id="tc-mfg-family"></select></div>
+                <div class="input-group"><label data-i18n="tcMfgFilter"></label><input type="search" id="tc-mfg-filter" data-i18n-placeholder="tcMfgFilterPh" autocomplete="off"></div>
+                <div class="input-group"><label data-i18n="tcMfgRef"></label><select id="tc-mfg-device"></select></div>
+                <div class="input-group"><label data-i18n="tcMfgIn"></label><select id="tc-mfg-in"></select><p class="tc-settings-hint" id="tc-mfg-in-hint" hidden aria-live="polite"></p></div>
+                <div class="input-group" id="tc-mfg-trip-group"><label data-i18n="tcMfgTrip"></label><select id="tc-mfg-trip"></select></div>
+              </div>
+            </div>
           </div>
-          <div class="input-group"><label data-i18n="tcDevice"></label>
-            <select id="tc-device"><option value="mcb" data-i18n-opt="tcDevMcb"></option><option value="mccb" data-i18n-opt="tcDevMccb"></option><option value="gg" data-i18n-opt="tcDevGg"></option><option value="am" data-i18n-opt="tcDevAm"></option></select>
+          <select id="tc-device" hidden aria-hidden="true">
+            <option value="mcb"></option><option value="mccb"></option><option value="gg"></option><option value="am"></option>
+          </select>
+          <select id="tc-mccb-cat" hidden aria-hidden="true"><option value="A"></option><option value="B"></option></select>
+          <div class="tc-chars-block">
+            <p class="tc-pro-panel-title" data-i18n="tcCharsBlockTitle"></p>
+            <p class="tc-settings-hint" data-i18n="tcCharsBlockHint"></p>
+            <div class="form-grid">
+              <div class="input-group"><label data-i18n="tcRole"></label>
+                <select id="tc-role"><option value="aval" data-i18n-opt="tcRoleAval"></option><option value="amont" data-i18n-opt="tcRoleAmont"></option><option value="autre" data-i18n-opt="tcRoleNone"></option></select>
+              </div>
+              <div class="input-group tc-norm-only" id="tc-in-group"><label data-i18n="tcIn"></label><select id="tc-in" class="std-select" data-std="breaker" data-default="16"></select></div>
+              <div class="input-group tc-norm-only" id="tc-curve-group"><label data-i18n="tcCurve"></label><select id="tc-curve" class="std-select" data-std="curve" data-default="C"></select></div>
+              <div class="input-group tc-norm-only" id="tc-ir-group-norm" hidden><label data-i18n="tcIr"></label><input type="number" id="tc-ir-norm" step="0.05" min="0.4" max="1" value="1"></div>
+              <div class="input-group tc-norm-only" id="tc-im-group" hidden><label data-i18n="tcIm"></label><input type="number" id="tc-im" step="0.5" min="1.5" max="15" value="10"></div>
+            </div>
           </div>
-          <div class="input-group"><label data-i18n="tcIn"></label><select id="tc-in" class="std-select" data-std="breaker" data-default="16"></select></div>
-          <div class="input-group" id="tc-curve-group"><label data-i18n="tcCurve"></label><select id="tc-curve" class="std-select" data-std="curve" data-default="C"></select></div>
-          <div class="input-group" id="tc-ir-group" style="display:none"><label data-i18n="tcIr"></label><input type="number" id="tc-ir" step="0.05" min="0.4" max="1" value="1"></div>
-          <div class="input-group" id="tc-im-group" style="display:none"><label data-i18n="tcIm"></label><input type="number" id="tc-im" step="0.5" min="1.5" max="15" value="10"></div>
           <div class="input-group" style="align-self:end"><button type="button" class="sub-type-btn active" id="tc-add" data-i18n="tcAdd"></button></div>
-          <div class="input-group" style="align-self:end"><button type="button" class="sub-type-btn" id="tc-clear" data-i18n="tcClear"></button></div>
+          <div class="input-group" style="align-self:end"><button type="button" class="sub-type-btn" id="tc-cancel-edit" hidden data-i18n="tcCancelEdit"></button></div>
           <div class="input-group"><label data-i18n="tcIcc"></label><input type="number" id="tc-icc" step="100" min="0" data-i18n-placeholder="tcIccPh"></div>
         </div>
+        <p id="tc-mfg-count" class="tc-settings-hint" aria-live="polite" hidden></p>
+        <p id="tc-edit-hint" class="tc-settings-hint" hidden aria-live="polite"></p>
+        <p id="tc-settings-hint" class="tc-settings-hint" aria-live="polite"></p>
+        <p id="tc-settings-live" class="tc-settings-hint" hidden aria-live="polite"></p>
         <div class="tc-pro-bar">
           <button type="button" class="tc-pro-toggle" id="tc-pro-toggle" aria-expanded="false" data-i18n="tcProToggle"></button>
         </div>
         <div id="tc-pro" class="tc-pro" hidden>
           <p class="tc-disclaimer" data-i18n="tcDisclaimer"></p>
+          <details class="tc-pro-docs">
+            <summary data-i18n="tcProDocsToggle"></summary>
+            <div id="tc-mfg-provenance" class="tc-mfg-provenance"></div>
+            <div class="tc-pro-panel-actions">
+              <a class="tc-mini-btn" href="data/trip-curves/METHODOLOGY.md" target="_blank" rel="noopener" data-i18n="tcMethodologyDoc"></a>
+              <a class="tc-mini-btn" href="data/trip-curves/public-sources.json" target="_blank" rel="noopener" data-i18n="tcPublicSources"></a>
+            </div>
+            <div class="tc-custom-catalog">
+              <input type="file" id="tc-custom-catalog-file" accept=".json,application/json" hidden>
+              <button type="button" class="tc-mini-btn" id="tc-custom-catalog-btn" data-i18n="tcCustomCatalogBtn"></button>
+              <button type="button" class="tc-mini-btn" id="tc-custom-catalog-clear" data-i18n="tcCustomCatalogClear"></button>
+              <a class="tc-mini-btn" href="data/trip-curves/caneco-import.example.json" download data-i18n="tcCustomCatalogExample"></a>
+              <span id="tc-custom-catalog-status" aria-live="polite"></span>
+            </div>
+          </details>
+          <!-- CANECO_BT_DISABLED — boucle Rac/Zs (mode pro) : voir commentaire section caneco ci-dessus -->
+          <details class="tc-pro-advanced" open>
+            <summary data-i18n="tcProIccTitle"></summary>
+            <p class="tc-pro-panel-title" data-i18n="tcProIccHint"></p>
+            <div class="form-grid">
+              <div class="input-group full"><label data-i18n="iccIk1"></label><input type="number" id="tc-ik1" min="0" step="0.01" placeholder="6"></div>
+              <div class="input-group"><label data-i18n="iccEarthing"></label><select id="tc-icc-earth"><option value="TN" data-i18n-opt="iccEarthTN"></option><option value="TT" data-i18n-opt="iccEarthTT"></option></select></div>
+              <div class="input-group"><label data-i18n="iccSn"></label><select id="tc-icc-kva" class="std-select" data-std="transfo-kva" data-default="250"></select></div>
+              <div class="input-group"><label data-i18n="iccUcc"></label><input type="number" id="tc-icc-ucc" value="4" step="0.1"></div>
+              <div class="input-group"><label data-i18n="iccPcc"></label><input type="number" id="tc-icc-pcc" value="500"></div>
+              <div class="input-group"><label data-i18n="iccLength"></label><input type="number" id="tc-icc-l" min="0" step="1"></div>
+              <div class="input-group"><label data-i18n="iccSection"></label><select id="tc-icc-s" class="std-select" data-std="section" data-default="16"></select></div>
+              <div class="input-group"><label data-i18n="iccServiceVoltage"></label>
+                <div class="voltage-selector" data-voltage-target="tc-icc-u">
+                  <button type="button" class="voltage-btn" data-v="230">230V</button>
+                  <button type="button" class="voltage-btn active" data-v="400">400V</button>
+                </div>
+                <input type="hidden" id="tc-icc-u" value="400">
+              </div>
+              <div class="input-group"><label data-i18n="labelConductor"></label><select id="tc-icc-conductor"><option value="Cu" data-i18n-opt="conductorCu"></option><option value="Al" data-i18n-opt="conductorAl"></option></select></div>
+              <div class="input-group" style="align-self:end"><button type="button" class="tc-mini-btn" id="tc-icc-calc" data-i18n="tcProIccCalc"></button></div>
+            </div>
+            <div id="tc-pro-icc-results" class="tc-pro-icc-results" hidden aria-live="polite"></div>
+            <div class="form-grid tc-pro-icc-apply-row">
+              <div class="input-group"><label data-i18n="tcIccGraphSource"></label>
+                <select id="tc-icc-graph-source">
+                  <option value="ik3max" data-i18n-opt="tcIccSrcIk3Max"></option>
+                  <option value="ik3min" data-i18n-opt="tcIccSrcIk3Min"></option>
+                  <option value="ik2max" data-i18n-opt="tcIccSrcIk2Max"></option>
+                  <option value="ik2min" data-i18n-opt="tcIccSrcIk2Min"></option>
+                  <option value="ik1max" data-i18n-opt="tcIccSrcIk1Max"></option>
+                  <option value="ik1min" data-i18n-opt="tcIccSrcIk1Min"></option>
+                </select>
+              </div>
+              <div class="input-group" style="align-self:end"><button type="button" class="tc-mini-btn" id="tc-icc-apply" data-i18n="tcProIccApply"></button></div>
+            </div>
+          </details>
           <div class="form-grid">
             <div class="input-group"><label data-i18n="tcIcu"></label><input type="number" id="tc-icu" step="0.5" min="0" data-i18n-placeholder="tcIcuPh"></div>
             <div class="input-group"><label data-i18n="tcCableS"></label>
@@ -378,12 +712,56 @@
           </div>
           <div id="tc-pro-result" class="tc-pro-result"></div>
         </div>
+        <div class="tc-graph-studio" id="tc-graph-studio">
+          <div id="tc-legend" class="tc-legend"></div>
+          <canvas id="tc-canvas" class="tc-canvas" width="900" height="540"></canvas>
+          <div class="tc-tune-recap" id="tc-tune-recap" aria-live="polite">
+            <span id="tc-ir-live"></span>
+            <span id="tc-isd-live"></span>
+            <span id="tc-tsd-live"></span>
+            <span id="tc-ii-live"></span>
+          </div>
+          <div id="tc-graph-thresholds" class="tc-graph-thresholds" hidden>
+            <p class="tc-pro-panel-title" data-i18n="tcGraphThresholdsTitle"></p>
+            <p id="tc-graph-norm-readonly" class="tc-graph-thresholds-readonly tc-norm-only" hidden data-i18n="tcGraphNormCatB"></p>
+            <div id="tc-graph-mfg-tune" class="tc-mfg-hidden" hidden>
+              <div class="input-group" id="tc-ir-group" hidden>
+                <label data-i18n="tcIr"></label>
+                <input type="number" id="tc-ir" step="0.05" min="0.4" max="1" value="1">
+              </div>
+              <div class="input-group" id="tc-tr-group" hidden>
+                <label data-i18n="tcTr"></label>
+                <select id="tc-tr"></select>
+                <p class="tc-advanced-hint" id="tc-tr-hint" data-i18n="tcTrHint"></p>
+              </div>
+              <div class="input-group" id="tc-isd-group" hidden>
+                <label data-i18n="tcIsd"></label>
+                <input type="number" id="tc-isd" step="0.1" min="1.5" max="10" value="2">
+              </div>
+              <div class="input-group" id="tc-tsd-group" hidden>
+                <label data-i18n="tcTsdGraph"></label>
+                <div class="tc-tsd-stepper" id="tc-tsd-stepper">
+                  <button type="button" class="tc-step-btn" id="tc-tsd-dec" data-i18n-title="tcTsdDec" title="Diminuer Tsd">−</button>
+                  <select id="tc-tsd-select" class="tc-tsd-select" aria-label="Tsd"></select>
+                  <input type="number" id="tc-tsd" class="tc-tsd-num" step="0.1" min="0.1" max="0.4" value="0.2" hidden>
+                  <button type="button" class="tc-step-btn" id="tc-tsd-inc" data-i18n-title="tcTsdInc" title="Augmenter Tsd">+</button>
+                </div>
+                <input type="range" id="tc-tsd-range" class="tc-threshold-range" min="0" max="3" step="1" value="1" hidden>
+                <p class="tc-advanced-hint" id="tc-tsd-range-hint" hidden aria-live="polite"></p>
+              </div>
+              <div class="input-group" id="tc-ii-group" hidden>
+                <label data-i18n="tcIi"></label>
+                <input type="number" id="tc-ii" step="0.5" min="2" max="10" value="10">
+                <label class="tc-ii-off-lbl"><input type="checkbox" id="tc-ii-off"> <span data-i18n="tcIiOff"></span></label>
+              </div>
+            </div>
+          </div>
+        </div>
         <div id="tc-verdict" class="tc-verdict"></div>
-        <div id="tc-legend" class="tc-legend"></div>
-        <canvas id="tc-canvas" class="tc-canvas" width="900" height="540"></canvas>
         <div class="tc-export">
           <button type="button" id="tc-export-png" class="tc-mini-btn" data-i18n="tcExportPng"></button>
           <button type="button" id="tc-export-pdf" class="tc-mini-btn" data-i18n="tcExportPdf"></button>
+          <button type="button" id="tc-export-study" class="tc-mini-btn" data-i18n="tcExportStudy"></button>
         </div>
         <p class="tc-note" data-i18n="tcNote"></p>
       </div>
@@ -409,7 +787,13 @@
   <script src="js/cableThermalIEC60364.js"></script>
   <script src="js/calcul-electrique-engine.js"></script>
   <script src="js/calcul-electrique-extra.js"></script>
+  <!-- CANECO_BT_DISABLED — réactiver avec l’onglet Étude BT
+  <script src="js/caneco-bt-lib.js"></script>
+  <script src="js/caneco-bt-calc.js"></script>
+  -->
+  <script src="js/trip-curve-catalog.js"></script>
   <script src="js/courbes-protection.js"></script>
+  <script src="js/power-balance-pro.js"></script>
   <script src="js/calcul-electrique.js" defer></script>
 </body>
 </html>

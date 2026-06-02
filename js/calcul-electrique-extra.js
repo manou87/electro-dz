@@ -42,12 +42,14 @@
         nullSelectivity: 'Non sélectif', breakerSelectivity: 'Sélectivité disjoncteurs',
         iccInterpretationHigh: 'Icc élevé', iccInterpretationNormal: 'Icc normal',
         iccAlertInvalidValues: 'Valeurs invalides',
+        iccAlertIk1Required: 'Saisissez Icc₁ / Ik₁ au disjoncteur (kA).',
       },
       ar: {
         totalSelectivity: 'انتقائية كاملة', partialSelectivity: 'انتقائية جزئية',
         nullSelectivity: 'غير انتقائي', breakerSelectivity: 'انتقائية القواطع',
         iccInterpretationHigh: 'Icc مرتفع', iccInterpretationNormal: 'Icc طبيعي',
         iccAlertInvalidValues: 'قيم غير صالحة',
+        iccAlertIk1Required: 'أدخل Icc₁ / Ik₁ عند القاطع (kA).',
       },
     };
     return { ...extra[k], ...ui, ...base };
@@ -261,21 +263,31 @@
     };
   }
 
-  function calculateICC(opts) {
-    const t = getT(opts.lang);
+  function zMag(r, x) {
+    return Math.sqrt(r * r + x * x);
+  }
+
+  function zAdd(r1, x1, r2, x2) {
+    return { r: r1 + r2, x: x1 + x2, z: zMag(r1 + r2, x1 + x2) };
+  }
+
+  /** Facteurs de tension IEC 60909 (BT, c_max / c_min). */
+  const IEC_C_MAX_LV = 1.05;
+  const IEC_C_MIN_LV = 0.95;
+
+  /** Impédances amont (Ze) et ligne (Zₗ) — IEC 60909 simplifié BT (sans facteur c). */
+  function computeIccImpedances(opts) {
     const Sn = parseFloat(opts.transfoKva);
     const Ucc = parseFloat(opts.transfoUcc);
     const Pcc_amont = parseFloat(opts.upstreamPcc) || 500;
     const L = parseFloat(opts.length);
     const S = parseFloat(opts.section);
     const Un = parseFloat(opts.voltage);
-    if (isNaN(Sn) || isNaN(Ucc) || isNaN(L) || isNaN(S)) {
-      return { error: true, message: t.iccAlertInvalidValues || t.invalidValues };
-    }
+    if (isNaN(Sn) || isNaN(Ucc) || isNaN(L) || isNaN(S) || L <= 0 || S <= 0) return null;
     const isTri = Un >= 400;
-    const c_max = 1.05;
     const Un_volts = isTri ? 400 : 230;
-    const Z_up = (c_max * Math.pow(Un_volts, 2)) / (Pcc_amont * 1e6);
+    const U0 = isTri ? 230 : Un_volts;
+    const Z_up = Math.pow(Un_volts, 2) / (Pcc_amont * 1e6);
     const X_up = 0.995 * Z_up;
     const R_up = 0.1 * X_up;
     const Z_tr = (Ucc / 100) * (Math.pow(Un_volts, 2) / (Sn * 1000));
@@ -287,15 +299,78 @@
     } else {
       R_tr = Sn >= 630 ? 0.1 * Z_tr : 0.15 * Z_tr;
     }
-    const X_tr = Math.sqrt(Math.pow(Z_tr, 2) - Math.pow(R_tr, 2));
+    const X_tr = Math.sqrt(Math.max(0, Z_tr * Z_tr - R_tr * R_tr));
     const rho = opts.conductorType === 'Cu' ? 0.01851 : 0.02941;
     const R_c = (rho * L) / S;
     const X_c = (REACTANCE_K / 1000) * L;
-    const R_tot = R_up + R_tr + R_c;
-    const X_tot = X_up + X_tr + X_c;
-    const Z_tot = Math.sqrt(R_tot * R_tot + X_tot * X_tot);
-    const Icc = isTri ? (c_max * Un_volts) / (Math.sqrt(3) * Z_tot) : (c_max * Un_volts) / Z_tot;
-    const Icc_ka = Icc / 1000;
+    const ze = zAdd(R_up + R_tr, X_up + X_tr, 0, 0);
+    const zLine = { r: R_c, x: X_c, z: zMag(R_c, X_c) };
+    return { isTri, Un_volts, U0, ze, zLine };
+  }
+
+  /**
+   * Courants de défaut Ik₁ / Ik₂ / Ik₃ au point (IEC 60909-0, BT).
+   * @param {number} cFactor — facteur de tension c (c_max ou c_min).
+   */
+  function iecFaultCurrentsA(imp, earthing, cFactor) {
+    if (!imp) return null;
+    const c = Number.isFinite(cFactor) && cFactor > 0 ? cFactor : IEC_C_MAX_LV;
+    const { Un_volts, U0, ze, zLine, isTri } = imp;
+    const earth = String(earthing || 'TN').toUpperCase();
+    const zk = zAdd(ze.r, ze.x, zLine.r, zLine.x);
+    let ik3A;
+    if (isTri) {
+      ik3A = (c * Un_volts) / (Math.sqrt(3) * zk.z);
+    } else {
+      ik3A = (c * Un_volts) / zk.z;
+    }
+    const ik2A = ik3A * (Math.sqrt(3) / 2);
+    const zs =
+      earth === 'TT'
+        ? zAdd(ze.r, ze.x, zLine.r, zLine.x)
+        : zAdd(ze.r + zLine.r, ze.x + zLine.x, zLine.r, zLine.x);
+    const ik1CalcA = (c * U0) / zs.z;
+    return { c, ik1CalcA, ik2A, ik3A, zeOhm: ze.z, zsOhm: zs.z, zkOhm: zk.z, earth };
+  }
+
+  function proIccFaultSet(imp, earthing, c) {
+    const f = iecFaultCurrentsA(imp, earthing, c);
+    if (!f) return null;
+    return {
+      c,
+      ik1A: f.ik1CalcA,
+      ik2A: f.ik2A,
+      ik3A: f.ik3A,
+      ik1Ka: f.ik1CalcA / 1000,
+      ik2Ka: f.ik2A / 1000,
+      ik3Ka: f.ik3A / 1000,
+      zeOhm: f.zeOhm,
+      zsOhm: f.zsOhm,
+      zkOhm: f.zkOhm,
+      earth: f.earth,
+    };
+  }
+
+  function tpl(t, key, vars) {
+    let s = t[key] || key;
+    Object.keys(vars || {}).forEach((k) => {
+      s = s.replace(new RegExp(`\\{${k}\\}`, 'g'), String(vars[k]));
+    });
+    return s;
+  }
+
+  function calculateICC(opts) {
+    const t = getT(opts.lang);
+    const imp = computeIccImpedances(opts);
+    if (!imp) {
+      return { error: true, message: t.iccAlertInvalidValues || t.invalidValues };
+    }
+    const faults = iecFaultCurrentsA(imp, opts.earthing || 'TN', IEC_C_MAX_LV);
+    if (!faults) {
+      return { error: true, message: t.iccAlertInvalidValues || t.invalidValues };
+    }
+    const Icc_ka = faults.ik3A / 1000;
+    const isTri = imp.isTri;
     return {
       ok: true,
       data: {
@@ -307,10 +382,77 @@
     };
   }
 
+  /** Ik₁ / Ik₂ / Ik₃ max & min (c_max / c_min) — mode pro courbes de protection. */
+  function calculateProIccFaults(opts) {
+    const t = getT(opts.lang);
+    const ik1InRaw = String(opts.icc1Ka ?? '').replace(',', '.').trim();
+    const ik1KaIn = ik1InRaw === '' ? NaN : parseFloat(ik1InRaw);
+    const hasIk1Input = Number.isFinite(ik1KaIn) && ik1KaIn > 0;
+    const imp = computeIccImpedances(opts);
+    if (!imp) {
+      return { ok: false, message: t.iccAlertInvalidValues || t.invalidValues };
+    }
+    const earth = opts.earthing || 'TN';
+    const maxF = proIccFaultSet(imp, earth, IEC_C_MAX_LV);
+    const minF = proIccFaultSet(imp, earth, IEC_C_MIN_LV);
+    if (!maxF || !minF) {
+      return { ok: false, message: t.iccAlertInvalidValues || t.invalidValues };
+    }
+    const relDiff = hasIk1Input ? Math.abs(maxF.ik1Ka - ik1KaIn) / ik1KaIn : 0;
+    const lines = [
+      tpl(t, 'iccLineIk3Max', { ik3: maxF.ik3Ka.toFixed(2), c: String(IEC_C_MAX_LV) }),
+      tpl(t, 'iccLineIk3Min', { ik3: minF.ik3Ka.toFixed(2), c: String(IEC_C_MIN_LV) }),
+      tpl(t, 'iccLineIk2Max', { ik2: maxF.ik2Ka.toFixed(2) }),
+      tpl(t, 'iccLineIk2Min', { ik2: minF.ik2Ka.toFixed(2) }),
+      tpl(t, 'iccLineIk1Max', { ik1: maxF.ik1Ka.toFixed(2), earth: maxF.earth }),
+      tpl(t, 'iccLineIk1Min', { ik1: minF.ik1Ka.toFixed(2), earth: minF.earth }),
+      tpl(t, 'iccLineZe', { ze: (maxF.zeOhm * 1000).toFixed(1) }),
+      tpl(t, 'iccFormulaTri', {}),
+    ];
+    if (hasIk1Input) {
+      lines.unshift(tpl(t, 'iccLineIk1In', { ik1: ik1KaIn.toFixed(2) }));
+    }
+    return {
+      ok: true,
+      error: false,
+      hasIk1Input,
+      ik1KaIn: hasIk1Input ? ik1KaIn : null,
+      max: maxF,
+      min: minF,
+      ik3MaxA: maxF.ik3A,
+      ik3MinA: minF.ik3A,
+      ik2MaxA: maxF.ik2A,
+      ik2MinA: minF.ik2A,
+      ik1MaxA: maxF.ik1A,
+      ik1MinA: minF.ik1A,
+      ik3A: maxF.ik3A,
+      ik2A: maxF.ik2A,
+      ik1CalcKa: maxF.ik1Ka,
+      ik3Ka: maxF.ik3Ka,
+      ik2Ka: maxF.ik2Ka,
+      zeOhm: maxF.zeOhm,
+      mismatch: hasIk1Input && relDiff > 0.15,
+      lines,
+    };
+  }
+
+  function parseCosPhi(v, fallback) {
+    const n = parseFloat(String(v).replace(',', '.'));
+    if (!Number.isFinite(n) || n <= 0 || n > 1) return fallback;
+    return n;
+  }
+
+  function lineReactiveApparent(pdW, cosPhi) {
+    const tanPhi = Math.sqrt(Math.max(0, 1 - cosPhi * cosPhi)) / cosPhi;
+    const qdVar = pdW * tanPhi;
+    const sdVA = pdW / cosPhi;
+    return { qdVar, sdVA, tanPhi };
+  }
+
   function calculatePowerBalance(opts) {
     const t = getT(opts.lang);
-    const cosPhiVal = parseFloat(String(opts.cosPhi).replace(',', '.')) || 0.9;
-    if (cosPhiVal <= 0 || cosPhiVal > 1) return { error: true, message: t.calcAlertCosPhiRange };
+    /** Hypothèse de calcul pour Qd/Sd ligne ; cos φ effectif affiché après bilan uniquement */
+    const cosPhiGlobal = 0.9;
     const Uline = parseFloat(opts.voltage) || 230;
     const isTri = Uline >= 400;
     const detailRows = [];
@@ -321,21 +463,85 @@
       let ks = parseFloat(String(row.ks).replace(',', '.'));
       if (isNaN(ku) || ku < 0) ku = 1;
       if (isNaN(ks) || ks < 0) ks = 1;
-      detailRows.push({ label: row.label || '—', pi, ku, ks, pdem: pi * ku * ks });
+      const cosPhi = cosPhiGlobal;
+      const pdem = pi * ku * ks;
+      const ra = lineReactiveApparent(pdem, cosPhi);
+      const circuitRef = (row.circuitRef || '').trim();
+      detailRows.push({
+        circuitRef: circuitRef || `C${detailRows.length + 1}`,
+        schemaRef: (row.schemaRef || '').trim(),
+        label: (row.label || '').trim() || '—',
+        location: (row.location || '').trim(),
+        board: (row.board || '').trim(),
+        usage: row.usage || 'custom',
+        pi,
+        ku,
+        ks,
+        cosPhi,
+        pdem,
+        qdVar: ra.qdVar,
+        sdVA: ra.sdVA,
+      });
     }
     if (!detailRows.length) return { error: true, message: t.calcAlertPowerBalanceMin };
     const pTotalW = detailRows.reduce((s, r) => s + r.pdem, 0);
     if (pTotalW <= 0) return { error: true, message: t.calcAlertPowerBalancePositive };
-    const ib = isTri ? pTotalW / (Math.sqrt(3) * Uline * cosPhiVal) : pTotalW / (Uline * cosPhiVal);
+    const qTotalVar = detailRows.reduce((s, r) => s + r.qdVar, 0);
+    const sTotalVA = Math.sqrt(pTotalW * pTotalW + qTotalVar * qTotalVar);
+    const cosPhiFinal = sTotalVA > 0 ? pTotalW / sTotalVA : 0;
+    const ib = isTri
+      ? sTotalVA / (Math.sqrt(3) * Uline)
+      : sTotalVA / Uline;
     const pTotalKw = pTotalW / 1000;
+    detailRows.sort((a, b) => {
+      const ba = a.board || '';
+      const bb = b.board || '';
+      if (ba !== bb) return ba.localeCompare(bb, undefined, { numeric: true });
+      return (a.circuitRef || '').localeCompare(b.circuitRef || '', undefined, { numeric: true });
+    });
+    function aggregateBy(getKey) {
+      const groups = {};
+      detailRows.forEach((r) => {
+        const key = getKey(r) || '—';
+        if (!groups[key]) groups[key] = { pdW: 0, qdVar: 0, count: 0 };
+        groups[key].pdW += r.pdem;
+        groups[key].qdVar += r.qdVar;
+        groups[key].count += 1;
+      });
+      Object.keys(groups).forEach((key) => {
+        const b = groups[key];
+        b.sdVA = Math.sqrt(b.pdW * b.pdW + b.qdVar * b.qdVar);
+        b.ibA = isTri ? b.sdVA / (Math.sqrt(3) * Uline) : b.sdVA / Uline;
+      });
+      return groups;
+    }
+    const byBoard = aggregateBy((r) => r.board);
+    const byLocation = aggregateBy((r) => r.location);
     return {
       ok: true,
       data: {
-        formula: 'Pd = Σ (Pi × Ku × Ks)',
+        formula: 'Pd = Σ (Pi × Ku × Ks) · Sd = √(Pd² + Qd²)',
         result: pTotalKw.toFixed(2),
         unit: 'kW',
-        additionalData: { ibA: ib.toFixed(2), pTotalW: pTotalW.toFixed(0) },
-        interpretation: detailRows.map((r) => `• ${r.label}: ${r.pdem.toFixed(0)} W`).join('\n'),
+        additionalData: {
+          ibA: ib.toFixed(2),
+          pTotalW: pTotalW.toFixed(0),
+          qTotalKvar: (qTotalVar / 1000).toFixed(2),
+          sTotalKva: (sTotalVA / 1000).toFixed(2),
+          cosPhiFinal: cosPhiFinal.toFixed(3),
+          isTri,
+          Uline: String(Uline),
+          detailRows,
+          byBoard,
+          byLocation,
+        },
+        interpretation: detailRows
+          .map((r) => {
+            const id = r.schemaRef ? `${r.circuitRef} [${r.schemaRef}]` : r.circuitRef;
+            const where = r.location ? ` (${r.location})` : '';
+            return `• ${id} ${r.label}${where}: ${r.pdem.toFixed(0)} W`;
+          })
+          .join('\n'),
       },
     };
   }
@@ -392,7 +598,16 @@
     calculateCopperResistance,
     calculateSelectivity,
     calculateICC,
+    calculateProIccFaults,
     calculatePowerBalance,
     calculateBreakingTime,
+    computeMaxDisconnectionTimeIEC,
+    estimateMcBreakingTimeSeconds,
+    estimateIkFromLineLoop,
+    computeIccImpedances,
+    iecFaultCurrentsA,
+    proIccFaultSet,
+    IEC_C_MAX_LV,
+    IEC_C_MIN_LV,
   };
 })(typeof window !== 'undefined' ? window : globalThis);

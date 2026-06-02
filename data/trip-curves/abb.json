@@ -1,0 +1,1869 @@
+{
+  "brand": "ABB",
+  "source": "Documentation constructeur publique — 1SDC210099D0205 (Tmax XT), Ekip, IEC 60898-1 (S200). Voir methodology.json",
+  "revision": "2026-06-pro-curves",
+  "tripUnits": {
+    "tma": {
+      "id": "tma",
+      "label": "TMA (thermo-magnétique)",
+      "hasShortTime": false,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": null,
+        "tsd": null,
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": false
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.13,
+          3600
+        ],
+        [
+          1.5,
+          900
+        ],
+        [
+          2,
+          200
+        ],
+        [
+          3,
+          50
+        ],
+        [
+          4,
+          15
+        ],
+        [
+          6,
+          3
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "ABB 1SDC210099D0205 — TMD thermique (40 °C, 3·I1)",
+      "curveSourceId": "abb-tmax-xt",
+      "trRefSec": 1,
+      "supportsTr": true
+    },
+    "tma_m": {
+      "id": "tma_m",
+      "label": "TMA + motor protection",
+      "hasShortTime": false,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": null,
+        "tsd": null,
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": false
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.13,
+          3600
+        ],
+        [
+          1.5,
+          900
+        ],
+        [
+          2,
+          200
+        ],
+        [
+          3,
+          50
+        ],
+        [
+          4,
+          15
+        ],
+        [
+          6,
+          3
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "ABB 1SDC210099D0205 — TMD thermique (40 °C, 3·I1)",
+      "curveSourceId": "abb-tmax-xt",
+      "trRefSec": 1,
+      "supportsTr": true
+    },
+    "tmft": {
+      "id": "tmft",
+      "label": "TMA-TFM (réglable)",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0.05,
+            0.1,
+            0.15,
+            0.2,
+            0.25,
+            0.3,
+            0.35,
+            0.4,
+            0.45,
+            0.5,
+            0.55,
+            0.6,
+            0.65,
+            0.7,
+            0.75,
+            0.8
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "ABB Ekip Touch — retard court t2 (0,05–0,8 s)"
+        },
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.13,
+          3600
+        ],
+        [
+          1.5,
+          900
+        ],
+        [
+          2,
+          200
+        ],
+        [
+          3,
+          50
+        ],
+        [
+          4,
+          15
+        ],
+        [
+          6,
+          3
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "ABB 1SDC210099D0205 — TMD thermique (40 °C, 3·I1)",
+      "curveSourceId": "abb-tmax-xt",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "tsdProfile": "abb_tmax"
+    },
+    "ekip_g": {
+      "id": "ekip_g",
+      "label": "Ekip G Touch LSI",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0.05,
+            0.1,
+            0.15,
+            0.2,
+            0.25,
+            0.3,
+            0.35,
+            0.4,
+            0.45,
+            0.5,
+            0.55,
+            0.6,
+            0.65,
+            0.7,
+            0.75,
+            0.8
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "ABB Ekip Touch — retard court t2 (0,05–0,8 s)"
+        },
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.5,
+          25
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7.2,
+          0.7
+        ],
+        [
+          10,
+          0.7
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "ABB 1SDH002031A1002 Ekip Touch — long-time (indicatif, proche NSX)",
+      "curveSourceId": "abb-ekip",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "tsdProfile": "abb_tmax"
+    },
+    "ekip_h": {
+      "id": "ekip_h",
+      "label": "Ekip Hi-Touch LSI",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0.05,
+            0.1,
+            0.15,
+            0.2,
+            0.25,
+            0.3,
+            0.35,
+            0.4,
+            0.45,
+            0.5,
+            0.55,
+            0.6,
+            0.65,
+            0.7,
+            0.75,
+            0.8
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "ABB Ekip Touch — retard court t2 (0,05–0,8 s)"
+        },
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.5,
+          25
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7.2,
+          0.7
+        ],
+        [
+          10,
+          0.7
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "ABB 1SDH002031A1002 Ekip Touch — long-time (indicatif, proche NSX)",
+      "curveSourceId": "abb-ekip",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "tsdProfile": "abb_tmax"
+    },
+    "ekip_l": {
+      "id": "ekip_l",
+      "label": "Ekip LCD LSI",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0.05,
+            0.1,
+            0.15,
+            0.2,
+            0.25,
+            0.3,
+            0.35,
+            0.4,
+            0.45,
+            0.5,
+            0.55,
+            0.6,
+            0.65,
+            0.7,
+            0.75,
+            0.8
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "ABB Ekip Touch — retard court t2 (0,05–0,8 s)"
+        },
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.5,
+          25
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7.2,
+          0.7
+        ],
+        [
+          10,
+          0.7
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "ABB 1SDH002031A1002 Ekip Touch — long-time (indicatif, proche NSX)",
+      "curveSourceId": "abb-ekip",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "tsdProfile": "abb_tmax"
+    },
+    "ekip_lsig": {
+      "id": "ekip_lsig",
+      "label": "Ekip Touch LSIG",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0.05,
+            0.1,
+            0.15,
+            0.2,
+            0.25,
+            0.3,
+            0.35,
+            0.4,
+            0.45,
+            0.5,
+            0.55,
+            0.6,
+            0.65,
+            0.7,
+            0.75,
+            0.8
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "ABB Ekip Touch — retard court t2 (0,05–0,8 s)"
+        },
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.5,
+          25
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7.2,
+          0.7
+        ],
+        [
+          10,
+          0.7
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "ABB 1SDH002031A1002 Ekip Touch — long-time (indicatif, proche NSX)",
+      "curveSourceId": "abb-ekip",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "tsdProfile": "abb_tmax"
+    },
+    "ekip_m": {
+      "id": "ekip_m",
+      "label": "Ekip M Touch LSI",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0.05,
+            0.1,
+            0.15,
+            0.2,
+            0.25,
+            0.3,
+            0.35,
+            0.4,
+            0.45,
+            0.5,
+            0.55,
+            0.6,
+            0.65,
+            0.7,
+            0.75,
+            0.8
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "ABB Ekip Touch — retard court t2 (0,05–0,8 s)"
+        },
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.5,
+          25
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7.2,
+          0.7
+        ],
+        [
+          10,
+          0.7
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "ABB 1SDH002031A1002 Ekip Touch — long-time (indicatif, proche NSX)",
+      "curveSourceId": "abb-ekip",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "tsdProfile": "abb_tmax"
+    },
+    "pr121": {
+      "id": "pr121",
+      "label": "PR121 (Tmax T)",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "ABB PR — retard court"
+        },
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.13,
+          3600
+        ],
+        [
+          1.5,
+          900
+        ],
+        [
+          2,
+          200
+        ],
+        [
+          3,
+          50
+        ],
+        [
+          4,
+          15
+        ],
+        [
+          6,
+          3
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "ABB 1SDC210099D0205 — TMD thermique (40 °C, 3·I1)",
+      "curveSourceId": "abb-tmax-xt",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "tsdProfile": "abb_pr"
+    },
+    "pr122": {
+      "id": "pr122",
+      "label": "PR122 (Tmax T)",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "ABB PR — retard court"
+        },
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.13,
+          3600
+        ],
+        [
+          1.5,
+          900
+        ],
+        [
+          2,
+          200
+        ],
+        [
+          3,
+          50
+        ],
+        [
+          4,
+          15
+        ],
+        [
+          6,
+          3
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "ABB 1SDC210099D0205 — TMD thermique (40 °C, 3·I1)",
+      "curveSourceId": "abb-tmax-xt",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "tsdProfile": "abb_pr"
+    },
+    "pr123": {
+      "id": "pr123",
+      "label": "PR123 (Tmax T)",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "ABB PR — retard court"
+        },
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.13,
+          3600
+        ],
+        [
+          1.5,
+          900
+        ],
+        [
+          2,
+          200
+        ],
+        [
+          3,
+          50
+        ],
+        [
+          4,
+          15
+        ],
+        [
+          6,
+          3
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "ABB 1SDC210099D0205 — TMD thermique (40 °C, 3·I1)",
+      "curveSourceId": "abb-tmax-xt",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "tsdProfile": "abb_pr"
+    },
+    "tma_emax": {
+      "id": "tma_emax",
+      "label": "PR123/PB (Emax)",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "ABB PR — retard court"
+        },
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.13,
+          3600
+        ],
+        [
+          1.5,
+          900
+        ],
+        [
+          2,
+          200
+        ],
+        [
+          3,
+          50
+        ],
+        [
+          4,
+          15
+        ],
+        [
+          6,
+          3
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "ABB 1SDC210099D0205 — TMD thermique (40 °C, 3·I1)",
+      "curveSourceId": "abb-tmax-xt",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "tsdProfile": "abb_pr"
+    },
+    "curve_b": {
+      "id": "curve_b",
+      "label": "Courbe B",
+      "mcb": true,
+      "curve": "B",
+      "hasShortTime": false,
+      "settings": null,
+      "longAnchors": [
+        [
+          1.13,
+          1000000
+        ],
+        [
+          1.45,
+          3600
+        ],
+        [
+          2,
+          300
+        ],
+        [
+          2.55,
+          60
+        ],
+        [
+          4,
+          12
+        ]
+      ],
+      "magMult": [
+        3,
+        5
+      ],
+      "instTS": 0.01,
+      "curveSource": "IEC 60898-1 + seuils magnétiques courbe B",
+      "curveSourceId": "iec-60898"
+    },
+    "curve_c": {
+      "id": "curve_c",
+      "label": "Courbe C",
+      "mcb": true,
+      "curve": "C",
+      "hasShortTime": false,
+      "settings": null,
+      "longAnchors": [
+        [
+          1.13,
+          1000000
+        ],
+        [
+          1.45,
+          3600
+        ],
+        [
+          2,
+          300
+        ],
+        [
+          2.55,
+          60
+        ],
+        [
+          4,
+          12
+        ]
+      ],
+      "magMult": [
+        5,
+        10
+      ],
+      "instTS": 0.01,
+      "curveSource": "IEC 60898-1 + seuils magnétiques courbe C",
+      "curveSourceId": "iec-60898"
+    },
+    "curve_d": {
+      "id": "curve_d",
+      "label": "Courbe D",
+      "mcb": true,
+      "curve": "D",
+      "hasShortTime": false,
+      "settings": null,
+      "longAnchors": [
+        [
+          1.13,
+          1000000
+        ],
+        [
+          1.45,
+          3600
+        ],
+        [
+          2,
+          300
+        ],
+        [
+          2.55,
+          60
+        ],
+        [
+          4,
+          12
+        ]
+      ],
+      "magMult": [
+        10,
+        20
+      ],
+      "instTS": 0.01,
+      "curveSource": "IEC 60898-1 + seuils magnétiques courbe D",
+      "curveSourceId": "iec-60898"
+    },
+    "curve_k": {
+      "id": "curve_k",
+      "label": "Courbe K",
+      "mcb": true,
+      "curve": "K",
+      "hasShortTime": false,
+      "settings": null,
+      "longAnchors": [
+        [
+          1.13,
+          1000000
+        ],
+        [
+          1.45,
+          3600
+        ],
+        [
+          2,
+          300
+        ],
+        [
+          2.55,
+          60
+        ],
+        [
+          4,
+          12
+        ]
+      ],
+      "magMult": [
+        8,
+        14
+      ],
+      "instTS": 0.01,
+      "curveSource": "IEC 60898-1 + seuils magnétiques courbe K",
+      "curveSourceId": "iec-60898"
+    },
+    "curve_z": {
+      "id": "curve_z",
+      "label": "Courbe Z",
+      "mcb": true,
+      "curve": "Z",
+      "hasShortTime": false,
+      "settings": null,
+      "longAnchors": [
+        [
+          1.13,
+          1000000
+        ],
+        [
+          1.45,
+          3600
+        ],
+        [
+          2,
+          300
+        ],
+        [
+          2.55,
+          60
+        ],
+        [
+          4,
+          12
+        ]
+      ],
+      "magMult": [
+        2,
+        3
+      ],
+      "instTS": 0.01,
+      "curveSource": "IEC 60898-1 + seuils magnétiques courbe Z",
+      "curveSourceId": "iec-60898"
+    }
+  },
+  "families": [
+    {
+      "id": "all",
+      "label": "Toute la gamme"
+    },
+    {
+      "id": "tmax_xt",
+      "label": "Tmax XT"
+    },
+    {
+      "id": "tmax_t",
+      "label": "Tmax T"
+    },
+    {
+      "id": "emax",
+      "label": "Emax"
+    },
+    {
+      "id": "s200",
+      "label": "S200 modulaire"
+    }
+  ],
+  "devices": [
+    {
+      "id": "xt1",
+      "label": "Tmax XT1",
+      "group": "Tmax XT",
+      "family": "tmax_xt",
+      "frameA": 160,
+      "inRatings": [
+        16,
+        20,
+        25,
+        32,
+        40,
+        50,
+        63,
+        80,
+        100,
+        125,
+        160
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tma",
+        "tmft",
+        "ekip_g",
+        "ekip_h",
+        "ekip_l",
+        "ekip_lsig",
+        "ekip_m",
+        "pr121",
+        "pr122",
+        "pr123"
+      ]
+    },
+    {
+      "id": "xt2",
+      "label": "Tmax XT2",
+      "group": "Tmax XT",
+      "family": "tmax_xt",
+      "frameA": 250,
+      "inRatings": [
+        63,
+        80,
+        100,
+        125,
+        160,
+        200,
+        250
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tma",
+        "tmft",
+        "ekip_g",
+        "ekip_h",
+        "ekip_l",
+        "ekip_lsig",
+        "ekip_m",
+        "pr121",
+        "pr122",
+        "pr123"
+      ]
+    },
+    {
+      "id": "xt3",
+      "label": "Tmax XT3",
+      "group": "Tmax XT",
+      "family": "tmax_xt",
+      "frameA": 400,
+      "inRatings": [
+        250,
+        315,
+        400
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tma",
+        "tmft",
+        "ekip_g",
+        "ekip_h",
+        "ekip_l",
+        "ekip_lsig",
+        "ekip_m",
+        "pr121",
+        "pr122",
+        "pr123"
+      ]
+    },
+    {
+      "id": "xt4",
+      "label": "Tmax XT4",
+      "group": "Tmax XT",
+      "family": "tmax_xt",
+      "frameA": 250,
+      "inRatings": [
+        160,
+        200,
+        250
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tma",
+        "tmft",
+        "ekip_g",
+        "ekip_h",
+        "ekip_l",
+        "ekip_lsig",
+        "ekip_m",
+        "pr121",
+        "pr122",
+        "pr123"
+      ]
+    },
+    {
+      "id": "xt5",
+      "label": "Tmax XT5",
+      "group": "Tmax XT",
+      "family": "tmax_xt",
+      "frameA": 630,
+      "inRatings": [
+        400,
+        500,
+        630
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tma",
+        "tmft",
+        "ekip_g",
+        "ekip_h",
+        "ekip_l",
+        "ekip_lsig",
+        "ekip_m",
+        "pr121",
+        "pr122",
+        "pr123"
+      ]
+    },
+    {
+      "id": "xt6",
+      "label": "Tmax XT6",
+      "group": "Tmax XT",
+      "family": "tmax_xt",
+      "frameA": 1000,
+      "inRatings": [
+        630,
+        800,
+        1000
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tma",
+        "tmft",
+        "ekip_g",
+        "ekip_h",
+        "ekip_l",
+        "ekip_lsig",
+        "ekip_m",
+        "pr121",
+        "pr122",
+        "pr123"
+      ]
+    },
+    {
+      "id": "xt7",
+      "label": "Tmax XT7",
+      "group": "Tmax XT",
+      "family": "tmax_xt",
+      "frameA": 1600,
+      "inRatings": [
+        800,
+        1000,
+        1250,
+        1600
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tma",
+        "tmft",
+        "ekip_g",
+        "ekip_h",
+        "ekip_l",
+        "ekip_lsig",
+        "ekip_m",
+        "pr121",
+        "pr122",
+        "pr123"
+      ]
+    },
+    {
+      "id": "t1",
+      "label": "Tmax T1",
+      "group": "Tmax T (précédente)",
+      "family": "tmax_t",
+      "frameA": 160,
+      "inRatings": [
+        16,
+        20,
+        25,
+        32,
+        40,
+        50,
+        63,
+        80,
+        100,
+        125,
+        160
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tma",
+        "pr121",
+        "pr122",
+        "pr123"
+      ]
+    },
+    {
+      "id": "t2",
+      "label": "Tmax T2",
+      "group": "Tmax T (précédente)",
+      "family": "tmax_t",
+      "frameA": 250,
+      "inRatings": [
+        63,
+        80,
+        100,
+        125,
+        160,
+        200,
+        250
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tma",
+        "pr121",
+        "pr122",
+        "pr123"
+      ]
+    },
+    {
+      "id": "t3",
+      "label": "Tmax T3",
+      "group": "Tmax T (précédente)",
+      "family": "tmax_t",
+      "frameA": 400,
+      "inRatings": [
+        250,
+        315,
+        400
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tma",
+        "pr121",
+        "pr122",
+        "pr123"
+      ]
+    },
+    {
+      "id": "t4",
+      "label": "Tmax T4",
+      "group": "Tmax T (précédente)",
+      "family": "tmax_t",
+      "frameA": 250,
+      "inRatings": [
+        160,
+        200,
+        250
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tma",
+        "pr121",
+        "pr122",
+        "pr123"
+      ]
+    },
+    {
+      "id": "t5",
+      "label": "Tmax T5",
+      "group": "Tmax T (précédente)",
+      "family": "tmax_t",
+      "frameA": 630,
+      "inRatings": [
+        400,
+        500,
+        630
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tma",
+        "pr121",
+        "pr122",
+        "pr123"
+      ]
+    },
+    {
+      "id": "e1",
+      "label": "Emax E1",
+      "group": "Emax",
+      "family": "emax",
+      "frameA": 1000,
+      "inRatings": [
+        630,
+        800,
+        1000
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tma_emax",
+        "ekip_lsig",
+        "ekip_h"
+      ]
+    },
+    {
+      "id": "e2",
+      "label": "Emax E2",
+      "group": "Emax",
+      "family": "emax",
+      "frameA": 2000,
+      "inRatings": [
+        1000,
+        1250,
+        1600,
+        2000
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tma_emax",
+        "ekip_lsig",
+        "ekip_h"
+      ]
+    },
+    {
+      "id": "e4",
+      "label": "Emax E4",
+      "group": "Emax",
+      "family": "emax",
+      "frameA": 4000,
+      "inRatings": [
+        2000,
+        2500,
+        3200,
+        4000
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tma_emax",
+        "ekip_lsig",
+        "ekip_h"
+      ]
+    },
+    {
+      "id": "e6",
+      "label": "Emax E6",
+      "group": "Emax",
+      "family": "emax",
+      "frameA": 6300,
+      "inRatings": [
+        3200,
+        4000,
+        5000,
+        6300
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tma_emax",
+        "ekip_lsig",
+        "ekip_h"
+      ]
+    },
+    {
+      "id": "s200",
+      "label": "S200",
+      "group": "S200 modulaire",
+      "family": "s200",
+      "frameA": 63,
+      "inRatings": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        10,
+        13,
+        16,
+        20,
+        25,
+        32,
+        40,
+        50,
+        63
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mcb",
+      "tripUnitIds": [
+        "curve_b",
+        "curve_c",
+        "curve_d",
+        "curve_k",
+        "curve_z",
+        "curve_ma"
+      ]
+    },
+    {
+      "id": "s200m",
+      "label": "S200M",
+      "group": "S200 modulaire",
+      "family": "s200",
+      "frameA": 63,
+      "inRatings": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        10,
+        13,
+        16,
+        20,
+        25,
+        32,
+        40,
+        50,
+        63
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mcb",
+      "tripUnitIds": [
+        "curve_b",
+        "curve_c",
+        "curve_d",
+        "curve_k",
+        "curve_z",
+        "curve_ma"
+      ]
+    },
+    {
+      "id": "sn201",
+      "label": "SN201 (1P+N)",
+      "group": "S200 modulaire",
+      "family": "s200",
+      "frameA": 40,
+      "inRatings": [
+        6,
+        10,
+        13,
+        16,
+        20,
+        25,
+        32,
+        40
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mcb",
+      "tripUnitIds": [
+        "curve_b",
+        "curve_c",
+        "curve_d",
+        "curve_k",
+        "curve_z",
+        "curve_ma"
+      ]
+    },
+    {
+      "id": "xt2s",
+      "label": "Tmax XT2S (limiteur)",
+      "group": "Tmax XT",
+      "family": "tmax_xt",
+      "frameA": 250,
+      "inRatings": [
+        63,
+        80,
+        100,
+        125,
+        160,
+        200,
+        250
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tma",
+        "tmft",
+        "ekip_g",
+        "ekip_h",
+        "ekip_l",
+        "ekip_lsig",
+        "ekip_m",
+        "pr121",
+        "pr122",
+        "pr123"
+      ]
+    }
+  ],
+  "brandId": "abb",
+  "breakerCount": 20
+}

@@ -1,0 +1,69 @@
+{
+  "revision": "2026-06",
+  "note": "Outils officiels pour valider courbes t(I) et sélectivité — à utiliser en complément du tracé ElectroDZ.",
+  "brands": {
+    "schneider": {
+      "label": "Schneider Electric",
+      "tools": [
+        {
+          "id": "tcc",
+          "titleFr": "Courbes temps-courant (TCC)",
+          "titleAr": "منحنيات زمن-تيار (TCC)",
+          "url": "https://www.se.com/us/en/work/support/resources-and-tools/calculators-and-online-tools/time-current-curves/"
+        },
+        {
+          "id": "catalogues",
+          "titleFr": "Catalogues et guides France",
+          "titleAr": "كتالوجات ودلائل فرنسا",
+          "url": "https://www.se.com/fr/fr/work/support/catalogues-brochures/#PublicationsActuelles"
+        },
+        {
+          "id": "doca0141",
+          "titleFr": "DOCA0141 — Micrologic NSX (PDF)",
+          "titleAr": "DOCA0141 — Micrologic NSX",
+          "url": "https://www.productinfo.schneider-electric.com/compactnsxlegacymicrologic_5_6_7/doca0141-compact-nsx-legacy-micrologic-5_6_7/English/DOCA0141EN-03.pdf"
+        }
+      ]
+    },
+    "abb": {
+      "label": "ABB",
+      "tools": [
+        {
+          "id": "library",
+          "titleFr": "Bibliothèque technique ABB",
+          "titleAr": "المكتبة التقنية ABB",
+          "url": "https://new.abb.com/low-voltage/products"
+        },
+        {
+          "id": "tmax-xt",
+          "titleFr": "Tmax XT — Caractéristiques (1SDC210099D0205)",
+          "titleAr": "Tmax XT — مواصفات",
+          "url": "https://search.abb.com/library/Download.aspx?DocumentID=1SDC210099D0205&LanguageCode=en"
+        },
+        {
+          "id": "s200",
+          "titleFr": "S200 / S200M — Fiche technique",
+          "titleAr": "S200 / S200M — ورقة بيانات",
+          "url": "https://search.abb.com/library/Download.aspx?DocumentID=2CDC002157D0202&LanguageCode=en"
+        }
+      ]
+    },
+    "hager": {
+      "label": "Hager",
+      "tools": [
+        {
+          "id": "downloads",
+          "titleFr": "Téléchargements techniques Hager",
+          "titleAr": "تحميلات Hager التقنية",
+          "url": "https://www.hager.fr/telechargements"
+        },
+        {
+          "id": "mcb-tech",
+          "titleFr": "MCB — Données techniques (NBN)",
+          "titleAr": "قواطع مصغرة — بيانات تقنية",
+          "url": "https://storage.electrika.com/manu/man-0330/pdftech/0330-hager-cat-19-090-099.pdf"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "revision": "2026-06-pro-curves",
+  "publicSources": "public-sources.json",
+  "brands": [
+    {
+      "id": "schneider",
+      "label": "Schneider Electric",
+      "file": "schneider.json",
+      "default": true
+    },
+    {
+      "id": "abb",
+      "label": "ABB",
+      "file": "abb.json"
+    },
+    {
+      "id": "hager",
+      "label": "Hager",
+      "file": "hager.json"
+    }
+  ]
+}

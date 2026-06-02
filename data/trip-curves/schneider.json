@@ -1,0 +1,3334 @@
+{
+  "brand": "Schneider Electric",
+  "source": "Documentation constructeur publique — DOCA0141/0217 (Micrologic), IEC 60898-1 (Acti9). Voir methodology.json",
+  "revision": "2026-06-pro-curves",
+  "tripUnits": {
+    "micrologic_2_0": {
+      "id": "micrologic_2_0",
+      "label": "Micrologic 2.0",
+      "hasShortTime": false,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": null,
+        "tsd": null,
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": false
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.5,
+          25
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7.2,
+          0.7
+        ],
+        [
+          10,
+          0.7
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "Schneider DOCA0141EN-03 (NSX Micrologic, tr=1 s @ 6·Ir)",
+      "curveSourceId": "schneider-DOCA0141EN",
+      "trRefSec": 1,
+      "supportsTr": true
+    },
+    "micrologic_2_1": {
+      "id": "micrologic_2_1",
+      "label": "Micrologic 2.1",
+      "hasShortTime": false,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": null,
+        "tsd": null,
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": false
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.5,
+          25
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7.2,
+          0.7
+        ],
+        [
+          10,
+          0.7
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "Schneider DOCA0141EN-03 (NSX Micrologic, tr=1 s @ 6·Ir)",
+      "curveSourceId": "schneider-DOCA0141EN",
+      "trRefSec": 1,
+      "supportsTr": true
+    },
+    "micrologic_2_2": {
+      "id": "micrologic_2_2",
+      "label": "Micrologic 2.2",
+      "hasShortTime": false,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": null,
+        "tsd": null,
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": false
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.5,
+          25
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7.2,
+          0.7
+        ],
+        [
+          10,
+          0.7
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "Schneider DOCA0141EN-03 (NSX Micrologic, tr=1 s @ 6·Ir)",
+      "curveSourceId": "schneider-DOCA0141EN",
+      "trRefSec": 1,
+      "supportsTr": true
+    },
+    "micrologic_2_3": {
+      "id": "micrologic_2_3",
+      "label": "Micrologic 2.3",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0.02
+          ],
+          "default": 0.02,
+          "unit": "s",
+          "fixed": true,
+          "source": "Schneider DOCA0141 — Micrologic 2.3 (So, tsd non réglable)"
+        },
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.5,
+          25
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7.2,
+          0.7
+        ],
+        [
+          10,
+          0.7
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "Schneider DOCA0141EN-03 (NSX Micrologic, tr=1 s @ 6·Ir)",
+      "curveSourceId": "schneider-DOCA0141EN",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "tsdProfile": "mic_23_fixed"
+    },
+    "micrologic_2_4": {
+      "id": "micrologic_2_4",
+      "label": "Micrologic 2.4",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0.1,
+            0.2,
+            0.3,
+            0.4
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "Schneider — Micrologic 2.4 / 3 / 4 (court retard I²t)"
+        },
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.5,
+          25
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7.2,
+          0.7
+        ],
+        [
+          10,
+          0.7
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "Schneider DOCA0141EN-03 (NSX Micrologic, tr=1 s @ 6·Ir)",
+      "curveSourceId": "schneider-DOCA0141EN",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "tsdProfile": "mic_34"
+    },
+    "micrologic_3_2": {
+      "id": "micrologic_3_2",
+      "label": "Micrologic 3.2",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0.1,
+            0.2,
+            0.3,
+            0.4
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "Schneider — Micrologic 2.4 / 3 / 4 (court retard I²t)"
+        },
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.5,
+          25
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7.2,
+          0.7
+        ],
+        [
+          10,
+          0.7
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "Schneider DOCA0141EN-03 (NSX Micrologic, tr=1 s @ 6·Ir)",
+      "curveSourceId": "schneider-DOCA0141EN",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "tsdProfile": "mic_34"
+    },
+    "micrologic_3_3": {
+      "id": "micrologic_3_3",
+      "label": "Micrologic 3.3",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0.1,
+            0.2,
+            0.3,
+            0.4
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "Schneider — Micrologic 2.4 / 3 / 4 (court retard I²t)"
+        },
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.5,
+          25
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7.2,
+          0.7
+        ],
+        [
+          10,
+          0.7
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "Schneider DOCA0141EN-03 (NSX Micrologic, tr=1 s @ 6·Ir)",
+      "curveSourceId": "schneider-DOCA0141EN",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "tsdProfile": "mic_34"
+    },
+    "micrologic_4_2": {
+      "id": "micrologic_4_2",
+      "label": "Micrologic 4.2",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0.1,
+            0.2,
+            0.3,
+            0.4
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "Schneider — Micrologic 2.4 / 3 / 4 (court retard I²t)"
+        },
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.5,
+          25
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7.2,
+          0.7
+        ],
+        [
+          10,
+          0.7
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "Schneider DOCA0141EN-03 (NSX Micrologic, tr=1 s @ 6·Ir)",
+      "curveSourceId": "schneider-DOCA0141EN",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "tsdProfile": "mic_34"
+    },
+    "micrologic_4_3": {
+      "id": "micrologic_4_3",
+      "label": "Micrologic 4.3",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0.1,
+            0.2,
+            0.3,
+            0.4
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "Schneider — Micrologic 2.4 / 3 / 4 (court retard I²t)"
+        },
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.5,
+          25
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7.2,
+          0.7
+        ],
+        [
+          10,
+          0.7
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "Schneider DOCA0141EN-03 (NSX Micrologic, tr=1 s @ 6·Ir)",
+      "curveSourceId": "schneider-DOCA0141EN",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "tsdProfile": "mic_34"
+    },
+    "micrologic_5_2": {
+      "id": "micrologic_5_2",
+      "label": "Micrologic 5.2",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0,
+            0.1,
+            0.2,
+            0.3,
+            0.4
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "Schneider DOCA0141 — Micrologic 5/6/7"
+        },
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.5,
+          25
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7.2,
+          0.7
+        ],
+        [
+          10,
+          0.7
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "Schneider DOCA0141EN-03 (NSX Micrologic, tr=1 s @ 6·Ir)",
+      "curveSourceId": "schneider-DOCA0141EN",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "tsdProfile": "mic_567"
+    },
+    "micrologic_5_3": {
+      "id": "micrologic_5_3",
+      "label": "Micrologic 5.3",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0,
+            0.1,
+            0.2,
+            0.3,
+            0.4
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "Schneider DOCA0141 — Micrologic 5/6/7"
+        },
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.5,
+          25
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7.2,
+          0.7
+        ],
+        [
+          10,
+          0.7
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "Schneider DOCA0141EN-03 (NSX Micrologic, tr=1 s @ 6·Ir)",
+      "curveSourceId": "schneider-DOCA0141EN",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "tsdProfile": "mic_567"
+    },
+    "micrologic_6_2": {
+      "id": "micrologic_6_2",
+      "label": "Micrologic 6.2",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0,
+            0.1,
+            0.2,
+            0.3,
+            0.4
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "Schneider DOCA0141 — Micrologic 5/6/7"
+        },
+        "ii": {
+          "min": 2,
+          "max": 15,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.5,
+          25
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7.2,
+          0.7
+        ],
+        [
+          10,
+          0.7
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "Schneider DOCA0141EN-03 (NSX Micrologic, tr=1 s @ 6·Ir)",
+      "curveSourceId": "schneider-DOCA0141EN",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "hiIi": true,
+      "tsdProfile": "mic_567"
+    },
+    "micrologic_6_3": {
+      "id": "micrologic_6_3",
+      "label": "Micrologic 6.3",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0,
+            0.1,
+            0.2,
+            0.3,
+            0.4
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "Schneider DOCA0141 — Micrologic 5/6/7"
+        },
+        "ii": {
+          "min": 2,
+          "max": 15,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.5,
+          25
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7.2,
+          0.7
+        ],
+        [
+          10,
+          0.7
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "Schneider DOCA0141EN-03 (NSX Micrologic, tr=1 s @ 6·Ir)",
+      "curveSourceId": "schneider-DOCA0141EN",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "hiIi": true,
+      "tsdProfile": "mic_567"
+    },
+    "micrologic_7_2": {
+      "id": "micrologic_7_2",
+      "label": "Micrologic 7.2",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0,
+            0.1,
+            0.2,
+            0.3,
+            0.4
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "Schneider DOCA0141 — Micrologic 5/6/7"
+        },
+        "ii": {
+          "min": 2,
+          "max": 15,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.5,
+          25
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7.2,
+          0.7
+        ],
+        [
+          10,
+          0.7
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "Schneider DOCA0141EN-03 (NSX Micrologic, tr=1 s @ 6·Ir)",
+      "curveSourceId": "schneider-DOCA0141EN",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "hiIi": true,
+      "tsdProfile": "mic_567"
+    },
+    "micrologic_7_3": {
+      "id": "micrologic_7_3",
+      "label": "Micrologic 7.3",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0,
+            0.1,
+            0.2,
+            0.3,
+            0.4
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "Schneider DOCA0141 — Micrologic 5/6/7"
+        },
+        "ii": {
+          "min": 2,
+          "max": 15,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.5,
+          25
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7.2,
+          0.7
+        ],
+        [
+          10,
+          0.7
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "Schneider DOCA0141EN-03 (NSX Micrologic, tr=1 s @ 6·Ir)",
+      "curveSourceId": "schneider-DOCA0141EN",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "hiIi": true,
+      "tsdProfile": "mic_567"
+    },
+    "micrologic_p": {
+      "id": "micrologic_p",
+      "label": "MicroLogic P",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0,
+            0.1,
+            0.2,
+            0.3,
+            0.4
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "Schneider DOCA0141 — Micrologic 5/6/7"
+        },
+        "ii": {
+          "min": 2,
+          "max": 15,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.5,
+          25
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7.2,
+          0.7
+        ],
+        [
+          10,
+          0.7
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "Schneider DOCA0141EN-03 (NSX Micrologic, tr=1 s @ 6·Ir)",
+      "curveSourceId": "schneider-DOCA0141EN",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "hiIi": true,
+      "tsdProfile": "mic_567"
+    },
+    "micrologic_h": {
+      "id": "micrologic_h",
+      "label": "MicroLogic H",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0,
+            0.1,
+            0.2,
+            0.3,
+            0.4
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "Schneider DOCA0141 — Micrologic 5/6/7"
+        },
+        "ii": {
+          "min": 2,
+          "max": 15,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.5,
+          25
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7.2,
+          0.7
+        ],
+        [
+          10,
+          0.7
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "Schneider DOCA0141EN-03 (NSX Micrologic, tr=1 s @ 6·Ir)",
+      "curveSourceId": "schneider-DOCA0141EN",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "hiIi": true,
+      "tsdProfile": "mic_567"
+    },
+    "micrologic_g": {
+      "id": "micrologic_g",
+      "label": "MicroLogic G",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0,
+            0.1,
+            0.2,
+            0.3,
+            0.4
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "Schneider DOCA0141 — Micrologic 5/6/7"
+        },
+        "ii": {
+          "min": 2,
+          "max": 15,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.5,
+          25
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          1
+        ],
+        [
+          7.2,
+          0.7
+        ],
+        [
+          10,
+          0.7
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "Schneider DOCA0141EN-03 (NSX Micrologic, tr=1 s @ 6·Ir)",
+      "curveSourceId": "schneider-DOCA0141EN",
+      "trRefSec": 1,
+      "supportsTr": true,
+      "hiIi": true,
+      "tsdProfile": "mic_567"
+    },
+    "tm_d": {
+      "id": "tm_d",
+      "label": "TM-D",
+      "hasShortTime": false,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": null,
+        "tsd": null,
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": false
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.3,
+          800
+        ],
+        [
+          1.5,
+          120
+        ],
+        [
+          2,
+          25
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          8,
+          0.8
+        ],
+        [
+          10,
+          0.5
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "Schneider TM-D/TM-G — protection thermique (DOCA0140)",
+      "curveSourceId": "schneider-DOCA0140EN",
+      "trRefSec": 1,
+      "supportsTr": false,
+      "fixedIr": true
+    },
+    "tm_g": {
+      "id": "tm_g",
+      "label": "TM-G",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0.1,
+            0.2,
+            0.3,
+            0.4
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "Schneider — TM-G court retard"
+        },
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.3,
+          800
+        ],
+        [
+          1.5,
+          120
+        ],
+        [
+          2,
+          25
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          8,
+          0.8
+        ],
+        [
+          10,
+          0.5
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "Schneider TM-D/TM-G — protection thermique (DOCA0140)",
+      "curveSourceId": "schneider-DOCA0140EN",
+      "trRefSec": 1,
+      "supportsTr": false,
+      "fixedIr": true,
+      "tsdProfile": "schneider_tm"
+    },
+    "tm_gb": {
+      "id": "tm_gb",
+      "label": "TM-Gb",
+      "hasShortTime": true,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": {
+          "min": 1.5,
+          "max": 10,
+          "step": 0.1,
+          "default": 2,
+          "unit": "xIr"
+        },
+        "tsd": {
+          "values": [
+            0.1,
+            0.2,
+            0.3,
+            0.4
+          ],
+          "default": 0.2,
+          "unit": "s",
+          "source": "Schneider — TM-G court retard"
+        },
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": true
+        },
+        "tr": {
+          "values": [
+            0.5,
+            1,
+            2,
+            4,
+            8,
+            16,
+            24
+          ],
+          "default": 1,
+          "unit": "s",
+          "refSec": 1
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          1.3,
+          800
+        ],
+        [
+          1.5,
+          120
+        ],
+        [
+          2,
+          25
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          8,
+          0.8
+        ],
+        [
+          10,
+          0.5
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "Schneider TM-D/TM-G — protection thermique (DOCA0140)",
+      "curveSourceId": "schneider-DOCA0140EN",
+      "trRefSec": 1,
+      "supportsTr": false,
+      "fixedIr": true,
+      "tsdProfile": "schneider_tm"
+    },
+    "ma_63": {
+      "id": "ma_63",
+      "label": "MA (moteur)",
+      "hasShortTime": false,
+      "settings": {
+        "ir": {
+          "min": 0.4,
+          "max": 1,
+          "step": 0.01,
+          "default": 1,
+          "unit": "xIn"
+        },
+        "isd": null,
+        "tsd": null,
+        "ii": {
+          "min": 2,
+          "max": 10,
+          "step": 0.5,
+          "default": 10,
+          "unit": "xIn",
+          "off": false
+        }
+      },
+      "longAnchors": [
+        [
+          1.05,
+          1000000
+        ],
+        [
+          12,
+          0.02
+        ],
+        [
+          14,
+          0.02
+        ]
+      ],
+      "instTS": 0.02,
+      "curveSource": "Schneider MA — magnétique (moteur)",
+      "curveSourceId": "schneider-DOCA0140EN",
+      "trRefSec": 1,
+      "supportsTr": false
+    },
+    "curve_b": {
+      "id": "curve_b",
+      "label": "Courbe B",
+      "mcb": true,
+      "curve": "B",
+      "hasShortTime": false,
+      "settings": null,
+      "longAnchors": [
+        [
+          1.13,
+          1000000
+        ],
+        [
+          1.45,
+          3600
+        ],
+        [
+          2,
+          300
+        ],
+        [
+          2.55,
+          60
+        ],
+        [
+          4,
+          12
+        ]
+      ],
+      "magMult": [
+        3,
+        5
+      ],
+      "instTS": 0.01,
+      "curveSource": "IEC 60898-1 + seuils magnétiques courbe B",
+      "curveSourceId": "iec-60898"
+    },
+    "curve_c": {
+      "id": "curve_c",
+      "label": "Courbe C",
+      "mcb": true,
+      "curve": "C",
+      "hasShortTime": false,
+      "settings": null,
+      "longAnchors": [
+        [
+          1.13,
+          1000000
+        ],
+        [
+          1.45,
+          3600
+        ],
+        [
+          2,
+          300
+        ],
+        [
+          2.55,
+          60
+        ],
+        [
+          4,
+          12
+        ]
+      ],
+      "magMult": [
+        5,
+        10
+      ],
+      "instTS": 0.01,
+      "curveSource": "IEC 60898-1 + seuils magnétiques courbe C",
+      "curveSourceId": "iec-60898"
+    },
+    "curve_d": {
+      "id": "curve_d",
+      "label": "Courbe D",
+      "mcb": true,
+      "curve": "D",
+      "hasShortTime": false,
+      "settings": null,
+      "longAnchors": [
+        [
+          1.13,
+          1000000
+        ],
+        [
+          1.45,
+          3600
+        ],
+        [
+          2,
+          300
+        ],
+        [
+          2.55,
+          60
+        ],
+        [
+          4,
+          12
+        ]
+      ],
+      "magMult": [
+        10,
+        20
+      ],
+      "instTS": 0.01,
+      "curveSource": "IEC 60898-1 + seuils magnétiques courbe D",
+      "curveSourceId": "iec-60898"
+    },
+    "curve_k": {
+      "id": "curve_k",
+      "label": "Courbe K",
+      "mcb": true,
+      "curve": "K",
+      "hasShortTime": false,
+      "settings": null,
+      "longAnchors": [
+        [
+          1.13,
+          1000000
+        ],
+        [
+          1.45,
+          3600
+        ],
+        [
+          2,
+          300
+        ],
+        [
+          2.55,
+          60
+        ],
+        [
+          4,
+          12
+        ]
+      ],
+      "magMult": [
+        8,
+        14
+      ],
+      "instTS": 0.01,
+      "curveSource": "IEC 60898-1 + seuils magnétiques courbe K",
+      "curveSourceId": "iec-60898"
+    },
+    "curve_z": {
+      "id": "curve_z",
+      "label": "Courbe Z",
+      "mcb": true,
+      "curve": "Z",
+      "hasShortTime": false,
+      "settings": null,
+      "longAnchors": [
+        [
+          1.13,
+          1000000
+        ],
+        [
+          1.45,
+          3600
+        ],
+        [
+          2,
+          300
+        ],
+        [
+          2.55,
+          60
+        ],
+        [
+          4,
+          12
+        ]
+      ],
+      "magMult": [
+        2,
+        3
+      ],
+      "instTS": 0.01,
+      "curveSource": "IEC 60898-1 + seuils magnétiques courbe Z",
+      "curveSourceId": "iec-60898"
+    },
+    "curve_ma": {
+      "id": "curve_ma",
+      "label": "Courbe MA",
+      "mcb": true,
+      "curve": "D",
+      "hasShortTime": false,
+      "settings": null,
+      "longAnchors": [
+        [
+          1.13,
+          1000000
+        ],
+        [
+          1.45,
+          3600
+        ],
+        [
+          2,
+          300
+        ],
+        [
+          2.55,
+          60
+        ],
+        [
+          4,
+          12
+        ]
+      ],
+      "magMult": [
+        10,
+        20
+      ],
+      "instTS": 0.01,
+      "curveSource": "IEC 60898-1 + seuils magnétiques courbe D",
+      "curveSourceId": "iec-60898"
+    }
+  },
+  "families": [
+    {
+      "id": "all",
+      "label": "Toute la gamme"
+    },
+    {
+      "id": "nsx",
+      "label": "ComPacT NSX / NSXm"
+    },
+    {
+      "id": "ns",
+      "label": "ComPacT NS"
+    },
+    {
+      "id": "cvs",
+      "label": "ComPacT CVS / EZC"
+    },
+    {
+      "id": "masterpact",
+      "label": "Masterpact"
+    },
+    {
+      "id": "acti9",
+      "label": "Acti9 modulaire"
+    }
+  ],
+  "devices": [
+    {
+      "id": "nsx100",
+      "label": "NSX100",
+      "group": "ComPacT NSX",
+      "family": "nsx",
+      "frameA": 100,
+      "inRatings": [
+        16,
+        20,
+        25,
+        32,
+        40,
+        50,
+        63,
+        80,
+        100
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "micrologic_2_0",
+        "micrologic_2_1",
+        "micrologic_2_2",
+        "micrologic_2_3",
+        "micrologic_2_4",
+        "micrologic_3_2",
+        "micrologic_3_3",
+        "micrologic_4_2",
+        "micrologic_4_3",
+        "micrologic_5_2",
+        "micrologic_5_3",
+        "micrologic_6_2",
+        "micrologic_6_3",
+        "micrologic_7_2",
+        "micrologic_7_3",
+        "micrologic_p",
+        "micrologic_h",
+        "micrologic_g"
+      ]
+    },
+    {
+      "id": "nsx160",
+      "label": "NSX160",
+      "group": "ComPacT NSX",
+      "family": "nsx",
+      "frameA": 160,
+      "inRatings": [
+        63,
+        80,
+        100,
+        125,
+        160
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "micrologic_2_0",
+        "micrologic_2_1",
+        "micrologic_2_2",
+        "micrologic_2_3",
+        "micrologic_2_4",
+        "micrologic_3_2",
+        "micrologic_3_3",
+        "micrologic_4_2",
+        "micrologic_4_3",
+        "micrologic_5_2",
+        "micrologic_5_3",
+        "micrologic_6_2",
+        "micrologic_6_3",
+        "micrologic_7_2",
+        "micrologic_7_3",
+        "micrologic_p",
+        "micrologic_h",
+        "micrologic_g"
+      ]
+    },
+    {
+      "id": "nsx250",
+      "label": "NSX250",
+      "group": "ComPacT NSX",
+      "family": "nsx",
+      "frameA": 250,
+      "inRatings": [
+        100,
+        125,
+        160,
+        200,
+        250
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "micrologic_2_0",
+        "micrologic_2_1",
+        "micrologic_2_2",
+        "micrologic_2_3",
+        "micrologic_2_4",
+        "micrologic_3_2",
+        "micrologic_3_3",
+        "micrologic_4_2",
+        "micrologic_4_3",
+        "micrologic_5_2",
+        "micrologic_5_3",
+        "micrologic_6_2",
+        "micrologic_6_3",
+        "micrologic_7_2",
+        "micrologic_7_3",
+        "micrologic_p",
+        "micrologic_h",
+        "micrologic_g"
+      ]
+    },
+    {
+      "id": "nsx400",
+      "label": "NSX400",
+      "group": "ComPacT NSX",
+      "family": "nsx",
+      "frameA": 400,
+      "inRatings": [
+        250,
+        315,
+        400
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "micrologic_2_0",
+        "micrologic_2_1",
+        "micrologic_2_2",
+        "micrologic_2_3",
+        "micrologic_2_4",
+        "micrologic_3_2",
+        "micrologic_3_3",
+        "micrologic_4_2",
+        "micrologic_4_3",
+        "micrologic_5_2",
+        "micrologic_5_3",
+        "micrologic_6_2",
+        "micrologic_6_3",
+        "micrologic_7_2",
+        "micrologic_7_3",
+        "micrologic_p",
+        "micrologic_h",
+        "micrologic_g"
+      ]
+    },
+    {
+      "id": "nsx630",
+      "label": "NSX630",
+      "group": "ComPacT NSX",
+      "family": "nsx",
+      "frameA": 630,
+      "inRatings": [
+        400,
+        500,
+        630
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "micrologic_2_0",
+        "micrologic_2_1",
+        "micrologic_2_2",
+        "micrologic_2_3",
+        "micrologic_2_4",
+        "micrologic_3_2",
+        "micrologic_3_3",
+        "micrologic_4_2",
+        "micrologic_4_3",
+        "micrologic_5_2",
+        "micrologic_5_3",
+        "micrologic_6_2",
+        "micrologic_6_3",
+        "micrologic_7_2",
+        "micrologic_7_3",
+        "micrologic_p",
+        "micrologic_h",
+        "micrologic_g"
+      ]
+    },
+    {
+      "id": "nsx400k",
+      "label": "NSX400K",
+      "group": "ComPacT NSX",
+      "family": "nsx",
+      "frameA": 400,
+      "inRatings": [
+        250,
+        400
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "micrologic_2_0",
+        "micrologic_2_1",
+        "micrologic_2_2",
+        "micrologic_2_3",
+        "micrologic_2_4",
+        "micrologic_3_2",
+        "micrologic_3_3",
+        "micrologic_4_2",
+        "micrologic_4_3",
+        "micrologic_5_2",
+        "micrologic_5_3",
+        "micrologic_6_2",
+        "micrologic_6_3",
+        "micrologic_7_2",
+        "micrologic_7_3",
+        "micrologic_p",
+        "micrologic_h",
+        "micrologic_g"
+      ]
+    },
+    {
+      "id": "nsxm63",
+      "label": "NSXm63",
+      "group": "ComPacT NSXm",
+      "family": "nsxm",
+      "frameA": 63,
+      "inRatings": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        10,
+        13,
+        16,
+        20,
+        25,
+        32,
+        40,
+        50,
+        63
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "micrologic_2_0",
+        "micrologic_2_1",
+        "micrologic_2_2",
+        "micrologic_2_3",
+        "micrologic_2_4",
+        "micrologic_3_2",
+        "micrologic_3_3",
+        "micrologic_4_2",
+        "micrologic_4_3",
+        "micrologic_5_2",
+        "micrologic_5_3",
+        "micrologic_6_2",
+        "micrologic_6_3",
+        "micrologic_7_2",
+        "micrologic_7_3",
+        "micrologic_p",
+        "micrologic_h",
+        "micrologic_g"
+      ]
+    },
+    {
+      "id": "nsxm160",
+      "label": "NSXm160",
+      "group": "ComPacT NSXm",
+      "family": "nsxm",
+      "frameA": 160,
+      "inRatings": [
+        63,
+        80,
+        100,
+        125,
+        160
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "micrologic_2_0",
+        "micrologic_2_1",
+        "micrologic_2_2",
+        "micrologic_2_3",
+        "micrologic_2_4",
+        "micrologic_3_2",
+        "micrologic_3_3",
+        "micrologic_4_2",
+        "micrologic_4_3",
+        "micrologic_5_2",
+        "micrologic_5_3",
+        "micrologic_6_2",
+        "micrologic_6_3",
+        "micrologic_7_2",
+        "micrologic_7_3",
+        "micrologic_p",
+        "micrologic_h",
+        "micrologic_g"
+      ]
+    },
+    {
+      "id": "nsxm250",
+      "label": "NSXm250",
+      "group": "ComPacT NSXm",
+      "family": "nsxm",
+      "frameA": 250,
+      "inRatings": [
+        100,
+        125,
+        160,
+        200,
+        250
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "micrologic_2_0",
+        "micrologic_2_1",
+        "micrologic_2_2",
+        "micrologic_2_3",
+        "micrologic_2_4",
+        "micrologic_3_2",
+        "micrologic_3_3",
+        "micrologic_4_2",
+        "micrologic_4_3",
+        "micrologic_5_2",
+        "micrologic_5_3",
+        "micrologic_6_2",
+        "micrologic_6_3",
+        "micrologic_7_2",
+        "micrologic_7_3",
+        "micrologic_p",
+        "micrologic_h",
+        "micrologic_g"
+      ]
+    },
+    {
+      "id": "ns100",
+      "label": "NS100",
+      "group": "ComPacT NS",
+      "family": "ns",
+      "frameA": 100,
+      "inRatings": [
+        16,
+        20,
+        25,
+        32,
+        40,
+        50,
+        63,
+        80,
+        100
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "micrologic_2_0",
+        "micrologic_2_1",
+        "micrologic_2_2",
+        "micrologic_2_3",
+        "micrologic_2_4",
+        "micrologic_3_2",
+        "micrologic_3_3",
+        "micrologic_4_2",
+        "micrologic_4_3",
+        "micrologic_5_2",
+        "micrologic_5_3",
+        "micrologic_6_2",
+        "micrologic_6_3",
+        "micrologic_7_2",
+        "micrologic_7_3",
+        "micrologic_p",
+        "micrologic_h",
+        "micrologic_g"
+      ]
+    },
+    {
+      "id": "ns160",
+      "label": "NS160",
+      "group": "ComPacT NS",
+      "family": "ns",
+      "frameA": 160,
+      "inRatings": [
+        63,
+        80,
+        100,
+        125,
+        160
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "micrologic_2_0",
+        "micrologic_2_1",
+        "micrologic_2_2",
+        "micrologic_2_3",
+        "micrologic_2_4",
+        "micrologic_3_2",
+        "micrologic_3_3",
+        "micrologic_4_2",
+        "micrologic_4_3",
+        "micrologic_5_2",
+        "micrologic_5_3",
+        "micrologic_6_2",
+        "micrologic_6_3",
+        "micrologic_7_2",
+        "micrologic_7_3",
+        "micrologic_p",
+        "micrologic_h",
+        "micrologic_g"
+      ]
+    },
+    {
+      "id": "ns250",
+      "label": "NS250",
+      "group": "ComPacT NS",
+      "family": "ns",
+      "frameA": 250,
+      "inRatings": [
+        100,
+        125,
+        160,
+        200,
+        250
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "micrologic_2_0",
+        "micrologic_2_1",
+        "micrologic_2_2",
+        "micrologic_2_3",
+        "micrologic_2_4",
+        "micrologic_3_2",
+        "micrologic_3_3",
+        "micrologic_4_2",
+        "micrologic_4_3",
+        "micrologic_5_2",
+        "micrologic_5_3",
+        "micrologic_6_2",
+        "micrologic_6_3",
+        "micrologic_7_2",
+        "micrologic_7_3",
+        "micrologic_p",
+        "micrologic_h",
+        "micrologic_g"
+      ]
+    },
+    {
+      "id": "ns400",
+      "label": "NS400",
+      "group": "ComPacT NS",
+      "family": "ns",
+      "frameA": 400,
+      "inRatings": [
+        250,
+        315,
+        400
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "micrologic_2_0",
+        "micrologic_2_1",
+        "micrologic_2_2",
+        "micrologic_2_3",
+        "micrologic_2_4",
+        "micrologic_3_2",
+        "micrologic_3_3",
+        "micrologic_4_2",
+        "micrologic_4_3",
+        "micrologic_5_2",
+        "micrologic_5_3",
+        "micrologic_6_2",
+        "micrologic_6_3",
+        "micrologic_7_2",
+        "micrologic_7_3",
+        "micrologic_p",
+        "micrologic_h",
+        "micrologic_g"
+      ]
+    },
+    {
+      "id": "ns630",
+      "label": "NS630",
+      "group": "ComPacT NS",
+      "family": "ns",
+      "frameA": 630,
+      "inRatings": [
+        400,
+        500,
+        630
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "micrologic_2_0",
+        "micrologic_2_1",
+        "micrologic_2_2",
+        "micrologic_2_3",
+        "micrologic_2_4",
+        "micrologic_3_2",
+        "micrologic_3_3",
+        "micrologic_4_2",
+        "micrologic_4_3",
+        "micrologic_5_2",
+        "micrologic_5_3",
+        "micrologic_6_2",
+        "micrologic_6_3",
+        "micrologic_7_2",
+        "micrologic_7_3",
+        "micrologic_p",
+        "micrologic_h",
+        "micrologic_g"
+      ]
+    },
+    {
+      "id": "cvs100",
+      "label": "CVS100",
+      "group": "ComPacT CVS",
+      "family": "cvs",
+      "frameA": 100,
+      "inRatings": [
+        16,
+        20,
+        25,
+        32,
+        40,
+        50,
+        63,
+        80,
+        100
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tm_d",
+        "tm_g",
+        "tm_gb",
+        "ma_63"
+      ]
+    },
+    {
+      "id": "cvs160",
+      "label": "CVS160",
+      "group": "ComPacT CVS",
+      "family": "cvs",
+      "frameA": 160,
+      "inRatings": [
+        63,
+        80,
+        100,
+        125,
+        160
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tm_d",
+        "tm_g",
+        "tm_gb",
+        "ma_63"
+      ]
+    },
+    {
+      "id": "cvs250",
+      "label": "CVS250",
+      "group": "ComPacT CVS",
+      "family": "cvs",
+      "frameA": 250,
+      "inRatings": [
+        100,
+        125,
+        160,
+        200,
+        250
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tm_d",
+        "tm_g",
+        "tm_gb",
+        "ma_63"
+      ]
+    },
+    {
+      "id": "cvs400",
+      "label": "CVS400",
+      "group": "ComPacT CVS",
+      "family": "cvs",
+      "frameA": 400,
+      "inRatings": [
+        250,
+        315,
+        400
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tm_d",
+        "tm_g",
+        "tm_gb",
+        "ma_63"
+      ]
+    },
+    {
+      "id": "cvs630",
+      "label": "CVS630",
+      "group": "ComPacT CVS",
+      "family": "cvs",
+      "frameA": 630,
+      "inRatings": [
+        400,
+        500,
+        630
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tm_d",
+        "tm_g",
+        "tm_gb",
+        "ma_63"
+      ]
+    },
+    {
+      "id": "ezc100",
+      "label": "EZC100",
+      "group": "EasyPact EZC",
+      "family": "ezc",
+      "frameA": 100,
+      "inRatings": [
+        16,
+        20,
+        25,
+        32,
+        40,
+        50,
+        63,
+        80,
+        100
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tm_d",
+        "tm_g",
+        "tm_gb",
+        "ma_63"
+      ]
+    },
+    {
+      "id": "ezc250",
+      "label": "EZC250",
+      "group": "EasyPact EZC",
+      "family": "ezc",
+      "frameA": 250,
+      "inRatings": [
+        100,
+        125,
+        160,
+        200,
+        250
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tm_d",
+        "tm_g",
+        "tm_gb",
+        "ma_63"
+      ]
+    },
+    {
+      "id": "ezc400",
+      "label": "EZC400",
+      "group": "EasyPact EZC",
+      "family": "ezc",
+      "frameA": 400,
+      "inRatings": [
+        250,
+        315,
+        400
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tm_d",
+        "tm_g",
+        "tm_gb",
+        "ma_63"
+      ]
+    },
+    {
+      "id": "ezc630",
+      "label": "EZC630",
+      "group": "EasyPact EZC",
+      "family": "ezc",
+      "frameA": 630,
+      "inRatings": [
+        400,
+        500,
+        630
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "tm_d",
+        "tm_g",
+        "tm_gb",
+        "ma_63"
+      ]
+    },
+    {
+      "id": "nw10",
+      "label": "Masterpact NW10",
+      "group": "Masterpact NW",
+      "family": "masterpact",
+      "frameA": 1000,
+      "inRatings": [
+        400,
+        500,
+        630,
+        800,
+        1000
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "micrologic_2_0",
+        "micrologic_2_1",
+        "micrologic_2_2",
+        "micrologic_2_3",
+        "micrologic_2_4",
+        "micrologic_3_2",
+        "micrologic_3_3",
+        "micrologic_4_2",
+        "micrologic_4_3",
+        "micrologic_5_2",
+        "micrologic_5_3",
+        "micrologic_6_2",
+        "micrologic_6_3",
+        "micrologic_7_2",
+        "micrologic_7_3",
+        "micrologic_p",
+        "micrologic_h",
+        "micrologic_g"
+      ]
+    },
+    {
+      "id": "nw12",
+      "label": "Masterpact NW12",
+      "group": "Masterpact NW",
+      "family": "masterpact",
+      "frameA": 1250,
+      "inRatings": [
+        630,
+        800,
+        1000,
+        1250
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "micrologic_2_0",
+        "micrologic_2_1",
+        "micrologic_2_2",
+        "micrologic_2_3",
+        "micrologic_2_4",
+        "micrologic_3_2",
+        "micrologic_3_3",
+        "micrologic_4_2",
+        "micrologic_4_3",
+        "micrologic_5_2",
+        "micrologic_5_3",
+        "micrologic_6_2",
+        "micrologic_6_3",
+        "micrologic_7_2",
+        "micrologic_7_3",
+        "micrologic_p",
+        "micrologic_h",
+        "micrologic_g"
+      ]
+    },
+    {
+      "id": "nw16",
+      "label": "Masterpact NW16",
+      "group": "Masterpact NW",
+      "family": "masterpact",
+      "frameA": 1600,
+      "inRatings": [
+        800,
+        1000,
+        1250,
+        1600
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "micrologic_2_0",
+        "micrologic_2_1",
+        "micrologic_2_2",
+        "micrologic_2_3",
+        "micrologic_2_4",
+        "micrologic_3_2",
+        "micrologic_3_3",
+        "micrologic_4_2",
+        "micrologic_4_3",
+        "micrologic_5_2",
+        "micrologic_5_3",
+        "micrologic_6_2",
+        "micrologic_6_3",
+        "micrologic_7_2",
+        "micrologic_7_3",
+        "micrologic_p",
+        "micrologic_h",
+        "micrologic_g"
+      ]
+    },
+    {
+      "id": "nw20",
+      "label": "Masterpact NW20",
+      "group": "Masterpact NW",
+      "family": "masterpact",
+      "frameA": 2000,
+      "inRatings": [
+        1000,
+        1250,
+        1600,
+        2000
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "micrologic_2_0",
+        "micrologic_2_1",
+        "micrologic_2_2",
+        "micrologic_2_3",
+        "micrologic_2_4",
+        "micrologic_3_2",
+        "micrologic_3_3",
+        "micrologic_4_2",
+        "micrologic_4_3",
+        "micrologic_5_2",
+        "micrologic_5_3",
+        "micrologic_6_2",
+        "micrologic_6_3",
+        "micrologic_7_2",
+        "micrologic_7_3",
+        "micrologic_p",
+        "micrologic_h",
+        "micrologic_g"
+      ]
+    },
+    {
+      "id": "nw25",
+      "label": "Masterpact NW25",
+      "group": "Masterpact NW",
+      "family": "masterpact",
+      "frameA": 2500,
+      "inRatings": [
+        1250,
+        1600,
+        2000,
+        2500
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "micrologic_2_0",
+        "micrologic_2_1",
+        "micrologic_2_2",
+        "micrologic_2_3",
+        "micrologic_2_4",
+        "micrologic_3_2",
+        "micrologic_3_3",
+        "micrologic_4_2",
+        "micrologic_4_3",
+        "micrologic_5_2",
+        "micrologic_5_3",
+        "micrologic_6_2",
+        "micrologic_6_3",
+        "micrologic_7_2",
+        "micrologic_7_3",
+        "micrologic_p",
+        "micrologic_h",
+        "micrologic_g"
+      ]
+    },
+    {
+      "id": "nw32",
+      "label": "Masterpact NW32",
+      "group": "Masterpact NW",
+      "family": "masterpact",
+      "frameA": 3200,
+      "inRatings": [
+        1600,
+        2000,
+        2500,
+        3200
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "micrologic_2_0",
+        "micrologic_2_1",
+        "micrologic_2_2",
+        "micrologic_2_3",
+        "micrologic_2_4",
+        "micrologic_3_2",
+        "micrologic_3_3",
+        "micrologic_4_2",
+        "micrologic_4_3",
+        "micrologic_5_2",
+        "micrologic_5_3",
+        "micrologic_6_2",
+        "micrologic_6_3",
+        "micrologic_7_2",
+        "micrologic_7_3",
+        "micrologic_p",
+        "micrologic_h",
+        "micrologic_g"
+      ]
+    },
+    {
+      "id": "nw40",
+      "label": "Masterpact NW40",
+      "group": "Masterpact NW",
+      "family": "masterpact",
+      "frameA": 4000,
+      "inRatings": [
+        2000,
+        2500,
+        3200,
+        4000
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "micrologic_2_0",
+        "micrologic_2_1",
+        "micrologic_2_2",
+        "micrologic_2_3",
+        "micrologic_2_4",
+        "micrologic_3_2",
+        "micrologic_3_3",
+        "micrologic_4_2",
+        "micrologic_4_3",
+        "micrologic_5_2",
+        "micrologic_5_3",
+        "micrologic_6_2",
+        "micrologic_6_3",
+        "micrologic_7_2",
+        "micrologic_7_3",
+        "micrologic_p",
+        "micrologic_h",
+        "micrologic_g"
+      ]
+    },
+    {
+      "id": "nw50",
+      "label": "Masterpact NW50",
+      "group": "Masterpact NW",
+      "family": "masterpact",
+      "frameA": 5000,
+      "inRatings": [
+        2500,
+        3200,
+        4000,
+        5000
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "micrologic_2_0",
+        "micrologic_2_1",
+        "micrologic_2_2",
+        "micrologic_2_3",
+        "micrologic_2_4",
+        "micrologic_3_2",
+        "micrologic_3_3",
+        "micrologic_4_2",
+        "micrologic_4_3",
+        "micrologic_5_2",
+        "micrologic_5_3",
+        "micrologic_6_2",
+        "micrologic_6_3",
+        "micrologic_7_2",
+        "micrologic_7_3",
+        "micrologic_p",
+        "micrologic_h",
+        "micrologic_g"
+      ]
+    },
+    {
+      "id": "nw63",
+      "label": "Masterpact NW63",
+      "group": "Masterpact NW",
+      "family": "masterpact",
+      "frameA": 6300,
+      "inRatings": [
+        3200,
+        4000,
+        5000,
+        6300
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mccb",
+      "tripUnitIds": [
+        "micrologic_2_0",
+        "micrologic_2_1",
+        "micrologic_2_2",
+        "micrologic_2_3",
+        "micrologic_2_4",
+        "micrologic_3_2",
+        "micrologic_3_3",
+        "micrologic_4_2",
+        "micrologic_4_3",
+        "micrologic_5_2",
+        "micrologic_5_3",
+        "micrologic_6_2",
+        "micrologic_6_3",
+        "micrologic_7_2",
+        "micrologic_7_3",
+        "micrologic_p",
+        "micrologic_h",
+        "micrologic_g"
+      ]
+    },
+    {
+      "id": "ic60",
+      "label": "iC60",
+      "group": "Acti9 iC60",
+      "family": "acti9",
+      "frameA": 63,
+      "inRatings": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        10,
+        13,
+        16,
+        20,
+        25,
+        32,
+        40,
+        50,
+        63
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mcb",
+      "tripUnitIds": [
+        "curve_b",
+        "curve_c",
+        "curve_d",
+        "curve_k",
+        "curve_z",
+        "curve_ma"
+      ]
+    },
+    {
+      "id": "ic60h",
+      "label": "iC60H",
+      "group": "Acti9 iC60",
+      "family": "acti9",
+      "frameA": 63,
+      "inRatings": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        10,
+        13,
+        16,
+        20,
+        25,
+        32,
+        40,
+        50,
+        63
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mcb",
+      "tripUnitIds": [
+        "curve_b",
+        "curve_c",
+        "curve_d",
+        "curve_k",
+        "curve_z",
+        "curve_ma"
+      ]
+    },
+    {
+      "id": "ic60l",
+      "label": "iC60L",
+      "group": "Acti9 iC60",
+      "family": "acti9",
+      "frameA": 63,
+      "inRatings": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        10,
+        13,
+        16,
+        20,
+        25,
+        32,
+        40,
+        50,
+        63
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mcb",
+      "tripUnitIds": [
+        "curve_b",
+        "curve_c",
+        "curve_d",
+        "curve_k",
+        "curve_z",
+        "curve_ma"
+      ]
+    },
+    {
+      "id": "ng125",
+      "label": "NG125",
+      "group": "Acti9 NG125",
+      "family": "acti9",
+      "frameA": 125,
+      "inRatings": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        10,
+        13,
+        16,
+        20,
+        25,
+        32,
+        40,
+        50,
+        63,
+        80,
+        100,
+        125
+      ],
+      "icuKA": [],
+      "kind": "breaker",
+      "deviceType": "mcb",
+      "tripUnitIds": [
+        "curve_b",
+        "curve_c",
+        "curve_d",
+        "curve_k",
+        "curve_z",
+        "curve_ma"
+      ]
+    }
+  ],
+  "brandId": "schneider",
+  "breakerCount": 36
+}

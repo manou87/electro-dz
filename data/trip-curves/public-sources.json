@@ -1,0 +1,116 @@
+{
+  "revision": "2026-06-pro",
+  "methodology": "methodology.json",
+  "proValidation": "pro-validation.json",
+  "hubSchneider": "https://www.se.com/fr/fr/work/support/catalogues-brochures/#PublicationsActuelles",
+  "cataloguesIndex": "schneider-catalogues-index.json",
+  "note": "PDF dans data/trip-curves/refs/ (gitignored). Index publications : schneider-catalogues-index.json",
+  "sources": [
+    {
+      "id": "schneider-catalogues-hub",
+      "brand": "schneider",
+      "title": "Catalogues et guides Schneider France",
+      "url": "https://www.se.com/fr/fr/work/support/catalogues-brochures/#PublicationsActuelles",
+      "index": "schneider-catalogues-index.json"
+    },
+    {
+      "id": "schneider-LVPED221001EN",
+      "brand": "schneider",
+      "title": "Catalogue ComPacT NSX & NSXm (LVPED221001EN)",
+      "file": "refs/schneider-LVPED221001EN-NSX-NSXm-catalog.pdf",
+      "url": "https://www.se.com/fr/fr/download/document/LVPED221001EN/"
+    },
+    {
+      "id": "schneider-DOCA0141EN",
+      "brand": "schneider",
+      "title": "ComPacT NSX — Micrologic 5/6/7 (DOCA0141EN-03)",
+      "file": "refs/schneider-DOCA0141EN-NSX-Micrologic-567.pdf",
+      "url": "https://www.productinfo.schneider-electric.com/compactnsxlegacymicrologic_5_6_7/doca0141-compact-nsx-legacy-micrologic-5_6_7/English/DOCA0141EN-03.pdf",
+      "anchors": "long-time tr=1s : 25s@1,5·Ir, 1s@6·Ir, 0,7s@7,2·Ir"
+    },
+    {
+      "id": "schneider-DOCA0217EN",
+      "brand": "schneider",
+      "title": "ComPacT NS — Micrologic (DOCA0217EN)",
+      "file": "refs/schneider-DOCA0217EN-ComPacT-NS-Micrologic.pdf",
+      "url": "https://download.schneider-electric.com/files?p_Doc_Ref=DOCA0217EN"
+    },
+    {
+      "id": "schneider-DOCA0140EN",
+      "brand": "schneider",
+      "title": "ComPacT NSX — Circuit breakers 100–630 A",
+      "file": "refs/schneider-DOCA0140EN-NSX-breakers.pdf",
+      "url": "https://download.schneider-electric.com/files?p_Doc_Ref=DOCA0140EN"
+    },
+    {
+      "id": "schneider-ZXTHPLANCHF",
+      "brand": "schneider",
+      "title": "Compléments techniques — distribution BT (protection, coordination, sélectivité)",
+      "file": "refs/schneider-ZXTHPLANCHF-complements-techniques.pdf",
+      "url": "https://download.schneider-electric.com/files?p_Doc_Ref=ZXTHPLANCHF&p_enDocType=Technical+Advisory&p_File_Name=Compl%C3%A9ments+techniques_ZXTHPLANCHF.pdf",
+      "note": "Document proche logique Caneco (filiation, sélectivité) — pas courbes t(I) point par point"
+    },
+    {
+      "id": "schneider-tcc",
+      "brand": "schneider",
+      "title": "Time-Current Curves — centre téléchargement",
+      "url": "https://www.se.com/us/en/work/support/resources-and-tools/calculators-and-online-tools/time-current-curves/"
+    },
+    {
+      "id": "abb-tmax-xt",
+      "brand": "abb",
+      "title": "SACE Tmax XT — Caractéristiques (1SDC210099D0205)",
+      "file": "refs/abb-1SDC210099D0205-Tmax-XT-characteristics.pdf",
+      "url": "https://search.abb.com/library/Download.aspx?DocumentID=1SDC210099D0205&LanguageCode=en"
+    },
+    {
+      "id": "abb-ekip",
+      "brand": "abb",
+      "title": "Ekip Touch trip unit (1SDH002031A1002)",
+      "file": "refs/abb-1SDH002031A1002-Ekip-Touch.pdf"
+    },
+    {
+      "id": "abb-s200",
+      "brand": "abb",
+      "title": "S200 / S200M — fiche technique + courbes de déclenchement (2CDC002157D0202)",
+      "file": "refs/abb-2CDC002157D0202-S200-S200M-datasheet.pdf",
+      "url": "https://search.abb.com/library/Download.aspx?DocumentID=2CDC002157D0202&LanguageCode=en"
+    },
+    {
+      "id": "abb-mcb",
+      "brand": "abb",
+      "title": "MCB trip curves + comparaison 60898",
+      "files": [
+        "refs/abb-mcb-trip-curves-guide.pdf",
+        "refs/abb-2CDC400002D0201-MCB-tripping-compare.pdf"
+      ]
+    },
+    {
+      "id": "hager-mcb",
+      "brand": "hager",
+      "title": "Hager NBN — données techniques MCB",
+      "files": [
+        "refs/hager-MCB-technical-data-NBN.pdf",
+        "refs/hager-TECHINFO-MCBS-AU.pdf"
+      ]
+    },
+    {
+      "id": "iec-60898",
+      "brand": "all",
+      "title": "IEC 60898-1 — essais MCB B/C/D",
+      "note": "1,13·In (>1h), 1,45·In (<1h), 2,55·In (1–60s)"
+    },
+    {
+      "id": "caneco-edielec",
+      "brand": "all",
+      "title": "Caneco BT — optionnel (licence ALPI)",
+      "note": "Non requis. Si installé : CANECO_BASE + scripts/import-caneco-base.mjs ou import JSON navigateur (bureau d’études).",
+      "extensions": [".dug", ".dmd", ".dmi", ".dst", ".dmt"]
+    }
+  ],
+  "catalogs": {
+    "schneider": "schneider.json",
+    "abb": "abb.json",
+    "hager": "hager.json"
+  }
+}

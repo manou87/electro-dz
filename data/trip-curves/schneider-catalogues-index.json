@@ -1,0 +1,102 @@
+{
+  "hubUrl": "https://www.se.com/fr/fr/work/support/catalogues-brochures/#PublicationsActuelles",
+  "hubTitle": "Catalogues et guides — Schneider Electric France",
+  "updated": "2026-06",
+  "note": "Index manuel des publications utiles pour courbes t(I), sélectivité et gammes disjoncteurs (équivalent documentaire Caneco, pas EDIELEC).",
+  "publicationsActuelles": [
+    {
+      "id": "catalogue-general",
+      "title": "Catalogue général",
+      "edition": "Avril 2026",
+      "format": "flipbook",
+      "url": "https://flipbook.se.com/fr/chapK?p_Doc_Ref=flipbook",
+      "priority": "catalogue"
+    },
+    {
+      "id": "nfc-15-100",
+      "title": "Norme NF C 15-100",
+      "edition": "Octobre 2025",
+      "type": "guide",
+      "priority": "norme"
+    },
+    {
+      "id": "nsx-catalogue",
+      "title": "ComPacT NSXm et NSX",
+      "edition": "Catalogue 2021",
+      "docRef": "LVPED221001EN",
+      "downloadUrl": "https://www.se.com/fr/fr/download/document/LVPED221001EN/",
+      "directPdf": "https://download.schneider-electric.com/files?p_Doc_Ref=LVPED221001EN",
+      "localFile": "refs/schneider-LVPED221001EN.pdf",
+      "priority": "courbes",
+      "note": "Références NSX/NSXm, Micrologic — complète DOCA0140/0141"
+    },
+    {
+      "id": "tableaux-tertiaires",
+      "title": "Optimisez vos tableaux électriques tertiaires",
+      "edition": "Mai 2026",
+      "url": "https://flipbook.se.com/fr/fr/ZZ5287/02-2025/index.html?p_Doc_Ref=flipbook",
+      "priority": "coordination"
+    },
+    {
+      "id": "masterpact-mtz",
+      "title": "MasterPacT MTZ",
+      "edition": "Catalogue 2018",
+      "priority": "mccb"
+    },
+    {
+      "id": "acti9-resi",
+      "title": "Les incontournables chantiers résidentiels et petit tertiaire",
+      "edition": "Octobre 2025",
+      "priority": "mcb"
+    }
+  ],
+  "anciensCatalogues": [
+    {
+      "id": "complements-techniques-2018",
+      "title": "Compléments techniques Distribution Electrique 2016/2017",
+      "edition": "Mise à jour février 2018",
+      "url": "https://flipbook.se.com/catalog/complements-techniques-de-maj-02-2018/",
+      "priority": "selectivite"
+    },
+    {
+      "id": "complements-techniques-pdf",
+      "title": "Compléments techniques (PDF ZXTHPLANCHF)",
+      "localFile": "refs/schneider-ZXTHPLANCHF-complements-techniques.pdf",
+      "downloadUrl": "https://download.schneider-electric.com/files?p_Doc_Ref=ZXTHPLANCHF&p_enDocType=Technical+Advisory&p_File_Name=Compl%C3%A9ments+techniques_ZXTHPLANCHF.pdf",
+      "priority": "selectivite",
+      "downloaded": true
+    },
+    {
+      "id": "distribution-2018",
+      "title": "Distribution Electrique 2016/2017",
+      "edition": "Mise à jour février 2018",
+      "priority": "catalogue"
+    },
+    {
+      "id": "catalogue-2024",
+      "title": "Catalogue Schneider Electric Edition 2024",
+      "edition": "Mise à jour 01/2026",
+      "priority": "catalogue"
+    }
+  ],
+  "dejaDansLeProjet": [
+    "refs/schneider-DOCA0141EN-NSX-Micrologic-567.pdf",
+    "refs/schneider-DOCA0217EN-ComPacT-NS-Micrologic.pdf",
+    "refs/schneider-DOCA0140EN-NSX-breakers.pdf",
+    "refs/schneider-ZXTHPLANCHF-complements-techniques.pdf"
+  ],
+  "liensUtiles": [
+    {
+      "title": "Courbes temps-courant (TCC)",
+      "url": "https://www.se.com/us/en/work/support/resources-and-tools/calculators-and-online-tools/time-current-curves/"
+    },
+    {
+      "title": "Centre de téléchargement",
+      "url": "https://www.se.com/fr/fr/download/"
+    },
+    {
+      "title": "Wiki installation électrique",
+      "url": "https://www.se.com/fr/fr/work/support/catalogues-brochures/"
+    }
+  ]
+}

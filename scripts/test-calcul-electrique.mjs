@@ -82,6 +82,20 @@ test('Bilan puissance', () => C.calculatePowerBalance({
   rows: [{ label: 'L1', p: '3000', ku: '1', ks: '0.8' }],
   voltage: '230', cosPhi: '0.9', lang,
 }), (r) => parseFloat(r.data.result) > 0);
+test('Bilan nomenclature pro', () => C.calculatePowerBalance({
+  rows: [{ circuitRef: 'C1', schemaRef: 'Q1', label: 'Prises', location: 'RDC', board: 'TD', p: '2000', ku: '1', ks: '1' }],
+  voltage: '230', cosPhi: '0.9', lang,
+}), (r) => r.data.additionalData.detailRows[0].circuitRef === 'C1');
+test('Bilan Qd/Sd/Ib', () => C.calculatePowerBalance({
+  rows: [
+    { label: 'A', p: '2000', ku: '1', ks: '1', cosPhi: '0.9' },
+    { label: 'B', p: '1000', ku: '0.5', ks: '1' },
+  ],
+  voltage: '400', cosPhi: '0.9', lang,
+}), (r) => {
+  const ad = r.data.additionalData;
+  return parseFloat(ad.sTotalKva) > 0 && parseFloat(ad.qTotalKvar) >= 0 && parseFloat(ad.ibA) > 0;
+});
 test('Temps coupure TN 230 prises', () => C.calculateBreakingTime({
   subMode: 'normative', earthing: 'TN', u0: '230', circuitKind: 'socket_32', lang,
 }), (r) => r.data.result === '0.4');

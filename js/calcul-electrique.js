@@ -1,21 +1,37 @@
 /**
  * UI calculateur — même organisation que l'app (grille / bandeau / focus).
+ *
+ * Étude BT (type Caneco) : désactivée par défaut.
+ * Réactivation : ENABLE_CANECO_BT = true + décommenter le bloc HTML et les scripts
+ * dans calcul-electrique.html (rechercher « CANECO_BT_DISABLED »).
  */
 (function () {
   'use strict';
 
-  const CALC_TYPES = [
+  const ENABLE_CANECO_BT = false;
+
+  /** Outils pro en tête : bilan, courbes t(I), section câble */
+  const CALC_PRIORITY_IDS = ['power_balance', 'trip_curve', 'cable_section'];
+
+  const CALC_TYPES_ALL = [
+    { id: 'power_balance', domId: 'balance', icon: '📊', color: '#059669', featured: true },
+    { id: 'trip_curve', domId: 'tripcurve', icon: '📈', color: '#10B981', featured: true },
+    { id: 'cable_section', domId: 'section', icon: '📏', color: '#7C3AED', featured: true },
     { id: 'ohm_law', domId: 'ohm', icon: '⚡', color: '#1E40AF' },
     { id: 'power_energy', domId: 'power', icon: '🔋', color: '#FFFFFF' },
     { id: 'copper_resistance', domId: 'copper', icon: '🔶', color: '#F97316' },
     { id: 'voltage_drop', domId: 'drop', icon: '📉', color: '#06B6D4' },
-    { id: 'cable_section', domId: 'section', icon: '📏', color: '#7C3AED' },
     { id: 'selectivity', domId: 'selectivity', icon: '🛡️', color: '#FFFFFF' },
     { id: 'icc', domId: 'icc', icon: '💥', color: '#DC2626' },
     { id: 'breaking_time', domId: 'breaking', icon: '⏱️', color: '#0EA5E9' },
-    { id: 'power_balance', domId: 'balance', icon: '📊', color: '#059669' },
-    { id: 'trip_curve', domId: 'tripcurve', icon: '📈', color: '#10B981' },
+    { id: 'caneco_bt', domId: 'caneco', icon: '📐', color: '#38BDF8' },
   ];
+
+  const CALC_TYPES = ENABLE_CANECO_BT
+    ? CALC_TYPES_ALL
+    : CALC_TYPES_ALL.filter((c) => c.id !== 'caneco_bt');
+
+  window.ElectroDzCalcFlags = { enableCanecoBt: ENABLE_CANECO_BT };
 
   let activeId = 'ohm_law';
   let focusMode = false;
@@ -38,6 +54,7 @@
     const box = document.getElementById('calc-global-result');
     if (box) {
       delete box.dataset.hasResult;
+      box.classList.remove('bal-result-box');
       box.textContent = '';
       box.innerHTML = '';
     }
@@ -99,6 +116,9 @@
     }
     updateWorkspaceLabels();
     renderTypePickers();
+    if (window.ElectroDzPowerBalancePro?.onLangChange) {
+      window.ElectroDzPowerBalancePro.onLangChange();
+    }
   }
 
   function mergeCalc() {
@@ -114,14 +134,17 @@
 
   function showError(box, msg) {
     if (!box) return;
+    box.classList.remove('bal-result-box');
     box.innerHTML = msg || '—';
     box.style.color = '#f87171';
   }
 
-  function showResult(box, html) {
+  function showResult(box, html, opts) {
     if (!box) return;
+    const balanceSheet = !!(opts && opts.balanceSheet);
+    box.classList.toggle('bal-result-box', balanceSheet);
     box.innerHTML = html;
-    box.style.color = 'var(--primary)';
+    box.style.color = balanceSheet ? '#0f172a' : 'var(--primary)';
   }
 
   function fmtSimple(r) {
@@ -142,6 +165,9 @@
   function activateCalc(id, enterFocus) {
     if (!CALC_TYPES.some((c) => c.id === id)) return;
     activeId = id;
+    try {
+      localStorage.setItem('electrodz-calc-active', id);
+    } catch (_) { /* ignore */ }
     if (enterFocus !== false) focusMode = true;
     document.body.classList.toggle('calc-focus', focusMode);
     document.querySelectorAll('.calc-section').forEach((s) => {
@@ -193,40 +219,73 @@
     if (pc) pc.textContent = tr('pickerStrip');
   }
 
-  function renderTypePickers() {
-    const lang = getLang();
-    const grid = document.getElementById('types-grid');
-    const strip = document.getElementById('types-strip');
-    const chips = document.getElementById('focus-chips');
-    if (!grid || !strip || !chips) return;
+  function reorderPrioritySections() {
+    const ws = document.querySelector('.calc-workspace');
+    const title = document.getElementById('calc-active-title');
+    if (!ws || !title) return;
+    let anchor = title;
+    CALC_PRIORITY_IDS.forEach((pid) => {
+      const domId = CALC_TYPES.find((c) => c.id === pid)?.domId;
+      const el = domId ? document.getElementById(domId) : null;
+      if (!el) return;
+      anchor.insertAdjacentElement('afterend', el);
+      anchor = el;
+    });
+  }
 
-    const cardHtml = CALC_TYPES.map((c) => {
-      const name = calcName(c.id);
-      const sel = c.id === activeId ? ' selected' : '';
-      return `<div class="type-card${sel}" data-calc-id="${c.id}" role="button" tabindex="0">
+  function splitCalcTypes() {
+    const priority = CALC_TYPES.filter((c) => CALC_PRIORITY_IDS.includes(c.id));
+    const other = CALC_TYPES.filter((c) => !CALC_PRIORITY_IDS.includes(c.id));
+    return { priority, other };
+  }
+
+  function typeCardHtml(c) {
+    const name = calcName(c.id);
+    const sel = c.id === activeId ? ' selected' : '';
+    const feat = c.featured ? ' type-card-featured' : '';
+    return `<div class="type-card${feat}${sel}" data-calc-id="${c.id}" role="button" tabindex="0">
         <div class="type-icon" style="background:${c.color}22;color:${c.color}">${c.icon}</div>
         <div class="type-name">${name}</div>
       </div>`;
-    }).join('');
+  }
+
+  function renderTypePickers() {
+    const gridPri = document.getElementById('types-grid-priority');
+    const gridOther = document.getElementById('types-grid-other');
+    const strip = document.getElementById('types-strip');
+    const chips = document.getElementById('focus-chips');
+    if (!gridPri || !gridOther || !strip || !chips) return;
+
+    const { priority, other } = splitCalcTypes();
+    const priLabel = document.getElementById('types-priority-label');
+    const othLabel = document.getElementById('types-other-label');
+    if (priLabel) priLabel.textContent = tr('pickerPriority');
+    if (othLabel) othLabel.textContent = tr('pickerOther');
+
+    gridPri.innerHTML = priority.map(typeCardHtml).join('');
+    gridOther.innerHTML = other.map(typeCardHtml).join('');
 
     const chipHtml = CALC_TYPES.map((c) => {
       const name = calcName(c.id);
       const act = c.id === activeId ? ' active' : '';
       const label = c.id === activeId ? `<span>${name}</span>` : '';
-      return `<div class="focus-chip${act}" data-calc-id="${c.id}" title="${name}">${c.icon}${label}</div>`;
+      const feat = c.featured ? ' focus-chip-featured' : '';
+      return `<div class="focus-chip${feat}${act}" data-calc-id="${c.id}" title="${name}">${c.icon}${label}</div>`;
     }).join('');
 
-    const stripHtml = CALC_TYPES.map((c) => {
+    const stripPart = (list) => list.map((c) => {
       const name = calcName(c.id);
       const act = c.id === activeId ? ' active' : '';
-      return `<div class="type-chip${act}" data-calc-id="${c.id}">${c.icon} ${name}</div>`;
+      const feat = c.featured ? ' type-chip-featured' : '';
+      return `<div class="type-chip${feat}${act}" data-calc-id="${c.id}">${c.icon} ${name}</div>`;
     }).join('');
 
-    grid.innerHTML = cardHtml;
-    strip.innerHTML = stripHtml;
+    strip.innerHTML = `${stripPart(priority)}<span class="types-strip-sep" aria-hidden="true"></span>${stripPart(other)}`;
+
     chips.innerHTML = chipHtml;
 
-    bindPickerClicks(grid);
+    bindPickerClicks(gridPri);
+    bindPickerClicks(gridOther);
     bindPickerClicks(strip);
     bindPickerClicks(chips);
   }
@@ -282,6 +341,56 @@
     document.querySelectorAll('[data-brk-group]').forEach((g) => {
       g.classList.toggle('show', g.getAttribute('data-brk-group') === mode);
     });
+  }
+
+  function setField(id, value) {
+    const el = document.getElementById(id);
+    if (el && value != null) el.value = String(value);
+  }
+
+  function applyCanecoPreset(p, prefix) {
+    if (!p) return;
+    if (prefix === 'tc') {
+      setField('tc-cable-s', p.S);
+      setField('tc-cable-mat', p.mat);
+      setField('tc-cable-ins', p.ins === 'pr' ? 'pr' : 'pvc');
+      setField('tc-length', p.L);
+      setField('tc-u0', p.u0);
+      if (window.ElectroDzTripCurve?.redraw) window.ElectroDzTripCurve.redraw();
+      return;
+    }
+    setField('caneco-l', p.L);
+    setField('caneco-s', p.S);
+    setField('caneco-spe', p.S);
+    setField('caneco-mat', p.mat);
+    setField('caneco-ins', p.ins);
+    setField('caneco-u0', p.u0);
+    setField('caneco-in', p.inA);
+    setField('caneco-curve', p.curve);
+  }
+
+  function initCanecoPresets() {
+    if (!ENABLE_CANECO_BT) return;
+    const lib = window.ElectroDzCanecoBT;
+    if (!lib?.PRESETS) return;
+    const lang = getLang();
+    const mk = (rootId, prefix) => {
+      const root = document.getElementById(rootId);
+      if (!root) return;
+      root.innerHTML = lib.PRESETS.map((p) => {
+        const lbl = lang === 'fr' ? p.labelFr : p.labelAr;
+        return `<button type="button" class="sub-type-btn" data-preset="${p.id}">${lbl}</button>`;
+      }).join('');
+      root.querySelectorAll('[data-preset]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const p = lib.PRESETS.find((x) => x.id === btn.dataset.preset);
+          applyCanecoPreset(p, prefix);
+          if (activeId === 'caneco_bt') performCalculation();
+        });
+      });
+    };
+    mk('caneco-presets', '');
+    mk('tc-pro-presets', 'tc');
   }
 
   function initVoltageSelectors() {
@@ -378,19 +487,40 @@
         );
         break;
       }
-      case 'power_balance': {
-        const rows = [];
-        document.querySelectorAll('[data-balance-row]').forEach((row) => {
-          rows.push({
-            label: row.querySelector('.bal-label')?.value || '',
-            p: row.querySelector('.bal-p')?.value || '',
-            ku: row.querySelector('.bal-ku')?.value || '1',
-            ks: row.querySelector('.bal-ks')?.value || '1',
+      case 'caneco_bt':
+        if (!ENABLE_CANECO_BT) return;
+        {
+          const Can = window.ElectroDzCanecoBTCalc;
+          if (!Can?.calculateCanecoStudy) {
+            showError(box, tr('canecoErrLoad'));
+            return;
+          }
+          r = Can.calculateCanecoStudy({
+            zeOhm: val('caneco-ze'),
+            lengthM: val('caneco-l'),
+            sectionMm2: val('caneco-s'),
+            sectionPeMm2: val('caneco-spe'),
+            material: val('caneco-mat') || 'cu',
+            insulation: val('caneco-ins') || 'pvc',
+            u0: val('caneco-u0') || '230',
+            earthing: val('caneco-earth') || 'TN',
+            circuitKind: val('caneco-circuit') || 'socket_32',
+            deviceIn: val('caneco-in'),
+            deviceCurve: val('caneco-curve') || 'C',
+            iccA: val('caneco-icc'),
+            lang,
           });
-        });
+        }
+        break;
+      case 'power_balance': {
+        const Pro = window.ElectroDzPowerBalancePro;
+        const form = Pro?.collectForm ? Pro.collectForm() : { rows: [], voltage: val('balance-u'), lang };
         r = C.calculatePowerBalance({
-          rows, voltage: val('balance-u'), cosPhi: val('balance-cos') || '0.9', lang,
+          rows: form.rows,
+          voltage: form.voltage || val('balance-u'),
+          lang: form.lang || lang,
         });
+        if (Pro?.setLastReport) Pro.setLastReport(r, form.meta);
         break;
       }
       default:
@@ -401,11 +531,16 @@
     if (r.error) showError(box, r.message);
     else if (!r.ok) showError(box, r.message);
     else {
-      let h = fmtSimple(r);
-      if (r.data.additionalData?.ibA) {
-        h += `<br>${tr('balanceIbApprox')} <strong>${r.data.additionalData.ibA} ${tr('unitA')}</strong>`;
+      let h;
+      if (activeId === 'power_balance' && window.ElectroDzPowerBalancePro?.formatResultHtml) {
+        h = window.ElectroDzPowerBalancePro.formatResultHtml(r);
+      } else {
+        h = fmtSimple(r);
+        if (r.data.additionalData?.ibA) {
+          h += `<br>${tr('balanceIbApprox')} <strong>${r.data.additionalData.ibA} ${tr('unitA')}</strong>`;
+        }
       }
-      showResult(box, h);
+      showResult(box, h, { balanceSheet: activeId === 'power_balance' && r.ok });
     }
   }
 
@@ -424,8 +559,15 @@
       if (saved === 'compact' || saved === 'grid') setPickerMode(saved);
     } catch (_) { /* ignore */ }
 
+    reorderPrioritySections();
     applyI18n();
-    activateCalc('ohm_law', false);
+    let startId = 'power_balance';
+    try {
+      const saved = localStorage.getItem('electrodz-calc-active');
+      if (saved && CALC_TYPES.some((c) => c.id === saved)) startId = saved;
+    } catch (_) { /* ignore */ }
+    activateCalc(startId, false);
+    window.ElectroDzTripCurveCatalog?.loadCatalog?.();
 
     document.getElementById('picker-grid')?.addEventListener('click', () => setPickerMode('grid'));
     document.getElementById('picker-compact')?.addEventListener('click', () => setPickerMode('compact'));
@@ -452,6 +594,18 @@
     document.getElementById('btn-calculate')?.addEventListener('click', performCalculation);
     document.getElementById('lang-toggle')?.addEventListener('click', () => {
       setLang(getLang() === 'fr' ? 'ar' : 'fr');
+    });
+
+    initCanecoPresets();
+    window.ElectroDzPowerBalancePro?.init?.();
+
+    document.getElementById('sel-open-trip-curves')?.addEventListener('click', () => {
+      activateCalc('trip_curve');
+      const run = () => {
+        if (window.ElectroDzTripCurve?.loadPilotNsx160) window.ElectroDzTripCurve.loadPilotNsx160();
+      };
+      if (window.ElectroDzTripCurveCatalog?.getCatalog()) run();
+      else window.ElectroDzTripCurveCatalog?.loadCatalog().then(run);
     });
   });
 })();
