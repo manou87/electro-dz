@@ -195,24 +195,52 @@
     });
   }
 
-  const MOBILE_COLS = [
-    ['bal-col-ref', 'balColRef'],
-    ['bal-col-schema', 'balColSchema'],
-    ['bal-col-desig', 'balColLabel'],
-    ['bal-col-location', 'balColLocation'],
-    ['bal-col-board', 'balColBoard'],
-    ['bal-col-pi', 'balColPi'],
-    ['bal-col-ku', 'balColKu'],
-    ['bal-col-ks', 'balColKs'],
-    ['bal-col-cos', 'balColCos'],
+  const MOBILE_COL_CLASSES = [
+    'bal-col-ref',
+    'bal-col-schema',
+    'bal-col-desig',
+    'bal-col-location',
+    'bal-col-board',
+    'bal-col-pi',
+    'bal-col-ku',
+    'bal-col-ks',
+    'bal-col-cos',
   ];
+
+  /** Libellé complet par champ (titre + sous-titre + unité) pour affichage mobile. */
+  function mobileFieldLabel(cls) {
+    switch (cls) {
+      case 'bal-col-ref':
+        return `${tr('balColRef')} (${tr('unitRef')})`;
+      case 'bal-col-schema':
+        return `${tr('balColSchema')} (${tr('unitSchema')})`;
+      case 'bal-col-desig':
+        return `${tr('balColLabel')} (${tr('unitCatalog')})`;
+      case 'bal-col-location':
+        return tr('balColLocation');
+      case 'bal-col-board':
+        return tr('balColBoard');
+      case 'bal-col-pi':
+        return `${tr('balColPi')} (${tr('unitW')})`;
+      case 'bal-col-ku':
+        return `${tr('balColKu')} — ${tr('balColKuSub')} (${tr('unitCoef')})`;
+      case 'bal-col-ks':
+        return `${tr('balColKs')} — ${tr('balColKsSub')} (${tr('unitCoef')})`;
+      case 'bal-col-cos':
+        return `${tr('balColCos')} — ${tr('balColCosSub')}`;
+      default:
+        return '';
+    }
+  }
 
   function applyMobileLabels() {
     host()?.querySelectorAll('[data-balance-row]').forEach((row) => {
-      MOBILE_COLS.forEach(([cls, key]) => {
+      MOBILE_COL_CLASSES.forEach((cls) => {
         const el = row.querySelector(`.${cls}`);
-        if (el) el.setAttribute('data-lbl', tr(key));
+        if (el) el.setAttribute('data-lbl', mobileFieldLabel(cls));
       });
+      const rm = row.querySelector('.bal-row-remove');
+      if (rm) rm.setAttribute('data-lbl', tr('balColActions'));
     });
   }
 
