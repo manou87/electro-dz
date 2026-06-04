@@ -65,7 +65,7 @@
       autosave: 0,
       modified: false,
       editable: false,
-      libs: 'electrical;general',
+      libs: 'electrical;general;signs',
       title: project.board || 'Unifilaire',
     });
   }

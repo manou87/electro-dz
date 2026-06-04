@@ -154,16 +154,20 @@
       .replace(/"/g, '&quot;');
   }
 
-  var EDGE_WIRE =
-    'edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#0284c7;endArrow=none;startArrow=none;';
+  var EDGE_V =
+    'edgeStyle=none;rounded=0;html=1;strokeWidth=2;strokeColor=#0284c7;endArrow=none;startArrow=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;';
   var SYM = {
     ac: 'shape=mxgraph.electrical.signal_sources.ac_source;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;',
     breaker:
-      'shape=mxgraph.electrical.electro_mechanical.circuit_breaker;html=1;whiteSpace=wrap;aspect=fixed;align=center;verticalLabelPosition=bottom;verticalAlign=top;strokeColor=#0f172a;fillColor=#ffffff;fontSize=10;',
+      'shape=mxgraph.electrical.electro_mechanical.circuit_breaker;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;',
     busH:
       'shape=mxgraph.electrical.transmission.2_line_bus;html=1;strokeWidth=2;strokeColor=#0284c7;fillColor=none;align=center;',
     feeder: 'line;strokeWidth=2;strokeColor=#0284c7;direction=south;html=1;',
   };
+  var TXT =
+    'text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;fontColor=#1e293b;';
+  var BRK_W = 75;
+  var BRK_H = 20;
 
   var TEMPLATE_ICON = {
     light_rooms: 'lighting',
@@ -266,16 +270,12 @@
     );
   }
 
-  /** Unifilaire simple : source → protection → ligne → charge (série, peu de fils). */
+  /** Unifilaire : symboles vides + texte à côté, fil vertical droit, 1 départ = chaîne simple. */
   function projectToDrawioXml(project) {
     var circuits = project.circuits || [];
     var n = Math.max(1, circuits.length);
-    var colW = 148;
-    var busY = 228;
-    var busX0 = 100;
-    var busLen = Math.max(360, n * colW + 120);
-    var pageW = Math.max(1169, busX0 + busLen + 80);
-    var pageH = 620;
+    var pageW = 900;
+    var pageH = 560;
     var cells = [];
     var id = 2;
 
@@ -306,13 +306,21 @@
       return cid;
     }
 
+    function addSym(style, x, y, w, h) {
+      return addVertex('', style, x, y, w, h);
+    }
+
+    function addTxt(text, x, y, w, h) {
+      return addVertex(text, TXT, x, y, w, h);
+    }
+
     function addEdge(source, target) {
       var cid = nextId();
       cells.push(
         '<mxCell id="' +
           cid +
           '" style="' +
-          EDGE_WIRE +
+          EDGE_V +
           '" edge="1" parent="1" source="' +
           source +
           '" target="' +
@@ -320,6 +328,18 @@
           '"><mxGeometry relative="1" as="geometry"/></mxCell>'
       );
       return cid;
+    }
+
+    function stackDepart(cx, y0, c) {
+      var y = y0;
+      var qId = addSym(SYM.breaker, cx - BRK_W / 2, y, BRK_W, BRK_H);
+      addTxt(departProtectionLabel(c), cx + BRK_W / 2 + 6, y - 2, 130, 44);
+      y += 28;
+      addSym(SYM.feeder, cx - 1, y, 3, 70);
+      y += 70;
+      var imgId = addVertex('', imageStyle(resolveLoadIcon(c)), cx - 36, y, 72, 72);
+      addTxt((c.label || 'Charge') + '\n' + c.pdemW + ' W', cx - 48, y + 74, 110, 32);
+      return { top: y0, bottom: y + 108, qId: qId, imgId: imgId };
     }
 
     var title = project.meta.ref
@@ -347,38 +367,49 @@
       20
     );
 
-    var feedX = busX0 + 40;
-    var srcId = addVertex(sourceLabel(project.supply), SYM.ac, feedX - 20, 72, 56, 56);
-    var mainProtId = addVertex(mainProtectionLabel(project), SYM.breaker, feedX - 30, 138, 70, 44);
-    var busId = addVertex(
-      project.supply.isTri ? 'Barre 400 V' : 'Barre 230 V',
-      SYM.busH,
-      busX0,
-      busY,
-      busLen,
-      24
-    );
+    if (n === 1) {
+      var c0 = circuits[0];
+      var cx = 420;
+      var y = 76;
+      var srcId = addSym(SYM.ac, cx - 30, y, 60, 60);
+      addTxt(sourceLabel(project.supply), cx + 36, y + 6, 160, 52);
+      y += 68;
+      var qgId = addSym(SYM.breaker, cx - BRK_W / 2, y, BRK_W, BRK_H);
+      addTxt(mainProtectionLabel(project), cx + BRK_W / 2 + 6, y - 2, 170, 48);
+      y += 34;
+      addSym(SYM.feeder, cx - 1, y, 3, 48);
+      y += 48;
+      var dep = stackDepart(cx, y, c0);
+      addEdge(srcId, qgId);
+      addEdge(qgId, dep.qId);
+      addEdge(dep.qId, dep.imgId);
+      pageH = Math.max(520, dep.bottom + 40);
+    } else {
+      var colW = 160;
+      var busX0 = 120;
+      var busLen = Math.max(400, n * colW + 80);
+      pageW = Math.max(1000, busX0 + busLen + 100);
+      var cxFeed = busX0 + 50;
+      var busY = 210;
+      var y = 76;
+      var srcId = addSym(SYM.ac, cxFeed - 30, y, 60, 60);
+      addTxt(sourceLabel(project.supply), cxFeed + 36, y + 6, 160, 52);
+      y += 68;
+      var qgId = addSym(SYM.breaker, cxFeed - BRK_W / 2, y, BRK_W, BRK_H);
+      addTxt(mainProtectionLabel(project), cxFeed + BRK_W / 2 + 6, y - 2, 170, 48);
+      y += 34;
+      addSym(SYM.feeder, cxFeed - 1, y, 3, busY - y + 8);
+      var busId = addSym(SYM.busH, busX0, busY, busLen, 24);
+      addTxt(project.supply.isTri ? 'Barre 400 V' : 'Barre 230 V', busX0 + busLen / 2 - 40, busY - 18, 90, 16);
+      addEdge(srcId, qgId);
+      addEdge(qgId, busId);
 
-    addEdge(srcId, mainProtId);
-    addEdge(mainProtId, busId);
-
-    var feederTop = busY + 28;
-    var feederH = 130;
-
-    circuits.forEach(function (c, i) {
-      var cx = busX0 + 56 + i * colW;
-      addVertex('', SYM.feeder, cx - 1, feederTop, 3, feederH);
-      addVertex(departProtectionLabel(c), SYM.breaker, cx - 34, feederTop + 4, 68, 32);
-      var loadY = feederTop + 52;
-      addVertex(
-        (c.label || 'Charge') + '\n' + c.pdemW + ' W',
-        imageStyle(resolveLoadIcon(c)),
-        cx - 32,
-        loadY,
-        64,
-        64
-      );
-    });
+      circuits.forEach(function (c, i) {
+        var cx = busX0 + 90 + i * colW;
+        stackDepart(cx, busY + 32, c);
+      });
+      pageH = 580;
+    }
 
     return (
       '<mxfile host="DZSWISS ELEC" agent="unifilar-from-balance" version="22.1.0">' +
