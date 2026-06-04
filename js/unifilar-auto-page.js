@@ -56,40 +56,13 @@
     return u.toString();
   }
 
+  /** Aperçu = SVG IEC uniquement (pas draw.io : évite ancien cache et fils diagonaux). */
   function loadPreviewInEmbed() {
-    if (!project || !drawioFrame) return;
-    var xml = U.projectToDrawioXml(project);
-    whenEmbedReady({
-      action: 'load',
-      xml: xml,
-      autosave: 0,
-      modified: false,
-      editable: false,
-      libs: 'electrical;general;signs',
-      title: project.board || 'Unifilaire',
-    });
+    return;
   }
 
   function initEmbedOnce() {
-    if (!drawioFrame || drawioFrame.dataset.init === '1') return;
-    drawioFrame.dataset.init = '1';
-    drawioFrame.src = embedUrl();
-    window.addEventListener('message', function (evt) {
-      if (evt.origin !== EMBED_ORIGIN) return;
-      var msg;
-      try {
-        msg = JSON.parse(evt.data);
-      } catch (e) {
-        return;
-      }
-      if (msg.event === 'init') {
-        embedReady = true;
-        if (previewLoading) previewLoading.hidden = true;
-        if (drawioFrame) drawioFrame.hidden = false;
-        flushEmbedQueue();
-        loadPreviewInEmbed();
-      }
-    });
+    if (drawioFrame) drawioFrame.hidden = true;
   }
 
   function loadSourceReport() {
@@ -163,6 +136,11 @@
 
   function refreshPreview() {
     if (!previewEl || !project) return;
+    if (!window.ElectroDzIecSymbols) {
+      previewEl.innerHTML =
+        '<p style="color:#b91c1c;padding:12px">Bibliothèque IEC non chargée. Rechargez la page (Ctrl+F5).</p>';
+      return;
+    }
     U.saveProject(project);
     if (previewLoading) previewLoading.hidden = true;
     if (drawioFrame) drawioFrame.hidden = true;
@@ -170,7 +148,6 @@
       '<div class="unif-svg-wrap" style="overflow:auto;background:#fff;border-radius:8px;padding:8px">' +
       (U.projectToSvgPro ? U.projectToSvgPro(project) : '') +
       '</div>';
-    if (embedReady) loadPreviewInEmbed();
   }
 
   function generateFromBoard() {
@@ -200,9 +177,11 @@
   }
 
   function initFromStorage() {
-    project = U.loadProject();
+    if (U.purgeLegacyUnifilarCache) U.purgeLegacyUnifilarCache();
+    var forceFresh = /[?&]fresh=1/.test(window.location.search || '');
     sourceReport = loadSourceReport();
-    if (project && project.circuits && project.circuits.length) {
+    project = forceFresh ? null : U.loadProject();
+    if (project && project.circuits && project.circuits.length && !forceFresh) {
       showContent(true);
       initEmbedOnce();
       if (sourceReport) rebuildBoardSelect();
@@ -215,6 +194,9 @@
       generateFromBoard();
       showContent(true);
       initEmbedOnce();
+      if (forceFresh && history.replaceState) {
+        history.replaceState(null, '', 'unifilaire-auto.html');
+      }
       return;
     }
     showContent(false);

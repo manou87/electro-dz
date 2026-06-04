@@ -124,21 +124,24 @@
     return m.project || t("page.title");
   }
 
-  function loadIntoEditor(xml) {
+  function loadIntoEditor(xml, opts) {
+    opts = opts || {};
     whenReady({
       action: "load",
       xml: xml,
-      autosave: 1,
-      modified: "modified",
+      autosave: opts.autosave !== undefined ? opts.autosave : 1,
+      modified: opts.modified !== undefined ? opts.modified : "modified",
       title: diagramTitle(),
-      libs: "electrical;general;floorplan;signs;networking",
+      libs: opts.libs !== undefined ? opts.libs : "electrical;general;floorplan;signs;networking",
       exportProtocol: true,
     });
   }
 
   function syncMetaFromUnifilarProject() {
     try {
-      var raw = localStorage.getItem("electrodz-unifilar-project-v1");
+      var raw =
+        localStorage.getItem("electrodz-unifilar-project-v2") ||
+        localStorage.getItem("electrodz-unifilar-project-v1");
       if (!raw) return;
       var proj = JSON.parse(raw);
       var m = proj.meta || {};
@@ -155,17 +158,44 @@
     } catch (e) {}
   }
 
+  function purgeLegacyUnifilarStorage() {
+    ["electrodz-unifilar-project-v1", "electrodz-unifilar-drawio-v1"].forEach(function (k) {
+      try {
+        localStorage.removeItem(k);
+      } catch (e) {}
+    });
+  }
+
+  function loadUnifilarXmlFresh() {
+    var U = window.ElectroDzUnifilarFromBalance;
+    if (!U || !window.ElectroDzIecSymbols) return null;
+    purgeLegacyUnifilarStorage();
+    var proj = U.loadProject();
+    if (!proj || !proj.circuits || !proj.circuits.length) return null;
+    var xml = U.projectToDrawioXml(proj);
+    try {
+      localStorage.setItem(U.STORAGE_DRAWIO, xml);
+    } catch (e2) {}
+    return xml;
+  }
+
   function initEditorContent() {
     var params = new URLSearchParams(window.location.search);
     if (params.get("from") === "unifilar") {
       syncMetaFromUnifilarProject();
+      var freshXml = loadUnifilarXmlFresh();
+      if (freshXml && freshXml.length > 80) {
+        loadIntoEditor(freshXml, { libs: "", autosave: 0, modified: false });
+        return;
+      }
       try {
-        var unifXml = localStorage.getItem("electrodz-unifilar-drawio-v1");
-        if (unifXml && unifXml.length > 80) {
-          loadIntoEditor(unifXml);
+        var unifXml = localStorage.getItem("electrodz-unifilar-drawio-v2");
+        if (unifXml && unifXml.indexOf("data:image/svg+xml") !== -1 && unifXml.length > 80) {
+          loadIntoEditor(unifXml, { libs: "", autosave: 0, modified: false });
           return;
         }
       } catch (e) {}
+      purgeLegacyUnifilarStorage();
     }
     var draft = null;
     try {

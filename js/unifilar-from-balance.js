@@ -4,8 +4,13 @@
 (function (g) {
   'use strict';
 
-  var STORAGE_PROJECT = 'electrodz-unifilar-project-v1';
-  var STORAGE_DRAWIO = 'electrodz-unifilar-drawio-v1';
+  var STORAGE_PROJECT = 'electrodz-unifilar-project-v2';
+  var STORAGE_DRAWIO = 'electrodz-unifilar-drawio-v2';
+  var SCHEMA_VERSION = 2;
+  var LEGACY_KEYS = [
+    'electrodz-unifilar-project-v1',
+    'electrodz-unifilar-drawio-v1',
+  ];
 
   var STANDARD_IN = [10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125];
 
@@ -114,6 +119,7 @@
 
     return {
       version: 1,
+      schemaVersion: SCHEMA_VERSION,
       createdAt: new Date().toISOString(),
       meta: {
         ref: meta.ref || '',
@@ -155,7 +161,7 @@
   }
 
   var EDGE_V =
-    'edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#0284c7;endArrow=none;startArrow=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;';
+    'edgeStyle=none;rounded=0;html=1;strokeWidth=2;strokeColor=#0284c7;endArrow=none;startArrow=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;';
   var FEEDER_V = 'line;strokeWidth=2;strokeColor=#0284c7;direction=south;html=1;';
 
   function iec() {
@@ -514,10 +520,23 @@
     return projectToSvgPro(project);
   }
 
+  function purgeLegacyUnifilarCache() {
+    LEGACY_KEYS.forEach(function (key) {
+      try {
+        localStorage.removeItem(key);
+        sessionStorage.removeItem(key);
+      } catch (e) {}
+    });
+  }
+
   function saveProject(project) {
+    if (!iec()) return false;
     try {
+      project.schemaVersion = SCHEMA_VERSION;
+      purgeLegacyUnifilarCache();
       localStorage.setItem(STORAGE_PROJECT, JSON.stringify(project));
       localStorage.setItem(STORAGE_DRAWIO, projectToDrawioXml(project));
+      sessionStorage.setItem(STORAGE_DRAWIO, projectToDrawioXml(project));
     } catch (e) {
       return false;
     }
@@ -527,10 +546,20 @@
   function loadProject() {
     try {
       var raw = localStorage.getItem(STORAGE_PROJECT);
-      return raw ? JSON.parse(raw) : null;
+      var project = raw ? JSON.parse(raw) : null;
+      if (project && project.schemaVersion !== SCHEMA_VERSION) return null;
+      return project;
     } catch (e) {
       return null;
     }
+  }
+
+  function ensureIecLibrary() {
+    if (!iec()) {
+      console.warn('[unifilar] iec-symbol-library.js manquant — symboles non disponibles.');
+      return false;
+    }
+    return true;
   }
 
   function listBoardsFromReport(report) {
@@ -546,6 +575,9 @@
   g.ElectroDzUnifilarFromBalance = {
     STORAGE_PROJECT: STORAGE_PROJECT,
     STORAGE_DRAWIO: STORAGE_DRAWIO,
+    SCHEMA_VERSION: SCHEMA_VERSION,
+    purgeLegacyUnifilarCache: purgeLegacyUnifilarCache,
+    ensureIecLibrary: ensureIecLibrary,
     buildProjectFromReport: buildProjectFromReport,
     projectToDrawioXml: projectToDrawioXml,
     projectToSvg: projectToSvg,

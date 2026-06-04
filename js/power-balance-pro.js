@@ -762,8 +762,11 @@ ${printScript}
       sessionStorage.setItem('electrodz-unifilar-source-report-v1', payload);
       localStorage.setItem('electrodz-unifilar-source-report-v1', payload);
     } catch (_) { /* ignore */ }
-    U.saveProject(built);
-    window.location.href = 'schemas-plans.html?from=unifilar';
+    if (!U.saveProject(built)) {
+      alert(tr('balUnifilarErr') + ' (bibliothèque symboles IEC non chargée — rechargez la page.)');
+      return;
+    }
+    window.location.href = 'unifilaire-auto.html?fresh=1';
   }
 
   function refreshRowSelects() {
