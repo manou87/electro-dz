@@ -5,6 +5,8 @@
   'use strict';
 
   const STORAGE_META = 'electrodz-bal-pro-meta';
+  const STORAGE_SAVES = 'electrodz-bal-saved-v1';
+  const MAX_SAVED = 30;
   const MIN_ROWS = 1;
   const MAX_ROWS = 40;
 
@@ -515,12 +517,205 @@ ${printScript}
     const dock = document.getElementById('bal-export-dock');
     if (bar) bar.classList.toggle('visible', show);
     if (dock) dock.hidden = !show;
-    const unifBtn = document.getElementById('bal-unifilar');
-    if (unifBtn) unifBtn.disabled = !show;
+    updateUnifilarButtons();
+  }
+
+  function formHasCharges() {
+    return collectRows().some((row) => {
+      const pi = parseFloat(String(row.p).replace(',', '.'));
+      return !isNaN(pi) && pi > 0;
+    });
+  }
+
+  function ensureReport() {
+    if (lastReport?.r?.ok) return lastReport;
+    const C = g.ElectroDzCalc;
+    if (!C?.calculatePowerBalance || !formHasCharges()) return null;
+    const form = collectForm();
+    const r = C.calculatePowerBalance({
+      rows: form.rows,
+      voltage: form.voltage,
+      lang: form.lang,
+    });
+    if (r?.ok) {
+      setLastReport(r, form.meta);
+      return lastReport;
+    }
+    return null;
+  }
+
+  function updateUnifilarButtons() {
+    const can = !!(lastReport?.r?.ok) || formHasCharges();
+    ['bal-unifilar', 'bal-unifilar-main'].forEach((id) => {
+      const btn = document.getElementById(id);
+      if (btn) btn.disabled = !can;
+    });
+  }
+
+  function setSavedStatus(msg) {
+    const el = document.getElementById('bal-saved-status');
+    if (el) el.textContent = msg || '';
+  }
+
+  function loadSavedList() {
+    try {
+      const raw = localStorage.getItem(STORAGE_SAVES);
+      const list = raw ? JSON.parse(raw) : [];
+      return Array.isArray(list) ? list : [];
+    } catch (_) {
+      return [];
+    }
+  }
+
+  function writeSavedList(list) {
+    try {
+      localStorage.setItem(STORAGE_SAVES, JSON.stringify(list.slice(0, MAX_SAVED)));
+    } catch (_) {
+      alert(tr('balSaveErrStorage'));
+    }
+  }
+
+  function defaultSaveName() {
+    const m = getMeta();
+    const base = m.ref || m.client || m.site || tr('balSaveDefaultName');
+    const d = new Date().toLocaleDateString(getLang() === 'ar' ? 'ar-DZ' : 'fr-CH');
+    return `${base} — ${d}`;
+  }
+
+  function refreshSavedSelect(selectedId) {
+    const sel = document.getElementById('bal-saved-select');
+    if (!sel) return;
+    const list = loadSavedList().sort((a, b) => (b.savedAt || '').localeCompare(a.savedAt || ''));
+    const pickLabel = tr('balSavedPick');
+    sel.innerHTML =
+      `<option value="">${esc(pickLabel)}</option>` +
+      list
+        .map((item) => {
+          const label = item.name || item.id;
+          const date = item.savedAt
+            ? new Date(item.savedAt).toLocaleString(getLang() === 'ar' ? 'ar-DZ' : 'fr-CH', {
+                dateStyle: 'short',
+                timeStyle: 'short',
+              })
+            : '';
+          return `<option value="${esc(item.id)}"${item.id === selectedId ? ' selected' : ''}>${esc(label)}${date ? ' · ' + esc(date) : ''}</option>`;
+        })
+        .join('');
+  }
+
+  function applyVoltage(voltage) {
+    const v = String(voltage || '230');
+    const hidden = document.getElementById('balance-u');
+    if (hidden) hidden.value = v;
+    document.querySelectorAll('[data-voltage-target="balance-u"] .voltage-btn').forEach((btn) => {
+      const on = btn.getAttribute('data-v') === v;
+      btn.classList.toggle('active', on);
+    });
+  }
+
+  function clearAllRows() {
+    const h = host();
+    if (!h) return;
+    h.querySelectorAll('[data-balance-row]').forEach((row) => row.remove());
+  }
+
+  function applyForm(form) {
+    if (!form) return;
+    const m = form.meta || {};
+    const refEl = document.getElementById('bal-pro-ref');
+    const siteEl = document.getElementById('bal-pro-site');
+    const clientEl = document.getElementById('bal-pro-client');
+    const engEl = document.getElementById('bal-pro-engineer');
+    if (refEl) refEl.value = m.ref || '';
+    if (siteEl) siteEl.value = m.site || '';
+    if (clientEl) clientEl.value = m.client || '';
+    if (engEl) engEl.value = m.engineer || '';
+    saveMeta();
+    applyVoltage(form.voltage || '230');
+    clearAllRows();
+    const rows = form.rows && form.rows.length ? form.rows : [{}];
+    rows.forEach((row) => addRow(row));
+    while (host().querySelectorAll('[data-balance-row]').length < MIN_ROWS) addRow();
+    renumberRefs();
+    updateRemoveButtons();
+    applyAllUnits();
+    const savedReport = form.lastReport;
+    if (savedReport?.r?.ok) {
+      setLastReport(savedReport.r, savedReport.meta || m);
+    } else if (savedReport?.ok) {
+      setLastReport(savedReport, m);
+    } else {
+      lastReport = null;
+      const bar = document.getElementById('bal-export');
+      const dock = document.getElementById('bal-export-dock');
+      if (bar) bar.classList.remove('visible');
+      if (dock) dock.hidden = true;
+      updateUnifilarButtons();
+    }
+  }
+
+  function saveBilan() {
+    saveMeta();
+    if (!formHasCharges()) {
+      alert(tr('balSaveNeedRows'));
+      return;
+    }
+    const nameIn = window.prompt(tr('balSavePrompt'), defaultSaveName());
+    if (nameIn == null) return;
+    const name = nameIn.trim() || defaultSaveName();
+    const form = collectForm();
+    const entry = {
+      id: 'bal-' + Date.now(),
+      name,
+      savedAt: new Date().toISOString(),
+      form: {
+        rows: form.rows,
+        voltage: form.voltage,
+        meta: form.meta,
+        lastReport: lastReport?.r?.ok ? lastReport : ensureReport() || null,
+      },
+    };
+    const list = loadSavedList();
+    list.unshift(entry);
+    writeSavedList(list);
+    refreshSavedSelect(entry.id);
+    setSavedStatus(tr('balSaveOk').replace('{name}', name));
+  }
+
+  function loadBilan() {
+    const sel = document.getElementById('bal-saved-select');
+    const id = sel?.value;
+    if (!id) {
+      alert(tr('balLoadPick'));
+      return;
+    }
+    const item = loadSavedList().find((x) => x.id === id);
+    if (!item?.form) {
+      alert(tr('balLoadErr'));
+      return;
+    }
+    applyForm(item.form);
+    refreshSavedSelect(id);
+    setSavedStatus(tr('balLoadOk').replace('{name}', item.name || id));
+  }
+
+  function deleteBilan() {
+    const sel = document.getElementById('bal-saved-select');
+    const id = sel?.value;
+    if (!id) {
+      alert(tr('balLoadPick'));
+      return;
+    }
+    if (!confirm(tr('balDeleteConfirm'))) return;
+    const list = loadSavedList().filter((x) => x.id !== id);
+    writeSavedList(list);
+    refreshSavedSelect('');
+    setSavedStatus(tr('balDeleteOk'));
   }
 
   function goToUnifilarAuto() {
-    if (!lastReport?.r?.ok) {
+    const report = ensureReport();
+    if (!report?.r?.ok) {
       alert(tr('balUnifilarNeedCalc'));
       return;
     }
@@ -576,6 +771,14 @@ ${printScript}
     document.getElementById('bal-export-html')?.addEventListener('click', downloadReportHtml);
     document.getElementById('bal-export-txt')?.addEventListener('click', exportTxt);
     document.getElementById('bal-unifilar')?.addEventListener('click', goToUnifilarAuto);
+    document.getElementById('bal-unifilar-main')?.addEventListener('click', goToUnifilarAuto);
+    document.getElementById('bal-save-btn')?.addEventListener('click', saveBilan);
+    document.getElementById('bal-load-btn')?.addEventListener('click', loadBilan);
+    document.getElementById('bal-delete-save-btn')?.addEventListener('click', deleteBilan);
+    refreshSavedSelect('');
+    updateUnifilarButtons();
+    host()?.addEventListener('input', () => updateUnifilarButtons());
+    host()?.addEventListener('change', () => updateUnifilarButtons());
     ['bal-pro-ref', 'bal-pro-site', 'bal-pro-client', 'bal-pro-engineer'].forEach((id) => {
       document.getElementById(id)?.addEventListener('change', saveMeta);
     });
@@ -584,6 +787,8 @@ ${printScript}
   function onLangChange() {
     refreshRowSelects();
     applyAllUnits();
+    const sel = document.getElementById('bal-saved-select');
+    refreshSavedSelect(sel?.value || '');
   }
 
   g.ElectroDzPowerBalancePro = {
@@ -596,5 +801,9 @@ ${printScript}
     getLastReport: function () {
       return lastReport;
     },
+    saveBilan,
+    loadBilan,
+    refreshSavedSelect,
+    ensureReport,
   };
 })(typeof window !== 'undefined' ? window : globalThis);

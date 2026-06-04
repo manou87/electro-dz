@@ -108,6 +108,17 @@
     .bal-row-remove{border-radius:6px;border:1px solid rgba(248,113,113,0.35);background:rgba(248,113,113,0.1);color:#f87171;cursor:pointer}
     .bal-row-remove:disabled{opacity:0.25;cursor:not-allowed}
     .bal-toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0;align-items:center}
+    .bal-saved-bar{margin-top:14px;padding:14px;border-radius:12px;border:1px solid rgba(124,58,237,0.35);background:rgba(124,58,237,0.08)}
+    .bal-saved-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+    .bal-saved-title{font-size:0.8rem;font-weight:800;color:#c4b5fd;flex:1 1 100%}
+    .bal-saved-select{flex:1 1 200px;min-width:160px;padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:#1e293b;color:#f1f5f9;font-size:0.85rem}
+    .bal-saved-btn{padding:8px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.06);color:#e2e8f0;font-size:0.82rem;font-weight:700;cursor:pointer}
+    .bal-saved-btn:hover{border-color:rgba(250,204,21,0.45);color:#fde047}
+    .bal-saved-btn--save{background:#059669;color:#fff;border-color:#059669}
+    .bal-unifilar-main-btn{display:block;width:100%;padding:12px 16px;border:none;border-radius:10px;background:linear-gradient(135deg,#7c3aed,#5b21b6);color:#fff;font-size:0.95rem;font-weight:800;cursor:pointer;letter-spacing:0.02em}
+    .bal-unifilar-main-btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+    .bal-unifilar-main-btn:disabled{opacity:0.45;cursor:not-allowed;transform:none}
+    .bal-saved-status{font-size:0.75rem;color:#86efac;margin-top:6px;min-height:1.1em}
     .bal-export-dock{margin-top:18px;padding:16px 18px;border-radius:14px;border:2px solid rgba(5,150,105,0.5);background:linear-gradient(180deg,rgba(5,150,105,0.14),rgba(5,150,105,0.06))}
     .bal-export-dock[hidden]{display:none!important}
     .bal-export-dock-title{margin:0 0 12px;font-size:0.95rem;font-weight:800;color:#6ee7b7;letter-spacing:0.02em}
@@ -576,6 +587,19 @@
         </div>
         <div class="bal-toolbar">
           <button type="button" class="tc-mini-btn" id="bal-add-row" data-i18n="balAddRow"></button>
+        </div>
+        <div class="bal-saved-bar">
+          <div class="bal-saved-row">
+            <span class="bal-saved-title" data-i18n="balSavedTitle">Mes bilans enregistrés</span>
+            <select id="bal-saved-select" aria-label="Bilans enregistrés">
+              <option value="" data-i18n="balSavedPick">— Choisir un bilan —</option>
+            </select>
+            <button type="button" class="bal-saved-btn bal-saved-btn--save" id="bal-save-btn" data-i18n="balSave">Enregistrer le bilan</button>
+            <button type="button" class="bal-saved-btn" id="bal-load-btn" data-i18n="balLoad">Charger</button>
+            <button type="button" class="bal-saved-btn" id="bal-delete-save-btn" data-i18n="balDeleteSave">Supprimer</button>
+          </div>
+          <button type="button" class="bal-unifilar-main-btn" id="bal-unifilar-main" data-i18n="balUnifilar">Schéma unifilaire →</button>
+          <p class="bal-saved-status" id="bal-saved-status" aria-live="polite"></p>
         </div>
         <p style="font-size:0.72rem;color:var(--muted);margin-top:10px;line-height:1.4" data-i18n="balDisclaimer"></p>
       </div>
