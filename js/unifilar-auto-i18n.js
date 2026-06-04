@@ -4,10 +4,10 @@
       'meta.title': 'Unifilaire auto — DZSWISS ELEC',
       'page.title': 'Schéma unifilaire (depuis le bilan)',
       'page.lead':
-        'Présentation type bureau d’études (CYPELEC) : compteur, disjoncteur, barre, départs verticaux, tableau des puissances — à partir du bilan.',
+        'Génération automatique avec le même moteur que diagrams.net (draw.io) : bibliothèque Engineering → Electrical, fils droits, symboles mxgraph.',
       'symbols.note':
-        'Aperçu SVG professionnel ci-dessous. « Ouvrir dans l’éditeur » = diagrams.net pour retouches. Pas un clone Caneco/CYPELEC (pas de ΔU/câbles auto).',
-      'preview.loading': 'Chargement de l’aperçu diagrams.net…',
+        'Méthode identique à l’éditeur draw.io pro (pas de symboles dessinés à la main). Données issues du bilan — à valider sur site.',
+      'preview.loading': 'Chargement diagrams.net (symboles Electrical)…',
       'btn.regen': 'Regénérer',
       'btn.editor': 'Ouvrir dans l’éditeur',
       'btn.print': 'Imprimer',

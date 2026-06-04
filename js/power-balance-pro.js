@@ -763,7 +763,7 @@ ${printScript}
       localStorage.setItem('electrodz-unifilar-source-report-v1', payload);
     } catch (_) { /* ignore */ }
     if (!U.saveProject(built)) {
-      alert(tr('balUnifilarErr') + ' (bibliothèque symboles IEC non chargée — rechargez la page.)');
+      alert(tr('balUnifilarErr') + ' (moteur diagrams.net non chargé — rechargez la page.)');
       return;
     }
     window.location.href = 'unifilaire-auto.html?fresh=1';

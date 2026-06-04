@@ -1,5 +1,5 @@
 /**
- * Page unifilaire-auto.html — aperçu diagrams.net + tableau des départs
+ * Page unifilaire-auto.html — aperçu diagrams.net (même moteur que draw.io pro).
  */
 (function () {
   var U = window.ElectroDzUnifilarFromBalance;
@@ -52,17 +52,62 @@
     u.searchParams.set('noSaveBtn', '1');
     u.searchParams.set('noExitBtn', '1');
     u.searchParams.set('saveAndExit', '0');
+    u.searchParams.set('ui', 'min');
     u.searchParams.set('lang', lang() === 'ar' ? 'ar' : 'fr');
     return u.toString();
   }
 
-  /** Aperçu = SVG IEC uniquement (pas draw.io : évite ancien cache et fils diagonaux). */
   function loadPreviewInEmbed() {
-    return;
+    if (!project || !U) return;
+    var xml = U.projectToDrawioXml(project);
+    if (!xml || xml.indexOf('mxgraph.electrical') === -1) {
+      if (previewLoading) {
+        previewLoading.textContent = 'Moteur draw.io non chargé — rechargez la page (Ctrl+F5).';
+      }
+      return;
+    }
+    whenEmbedReady({
+      action: 'load',
+      xml: xml,
+      autosave: 0,
+      modified: false,
+      editable: false,
+      libs: 'electrical',
+      title: project.board || 'Unifilaire',
+    });
   }
 
   function initEmbedOnce() {
-    if (drawioFrame) drawioFrame.hidden = true;
+    if (!drawioFrame || drawioFrame.dataset.init === '1') return;
+    drawioFrame.dataset.init = '1';
+    drawioFrame.removeAttribute('hidden');
+    drawioFrame.src = embedUrl();
+    window.addEventListener('message', function (evt) {
+      if (evt.origin !== EMBED_ORIGIN) return;
+      var msg;
+      try {
+        msg = JSON.parse(evt.data);
+      } catch (e) {
+        return;
+      }
+      if (msg.event === 'configure') {
+        postEmbed({
+          action: 'configure',
+          config: { defaultLibraries: 'electrical' },
+        });
+        return;
+      }
+      if (msg.event === 'init') {
+        embedReady = true;
+        if (previewLoading) previewLoading.hidden = true;
+        flushEmbedQueue();
+        loadPreviewInEmbed();
+        return;
+      }
+      if (msg.event === 'load') {
+        if (previewLoading) previewLoading.hidden = true;
+      }
+    });
   }
 
   function loadSourceReport() {
@@ -135,19 +180,17 @@
   }
 
   function refreshPreview() {
-    if (!previewEl || !project) return;
-    if (!window.ElectroDzIecSymbols) {
-      previewEl.innerHTML =
-        '<p style="color:#b91c1c;padding:12px">Bibliothèque IEC non chargée. Rechargez la page (Ctrl+F5).</p>';
+    if (!project) return;
+    if (!window.ElectroDzUnifilarDrawio) {
+      if (previewEl) {
+        previewEl.innerHTML =
+          '<p style="color:#b91c1c;padding:12px">Bibliothèque draw.io manquante. Rechargez la page.</p>';
+      }
       return;
     }
     U.saveProject(project);
-    if (previewLoading) previewLoading.hidden = true;
-    if (drawioFrame) drawioFrame.hidden = true;
-    previewEl.innerHTML =
-      '<div class="unif-svg-wrap" style="overflow:auto;background:#fff;border-radius:8px;padding:8px">' +
-      (U.projectToSvgPro ? U.projectToSvgPro(project) : '') +
-      '</div>';
+    initEmbedOnce();
+    if (embedReady) loadPreviewInEmbed();
   }
 
   function generateFromBoard() {
@@ -183,17 +226,15 @@
     project = forceFresh ? null : U.loadProject();
     if (project && project.circuits && project.circuits.length && !forceFresh) {
       showContent(true);
-      initEmbedOnce();
-      if (sourceReport) rebuildBoardSelect();
       renderTable();
       refreshPreview();
+      if (sourceReport) rebuildBoardSelect();
       return;
     }
     if (sourceReport && sourceReport.r && sourceReport.r.ok) {
       rebuildBoardSelect();
       generateFromBoard();
       showContent(true);
-      initEmbedOnce();
       if (forceFresh && history.replaceState) {
         history.replaceState(null, '', 'unifilaire-auto.html');
       }
