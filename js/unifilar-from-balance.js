@@ -241,74 +241,34 @@
     );
   }
 
-  function sourceLabel(supply) {
-    if (supply.isTri) {
-      return '400 V — 3Ph + N + PE\n50 Hz\nL1 · L2 · L3 · N · PE';
-    }
-    return '230 V — 1Ph + N + PE\n50 Hz\nL · N · PE';
+  /** Libellés courts (abréviations bureau d’études). */
+  function sourceShort(supply) {
+    return supply.isTri ? '400V L1L2L3N' : '230V LN PE';
   }
 
-  function departProtectionLabel(c) {
-    var lines = [c.schemaRef || 'Q'];
-    lines.push(c.inA + ' A — ' + c.curve);
-    lines.push('Ib ' + c.ibA + ' A');
-    if (c.rcd) lines.push('DDR 30 mA A');
-    return lines.join('\n');
-  }
-
-  function mainProtectionLabel(project) {
-    var mp = project.mainProtection;
-    return (
-      'Protection générale\nDG ' +
-      mp.inA +
-      ' A\nDDR ' +
-      mp.rcdInA +
-      ' A / ' +
-      mp.rcdMa +
-      ' mA ' +
-      mp.rcdType
-    );
-  }
-
-  function techHeaderText(project) {
+  function techShort(project) {
     var s = project.supply;
     return (
       project.board +
-      '\nP. demandée : ' +
+      '\nPd ' +
       s.pTotalKw +
-      ' kW\nI : ' +
-      (Math.round(s.ibA * 100) / 100) +
-      ' A\ncos φ : ' +
+      'kW · I ' +
+      (Math.round(s.ibA * 10) / 10) +
+      'A · cos ' +
       (s.cosPhi != null ? s.cosPhi : '—')
     );
   }
 
-  function mainBreakerCypeText(project) {
+  function mainShort(project) {
     var mp = project.mainProtection;
-    return (
-      'Disjoncteur\nCourbe C\nIn : ' +
-      mp.inA +
-      '.00 A\nIcu : 6 kA (indic.)\nIΔn : ' +
-      mp.rcdMa +
-      ' mA ' +
-      mp.rcdType
-    );
+    return 'DG C' + mp.inA + '\nDDR ' + mp.rcdInA + 'A ' + mp.rcdMa + 'mA ' + mp.rcdType;
   }
 
-  function departCypeText(c) {
-    return (
-      (c.schemaRef || 'Q') +
-      '\nI : ' +
-      c.ibA +
-      ' A\nIn : ' +
-      c.inA +
-      '.00 A\ncourbe ' +
-      c.curve +
-      (c.rcd ? '\nIΔn 30 mA A' : '') +
-      '\nPd : ' +
-      (c.pdemW / 1000).toFixed(2) +
-      ' kW'
-    );
+  function departShort(c) {
+    var ref = c.schemaRef || 'Q';
+    var cal = 'C' + c.inA;
+    var head = c.rcd ? 'DDR ' + cal + ' 30mA A' : ref + ' ' + cal;
+    return head + '\nIb' + c.ibA + 'A Pd' + (c.pdemW / 1000).toFixed(1) + 'kW';
   }
 
   var SYM_METER =
@@ -320,12 +280,12 @@
     var circuits = project.circuits || [];
     var n = Math.max(1, circuits.length);
     var colW = 108;
-    var busX0 = 200;
+    var cxFeed = 130;
+    var busX0 = cxFeed;
     var busLen = Math.max(320, n * colW + 40);
     var pageW = Math.max(1100, busX0 + busLen + 220);
     var pageH = 640;
     var busY = 268;
-    var cxFeed = 130;
     var cells = [];
     var id = 2;
 
@@ -391,18 +351,18 @@
       400,
       24
     );
-    addTxt(techHeaderText(project), 24, 40, 160, 72);
+    addTxt(techShort(project), 24, 40, 140, 40, 'fontSize=10;');
 
     var y = 88;
     var srcId = addSym(SYM.ac, cxFeed - 28, y, 56, 56);
-    addTxt(sourceLabel(project.supply), cxFeed + 34, y + 8, 150, 48);
+    addTxt(sourceShort(project.supply), cxFeed + 34, y + 14, 90, 20, 'fontSize=10;');
     y += 62;
-    var meterId = addVertex('Wh\nCompteur', SYM_METER, cxFeed - 24, y, 48, 40);
-    y += 48;
+    var meterId = addVertex('M', SYM_METER, cxFeed - 20, y, 40, 32);
+    y += 40;
     addSym(SYM.feeder, cxFeed - 1, y, 3, 28);
     y += 28;
     var qgId = addSym(SYM.breaker, cxFeed - BRK_W / 2, y, BRK_W, BRK_H);
-    addTxt(mainBreakerCypeText(project), cxFeed + 42, y - 4, 120, 72);
+    addTxt(mainShort(project), cxFeed + 42, y - 2, 100, 36, 'fontSize=9;');
     y += 30;
     addSym(SYM.feeder, cxFeed - 1, y, 3, busY - y + 6);
     var busId = addSym(SYM.busH, busX0, busY, busLen, 26);
@@ -418,26 +378,19 @@
       var cx = busX0 + 44 + i * colW;
       addSym(SYM.feeder, cx - 1, branchTop, 3, loadY - branchTop + 40);
       addSym(SYM.breaker, cx - BRK_W / 2, branchTop + 4, BRK_W, BRK_H);
-      addTxt(
-        departCypeText(c),
-        'text;html=1;horizontal=0;align=center;fontSize=9;fontColor=#475569;strokeColor=none;fillColor=none;',
-        cx - 58,
-        branchTop + 20,
-        18,
-        110
-      );
+      addTxt(departShort(c), cx + 42, branchTop + 2, 88, 32, 'fontSize=8;fontColor=#475569;');
       var icon = resolveLoadIcon(c);
       if (c.usage === 'lighting' || icon === 'lighting') {
         addVertex('×', SYM_LAMP, cx - 12, loadY, 24, 24);
       } else {
         addVertex('', imageStyle(icon), cx - 28, loadY - 8, 56, 56);
       }
-      addTxt(c.label || 'Charge', cx - 40, loadY + 34, 90, 28, 'fontSize=9;align=center;');
+      addTxt(c.schemaRef || '—', cx - 28, loadY + 34, 56, 14, 'fontSize=8;align=center;');
     });
 
     var tableY = loadY + 72;
-    addTxt('Référence', 'fontSize=9;fontStyle=1;align=center;', busX0 + 20, tableY, 70, 16);
-    addTxt('Puissance demandée', 'fontSize=9;fontStyle=1;align=center;', busX0 + 20, tableY + 18, 70, 28);
+    addTxt('Réf.', 'fontSize=8;fontStyle=1;align=center;', busX0 + 8, tableY, 40, 14);
+    addTxt('Pd', 'fontSize=8;fontStyle=1;align=center;', busX0 + 8, tableY + 14, 40, 14);
     circuits.forEach(function (c, i) {
       var cx = busX0 + 44 + i * colW;
       addTxt(c.schemaRef || '—', 'fontSize=9;align=center;', cx - 30, tableY, 60, 16);
@@ -479,17 +432,12 @@
       x +
       '" y="' +
       y +
-      '" width="46" height="38" fill="#fff7ed" stroke="#c2410c" stroke-width="1.5"/>' +
+      '" width="36" height="30" fill="#fff7ed" stroke="#c2410c" stroke-width="1.5"/>' +
       '<text x="' +
-      (x + 23) +
+      (x + 18) +
       '" y="' +
-      (y + 17) +
-      '" text-anchor="middle" font-size="11" font-weight="700" fill="#9a3412">Wh</text>' +
-      '<text x="' +
-      (x + 23) +
-      '" y="' +
-      (y + 30) +
-      '" text-anchor="middle" font-size="8" fill="#9a3412">Compteur</text>'
+      (y + 20) +
+      '" text-anchor="middle" font-size="12" font-weight="700" fill="#9a3412">M</text>'
     );
   }
 
@@ -556,11 +504,11 @@
     var circuits = project.circuits || [];
     var n = Math.max(1, circuits.length);
     var colW = 100;
-    var busX0 = 200;
-    var busLen = Math.max(300, n * colW + 20);
-    var w = busX0 + busLen + 180;
-    var busY = 268;
     var cxFeed = 118;
+    var busX0 = cxFeed;
+    var busLen = Math.max(300, n * colW + 20);
+    var w = busX0 + busLen + 160;
+    var busY = 268;
     var branchTop = 302;
     var loadY = 470;
     var tableY = 530;
@@ -574,21 +522,16 @@
       '<text class="hdr" x="20" y="22">' +
         escXml(project.meta.ref ? project.meta.ref + ' — ' + project.board : project.board) +
         '</text>',
-      '<text class="muted" x="20" y="38">P. demandée : ' +
-        escXml(project.supply.pTotalKw) +
-        ' kW · I : ' +
-        escXml(String(project.supply.ibA)) +
-        ' A</text>',
-      '<text x="20" y="54" font-size="10">cos φ : ' +
-        escXml(String(project.supply.cosPhi != null ? project.supply.cosPhi : '—')) +
+      '<text class="muted" x="20" y="40">' +
+        escXml(techShort(project).split('\n')[1] || '') +
         '</text>',
       '<circle cx="' +
         cxFeed +
         '" cy="108" r="22" fill="#fff" stroke="#111" stroke-width="1.8"/>',
       '<text x="' +
-        (cxFeed + 34) +
-        '" y="100" font-size="10">' +
-        escXml(project.supply.isTri ? '400 V L1 L2 L3 N PE' : '230 V L N PE') +
+        (cxFeed + 32) +
+        '" y="102" font-size="10">' +
+        escXml(sourceShort(project.supply)) +
         '</text>',
       svgMeterG(cxFeed - 23, 138),
       '<line x1="' +
@@ -598,9 +541,9 @@
         '" y2="198" stroke="#0284c7" stroke-width="2"/>',
       svgBreakerG(cxFeed - 15, 198),
       '<text x="' +
-        (cxFeed + 38) +
-        '" y="208" font-size="9">' +
-        escXml(mainBreakerCypeText(project).replace(/\n/g, ' · ')) +
+        (cxFeed + 36) +
+        '" y="204" font-size="9">' +
+        escXml(mainShort(project).replace(/\n/g, ' ')) +
         '</text>',
       '<line x1="' +
         cxFeed +
@@ -619,10 +562,10 @@
         busY +
         '" stroke="#0284c7" stroke-width="4"/>',
       '<text x="' +
-        (busX0 + busLen / 2 - 30) +
+        (busX0 + 8) +
         '" y="' +
-        (busY - 8) +
-        '" font-size="10" fill="#0369a1">Barre</text>',
+        (busY - 6) +
+        '" font-size="9" fill="#0369a1">Barre</text>',
     ];
 
     circuits.forEach(function (c, i) {
@@ -640,16 +583,12 @@
       );
       parts.push(svgBreakerG(cx - 15, branchTop));
       parts.push(
-        '<text transform="rotate(-90 ' +
-          (cx - 36) +
-          ' ' +
-          (branchTop + 70) +
-          ')" x="' +
-          (cx - 36) +
+        '<text x="' +
+          (cx + 24) +
           '" y="' +
-          (branchTop + 70) +
+          (branchTop + 8) +
           '" font-size="8" fill="#475569">' +
-          escXml(departCypeText(c).replace(/\n/g, '  ')) +
+          escXml(departShort(c).replace(/\n/g, ' ')) +
           '</text>'
       );
       parts.push(svgLoadAt(c, cx, loadY));
@@ -659,19 +598,13 @@
           '" y="' +
           (loadY + 38) +
           '" text-anchor="middle" font-size="8">' +
-          escXml(c.label || '') +
+          escXml(c.schemaRef || '') +
           '</text>'
       );
     });
 
-    parts.push('<text x="' + (busX0 + 10) + '" y="' + tableY + '" font-size="9" font-weight="700">Référence</text>');
-    parts.push(
-      '<text x="' +
-        (busX0 + 10) +
-        '" y="' +
-        (tableY + 16) +
-        '" font-size="9" font-weight="700">Puiss. demandée</text>'
-    );
+    parts.push('<text x="' + (busX0 + 4) + '" y="' + tableY + '" font-size="8" font-weight="700">Réf.</text>');
+    parts.push('<text x="' + (busX0 + 4) + '" y="' + (tableY + 14) + '" font-size="8" font-weight="700">Pd</text>');
     circuits.forEach(function (c, i) {
       var cx = busX0 + 50 + i * colW;
       parts.push(
