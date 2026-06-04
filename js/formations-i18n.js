@@ -1,80 +1,62 @@
 /**
- * Page Formations — FR / AR
+ * Page Formations — FR / AR (quiz NF C 15-100)
  */
 (function () {
   var STORAGE = "electrodz-site-lang";
 
   var T = {
     fr: {
-      "meta.title": "Formations — DZSWISS ELEC",
+      "meta.title": "Formation & quiz — DZSWISS ELEC",
       "meta.desc":
-        "Formation : supports PDF suisses et quiz interactif NF C 15-100 (2015) — DZSWISS ELEC.",
+        "Apprenez la norme NF C 15-100 avec le grand questionnaire interactif — 450 questions, gratuit en ligne.",
       "nav.home": "Accueil",
       "nav.train": "Formations",
       "nav.docs": "Documentation",
+      "nav.lib": "Bibliothèque PDF",
       "nav.calc": "Calculs",
       "nav.job": "Emploi",
       "nav.contact": "Contact",
       "nav.support": "Support",
-      "hero.title": "Formation suisse en Algérie",
+      "hero.badge": "100 % gratuit · En ligne",
+      "hero.title": "Apprenez en vous testant",
       "hero.sub":
-        "Supports PDF du programme suisse et quiz NF C 15-100 pour réviser la norme avec renvois au texte officiel.",
-      "hero.badge": "Quiz en ligne",
-      "block.what.title": "Le modèle suisse, en Algérie",
-      "block.what.p":
-        "Normes, schémas, sécurité et rigueur du système suisse, pour les électriciens du bâtiment, de l'industrie et de la maintenance.",
-      "block.topics.title": "Axes du parcours",
-      "block.topics.li1": "Contenu suisse : installations, normes et bonnes pratiques",
-      "block.topics.li2": "Savoir-faire suisse : tableaux, protections, câblage",
-      "block.topics.li3": "Matériel et méthodes selon les standards suisses",
-      "block.topics.li4": "Quiz NF C 15-100 : révision par modules avec explications et pages PDF",
-      "cta.quiz": "Lancer le quiz",
-      "section.quiz": "Quiz NF C 15-100",
-      "section.quiz.sub":
-        "Révision interactive de la norme (2015) — 6 modules, 5 paliers, 75 questions par module.",
-      "section.quiz.desc":
-        "QCM et Vrai/Faux : après chaque réponse, explication et renvoi aux paragraphes du PDF de la norme.",
-      "section.quiz.stats": "450 questions au total — score en fin de chaque module.",
-      "section.pdf": "Supports PDF (disponibles)",
-      "section.pdf.sub": "Modules du programme suisse (FET, AE…) — lecture en ligne avec code d'accès.",
-      "section.empty": "Aucun PDF formation pour le moment.",
-      "link.library": "Toute la bibliothèque PDF →",
+        "Le grand questionnaire interactif sur la norme NF C 15-100 (2015) — pour réviser avant l'examen, le contrôle ou sur le chantier.",
+      "section.quiz.hook":
+        "450 questions pour maîtriser la norme NF C 15-100, pas à pas",
+      "section.quiz.lead":
+        "QCM, Vrai/Faux, explications immédiates et renvoi au texte officiel après chaque réponse — sans inscription.",
+      "section.quiz.perk1": "6 modules · 5 paliers · 75 questions par module",
+      "section.quiz.perk2": "Progressez à votre rythme — score à la fin de chaque module",
+      "section.quiz.perk3": "Révision ciblée : norme NF C 15-100 (2015) intégrée au site",
+      "cta.quiz": "Commencer le questionnaire →",
+      "cta.note": "Gratuit · mobile et ordinateur",
       "footer.copy": "© 2026 DZSWISS ELEC — electro-dz.com",
     },
     ar: {
-      "meta.title": "التكوين — DZSWISS ELEC",
+      "meta.title": "التكوين والاختبار — DZSWISS ELEC",
       "meta.desc":
-        "تكوين: دعم PDF سويسري واختبار NF C 15-100 (2015) — DZSWISS ELEC.",
+        "تعلّم معيار NF C 15-100 عبر استبيان تفاعلي ضخم — 450 سؤالاً، مجاني على الموقع.",
       "nav.home": "الرئيسية",
       "nav.train": "التكوين",
       "nav.docs": "التوثيق",
+      "nav.lib": "مكتبة PDF",
       "nav.calc": "الحسابات",
       "nav.job": "العمل",
       "nav.contact": "اتصال",
       "nav.support": "الدعم",
-      "hero.title": "تكوين سويسري في الجزائر",
+      "hero.badge": "مجاني · على الموقع",
+      "hero.title": "تعلّم بالاختبار",
       "hero.sub":
-        "دعم PDF للبرنامج السويسري واختبار NF C 15-100 لمراجعة المعيار مع إحالات إلى النص الرسمي.",
-      "hero.badge": "اختبار على الموقع",
-      "block.what.title": "النموذج السويسري في الجزائر",
-      "block.what.p":
-        "معايير ومخططات وسلامة وصرامة النظام السويسري، للكهربائيين في البناء والصناعة والصيانة.",
-      "block.topics.title": "محاور المسار",
-      "block.topics.li1": "محتوى سويسري: تركيبات، معايير وممارسات جيدة",
-      "block.topics.li2": "خبرة سويسرية: لوحات، حمايات، تمديدات",
-      "block.topics.li3": "معدات وأساليب وفق المعايير السويسرية",
-      "block.topics.li4": "اختبار NF C 15-100: مراجعة حسب الوحدات مع تفسير وصفحات PDF",
-      "cta.quiz": "بدء الاختبار",
-      "section.quiz": "اختبار NF C 15-100",
-      "section.quiz.sub":
-        "مراجعة تفاعلية للمعيار (2015) — 6 وحدات، 5 مستويات، 75 سؤالاً لكل وحدة.",
-      "section.quiz.desc":
-        "اختيار من متعدد وصح/خطأ: بعد كل إجابة، تفسير وإحالة إلى فقرات PDF المعيار.",
-      "section.quiz.stats": "450 سؤالاً — نتيجة في نهاية كل وحدة.",
-      "section.pdf": "دعم PDF (متاح)",
-      "section.pdf.sub": "وحدات البرنامج السويسري (FET، AE…) — قراءة على الموقع برمز وصول.",
-      "section.empty": "لا يوجد PDF تكوين حالياً.",
-      "link.library": "كل مكتبة PDF ←",
+        "استبيان تفاعلي ضخم حول معيار NF C 15-100 (2015) — للمراجعة قبل الامتحان أو التفتيش أو على الورشة.",
+      "section.quiz.hook":
+        "450 سؤالاً لإتقان معيار NF C 15-100 خطوة بخطوة",
+      "section.quiz.lead":
+        "اختيار من متعدد، صح/خطأ، تفسير فوري وإحالة إلى النص الرسمي بعد كل إجابة — دون تسجيل.",
+      "section.quiz.perk1": "6 وحدات · 5 مستويات · 75 سؤالاً لكل وحدة",
+      "section.quiz.perk2": "تقدّم على وتيرتك — النتيجة في نهاية كل وحدة",
+      "section.quiz.perk3": "مراجعة موجهة: معيار NF C 15-100 (2015) على الموقع",
+      "cta.quiz": "ابدأ الاستبيان الآن ←",
+      "cta.note": "مجاني · هاتف وحاسوب",
       "footer.copy": "© 2026 DZSWISS ELEC — electro-dz.com",
     },
   };
