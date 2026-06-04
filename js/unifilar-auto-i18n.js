@@ -4,10 +4,9 @@
       'meta.title': 'Unifilaire auto — DZSWISS ELEC',
       'page.title': 'Schéma unifilaire (depuis le bilan)',
       'page.lead':
-        'Génération automatique avec le même moteur que diagrams.net (draw.io) : bibliothèque Engineering → Electrical, fils droits, symboles mxgraph.',
+        'Gabarit bureau d’études : arrivée (~ → M → DG → DDR → barre), départs verticaux, symboles de charge, tableau des puissances.',
       'symbols.note':
-        'Méthode identique à l’éditeur draw.io pro (pas de symboles dessinés à la main). Données issues du bilan — à valider sur site.',
-      'preview.loading': 'Chargement diagrams.net (symboles Electrical)…',
+        'Aperçu SVG clair (sans éditeur embarqué). « Ouvrir dans l’éditeur » = draw.io pour retouches. Indicatif — à valider sur site.',
       'btn.regen': 'Regénérer',
       'btn.editor': 'Ouvrir dans l’éditeur',
       'btn.print': 'Imprimer',

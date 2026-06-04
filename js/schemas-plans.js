@@ -140,6 +140,7 @@
   function syncMetaFromUnifilarProject() {
     try {
       var raw =
+        localStorage.getItem("electrodz-unifilar-project-v4") ||
         localStorage.getItem("electrodz-unifilar-project-v3") ||
         localStorage.getItem("electrodz-unifilar-project-v2") ||
         localStorage.getItem("electrodz-unifilar-project-v1");
@@ -195,7 +196,7 @@
         return;
       }
       try {
-        var unifXml = localStorage.getItem("electrodz-unifilar-drawio-v3");
+        var unifXml = localStorage.getItem("electrodz-unifilar-drawio-v4");
         if (unifXml && unifXml.indexOf("mxgraph.electrical") !== -1 && unifXml.length > 80) {
           loadIntoEditor(unifXml, { libs: "", autosave: 0, modified: false });
           return;

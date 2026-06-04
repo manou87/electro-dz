@@ -1,14 +1,11 @@
 /**
- * Page unifilaire-auto.html — aperçu diagrams.net (même moteur que draw.io pro).
+ * Page unifilaire-auto — aperçu SVG pro (gabarit bureau d’études).
  */
 (function () {
   var U = window.ElectroDzUnifilarFromBalance;
   var STORAGE_REPORT = 'electrodz-unifilar-source-report-v1';
-  var EMBED_ORIGIN = 'https://embed.diagrams.net';
 
   var previewEl = document.getElementById('unifPreview');
-  var drawioFrame = document.getElementById('unifDrawioFrame');
-  var previewLoading = document.getElementById('unifPreviewLoading');
   var tableBody = document.getElementById('unifTableBody');
   var boardSelect = document.getElementById('unifBoardSelect');
   var emptyEl = document.getElementById('unifEmpty');
@@ -16,98 +13,9 @@
 
   var project = null;
   var sourceReport = null;
-  var embedReady = false;
-  var embedQueue = [];
 
   function t(key) {
     return window.UnifilarAutoI18n ? window.UnifilarAutoI18n.t(key) : key;
-  }
-
-  function lang() {
-    return window.UnifilarAutoI18n && window.UnifilarAutoI18n.lang === 'ar' ? 'ar' : 'fr';
-  }
-
-  function postEmbed(msg) {
-    if (!drawioFrame || !drawioFrame.contentWindow) return;
-    drawioFrame.contentWindow.postMessage(JSON.stringify(msg), EMBED_ORIGIN);
-  }
-
-  function whenEmbedReady(msg) {
-    if (embedReady) postEmbed(msg);
-    else embedQueue.push(msg);
-  }
-
-  function flushEmbedQueue() {
-    embedQueue.forEach(postEmbed);
-    embedQueue = [];
-  }
-
-  function embedUrl() {
-    var u = new URL(EMBED_ORIGIN + '/');
-    u.searchParams.set('embed', '1');
-    u.searchParams.set('proto', 'json');
-    u.searchParams.set('spin', '1');
-    u.searchParams.set('libraries', '1');
-    u.searchParams.set('configure', '1');
-    u.searchParams.set('noSaveBtn', '1');
-    u.searchParams.set('noExitBtn', '1');
-    u.searchParams.set('saveAndExit', '0');
-    u.searchParams.set('ui', 'min');
-    u.searchParams.set('lang', lang() === 'ar' ? 'ar' : 'fr');
-    return u.toString();
-  }
-
-  function loadPreviewInEmbed() {
-    if (!project || !U) return;
-    var xml = U.projectToDrawioXml(project);
-    if (!xml || xml.indexOf('mxgraph.electrical') === -1) {
-      if (previewLoading) {
-        previewLoading.textContent = 'Moteur draw.io non chargé — rechargez la page (Ctrl+F5).';
-      }
-      return;
-    }
-    whenEmbedReady({
-      action: 'load',
-      xml: xml,
-      autosave: 0,
-      modified: false,
-      editable: false,
-      libs: 'electrical',
-      title: project.board || 'Unifilaire',
-    });
-  }
-
-  function initEmbedOnce() {
-    if (!drawioFrame || drawioFrame.dataset.init === '1') return;
-    drawioFrame.dataset.init = '1';
-    drawioFrame.removeAttribute('hidden');
-    drawioFrame.src = embedUrl();
-    window.addEventListener('message', function (evt) {
-      if (evt.origin !== EMBED_ORIGIN) return;
-      var msg;
-      try {
-        msg = JSON.parse(evt.data);
-      } catch (e) {
-        return;
-      }
-      if (msg.event === 'configure') {
-        postEmbed({
-          action: 'configure',
-          config: { defaultLibraries: 'electrical' },
-        });
-        return;
-      }
-      if (msg.event === 'init') {
-        embedReady = true;
-        if (previewLoading) previewLoading.hidden = true;
-        flushEmbedQueue();
-        loadPreviewInEmbed();
-        return;
-      }
-      if (msg.event === 'load') {
-        if (previewLoading) previewLoading.hidden = true;
-      }
-    });
   }
 
   function loadSourceReport() {
@@ -180,17 +88,15 @@
   }
 
   function refreshPreview() {
-    if (!project) return;
-    if (!window.ElectroDzUnifilarDrawio) {
-      if (previewEl) {
-        previewEl.innerHTML =
-          '<p style="color:#b91c1c;padding:12px">Bibliothèque draw.io manquante. Rechargez la page.</p>';
-      }
+    if (!previewEl || !project) return;
+    if (!window.ElectroDzUnifilarProSvg) {
+      previewEl.innerHTML =
+        '<p style="color:#b91c1c;padding:16px">Module unifilaire pro non chargé. Rechargez la page (Ctrl+F5).</p>';
       return;
     }
     U.saveProject(project);
-    initEmbedOnce();
-    if (embedReady) loadPreviewInEmbed();
+    previewEl.innerHTML =
+      '<div class="unif-svg-pro-wrap">' + (U.projectToSvgPro ? U.projectToSvgPro(project) : '') + '</div>';
   }
 
   function generateFromBoard() {
@@ -214,9 +120,27 @@
   function openEditor() {
     if (!project) return;
     try {
-      localStorage.setItem(U.STORAGE_DRAWIO, U.projectToDrawioXml(project));
+      if (U.projectToDrawioXml) {
+        localStorage.setItem(U.STORAGE_DRAWIO, U.projectToDrawioXml(project));
+      }
     } catch (e) {}
     window.location.href = 'schemas-plans.html?from=unifilar';
+  }
+
+  function printSvg() {
+    if (!project || !U.projectToSvgPro) return;
+    var w = window.open('', '_blank');
+    if (!w) {
+      alert('Autorisez les fenêtres popup pour imprimer.');
+      return;
+    }
+    w.document.write(
+      '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Unifilaire</title>' +
+        '<style>body{margin:12mm}svg{max-width:100%;height:auto}</style></head><body>' +
+        U.projectToSvgPro(project) +
+        '<script>onload=function(){setTimeout(function(){print()},400)}<\/script></body></html>'
+    );
+    w.document.close();
   }
 
   function initFromStorage() {
@@ -226,9 +150,9 @@
     project = forceFresh ? null : U.loadProject();
     if (project && project.circuits && project.circuits.length && !forceFresh) {
       showContent(true);
+      if (sourceReport) rebuildBoardSelect();
       renderTable();
       refreshPreview();
-      if (sourceReport) rebuildBoardSelect();
       return;
     }
     if (sourceReport && sourceReport.r && sourceReport.r.ok) {
@@ -246,7 +170,7 @@
   document.getElementById('btnUnifRegen')?.addEventListener('click', generateFromBoard);
   boardSelect?.addEventListener('change', generateFromBoard);
   document.getElementById('btnUnifEditor')?.addEventListener('click', openEditor);
-  document.getElementById('btnUnifPrint')?.addEventListener('click', openEditor);
+  document.getElementById('btnUnifPrint')?.addEventListener('click', printSvg);
 
   document.getElementById('btnUnifBackCalc')?.addEventListener('click', function () {
     window.location.href = 'calcul-electrique.html#balance';

@@ -4,14 +4,16 @@
 (function (g) {
   'use strict';
 
-  var STORAGE_PROJECT = 'electrodz-unifilar-project-v3';
-  var STORAGE_DRAWIO = 'electrodz-unifilar-drawio-v3';
-  var SCHEMA_VERSION = 3;
+  var STORAGE_PROJECT = 'electrodz-unifilar-project-v4';
+  var STORAGE_DRAWIO = 'electrodz-unifilar-drawio-v4';
+  var SCHEMA_VERSION = 4;
   var LEGACY_KEYS = [
     'electrodz-unifilar-project-v1',
     'electrodz-unifilar-drawio-v1',
     'electrodz-unifilar-project-v2',
     'electrodz-unifilar-drawio-v2',
+    'electrodz-unifilar-project-v3',
+    'electrodz-unifilar-drawio-v3',
   ];
 
   var STANDARD_IN = [10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125];
@@ -166,6 +168,10 @@
     return g.ElectroDzUnifilarDrawio;
   }
 
+  function proSvgEngine() {
+    return g.ElectroDzUnifilarProSvg;
+  }
+
   /** Libellés courts (abréviations bureau d’études). */
   function sourceShort(supply) {
     return supply.isTri ? '400V L1L2L3N' : '230V LN PE';
@@ -208,15 +214,13 @@
   }
 
   function projectToSvgPro(project) {
-    return (
-      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 80" width="100%">' +
-      '<text x="12" y="28" font-family="system-ui,sans-serif" font-size="13" fill="#1e293b">' +
-      escXml(project.board || 'Unifilaire') +
-      '</text>' +
-      '<text x="12" y="52" font-family="system-ui,sans-serif" font-size="11" fill="#64748b">' +
-      'Aperçu diagrams.net (symboles Electrical) — chargement…' +
-      '</text></svg>'
-    );
+    var P = proSvgEngine();
+    if (!P) return '';
+    return P.buildProSvg(project, {
+      techShort: techShort,
+      sourceShort: sourceShort,
+      departShort: departShort,
+    });
   }
 
   function projectToSvg(project) {
@@ -233,13 +237,16 @@
   }
 
   function saveProject(project) {
-    if (!drawioEngine()) return false;
+    if (!proSvgEngine()) return false;
     try {
       project.schemaVersion = SCHEMA_VERSION;
       purgeLegacyUnifilarCache();
       localStorage.setItem(STORAGE_PROJECT, JSON.stringify(project));
-      localStorage.setItem(STORAGE_DRAWIO, projectToDrawioXml(project));
-      sessionStorage.setItem(STORAGE_DRAWIO, projectToDrawioXml(project));
+      if (drawioEngine()) {
+        var xml = projectToDrawioXml(project);
+        localStorage.setItem(STORAGE_DRAWIO, xml);
+        sessionStorage.setItem(STORAGE_DRAWIO, xml);
+      }
     } catch (e) {
       return false;
     }
@@ -258,11 +265,7 @@
   }
 
   function ensureDrawioEngine() {
-    if (!drawioEngine()) {
-      console.warn('[unifilar] unifilar-drawio-engine.js manquant.');
-      return false;
-    }
-    return true;
+    return !!proSvgEngine();
   }
 
   function listBoardsFromReport(report) {
