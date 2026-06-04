@@ -1,0 +1,228 @@
+/* Schémas et plans — éditeur diagrams.net intégré */
+.schemas-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #0f172a;
+}
+
+.schemas-topbar {
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(15, 23, 42, 0.98);
+}
+
+.schemas-topbar-inner {
+  max-width: 100%;
+  padding: 10px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+}
+
+.schemas-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #f8fafc;
+  font-weight: 800;
+  font-size: 0.95rem;
+  margin-inline-end: auto;
+}
+
+.schemas-brand img {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.schemas-brand .accent {
+  color: #facc15;
+}
+
+.schemas-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.schemas-toolbar .btn-schema {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  color: #e2e8f0;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.schemas-toolbar .btn-schema:hover {
+  background: rgba(250, 204, 21, 0.12);
+  border-color: rgba(250, 204, 21, 0.45);
+  color: #fde047;
+}
+
+.schemas-toolbar .btn-schema--primary {
+  background: #facc15;
+  color: #0f172a;
+  border-color: #facc15;
+}
+
+.schemas-toolbar .btn-schema--primary:hover {
+  background: #fde047;
+}
+
+.schemas-status {
+  font-size: 0.75rem;
+  color: #64748b;
+  min-width: 5rem;
+}
+
+.schemas-status.is-dirty {
+  color: #fbbf24;
+}
+
+.schemas-status.is-ok {
+  color: #4ade80;
+}
+
+.schemas-lang-switch {
+  display: flex;
+  gap: 4px;
+}
+
+.schemas-lang-switch .lang-btn {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #cbd5e1;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.schemas-lang-switch .lang-btn.active {
+  background: #facc15;
+  color: #0f172a;
+  border-color: #facc15;
+}
+
+.schemas-meta-toggle {
+  font-size: 0.78rem;
+}
+
+.schemas-meta-panel {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(30, 41, 59, 0.6);
+  padding: 0 16px 14px;
+}
+
+.schemas-meta-panel[hidden] {
+  display: none;
+}
+
+.schemas-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px 16px;
+  max-width: 1200px;
+}
+
+.schemas-meta-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.schemas-meta-grid input,
+.schemas-meta-grid textarea {
+  font-size: 0.88rem;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(15, 23, 42, 0.8);
+  color: #f1f5f9;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.schemas-meta-grid textarea {
+  min-height: 56px;
+  resize: vertical;
+}
+
+.schemas-meta-full {
+  grid-column: 1 / -1;
+}
+
+.schemas-workspace {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.schemas-editor-wrap {
+  flex: 1;
+  position: relative;
+  min-height: calc(100vh - 120px);
+}
+
+.schemas-editor-wrap iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.schemas-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0f172a;
+  color: #94a3b8;
+  font-size: 0.95rem;
+  z-index: 2;
+}
+
+.schemas-loading[hidden] {
+  display: none;
+}
+
+.schemas-footer-note {
+  flex-shrink: 0;
+  padding: 6px 16px;
+  font-size: 0.68rem;
+  color: #64748b;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.schemas-footer-note a {
+  color: #94a3b8;
+}
+
+@media (max-width: 640px) {
+  .schemas-toolbar .btn-schema {
+    padding: 6px 8px;
+    font-size: 0.72rem;
+  }
+  .schemas-brand span:not(.accent) {
+    display: none;
+  }
+}

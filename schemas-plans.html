@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Éditeur de schémas unifilaires et plans — DZSWISS ELEC" />
+  <title>Schémas et plans — DZSWISS ELEC</title>
+  <link rel="stylesheet" href="css/schemas-plans.css" />
+  <link rel="icon" href="assets/app-icon.png" type="image/png" />
+  <link rel="canonical" href="https://electro-dz.com/schemas-plans.html" />
+</head>
+<body class="schemas-page">
+  <header class="schemas-topbar">
+    <div class="schemas-topbar-inner">
+      <a href="index.html" class="schemas-brand">
+        <img src="assets/app-icon.png" alt="" width="32" height="32" decoding="async" />
+        <span>DZSWISS <span class="accent" data-i18n="brand">ELEC</span></span>
+      </a>
+      <span class="schemas-status" id="schemasStatus" data-i18n="status.ready">Prêt</span>
+      <div class="schemas-toolbar" role="toolbar" aria-label="Schémas">
+        <button type="button" class="btn-schema" id="btnSchemaNew" data-i18n="btn.new">Nouveau</button>
+        <button type="button" class="btn-schema" id="btnSchemaOpen" data-i18n="btn.open">Ouvrir</button>
+        <button type="button" class="btn-schema btn-schema--primary" id="btnSchemaSave" data-i18n="btn.save">Enregistrer</button>
+        <button type="button" class="btn-schema" id="btnSchemaPrint" data-i18n="btn.print">Imprimer</button>
+        <button type="button" class="btn-schema" id="btnSchemaPng" data-i18n="btn.png">PNG</button>
+        <button type="button" class="btn-schema" id="btnSchemaSvg" data-i18n="btn.svg">SVG</button>
+        <button type="button" class="btn-schema" id="btnSchemaPdf" data-i18n="btn.pdf">PDF</button>
+        <button type="button" class="btn-schema schemas-meta-toggle" id="btnSchemaMeta" data-i18n="btn.meta">Infos chantier</button>
+      </div>
+      <div class="schemas-lang-switch">
+        <button type="button" class="lang-btn active" data-lang="fr" aria-label="Français">FR</button>
+        <button type="button" class="lang-btn" data-lang="ar" aria-label="العربية">AR</button>
+      </div>
+      <input type="file" id="schemaFileInput" accept=".drawio,.xml,.png,.svg,.vsdx,.vdx,.vssx,.html" hidden />
+    </div>
+    <div class="schemas-meta-panel" id="schemasMetaPanel" hidden>
+      <p style="font-size:.8rem;color:#94a3b8;margin:8px 0 10px" data-i18n="meta.title">Informations du dossier</p>
+      <div class="schemas-meta-grid">
+        <label>
+          <span data-i18n="meta.project">Nom du projet / chantier</span>
+          <input type="text" data-meta="project" autocomplete="organization" />
+        </label>
+        <label>
+          <span data-i18n="meta.client">Client</span>
+          <input type="text" data-meta="client" autocomplete="name" />
+        </label>
+        <label>
+          <span data-i18n="meta.site">Adresse / site</span>
+          <input type="text" data-meta="site" autocomplete="street-address" />
+        </label>
+        <label>
+          <span data-i18n="meta.author">Réalisé par</span>
+          <input type="text" data-meta="author" autocomplete="name" />
+        </label>
+        <label>
+          <span data-i18n="meta.date">Date</span>
+          <input type="date" data-meta="date" />
+        </label>
+        <label class="schemas-meta-full">
+          <span data-i18n="meta.notes">Notes / remarques</span>
+          <textarea data-meta="notes" rows="2"></textarea>
+        </label>
+      </div>
+    </div>
+  </header>
+
+  <div class="schemas-workspace">
+    <div class="schemas-editor-wrap">
+      <div class="schemas-loading" id="schemasLoading" data-i18n="loading">Chargement de l'éditeur…</div>
+      <iframe
+        id="drawioFrame"
+        title="Éditeur diagrams.net"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+    </div>
+    <p class="schemas-footer-note" data-i18n="footer">
+      Éditeur intégré : diagrams.net (draw.io) — logiciel open source. Symboles électriques via bibliothèques intégrées.
+    </p>
+  </div>
+
+  <script src="js/schemas-plans-i18n.js" defer></script>
+  <script src="js/schemas-plans.js" defer></script>
+</body>
+</html>

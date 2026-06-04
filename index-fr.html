@@ -157,10 +157,10 @@
     }
     .quick-grid{
       flex:1;display:grid;
-      grid-template-columns:repeat(4,1fr);
-      grid-template-rows:repeat(2,minmax(0,1fr));
+      grid-template-columns:repeat(3,1fr);
+      grid-template-rows:repeat(3,minmax(0,1fr));
       gap:12px;
-      min-height:min(68vh,560px);
+      min-height:min(72vh,620px);
     }
     .quick-item{
       display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -179,6 +179,7 @@
     .quick-item--calc{--quick-accent:#facc15}
     .quick-item--pdf{--quick-accent:#f87171}
     .quick-item--docs{--quick-accent:#60a5fa}
+    .quick-item--schema{--quick-accent:#4ade80}
     .quick-item--train{--quick-accent:#a78bfa}
     .quick-item--job{--quick-accent:#34d399}
     .quick-item--quote{--quick-accent:#fb923c}
@@ -222,6 +223,7 @@
       color:#c4b5fd;max-width:10.5rem;opacity:.95;
     }
     .quick-item--train .ico-hint{color:#ddd6fe}
+    .quick-item--schema .ico-hint{color:#86efac}
 
     /* Rubriques secondaires — repliées par défaut */
     .accueil-more{
@@ -396,6 +398,7 @@
     <symbol id="ico-pdf" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></symbol>
     <symbol id="ico-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></symbol>
     <symbol id="ico-school" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-6 10 6-10 6z"/><path d="M6 12v5c0 1 2 3 6 3s6-2 6-3v-5"/></symbol>
+    <symbol id="ico-schema" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 8h8M8 12h5M8 16h8M16 8v8"/></symbol>
     <symbol id="ico-briefcase" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></symbol>
     <symbol id="ico-clipboard" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 12h6M9 16h6"/></symbol>
     <symbol id="ico-circuit" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M8 6h8M6 8v4M18 8v4M12 14v2"/></symbol>
@@ -462,6 +465,13 @@
         <a class="quick-item quick-item--docs" href="documentation.html">
           <span class="ico-wrap"><svg class="ico"><use href="#ico-book"/></svg></span>
           <span class="ico-label" data-i18n="quick.docs">Documentation</span>
+        </a>
+        <a class="quick-item quick-item--schema" href="schemas-plans.html">
+          <span class="ico-wrap"><svg class="ico"><use href="#ico-schema"/></svg></span>
+          <span class="quick-labels">
+            <span class="ico-label" data-i18n="quick.plans">Schémas et plans</span>
+            <span class="ico-hint" data-i18n="quick.plans.hint">Unifilaire, symboles IEC, export & impression</span>
+          </span>
         </a>
         <a class="quick-item quick-item--train" href="formations.html#quiz">
           <span class="ico-wrap"><svg class="ico"><use href="#ico-school"/></svg></span>
@@ -572,6 +582,15 @@
           <h3 data-i18n="tools.calc.title">Calculs en ligne</h3>
           <p data-i18n="tools.calc.desc">Ohm, puissance, sections, chute de tension</p>
           <span class="hub-link" data-i18n="tools.calc.link">Lancer un calcul →</span>
+        </a>
+        <a class="hub-card" href="schemas-plans.html">
+          <div class="hub-card-top">
+            <span class="ico-wrap"><svg class="ico"><use href="#ico-schema"/></svg></span>
+            <span class="hub-pill pill-schema" data-i18n="pill.schema">CAO</span>
+          </div>
+          <h3 data-i18n="tools.schema.title">Schémas et plans</h3>
+          <p data-i18n="tools.schema.desc">Éditeur pro intégré — unifilaire, symboles électriques</p>
+          <span class="hub-link" data-i18n="tools.schema.link">Ouvrir l'éditeur →</span>
         </a>
         <a class="hub-card" href="login.html" data-hub-member>
           <div class="hub-card-top">
