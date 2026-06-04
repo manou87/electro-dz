@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Unifilaire automatique depuis le bilan de puissance — DZSWISS ELEC" />
+  <title>Unifilaire auto — DZSWISS ELEC</title>
+  <link rel="stylesheet" href="css/unifilaire-auto.css" />
+  <link rel="icon" href="assets/app-icon.png" type="image/png" />
+  <link rel="canonical" href="https://electro-dz.com/unifilaire-auto.html" />
+</head>
+<body class="unif-auto-page">
+  <header class="unif-auto-top">
+    <a href="index.html" class="brand">DZSWISS <span class="accent">ELEC</span></a>
+    <div class="unif-auto-actions">
+      <button type="button" class="btn" id="btnUnifRegen" data-i18n="btn.regen">Regénérer</button>
+      <button type="button" class="btn btn-primary" id="btnUnifEditor" data-i18n="btn.editor">Ouvrir dans l’éditeur</button>
+      <button type="button" class="btn" id="btnUnifPrint" data-i18n="btn.print">Imprimer</button>
+      <a href="calcul-electrique.html#balance" class="btn" id="btnUnifBackCalc" data-i18n="btn.calc">Retour bilan</a>
+    </div>
+  </header>
+
+  <main class="unif-auto-main">
+    <div id="unifEmpty" class="unif-auto-card unif-empty" hidden>
+      <h1 data-i18n="empty.title">Aucun bilan chargé</h1>
+      <p data-i18n="empty.lead">Calculez d’abord un bilan de puissance, puis cliquez « Générer unifilaire ».</p>
+      <p><a href="calcul-electrique.html#balance" data-i18n="empty.link">Aller aux calculs</a></p>
+    </div>
+
+    <div id="unifContent" hidden>
+      <section class="unif-auto-card">
+        <h1 data-i18n="page.title">Schéma unifilaire (depuis le bilan)</h1>
+        <p class="lead" data-i18n="page.lead">Génération assistée à partir du bilan de puissance…</p>
+        <div class="unif-auto-board-row">
+          <label for="unifBoardSelect" data-i18n="board">Tableau</label>
+          <select id="unifBoardSelect" aria-label="Tableau"></select>
+        </div>
+        <div class="unif-preview" id="unifPreview"></div>
+        <p class="unif-disclaimer" data-i18n="disclaimer"></p>
+      </section>
+
+      <section class="unif-auto-card">
+        <table class="unif-circuits-table">
+          <thead>
+            <tr>
+              <th data-i18n="col.ref">Repère</th>
+              <th data-i18n="col.label">Désignation</th>
+              <th data-i18n="col.pd">Pd</th>
+              <th data-i18n="col.ib">Ib calc.</th>
+              <th data-i18n="col.in">In (A)</th>
+            </tr>
+          </thead>
+          <tbody id="unifTableBody"></tbody>
+        </table>
+      </section>
+    </div>
+  </main>
+
+  <script src="js/unifilar-auto-i18n.js"></script>
+  <script src="js/unifilar-from-balance.js"></script>
+  <script src="js/unifilar-auto-page.js"></script>
+</body>
+</html>

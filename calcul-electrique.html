@@ -121,6 +121,8 @@
     .bal-action-print,.bal-action-pdf{background:var(--primary);color:#0f172a;box-shadow:0 2px 0 rgba(0,0,0,0.2)}
     .bal-action-html{background:#059669;color:#fff;box-shadow:0 2px 0 #047857}
     .bal-action-txt{background:rgba(15,23,42,0.85);color:#ecfdf5;border:2px solid rgba(110,231,183,0.55)}
+    .bal-action-unif{background:#7c3aed;color:#fff;box-shadow:0 2px 0 #5b21b6;flex:1 1 100%}
+    .bal-action-unif:disabled{opacity:0.45;cursor:not-allowed;transform:none!important;box-shadow:none}
     .bal-result-table{width:100%;margin-top:12px;border-collapse:collapse;font-size:0.82rem;text-align:start}
     .bal-result-table th,.bal-result-table td{padding:6px 8px;border-bottom:1px solid rgba(255,255,255,0.08)}
     .bal-result-table th{color:var(--muted);font-weight:700;font-size:0.72rem}
@@ -785,6 +787,7 @@
           <button type="button" class="bal-action-btn bal-action-print" id="bal-print" data-i18n="balExportPrint"></button>
           <button type="button" class="bal-action-btn bal-action-pdf" id="bal-export-pdf" data-i18n="balExportPdf"></button>
           <button type="button" class="bal-action-btn bal-action-txt" id="bal-export-txt" data-i18n="balExportTxt"></button>
+          <button type="button" class="bal-action-btn bal-action-unif" id="bal-unifilar" disabled data-i18n="balUnifilar"></button>
         </div>
         <p class="bal-export-hint" id="bal-export-hint" data-i18n="balExportFileHint"></p>
       </div>
@@ -813,6 +816,7 @@
   -->
   <script src="js/trip-curve-catalog.js"></script>
   <script src="js/courbes-protection.js"></script>
+  <script src="js/unifilar-from-balance.js"></script>
   <script src="js/power-balance-pro.js"></script>
   <script src="js/calcul-electrique.js" defer></script>
 </body>

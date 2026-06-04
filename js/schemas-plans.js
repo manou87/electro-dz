@@ -136,7 +136,37 @@
     });
   }
 
+  function syncMetaFromUnifilarProject() {
+    try {
+      var raw = localStorage.getItem("electrodz-unifilar-project-v1");
+      if (!raw) return;
+      var proj = JSON.parse(raw);
+      var m = proj.meta || {};
+      var map = {
+        project: m.ref,
+        client: m.client,
+        site: m.site,
+        author: m.engineer,
+      };
+      Object.keys(map).forEach(function (key) {
+        var el = document.querySelector('[data-meta="' + key + '"]');
+        if (el && map[key]) el.value = map[key];
+      });
+    } catch (e) {}
+  }
+
   function initEditorContent() {
+    var params = new URLSearchParams(window.location.search);
+    if (params.get("from") === "unifilar") {
+      syncMetaFromUnifilarProject();
+      try {
+        var unifXml = localStorage.getItem("electrodz-unifilar-drawio-v1");
+        if (unifXml && unifXml.length > 80) {
+          loadIntoEditor(unifXml);
+          return;
+        }
+      } catch (e) {}
+    }
     var draft = null;
     try {
       draft = localStorage.getItem(STORAGE_DRAFT);

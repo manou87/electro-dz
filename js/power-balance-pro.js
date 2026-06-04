@@ -515,6 +515,32 @@ ${printScript}
     const dock = document.getElementById('bal-export-dock');
     if (bar) bar.classList.toggle('visible', show);
     if (dock) dock.hidden = !show;
+    const unifBtn = document.getElementById('bal-unifilar');
+    if (unifBtn) unifBtn.disabled = !show;
+  }
+
+  function goToUnifilarAuto() {
+    if (!lastReport?.r?.ok) {
+      alert(tr('balUnifilarNeedCalc'));
+      return;
+    }
+    const U = g.ElectroDzUnifilarFromBalance;
+    if (!U) {
+      window.location.href = 'unifilaire-auto.html';
+      return;
+    }
+    const built = U.buildProjectFromReport(lastReport, '');
+    if (built.error) {
+      alert(tr('balUnifilarErr'));
+      return;
+    }
+    try {
+      const payload = JSON.stringify(lastReport);
+      sessionStorage.setItem('electrodz-unifilar-source-report-v1', payload);
+      localStorage.setItem('electrodz-unifilar-source-report-v1', payload);
+    } catch (_) { /* ignore */ }
+    U.saveProject(built);
+    window.location.href = 'unifilaire-auto.html';
   }
 
   function refreshRowSelects() {
@@ -549,6 +575,7 @@ ${printScript}
     document.getElementById('bal-export-pdf')?.addEventListener('click', () => openReportPreview(true));
     document.getElementById('bal-export-html')?.addEventListener('click', downloadReportHtml);
     document.getElementById('bal-export-txt')?.addEventListener('click', exportTxt);
+    document.getElementById('bal-unifilar')?.addEventListener('click', goToUnifilarAuto);
     ['bal-pro-ref', 'bal-pro-site', 'bal-pro-client', 'bal-pro-engineer'].forEach((id) => {
       document.getElementById(id)?.addEventListener('change', saveMeta);
     });
@@ -565,5 +592,9 @@ ${printScript}
     formatResultHtml,
     setLastReport,
     onLangChange,
+    goToUnifilarAuto,
+    getLastReport: function () {
+      return lastReport;
+    },
   };
 })(typeof window !== 'undefined' ? window : globalThis);

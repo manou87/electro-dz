@@ -400,6 +400,9 @@
     balExportPrint: 'Imprimer',
     balExportPdf: 'PDF (impression)',
     balExportTxt: 'Rapport TXT',
+    balUnifilar: 'Générer unifilaire →',
+    balUnifilarNeedCalc: 'Calculez d’abord le bilan (bouton Calculer), puis générez l’unifilaire.',
+    balUnifilarErr: 'Impossible de générer : ajoutez des charges avec Pi > 0 et des repères.',
     balExportPdfHint: 'Pour un PDF : Imprimer → Enregistrer au format PDF',
     balExportFileHint:
       'Téléchargez le rapport HTML (fond blanc, format A4) : ouvrez-le dans le navigateur puis Imprimer ou Enregistrer en PDF.',
@@ -881,6 +884,9 @@
     balExportPrint: 'طباعة',
     balExportPdf: 'PDF (طباعة)',
     balExportTxt: 'تقرير TXT',
+    balUnifilar: 'توليد مخطط أحادي ←',
+    balUnifilarNeedCalc: 'احسب الموازنة أولاً (زر احسب) ثم ولّد المخطط.',
+    balUnifilarErr: 'تعذّر التوليد: أضف أحمالاً بـ Pi > 0 ومراجع.',
     balExportPdfHint: 'لـ PDF: طباعة ← حفظ بصيغة PDF',
     balExportFileHint:
       'حمّل تقرير HTML (خلفية بيضاء، A4): افتحه في المتصفح ثم اطبع أو احفظ PDF.',
