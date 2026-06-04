@@ -146,76 +146,86 @@
       .replace(/"/g, '&quot;');
   }
 
-  /** Schéma vectoriel draw.io (mxGraph) — disposition unifilaire verticale */
+  /** Fils et symboles diagrams.net — bibliothèque mxgraph.electrical (open source). */
+  var EDGE_WIRE =
+    'edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#0f172a;endArrow=none;startArrow=none;';
+  var SYM = {
+    ac: 'shape=mxgraph.electrical.signal_sources.ac_source;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;',
+    breaker:
+      'shape=mxgraph.electrical.electro_mechanical.circuit_breaker;html=1;whiteSpace=wrap;aspect=fixed;align=center;verticalLabelPosition=bottom;verticalAlign=top;strokeColor=#0f172a;fillColor=#ffffff;',
+    ddr:
+      'shape=mxgraph.electrical.electro_mechanical.circuit_breaker;html=1;whiteSpace=wrap;aspect=fixed;align=center;verticalLabelPosition=bottom;verticalAlign=top;strokeColor=#2563eb;fillColor=#ffffff;',
+    fuse: 'shape=mxgraph.electrical.electro_mechanical.fuse;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;',
+    load:
+      'shape=mxgraph.electrical.electro_mechanical.motor_1;html=1;whiteSpace=wrap;aspect=fixed;align=center;verticalLabelPosition=bottom;verticalAlign=top;strokeColor=#64748b;fillColor=#ffffff;',
+    bus: 'line;strokeWidth=5;strokeColor=#0f172a;direction=south;html=1;',
+  };
+
+  /** Schéma draw.io avec symboles IEC (diagrams.net — bibliothèque Électrique). */
   function projectToDrawioXml(project) {
     var circuits = project.circuits || [];
     var n = Math.max(1, circuits.length);
-    var rowH = 88;
-    var startY = 200;
-    var pageH = Math.max(827, startY + n * rowH + 120);
+    var rowH = 96;
+    var startY = 300;
     var pageW = 1169;
-    var busX = 280;
+    var pageH = Math.max(827, startY + n * rowH + 120);
+    var busX = 260;
     var cells = [];
     var id = 2;
 
-    function cell(value, style, x, y, w, h, edge, parent, source, target) {
-      var cid = String(id++);
-      var geo =
-        '<mxGeometry x="' +
-        x +
-        '" y="' +
-        y +
-        '" width="' +
-        w +
-        '" height="' +
-        h +
-        '" as="geometry"/>';
-      if (edge) {
-        cells.push(
-          '<mxCell id="' +
-            cid +
-            '" style="' +
-            style +
-            '" edge="1" parent="' +
-            parent +
-            '" source="' +
-            source +
-            '" target="' +
-            target +
-            '">' +
-            geo +
-            '</mxCell>'
-        );
-      } else {
-        cells.push(
-          '<mxCell id="' +
-            cid +
-            '" value="' +
-            escXml(value) +
-            '" style="' +
-            style +
-            '" vertex="1" parent="' +
-            parent +
-            '">' +
-            geo +
-            '</mxCell>'
-        );
-      }
+    function nextId() {
+      return String(id++);
+    }
+
+    function addVertex(value, style, x, y, w, h) {
+      var cid = nextId();
+      cells.push(
+        '<mxCell id="' +
+          cid +
+          '" value="' +
+          escXml(value) +
+          '" style="' +
+          style +
+          '" vertex="1" parent="1">' +
+          '<mxGeometry x="' +
+          x +
+          '" y="' +
+          y +
+          '" width="' +
+          w +
+          '" height="' +
+          h +
+          '" as="geometry"/></mxCell>'
+      );
+      return cid;
+    }
+
+    function addEdge(source, target) {
+      var cid = nextId();
+      cells.push(
+        '<mxCell id="' +
+          cid +
+          '" style="' +
+          EDGE_WIRE +
+          '" edge="1" parent="1" source="' +
+          source +
+          '" target="' +
+          target +
+          '"><mxGeometry relative="1" as="geometry"/></mxCell>'
+      );
       return cid;
     }
 
     var title = project.meta.ref
       ? project.meta.ref + ' — ' + project.board
       : project.board;
-    cell(
+    addVertex(
       title,
       'text;html=1;fontSize=14;fontStyle=1;align=left;fillColor=none;strokeColor=none;',
       40,
-      24,
+      20,
       520,
-      28,
-      false,
-      '1'
+      28
     );
     var sub =
       (project.meta.client ? 'Client: ' + project.meta.client + ' · ' : '') +
@@ -224,90 +234,80 @@
       ' kW · Ib ≈ ' +
       project.supply.ibA +
       ' A · ' +
-      (project.supply.isTri ? '400 V tri' : '230 V mono');
-    cell(
+      (project.supply.isTri ? '400 V tri' : '230 V mono') +
+      ' — symboles diagrams.net (Électrique)';
+    addVertex(
       sub,
       'text;html=1;fontSize=11;align=left;fontColor=#64748B;fillColor=none;strokeColor=none;',
       40,
-      52,
-      700,
-      22,
-      false,
-      '1'
+      48,
+      760,
+      22
     );
 
-    var supplyId = cell(
-      'Alimentation\n' +
-        (project.supply.isTri ? '400 V ~ 50 Hz' : '230 V ~ 50 Hz') +
-        '\nCompteur',
-      'rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#ca8a04;fontStyle=1;',
-      40,
-      120,
-      120,
-      70,
-      false,
-      '1'
+    var acId = addVertex(
+      project.supply.isTri ? '~400 V\n50 Hz' : '~230 V\n50 Hz',
+      SYM.ac,
+      busX - 8,
+      88,
+      60,
+      60
     );
-
-    var mainId = cell(
-      'Disj. général\n' +
-        project.mainProtection.inA +
-        ' A\nDDR ' +
+    var dgId = addVertex(
+      'DG\n' + project.mainProtection.inA + ' A',
+      SYM.breaker,
+      busX - 37,
+      168,
+      75,
+      20
+    );
+    var ddrId = addVertex(
+      'DDR\n' +
         project.mainProtection.rcdInA +
-        ' A ' +
+        ' A / ' +
         project.mainProtection.rcdMa +
         ' mA ' +
         project.mainProtection.rcdType,
-      'rounded=0;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#2563eb;fontStyle=1;',
-      40,
-      210,
-      140,
-      72,
-      false,
-      '1'
+      SYM.ddr,
+      busX - 37,
+      208,
+      75,
+      20
     );
 
-    cell('', 'endArrow=block;strokeWidth=2;strokeColor=#334155;', 0, 0, 0, 0, true, '1', supplyId, mainId);
+    var busTop = 248;
+    var busBot = startY + (n - 1) * rowH + 36;
+    var busId = addVertex('', SYM.bus, busX, busTop, 4, busBot - busTop);
 
-    var busTop = startY - 20;
-    var busBot = startY + (n - 1) * rowH + 40;
-    var busId = cell(
-      '',
-      'line;strokeWidth=4;strokeColor=#0f172a;',
-      busX,
-      busTop,
-      4,
-      busBot - busTop,
-      false,
-      '1'
-    );
-
-    cell('', 'endArrow=block;strokeWidth=2;strokeColor=#334155;', 0, 0, 0, 0, true, '1', mainId, busId);
+    addEdge(acId, dgId);
+    addEdge(dgId, ddrId);
+    addEdge(ddrId, busId);
 
     circuits.forEach(function (c, i) {
       var y = startY + i * rowH;
-      var brkId = cell(
-        c.schemaRef + '\n' + c.inA + ' A curv. ' + c.curve + (c.rcd ? '\nDDR dédié' : ''),
-        'rounded=0;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=#059669;fontStyle=1;',
-        busX + 24,
-        y,
-        110,
-        56,
-        false,
-        '1'
-      );
-      var loadId = cell(
-        c.label + (c.location ? '\n(' + c.location + ')' : '') + '\nPd ' + c.pdemW + ' W · Ib ' + c.ibA + ' A',
-        'rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#94a3b8;',
-        busX + 180,
-        y - 4,
-        280,
-        64,
-        false,
-        '1'
-      );
-      cell('', 'endArrow=block;strokeWidth=2;strokeColor=#334155;', 0, 0, 0, 0, true, '1', busId, brkId);
-      cell('', 'endArrow=block;strokeWidth=2;strokeColor=#64748b;dashed=1;', 0, 0, 0, 0, true, '1', brkId, loadId);
+      var brkLabel =
+        c.schemaRef +
+        '\n' +
+        c.inA +
+        ' A ' +
+        c.curve +
+        (c.rcd ? '\nDDR type A' : '');
+      var brkId = addVertex(brkLabel, SYM.breaker, busX + 36, y + 8, 75, 20);
+      var loadLabel =
+        (c.label || 'Charge') +
+        (c.location ? '\n' + c.location : '') +
+        '\nPd ' +
+        c.pdemW +
+        ' W';
+      var loadId = addVertex(loadLabel, SYM.load, busX + 200, y - 4, 100, 60);
+      if (c.rcd) {
+        var fuseId = addVertex('30 mA A', SYM.fuse, busX + 120, y + 10, 60, 20);
+        addEdge(busId, fuseId);
+        addEdge(fuseId, brkId);
+      } else {
+        addEdge(busId, brkId);
+      }
+      addEdge(brkId, loadId);
     });
 
     return (
@@ -326,78 +326,19 @@
     );
   }
 
+  /** Aperçu : message — le rendu fiable est dans diagrams.net (symboles IEC). */
   function projectToSvg(project) {
-    var circuits = project.circuits || [];
-    var n = circuits.length;
-    var rowH = 72;
-    var w = 820;
-    var h = 160 + n * rowH;
-    var busX = 200;
-    var parts = [
-      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + w + ' ' + h + '" width="100%" style="max-width:' + w + 'px;background:#fff">',
-      '<style>text{font-family:Segoe UI,system-ui,sans-serif}.t{font-size:13px;fill:#0f172a}.s{font-size:11px;fill:#64748b}.h{font-size:16px;font-weight:700;fill:#047857}</style>',
-      '<text class="h" x="24" y="32">' + escXml(project.board) + '</text>',
-      '<text class="s" x="24" y="52">' +
-        escXml(
-          (project.meta.client ? project.meta.client + ' — ' : '') +
-            'Pd ' +
-            project.supply.pTotalKw +
-            ' kW · Ib ' +
-            project.supply.ibA +
-            ' A'
-        ) +
-        '</text>',
-      '<rect x="24" y="72" width="110" height="48" rx="6" fill="#fef3c7" stroke="#ca8a04"/>',
-      '<text class="t" x="34" y="94">Alimentation</text>',
-      '<text class="s" x="34" y="110">' +
-        escXml(project.supply.isTri ? '400 V tri' : '230 V mono') +
-        '</text>',
-      '<rect x="24" y="132" width="130" height="56" rx="4" fill="#dbeafe" stroke="#2563eb"/>',
-      '<text class="t" x="34" y="154">DG ' + project.mainProtection.inA + ' A</text>',
-      '<text class="s" x="34" y="172">DDR ' +
-        project.mainProtection.rcdInA +
-        'A / ' +
-        project.mainProtection.rcdMa +
-        'mA ' +
-        project.mainProtection.rcdType +
-        '</text>',
-      '<line x1="' + busX + '" y1="100" x2="' + busX + '" y2="' + (140 + n * rowH) + '" stroke="#0f172a" stroke-width="4"/>',
-    ];
-    circuits.forEach(function (c, i) {
-      var y = 140 + i * rowH;
-      parts.push('<line x1="' + busX + '" y1="' + (y + 20) + '" x2="' + (busX + 40) + '" y2="' + (y + 20) + '" stroke="#334155" stroke-width="2"/>');
-      parts.push(
-        '<rect x="' +
-          (busX + 40) +
-          '" y="' +
-          (y + 2) +
-          '" width="100" height="40" fill="#ecfdf5" stroke="#059669"/>'
-      );
-      parts.push(
-        '<text class="t" x="' +
-          (busX + 48) +
-          '" y="' +
-          (y + 20) +
-          '">' +
-          escXml(c.schemaRef + ' ' + c.inA + 'A') +
-          '</text>'
-      );
-      parts.push(
-        '<text class="s" x="' +
-          (busX + 160) +
-          '" y="' +
-          (y + 18) +
-          '">' +
-          escXml(c.label + ' — ' + c.pdemW + ' W') +
-          '</text>'
-      );
-    });
-    parts.push(
-      '<text class="s" x="24" y="' +
-        (h - 16) +
-        '">DZSWISS ELEC — unifilaire indicatif (vérifier calibres sur site). NFC 15-100.</text></svg>'
+    var n = (project.circuits || []).length;
+    return (
+      '<div class="unif-preview-note" style="padding:20px;text-align:center;background:#fff;border-radius:12px;color:#334155;font-family:system-ui,sans-serif">' +
+      '<p style="font-size:1rem;font-weight:700;margin:0 0 8px">' +
+      escXml(project.board) +
+      '</p>' +
+      '<p style="font-size:0.9rem;margin:0 0 12px">' +
+      n +
+      ' départ(s) — symboles <strong>diagrams.net</strong> (bibliothèque Électrique : disjoncteurs, fusibles, moteurs, bus…)</p>' +
+      '<p style="font-size:0.82rem;color:#64748b;margin:0">L’aperçu ci-dessus utilise l’éditeur intégré. Cliquez « Ouvrir dans l’éditeur » pour modifier avec tous les symboles pro.</p></div>'
     );
-    return parts.join('');
   }
 
   function saveProject(project) {

@@ -735,7 +735,7 @@ ${printScript}
       localStorage.setItem('electrodz-unifilar-source-report-v1', payload);
     } catch (_) { /* ignore */ }
     U.saveProject(built);
-    window.location.href = 'unifilaire-auto.html';
+    window.location.href = 'schemas-plans.html?from=unifilar';
   }
 
   function refreshRowSelects() {

@@ -31,11 +31,15 @@
       <section class="unif-auto-card">
         <h1 data-i18n="page.title">Schéma unifilaire (depuis le bilan)</h1>
         <p class="lead" data-i18n="page.lead">Génération assistée à partir du bilan de puissance…</p>
+        <p class="unif-symbols-note" data-i18n="symbols.note"></p>
         <div class="unif-auto-board-row">
           <label for="unifBoardSelect" data-i18n="board">Tableau</label>
           <select id="unifBoardSelect" aria-label="Tableau"></select>
         </div>
-        <div class="unif-preview" id="unifPreview"></div>
+        <div class="unif-preview" id="unifPreview">
+          <iframe id="unifDrawioFrame" class="unif-drawio-frame" title="Aperçu diagrams.net" hidden></iframe>
+          <p id="unifPreviewLoading" class="unif-preview-loading" data-i18n="preview.loading">Chargement des symboles…</p>
+        </div>
         <p class="unif-disclaimer" data-i18n="disclaimer"></p>
       </section>
 
@@ -57,7 +61,7 @@
   </main>
 
   <script src="js/unifilar-auto-i18n.js"></script>
-  <script src="js/unifilar-from-balance.js"></script>
-  <script src="js/unifilar-auto-page.js"></script>
+  <script src="js/unifilar-from-balance.js?v=20260605"></script>
+  <script src="js/unifilar-auto-page.js?v=20260605"></script>
 </body>
 </html>

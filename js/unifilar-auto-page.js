@@ -1,11 +1,14 @@
 /**
- * Page unifilaire-auto.html
+ * Page unifilaire-auto.html — aperçu diagrams.net + tableau des départs
  */
 (function () {
   var U = window.ElectroDzUnifilarFromBalance;
   var STORAGE_REPORT = 'electrodz-unifilar-source-report-v1';
+  var EMBED_ORIGIN = 'https://embed.diagrams.net';
 
   var previewEl = document.getElementById('unifPreview');
+  var drawioFrame = document.getElementById('unifDrawioFrame');
+  var previewLoading = document.getElementById('unifPreviewLoading');
   var tableBody = document.getElementById('unifTableBody');
   var boardSelect = document.getElementById('unifBoardSelect');
   var emptyEl = document.getElementById('unifEmpty');
@@ -13,9 +16,80 @@
 
   var project = null;
   var sourceReport = null;
+  var embedReady = false;
+  var embedQueue = [];
 
   function t(key) {
     return window.UnifilarAutoI18n ? window.UnifilarAutoI18n.t(key) : key;
+  }
+
+  function lang() {
+    return window.UnifilarAutoI18n && window.UnifilarAutoI18n.lang === 'ar' ? 'ar' : 'fr';
+  }
+
+  function postEmbed(msg) {
+    if (!drawioFrame || !drawioFrame.contentWindow) return;
+    drawioFrame.contentWindow.postMessage(JSON.stringify(msg), EMBED_ORIGIN);
+  }
+
+  function whenEmbedReady(msg) {
+    if (embedReady) postEmbed(msg);
+    else embedQueue.push(msg);
+  }
+
+  function flushEmbedQueue() {
+    embedQueue.forEach(postEmbed);
+    embedQueue = [];
+  }
+
+  function embedUrl() {
+    var u = new URL(EMBED_ORIGIN + '/');
+    u.searchParams.set('embed', '1');
+    u.searchParams.set('proto', 'json');
+    u.searchParams.set('spin', '1');
+    u.searchParams.set('libraries', '1');
+    u.searchParams.set('configure', '1');
+    u.searchParams.set('noSaveBtn', '1');
+    u.searchParams.set('noExitBtn', '1');
+    u.searchParams.set('saveAndExit', '0');
+    u.searchParams.set('lang', lang() === 'ar' ? 'ar' : 'fr');
+    return u.toString();
+  }
+
+  function loadPreviewInEmbed() {
+    if (!project || !drawioFrame) return;
+    var xml = U.projectToDrawioXml(project);
+    whenEmbedReady({
+      action: 'load',
+      xml: xml,
+      autosave: 0,
+      modified: false,
+      editable: false,
+      libs: 'electrical;general',
+      title: project.board || 'Unifilaire',
+    });
+  }
+
+  function initEmbedOnce() {
+    if (!drawioFrame || drawioFrame.dataset.init === '1') return;
+    drawioFrame.dataset.init = '1';
+    drawioFrame.src = embedUrl();
+    window.addEventListener('message', function (evt) {
+      if (evt.origin !== EMBED_ORIGIN) return;
+      var msg;
+      try {
+        msg = JSON.parse(evt.data);
+      } catch (e) {
+        return;
+      }
+      if (msg.event === 'init') {
+        embedReady = true;
+        if (previewLoading) previewLoading.hidden = true;
+        if (drawioFrame) drawioFrame.hidden = false;
+        flushEmbedQueue();
+        loadPreviewInEmbed();
+      }
+    });
   }
 
   function loadSourceReport() {
@@ -35,6 +109,13 @@
         return '<option value="' + b.replace(/"/g, '&quot;') + '">' + b + '</option>';
       })
       .join('');
+  }
+
+  function escapeHtml(s) {
+    return String(s ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
   }
 
   function renderTable() {
@@ -80,17 +161,10 @@
     });
   }
 
-  function escapeHtml(s) {
-    return String(s ?? '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
-  }
-
   function refreshPreview() {
-    if (!previewEl || !project) return;
-    previewEl.innerHTML = U.projectToSvg(project);
+    if (!project) return;
     U.saveProject(project);
+    if (embedReady) loadPreviewInEmbed();
   }
 
   function generateFromBoard() {
@@ -111,11 +185,20 @@
     if (contentEl) contentEl.hidden = !show;
   }
 
+  function openEditor() {
+    if (!project) return;
+    try {
+      localStorage.setItem(U.STORAGE_DRAWIO, U.projectToDrawioXml(project));
+    } catch (e) {}
+    window.location.href = 'schemas-plans.html?from=unifilar';
+  }
+
   function initFromStorage() {
     project = U.loadProject();
     sourceReport = loadSourceReport();
     if (project && project.circuits && project.circuits.length) {
       showContent(true);
+      initEmbedOnce();
       if (sourceReport) rebuildBoardSelect();
       renderTable();
       refreshPreview();
@@ -125,6 +208,7 @@
       rebuildBoardSelect();
       generateFromBoard();
       showContent(true);
+      initEmbedOnce();
       return;
     }
     showContent(false);
@@ -132,28 +216,8 @@
 
   document.getElementById('btnUnifRegen')?.addEventListener('click', generateFromBoard);
   boardSelect?.addEventListener('change', generateFromBoard);
-
-  document.getElementById('btnUnifEditor')?.addEventListener('click', function () {
-    if (!project) return;
-    try {
-      localStorage.setItem(U.STORAGE_DRAWIO, U.projectToDrawioXml(project));
-    } catch (e) {}
-    window.location.href = 'schemas-plans.html?from=unifilar';
-  });
-
-  document.getElementById('btnUnifPrint')?.addEventListener('click', function () {
-    if (!project) return;
-    var w = window.open('', '_blank');
-    if (!w) return;
-    w.document.write(
-      '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' +
-        escapeHtml(project.board) +
-        '</title><style>body{margin:16px;font-family:system-ui}@media print{margin:8mm}</style></head><body>' +
-        U.projectToSvg(project) +
-        '<script>window.onload=function(){setTimeout(function(){window.print()},400)}<\/script></body></html>'
-    );
-    w.document.close();
-  });
+  document.getElementById('btnUnifEditor')?.addEventListener('click', openEditor);
+  document.getElementById('btnUnifPrint')?.addEventListener('click', openEditor);
 
   document.getElementById('btnUnifBackCalc')?.addEventListener('click', function () {
     window.location.href = 'calcul-electrique.html#balance';
