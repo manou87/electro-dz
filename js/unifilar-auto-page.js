@@ -162,8 +162,14 @@
   }
 
   function refreshPreview() {
-    if (!project) return;
+    if (!previewEl || !project) return;
     U.saveProject(project);
+    if (previewLoading) previewLoading.hidden = true;
+    if (drawioFrame) drawioFrame.hidden = true;
+    previewEl.innerHTML =
+      '<div class="unif-svg-wrap" style="overflow:auto;background:#fff;border-radius:8px;padding:8px">' +
+      (U.projectToSvgPro ? U.projectToSvgPro(project) : '') +
+      '</div>';
     if (embedReady) loadPreviewInEmbed();
   }
 
