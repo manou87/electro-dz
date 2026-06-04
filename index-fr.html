@@ -214,6 +214,14 @@
       font-size:.84rem;font-weight:800;text-align:center;color:var(--text);
       line-height:1.2;max-width:100%;word-break:break-word;
     }
+    .quick-item .quick-labels{
+      display:flex;flex-direction:column;align-items:center;gap:3px;max-width:100%;
+    }
+    .quick-item .ico-hint{
+      font-size:.58rem;font-weight:600;line-height:1.2;text-align:center;
+      color:#c4b5fd;max-width:10.5rem;opacity:.95;
+    }
+    .quick-item--train .ico-hint{color:#ddd6fe}
 
     /* Rubriques secondaires — repliées par défaut */
     .accueil-more{
@@ -373,6 +381,7 @@
       .quick-item .ico-wrap{width:48px;height:48px}
       .quick-item .ico{width:26px;height:26px}
       .quick-item .ico-label{font-size:.8rem}
+      .quick-item .ico-hint{font-size:.52rem;max-width:9.5rem}
       .spotlight-grid,.hub-grid{grid-template-columns:1fr}
       .spot-card .ico-wrap{display:none}
       .hero-text p{white-space:normal}
@@ -456,7 +465,10 @@
         </a>
         <a class="quick-item quick-item--train" href="formations.html#quiz">
           <span class="ico-wrap"><svg class="ico"><use href="#ico-school"/></svg></span>
-          <span class="ico-label" data-i18n="quick.training">Formations</span>
+          <span class="quick-labels">
+            <span class="ico-label" data-i18n="quick.training">Formations</span>
+            <span class="ico-hint" data-i18n="quick.training.hint">450 questions pour maîtriser la norme NF C 15-100, pas à pas</span>
+          </span>
         </a>
         <a class="quick-item quick-item--job" href="emploi.html">
           <span class="ico-wrap ico-wrap--job"><svg class="ico"><use href="#ico-briefcase"/></svg></span>

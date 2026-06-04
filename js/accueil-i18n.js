@@ -17,6 +17,8 @@
       "quick.pdf": "PDF",
       "quick.docs": "Documentation",
       "quick.training": "Formations",
+      "quick.training.hint":
+        "450 questions pour maîtriser la norme NF C 15-100, pas à pas",
       "quick.job": "Emploi · bientôt",
       "quick.quote": "Devis",
       "quick.social": "Réseaux",
@@ -109,6 +111,8 @@
       "quick.pdf": "PDF",
       "quick.docs": "وثائق",
       "quick.training": "تكوين",
+      "quick.training.hint":
+        "450 سؤالاً لإتقان معيار NF C 15-100 خطوة بخطوة",
       "quick.job": "عمل · قريباً",
       "quick.quote": "عروض أسعار",
       "quick.social": "شبكات",
