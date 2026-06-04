@@ -14,7 +14,6 @@
     breaker:
       'shape=mxgraph.electrical.electro_mechanical.circuit_breaker;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;',
     rcd: 'shape=mxgraph.electrical.miscellaneous.residual_current_device;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;',
-    bus: 'shape=mxgraph.electrical.transmission.bus_bar;html=1;strokeWidth=3;strokeColor=#0284c7;fillColor=none;align=center;',
     motor:
       'shape=mxgraph.electrical.rot_mechanical.motor;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;',
     lamp: 'shape=mxgraph.electrical.lamps.incandescent_bulb;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;',
@@ -27,6 +26,7 @@
 
   var WIRE_V = 'line;strokeWidth=2;strokeColor=#0284c7;direction=south;html=1;';
   var WIRE_H = 'line;strokeWidth=2;strokeColor=#0284c7;html=1;';
+  var BUS_H = 'line;strokeWidth=4;strokeColor=#0284c7;html=1;';
   var TXT =
     'text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;fontColor=#1e293b;';
 
@@ -106,8 +106,8 @@
       vtx('', WIRE_V, x - 1, y, 3, len);
     }
 
-    function wireH(x, y, len) {
-      vtx('', WIRE_H, x, y - 1, len, 3);
+    function wireH(x, y, len, thick) {
+      vtx('', thick ? BUS_H : WIRE_H, x, y - (thick ? 2 : 1), len, thick ? 4 : 3);
     }
 
     var title = project.meta && project.meta.ref ? project.meta.ref + ' — ' + project.board : project.board;
@@ -140,17 +140,17 @@
     );
     y += BRK_H + 6;
     wireV(cx, y, busY - y);
-    wireH(cx - 20, busY, busLen);
-    vtx('', MX.bus, cx - 20, busY - 4, busLen, 10);
+    wireH(cx - 20, busY, busLen, true);
 
-    var protY = busY + 28;
-    var loadY = protY + BRK_H + 70;
+    var protY = busY + 24;
+    var loadY = protY + BRK_H + 56;
 
     circuits.forEach(function (c, i) {
       var bx = cx + 50 + i * colW;
-      wireV(bx, busY, loadY + SYM - busY + 8);
+      wireV(bx, busY, protY - busY);
       var protStyle = c.rcd ? MX.rcd : MX.breaker;
       vtx('', protStyle, bx - BRK / 2, protY, BRK, BRK_H);
+      wireV(bx, protY + BRK_H, loadY - (protY + BRK_H));
       if (h.departShort) vtx(h.departShort(c), TXT + 'fontSize=8;fontColor=#475569;', bx + 38, protY + 2, 100, 32);
       vtx('', resolveLoadMx(c), bx - SYM / 2, loadY, SYM, SYM);
       vtx(c.schemaRef || '—', TXT + 'fontSize=8;align=center;', bx - 30, loadY + SYM - 2, 60, 14);
