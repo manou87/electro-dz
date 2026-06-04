@@ -24,8 +24,13 @@
     return isTri ? sd / (Math.sqrt(3) * Uline) : sd / Uline;
   }
 
-  function needsTypeA(usage) {
-    return usage === 'ev_charger' || usage === 'washing_machine' || usage === 'welding';
+  function needsTypeA(usage, templateId) {
+    return (
+      usage === 'welding' ||
+      templateId === 'washing_machine' ||
+      templateId === 'ev_charger' ||
+      templateId === 'dishwasher'
+    );
   }
 
   function groupCircuits(detailRows) {
@@ -41,6 +46,7 @@
           location: row.location,
           board: row.board,
           usage: row.usage,
+          templateId: row.templateId || '',
           pdemW: 0,
           cosPhi: row.cosPhi,
           count: 0,
@@ -50,6 +56,7 @@
       g0.pdemW += row.pdem;
       g0.count += 1;
       if (!g0.label || g0.label === '—') g0.label = row.label;
+      if (!g0.templateId && row.templateId) g0.templateId = row.templateId;
     });
     return Object.keys(map)
       .map(function (k) {
@@ -89,8 +96,9 @@
         ibA: Math.round(ib * 10) / 10,
         inA: inA,
         curve: g1.pdemW > 4000 ? 'C' : 'C',
-        rcd: needsTypeA(g1.usage),
+        rcd: needsTypeA(g1.usage, g1.templateId),
         usage: g1.usage,
+        templateId: g1.templateId || '',
       };
     });
 
@@ -146,30 +154,119 @@
       .replace(/"/g, '&quot;');
   }
 
-  /** Fils et symboles diagrams.net — bibliothèque mxgraph.electrical (open source). */
   var EDGE_WIRE =
-    'edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#0f172a;endArrow=none;startArrow=none;';
+    'edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#0284c7;endArrow=none;startArrow=none;';
   var SYM = {
     ac: 'shape=mxgraph.electrical.signal_sources.ac_source;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;',
+    earth:
+      'shape=mxgraph.electrical.signal_sources.protective_earth;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#16a34a;fillColor=#ffffff;',
     breaker:
-      'shape=mxgraph.electrical.electro_mechanical.circuit_breaker;html=1;whiteSpace=wrap;aspect=fixed;align=center;verticalLabelPosition=bottom;verticalAlign=top;strokeColor=#0f172a;fillColor=#ffffff;',
+      'shape=mxgraph.electrical.electro_mechanical.circuit_breaker;html=1;whiteSpace=wrap;aspect=fixed;align=center;verticalLabelPosition=bottom;verticalAlign=top;strokeColor=#0f172a;fillColor=#ffffff;fontSize=10;',
     ddr:
-      'shape=mxgraph.electrical.electro_mechanical.circuit_breaker;html=1;whiteSpace=wrap;aspect=fixed;align=center;verticalLabelPosition=bottom;verticalAlign=top;strokeColor=#2563eb;fillColor=#ffffff;',
-    fuse: 'shape=mxgraph.electrical.electro_mechanical.fuse;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;',
-    load:
-      'shape=mxgraph.electrical.electro_mechanical.motor_1;html=1;whiteSpace=wrap;aspect=fixed;align=center;verticalLabelPosition=bottom;verticalAlign=top;strokeColor=#64748b;fillColor=#ffffff;',
-    bus: 'line;strokeWidth=5;strokeColor=#0f172a;direction=south;html=1;',
+      'shape=mxgraph.electrical.electro_mechanical.circuit_breaker;html=1;whiteSpace=wrap;aspect=fixed;align=center;verticalLabelPosition=bottom;verticalAlign=top;strokeColor=#2563eb;fillColor=#ffffff;fontSize=10;',
+    fuse: 'shape=mxgraph.electrical.electro_mechanical.fuse;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;fontSize=10;',
+    busH:
+      'shape=mxgraph.electrical.transmission.2_line_bus;html=1;strokeWidth=2;strokeColor=#0284c7;fillColor=none;align=center;',
+    wireV: 'line;strokeWidth=2;strokeColor=#0284c7;direction=south;html=1;',
   };
 
-  /** Schéma draw.io avec symboles IEC (diagrams.net — bibliothèque Électrique). */
+  var TEMPLATE_ICON = {
+    light_rooms: 'lighting',
+    light_stairs: 'lighting',
+    light_parking: 'lighting',
+    outdoor_light: 'lighting',
+    sockets_living: 'socket',
+    sockets_kitchen: 'socket',
+    sockets_bedrooms: 'socket',
+    sockets_bathroom: 'socket',
+    sockets_office: 'socket',
+    sockets_garage: 'socket',
+    hvac_ventilation: 'hvac',
+    motor_pump: 'motor',
+    motor_lift: 'motor',
+    washing_machine: 'washing-machine',
+    heating_electric: 'water-heater',
+    water_heater: 'water-heater',
+    cooker: 'oven',
+    oven: 'oven',
+    dishwasher: 'oven',
+    dryer: 'water-heater',
+    welding: 'motor',
+    ev_charger: 'ev-charger',
+  };
+
+  function siteOrigin() {
+    if (typeof window !== 'undefined' && window.location && window.location.origin) {
+      return window.location.origin;
+    }
+    return 'https://electro-dz.com';
+  }
+
+  function loadIconUrl(iconKey) {
+    return siteOrigin() + '/assets/unifilar/' + iconKey + '.svg';
+  }
+
+  function resolveLoadIcon(c) {
+    var tid = c.templateId || '';
+    if (TEMPLATE_ICON[tid]) return TEMPLATE_ICON[tid];
+    var label = String(c.label || '').toLowerCase();
+    if (/lave|linge|wash/.test(label)) return 'washing-machine';
+    if (/lampe|éclair|eclair|luminaire|light/.test(label)) return 'lighting';
+    if (/moteur|motor|pompe|ventil|ascenseur|lift|ventilateur/.test(label)) return 'motor';
+    if (/prise|socket|pc |informat/.test(label)) return 'socket';
+    if (/chauffe|cumulus|eau chaude|ballon/.test(label)) return 'water-heater';
+    if (/four|cuisini|plaque|oven|cook/.test(label)) return 'oven';
+    if (/clim|hvac|cta|groupe froid/.test(label)) return 'hvac';
+    if (/ve |irve|borne|ev /.test(label)) return 'ev-charger';
+    switch (c.usage) {
+      case 'lighting':
+        return 'lighting';
+      case 'motors':
+        return 'motor';
+      case 'sockets':
+        return 'socket';
+      case 'heating':
+        return 'water-heater';
+      case 'welding':
+        return 'motor';
+      default:
+        return 'generic';
+    }
+  }
+
+  function imageStyle(iconKey) {
+    return (
+      'shape=image;html=1;labelBackgroundColor=none;verticalLabelPosition=bottom;verticalAlign=top;aspect=fixed;imageAspect=0;image=' +
+      loadIconUrl(iconKey) +
+      ';'
+    );
+  }
+
+  function sourceLabel(supply) {
+    if (supply.isTri) {
+      return '400 V — 3Ph + N + PE\n50 Hz\nL1 · L2 · L3 · N · PE';
+    }
+    return '230 V — 1Ph + N + PE\n50 Hz\nL · N · PE';
+  }
+
+  function departProtectionLabel(c) {
+    var lines = [c.schemaRef || 'Q'];
+    lines.push('Disj. ' + c.inA + ' A — curbe ' + c.curve);
+    lines.push('Ib ≈ ' + c.ibA + ' A');
+    if (c.rcd) lines.push('DDR 30 mA — type A');
+    return lines.join('\n');
+  }
+
+  /** Unifilaire type bureau d’études : barre horizontale + départs verticaux + icône charge. */
   function projectToDrawioXml(project) {
     var circuits = project.circuits || [];
     var n = Math.max(1, circuits.length);
-    var rowH = 96;
-    var startY = 300;
-    var pageW = 1169;
-    var pageH = Math.max(827, startY + n * rowH + 120);
-    var busX = 260;
+    var colW = 148;
+    var busY = 228;
+    var busX0 = 100;
+    var busLen = Math.max(360, n * colW + 120);
+    var pageW = Math.max(1169, busX0 + busLen + 80);
+    var pageH = 620;
     var cells = [];
     var id = 2;
 
@@ -221,93 +318,121 @@
       : project.board;
     addVertex(
       title,
-      'text;html=1;fontSize=14;fontStyle=1;align=left;fillColor=none;strokeColor=none;',
+      'text;html=1;fontSize=15;fontStyle=1;align=left;fillColor=none;strokeColor=none;',
       40,
-      20,
+      16,
       520,
       28
     );
-    var sub =
-      (project.meta.client ? 'Client: ' + project.meta.client + ' · ' : '') +
-      'Pd ≈ ' +
-      project.supply.pTotalKw +
-      ' kW · Ib ≈ ' +
-      project.supply.ibA +
-      ' A · ' +
-      (project.supply.isTri ? '400 V tri' : '230 V mono') +
-      ' — symboles diagrams.net (Électrique)';
     addVertex(
-      sub,
+      (project.meta.client ? 'Client: ' + project.meta.client + ' · ' : '') +
+        'Pd ≈ ' +
+        project.supply.pTotalKw +
+        ' kW · Ib ≈ ' +
+        project.supply.ibA +
+        ' A',
       'text;html=1;fontSize=11;align=left;fontColor=#64748B;fillColor=none;strokeColor=none;',
       40,
-      48,
-      760,
-      22
+      42,
+      700,
+      20
     );
 
-    var acId = addVertex(
-      project.supply.isTri ? '~400 V\n50 Hz' : '~230 V\n50 Hz',
-      SYM.ac,
-      busX - 8,
-      88,
-      60,
-      60
+    var feedX = busX0 - 20;
+    var srcId = addVertex(sourceLabel(project.supply), SYM.ac, feedX - 22, 72, 64, 64);
+    addVertex(
+      'PE',
+      SYM.earth,
+      feedX + 52,
+      108,
+      28,
+      28
     );
     var dgId = addVertex(
-      'DG\n' + project.mainProtection.inA + ' A',
+      'DG — disj. général\nIn ' +
+        project.mainProtection.inA +
+        ' A\nIb tableau ≈ ' +
+        Math.round(project.supply.ibA * 10) / 10 +
+        ' A',
       SYM.breaker,
-      busX - 37,
-      168,
-      75,
-      20
+      feedX - 38,
+      152,
+      80,
+      36
     );
-    var ddrId = addVertex(
-      'DDR\n' +
+    var ddrMainId = addVertex(
+      'DDR général\n' +
         project.mainProtection.rcdInA +
-        ' A / ' +
+        ' A · ' +
         project.mainProtection.rcdMa +
-        ' mA ' +
+        ' mA\nType ' +
         project.mainProtection.rcdType,
       SYM.ddr,
-      busX - 37,
-      208,
-      75,
-      20
+      feedX - 38,
+      198,
+      80,
+      36
     );
 
-    var busTop = 248;
-    var busBot = startY + (n - 1) * rowH + 36;
-    var busId = addVertex('', SYM.bus, busX, busTop, 4, busBot - busTop);
+    var busId = addVertex(
+      project.supply.isTri ? '0,4 kV — L1 L2 L3 N' : '230 V — L N',
+      SYM.busH,
+      busX0,
+      busY,
+      busLen,
+      28
+    );
 
-    addEdge(acId, dgId);
-    addEdge(dgId, ddrId);
-    addEdge(ddrId, busId);
+    addEdge(srcId, dgId);
+    addEdge(dgId, ddrMainId);
+    addEdge(ddrMainId, busId);
 
     circuits.forEach(function (c, i) {
-      var y = startY + i * rowH;
-      var brkLabel =
-        c.schemaRef +
-        '\n' +
-        c.inA +
-        ' A ' +
-        c.curve +
-        (c.rcd ? '\nDDR type A' : '');
-      var brkId = addVertex(brkLabel, SYM.breaker, busX + 36, y + 8, 75, 20);
-      var loadLabel =
-        (c.label || 'Charge') +
-        (c.location ? '\n' + c.location : '') +
-        '\nPd ' +
-        c.pdemW +
-        ' W';
-      var loadId = addVertex(loadLabel, SYM.load, busX + 200, y - 4, 100, 60);
+      var cx = busX0 + 50 + i * colW;
+      var y = busY + 36;
+      var prev = busId;
+
       if (c.rcd) {
-        var fuseId = addVertex('30 mA A', SYM.fuse, busX + 120, y + 10, 60, 20);
-        addEdge(busId, fuseId);
-        addEdge(fuseId, brkId);
-      } else {
-        addEdge(busId, brkId);
+        var ddrDepId = addVertex(
+          'DDR départ\n30 mA type A',
+          SYM.ddr,
+          cx - 38,
+          y,
+          76,
+          32
+        );
+        addEdge(prev, ddrDepId);
+        prev = ddrDepId;
+        y += 44;
       }
-      addEdge(brkId, loadId);
+
+      var brkId = addVertex(departProtectionLabel(c), SYM.breaker, cx - 38, y, 76, 40);
+      addEdge(prev, brkId);
+      y += 52;
+
+      var wireId = addVertex('', SYM.wireV, cx - 2, y, 4, 48);
+      addEdge(brkId, wireId);
+      y += 52;
+
+      var iconKey = resolveLoadIcon(c);
+      var imgId = addVertex(
+        (c.label || 'Charge') + '\n' + c.pdemW + ' W',
+        imageStyle(iconKey),
+        cx - 36,
+        y,
+        72,
+        72
+      );
+      addEdge(wireId, imgId);
+
+      addVertex(
+        c.location ? c.location : '',
+        'text;html=1;fontSize=9;align=center;fontColor=#64748B;fillColor=none;strokeColor=none;',
+        cx - 40,
+        y + 76,
+        80,
+        16
+      );
     });
 
     return (
@@ -336,7 +461,7 @@
       '</p>' +
       '<p style="font-size:0.9rem;margin:0 0 12px">' +
       n +
-      ' départ(s) — symboles <strong>diagrams.net</strong> (bibliothèque Électrique : disjoncteurs, fusibles, moteurs, bus…)</p>' +
+      ' départ(s) — barre horizontale, protections détaillées, icône par charge (lave-linge, lampe, moteur…)</p>' +
       '<p style="font-size:0.82rem;color:#64748b;margin:0">L’aperçu ci-dessus utilise l’éditeur intégré. Cliquez « Ouvrir dans l’éditeur » pour modifier avec tous les symboles pro.</p></div>'
     );
   }

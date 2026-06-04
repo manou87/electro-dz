@@ -4,9 +4,9 @@
       'meta.title': 'Unifilaire auto — DZSWISS ELEC',
       'page.title': 'Schéma unifilaire (depuis le bilan)',
       'page.lead':
-        'Placement automatique des départs (repères, In indicatif) avec les symboles IEC de diagrams.net — pas de rectangles « maison ».',
+        'Barre horizontale, source L1/L2/L3/N/PE (ou L/N), protections détaillées (In, courbe, Ib, DDR) et icône réelle par charge en bas de chaque départ.',
       'symbols.note':
-        'Symboles : bibliothèque Électrique (disjoncteur, fusible, DDR, source AC, charge…). Édition complète dans Schémas et plans.',
+        'Lave-linge, lampe, moteur, prises… — icônes dédiées. Sans marque constructeur. Édition dans Schémas et plans.',
       'preview.loading': 'Chargement de l’aperçu diagrams.net…',
       'btn.regen': 'Regénérer',
       'btn.editor': 'Ouvrir dans l’éditeur',
