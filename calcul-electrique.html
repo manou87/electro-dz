@@ -588,19 +588,6 @@
         <div class="bal-toolbar">
           <button type="button" class="tc-mini-btn" id="bal-add-row" data-i18n="balAddRow"></button>
         </div>
-        <div class="bal-saved-bar">
-          <div class="bal-saved-row">
-            <span class="bal-saved-title" data-i18n="balSavedTitle">Mes bilans enregistrés</span>
-            <select id="bal-saved-select" aria-label="Bilans enregistrés">
-              <option value="" data-i18n="balSavedPick">— Choisir un bilan —</option>
-            </select>
-            <button type="button" class="bal-saved-btn bal-saved-btn--save" id="bal-save-btn" data-i18n="balSave">Enregistrer le bilan</button>
-            <button type="button" class="bal-saved-btn" id="bal-load-btn" data-i18n="balLoad">Charger</button>
-            <button type="button" class="bal-saved-btn" id="bal-delete-save-btn" data-i18n="balDeleteSave">Supprimer</button>
-          </div>
-          <button type="button" class="bal-unifilar-main-btn" id="bal-unifilar-main" data-i18n="balUnifilar">Schéma unifilaire →</button>
-          <p class="bal-saved-status" id="bal-saved-status" aria-live="polite"></p>
-        </div>
         <p style="font-size:0.72rem;color:var(--muted);margin-top:10px;line-height:1.4" data-i18n="balDisclaimer"></p>
       </div>
 
@@ -801,17 +788,31 @@
         <p class="tc-note" data-i18n="tcNote"></p>
       </div>
 
+      <div id="bal-saved-dock" class="bal-saved-bar">
+        <div class="bal-saved-row">
+          <span class="bal-saved-title" data-i18n="balSavedTitle">📁 Mes bilans enregistrés (sur cet appareil)</span>
+          <select id="bal-saved-select" aria-label="Bilans enregistrés">
+            <option value="" data-i18n="balSavedPick">— Choisir un bilan —</option>
+          </select>
+          <button type="button" class="bal-saved-btn bal-saved-btn--save" id="bal-save-btn" data-i18n="balSave">Enregistrer le bilan</button>
+          <button type="button" class="bal-saved-btn" id="bal-load-btn" data-i18n="balLoad">Charger</button>
+          <button type="button" class="bal-saved-btn" id="bal-delete-save-btn" data-i18n="balDeleteSave">Supprimer</button>
+        </div>
+        <button type="button" class="bal-unifilar-main-btn" id="bal-unifilar-main" data-i18n="balUnifilar">⚡ Schéma unifilaire →</button>
+        <p class="bal-saved-status" id="bal-saved-status" aria-live="polite"></p>
+      </div>
+
       <button type="button" class="btn-calc" id="btn-calculate"></button>
       <div id="calc-global-result" class="result-box"></div>
 
       <div id="bal-export-dock" class="bal-export-dock" hidden>
         <p class="bal-export-dock-title" data-i18n="balExportDockTitle"></p>
         <div class="bal-export" id="bal-export">
+          <button type="button" class="bal-action-btn bal-action-unif" id="bal-unifilar" disabled data-i18n="balUnifilar">Schéma unifilaire →</button>
           <button type="button" class="bal-action-btn bal-action-html" id="bal-export-html" data-i18n="balExportHtml"></button>
           <button type="button" class="bal-action-btn bal-action-print" id="bal-print" data-i18n="balExportPrint"></button>
           <button type="button" class="bal-action-btn bal-action-pdf" id="bal-export-pdf" data-i18n="balExportPdf"></button>
           <button type="button" class="bal-action-btn bal-action-txt" id="bal-export-txt" data-i18n="balExportTxt"></button>
-          <button type="button" class="bal-action-btn bal-action-unif" id="bal-unifilar" disabled data-i18n="balUnifilar"></button>
         </div>
         <p class="bal-export-hint" id="bal-export-hint" data-i18n="balExportFileHint"></p>
       </div>
@@ -840,8 +841,8 @@
   -->
   <script src="js/trip-curve-catalog.js"></script>
   <script src="js/courbes-protection.js"></script>
-  <script src="js/unifilar-from-balance.js"></script>
-  <script src="js/power-balance-pro.js"></script>
-  <script src="js/calcul-electrique.js" defer></script>
+  <script src="js/unifilar-from-balance.js?v=20260604"></script>
+  <script src="js/power-balance-pro.js?v=20260604"></script>
+  <script src="js/calcul-electrique.js?v=20260604" defer></script>
 </body>
 </html>

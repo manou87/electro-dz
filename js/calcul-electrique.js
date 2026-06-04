@@ -192,6 +192,8 @@
     }
     const balDock = document.getElementById('bal-export-dock');
     if (balDock && id !== 'power_balance') balDock.hidden = true;
+    const balSavedDock = document.getElementById('bal-saved-dock');
+    if (balSavedDock) balSavedDock.hidden = id !== 'power_balance';
   }
 
   function updateWorkspaceLabels() {
