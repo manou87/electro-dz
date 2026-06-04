@@ -1,0 +1,1374 @@
+{
+  "bookId": "nf-c15-100-2015",
+  "version": "2.0",
+  "reviewStatus": "validated-pdf",
+  "sourcePdf": "pdf/francais/nf-c15-100-2015/nf-c15-100-2015.pdf",
+  "sourceNoteFr": "Réponses vérifiées uniquement dans ce PDF (édition indiquée : décembre 2002). 15 questions par palier (5 paliers).",
+  "moduleId": "M06",
+  "titleFr": "Tableau, GTL & organisation",
+  "titleAr": "اللوحة و GTL والتنظيم",
+  "objectiveFr": "GTL, tableaux, sectionnement habitation — PDF partie 7-771 et 5-53.",
+  "objectiveAr": "GTL واللوحات والقطع — PDF 7-771.",
+  "questions": [
+    {
+      "id": "m06_L1_q01",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "multiple",
+      "questionFr": "GTL (§ 771.558) regroupe :",
+      "questionAr": "GTL (§ 771.558) تجمع:",
+      "optionsFr": [
+        "Uniquement éclairage",
+        "Arrivées réseaux puissance et communication",
+        "Gaz uniquement",
+        "Chauffage seul"
+      ],
+      "optionsAr": [
+        "إضاءة فقط",
+        "وصول الطاقة والاتصالات",
+        "غاز فقط",
+        "تدفئة فقط"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "§ 771.558 : GTL = arrivées puissance + communication.",
+      "explanationAr": "§ 771.558: طاقة واتصالات.",
+      "normRef": "NF C 15-100 — § 771.558 (p. 479)",
+      "pdfPage": 479
+    },
+    {
+      "id": "m06_L1_q02",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100 (§ 771.558), quelle affirmation correspond au texte de la norme concernant la GTL doit être matérialisée ?",
+      "questionAr": "§ 771.558: GTL يجب أن تكون مادية/محددة.",
+      "correctAnswer": true,
+      "explanationFr": "§ 771.558 : GTL matérialisée.",
+      "explanationAr": "§ 771.558: تحديد GTL.",
+      "normRef": "NF C 15-100 — § 771.558 (p. 479)",
+      "pdfPage": 479
+    },
+    {
+      "id": "m06_L1_q03",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100 (§ 771.558.3), quelle affirmation correspond au texte de la norme concernant panneau de contrôle supporte ?",
+      "questionAr": "§ 771.558.3 لوحة التحكم تحمل:",
+      "optionsFr": [
+        "Uniquement DDR cuisine",
+        "AGCP et compteur électrique",
+        "Parafoudre seul",
+        "Transformateur rasoir"
+      ],
+      "optionsAr": [
+        "DDR مطبخ",
+        "AGCP والعداد",
+        "مانع صواعق",
+        "محول حلاقة"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "§ 771.558.3 : la réponse correcte est « AGCP et compteur électrique ». Voir NF C 15-100 — § 771.558.3 (p. 486) p. 486.",
+      "explanationAr": "§ 771.558.3: AGCP + عداد.",
+      "normRef": "NF C 15-100 — § 771.558.3 (p. 486)",
+      "pdfPage": 486
+    },
+    {
+      "id": "m06_L1_q04",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Si une fixation est utilisée, elle ne doit pas endommager l'électrode de terre ou le conducteur de terre »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «Si une fixation est utilisée, elle ne doit pas endommager l'électrode de terre o»",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 307) — page 307 du PDF.",
+      "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 307) — page 307 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 307)",
+      "pdfPage": 307
+    },
+    {
+      "id": "m06_L1_q05",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Ce repérage doit préciser les locaux desservis et la fonction (par exemple au moyen de pictogrammes ou autres… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «Ce repérage doit préciser les locaux desservis et la fonction (par exemple au mo»",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 474) — page 474 du PDF.",
+      "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 474) — page 474 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 474)",
+      "pdfPage": 474
+    },
+    {
+      "id": "m06_L1_q06",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "optionsFr": [
+        "Aucune exigence de ce type dans la norme.",
+        "Cette GTL, comportant de nombreux départs vers le haut et vers le bas, ne doit pas être placée au droit des poutraisons.…",
+        "Cette GTL, comportant de nombreux départs vers le haut et vers le bas, doit être placée au droit des poutraisons.…",
+        "Règle réservée aux installations haute tension uniquement."
+      ],
+      "optionsAr": [
+        "غير موجودة في المعيار",
+        "عبارة مطابقة للمعيار",
+        "عبارة مخالفة للمعيار",
+        "للجهد العالي فقط"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § NF C 15-100 (p. 479), page 479 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § NF C 15-100 (p. 479)، ص. 479.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 479)",
+      "pdfPage": 479
+    },
+    {
+      "id": "m06_L1_q07",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Le fonctionnement du dispositif d'urgence est prioritaire sur toute autre fonction non relative à la sécurité et doit… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «Le fonctionnement du dispositif d'urgence est prioritaire sur toute autre foncti»",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 297) — page 297 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 297) — page 297 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 297)",
+      "pdfPage": 297
+    },
+    {
+      "id": "m06_L1_q08",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Les indications que doivent comporter les schémas et documents annexés sont les suivantes : - nature et type des… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «Les indications que doivent comporter les schémas et documents annexés sont les »",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 474) — page 474 du PDF.",
+      "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 474) — page 474 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 474)",
+      "pdfPage": 474
+    },
+    {
+      "id": "m06_L1_q09",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "optionsFr": [
+        "- prises de courant de courant assigné au plus égal à 32 A ;…",
+        "- prises de courant de courant assigné au moins égal à 32 A ;…",
+        "Règle réservée aux installations haute tension uniquement.",
+        "Aucune exigence de ce type dans la norme."
+      ],
+      "optionsAr": [
+        "عبارة مطابقة للمعيار",
+        "عبارة مخالفة للمعيار",
+        "للجهد العالي فقط",
+        "غير موجودة في المعيار"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § NF C 15-100 (p. 297), page 297 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § NF C 15-100 (p. 297)، ص. 297.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 297)",
+      "pdfPage": 297
+    },
+    {
+      "id": "m06_L1_q10",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « L’une de ces prises ne doit pas être placée dans un endroit adéquat de la salle de séjour, près d’un socle de prise de… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «L’une de ces prises ne doit pas être placée dans un endroit adéquat de la salle »",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 487) — page 487 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 487) — page 487 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 487)",
+      "pdfPage": 487
+    },
+    {
+      "id": "m06_L1_q11",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Certains produits de gestion du bâtiment sont conçus pour cohabiter sans problème de fonctionnement avec les matériels… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «Certains produits de gestion du bâtiment sont conçus pour cohabiter sans problèm»",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 482) — page 482 du PDF.",
+      "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 482) — page 482 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 482)",
+      "pdfPage": 482
+    },
+    {
+      "id": "m06_L1_q12",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "optionsFr": [
+        "Le cheminement des réseaux de puissance et de communication ne doit pas se faire dans des conduits ou des compartiments de goulottes distinc",
+        "Aucune exigence de ce type dans la norme.",
+        "Règle réservée aux installations haute tension uniquement.",
+        "Le cheminement des réseaux de puissance et de communication doit se faire dans des conduits ou des compartiments de goulottes distincts.…"
+      ],
+      "optionsAr": [
+        "عبارة مخالفة للمعيار",
+        "غير موجودة في المعيار",
+        "للجهد العالي فقط",
+        "عبارة مطابقة للمعيار"
+      ],
+      "correctAnswer": 3,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § NF C 15-100 (p. 482), page 482 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § NF C 15-100 (p. 482)، ص. 482.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 482)",
+      "pdfPage": 482
+    },
+    {
+      "id": "m06_L1_q13",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Ces dispositifs de protection doivent être placés à l’origine de tous les circuits à l’exception de ceux alimentés par… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «Ces dispositifs de protection doivent être placés à l’origine de tous les circui»",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 475) — page 475 du PDF.",
+      "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 475) — page 475 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 475)",
+      "pdfPage": 475
+    },
+    {
+      "id": "m06_L1_q14",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « 771.559.6.2 Position et emplacement des prises de communication Au moins un socle de prise de courant 16 A ne doit pas… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «771.559.6.2 Position et emplacement des prises de communication Au moins un socl»",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § 771.559.6.2 (p. 487) — page 487 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § 771.559.6.2 (p. 487) — page 487 du PDF.",
+      "normRef": "NF C 15-100 — § 771.559.6.2 (p. 487)",
+      "pdfPage": 487
+    },
+    {
+      "id": "m06_L1_q15",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "optionsFr": [
+        "Règle réservée aux installations haute tension uniquement.",
+        "L’axe des socles de ces prises de communication doit être à une hauteur minimale de 50 mm au-dessus du sol fini.…",
+        "Aucune exigence de ce type dans la norme.",
+        "L’axe des socles de ces prises de communication ne doit pas être à une hauteur minimale de 50 mm au-dessus du sol fini.…"
+      ],
+      "optionsAr": [
+        "للجهد العالي فقط",
+        "عبارة مطابقة للمعيار",
+        "غير موجودة في المعيار",
+        "عبارة مخالفة للمعيار"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § NF C 15-100 (p. 487), page 487 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § NF C 15-100 (p. 487)، ص. 487.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 487)",
+      "pdfPage": 487
+    },
+    {
+      "id": "m06_L2_q01",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "GTL saillie — goulotte min. (§ 771.558.2.4) :",
+      "questionAr": "GTL بارزة — قناة min.:",
+      "optionsFr": [
+        "50 cm² / 4 cm",
+        "150 cm² section ext. et 6 cm dimension min.",
+        "300 cm² / 10 cm",
+        "Sans dimension"
+      ],
+      "optionsAr": [
+        "50/4",
+        "150 cm² و 6 cm",
+        "300/10",
+        "بلا بعد"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "La norme indique : 150 cm² section ext. et 6 cm dimension min.. Vérification sur NF C 15-100 — § 771.558.2.4 (p. 481) (page 481).",
+      "explanationAr": "§ 771.558.2.4: 150/6.",
+      "normRef": "NF C 15-100 — § 771.558.2.4 (p. 481)",
+      "pdfPage": 481
+    },
+    {
+      "id": "m06_L2_q02",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Liaison terre TR–TC (§ 771.558) :",
+      "questionAr": "ربط أرض TR–TC:",
+      "optionsFr": [
+        "10 m / 2,5 mm²",
+        "≤ 50 cm de préférence, 6 mm² min.",
+        "1 m / 16 mm²",
+        "Sans liaison"
+      ],
+      "optionsAr": [
+        "10 م / 2,5",
+        "≤ 50 cm، 6 mm² min.",
+        "1 م / 16",
+        "بدون"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "La norme indique : ≤ 50 cm de préférence, 6 mm² min.. Vérification sur NF C 15-100 — § 771.558 (p. 482) (page 482).",
+      "explanationAr": "482: 50 cm، 6 mm².",
+      "normRef": "NF C 15-100 — § 771.558 (p. 482)",
+      "pdfPage": 482
+    },
+    {
+      "id": "m06_L2_q03",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100 (§ 771.462.1), quelle affirmation correspond au texte de la norme concernant sectionnement à l'origine des circuits ?",
+      "questionAr": "§ 771.462.1 — قطع أصل الدوائر:",
+      "optionsFr": [
+        "Phases seules",
+        "Tous conducteurs actifs y compris neutre",
+        "PE seulement",
+        "Neutre seul"
+      ],
+      "optionsAr": [
+        "الأطوار فقط",
+        "كل الموصلات النشطة بما فيها المحايد",
+        "PE فقط",
+        "المحايد فقط"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "§ 771.462.1 : la réponse correcte est « Tous conducteurs actifs y compris neutre ». Voir NF C 15-100 — § 771.462.1 (p. 473) p. 473.",
+      "explanationAr": "§ 771.462.1: كل النشط + محايد.",
+      "normRef": "NF C 15-100 — § 771.462.1 (p. 473)",
+      "pdfPage": 473
+    },
+    {
+      "id": "m06_L2_q04",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Une réserve minimale de 20 % ne doit pas être respectée pour chacun des tableaux »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «Une réserve minimale de 20 % ne doit pas être respectée pour chacun des tableaux»",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 486) — page 486 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 486) — page 486 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 486)",
+      "pdfPage": 486
+    },
+    {
+      "id": "m06_L2_q05",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « En conséquence, la GTL ne doit pas garantir toutes les spécifications requises permettant l’installation du panneau de… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «En conséquence, la GTL ne doit pas garantir toutes les spécifications requises p»",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § 100 (p. 479) — page 479 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § 100 (p. 479) — page 479 du PDF.",
+      "normRef": "NF C 15-100 — § 100 (p. 479)",
+      "pdfPage": 479
+    },
+    {
+      "id": "m06_L2_q06",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "optionsFr": [
+        "Aucune exigence de ce type dans la norme.",
+        "S’il est situé dans un garage ou un local annexe, il doit exister un accès direct entre ce local et le logement.…",
+        "Règle réservée aux installations haute tension uniquement.",
+        "S’il est situé dans un garage ou un local annexe, il ne doit pas exister un accès direct entre ce local et le logement.…"
+      ],
+      "optionsAr": [
+        "غير موجودة في المعيار",
+        "عبارة مطابقة للمعيار",
+        "للجهد العالي فقط",
+        "عبارة مخالفة للمعيار"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § NF C 15-100 (p. 473), page 473 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § NF C 15-100 (p. 473)، ص. 473.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 473)",
+      "pdfPage": 473
+    },
+    {
+      "id": "m06_L2_q07",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Les croisements entre ces canalisations doivent être évités au maximum et être réalisés à 90. (formulation non… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «Les croisements entre ces canalisations doivent être évités au maximum et être r»",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 482) — page 482 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 482) — page 482 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 482)",
+      "pdfPage": 482
+    },
+    {
+      "id": "m06_L2_q08",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « 542.4 Bornes ou barres principales de terre 542.4.1 Dans toute installation, une borne ou une barre principale de… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «542.4 Bornes ou barres principales de terre 542.4.1 Dans toute installation, une»",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § 542.4 (p. 307) — page 307 du PDF.",
+      "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § 542.4 (p. 307) — page 307 du PDF.",
+      "normRef": "NF C 15-100 — § 542.4 (p. 307)",
+      "pdfPage": 307
+    },
+    {
+      "id": "m06_L2_q09",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "optionsFr": [
+        "Règle réservée aux installations haute tension uniquement.",
+        "Aucune exigence de ce type dans la norme.",
+        "Cette obligation ne figure pas dans la norme NF C 15-100.",
+        "Les dimensions de cette GTL doivent être respectées sur toute la hauteur.…"
+      ],
+      "optionsAr": [
+        "للجهد العالي فقط",
+        "غير موجودة في المعيار",
+        "عبارة مخالفة للمعيار",
+        "عبارة مطابقة للمعيار"
+      ],
+      "correctAnswer": 3,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § NF C 15-100 (p. 480), page 480 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § NF C 15-100 (p. 480)، ص. 480.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 480)",
+      "pdfPage": 480
+    },
+    {
+      "id": "m06_L2_q10",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « 536.5.2 Les dispositifs de commande fonctionnelle peuvent interrompre le courant sans ouvrir nécessairement les pôles… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «536.5.2 Les dispositifs de commande fonctionnelle peuvent interrompre le courant»",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § 536.5.2 (p. 297) — page 297 du PDF.",
+      "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § 536.5.2 (p. 297) — page 297 du PDF.",
+      "normRef": "NF C 15-100 — § 536.5.2 (p. 297)",
+      "pdfPage": 297
+    },
+    {
+      "id": "m06_L2_q11",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « La (ou les) goulotte(s) doit être facilement accessible du sol au plafond, pour le passage des canalisations et… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «La (ou les) goulotte(s) doit être facilement accessible du sol au plafond, pour »",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § 150 (p. 481) — page 481 du PDF.",
+      "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § 150 (p. 481) — page 481 du PDF.",
+      "normRef": "NF C 15-100 — § 150 (p. 481)",
+      "pdfPage": 481
+    },
+    {
+      "id": "m06_L2_q12",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "optionsFr": [
+        "NF C 15-100 Partie 5-53 - 261 - Les prises de courant d’un calibre assigné supérieur à 32 A doivent être utilisées pour assurer la coupure d",
+        "Règle réservée aux installations haute tension uniquement.",
+        "Aucune exigence de ce type dans la norme.",
+        "NF C 15-100 Partie 5-53 - 261 - Les prises de courant d’un calibre assigné supérieur à 32 A ne doivent pas être utilisées pour assurer la coupure d'ur…"
+      ],
+      "optionsAr": [
+        "عبارة مخالفة للمعيار",
+        "للجهد العالي فقط",
+        "غير موجودة في المعيار",
+        "عبارة مطابقة للمعيار"
+      ],
+      "correctAnswer": 3,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § 100 (p. 297), page 297 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § 100 (p. 297)، ص. 297.",
+      "normRef": "NF C 15-100 — § 100 (p. 297)",
+      "pdfPage": 297
+    },
+    {
+      "id": "m06_L2_q13",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « 771.462.2 Sectionnement du fil pilote des installations individuelles de chauffage électrique Dans le cas de chauffage… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «771.462.2 Sectionnement du fil pilote des installations individuelles de chauffa»",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § 771.462.2 (p. 473) — page 473 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § 771.462.2 (p. 473) — page 473 du PDF.",
+      "normRef": "NF C 15-100 — § 771.462.2 (p. 473)",
+      "pdfPage": 473
+    },
+    {
+      "id": "m06_L2_q14",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « 771.558.5 Tableau de communication Le tableau de communication doit être placé dans la GTL »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «771.558.5 Tableau de communication Le tableau de communication doit être placé d»",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § 771.558.5 (p. 486) — page 486 du PDF.",
+      "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § 771.558.5 (p. 486) — page 486 du PDF.",
+      "normRef": "NF C 15-100 — § 771.558.5 (p. 486)",
+      "pdfPage": 486
+    },
+    {
+      "id": "m06_L2_q15",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "optionsFr": [
+        "En cas d’utilisation de disjoncteurs différentiels, leur type et leur nombre sont au maximum ceux indiqués dans le tableau 771E, leur calibr",
+        "Aucune exigence de ce type dans la norme.",
+        "Règle réservée aux installations haute tension uniquement.",
+        "En cas d’utilisation de disjoncteurs différentiels, leur type et leur nombre sont au minimum ceux indiqués dans le tableau 771E, leur calibre étant ad…"
+      ],
+      "optionsAr": [
+        "عبارة مخالفة للمعيار",
+        "غير موجودة في المعيار",
+        "للجهد العالي فقط",
+        "عبارة مطابقة للمعيار"
+      ],
+      "correctAnswer": 3,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § NF C 15-100 (p. 476), page 476 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § NF C 15-100 (p. 476)، ص. 476.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 476)",
+      "pdfPage": 476
+    },
+    {
+      "id": "m06_L3_q01",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100 (§ 542.4.1), quelle affirmation correspond au texte de la norme concernant dans toute installation ?",
+      "questionAr": "§ 542.4.1 — في كل منشأة:",
+      "optionsFr": [
+        "Pas de borne terre",
+        "Borne ou barre principale de terre obligatoire",
+        "Terre optionnelle",
+        "PEN sans borne"
+      ],
+      "optionsAr": [
+        "لا طرفة",
+        "طرفة/قضيب أرض رئيسي إلزامي",
+        "أرض اختياري",
+        "PEN بدون"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "§ 542.4.1 : la réponse correcte est « Borne ou barre principale de terre obligatoire ». Voir NF C 15-100 — § 542.4.1 (p. 307) p. 307.",
+      "explanationAr": "§ 542.4.1: طرفة رئيسية.",
+      "normRef": "NF C 15-100 — § 542.4.1 (p. 307)",
+      "pdfPage": 307
+    },
+    {
+      "id": "m06_L3_q02",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "GTL — protection chocs (§ 771.558) chaque matériel :",
+      "questionAr": "GTL — حماية صدمات:",
+      "optionsFr": [
+        "IP00 suffit",
+        "IP2X ou IPXXB ou TBTS 25 V AC / 60 V DC",
+        "IPX7 global",
+        "Sans protection"
+      ],
+      "optionsAr": [
+        "IP00",
+        "IP2X أو TBTS 25/60 V",
+        "IPX7",
+        "بدون"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "§ 771.558 p. 483 : IP2X ou TBTS 25/60 V par matériel.",
+      "explanationAr": "483: IP2X أو TBTS.",
+      "normRef": "NF C 15-100 — § 771.558 (p. 483)",
+      "pdfPage": 483
+    },
+    {
+      "id": "m06_L3_q03",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100 (§ 771.558), quelle affirmation correspond au texte de la norme concernant en réhabilitation, GTL exigée seulement si réhabilitation totale avec… ?",
+      "questionAr": "§ 771.558: إعادة تأهيل — GTL عند إعادة تأهيل كلية.",
+      "correctAnswer": true,
+      "explanationFr": "§ 771.558 : réhabilitation totale + cloisons.",
+      "explanationAr": "§ 771.558: تأهيل كلي.",
+      "normRef": "NF C 15-100 — § 771.558 (p. 479)",
+      "pdfPage": 479
+    },
+    {
+      "id": "m06_L3_q04",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « 542.3 Conducteurs de terre 542.3.1 Les conducteurs de terre doivent satisfaire aux prescriptions de 543.1 et,  ’ils… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «542.3 Conducteurs de terre 542.3.1 Les conducteurs de terre doivent satisfaire a»",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § 542.3 (p. 307) — page 307 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § 542.3 (p. 307) — page 307 du PDF.",
+      "normRef": "NF C 15-100 — § 542.3 (p. 307)",
+      "pdfPage": 307
+    },
+    {
+      "id": "m06_L3_q05",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Le volume défini dans le présent sous-paragraphe, même partiellement occupé, doit rester dédié dans sa totalité à la… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «Le volume défini dans le présent sous-paragraphe, même partiellement occupé, doi»",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 481) — page 481 du PDF.",
+      "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 481) — page 481 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 481)",
+      "pdfPage": 481
+    },
+    {
+      "id": "m06_L3_q06",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "optionsFr": [
+        "L’organe de manœuvre du dispositif de coupure d’urgence ne doit pas être situé à une hauteur comprise entre 1,00 m et 1,80 m au-dessus du so",
+        "Règle réservée aux installations haute tension uniquement.",
+        "L’organe de manœuvre du dispositif de coupure d’urgence doit être situé à une hauteur comprise entre 1,00 m et 1,80 m au-dessus du sol fini.…",
+        "Aucune exigence de ce type dans la norme."
+      ],
+      "optionsAr": [
+        "عبارة مخالفة للمعيار",
+        "للجهد العالي فقط",
+        "عبارة مطابقة للمعيار",
+        "غير موجودة في المعيار"
+      ],
+      "correctAnswer": 2,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § NF C 15-100 (p. 478), page 478 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § NF C 15-100 (p. 478)، ص. 478.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 478)",
+      "pdfPage": 478
+    },
+    {
+      "id": "m06_L3_q07",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Ils ne sont pas placés dans des placards ou penderies où les objets entreposés peuvent rendre leur accès difficile,… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «Ils ne sont pas placés dans des placards ou penderies où les objets entreposés p»",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 486) — page 486 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 486) — page 486 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 486)",
+      "pdfPage": 486
+    },
+    {
+      "id": "m06_L3_q08",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Chacune de ces communications ne doit pas présenter une section libre minimale de 300 mm 2 (la plus petite dimension… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «Chacune de ces communications ne doit pas présenter une section libre minimale d»",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § 300 (p. 479) — page 479 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § 300 (p. 479) — page 479 du PDF.",
+      "normRef": "NF C 15-100 — § 300 (p. 479)",
+      "pdfPage": 479
+    },
+    {
+      "id": "m06_L3_q09",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "optionsFr": [
+        "Aucune exigence de ce type dans la norme.",
+        "536.5.3 Les sectionneurs, les fusibles et les barrettes ne doivent pas être utilisés pour la commande fonctionnelle.…",
+        "536.5.3 Les sectionneurs, les fusibles et les barrettes doivent être utilisés pour la commande fonctionnelle.…",
+        "Règle réservée aux installations haute tension uniquement."
+      ],
+      "optionsAr": [
+        "غير موجودة في المعيار",
+        "عبارة مطابقة للمعيار",
+        "عبارة مخالفة للمعيار",
+        "للجهد العالي فقط"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § 536.5.3 (p. 297), page 297 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § 536.5.3 (p. 297)، ص. 297.",
+      "normRef": "NF C 15-100 — § 536.5.3 (p. 297)",
+      "pdfPage": 297
+    },
+    {
+      "id": "m06_L3_q10",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « 536.3.3 Les dispositifs de coupure d'urgence doivent assurer la coupure du circuit principal »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «536.3.3 Les dispositifs de coupure d'urgence doivent assurer la coupure du circu»",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § 536.3.3 (p. 297) — page 297 du PDF.",
+      "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § 536.3.3 (p. 297) — page 297 du PDF.",
+      "normRef": "NF C 15-100 — § 536.3.3 (p. 297)",
+      "pdfPage": 297
+    },
+    {
+      "id": "m06_L3_q11",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Ces locaux ou emplacements ne doivent être ni humides, ni poussiéreux. (formulation non conforme au texte normatif) »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «Ces locaux ou emplacements ne doivent être ni humides, ni poussiéreux. (formulat»",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 478) — page 478 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 478) — page 478 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 478)",
+      "pdfPage": 478
+    },
+    {
+      "id": "m06_L3_q12",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "optionsFr": [
+        "Aucune exigence de ce type dans la norme.",
+        "Cette obligation ne figure pas dans la norme NF C 15-100.",
+        "Règle réservée aux installations haute tension uniquement.",
+        "Les fixations à griffes ne sont pas admises pour les prises de communication.…"
+      ],
+      "optionsAr": [
+        "غير موجودة في المعيار",
+        "عبارة مخالفة للمعيار",
+        "للجهد العالي فقط",
+        "عبارة مطابقة للمعيار"
+      ],
+      "correctAnswer": 3,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § NF C 15-100 (p. 487), page 487 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § NF C 15-100 (p. 487)، ص. 487.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 487)",
+      "pdfPage": 487
+    },
+    {
+      "id": "m06_L3_q13",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « L'intervention sur un socle ne doit pas pouvoir être effectuée sans intervention sur l'autre »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «L'intervention sur un socle ne doit pas pouvoir être effectuée sans intervention»",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 487) — page 487 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 487) — page 487 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 487)",
+      "pdfPage": 487
+    },
+    {
+      "id": "m06_L3_q14",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « 536.4 Dispositifs de coupure pour entretien mécanique Les dispositifs de coupure pour entretien mécanique doivent… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «536.4 Dispositifs de coupure pour entretien mécanique Les dispositifs de coupure»",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § 536.4 (p. 297) — page 297 du PDF.",
+      "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § 536.4 (p. 297) — page 297 du PDF.",
+      "normRef": "NF C 15-100 — § 536.4 (p. 297)",
+      "pdfPage": 297
+    },
+    {
+      "id": "m06_L3_q15",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "optionsFr": [
+        "Règle réservée aux installations haute tension uniquement.",
+        "La GTL doit permettre des extensions de l'installation électrique aussi aisées que possible et faciliter les interventions en toute sécurité.…",
+        "Aucune exigence de ce type dans la norme.",
+        "La GTL ne doit pas permettre des extensions de l'installation électrique aussi aisées que possible et faciliter les interventions en toute s"
+      ],
+      "optionsAr": [
+        "للجهد العالي فقط",
+        "عبارة مطابقة للمعيار",
+        "غير موجودة في المعيار",
+        "عبارة مخالفة للمعيار"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § NF C 15-100 (p. 479), page 479 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § NF C 15-100 (p. 479)، ص. 479.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 479)",
+      "pdfPage": 479
+    },
+    {
+      "id": "m06_L4_q01",
+      "level": 4,
+      "difficulty": "difficile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100 (§ 771.558.4), quelle affirmation correspond au texte de la norme concernant protections circuits divisionnaires ?",
+      "questionAr": "§ 771.558.4 — حماية الدوائر:",
+      "optionsFr": [
+        "Sur le plafond",
+        "Tableau de répartition principal ou divisionnaires",
+        "Dans volume 0 salle d'eau",
+        "Sous sol uniquement"
+      ],
+      "optionsAr": [
+        "السقف",
+        "لوحة توزيع رئيسية أو فرعية",
+        "حجم 0",
+        "تحت الأرض"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "§ 771.558.4 : la réponse correcte est « Tableau de répartition principal ou divisionnaires ». Voir NF C 15-100 — § 771.558.4 (p. 486) p. 486.",
+      "explanationAr": "§ 771.558.4: لوحة توزيع.",
+      "normRef": "NF C 15-100 — § 771.558.4 (p. 486)",
+      "pdfPage": 486
+    },
+    {
+      "id": "m06_L4_q02",
+      "level": 4,
+      "difficulty": "difficile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100 (§ 536.3.2), quelle affirmation correspond au texte de la norme concernant coupure urgence, prises > 32 A ?",
+      "questionAr": "§ 536.3.2 — طوارئ، مقابس > 32 A:",
+      "optionsFr": [
+        "Admises pour coupure urgence",
+        "Ne doivent pas servir à coupure d'urgence",
+        "Obligatoires",
+        "Sans règle"
+      ],
+      "optionsAr": [
+        "مسموحة",
+        "لا تُستخدم لقطع الطوارئ",
+        "إلزامية",
+        "بلا قاعدة"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "§ 536.3.2 : la réponse correcte est « Ne doivent pas servir à coupure d'urgence ». Voir NF C 15-100 — § 536.3.2 (p. 297) p. 297.",
+      "explanationAr": "§ 536.3.2: > 32 A ممنوع.",
+      "normRef": "NF C 15-100 — § 536.3.2 (p. 297)",
+      "pdfPage": 297
+    },
+    {
+      "id": "m06_L4_q03",
+      "level": 4,
+      "difficulty": "difficile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100 (§ 771.559.6.1.1), quelle affirmation correspond au texte de la norme concernant prises communication min ?",
+      "questionAr": "§ 771.559.6.1.1 — مقابس اتصال:",
+      "optionsFr": [
+        "Une par garage",
+        "Au moins une par pièce principale + cuisine, min. 2",
+        "Aucune",
+        "Dix par logement"
+      ],
+      "optionsAr": [
+        "واحدة للمرآب",
+        "واحدة/غرفة رئيسية + مطبخ، min 2",
+        "لا شيء",
+        "10"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "§ 771.559.6.1.1 : la réponse correcte est « Au moins une par pièce principale + cuisine, min. 2 ». Voir NF C 15-100 — § 771.559.6.1.1 (p. 487) p. 487.",
+      "explanationAr": "§ 771.559.6.1.1: min 2.",
+      "normRef": "NF C 15-100 — § 771.559.6.1.1 (p. 487)",
+      "pdfPage": 487
+    },
+    {
+      "id": "m06_L4_q04",
+      "level": 4,
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Dans les immeubles d’habitation collectifs, la GTL doit être en communication avec les gaines des réseaux de puissance… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «Dans les immeubles d’habitation collectifs, la GTL doit être en communication av»",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 479) — page 479 du PDF.",
+      "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 479) — page 479 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 479)",
+      "pdfPage": 479
+    },
+    {
+      "id": "m06_L4_q05",
+      "level": 4,
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « NF C 15-100 Partie 5-54 - 271 - 542.2.6 Des canalisations métalliques de distribution de liquides ou de gaz ne doivent… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «NF C 15-100 Partie 5-54 - 271 - 542.2.6 Des canalisations métalliques de distrib»",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § 100 (p. 307) — page 307 du PDF.",
+      "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § 100 (p. 307) — page 307 du PDF.",
+      "normRef": "NF C 15-100 — § 100 (p. 307)",
+      "pdfPage": 307
+    },
+    {
+      "id": "m06_L4_q06",
+      "level": 4,
+      "difficulty": "difficile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "optionsFr": [
+        "Règle réservée aux installations haute tension uniquement.",
+        "Cette obligation ne figure pas dans la norme NF C 15-100.",
+        "Aucune exigence de ce type dans la norme.",
+        "le retrait de la platine de branchement soit possible sans démontage du (des) tableau(x) de répartition ;…"
+      ],
+      "optionsAr": [
+        "للجهد العالي فقط",
+        "عبارة مخالفة للمعيار",
+        "غير موجودة في المعيار",
+        "عبارة مطابقة للمعيار"
+      ],
+      "correctAnswer": 3,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § NF C 15-100 (p. 481), page 481 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § NF C 15-100 (p. 481)، ص. 481.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 481)",
+      "pdfPage": 481
+    },
+    {
+      "id": "m06_L4_q07",
+      "level": 4,
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Elle est interdite dans les volumes 0, 1, 2 et 3 définis d ans la partie 7-701. (formulation non conforme au texte… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «Elle est interdite dans les volumes 0, 1, 2 et 3 définis d ans la partie 7-701. »",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § 701 (p. 486) — page 486 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § 701 (p. 486) — page 486 du PDF.",
+      "normRef": "NF C 15-100 — § 701 (p. 486)",
+      "pdfPage": 486
+    },
+    {
+      "id": "m06_L4_q08",
+      "level": 4,
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Un interrupteur peut commander au plus deux socles de prise de courant à condition que ces socles soient dans la même… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «Un interrupteur peut commander au plus deux socles de prise de courant à conditi»",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 473) — page 473 du PDF.",
+      "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 473) — page 473 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 473)",
+      "pdfPage": 473
+    },
+    {
+      "id": "m06_L4_q09",
+      "level": 4,
+      "difficulty": "difficile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "optionsFr": [
+        "Aucune exigence de ce type dans la norme.",
+        "Règle réservée aux installations haute tension uniquement.",
+        "771.530.4 Fixation des appareillages Les socles de prise de courant doivent à l'usage se séparer de leur support et rendre accessibles les b",
+        "771.530.4 Fixation des appareillages Les socles de prise de courant ne doivent pas à l'usage se séparer de leur support et rendre accessibles les born…"
+      ],
+      "optionsAr": [
+        "غير موجودة في المعيار",
+        "للجهد العالي فقط",
+        "عبارة مخالفة للمعيار",
+        "عبارة مطابقة للمعيار"
+      ],
+      "correctAnswer": 3,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § 771.530.4 (p. 474), page 474 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § 771.530.4 (p. 474)، ص. 474.",
+      "normRef": "NF C 15-100 — § 771.530.4 (p. 474)",
+      "pdfPage": 474
+    },
+    {
+      "id": "m06_L4_q10",
+      "level": 4,
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Pour les prises mixtes [BT + communications], quel que soit le type [saillie ou encastré], une cloison ne doit pas… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «Pour les prises mixtes [BT + communications], quel que soit le type [saillie ou »",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 487) — page 487 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 487) — page 487 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 487)",
+      "pdfPage": 487
+    },
+    {
+      "id": "m06_L4_q11",
+      "level": 4,
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « 771.558.2.3 Destination La GTL ne doit pas contenir : - le panneau de contrôle, s’il est placé à l’intérieur du logement »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «771.558.2.3 Destination La GTL ne doit pas contenir : - le panneau de contrôle, »",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § 771.558.2.3 (p. 479) — page 479 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § 771.558.2.3 (p. 479) — page 479 du PDF.",
+      "normRef": "NF C 15-100 — § 771.558.2.3 (p. 479)",
+      "pdfPage": 479
+    },
+    {
+      "id": "m06_L4_q12",
+      "level": 4,
+      "difficulty": "difficile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "optionsFr": [
+        "Si la GTL comporte le dispositif de coupure d'urgence, elle doit être directement accessible à partir de l’intérieur du logement comme prescrit en 771…",
+        "Aucune exigence de ce type dans la norme.",
+        "Si la GTL comporte le dispositif de coupure d'urgence, elle ne doit pas être directement accessible à partir de l’intérieur du logement comm",
+        "Règle réservée aux installations haute tension uniquement."
+      ],
+      "optionsAr": [
+        "عبارة مطابقة للمعيار",
+        "غير موجودة في المعيار",
+        "عبارة مخالفة للمعيار",
+        "للجهد العالي فقط"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § 771.463 (p. 479), page 479 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § 771.463 (p. 479)، ص. 479.",
+      "normRef": "NF C 15-100 — § 771.463 (p. 479)",
+      "pdfPage": 479
+    },
+    {
+      "id": "m06_L4_q13",
+      "level": 4,
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Les faces des parois internes doivent être également : - planes »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «Les faces des parois internes doivent être également : - planes»",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 480) — page 480 du PDF.",
+      "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 480) — page 480 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 480)",
+      "pdfPage": 480
+    },
+    {
+      "id": "m06_L4_q14",
+      "level": 4,
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « La liaison fonctionnelle entre les barrettes de terre du tableau de répartition et le tableau de communication ne doit… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «La liaison fonctionnelle entre les barrettes de terre du tableau de répartition »",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 486) — page 486 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 486) — page 486 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 486)",
+      "pdfPage": 486
+    },
+    {
+      "id": "m06_L4_q15",
+      "level": 4,
+      "difficulty": "difficile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "optionsFr": [
+        "Règle réservée aux installations haute tension uniquement.",
+        "Ce repérage ne doit pas être lisible, de qualité durable et correctement fixé et doit rester visible après l’installation du tableau.…",
+        "Aucune exigence de ce type dans la norme.",
+        "Ce repérage doit être lisible, de qualité durable et correctement fixé et doit rester visible après l’installation du tableau.…"
+      ],
+      "optionsAr": [
+        "للجهد العالي فقط",
+        "عبارة مخالفة للمعيار",
+        "غير موجودة في المعيار",
+        "عبارة مطابقة للمعيار"
+      ],
+      "correctAnswer": 3,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § NF C 15-100 (p. 474), page 474 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § NF C 15-100 (p. 474)، ص. 474.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 474)",
+      "pdfPage": 474
+    },
+    {
+      "id": "m06_L5_q01",
+      "level": 5,
+      "difficulty": "difficile",
+      "type": "multiple",
+      "questionFr": "GTL — extensions (§ 771.558) :",
+      "questionAr": "GTL — توسعات:",
+      "optionsFr": [
+        "Impossibles",
+        "Aussi aisées que possible",
+        "Interdites",
+        "Réservées distributeur"
+      ],
+      "optionsAr": [
+        "مستحيلة",
+        "أسهل ما يمكن",
+        "ممنوعة",
+        "للموزع"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "§ 771.558 : extensions aisées + interventions sécurisées.",
+      "explanationAr": "§ 771.558: توسعات سهلة.",
+      "normRef": "NF C 15-100 — § 771.558 (p. 479)",
+      "pdfPage": 479
+    },
+    {
+      "id": "m06_L5_q02",
+      "level": 5,
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100 (§ 771.558), quelle affirmation correspond au texte de la norme concernant GTL n'est pas une enveloppe — chaque matériel assure sa propre protection ?",
+      "questionAr": "§ 771.558: GTL ليست غلافًا — كل جهاز يحمي نفسه.",
+      "correctAnswer": true,
+      "explanationFr": "§ 771.558 p. 483 : pas enveloppe globale.",
+      "explanationAr": "483: حماية فردية.",
+      "normRef": "NF C 15-100 — § 771.558 (p. 483)",
+      "pdfPage": 483
+    },
+    {
+      "id": "m06_L5_q03",
+      "level": 5,
+      "difficulty": "difficile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle valeur est imposée pour : communication peut être (§ 771.558 ?",
+      "questionAr": "لوحة الاتصالات:",
+      "optionsFr": [
+        "Jamais près du TR",
+        "Incorporée dans tableau répartition si règles respectées",
+        "Dans volume 0",
+        "Sans terre"
+      ],
+      "optionsAr": [
+        "Aleil du TR",
+        "مدمجة في TR إذا احترام القواعد",
+        "حجم 0",
+        "بدون أرض"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "La norme indique : Incorporée dans tableau répartition si règles respectées. Vérification sur NF C 15-100 — § 771.558 (p. 482) (page 482).",
+      "explanationAr": "482: TC في TR.",
+      "normRef": "NF C 15-100 — § 771.558 (p. 482)",
+      "pdfPage": 482
+    },
+    {
+      "id": "m06_L5_q04",
+      "level": 5,
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Cette connexion ne doit pas être réalisée par soudure exothermique, par connecteurs à pression ou autres fixations »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «Cette connexion ne doit pas être réalisée par soudure exothermique, par connecte»",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 307) — page 307 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 307) — page 307 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 307)",
+      "pdfPage": 307
+    },
+    {
+      "id": "m06_L5_q05",
+      "level": 5,
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Après libération de l'organe de commande du dispositif de coupure d'urgence, la réalimentation de la partie… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «Après libération de l'organe de commande du dispositif de coupure d'urgence, la »",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 297) — page 297 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 297) — page 297 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 297)",
+      "pdfPage": 297
+    },
+    {
+      "id": "m06_L5_q06",
+      "level": 5,
+      "difficulty": "difficile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "optionsFr": [
+        "Aucune exigence de ce type dans la norme.",
+        "536.3.6 Lorsqu'il est nécessaire d'agir sur plusieurs appareils de coupure, l'action sur un seul organe de commande ne doit pas provoquer l'",
+        "536.3.6 Lorsqu'il est nécessaire d'agir sur plusieurs appareils de coupure, l'action sur un seul organe de commande doit provoquer l'ouverture de tous…",
+        "Règle réservée aux installations haute tension uniquement."
+      ],
+      "optionsAr": [
+        "غير موجودة في المعيار",
+        "عبارة مخالفة للمعيار",
+        "عبارة مطابقة للمعيار",
+        "للجهد العالي فقط"
+      ],
+      "correctAnswer": 2,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § 536.3.6 (p. 297), page 297 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § 536.3.6 (p. 297)، ص. 297.",
+      "normRef": "NF C 15-100 — § 536.3.6 (p. 297)",
+      "pdfPage": 297
+    },
+    {
+      "id": "m06_L5_q07",
+      "level": 5,
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « 536.5 Dispositifs de commande fonctionnelle 536.5.1 Les dispositifs de commande fonctionnelle doivent être appropriés… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «536.5 Dispositifs de commande fonctionnelle 536.5.1 Les dispositifs de commande »",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § 536.5 (p. 297) — page 297 du PDF.",
+      "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § 536.5 (p. 297) — page 297 du PDF.",
+      "normRef": "NF C 15-100 — § 536.5 (p. 297)",
+      "pdfPage": 297
+    },
+    {
+      "id": "m06_L5_q08",
+      "level": 5,
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Les prises ne doivent pas être posées dans les volumes 0, 1 et 2 des locaux contenant une baignoire ou une douche »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «Les prises ne doivent pas être posées dans les volumes 0, 1 et 2 des locaux cont»",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 487) — page 487 du PDF.",
+      "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 487) — page 487 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 487)",
+      "pdfPage": 487
+    },
+    {
+      "id": "m06_L5_q09",
+      "level": 5,
+      "difficulty": "difficile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "optionsFr": [
+        "Aucune exigence de ce type dans la norme.",
+        "Règle réservée aux installations haute tension uniquement.",
+        "La protection des circuits extérieurs alimentant des installations et des matériels non fixés au bâtiment doit être distincte de celles des circuits i…",
+        "La protection des circuits extérieurs alimentant des installations et des matériels non fixés au bâtiment ne doit pas être distincte de cell"
+      ],
+      "optionsAr": [
+        "غير موجودة في المعيار",
+        "للجهد العالي فقط",
+        "عبارة مطابقة للمعيار",
+        "عبارة مخالفة للمعيار"
+      ],
+      "correctAnswer": 2,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § NF C 15-100 (p. 475), page 475 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § NF C 15-100 (p. 475)، ص. 475.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 475)",
+      "pdfPage": 475
+    },
+    {
+      "id": "m06_L5_q10",
+      "level": 5,
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Par ailleurs, la répartition peut être réalisée hors de la GTL, et au plus près des appareils récepteurs (par exemple… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «Par ailleurs, la répartition peut être réalisée hors de la GTL, et au plus près »",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 479) — page 479 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 479) — page 479 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 479)",
+      "pdfPage": 479
+    },
+    {
+      "id": "m06_L5_q11",
+      "level": 5,
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « 542.4.2 Chaque conducteur connecté à la borne principale de terre ne doit pas pouvoir être déconnecté individuellement… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «542.4.2 Chaque conducteur connecté à la borne principale de terre ne doit pas po»",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § 542.4.2 (p. 307) — page 307 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § 542.4.2 (p. 307) — page 307 du PDF.",
+      "normRef": "NF C 15-100 — § 542.4.2 (p. 307)",
+      "pdfPage": 307
+    },
+    {
+      "id": "m06_L5_q12",
+      "level": 5,
+      "difficulty": "difficile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "optionsFr": [
+        "Aucune exigence de ce type dans la norme.",
+        "536.3.4 Les moyens de commande (poignées, boutons-poussoirs, etc.) des dispositifs de coupure d'urgence doivent être clairement identifiés.…",
+        "Règle réservée aux installations haute tension uniquement.",
+        "Cette obligation ne figure pas dans la norme NF C 15-100."
+      ],
+      "optionsAr": [
+        "غير موجودة في المعيار",
+        "عبارة مطابقة للمعيار",
+        "للجهد العالي فقط",
+        "عبارة مخالفة للمعيار"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § 536.3.4 (p. 297), page 297 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § 536.3.4 (p. 297)، ص. 297.",
+      "normRef": "NF C 15-100 — § 536.3.4 (p. 297)",
+      "pdfPage": 297
+    },
+    {
+      "id": "m06_L5_q13",
+      "level": 5,
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « 771.514 Identification des circuits Chacun des circuits doit être repéré par une indication appropriée, correspondant… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «771.514 Identification des circuits Chacun des circuits doit être repéré par une»",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § 771.514 (p. 474) — page 474 du PDF.",
+      "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § 771.514 (p. 474) — page 474 du PDF.",
+      "normRef": "NF C 15-100 — § 771.514 (p. 474)",
+      "pdfPage": 474
+    },
+    {
+      "id": "m06_L5_q14",
+      "level": 5,
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « 771.558.4.1 Tableau de répartition principal Le tableau de répartition principal ne doit pas être placé dans la GTL »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «771.558.4.1 Tableau de répartition principal Le tableau de répartition principal»",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § 771.558.4.1 (p. 486) — page 486 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § 771.558.4.1 (p. 486) — page 486 du PDF.",
+      "normRef": "NF C 15-100 — § 771.558.4.1 (p. 486)",
+      "pdfPage": 486
+    },
+    {
+      "id": "m06_L5_q15",
+      "level": 5,
+      "difficulty": "difficile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "optionsFr": [
+        "Aucune exigence de ce type dans la norme.",
+        "Chacune de ces prises doit être desservie par une canalisation issue de la gaine technique logement (GTL).…",
+        "Chacune de ces prises ne doit pas être desservie par une canalisation issue de la gaine technique logement (GTL).…",
+        "Règle réservée aux installations haute tension uniquement."
+      ],
+      "optionsAr": [
+        "غير موجودة في المعيار",
+        "عبارة مطابقة للمعيار",
+        "عبارة مخالفة للمعيار",
+        "للجهد العالي فقط"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § NF C 15-100 (p. 487), page 487 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § NF C 15-100 (p. 487)، ص. 487.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 487)",
+      "pdfPage": 487
+    }
+  ],
+  "questionsPerLevel": 15
+}

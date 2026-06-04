@@ -1,0 +1,1782 @@
+{
+  "bookId": "nf-c15-100-2015",
+  "version": "2.0",
+  "reviewStatus": "validated-pdf",
+  "sourcePdf": "pdf/francais/nf-c15-100-2015/nf-c15-100-2015.pdf",
+  "sourceNoteFr": "Réponses vérifiées uniquement dans ce PDF (édition indiquée : décembre 2002). 15 questions par palier (5 paliers).",
+  "moduleId": "M04",
+  "titleFr": "Circuits, sections & protections",
+  "titleAr": "الدوائر والمقاطع والحماية",
+  "objectiveFr": "Surcharges, courts-circuits, sections minimales — PDF partie 4-43 et 5-52.",
+  "objectiveAr": "الحمل الزائد والقصر والمقاطع — PDF.",
+  "questions": [
+    {
+      "id": "m04_L1_q01",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100 (référence 52U), quelle valeur la norme impose-t-elle concernant : puissance/éclairage, câble Cu fixe ?",
+      "questionAr": "52U — طاقة/إضاءة، Cu:",
+      "optionsFr": [
+        "0,5 mm²",
+        "1,5 mm²",
+        "2,5 mm²",
+        "4 mm²"
+      ],
+      "optionsAr": [
+        "0,5",
+        "1,5",
+        "2,5",
+        "4"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "La norme indique : 1,5 mm². Vérification sur NF C 15-100 — Tableau 52U (p. 254) (page 254).",
+      "explanationAr": "52U: 1,5 mm² Cu.",
+      "normRef": "NF C 15-100 — Tableau 52U (p. 254)",
+      "pdfPage": 254
+    },
+    {
+      "id": "m04_L1_q02",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100 (référence 52U), quelle valeur la norme impose-t-elle concernant : signalisation/commande Cu ?",
+      "questionAr": "52U — إشارة/تحكم Cu:",
+      "optionsFr": [
+        "0,1 mm² admis note",
+        "0,5 mm²",
+        "1,5 mm²",
+        "2,5 mm²"
+      ],
+      "optionsAr": [
+        "0,1 note",
+        "0,5",
+        "1,5",
+        "2,5"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "La norme indique : 0,5 mm². Vérification sur NF C 15-100 — Tableau 52U (p. 254) (page 254).",
+      "explanationAr": "52U: 0,5 mm².",
+      "normRef": "NF C 15-100 — Tableau 52U (p. 254)",
+      "pdfPage": 254
+    },
+    {
+      "id": "m04_L1_q03",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100 (§ 432.1), quelle affirmation correspond au texte de la norme concernant dispositifs surcharges + CC peuvent être ?",
+      "questionAr": "§ 432.1 — أجهزة حماية:",
+      "optionsFr": [
+        "Parafoudres seuls",
+        "Disjoncteurs ou fusibles gG",
+        "DDR seuls",
+        "Transformateurs"
+      ],
+      "optionsAr": [
+        "مانعات صواعق",
+        "قواطع أو صمامات gG",
+        "DDR فقط",
+        "محولات"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "§ 432.1 : la réponse correcte est « Disjoncteurs ou fusibles gG ». Voir NF C 15-100 — § 432.1 (p. 141) p. 141.",
+      "explanationAr": "§ 432.1: قواطع أو gG.",
+      "normRef": "NF C 15-100 — § 432.1 (p. 141)",
+      "pdfPage": 141
+    },
+    {
+      "id": "m04_L1_q04",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « 432.4 Caractéristiques des dispositifs de protection Les caractéristiques temps/courant des dispositifs de protection… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «432.4 Caractéristiques des dispositifs de protection Les caractéristiques temps/»",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § 432.4 (p. 141) — page 141 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § 432.4 (p. 141) — page 141 du PDF.",
+      "normRef": "NF C 15-100 — § 432.4 (p. 141)",
+      "pdfPage": 141
+    },
+    {
+      "id": "m04_L1_q05",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Le pouvoir de coupure des dispositifs de protection ne doit pas être assuré pour chacun de ces courants de court-circuit »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «Le pouvoir de coupure des dispositifs de protection ne doit pas être assuré pour»",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 147) — page 147 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 147) — page 147 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 147)",
+      "pdfPage": 147
+    },
+    {
+      "id": "m04_L1_q06",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "optionsFr": [
+        "Ils doivent satisfaire aux prescriptions de l'article 433.…",
+        "Règle réservée aux installations haute tension uniquement.",
+        "Aucune exigence de ce type dans la norme.",
+        "Cette obligation ne figure pas dans la norme NF C 15-100."
+      ],
+      "optionsAr": [
+        "عبارة مطابقة للمعيار",
+        "للجهد العالي فقط",
+        "غير موجودة في المعيار",
+        "عبارة مخالفة للمعيار"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § 433 (p. 141), page 141 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § 433 (p. 141)، ص. 141.",
+      "normRef": "NF C 15-100 — § 433 (p. 141)",
+      "pdfPage": 141
+    },
+    {
+      "id": "m04_L1_q07",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Ils doivent pouvoir interrompre tout courant de court-circuit inférieur ou égal au courant de court-circuit présumé.… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «Ils doivent pouvoir interrompre tout courant de court-circuit inférieur ou égal »",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 141) — page 141 du PDF.",
+      "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 141) — page 141 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 141)",
+      "pdfPage": 141
+    },
+    {
+      "id": "m04_L1_q08",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « 434.1 Détermination des courants de court-circuit présumés Les courants de court-circuit présumés doivent être… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «434.1 Détermination des courants de court-circuit présumés Les courants de court»",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § 434.1 (p. 147) — page 147 du PDF.",
+      "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § 434.1 (p. 147) — page 147 du PDF.",
+      "normRef": "NF C 15-100 — § 434.1 (p. 147)",
+      "pdfPage": 147
+    },
+    {
+      "id": "m04_L1_q09",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "optionsFr": [
+        "Règle réservée aux installations haute tension uniquement.",
+        "C'est pourquoi les conducteurs doivent être effectivement protégés contre les surcharges.…",
+        "Cette obligation ne figure pas dans la norme NF C 15-100.",
+        "Aucune exigence de ce type dans la norme."
+      ],
+      "optionsAr": [
+        "للجهد العالي فقط",
+        "عبارة مطابقة للمعيار",
+        "عبارة مخالفة للمعيار",
+        "غير موجودة في المعيار"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § NF C 15-100 (p. 146), page 146 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § NF C 15-100 (p. 146)، ص. 146.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 146)",
+      "pdfPage": 146
+    },
+    {
+      "id": "m04_L1_q10",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « 3 - Le présent paragraphe n'exclut pas l'utilisation de dispositifs de protection présentant des caractéristiques… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «3 - Le présent paragraphe n'exclut pas l'utilisation de dispositifs de protectio»",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § 433.1 (p. 141) — page 141 du PDF.",
+      "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § 433.1 (p. 141) — page 141 du PDF.",
+      "normRef": "NF C 15-100 — § 433.1 (p. 141)",
+      "pdfPage": 141
+    },
+    {
+      "id": "m04_L1_q11",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « En règle générale la section réduite du conducteur neutre n'est pas inférieure à la moitié de celle des conducteurs de… »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة صحيحة؟ «En règle générale la section réduite du conducteur neutre n'est pas inférieure à»",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 255) — page 255 du PDF.",
+      "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 255) — page 255 du PDF.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 255)",
+      "pdfPage": 255
+    },
+    {
+      "id": "m04_L1_q12",
+      "level": 1,
+      "difficulty": "facile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "optionsFr": [
+        "Des méthodes de protection de conducteurs en parallèle contre les surcharges par fusibles sont données dans la publication CEI 60364-4-47 mais ne sont…",
+        "Cette obligation ne figure pas dans la norme NF C 15-100.",
+        "Aucune exigence de ce type dans la norme.",
+        "Règle réservée aux installations haute tension uniquement."
+      ],
+      "optionsAr": [
+        "عبارة مطابقة للمعيار",
+        "عبارة مخالفة للمعيار",
+        "غير موجودة في المعيار",
+        "للجهد العالي فقط"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § NF C 15-100 (p. 147), page 147 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § NF C 15-100 (p. 147)، ص. 147.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 147)",
+      "pdfPage": 147
+    },
+    {
+      "id": "m04_L1_q13",
+      "level": 1,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un forum de discussion en ligne",
+        "Aucun texte normatif",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un catalogue fabricant uniquement"
+      ],
+      "optionsAr": [
+        "منتدى إنترنت",
+        "لا وثيقة معيارية",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "كتالوج شركة فقط"
+      ],
+      "correctAnswer": 2,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 145).",
+      "explanationAr": "راجع PDF ص. 145.",
+      "normRef": "NF C 15-100 (p. 145)",
+      "pdfPage": 145
+    },
+    {
+      "id": "m04_L1_q14",
+      "level": 1,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un catalogue fabricant uniquement",
+        "Aucun texte normatif",
+        "Un forum de discussion en ligne"
+      ],
+      "optionsAr": [
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "كتالوج شركة فقط",
+        "لا وثيقة معيارية",
+        "منتدى إنترنت"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 146).",
+      "explanationAr": "راجع PDF ص. 146.",
+      "normRef": "NF C 15-100 (p. 146)",
+      "pdfPage": 146
+    },
+    {
+      "id": "m04_L1_q15",
+      "level": 1,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un catalogue fabricant uniquement",
+        "Un forum de discussion en ligne",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Aucun texte normatif"
+      ],
+      "optionsAr": [
+        "كتالوج شركة فقط",
+        "منتدى إنترنت",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "لا وثيقة معيارية"
+      ],
+      "correctAnswer": 2,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 147).",
+      "explanationAr": "راجع PDF ص. 147.",
+      "normRef": "NF C 15-100 (p. 147)",
+      "pdfPage": 147
+    },
+    {
+      "id": "m04_L2_q01",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100 (§ 433.1), quelle affirmation correspond au texte de la norme concernant condition 1 ?",
+      "questionAr": "§ 433.1 شرط 1:",
+      "optionsFr": [
+        "In ≤ IB",
+        "IB ≤ In ≤ Iz",
+        "Iz ≤ IB",
+        "I2 > 1,45 Iz"
+      ],
+      "optionsAr": [
+        "In ≤ IB",
+        "IB ≤ In ≤ Iz",
+        "Iz ≤ IB",
+        "I2 > 1,45 Iz"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "§ 433.1 : la réponse correcte est « IB ≤ In ≤ Iz ». Voir NF C 15-100 — § 433.1 (p. 142) p. 142.",
+      "explanationAr": "§ 433.1: IB ≤ In ≤ Iz.",
+      "normRef": "NF C 15-100 — § 433.1 (p. 142)",
+      "pdfPage": 142
+    },
+    {
+      "id": "m04_L2_q02",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100 (§ 433.1), quelle affirmation correspond au texte de la norme concernant condition 2 ?",
+      "questionAr": "§ 433.1 شرط 2:",
+      "optionsFr": [
+        "I2 ≤ 1,45 Iz",
+        "I2 ≤ Iz",
+        "In ≤ 0,8 Iz",
+        "IB = I2"
+      ],
+      "optionsAr": [
+        "I2 ≤ 1,45 Iz",
+        "I2 ≤ Iz",
+        "In ≤ 0,8 Iz",
+        "IB = I2"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "§ 433.1 : la réponse correcte est « I2 ≤ 1,45 Iz ». Voir NF C 15-100 — § 433.1 (p. 142) p. 142.",
+      "explanationAr": "§ 433.1: I2 ≤ 1,45 Iz.",
+      "normRef": "NF C 15-100 — § 433.1 (p. 142)",
+      "pdfPage": 142
+    },
+    {
+      "id": "m04_L2_q03",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Fusibles gG In < 16 A — k3 (§ 433.1) :",
+      "questionAr": "صمامات gG In < 16 A — k3:",
+      "optionsFr": [
+        "1,10",
+        "1,31",
+        "1,45",
+        "1,60"
+      ],
+      "optionsAr": [
+        "1,10",
+        "1,31",
+        "1,45",
+        "1,60"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "§ 433.1 pratique fusibles : In < 16 A → k3 = 1,31.",
+      "explanationAr": "k3 = 1,31.",
+      "normRef": "NF C 15-100 — § 433.1 (p. 143)",
+      "pdfPage": 143
+    },
+    {
+      "id": "m04_L2_q04",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un catalogue fabricant uniquement",
+        "Aucun texte normatif",
+        "Un forum de discussion en ligne"
+      ],
+      "optionsAr": [
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "كتالوج شركة فقط",
+        "لا وثيقة معيارية",
+        "منتدى إنترنت"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 255).",
+      "explanationAr": "راجع PDF ص. 255.",
+      "normRef": "NF C 15-100 (p. 255)",
+      "pdfPage": 255
+    },
+    {
+      "id": "m04_L2_q05",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un catalogue fabricant uniquement",
+        "Aucun texte normatif",
+        "Un forum de discussion en ligne"
+      ],
+      "optionsAr": [
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "كتالوج شركة فقط",
+        "لا وثيقة معيارية",
+        "منتدى إنترنت"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 142).",
+      "explanationAr": "راجع PDF ص. 142.",
+      "normRef": "NF C 15-100 (p. 142)",
+      "pdfPage": 142
+    },
+    {
+      "id": "m04_L2_q06",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Aucun texte normatif",
+        "Un forum de discussion en ligne",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un catalogue fabricant uniquement"
+      ],
+      "optionsAr": [
+        "لا وثيقة معيارية",
+        "منتدى إنترنت",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "كتالوج شركة فقط"
+      ],
+      "correctAnswer": 2,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 144).",
+      "explanationAr": "راجع PDF ص. 144.",
+      "normRef": "NF C 15-100 (p. 144)",
+      "pdfPage": 144
+    },
+    {
+      "id": "m04_L2_q07",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un forum de discussion en ligne",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Aucun texte normatif",
+        "Un catalogue fabricant uniquement"
+      ],
+      "optionsAr": [
+        "منتدى إنترنت",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "لا وثيقة معيارية",
+        "كتالوج شركة فقط"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 146).",
+      "explanationAr": "راجع PDF ص. 146.",
+      "normRef": "NF C 15-100 (p. 146)",
+      "pdfPage": 146
+    },
+    {
+      "id": "m04_L2_q08",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un catalogue fabricant uniquement",
+        "Un forum de discussion en ligne",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Aucun texte normatif"
+      ],
+      "optionsAr": [
+        "كتالوج شركة فقط",
+        "منتدى إنترنت",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "لا وثيقة معيارية"
+      ],
+      "correctAnswer": 2,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 254).",
+      "explanationAr": "راجع PDF ص. 254.",
+      "normRef": "NF C 15-100 (p. 254)",
+      "pdfPage": 254
+    },
+    {
+      "id": "m04_L2_q09",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un catalogue fabricant uniquement",
+        "Un forum de discussion en ligne",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Aucun texte normatif"
+      ],
+      "optionsAr": [
+        "كتالوج شركة فقط",
+        "منتدى إنترنت",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "لا وثيقة معيارية"
+      ],
+      "correctAnswer": 2,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 141).",
+      "explanationAr": "راجع PDF ص. 141.",
+      "normRef": "NF C 15-100 (p. 141)",
+      "pdfPage": 141
+    },
+    {
+      "id": "m04_L2_q10",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un catalogue fabricant uniquement",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Aucun texte normatif",
+        "Un forum de discussion en ligne"
+      ],
+      "optionsAr": [
+        "كتالوج شركة فقط",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "لا وثيقة معيارية",
+        "منتدى إنترنت"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 143).",
+      "explanationAr": "راجع PDF ص. 143.",
+      "normRef": "NF C 15-100 (p. 143)",
+      "pdfPage": 143
+    },
+    {
+      "id": "m04_L2_q11",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Aucun texte normatif",
+        "Un forum de discussion en ligne",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un catalogue fabricant uniquement"
+      ],
+      "optionsAr": [
+        "لا وثيقة معيارية",
+        "منتدى إنترنت",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "كتالوج شركة فقط"
+      ],
+      "correctAnswer": 2,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 145).",
+      "explanationAr": "راجع PDF ص. 145.",
+      "normRef": "NF C 15-100 (p. 145)",
+      "pdfPage": 145
+    },
+    {
+      "id": "m04_L2_q12",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un forum de discussion en ligne",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Aucun texte normatif",
+        "Un catalogue fabricant uniquement"
+      ],
+      "optionsAr": [
+        "منتدى إنترنت",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "لا وثيقة معيارية",
+        "كتالوج شركة فقط"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 147).",
+      "explanationAr": "راجع PDF ص. 147.",
+      "normRef": "NF C 15-100 (p. 147)",
+      "pdfPage": 147
+    },
+    {
+      "id": "m04_L2_q13",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Aucun texte normatif",
+        "Un catalogue fabricant uniquement",
+        "Un forum de discussion en ligne"
+      ],
+      "optionsAr": [
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "لا وثيقة معيارية",
+        "كتالوج شركة فقط",
+        "منتدى إنترنت"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 255).",
+      "explanationAr": "راجع PDF ص. 255.",
+      "normRef": "NF C 15-100 (p. 255)",
+      "pdfPage": 255
+    },
+    {
+      "id": "m04_L2_q14",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Aucun texte normatif",
+        "Un catalogue fabricant uniquement",
+        "Un forum de discussion en ligne"
+      ],
+      "optionsAr": [
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "لا وثيقة معيارية",
+        "كتالوج شركة فقط",
+        "منتدى إنترنت"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 142).",
+      "explanationAr": "راجع PDF ص. 142.",
+      "normRef": "NF C 15-100 (p. 142)",
+      "pdfPage": 142
+    },
+    {
+      "id": "m04_L2_q15",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un catalogue fabricant uniquement",
+        "Un forum de discussion en ligne",
+        "Aucun texte normatif"
+      ],
+      "optionsAr": [
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "كتالوج شركة فقط",
+        "منتدى إنترنت",
+        "لا وثيقة معيارية"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 144).",
+      "explanationAr": "راجع PDF ص. 144.",
+      "normRef": "NF C 15-100 (p. 144)",
+      "pdfPage": 144
+    },
+    {
+      "id": "m04_L3_q01",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100 (§ 433.2.1), quelle affirmation correspond au texte de la norme concernant protection surcharge placée ?",
+      "questionAr": "§ 433.2.1 — حماية الحمل:",
+      "optionsFr": [
+        "N'importe où",
+        "Où changement réduisant Iz (sauf exceptions)",
+        "Uniquement au tableau",
+        "Après chaque prise"
+      ],
+      "optionsAr": [
+        "أي مكان",
+        "عند نقص Iz",
+        "اللوحة فقط",
+        "بعد كل مقبس"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "§ 433.2.1 : la réponse correcte est « Où changement réduisant Iz (sauf exceptions) ». Voir NF C 15-100 — § 433.2.1 (p. 143) p. 143.",
+      "explanationAr": "§ 433.2.1: عند تغيير Iz.",
+      "normRef": "NF C 15-100 — § 433.2.1 (p. 143)",
+      "pdfPage": 143
+    },
+    {
+      "id": "m04_L3_q02",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100 (§ 433.2.2), quelle affirmation correspond au texte de la norme concernant dérivation max. sans protection locale ?",
+      "questionAr": "§ 433.2.2 — فرع بدون حماية:",
+      "optionsFr": [
+        "1 m",
+        "3 m",
+        "5 m",
+        "10 m"
+      ],
+      "optionsAr": [
+        "1",
+        "3",
+        "5",
+        "10"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "§ 433.2.2 : la réponse correcte est « 3 m ». Voir NF C 15-100 — § 433.2.2 (p. 144) p. 144.",
+      "explanationAr": "§ 433.2.2: ≤ 3 m.",
+      "normRef": "NF C 15-100 — § 433.2.2 (p. 144)",
+      "pdfPage": 144
+    },
+    {
+      "id": "m04_L3_q03",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100 (§ 433.3), quelle affirmation correspond au texte de la norme concernant dispense surcharge possible si canalisation protégée en amont ?",
+      "questionAr": "§ 433.3: إعفاء إذا محمية من أمام.",
+      "correctAnswer": true,
+      "explanationFr": "§ 433.3 a) : protection amont.",
+      "explanationAr": "§ 433.3: حماية أمامية.",
+      "normRef": "NF C 15-100 — § 433.3 (p. 144)",
+      "pdfPage": 144
+    },
+    {
+      "id": "m04_L3_q04",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un catalogue fabricant uniquement",
+        "Aucun texte normatif",
+        "Un forum de discussion en ligne",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC"
+      ],
+      "optionsAr": [
+        "كتالوج شركة فقط",
+        "لا وثيقة معيارية",
+        "منتدى إنترنت",
+        "معيار NF C 15-100 (2015) — PDF المكتبة"
+      ],
+      "correctAnswer": 3,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 144).",
+      "explanationAr": "راجع PDF ص. 144.",
+      "normRef": "NF C 15-100 (p. 144)",
+      "pdfPage": 144
+    },
+    {
+      "id": "m04_L3_q05",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Aucun texte normatif",
+        "Un forum de discussion en ligne",
+        "Un catalogue fabricant uniquement"
+      ],
+      "optionsAr": [
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "لا وثيقة معيارية",
+        "منتدى إنترنت",
+        "كتالوج شركة فقط"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 147).",
+      "explanationAr": "راجع PDF ص. 147.",
+      "normRef": "NF C 15-100 (p. 147)",
+      "pdfPage": 147
+    },
+    {
+      "id": "m04_L3_q06",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un catalogue fabricant uniquement",
+        "Un forum de discussion en ligne",
+        "Aucun texte normatif"
+      ],
+      "optionsAr": [
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "كتالوج شركة فقط",
+        "منتدى إنترنت",
+        "لا وثيقة معيارية"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 141).",
+      "explanationAr": "راجع PDF ص. 141.",
+      "normRef": "NF C 15-100 (p. 141)",
+      "pdfPage": 141
+    },
+    {
+      "id": "m04_L3_q07",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Aucun texte normatif",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un forum de discussion en ligne",
+        "Un catalogue fabricant uniquement"
+      ],
+      "optionsAr": [
+        "لا وثيقة معيارية",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "منتدى إنترنت",
+        "كتالوج شركة فقط"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 144).",
+      "explanationAr": "راجع PDF ص. 144.",
+      "normRef": "NF C 15-100 (p. 144)",
+      "pdfPage": 144
+    },
+    {
+      "id": "m04_L3_q08",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un forum de discussion en ligne",
+        "Aucun texte normatif",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un catalogue fabricant uniquement"
+      ],
+      "optionsAr": [
+        "منتدى إنترنت",
+        "لا وثيقة معيارية",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "كتالوج شركة فقط"
+      ],
+      "correctAnswer": 2,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 147).",
+      "explanationAr": "راجع PDF ص. 147.",
+      "normRef": "NF C 15-100 (p. 147)",
+      "pdfPage": 147
+    },
+    {
+      "id": "m04_L3_q09",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Aucun texte normatif",
+        "Un forum de discussion en ligne",
+        "Un catalogue fabricant uniquement",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC"
+      ],
+      "optionsAr": [
+        "لا وثيقة معيارية",
+        "منتدى إنترنت",
+        "كتالوج شركة فقط",
+        "معيار NF C 15-100 (2015) — PDF المكتبة"
+      ],
+      "correctAnswer": 3,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 141).",
+      "explanationAr": "راجع PDF ص. 141.",
+      "normRef": "NF C 15-100 (p. 141)",
+      "pdfPage": 141
+    },
+    {
+      "id": "m04_L3_q10",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Aucun texte normatif",
+        "Un forum de discussion en ligne",
+        "Un catalogue fabricant uniquement"
+      ],
+      "optionsAr": [
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "لا وثيقة معيارية",
+        "منتدى إنترنت",
+        "كتالوج شركة فقط"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 144).",
+      "explanationAr": "راجع PDF ص. 144.",
+      "normRef": "NF C 15-100 (p. 144)",
+      "pdfPage": 144
+    },
+    {
+      "id": "m04_L3_q11",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un forum de discussion en ligne",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un catalogue fabricant uniquement",
+        "Aucun texte normatif"
+      ],
+      "optionsAr": [
+        "منتدى إنترنت",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "كتالوج شركة فقط",
+        "لا وثيقة معيارية"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 147).",
+      "explanationAr": "راجع PDF ص. 147.",
+      "normRef": "NF C 15-100 (p. 147)",
+      "pdfPage": 147
+    },
+    {
+      "id": "m04_L3_q12",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Aucun texte normatif",
+        "Un forum de discussion en ligne",
+        "Un catalogue fabricant uniquement",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC"
+      ],
+      "optionsAr": [
+        "لا وثيقة معيارية",
+        "منتدى إنترنت",
+        "كتالوج شركة فقط",
+        "معيار NF C 15-100 (2015) — PDF المكتبة"
+      ],
+      "correctAnswer": 3,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 141).",
+      "explanationAr": "راجع PDF ص. 141.",
+      "normRef": "NF C 15-100 (p. 141)",
+      "pdfPage": 141
+    },
+    {
+      "id": "m04_L3_q13",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Aucun texte normatif",
+        "Un forum de discussion en ligne",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un catalogue fabricant uniquement"
+      ],
+      "optionsAr": [
+        "لا وثيقة معيارية",
+        "منتدى إنترنت",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "كتالوج شركة فقط"
+      ],
+      "correctAnswer": 2,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 144).",
+      "explanationAr": "راجع PDF ص. 144.",
+      "normRef": "NF C 15-100 (p. 144)",
+      "pdfPage": 144
+    },
+    {
+      "id": "m04_L3_q14",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Aucun texte normatif",
+        "Un forum de discussion en ligne",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un catalogue fabricant uniquement"
+      ],
+      "optionsAr": [
+        "لا وثيقة معيارية",
+        "منتدى إنترنت",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "كتالوج شركة فقط"
+      ],
+      "correctAnswer": 2,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 147).",
+      "explanationAr": "راجع PDF ص. 147.",
+      "normRef": "NF C 15-100 (p. 147)",
+      "pdfPage": 147
+    },
+    {
+      "id": "m04_L3_q15",
+      "level": 3,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un forum de discussion en ligne",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Aucun texte normatif",
+        "Un catalogue fabricant uniquement"
+      ],
+      "optionsAr": [
+        "منتدى إنترنت",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "لا وثيقة معيارية",
+        "كتالوج شركة فقط"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 141).",
+      "explanationAr": "راجع PDF ص. 141.",
+      "normRef": "NF C 15-100 (p. 141)",
+      "pdfPage": 141
+    },
+    {
+      "id": "m04_L4_q01",
+      "level": 4,
+      "difficulty": "difficile",
+      "type": "multiple",
+      "questionFr": "Disjoncteurs — conditions pratiques (§ 433.1) :",
+      "questionAr": "قواطع — شروط (§ 433.1):",
+      "optionsFr": [
+        "I2 ≤ 1,45 Iz seulement",
+        "IB ≤ In et In ≤ Iz",
+        "In ≤ IB uniquement",
+        "Iz ≤ In ≤ IB"
+      ],
+      "optionsAr": [
+        "I2 فقط",
+        "IB ≤ In و In ≤ Iz",
+        "In ≤ IB",
+        "Iz ≤ In ≤ IB"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "La norme indique : IB ≤ In et In ≤ Iz. Vérification sur NF C 15-100 — § 433.1 (p. 143) (page 143).",
+      "explanationAr": "§ 433.1: IB≤In≤Iz.",
+      "normRef": "NF C 15-100 — § 433.1 (p. 143)",
+      "pdfPage": 143
+    },
+    {
+      "id": "m04_L4_q02",
+      "level": 4,
+      "difficulty": "difficile",
+      "type": "multiple",
+      "questionFr": "Fusibles gG In ≥ 16 A — k3 :",
+      "questionAr": "gG In ≥ 16 A — k3:",
+      "optionsFr": [
+        "1,31",
+        "1,10",
+        "1,45",
+        "1,25"
+      ],
+      "optionsAr": [
+        "1,31",
+        "1,10",
+        "1,45",
+        "1,25"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "La norme indique : 1,10. Vérification sur NF C 15-100 — § 433.1 (p. 143) (page 143).",
+      "explanationAr": "k3 = 1,10.",
+      "normRef": "NF C 15-100 — § 433.1 (p. 143)",
+      "pdfPage": 143
+    },
+    {
+      "id": "m04_L4_q03",
+      "level": 4,
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100 (§ 434), quelle affirmation correspond au texte de la norme concernant la norme considère les courts-circuits entre conducteurs d'un même circuit ?",
+      "questionAr": "§ 434: قصر بين موصلات نفس الدائرة.",
+      "correctAnswer": true,
+      "explanationFr": "§ 434 note : CC même circuit.",
+      "explanationAr": "§ 434: قصر داخلي.",
+      "normRef": "NF C 15-100 — § 434 (p. 147)",
+      "pdfPage": 147
+    },
+    {
+      "id": "m04_L4_q04",
+      "level": 4,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Aucun texte normatif",
+        "Un forum de discussion en ligne",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un catalogue fabricant uniquement"
+      ],
+      "optionsAr": [
+        "لا وثيقة معيارية",
+        "منتدى إنترنت",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "كتالوج شركة فقط"
+      ],
+      "correctAnswer": 2,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 254).",
+      "explanationAr": "راجع PDF ص. 254.",
+      "normRef": "NF C 15-100 (p. 254)",
+      "pdfPage": 254
+    },
+    {
+      "id": "m04_L4_q05",
+      "level": 4,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un catalogue fabricant uniquement",
+        "Aucun texte normatif",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un forum de discussion en ligne"
+      ],
+      "optionsAr": [
+        "كتالوج شركة فقط",
+        "لا وثيقة معيارية",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "منتدى إنترنت"
+      ],
+      "correctAnswer": 2,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 143).",
+      "explanationAr": "راجع PDF ص. 143.",
+      "normRef": "NF C 15-100 (p. 143)",
+      "pdfPage": 143
+    },
+    {
+      "id": "m04_L4_q06",
+      "level": 4,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Aucun texte normatif",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un catalogue fabricant uniquement",
+        "Un forum de discussion en ligne"
+      ],
+      "optionsAr": [
+        "لا وثيقة معيارية",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "كتالوج شركة فقط",
+        "منتدى إنترنت"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 147).",
+      "explanationAr": "راجع PDF ص. 147.",
+      "normRef": "NF C 15-100 (p. 147)",
+      "pdfPage": 147
+    },
+    {
+      "id": "m04_L4_q07",
+      "level": 4,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un catalogue fabricant uniquement",
+        "Aucun texte normatif",
+        "Un forum de discussion en ligne",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC"
+      ],
+      "optionsAr": [
+        "كتالوج شركة فقط",
+        "لا وثيقة معيارية",
+        "منتدى إنترنت",
+        "معيار NF C 15-100 (2015) — PDF المكتبة"
+      ],
+      "correctAnswer": 3,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 142).",
+      "explanationAr": "راجع PDF ص. 142.",
+      "normRef": "NF C 15-100 (p. 142)",
+      "pdfPage": 142
+    },
+    {
+      "id": "m04_L4_q08",
+      "level": 4,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un forum de discussion en ligne",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un catalogue fabricant uniquement",
+        "Aucun texte normatif"
+      ],
+      "optionsAr": [
+        "منتدى إنترنت",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "كتالوج شركة فقط",
+        "لا وثيقة معيارية"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 146).",
+      "explanationAr": "راجع PDF ص. 146.",
+      "normRef": "NF C 15-100 (p. 146)",
+      "pdfPage": 146
+    },
+    {
+      "id": "m04_L4_q09",
+      "level": 4,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un catalogue fabricant uniquement",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un forum de discussion en ligne",
+        "Aucun texte normatif"
+      ],
+      "optionsAr": [
+        "كتالوج شركة فقط",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "منتدى إنترنت",
+        "لا وثيقة معيارية"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 141).",
+      "explanationAr": "راجع PDF ص. 141.",
+      "normRef": "NF C 15-100 (p. 141)",
+      "pdfPage": 141
+    },
+    {
+      "id": "m04_L4_q10",
+      "level": 4,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un catalogue fabricant uniquement",
+        "Un forum de discussion en ligne",
+        "Aucun texte normatif",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC"
+      ],
+      "optionsAr": [
+        "كتالوج شركة فقط",
+        "منتدى إنترنت",
+        "لا وثيقة معيارية",
+        "معيار NF C 15-100 (2015) — PDF المكتبة"
+      ],
+      "correctAnswer": 3,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 145).",
+      "explanationAr": "راجع PDF ص. 145.",
+      "normRef": "NF C 15-100 (p. 145)",
+      "pdfPage": 145
+    },
+    {
+      "id": "m04_L4_q11",
+      "level": 4,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un catalogue fabricant uniquement",
+        "Un forum de discussion en ligne",
+        "Aucun texte normatif",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC"
+      ],
+      "optionsAr": [
+        "كتالوج شركة فقط",
+        "منتدى إنترنت",
+        "لا وثيقة معيارية",
+        "معيار NF C 15-100 (2015) — PDF المكتبة"
+      ],
+      "correctAnswer": 3,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 255).",
+      "explanationAr": "راجع PDF ص. 255.",
+      "normRef": "NF C 15-100 (p. 255)",
+      "pdfPage": 255
+    },
+    {
+      "id": "m04_L4_q12",
+      "level": 4,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un forum de discussion en ligne",
+        "Un catalogue fabricant uniquement",
+        "Aucun texte normatif"
+      ],
+      "optionsAr": [
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "منتدى إنترنت",
+        "كتالوج شركة فقط",
+        "لا وثيقة معيارية"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 144).",
+      "explanationAr": "راجع PDF ص. 144.",
+      "normRef": "NF C 15-100 (p. 144)",
+      "pdfPage": 144
+    },
+    {
+      "id": "m04_L4_q13",
+      "level": 4,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un catalogue fabricant uniquement",
+        "Un forum de discussion en ligne",
+        "Aucun texte normatif"
+      ],
+      "optionsAr": [
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "كتالوج شركة فقط",
+        "منتدى إنترنت",
+        "لا وثيقة معيارية"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 254).",
+      "explanationAr": "راجع PDF ص. 254.",
+      "normRef": "NF C 15-100 (p. 254)",
+      "pdfPage": 254
+    },
+    {
+      "id": "m04_L4_q14",
+      "level": 4,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un forum de discussion en ligne",
+        "Un catalogue fabricant uniquement",
+        "Aucun texte normatif",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC"
+      ],
+      "optionsAr": [
+        "منتدى إنترنت",
+        "كتالوج شركة فقط",
+        "لا وثيقة معيارية",
+        "معيار NF C 15-100 (2015) — PDF المكتبة"
+      ],
+      "correctAnswer": 3,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 143).",
+      "explanationAr": "راجع PDF ص. 143.",
+      "normRef": "NF C 15-100 (p. 143)",
+      "pdfPage": 143
+    },
+    {
+      "id": "m04_L4_q15",
+      "level": 4,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un catalogue fabricant uniquement",
+        "Un forum de discussion en ligne",
+        "Aucun texte normatif"
+      ],
+      "optionsAr": [
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "كتالوج شركة فقط",
+        "منتدى إنترنت",
+        "لا وثيقة معيارية"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 147).",
+      "explanationAr": "راجع PDF ص. 147.",
+      "normRef": "NF C 15-100 (p. 147)",
+      "pdfPage": 147
+    },
+    {
+      "id": "m04_L5_q01",
+      "level": 5,
+      "difficulty": "difficile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100 (référence 52U), quelle valeur la norme impose-t-elle concernant : conducteurs nus puissance Cu ?",
+      "questionAr": "52U — موصلات عارية Cu:",
+      "optionsFr": [
+        "6 mm²",
+        "10 mm²",
+        "16 mm²",
+        "25 mm²"
+      ],
+      "optionsAr": [
+        "6",
+        "10",
+        "16",
+        "25"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "La norme indique : 10 mm². Vérification sur NF C 15-100 — Tableau 52U (p. 254) (page 254).",
+      "explanationAr": "52U: 10 mm² Cu.",
+      "normRef": "NF C 15-100 — Tableau 52U (p. 254)",
+      "pdfPage": 254
+    },
+    {
+      "id": "m04_L5_q02",
+      "level": 5,
+      "difficulty": "difficile",
+      "type": "multiple",
+      "questionFr": "Selon la norme NF C 15-100 (§ 433.6), quelle affirmation correspond au texte de la norme concernant conducteurs parallèles — Iz total ?",
+      "questionAr": "§ 433.6 موصلات متوازية:",
+      "optionsFr": [
+        "Iz du plus petit",
+        "Somme des Iz si courants sensiblement égaux",
+        "Iz × 2",
+        "Iz du plus grand"
+      ],
+      "optionsAr": [
+        "أصغر Iz",
+        "مجموع Iz",
+        "Iz×2",
+        "أكبر Iz"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "§ 433.6 : la réponse correcte est « Somme des Iz si courants sensiblement égaux ». Voir NF C 15-100 — § 433.6 (p. 147) p. 147.",
+      "explanationAr": "§ 433.6: مجموع Iz.",
+      "normRef": "NF C 15-100 — § 433.6 (p. 147)",
+      "pdfPage": 147
+    },
+    {
+      "id": "m04_L5_q03",
+      "level": 5,
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100 (§ 432.2), quelle affirmation correspond au texte de la norme concernant dispositifs surcharge seule ont généralement caractéristique temps inverse ?",
+      "questionAr": "§ 432.2: حماية حمل فقط — منحنى زمني عكسي.",
+      "correctAnswer": true,
+      "explanationFr": "§ 432.2 : temps inverse, pouvoir coupure peut être < Ik.",
+      "explanationAr": "§ 432.2: زمن عكسي.",
+      "normRef": "NF C 15-100 — § 432.2 (p. 141)",
+      "pdfPage": 141
+    },
+    {
+      "id": "m04_L5_q04",
+      "level": 5,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un catalogue fabricant uniquement",
+        "Aucun texte normatif",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un forum de discussion en ligne"
+      ],
+      "optionsAr": [
+        "كتالوج شركة فقط",
+        "لا وثيقة معيارية",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "منتدى إنترنت"
+      ],
+      "correctAnswer": 2,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 143).",
+      "explanationAr": "راجع PDF ص. 143.",
+      "normRef": "NF C 15-100 (p. 143)",
+      "pdfPage": 143
+    },
+    {
+      "id": "m04_L5_q05",
+      "level": 5,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un forum de discussion en ligne",
+        "Aucun texte normatif",
+        "Un catalogue fabricant uniquement"
+      ],
+      "optionsAr": [
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "منتدى إنترنت",
+        "لا وثيقة معيارية",
+        "كتالوج شركة فقط"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 254).",
+      "explanationAr": "راجع PDF ص. 254.",
+      "normRef": "NF C 15-100 (p. 254)",
+      "pdfPage": 254
+    },
+    {
+      "id": "m04_L5_q06",
+      "level": 5,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un catalogue fabricant uniquement",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un forum de discussion en ligne",
+        "Aucun texte normatif"
+      ],
+      "optionsAr": [
+        "كتالوج شركة فقط",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "منتدى إنترنت",
+        "لا وثيقة معيارية"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 144).",
+      "explanationAr": "راجع PDF ص. 144.",
+      "normRef": "NF C 15-100 (p. 144)",
+      "pdfPage": 144
+    },
+    {
+      "id": "m04_L5_q07",
+      "level": 5,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un forum de discussion en ligne",
+        "Un catalogue fabricant uniquement",
+        "Aucun texte normatif",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC"
+      ],
+      "optionsAr": [
+        "منتدى إنترنت",
+        "كتالوج شركة فقط",
+        "لا وثيقة معيارية",
+        "معيار NF C 15-100 (2015) — PDF المكتبة"
+      ],
+      "correctAnswer": 3,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 255).",
+      "explanationAr": "راجع PDF ص. 255.",
+      "normRef": "NF C 15-100 (p. 255)",
+      "pdfPage": 255
+    },
+    {
+      "id": "m04_L5_q08",
+      "level": 5,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un forum de discussion en ligne",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un catalogue fabricant uniquement",
+        "Aucun texte normatif"
+      ],
+      "optionsAr": [
+        "منتدى إنترنت",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "كتالوج شركة فقط",
+        "لا وثيقة معيارية"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 145).",
+      "explanationAr": "راجع PDF ص. 145.",
+      "normRef": "NF C 15-100 (p. 145)",
+      "pdfPage": 145
+    },
+    {
+      "id": "m04_L5_q09",
+      "level": 5,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un catalogue fabricant uniquement",
+        "Aucun texte normatif",
+        "Un forum de discussion en ligne",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC"
+      ],
+      "optionsAr": [
+        "كتالوج شركة فقط",
+        "لا وثيقة معيارية",
+        "منتدى إنترنت",
+        "معيار NF C 15-100 (2015) — PDF المكتبة"
+      ],
+      "correctAnswer": 3,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 141).",
+      "explanationAr": "راجع PDF ص. 141.",
+      "normRef": "NF C 15-100 (p. 141)",
+      "pdfPage": 141
+    },
+    {
+      "id": "m04_L5_q10",
+      "level": 5,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Aucun texte normatif",
+        "Un forum de discussion en ligne",
+        "Un catalogue fabricant uniquement",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC"
+      ],
+      "optionsAr": [
+        "لا وثيقة معيارية",
+        "منتدى إنترنت",
+        "كتالوج شركة فقط",
+        "معيار NF C 15-100 (2015) — PDF المكتبة"
+      ],
+      "correctAnswer": 3,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 146).",
+      "explanationAr": "راجع PDF ص. 146.",
+      "normRef": "NF C 15-100 (p. 146)",
+      "pdfPage": 146
+    },
+    {
+      "id": "m04_L5_q11",
+      "level": 5,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un catalogue fabricant uniquement",
+        "Aucun texte normatif",
+        "Un forum de discussion en ligne",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC"
+      ],
+      "optionsAr": [
+        "كتالوج شركة فقط",
+        "لا وثيقة معيارية",
+        "منتدى إنترنت",
+        "معيار NF C 15-100 (2015) — PDF المكتبة"
+      ],
+      "correctAnswer": 3,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 142).",
+      "explanationAr": "راجع PDF ص. 142.",
+      "normRef": "NF C 15-100 (p. 142)",
+      "pdfPage": 142
+    },
+    {
+      "id": "m04_L5_q12",
+      "level": 5,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Aucun texte normatif",
+        "Un catalogue fabricant uniquement",
+        "Un forum de discussion en ligne"
+      ],
+      "optionsAr": [
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "لا وثيقة معيارية",
+        "كتالوج شركة فقط",
+        "منتدى إنترنت"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 147).",
+      "explanationAr": "راجع PDF ص. 147.",
+      "normRef": "NF C 15-100 (p. 147)",
+      "pdfPage": 147
+    },
+    {
+      "id": "m04_L5_q13",
+      "level": 5,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un forum de discussion en ligne",
+        "Aucun texte normatif",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un catalogue fabricant uniquement"
+      ],
+      "optionsAr": [
+        "منتدى إنترنت",
+        "لا وثيقة معيارية",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "كتالوج شركة فقط"
+      ],
+      "correctAnswer": 2,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 143).",
+      "explanationAr": "راجع PDF ص. 143.",
+      "normRef": "NF C 15-100 (p. 143)",
+      "pdfPage": 143
+    },
+    {
+      "id": "m04_L5_q14",
+      "level": 5,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un forum de discussion en ligne",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Un catalogue fabricant uniquement",
+        "Aucun texte normatif"
+      ],
+      "optionsAr": [
+        "منتدى إنترنت",
+        "معيار NF C 15-100 (2015) — PDF المكتبة",
+        "كتالوج شركة فقط",
+        "لا وثيقة معيارية"
+      ],
+      "correctAnswer": 1,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 254).",
+      "explanationAr": "راجع PDF ص. 254.",
+      "normRef": "NF C 15-100 (p. 254)",
+      "pdfPage": 254
+    },
+    {
+      "id": "m04_L5_q15",
+      "level": 5,
+      "difficulty": "moyen",
+      "type": "multiple",
+      "questionFr": "Pour vérifier les règles du thème « Circuits, sections & protections » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
+      "questionAr": "للتحقق من قواعد «Circuits, sections & protections»، أي وثيقة يجب الرجوع إليها؟",
+      "optionsFr": [
+        "Un forum de discussion en ligne",
+        "Un catalogue fabricant uniquement",
+        "Aucun texte normatif",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC"
+      ],
+      "optionsAr": [
+        "منتدى إنترنت",
+        "كتالوج شركة فقط",
+        "لا وثيقة معيارية",
+        "معيار NF C 15-100 (2015) — PDF المكتبة"
+      ],
+      "correctAnswer": 3,
+      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 144).",
+      "explanationAr": "راجع PDF ص. 144.",
+      "normRef": "NF C 15-100 (p. 144)",
+      "pdfPage": 144
+    }
+  ],
+  "questionsPerLevel": 15
+}

@@ -503,6 +503,16 @@
         }
       });
       actions.appendChild(dl);
+
+      if (book.quizUrl) {
+        const quiz = document.createElement("a");
+        quiz.className = "btn btn-sm";
+        quiz.style.borderColor = "rgba(56,189,248,0.5)";
+        quiz.style.color = "#7dd3fc";
+        quiz.href = book.quizUrl;
+        quiz.textContent = t("Quiz", "اختبار");
+        actions.appendChild(quiz);
+      }
     } else if (hasFile) {
       const dl = document.createElement("a");
       dl.className = "btn btn-primary btn-sm";

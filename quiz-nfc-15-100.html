@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Quiz de révision NF C 15-100 (2015) — DZSWISS ELEC" />
+  <link rel="icon" href="assets/app-icon.png" type="image/png" />
+  <link rel="stylesheet" href="css/site-brand.css" />
+  <link rel="stylesheet" href="css/quiz-nfc.css" />
+  <title>Quiz NF C 15-100 (2015) — DZSWISS ELEC</title>
+  <link rel="canonical" href="https://electro-dz.com/quiz-nfc-15-100.html" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 5%;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo {
+      color: #facc15;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+    }
+    .lang-btn {
+      background: none;
+      border: 1px solid #cbd5e1;
+      color: #cbd5e1;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .lang-btn.active {
+      background: #facc15;
+      color: #0f172a;
+      border-color: #facc15;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="logo">
+      <img src="assets/app-icon.png" alt="" width="36" height="36" decoding="async" />
+      <span>DZSWISS ELEC</span>
+    </a>
+    <div>
+      <button type="button" class="lang-btn active" data-lang-fr>FR</button>
+      <button type="button" class="lang-btn" data-lang-ar>AR</button>
+    </div>
+  </nav>
+
+  <main class="quiz-page">
+    <div data-quiz-root>
+      <p style="text-align:center;color:#94a3b8;padding:40px">Chargement…</p>
+    </div>
+  </main>
+
+  <script src="js/quiz-nfc.js" defer></script>
+</body>
+</html>

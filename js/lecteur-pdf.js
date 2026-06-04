@@ -9,6 +9,9 @@
   const fromPage = params.get("from") || "bibliotheque.html";
   const pdfSrc = params.get("src") || "";
   const bookId = params.get("id") || "";
+  const initialPageParam = parseInt(params.get("page"), 10);
+  const initialPage =
+    Number.isFinite(initialPageParam) && initialPageParam >= 1 ? initialPageParam : 0;
   const titleFr = params.get("titleFr") || params.get("title") || "PDF";
   const titleAr = params.get("titleAr") || titleFr;
 
@@ -1461,7 +1464,9 @@
         buildThumbSidebar();
         if (window.innerWidth > 720) setThumbSidebarOpen(true);
         else setThumbSidebarOpen(false);
-        return goToPage(1, true);
+        const startPage =
+          initialPage > 0 && initialPage <= totalPages ? initialPage : 1;
+        return goToPage(startPage, true);
       })
       .then(function () {
         showReader();

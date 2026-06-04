@@ -1,0 +1,80 @@
+{
+  "bookId": "nf-c15-100-2015",
+  "normTitle": "NF C 15-100 (2015) — édition AFNOR",
+  "normYear": 2015,
+  "pdfUrl": "pdf/francais/nf-c15-100-2015/nf-c15-100-2015.pdf",
+  "bookId": "nf-c15-100-2015",
+  "bookTitleFr": "NF C 15-100 (2015) — édition AFNOR",
+  "bookTitleAr": "NF C 15-100 (2015) — الطبعة الرسمية AFNOR",
+  "bibliothequeUrl": "bibliotheque.html",
+  "disclaimerFr": "Quiz de révision pédagogique. Réponses relues sur le PDF NF C 15-100 de la bibliothèque uniquement (pas d'autre source). Ne remplace pas une habilitation officielle ni le texte intégral AFNOR.",
+  "disclaimerAr": "اختبار مراجعة تعليمي. الإجابات من PDF NF C 15-100 فقط. لا يغني عن التأهيل الرسمي ولا عن نص المعيار الكامل من AFNOR.",
+  "modules": [
+    {
+      "id": "M01",
+      "slug": "M01_champ_application",
+      "titleFr": "Champ d'application & définitions",
+      "titleAr": "مجال التطبيق والتعاريف",
+      "status": "validated-pdf",
+      "targetQuestions": 75,
+      "questionsPerLevel": 15,
+      "levels": 5,
+      "dataFile": "modules/M01_champ_application.json"
+    },
+    {
+      "id": "M02",
+      "slug": "M02_protection_personnes",
+      "titleFr": "Protection des personnes (DDR, contacts)",
+      "titleAr": "حماية الأشخاص (قواطع تفاضلية، ملامسة)",
+      "status": "validated-pdf",
+      "targetQuestions": 75,
+      "questionsPerLevel": 15,
+      "levels": 5,
+      "dataFile": "modules/M02_protection_personnes.json"
+    },
+    {
+      "id": "M03",
+      "slug": "M03_mise_a_la_terre",
+      "titleFr": "Mise à la terre & liaison équipotentielle",
+      "titleAr": "التأريض والربط متساوي الجهد",
+      "status": "validated-pdf",
+      "targetQuestions": 75,
+      "questionsPerLevel": 15,
+      "levels": 5,
+      "dataFile": "modules/M03_mise_a_la_terre.json"
+    },
+    {
+      "id": "M04",
+      "slug": "M04_circuits_protections",
+      "titleFr": "Circuits, sections & protections",
+      "titleAr": "الدوائر والمقاطع والحماية",
+      "status": "validated-pdf",
+      "targetQuestions": 75,
+      "questionsPerLevel": 15,
+      "levels": 5,
+      "dataFile": "modules/M04_circuits_protections.json"
+    },
+    {
+      "id": "M05",
+      "slug": "M05_locaux_humides",
+      "titleFr": "Locaux humides & volumes (salles d'eau)",
+      "titleAr": "الأماكن الرطبة والحجوم (حمامات)",
+      "status": "validated-pdf",
+      "targetQuestions": 75,
+      "questionsPerLevel": 15,
+      "levels": 5,
+      "dataFile": "modules/M05_locaux_humides.json"
+    },
+    {
+      "id": "M06",
+      "slug": "M06_tableau_gtl",
+      "titleFr": "Tableau, GTL & organisation",
+      "titleAr": "اللوحة و GTL والتنظيم",
+      "status": "validated-pdf",
+      "targetQuestions": 75,
+      "questionsPerLevel": 15,
+      "levels": 5,
+      "dataFile": "modules/M06_tableau_gtl.json"
+    }
+  ]
+}
