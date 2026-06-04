@@ -155,90 +155,23 @@
   }
 
   var EDGE_V =
-    'edgeStyle=none;rounded=0;html=1;strokeWidth=2;strokeColor=#0284c7;endArrow=none;startArrow=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;';
-  var SYM = {
-    ac: 'shape=mxgraph.electrical.signal_sources.ac_source;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;',
-    breaker:
-      'shape=mxgraph.electrical.electro_mechanical.circuit_breaker;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;',
-    busH:
-      'shape=mxgraph.electrical.transmission.2_line_bus;html=1;strokeWidth=2;strokeColor=#0284c7;fillColor=none;align=center;',
-    feeder: 'line;strokeWidth=2;strokeColor=#0284c7;direction=south;html=1;',
-  };
+    'edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#0284c7;endArrow=none;startArrow=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;';
+  var FEEDER_V = 'line;strokeWidth=2;strokeColor=#0284c7;direction=south;html=1;';
+
+  function iec() {
+    return g.ElectroDzIecSymbols;
+  }
+
+  function iecStyle(id, w, h) {
+    var lib = iec();
+    if (!lib) return FEEDER_V;
+    return lib.drawioImageStyle(id, w, h);
+  }
   var TXT =
     'text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;fontColor=#1e293b;';
-  var BRK_W = 75;
-  var BRK_H = 20;
-
-  var TEMPLATE_ICON = {
-    light_rooms: 'lighting',
-    light_stairs: 'lighting',
-    light_parking: 'lighting',
-    outdoor_light: 'lighting',
-    sockets_living: 'socket',
-    sockets_kitchen: 'socket',
-    sockets_bedrooms: 'socket',
-    sockets_bathroom: 'socket',
-    sockets_office: 'socket',
-    sockets_garage: 'socket',
-    hvac_ventilation: 'hvac',
-    motor_pump: 'motor',
-    motor_lift: 'motor',
-    washing_machine: 'washing-machine',
-    heating_electric: 'water-heater',
-    water_heater: 'water-heater',
-    cooker: 'oven',
-    oven: 'oven',
-    dishwasher: 'oven',
-    dryer: 'water-heater',
-    welding: 'motor',
-    ev_charger: 'ev-charger',
-  };
-
-  function siteOrigin() {
-    if (typeof window !== 'undefined' && window.location && window.location.origin) {
-      return window.location.origin;
-    }
-    return 'https://electro-dz.com';
-  }
-
-  function loadIconUrl(iconKey) {
-    return siteOrigin() + '/assets/unifilar/' + iconKey + '.svg';
-  }
-
-  function resolveLoadIcon(c) {
-    var tid = c.templateId || '';
-    if (TEMPLATE_ICON[tid]) return TEMPLATE_ICON[tid];
-    var label = String(c.label || '').toLowerCase();
-    if (/lave|linge|wash/.test(label)) return 'washing-machine';
-    if (/lampe|éclair|eclair|luminaire|light/.test(label)) return 'lighting';
-    if (/moteur|motor|pompe|ventil|ascenseur|lift|ventilateur/.test(label)) return 'motor';
-    if (/prise|socket|pc |informat/.test(label)) return 'socket';
-    if (/chauffe|cumulus|eau chaude|ballon/.test(label)) return 'water-heater';
-    if (/four|cuisini|plaque|oven|cook/.test(label)) return 'oven';
-    if (/clim|hvac|cta|groupe froid/.test(label)) return 'hvac';
-    if (/ve |irve|borne|ev /.test(label)) return 'ev-charger';
-    switch (c.usage) {
-      case 'lighting':
-        return 'lighting';
-      case 'motors':
-        return 'motor';
-      case 'sockets':
-        return 'socket';
-      case 'heating':
-        return 'water-heater';
-      case 'welding':
-        return 'motor';
-      default:
-        return 'generic';
-    }
-  }
-
-  function imageStyle(iconKey) {
-    return (
-      'shape=image;html=1;labelBackgroundColor=none;verticalLabelPosition=bottom;verticalAlign=top;aspect=fixed;imageAspect=0;image=' +
-      loadIconUrl(iconKey) +
-      ';'
-    );
+  function resolveLoadIecId(c) {
+    var lib = iec();
+    return lib ? lib.resolveLoadSymbol(c) : 'resistor_load';
   }
 
   /** Libellés courts (abréviations bureau d’études). */
@@ -271,11 +204,11 @@
     return head + '\nIb' + c.ibA + 'A Pd' + (c.pdemW / 1000).toFixed(1) + 'kW';
   }
 
-  var SYM_METER =
-    'rounded=1;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#c2410c;align=center;fontStyle=0;fontSize=11;';
-  var SYM_LAMP =
-    'ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#0f172a;fontSize=16;fontStyle=1;align=center;';
-  /** Gabarit type CYPELEC : compteur, DG, barre, départs verticaux, tableau Pd. */
+  var SYM_W = 48;
+  var SYM_H = 48;
+  var BRK_W = 48;
+  var BRK_H = 48;
+  /** Gabarit pro : symboles IEC (Hager/NIBT), liaisons H/V uniquement. */
   function projectToDrawioXml(project) {
     var circuits = project.circuits || [];
     var n = Math.max(1, circuits.length);
@@ -284,7 +217,7 @@
     var busX0 = cxFeed;
     var busLen = Math.max(320, n * colW + 40);
     var pageW = Math.max(1100, busX0 + busLen + 220);
-    var pageH = 640;
+    var pageH = 720;
     var busY = 268;
     var cells = [];
     var id = 2;
@@ -353,39 +286,60 @@
     );
     addTxt(techShort(project), 24, 40, 140, 40, 'fontSize=10;');
 
-    var y = 88;
-    var srcId = addSym(SYM.ac, cxFeed - 28, y, 56, 56);
+    var lib = iec();
+    var srcKey = lib ? lib.resolveSourceSymbol(project.supply) : 'ac_source';
+
+    var y = 80;
+    var srcId = addSym(iecStyle(srcKey, SYM_W, SYM_H), cxFeed - SYM_W / 2, y, SYM_W, SYM_H);
     addTxt(sourceShort(project.supply), cxFeed + 34, y + 14, 90, 20, 'fontSize=10;');
-    y += 62;
-    var meterId = addVertex('M', SYM_METER, cxFeed - 20, y, 40, 32);
-    y += 40;
-    addSym(SYM.feeder, cxFeed - 1, y, 3, 28);
-    y += 28;
-    var qgId = addSym(SYM.breaker, cxFeed - BRK_W / 2, y, BRK_W, BRK_H);
-    addTxt(mainShort(project), cxFeed + 42, y - 2, 100, 36, 'fontSize=9;');
-    y += 30;
-    addSym(SYM.feeder, cxFeed - 1, y, 3, busY - y + 6);
-    var busId = addSym(SYM.busH, busX0, busY, busLen, 26);
+    y += SYM_H + 8;
+    var meterId = addSym(iecStyle('energy_meter', SYM_W, SYM_H), cxFeed - SYM_W / 2, y, SYM_W, SYM_H);
+    y += SYM_H + 4;
+    addSym(FEEDER_V, cxFeed - 1, y, 3, 20);
+    y += 20;
+    var dgId = addSym(iecStyle('circuit_breaker', BRK_W, BRK_H), cxFeed - BRK_W / 2, y, BRK_W, BRK_H);
+    addTxt('DG C' + project.mainProtection.inA, cxFeed + 42, y + 14, 72, 16, 'fontSize=9;');
+    y += BRK_H + 4;
+    addSym(FEEDER_V, cxFeed - 1, y, 3, 16);
+    y += 16;
+    var rcdMainId = addSym(iecStyle('rcd', BRK_W, BRK_H), cxFeed - BRK_W / 2, y, BRK_W, BRK_H);
+    addTxt(
+      'DDR ' + project.mainProtection.rcdInA + 'A ' + project.mainProtection.rcdMa + 'mA ' + project.mainProtection.rcdType,
+      cxFeed + 42,
+      y + 10,
+      110,
+      28,
+      'fontSize=8;'
+    );
+    y += BRK_H + 4;
+    addSym(FEEDER_V, cxFeed - 1, y, 3, busY - y + 4);
+    var busJunctionId = addSym(
+      'ellipse;fillColor=#0284c7;strokeColor=#0284c7;opacity=80;html=1;',
+      cxFeed - 3,
+      busY - 3,
+      6,
+      6
+    );
+    addSym('line;strokeWidth=4;strokeColor=#0284c7;html=1;', busX0, busY, busLen, 4);
 
     addEdge(srcId, meterId);
-    addEdge(meterId, qgId);
-    addEdge(qgId, busId);
+    addEdge(meterId, dgId);
+    addEdge(dgId, rcdMainId);
+    addEdge(rcdMainId, busJunctionId);
 
-    var branchTop = busY + 30;
-    var loadY = branchTop + 168;
+    var branchTop = busY + 24;
+    var protY = branchTop + 8;
+    var loadY = protY + BRK_H + 56;
 
     circuits.forEach(function (c, i) {
       var cx = busX0 + 44 + i * colW;
-      addSym(SYM.feeder, cx - 1, branchTop, 3, loadY - branchTop + 40);
-      addSym(SYM.breaker, cx - BRK_W / 2, branchTop + 4, BRK_W, BRK_H);
-      addTxt(departShort(c), cx + 42, branchTop + 2, 88, 32, 'fontSize=8;fontColor=#475569;');
-      var icon = resolveLoadIcon(c);
-      if (c.usage === 'lighting' || icon === 'lighting') {
-        addVertex('×', SYM_LAMP, cx - 12, loadY, 24, 24);
-      } else {
-        addVertex('', imageStyle(icon), cx - 28, loadY - 8, 56, 56);
-      }
-      addTxt(c.schemaRef || '—', cx - 28, loadY + 34, 56, 14, 'fontSize=8;align=center;');
+      addSym(FEEDER_V, cx - 1, branchTop, 3, loadY - branchTop + SYM_H + 8);
+      var protKey = lib ? lib.resolveBranchProtection(c) : 'circuit_breaker';
+      addSym(iecStyle(protKey, BRK_W, BRK_H), cx - BRK_W / 2, protY, BRK_W, BRK_H);
+      addTxt(departShort(c), cx + 42, protY + 8, 88, 32, 'fontSize=8;fontColor=#475569;');
+      var loadKey = resolveLoadIecId(c);
+      addSym(iecStyle(loadKey, SYM_W, SYM_H), cx - SYM_W / 2, loadY, SYM_W, SYM_H);
+      addTxt(c.schemaRef || '—', cx - 28, loadY + SYM_H - 4, 56, 14, 'fontSize=8;align=center;');
     });
 
     var tableY = loadY + 72;
@@ -413,89 +367,14 @@
     );
   }
 
-  function svgBreakerG(x, y) {
-    return (
-      '<g transform="translate(' +
-      x +
-      ',' +
-      y +
-      ')"><line x1="0" y1="10" x2="16" y2="10" stroke="#111" stroke-width="2"/>' +
-      '<line x1="16" y1="2" x2="16" y2="18" stroke="#111" stroke-width="2"/>' +
-      '<line x1="16" y1="10" x2="30" y2="5" stroke="#111" stroke-width="2"/>' +
-      '<line x1="16" y1="10" x2="30" y2="15" stroke="#111" stroke-width="2"/></g>'
-    );
+  function svgIec(id, cx, cy, size) {
+    var lib = iec();
+    return lib ? lib.renderSymbolG(id, cx, cy, size || 48) : '';
   }
 
-  function svgMeterG(x, y) {
+  function svgFeederV(x, y1, y2) {
     return (
-      '<rect x="' +
-      x +
-      '" y="' +
-      y +
-      '" width="36" height="30" fill="#fff7ed" stroke="#c2410c" stroke-width="1.5"/>' +
-      '<text x="' +
-      (x + 18) +
-      '" y="' +
-      (y + 20) +
-      '" text-anchor="middle" font-size="12" font-weight="700" fill="#9a3412">M</text>'
-    );
-  }
-
-  function svgLoadAt(c, cx, cy) {
-    var icon = resolveLoadIcon(c);
-    if (c.usage === 'lighting' || icon === 'lighting') {
-      return (
-        '<circle cx="' +
-        cx +
-        '" cy="' +
-        cy +
-        '" r="11" fill="#fff" stroke="#111" stroke-width="1.8"/>' +
-        '<text x="' +
-        cx +
-        '" y="' +
-        (cy + 5) +
-        '" text-anchor="middle" font-size="15" font-weight="700">×</text>'
-      );
-    }
-    if (c.usage === 'sockets' || icon === 'socket') {
-      return (
-        '<path d="M' +
-        (cx - 10) +
-        ' ' +
-        (cy + 5) +
-        ' A10 10 0 0 1 ' +
-        (cx + 10) +
-        ' ' +
-        (cy + 5) +
-        '" fill="none" stroke="#111" stroke-width="1.8"/>' +
-        '<line x1="' +
-        (cx - 6) +
-        '" y1="' +
-        (cy + 5) +
-        '" x2="' +
-        (cx - 6) +
-        '" y2="' +
-        (cy + 12) +
-        '" stroke="#111" stroke-width="1.5"/>' +
-        '<line x1="' +
-        (cx + 6) +
-        '" y1="' +
-        (cy + 5) +
-        '" x2="' +
-        (cx + 6) +
-        '" y2="' +
-        (cy + 12) +
-        '" stroke="#111" stroke-width="1.5"/>'
-      );
-    }
-    return (
-      '<image href="' +
-      escXml(loadIconUrl(icon)) +
-      '" x="' +
-      (cx - 24) +
-      '" y="' +
-      (cy - 24) +
-      '" width="48" height="48"/>'
+      '<line x1="' + x + '" y1="' + y1 + '" x2="' + x + '" y2="' + y2 + '" stroke="#0284c7" stroke-width="2"/>'
     );
   }
 
@@ -508,14 +387,20 @@
     var busX0 = cxFeed;
     var busLen = Math.max(300, n * colW + 20);
     var w = busX0 + busLen + 160;
-    var busY = 268;
-    var branchTop = 302;
-    var loadY = 470;
-    var tableY = 530;
+    var lib = iec();
+    var srcKey = lib ? lib.resolveSourceSymbol(project.supply) : 'ac_source';
+    var busY = 300;
+    var branchTop = 324;
+    var protY = 332;
+    var loadY = 420;
+    var tableY = 540;
+    var pageH = 580;
     var parts = [
-      '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ' +
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' +
         w +
-        ' 580" width="100%" style="max-width:' +
+        ' ' +
+        pageH +
+        '" width="100%" style="max-width:' +
         w +
         'px;background:#fff;font-family:Segoe UI,system-ui,sans-serif">',
       '<style>text{fill:#1e293b}.muted{fill:#64748b;font-size:9px}.hdr{font-size:12px;font-weight:700}</style>',
@@ -525,33 +410,34 @@
       '<text class="muted" x="20" y="40">' +
         escXml(techShort(project).split('\n')[1] || '') +
         '</text>',
-      '<circle cx="' +
-        cxFeed +
-        '" cy="108" r="22" fill="#fff" stroke="#111" stroke-width="1.8"/>',
+      svgIec(srcKey, cxFeed, 92, 44),
       '<text x="' +
-        (cxFeed + 32) +
-        '" y="102" font-size="10">' +
+        (cxFeed + 30) +
+        '" y="88" font-size="10">' +
         escXml(sourceShort(project.supply)) +
         '</text>',
-      svgMeterG(cxFeed - 23, 138),
-      '<line x1="' +
-        cxFeed +
-        '" y1="176" x2="' +
-        cxFeed +
-        '" y2="198" stroke="#0284c7" stroke-width="2"/>',
-      svgBreakerG(cxFeed - 15, 198),
+      svgIec('energy_meter', cxFeed, 138, 40),
+      svgFeederV(cxFeed, 158, 172),
+      svgIec('circuit_breaker', cxFeed, 196, 40),
       '<text x="' +
-        (cxFeed + 36) +
-        '" y="204" font-size="9">' +
-        escXml(mainShort(project).replace(/\n/g, ' ')) +
+        (cxFeed + 32) +
+        '" y="200" font-size="9">DG C' +
+        project.mainProtection.inA +
         '</text>',
-      '<line x1="' +
-        cxFeed +
-        '" y1="218" x2="' +
-        cxFeed +
-        '" y2="' +
-        busY +
-        '" stroke="#0284c7" stroke-width="2"/>',
+      svgFeederV(cxFeed, 216, 228),
+      svgIec('rcd', cxFeed, 252, 40),
+      '<text x="' +
+        (cxFeed + 32) +
+        '" y="256" font-size="8">DDR ' +
+        escXml(
+          project.mainProtection.rcdInA +
+            'A ' +
+            project.mainProtection.rcdMa +
+            'mA ' +
+            project.mainProtection.rcdType
+        ) +
+        '</text>',
+      svgFeederV(cxFeed, 272, busY),
       '<line x1="' +
         busX0 +
         '" y1="' +
@@ -570,28 +456,20 @@
 
     circuits.forEach(function (c, i) {
       var cx = busX0 + 50 + i * colW;
-      parts.push(
-        '<line x1="' +
-          cx +
-          '" y1="' +
-          busY +
-          '" x2="' +
-          cx +
-          '" y2="' +
-          (loadY + 20) +
-          '" stroke="#0284c7" stroke-width="2"/>'
-      );
-      parts.push(svgBreakerG(cx - 15, branchTop));
+      var protKey = lib ? lib.resolveBranchProtection(c) : 'circuit_breaker';
+      var loadKey = resolveLoadIecId(c);
+      parts.push(svgFeederV(cx, busY, loadY + 24));
+      parts.push(svgIec(protKey, cx, protY, 40));
       parts.push(
         '<text x="' +
           (cx + 24) +
           '" y="' +
-          (branchTop + 8) +
+          (protY + 6) +
           '" font-size="8" fill="#475569">' +
           escXml(departShort(c).replace(/\n/g, ' ')) +
           '</text>'
       );
-      parts.push(svgLoadAt(c, cx, loadY));
+      parts.push(svgIec(loadKey, cx, loadY, 44));
       parts.push(
         '<text x="' +
           cx +
@@ -676,5 +554,6 @@
     loadProject: loadProject,
     listBoardsFromReport: listBoardsFromReport,
     roundUpStandardIn: roundUpStandardIn,
+    resolveLoadIecId: resolveLoadIecId,
   };
 })(typeof window !== 'undefined' ? window : globalThis);

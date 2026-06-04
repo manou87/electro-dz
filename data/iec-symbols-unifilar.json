@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "source": "IEC 60617 / Hager Normen (symboles schémas électriques, NIBT 2020)",
+  "usage": "Schéma unifilaire DZSWISS ELEC — bibliothèque js/iec-symbol-library.js",
+  "symbols": [
+    { "id": "ac_source", "label": "Courant alternatif", "category": "source" },
+    { "id": "ac_source_tri", "label": "Triphasé 400/230 V 50 Hz", "category": "source" },
+    { "id": "energy_meter", "label": "Compteur d'énergie (M)", "category": "measure" },
+    { "id": "circuit_breaker", "label": "Disjoncteur", "category": "protection" },
+    { "id": "rcd", "label": "DDR / RCD", "category": "protection" },
+    { "id": "fuse", "label": "Fusible", "category": "protection" },
+    { "id": "isolator", "label": "Sectionneur", "category": "protection" },
+    { "id": "surge_protector", "label": "Parafoudre", "category": "protection" },
+    { "id": "busbar", "label": "Barre de distribution", "category": "transmission" },
+    { "id": "conductor_v", "label": "Liaison verticale", "category": "conductor" },
+    { "id": "motor", "label": "Moteur M", "category": "load" },
+    { "id": "lamp", "label": "Lampe", "category": "load" },
+    { "id": "socket", "label": "Prise", "category": "load" },
+    { "id": "heating", "label": "Corps de chauffe", "category": "load" },
+    { "id": "resistor_load", "label": "Charge / résistance", "category": "load" },
+    { "id": "appliance", "label": "Appareil ménager", "category": "load" },
+    { "id": "transformer", "label": "Transformateur", "category": "conversion" },
+    { "id": "contactor", "label": "Contacteur", "category": "control" },
+    { "id": "battery", "label": "Batterie", "category": "source" },
+    { "id": "pv_array", "label": "Panneaux PV", "category": "source" }
+  ],
+  "templateMapping": {
+    "light_rooms": "lamp",
+    "light_stairs": "lamp",
+    "sockets_living": "socket",
+    "motor_pump": "motor",
+    "water_heater": "heating",
+    "ev_charger": "appliance"
+  },
+  "routing": {
+    "edges": "orthogonal_horizontal_vertical_only",
+    "noDiagonalWires": true
+  }
+}
