@@ -6,7 +6,7 @@
 
   var T = {
     fr: {
-      "meta.title": "Formation & quiz — DZSWISS ELEC",
+      "meta.title": "Méthode d'apprentissage suisse — DZSWISS ELEC",
       "meta.desc":
         "Apprenez la norme NF C 15-100 avec le grand questionnaire interactif — 450 questions, gratuit en ligne.",
       "nav.home": "Accueil",
@@ -18,7 +18,7 @@
       "nav.contact": "Contact",
       "nav.support": "Support",
       "hero.badge": "100 % gratuit · En ligne",
-      "hero.title": "Apprenez en vous testant",
+      "hero.title": "Une méthode d'apprentissage suisse en Algérie",
       "hero.sub":
         "Le grand questionnaire interactif sur la norme NF C 15-100 (2015) — pour réviser avant l'examen, le contrôle ou sur le chantier.",
       "section.quiz.hook":
@@ -33,7 +33,7 @@
       "footer.copy": "© 2026 DZSWISS ELEC — electro-dz.com",
     },
     ar: {
-      "meta.title": "التكوين والاختبار — DZSWISS ELEC",
+      "meta.title": "منهج تعلّم سويسري — DZSWISS ELEC",
       "meta.desc":
         "تعلّم معيار NF C 15-100 عبر استبيان تفاعلي ضخم — 450 سؤالاً، مجاني على الموقع.",
       "nav.home": "الرئيسية",
@@ -45,7 +45,7 @@
       "nav.contact": "اتصال",
       "nav.support": "الدعم",
       "hero.badge": "مجاني · على الموقع",
-      "hero.title": "تعلّم بالاختبار",
+      "hero.title": "منهج تعلّم سويسري في الجزائر",
       "hero.sub":
         "استبيان تفاعلي ضخم حول معيار NF C 15-100 (2015) — للمراجعة قبل الامتحان أو التفتيش أو على الورشة.",
       "section.quiz.hook":
