@@ -270,12 +270,62 @@
     );
   }
 
-  /** Unifilaire : symboles vides + texte à côté, fil vertical droit, 1 départ = chaîne simple. */
+  function techHeaderText(project) {
+    var s = project.supply;
+    return (
+      project.board +
+      '\nP. demandée : ' +
+      s.pTotalKw +
+      ' kW\nI : ' +
+      (Math.round(s.ibA * 100) / 100) +
+      ' A\ncos φ : ' +
+      (s.cosPhi != null ? s.cosPhi : '—')
+    );
+  }
+
+  function mainBreakerCypeText(project) {
+    var mp = project.mainProtection;
+    return (
+      'Disjoncteur\nCourbe C\nIn : ' +
+      mp.inA +
+      '.00 A\nIcu : 6 kA (indic.)\nIΔn : ' +
+      mp.rcdMa +
+      ' mA ' +
+      mp.rcdType
+    );
+  }
+
+  function departCypeText(c) {
+    return (
+      (c.schemaRef || 'Q') +
+      '\nI : ' +
+      c.ibA +
+      ' A\nIn : ' +
+      c.inA +
+      '.00 A\ncourbe ' +
+      c.curve +
+      (c.rcd ? '\nIΔn 30 mA A' : '') +
+      '\nPd : ' +
+      (c.pdemW / 1000).toFixed(2) +
+      ' kW'
+    );
+  }
+
+  var SYM_METER =
+    'rounded=1;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#c2410c;align=center;fontStyle=0;fontSize=11;';
+  var SYM_LAMP =
+    'ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#0f172a;fontSize=16;fontStyle=1;align=center;';
+  /** Gabarit type CYPELEC : compteur, DG, barre, départs verticaux, tableau Pd. */
   function projectToDrawioXml(project) {
     var circuits = project.circuits || [];
     var n = Math.max(1, circuits.length);
-    var pageW = 900;
-    var pageH = 560;
+    var colW = 108;
+    var busX0 = 200;
+    var busLen = Math.max(320, n * colW + 40);
+    var pageW = Math.max(1100, busX0 + busLen + 220);
+    var pageH = 640;
+    var busY = 268;
+    var cxFeed = 130;
     var cells = [];
     var id = 2;
 
@@ -310,8 +360,8 @@
       return addVertex('', style, x, y, w, h);
     }
 
-    function addTxt(text, x, y, w, h) {
-      return addVertex(text, TXT, x, y, w, h);
+    function addTxt(text, x, y, w, h, extra) {
+      return addVertex(text, TXT + (extra || ''), x, y, w, h);
     }
 
     function addEdge(source, target) {
@@ -330,86 +380,69 @@
       return cid;
     }
 
-    function stackDepart(cx, y0, c) {
-      var y = y0;
-      var qId = addSym(SYM.breaker, cx - BRK_W / 2, y, BRK_W, BRK_H);
-      addTxt(departProtectionLabel(c), cx + BRK_W / 2 + 6, y - 2, 130, 44);
-      y += 28;
-      addSym(SYM.feeder, cx - 1, y, 3, 70);
-      y += 70;
-      var imgId = addVertex('', imageStyle(resolveLoadIcon(c)), cx - 36, y, 72, 72);
-      addTxt((c.label || 'Charge') + '\n' + c.pdemW + ' W', cx - 48, y + 74, 110, 32);
-      return { top: y0, bottom: y + 108, qId: qId, imgId: imgId };
-    }
-
     var title = project.meta.ref
       ? project.meta.ref + ' — ' + project.board
       : project.board;
     addVertex(
       title,
-      'text;html=1;fontSize=15;fontStyle=1;align=left;fillColor=none;strokeColor=none;',
-      40,
-      16,
-      520,
-      28
+      'text;html=1;fontSize=14;fontStyle=1;align=left;fillColor=none;strokeColor=none;',
+      24,
+      12,
+      400,
+      24
     );
-    addVertex(
-      (project.meta.client ? 'Client: ' + project.meta.client + ' · ' : '') +
-        'Pd ≈ ' +
-        project.supply.pTotalKw +
-        ' kW · Ib ≈ ' +
-        project.supply.ibA +
-        ' A',
-      'text;html=1;fontSize=11;align=left;fontColor=#64748B;fillColor=none;strokeColor=none;',
-      40,
-      42,
-      700,
-      20
-    );
+    addTxt(techHeaderText(project), 24, 40, 160, 72);
 
-    if (n === 1) {
-      var c0 = circuits[0];
-      var cx = 420;
-      var y = 76;
-      var srcId = addSym(SYM.ac, cx - 30, y, 60, 60);
-      addTxt(sourceLabel(project.supply), cx + 36, y + 6, 160, 52);
-      y += 68;
-      var qgId = addSym(SYM.breaker, cx - BRK_W / 2, y, BRK_W, BRK_H);
-      addTxt(mainProtectionLabel(project), cx + BRK_W / 2 + 6, y - 2, 170, 48);
-      y += 34;
-      addSym(SYM.feeder, cx - 1, y, 3, 48);
-      y += 48;
-      var dep = stackDepart(cx, y, c0);
-      addEdge(srcId, qgId);
-      addEdge(qgId, dep.qId);
-      addEdge(dep.qId, dep.imgId);
-      pageH = Math.max(520, dep.bottom + 40);
-    } else {
-      var colW = 160;
-      var busX0 = 120;
-      var busLen = Math.max(400, n * colW + 80);
-      pageW = Math.max(1000, busX0 + busLen + 100);
-      var cxFeed = busX0 + 50;
-      var busY = 210;
-      var y = 76;
-      var srcId = addSym(SYM.ac, cxFeed - 30, y, 60, 60);
-      addTxt(sourceLabel(project.supply), cxFeed + 36, y + 6, 160, 52);
-      y += 68;
-      var qgId = addSym(SYM.breaker, cxFeed - BRK_W / 2, y, BRK_W, BRK_H);
-      addTxt(mainProtectionLabel(project), cxFeed + BRK_W / 2 + 6, y - 2, 170, 48);
-      y += 34;
-      addSym(SYM.feeder, cxFeed - 1, y, 3, busY - y + 8);
-      var busId = addSym(SYM.busH, busX0, busY, busLen, 24);
-      addTxt(project.supply.isTri ? 'Barre 400 V' : 'Barre 230 V', busX0 + busLen / 2 - 40, busY - 18, 90, 16);
-      addEdge(srcId, qgId);
-      addEdge(qgId, busId);
+    var y = 88;
+    var srcId = addSym(SYM.ac, cxFeed - 28, y, 56, 56);
+    addTxt(sourceLabel(project.supply), cxFeed + 34, y + 8, 150, 48);
+    y += 62;
+    var meterId = addVertex('Wh\nCompteur', SYM_METER, cxFeed - 24, y, 48, 40);
+    y += 48;
+    addSym(SYM.feeder, cxFeed - 1, y, 3, 28);
+    y += 28;
+    var qgId = addSym(SYM.breaker, cxFeed - BRK_W / 2, y, BRK_W, BRK_H);
+    addTxt(mainBreakerCypeText(project), cxFeed + 42, y - 4, 120, 72);
+    y += 30;
+    addSym(SYM.feeder, cxFeed - 1, y, 3, busY - y + 6);
+    var busId = addSym(SYM.busH, busX0, busY, busLen, 26);
 
-      circuits.forEach(function (c, i) {
-        var cx = busX0 + 90 + i * colW;
-        stackDepart(cx, busY + 32, c);
-      });
-      pageH = 580;
-    }
+    addEdge(srcId, meterId);
+    addEdge(meterId, qgId);
+    addEdge(qgId, busId);
+
+    var branchTop = busY + 30;
+    var loadY = branchTop + 168;
+
+    circuits.forEach(function (c, i) {
+      var cx = busX0 + 44 + i * colW;
+      addSym(SYM.feeder, cx - 1, branchTop, 3, loadY - branchTop + 40);
+      addSym(SYM.breaker, cx - BRK_W / 2, branchTop + 4, BRK_W, BRK_H);
+      addTxt(
+        departCypeText(c),
+        'text;html=1;horizontal=0;align=center;fontSize=9;fontColor=#475569;strokeColor=none;fillColor=none;',
+        cx - 58,
+        branchTop + 20,
+        18,
+        110
+      );
+      var icon = resolveLoadIcon(c);
+      if (c.usage === 'lighting' || icon === 'lighting') {
+        addVertex('×', SYM_LAMP, cx - 12, loadY, 24, 24);
+      } else {
+        addVertex('', imageStyle(icon), cx - 28, loadY - 8, 56, 56);
+      }
+      addTxt(c.label || 'Charge', cx - 40, loadY + 34, 90, 28, 'fontSize=9;align=center;');
+    });
+
+    var tableY = loadY + 72;
+    addTxt('Référence', 'fontSize=9;fontStyle=1;align=center;', busX0 + 20, tableY, 70, 16);
+    addTxt('Puissance demandée', 'fontSize=9;fontStyle=1;align=center;', busX0 + 20, tableY + 18, 70, 28);
+    circuits.forEach(function (c, i) {
+      var cx = busX0 + 44 + i * colW;
+      addTxt(c.schemaRef || '—', 'fontSize=9;align=center;', cx - 30, tableY, 60, 16);
+      addTxt((c.pdemW / 1000).toFixed(2) + ' kW', 'fontSize=9;align=center;', cx - 30, tableY + 22, 60, 16);
+    });
 
     return (
       '<mxfile host="DZSWISS ELEC" agent="unifilar-from-balance" version="22.1.0">' +
@@ -427,19 +460,247 @@
     );
   }
 
-  /** Aperçu : message — le rendu fiable est dans diagrams.net (symboles IEC). */
-  function projectToSvg(project) {
-    var n = (project.circuits || []).length;
+  function svgBreakerG(x, y) {
     return (
-      '<div class="unif-preview-note" style="padding:20px;text-align:center;background:#fff;border-radius:12px;color:#334155;font-family:system-ui,sans-serif">' +
-      '<p style="font-size:1rem;font-weight:700;margin:0 0 8px">' +
-      escXml(project.board) +
-      '</p>' +
-      '<p style="font-size:0.9rem;margin:0 0 12px">' +
-      n +
-      ' départ(s) — barre horizontale, protections détaillées, icône par charge (lave-linge, lampe, moteur…)</p>' +
-      '<p style="font-size:0.82rem;color:#64748b;margin:0">L’aperçu ci-dessus utilise l’éditeur intégré. Cliquez « Ouvrir dans l’éditeur » pour modifier avec tous les symboles pro.</p></div>'
+      '<g transform="translate(' +
+      x +
+      ',' +
+      y +
+      ')"><line x1="0" y1="10" x2="16" y2="10" stroke="#111" stroke-width="2"/>' +
+      '<line x1="16" y1="2" x2="16" y2="18" stroke="#111" stroke-width="2"/>' +
+      '<line x1="16" y1="10" x2="30" y2="5" stroke="#111" stroke-width="2"/>' +
+      '<line x1="16" y1="10" x2="30" y2="15" stroke="#111" stroke-width="2"/></g>'
     );
+  }
+
+  function svgMeterG(x, y) {
+    return (
+      '<rect x="' +
+      x +
+      '" y="' +
+      y +
+      '" width="46" height="38" fill="#fff7ed" stroke="#c2410c" stroke-width="1.5"/>' +
+      '<text x="' +
+      (x + 23) +
+      '" y="' +
+      (y + 17) +
+      '" text-anchor="middle" font-size="11" font-weight="700" fill="#9a3412">Wh</text>' +
+      '<text x="' +
+      (x + 23) +
+      '" y="' +
+      (y + 30) +
+      '" text-anchor="middle" font-size="8" fill="#9a3412">Compteur</text>'
+    );
+  }
+
+  function svgLoadAt(c, cx, cy) {
+    var icon = resolveLoadIcon(c);
+    if (c.usage === 'lighting' || icon === 'lighting') {
+      return (
+        '<circle cx="' +
+        cx +
+        '" cy="' +
+        cy +
+        '" r="11" fill="#fff" stroke="#111" stroke-width="1.8"/>' +
+        '<text x="' +
+        cx +
+        '" y="' +
+        (cy + 5) +
+        '" text-anchor="middle" font-size="15" font-weight="700">×</text>'
+      );
+    }
+    if (c.usage === 'sockets' || icon === 'socket') {
+      return (
+        '<path d="M' +
+        (cx - 10) +
+        ' ' +
+        (cy + 5) +
+        ' A10 10 0 0 1 ' +
+        (cx + 10) +
+        ' ' +
+        (cy + 5) +
+        '" fill="none" stroke="#111" stroke-width="1.8"/>' +
+        '<line x1="' +
+        (cx - 6) +
+        '" y1="' +
+        (cy + 5) +
+        '" x2="' +
+        (cx - 6) +
+        '" y2="' +
+        (cy + 12) +
+        '" stroke="#111" stroke-width="1.5"/>' +
+        '<line x1="' +
+        (cx + 6) +
+        '" y1="' +
+        (cy + 5) +
+        '" x2="' +
+        (cx + 6) +
+        '" y2="' +
+        (cy + 12) +
+        '" stroke="#111" stroke-width="1.5"/>'
+      );
+    }
+    return (
+      '<image href="' +
+      escXml(loadIconUrl(icon)) +
+      '" x="' +
+      (cx - 24) +
+      '" y="' +
+      (cy - 24) +
+      '" width="48" height="48"/>'
+    );
+  }
+
+  /** Aperçu SVG (style CYPELEC) — rendu fiable sans dépendre de draw.io. */
+  function projectToSvgPro(project) {
+    var circuits = project.circuits || [];
+    var n = Math.max(1, circuits.length);
+    var colW = 100;
+    var busX0 = 200;
+    var busLen = Math.max(300, n * colW + 20);
+    var w = busX0 + busLen + 180;
+    var busY = 268;
+    var cxFeed = 118;
+    var branchTop = 302;
+    var loadY = 470;
+    var tableY = 530;
+    var parts = [
+      '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ' +
+        w +
+        ' 580" width="100%" style="max-width:' +
+        w +
+        'px;background:#fff;font-family:Segoe UI,system-ui,sans-serif">',
+      '<style>text{fill:#1e293b}.muted{fill:#64748b;font-size:9px}.hdr{font-size:12px;font-weight:700}</style>',
+      '<text class="hdr" x="20" y="22">' +
+        escXml(project.meta.ref ? project.meta.ref + ' — ' + project.board : project.board) +
+        '</text>',
+      '<text class="muted" x="20" y="38">P. demandée : ' +
+        escXml(project.supply.pTotalKw) +
+        ' kW · I : ' +
+        escXml(String(project.supply.ibA)) +
+        ' A</text>',
+      '<text x="20" y="54" font-size="10">cos φ : ' +
+        escXml(String(project.supply.cosPhi != null ? project.supply.cosPhi : '—')) +
+        '</text>',
+      '<circle cx="' +
+        cxFeed +
+        '" cy="108" r="22" fill="#fff" stroke="#111" stroke-width="1.8"/>',
+      '<text x="' +
+        (cxFeed + 34) +
+        '" y="100" font-size="10">' +
+        escXml(project.supply.isTri ? '400 V L1 L2 L3 N PE' : '230 V L N PE') +
+        '</text>',
+      svgMeterG(cxFeed - 23, 138),
+      '<line x1="' +
+        cxFeed +
+        '" y1="176" x2="' +
+        cxFeed +
+        '" y2="198" stroke="#0284c7" stroke-width="2"/>',
+      svgBreakerG(cxFeed - 15, 198),
+      '<text x="' +
+        (cxFeed + 38) +
+        '" y="208" font-size="9">' +
+        escXml(mainBreakerCypeText(project).replace(/\n/g, ' · ')) +
+        '</text>',
+      '<line x1="' +
+        cxFeed +
+        '" y1="218" x2="' +
+        cxFeed +
+        '" y2="' +
+        busY +
+        '" stroke="#0284c7" stroke-width="2"/>',
+      '<line x1="' +
+        busX0 +
+        '" y1="' +
+        busY +
+        '" x2="' +
+        (busX0 + busLen) +
+        '" y2="' +
+        busY +
+        '" stroke="#0284c7" stroke-width="4"/>',
+      '<text x="' +
+        (busX0 + busLen / 2 - 30) +
+        '" y="' +
+        (busY - 8) +
+        '" font-size="10" fill="#0369a1">Barre</text>',
+    ];
+
+    circuits.forEach(function (c, i) {
+      var cx = busX0 + 50 + i * colW;
+      parts.push(
+        '<line x1="' +
+          cx +
+          '" y1="' +
+          busY +
+          '" x2="' +
+          cx +
+          '" y2="' +
+          (loadY + 20) +
+          '" stroke="#0284c7" stroke-width="2"/>'
+      );
+      parts.push(svgBreakerG(cx - 15, branchTop));
+      parts.push(
+        '<text transform="rotate(-90 ' +
+          (cx - 36) +
+          ' ' +
+          (branchTop + 70) +
+          ')" x="' +
+          (cx - 36) +
+          '" y="' +
+          (branchTop + 70) +
+          '" font-size="8" fill="#475569">' +
+          escXml(departCypeText(c).replace(/\n/g, '  ')) +
+          '</text>'
+      );
+      parts.push(svgLoadAt(c, cx, loadY));
+      parts.push(
+        '<text x="' +
+          cx +
+          '" y="' +
+          (loadY + 38) +
+          '" text-anchor="middle" font-size="8">' +
+          escXml(c.label || '') +
+          '</text>'
+      );
+    });
+
+    parts.push('<text x="' + (busX0 + 10) + '" y="' + tableY + '" font-size="9" font-weight="700">Référence</text>');
+    parts.push(
+      '<text x="' +
+        (busX0 + 10) +
+        '" y="' +
+        (tableY + 16) +
+        '" font-size="9" font-weight="700">Puiss. demandée</text>'
+    );
+    circuits.forEach(function (c, i) {
+      var cx = busX0 + 50 + i * colW;
+      parts.push(
+        '<text x="' +
+          cx +
+          '" y="' +
+          tableY +
+          '" text-anchor="middle" font-size="9">' +
+          escXml(c.schemaRef || '—') +
+          '</text>'
+      );
+      parts.push(
+        '<text x="' +
+          cx +
+          '" y="' +
+          (tableY + 16) +
+          '" text-anchor="middle" font-size="9">' +
+          (c.pdemW / 1000).toFixed(2) +
+          ' kW</text>'
+      );
+    });
+    parts.push(
+      '<text class="muted" x="20" y="568">DZSWISS ELEC — indicatif (bilan). Pas Caneco/CYPELEC. Édition : Schémas et plans.</text></svg>'
+    );
+    return parts.join('');
+  }
+
+  function projectToSvg(project) {
+    return projectToSvgPro(project);
   }
 
   function saveProject(project) {
@@ -477,6 +738,7 @@
     buildProjectFromReport: buildProjectFromReport,
     projectToDrawioXml: projectToDrawioXml,
     projectToSvg: projectToSvg,
+    projectToSvgPro: projectToSvgPro,
     saveProject: saveProject,
     loadProject: loadProject,
     listBoardsFromReport: listBoardsFromReport,

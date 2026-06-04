@@ -4,9 +4,9 @@
       'meta.title': 'Unifilaire auto — DZSWISS ELEC',
       'page.title': 'Schéma unifilaire (depuis le bilan)',
       'page.lead':
-        'Barre horizontale, source L1/L2/L3/N/PE (ou L/N), protections détaillées (In, courbe, Ib, DDR) et icône réelle par charge en bas de chaque départ.',
+        'Présentation type bureau d’études (CYPELEC) : compteur, disjoncteur, barre, départs verticaux, tableau des puissances — à partir du bilan.',
       'symbols.note':
-        'Lave-linge, lampe, moteur, prises… — icônes dédiées. Sans marque constructeur. Édition dans Schémas et plans.',
+        'Aperçu SVG professionnel ci-dessous. « Ouvrir dans l’éditeur » = diagrams.net pour retouches. Pas un clone Caneco/CYPELEC (pas de ΔU/câbles auto).',
       'preview.loading': 'Chargement de l’aperçu diagrams.net…',
       'btn.regen': 'Regénérer',
       'btn.editor': 'Ouvrir dans l’éditeur',
