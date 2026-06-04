@@ -158,16 +158,11 @@
     'edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#0284c7;endArrow=none;startArrow=none;';
   var SYM = {
     ac: 'shape=mxgraph.electrical.signal_sources.ac_source;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;',
-    earth:
-      'shape=mxgraph.electrical.signal_sources.protective_earth;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#16a34a;fillColor=#ffffff;',
     breaker:
       'shape=mxgraph.electrical.electro_mechanical.circuit_breaker;html=1;whiteSpace=wrap;aspect=fixed;align=center;verticalLabelPosition=bottom;verticalAlign=top;strokeColor=#0f172a;fillColor=#ffffff;fontSize=10;',
-    ddr:
-      'shape=mxgraph.electrical.electro_mechanical.circuit_breaker;html=1;whiteSpace=wrap;aspect=fixed;align=center;verticalLabelPosition=bottom;verticalAlign=top;strokeColor=#2563eb;fillColor=#ffffff;fontSize=10;',
-    fuse: 'shape=mxgraph.electrical.electro_mechanical.fuse;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;fontSize=10;',
     busH:
       'shape=mxgraph.electrical.transmission.2_line_bus;html=1;strokeWidth=2;strokeColor=#0284c7;fillColor=none;align=center;',
-    wireV: 'line;strokeWidth=2;strokeColor=#0284c7;direction=south;html=1;',
+    feeder: 'line;strokeWidth=2;strokeColor=#0284c7;direction=south;html=1;',
   };
 
   var TEMPLATE_ICON = {
@@ -251,13 +246,27 @@
 
   function departProtectionLabel(c) {
     var lines = [c.schemaRef || 'Q'];
-    lines.push('Disj. ' + c.inA + ' A — curbe ' + c.curve);
-    lines.push('Ib ≈ ' + c.ibA + ' A');
-    if (c.rcd) lines.push('DDR 30 mA — type A');
+    lines.push(c.inA + ' A — ' + c.curve);
+    lines.push('Ib ' + c.ibA + ' A');
+    if (c.rcd) lines.push('DDR 30 mA A');
     return lines.join('\n');
   }
 
-  /** Unifilaire type bureau d’études : barre horizontale + départs verticaux + icône charge. */
+  function mainProtectionLabel(project) {
+    var mp = project.mainProtection;
+    return (
+      'Protection générale\nDG ' +
+      mp.inA +
+      ' A\nDDR ' +
+      mp.rcdInA +
+      ' A / ' +
+      mp.rcdMa +
+      ' mA ' +
+      mp.rcdType
+    );
+  }
+
+  /** Unifilaire simple : source → protection → ligne → charge (série, peu de fils). */
   function projectToDrawioXml(project) {
     var circuits = project.circuits || [];
     var n = Math.max(1, circuits.length);
@@ -338,100 +347,36 @@
       20
     );
 
-    var feedX = busX0 - 20;
-    var srcId = addVertex(sourceLabel(project.supply), SYM.ac, feedX - 22, 72, 64, 64);
-    addVertex(
-      'PE',
-      SYM.earth,
-      feedX + 52,
-      108,
-      28,
-      28
-    );
-    var dgId = addVertex(
-      'DG — disj. général\nIn ' +
-        project.mainProtection.inA +
-        ' A\nIb tableau ≈ ' +
-        Math.round(project.supply.ibA * 10) / 10 +
-        ' A',
-      SYM.breaker,
-      feedX - 38,
-      152,
-      80,
-      36
-    );
-    var ddrMainId = addVertex(
-      'DDR général\n' +
-        project.mainProtection.rcdInA +
-        ' A · ' +
-        project.mainProtection.rcdMa +
-        ' mA\nType ' +
-        project.mainProtection.rcdType,
-      SYM.ddr,
-      feedX - 38,
-      198,
-      80,
-      36
-    );
-
+    var feedX = busX0 + 40;
+    var srcId = addVertex(sourceLabel(project.supply), SYM.ac, feedX - 20, 72, 56, 56);
+    var mainProtId = addVertex(mainProtectionLabel(project), SYM.breaker, feedX - 30, 138, 70, 44);
     var busId = addVertex(
-      project.supply.isTri ? '0,4 kV — L1 L2 L3 N' : '230 V — L N',
+      project.supply.isTri ? 'Barre 400 V' : 'Barre 230 V',
       SYM.busH,
       busX0,
       busY,
       busLen,
-      28
+      24
     );
 
-    addEdge(srcId, dgId);
-    addEdge(dgId, ddrMainId);
-    addEdge(ddrMainId, busId);
+    addEdge(srcId, mainProtId);
+    addEdge(mainProtId, busId);
+
+    var feederTop = busY + 28;
+    var feederH = 130;
 
     circuits.forEach(function (c, i) {
-      var cx = busX0 + 50 + i * colW;
-      var y = busY + 36;
-      var prev = busId;
-
-      if (c.rcd) {
-        var ddrDepId = addVertex(
-          'DDR départ\n30 mA type A',
-          SYM.ddr,
-          cx - 38,
-          y,
-          76,
-          32
-        );
-        addEdge(prev, ddrDepId);
-        prev = ddrDepId;
-        y += 44;
-      }
-
-      var brkId = addVertex(departProtectionLabel(c), SYM.breaker, cx - 38, y, 76, 40);
-      addEdge(prev, brkId);
-      y += 52;
-
-      var wireId = addVertex('', SYM.wireV, cx - 2, y, 4, 48);
-      addEdge(brkId, wireId);
-      y += 52;
-
-      var iconKey = resolveLoadIcon(c);
-      var imgId = addVertex(
-        (c.label || 'Charge') + '\n' + c.pdemW + ' W',
-        imageStyle(iconKey),
-        cx - 36,
-        y,
-        72,
-        72
-      );
-      addEdge(wireId, imgId);
-
+      var cx = busX0 + 56 + i * colW;
+      addVertex('', SYM.feeder, cx - 1, feederTop, 3, feederH);
+      addVertex(departProtectionLabel(c), SYM.breaker, cx - 34, feederTop + 4, 68, 32);
+      var loadY = feederTop + 52;
       addVertex(
-        c.location ? c.location : '',
-        'text;html=1;fontSize=9;align=center;fontColor=#64748B;fillColor=none;strokeColor=none;',
-        cx - 40,
-        y + 76,
-        80,
-        16
+        (c.label || 'Charge') + '\n' + c.pdemW + ' W',
+        imageStyle(resolveLoadIcon(c)),
+        cx - 32,
+        loadY,
+        64,
+        64
       );
     });
 
