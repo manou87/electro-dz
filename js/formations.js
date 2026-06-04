@@ -1,5 +1,5 @@
 /**
- * Page Formations — PDF (livres.json) ; école Algérie annoncée sur la page (pas de vidéos)
+ * Page Formations — quiz NF C 15-100 + PDF (livres.json, catégorie formation)
  * PDF protégés : même codes que la bibliothèque (library-protected.js)
  */
 (function () {

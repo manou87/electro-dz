@@ -28,6 +28,8 @@
     .formations-block h2{color:#facc15;font-size:1.35rem;margin-bottom:.35rem}
     .formations-block .sub{color:var(--text-muted);margin-bottom:1rem}
     .formation-soon-box{padding:1.25rem 1.5rem;border-radius:var(--radius);background:rgba(250,204,21,.08);border:1px solid rgba(250,204,21,.25);margin-bottom:1rem}
+    .formation-quiz-box{padding:1.25rem 1.5rem;border-radius:var(--radius);background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.28);margin-bottom:1rem}
+    .formation-quiz-box .quiz-stats{font-size:.9rem;color:var(--text-muted);margin:.5rem 0 0}
     .cta-row{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1rem}
     .formation-count{font-size:.9rem;color:var(--text-muted);margin-bottom:.75rem}
     .library-empty{text-align:center;padding:2rem;color:var(--text-muted)}
@@ -62,20 +64,21 @@
   <main>
     <section class="page-hero">
       <div class="container formations-shell" style="padding-top:0;padding-bottom:0">
-        <p class="soon-hero-badge" data-i18n="soon.badge">تكوين لاحقاً</p>
+        <p class="soon-hero-badge" data-i18n="hero.badge">اختبار على الموقع</p>
         <h1 data-i18n="hero.title">تكوين سويسري في الجزائر</h1>
-        <p data-i18n="hero.sub">مشروع تكوين في مدرسة: محتوى وخبرة ومعدات سويسرية — حضورياً.</p>
+        <p data-i18n="hero.sub">دعم PDF واختبار تفاعلي NF C 15-100 — مراجعة المعيار مع روابط إلى النص.</p>
       </div>
     </section>
 
     <div class="formations-shell">
-      <section class="formations-block" data-formation-school-block>
-        <h2 data-i18n="section.school">مدرسة في الجزائر</h2>
-        <div class="formation-soon-box">
-          <p data-i18n="section.school.soon">برامج سويسرية، أسلوب عمل سويسري، معدات وأساليب ملائمة لورش الجزائر. المشروع قيد الإعداد.</p>
+      <section class="formations-block" id="quiz">
+        <h2 data-i18n="section.quiz">اختبار NF C 15-100</h2>
+        <p class="sub" data-i18n="section.quiz.sub">مراجعة تفاعلية للمعيار (2015) — 6 وحدات، 5 مستويات، 75 سؤالاً لكل وحدة.</p>
+        <div class="formation-quiz-box">
+          <p data-i18n="section.quiz.desc">أسئلة اختيار من متعدد وصح/خطأ مع تفسير وإحالة إلى فقرات PDF بعد كل إجابة.</p>
+          <p class="quiz-stats" data-i18n="section.quiz.stats">450 سؤالاً — نتيجة في نهاية كل وحدة.</p>
           <div class="cta-row">
-            <a class="btn btn-primary" href="https://wa.me/213555429960" target="_blank" rel="noopener noreferrer" data-i18n="cta.wa">واتساب</a>
-            <a class="btn btn-outline" href="https://www.facebook.com/share/1TXqM56Ncd/" target="_blank" rel="noopener noreferrer" data-i18n="cta.fb">فيسبوك Electro DZ</a>
+            <a class="btn btn-primary" href="quiz-nfc-15-100.html" data-i18n="cta.quiz">بدء الاختبار</a>
           </div>
         </div>
       </section>
