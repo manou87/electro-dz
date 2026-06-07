@@ -1,7 +1,8 @@
 /**
  * Bibliothèque de symboles IEC 60617 pour schémas unifilaires.
  * Réf. : Hager « Normen » (symboles schémas électriques, NIBT 2020 / electrosuisse).
- * Rendu : traits uniquement, connexions N/S sur grille 48×48.
+ * Glyphes appareils alignés Hager Normen (IEC 60617) — pas de lignes de câbles.
+ * Grille 48×48, connexions N/S.
  */
 (function (g) {
   'use strict';
@@ -15,8 +16,9 @@
       label: 'Courant alternatif',
       category: 'source',
       body:
-        '<circle cx="24" cy="24" r="20" fill="#fff" stroke="#0f172a" stroke-width="1.8"/>' +
-        '<path d="M14 24c4-10 8-10 12 0s8 10 12 0 8-10 12 0" fill="none" stroke="#0f172a" stroke-width="1.6"/>',
+        '<line x1="24" y1="6" x2="24" y2="16" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<text x="24" y="32" text-anchor="middle" font-size="18" font-family="Arial,sans-serif" fill="#0f172a">~</text>' +
+        '<line x1="24" y1="36" x2="24" y2="44" stroke="#0f172a" stroke-width="1.8"/>',
       ports: { n: [24, 4], s: [24, 44] },
     },
     ac_source_tri: {
@@ -24,9 +26,11 @@
       label: 'Triphasé 400/230 V',
       category: 'source',
       body:
-        '<circle cx="24" cy="24" r="20" fill="#fff" stroke="#0f172a" stroke-width="1.8"/>' +
-        '<path d="M14 24c4-10 8-10 12 0s8 10 12 0" fill="none" stroke="#0f172a" stroke-width="1.6"/>' +
-        '<text x="24" y="28" text-anchor="middle" font-size="7" fill="#0f172a">3~</text>',
+        '<line x1="24" y1="6" x2="24" y2="12" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<text x="24" y="22" text-anchor="middle" font-size="8" font-family="Arial,sans-serif" fill="#0f172a">3N</text>' +
+        '<text x="24" y="32" text-anchor="middle" font-size="14" font-family="Arial,sans-serif" fill="#0f172a">~</text>' +
+        '<text x="24" y="40" text-anchor="middle" font-size="5.5" font-family="Arial,sans-serif" fill="#0f172a">50Hz 400/230V</text>' +
+        '<line x1="24" y1="42" x2="24" y2="44" stroke="#0f172a" stroke-width="1.8"/>',
       ports: { n: [24, 4], s: [24, 44] },
     },
     energy_meter: {
@@ -34,8 +38,9 @@
       label: 'Compteur (c)',
       category: 'measure',
       body:
-        '<rect x="8" y="10" width="32" height="28" fill="#fff" stroke="#0f172a" stroke-width="1.8"/>' +
-        '<text x="24" y="30" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">M</text>',
+        '<rect x="10" y="10" width="28" height="28" fill="#fff" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<line x1="10" y1="20" x2="38" y2="20" stroke="#0f172a" stroke-width="1.4"/>' +
+        '<text x="24" y="34" text-anchor="middle" font-size="13" font-weight="700" font-family="Arial,sans-serif" fill="#0f172a">c</text>',
       ports: { n: [24, 10], s: [24, 38] },
     },
     circuit_breaker: {
@@ -43,11 +48,11 @@
       label: 'Disjoncteur',
       category: 'protection',
       body:
-        '<line x1="24" y1="4" x2="24" y2="14" stroke="#0f172a" stroke-width="2"/>' +
-        '<line x1="24" y1="34" x2="24" y2="44" stroke="#0f172a" stroke-width="2"/>' +
-        '<rect x="14" y="14" width="20" height="20" fill="#fff" stroke="#0f172a" stroke-width="1.8"/>' +
-        '<line x1="18" y1="32" x2="30" y2="16" stroke="#0f172a" stroke-width="1.8"/>' +
-        '<line x1="18" y1="16" x2="30" y2="32" stroke="#0f172a" stroke-width="1.8"/>',
+        '<line x1="24" y1="4" x2="24" y2="14" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<line x1="24" y1="14" x2="17" y2="30" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<path d="M20 14 Q26 14 26 18" fill="none" stroke="#0f172a" stroke-width="1.4"/>' +
+        '<line x1="17" y1="30" x2="17" y2="36" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<line x1="17" y1="36" x2="24" y2="44" stroke="#0f172a" stroke-width="1.8"/>',
       ports: { n: [24, 4], s: [24, 44] },
     },
     rcd: {
@@ -55,12 +60,12 @@
       label: 'DDR / RCD',
       category: 'protection',
       body:
-        '<line x1="24" y1="4" x2="24" y2="12" stroke="#0f172a" stroke-width="2"/>' +
-        '<line x1="24" y1="36" x2="24" y2="44" stroke="#0f172a" stroke-width="2"/>' +
-        '<rect x="14" y="12" width="20" height="16" fill="#fff" stroke="#0f172a" stroke-width="1.8"/>' +
-        '<line x1="18" y1="26" x2="30" y2="14" stroke="#0f172a" stroke-width="1.8"/>' +
-        '<line x1="18" y1="14" x2="30" y2="26" stroke="#0f172a" stroke-width="1.8"/>' +
-        '<path d="M20 30 L24 36 L28 30 Z" fill="none" stroke="#0f172a" stroke-width="1.5"/>',
+        '<line x1="24" y1="4" x2="24" y2="12" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<line x1="24" y1="12" x2="17" y2="24" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<path d="M20 12 Q26 12 26 16" fill="none" stroke="#0f172a" stroke-width="1.4"/>' +
+        '<line x1="17" y1="24" x2="17" y2="28" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<path d="M20 30 L24 36 L28 30 Z" fill="none" stroke="#0f172a" stroke-width="1.5"/>' +
+        '<line x1="24" y1="36" x2="24" y2="44" stroke="#0f172a" stroke-width="1.8"/>',
       ports: { n: [24, 4], s: [24, 44] },
     },
     fuse: {
@@ -68,10 +73,9 @@
       label: 'Fusible',
       category: 'protection',
       body:
-        '<line x1="24" y1="4" x2="24" y2="14" stroke="#0f172a" stroke-width="2"/>' +
-        '<line x1="24" y1="34" x2="24" y2="44" stroke="#0f172a" stroke-width="2"/>' +
-        '<rect x="16" y="14" width="16" height="20" fill="#fff" stroke="#0f172a" stroke-width="1.8"/>' +
-        '<line x1="20" y1="24" x2="28" y2="24" stroke="#0f172a" stroke-width="1.8"/>',
+        '<line x1="24" y1="4" x2="24" y2="14" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<rect x="18" y="14" width="12" height="20" fill="#fff" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<line x1="24" y1="34" x2="24" y2="44" stroke="#0f172a" stroke-width="1.8"/>',
       ports: { n: [24, 4], s: [24, 44] },
     },
     isolator: {
@@ -79,9 +83,10 @@
       label: 'Sectionneur',
       category: 'protection',
       body:
-        '<line x1="24" y1="4" x2="24" y2="18" stroke="#0f172a" stroke-width="2"/>' +
-        '<line x1="24" y1="30" x2="24" y2="44" stroke="#0f172a" stroke-width="2"/>' +
-        '<line x1="18" y1="22" x2="30" y2="26" stroke="#0f172a" stroke-width="2"/>',
+        '<line x1="24" y1="4" x2="24" y2="16" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<circle cx="24" cy="16" r="2.2" fill="#fff" stroke="#0f172a" stroke-width="1.4"/>' +
+        '<line x1="24" y1="16" x2="32" y2="26" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<line x1="32" y1="26" x2="24" y2="44" stroke="#0f172a" stroke-width="1.8"/>',
       ports: { n: [24, 4], s: [24, 44] },
     },
     busbar: {
@@ -122,9 +127,11 @@
       label: 'Prise',
       category: 'load',
       body:
-        '<line x1="24" y1="4" x2="24" y2="12" stroke="#0f172a" stroke-width="2"/>' +
-        '<path d="M12 28 A12 12 0 0 1 36 28" fill="none" stroke="#0f172a" stroke-width="1.8"/>' +
-        '<path d="M12 34 A12 12 0 0 0 36 34" fill="none" stroke="#0f172a" stroke-width="1.8"/>',
+        '<line x1="24" y1="4" x2="24" y2="14" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<line x1="24" y1="14" x2="14" y2="14" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<path d="M14 14 A10 10 0 0 0 14 34" fill="none" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<line x1="30" y1="22" x2="38" y2="22" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<line x1="24" y1="34" x2="24" y2="44" stroke="#0f172a" stroke-width="1.8"/>',
       ports: { n: [24, 4], s: [24, 40] },
     },
     heating: {
@@ -132,9 +139,12 @@
       label: 'Corps de chauffe',
       category: 'load',
       body:
-        '<line x1="24" y1="4" x2="24" y2="10" stroke="#0f172a" stroke-width="2"/>' +
-        '<rect x="10" y="10" width="28" height="28" fill="#fff" stroke="#0f172a" stroke-width="1.8"/>' +
-        '<path d="M14 34 L18 18 L22 30 L26 16 L30 28 L34 20" fill="none" stroke="#0f172a" stroke-width="1.6"/>',
+        '<line x1="24" y1="4" x2="24" y2="12" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<rect x="12" y="12" width="24" height="22" fill="#fff" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<line x1="17" y1="14" x2="17" y2="32" stroke="#0f172a" stroke-width="1.6"/>' +
+        '<line x1="24" y1="14" x2="24" y2="32" stroke="#0f172a" stroke-width="1.6"/>' +
+        '<line x1="31" y1="14" x2="31" y2="32" stroke="#0f172a" stroke-width="1.6"/>' +
+        '<line x1="24" y1="34" x2="24" y2="44" stroke="#0f172a" stroke-width="1.8"/>',
       ports: { n: [24, 4], s: [24, 42] },
     },
     resistor_load: {
@@ -142,9 +152,10 @@
       label: 'Résistance / charge',
       category: 'load',
       body:
-        '<line x1="24" y1="4" x2="24" y2="10" stroke="#0f172a" stroke-width="2"/>' +
-        '<rect x="10" y="10" width="28" height="28" fill="#fff" stroke="#0f172a" stroke-width="1.8"/>' +
-        '<path d="M14 30 L18 18 L22 28 L26 16 L30 26 L34 18" fill="none" stroke="#0f172a" stroke-width="1.6"/>',
+        '<line x1="24" y1="4" x2="24" y2="12" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<rect x="12" y="12" width="24" height="22" fill="#fff" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<path d="M15 30 L19 18 L23 28 L27 16 L31 26 L33 20" fill="none" stroke="#0f172a" stroke-width="1.6"/>' +
+        '<line x1="24" y1="34" x2="24" y2="44" stroke="#0f172a" stroke-width="1.8"/>',
       ports: { n: [24, 4], s: [24, 42] },
     },
     transformer: {
@@ -181,11 +192,14 @@
       label: 'Parafoudre',
       category: 'protection',
       body:
-        '<line x1="24" y1="4" x2="24" y2="16" stroke="#0f172a" stroke-width="2"/>' +
-        '<line x1="24" y1="32" x2="24" y2="44" stroke="#0f172a" stroke-width="2"/>' +
-        '<rect x="16" y="16" width="16" height="16" fill="#fff" stroke="#0f172a" stroke-width="1.8"/>' +
-        '<path d="M20 28 L24 18 L28 28 Z" fill="none" stroke="#0f172a" stroke-width="1.5"/>' +
-        '<line x1="20" y1="32" x2="28" y2="32" stroke="#0f172a" stroke-width="1.2"/>',
+        '<line x1="24" y1="4" x2="24" y2="14" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<rect x="16" y="14" width="16" height="14" fill="#fff" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<path d="M20 24 L24 16 L28 24 Z" fill="none" stroke="#0f172a" stroke-width="1.5"/>' +
+        '<line x1="18" y1="28" x2="30" y2="28" stroke="#0f172a" stroke-width="1.4"/>' +
+        '<line x1="20" y1="32" x2="20" y2="36" stroke="#0f172a" stroke-width="1.4"/>' +
+        '<line x1="24" y1="34" x2="24" y2="38" stroke="#0f172a" stroke-width="1.4"/>' +
+        '<line x1="28" y1="32" x2="28" y2="36" stroke="#0f172a" stroke-width="1.4"/>' +
+        '<line x1="24" y1="38" x2="24" y2="44" stroke="#0f172a" stroke-width="1.8"/>',
       ports: { n: [24, 4], s: [24, 44] },
     },
     pv_array: {
@@ -204,8 +218,9 @@
       label: 'Appareil',
       category: 'load',
       body:
-        '<rect x="10" y="12" width="28" height="26" rx="3" fill="#fff" stroke="#0f172a" stroke-width="1.8"/>' +
-        '<line x1="16" y1="25" x2="32" y2="25" stroke="#0f172a" stroke-width="1.5"/>',
+        '<line x1="24" y1="4" x2="24" y2="14" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<rect x="10" y="14" width="28" height="18" fill="#fff" stroke="#0f172a" stroke-width="1.8"/>' +
+        '<line x1="24" y1="32" x2="24" y2="44" stroke="#0f172a" stroke-width="1.8"/>',
       ports: { n: [24, 12], s: [24, 38] },
     },
   };
