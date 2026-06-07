@@ -1,0 +1,820 @@
+/**
+ * Electro DZ — thème Electric Neon
+ * Polices chargées en async par js/theme-electric-neon.js (pas de @import bloquant)
+ */
+
+html.theme-electric-neon {
+  --neon-yellow: #facc15;
+  --neon-cyan: #22d3ee;
+  --neon-magenta: #e879f9;
+  --neon-bg: #030508;
+  --neon-panel: rgba(8, 12, 22, 0.92);
+}
+
+html.theme-electric-neon body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--neon-bg) !important;
+  background-image: none !important;
+  color: #e2e8f0;
+  position: relative;
+  overflow-x: hidden;
+  isolation: isolate;
+}
+
+html[dir="ltr"].theme-electric-neon .brand-name,
+html[dir="ltr"].theme-electric-neon .quick-access h2,
+html[dir="ltr"].theme-electric-neon .hero-sub {
+  font-family: 'Orbitron', 'Segoe UI', sans-serif;
+}
+
+/* Grille + circuits — toujours DERRIÈRE le contenu */
+
+html.theme-electric-neon .en-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1 !important;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+html.theme-electric-neon main,
+html.theme-electric-neon .container,
+html.theme-electric-neon .wrap,
+html.theme-electric-neon .page,
+html.theme-electric-neon .nav,
+html.theme-electric-neon .site-header,
+html.theme-electric-neon footer {
+  position: relative;
+  z-index: 1;
+}
+
+html.theme-electric-neon .en-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(34, 211, 238, 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.14) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse 95% 85% at 50% 40%, #000 10%, transparent 80%);
+}
+
+html.theme-electric-neon .en-glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(48px);
+  opacity: 0.28;
+  contain: strict;
+}
+
+html.theme-electric-neon .en-glow-orb--y {
+  width: 40vmax;
+  height: 40vmax;
+  top: -10%;
+  left: 10%;
+  background: var(--neon-yellow);
+  animation: en-pulse-orb 4s ease-in-out infinite;
+}
+
+html.theme-electric-neon .en-glow-orb--c {
+  width: 35vmax;
+  height: 35vmax;
+  bottom: 5%;
+  right: -5%;
+  background: var(--neon-cyan);
+  animation: en-pulse-orb 5s ease-in-out infinite 1s;
+}
+
+@keyframes en-pulse-orb {
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(1.08); }
+}
+
+/* Circuit SVG animé */
+html.theme-electric-neon .en-circuit {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.28;
+}
+
+html.theme-electric-neon .en-circuit path.en-flow {
+  fill: none;
+  stroke: var(--neon-cyan);
+  stroke-width: 2;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px var(--neon-cyan));
+  stroke-dasharray: 12 8;
+  animation: en-dash 3s linear infinite;
+}
+
+html.theme-electric-neon .en-circuit path.en-flow--2 {
+  stroke: var(--neon-yellow);
+  filter: drop-shadow(0 0 8px var(--neon-yellow));
+  animation-duration: 4.5s;
+  animation-direction: reverse;
+}
+
+@keyframes en-dash {
+  to { stroke-dashoffset: -40; }
+}
+
+html.theme-electric-neon .nav,
+html.theme-electric-neon .wrap,
+html.theme-electric-neon .footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Nav néon */
+html.theme-electric-neon .nav {
+  background: var(--neon-panel) !important;
+  border-bottom: 2px solid transparent !important;
+  border-image: linear-gradient(90deg, var(--neon-cyan), var(--neon-yellow), var(--neon-cyan)) 1 !important;
+  box-shadow: 0 0 24px rgba(34, 211, 238, 0.15) !important;
+}
+
+html.theme-electric-neon .brand-icon {
+  border-color: var(--neon-yellow);
+  box-shadow:
+    0 0 12px rgba(250, 204, 21, 0.6),
+    0 0 28px rgba(250, 204, 21, 0.25);
+}
+
+html.theme-electric-neon .brand-name {
+  color: #fff;
+  text-shadow: 0 0 20px rgba(250, 204, 21, 0.5);
+}
+
+html.theme-electric-neon .lang-btn.active {
+  box-shadow: 0 0 14px rgba(250, 204, 21, 0.55);
+}
+
+/* Hero néon */
+html.theme-electric-neon .en-hero-frame {
+  margin: 10px 0 16px;
+  padding: 2px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--neon-cyan), var(--neon-yellow), var(--neon-magenta), var(--neon-cyan));
+  background-size: 300% 300%;
+  animation: en-border-shift 6s ease infinite;
+  box-shadow:
+    0 0 30px rgba(34, 211, 238, 0.25),
+    0 0 60px rgba(250, 204, 21, 0.12);
+}
+
+@keyframes en-border-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+html.theme-electric-neon .en-hero-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: var(--neon-panel);
+}
+
+html.theme-electric-neon .hero-surprise {
+  color: var(--neon-cyan);
+  font-style: normal;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  text-shadow: 0 0 12px rgba(34, 211, 238, 0.8);
+}
+
+html.theme-electric-neon .hero-sub {
+  color: var(--neon-yellow);
+  text-shadow: 0 0 16px rgba(250, 204, 21, 0.35);
+}
+
+html.theme-electric-neon .btn-dl--play {
+  box-shadow: 0 0 20px rgba(250, 204, 21, 0.5);
+}
+
+html.theme-electric-neon .btn-dl--apple {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 14px rgba(34, 211, 238, 0.3);
+}
+
+html.theme-electric-neon .btn-dl:hover {
+  box-shadow: 0 0 28px rgba(250, 204, 21, 0.65);
+}
+
+/* Lanceur — cartes néon */
+html.theme-electric-neon .quick-access {
+  background: var(--neon-panel);
+  border: 1px solid rgba(34, 211, 238, 0.25);
+  border-radius: 16px;
+  padding: 16px 14px;
+  box-shadow: inset 0 0 40px rgba(34, 211, 238, 0.04);
+}
+
+html.theme-electric-neon .quick-access h2 {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 14px rgba(34, 211, 238, 0.6);
+  letter-spacing: 0.14em;
+}
+
+html.theme-electric-neon .quick-item {
+  background: rgba(6, 10, 18, 0.95);
+  border: 1px solid rgba(34, 211, 238, 0.35);
+  border-radius: 14px;
+  transition: transform 0.2s, box-shadow 0.25s, border-color 0.25s;
+  animation: en-card-pulse 3s ease-in-out infinite;
+  animation-delay: calc(var(--en-i, 0) * 0.15s);
+}
+
+html.theme-electric-neon .quick-item:nth-child(3n+1) {
+  border-color: rgba(250, 204, 21, 0.4);
+  --en-glow: rgba(250, 204, 21, 0.35);
+}
+
+html.theme-electric-neon .quick-item:nth-child(3n+2) {
+  --en-glow: rgba(34, 211, 238, 0.35);
+}
+
+html.theme-electric-neon .quick-item:nth-child(3n) {
+  border-color: rgba(232, 121, 249, 0.35);
+  --en-glow: rgba(232, 121, 249, 0.3);
+}
+
+@keyframes en-card-pulse {
+  0%, 100% { box-shadow: 0 0 8px var(--en-glow, rgba(34, 211, 238, 0.2)); }
+  50% { box-shadow: 0 0 18px var(--en-glow, rgba(34, 211, 238, 0.35)); }
+}
+
+html.theme-electric-neon .quick-item:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: var(--neon-yellow);
+  box-shadow:
+    0 0 24px rgba(250, 204, 21, 0.45),
+    0 0 48px rgba(34, 211, 238, 0.2);
+  animation: none;
+}
+
+html.theme-electric-neon .quick-item .ico-wrap {
+  box-shadow: 0 0 12px var(--en-glow, rgba(34, 211, 238, 0.4));
+}
+
+html.theme-electric-neon .ico {
+  filter: drop-shadow(0 0 4px currentColor);
+}
+
+/* Sections secondaires */
+html.theme-electric-neon .accueil-more,
+html.theme-electric-neon .spot-card,
+html.theme-electric-neon .hub-card,
+html.theme-electric-neon .social-card {
+  background: var(--neon-panel);
+  border: 1px solid rgba(34, 211, 238, 0.2);
+}
+
+html.theme-electric-neon .spot-card:hover,
+html.theme-electric-neon .hub-card:hover {
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.25);
+  border-color: var(--neon-cyan);
+}
+
+html.theme-electric-neon .hub-block-head h2,
+html.theme-electric-neon .spotlight-label {
+  color: var(--neon-yellow);
+  text-shadow: 0 0 10px rgba(250, 204, 21, 0.4);
+}
+
+html.theme-electric-neon .footer {
+  border-top: 1px solid rgba(34, 211, 238, 0.2);
+  color: var(--muted);
+}
+
+html.theme-electric-neon .en-preview-badge {
+  position: fixed;
+  bottom: 12px;
+  inset-inline-start: 12px;
+  z-index: 300;
+  padding: 8px 14px;
+  border-radius: 4px;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--neon-bg);
+  background: var(--neon-cyan);
+  box-shadow:
+    0 0 20px var(--neon-cyan),
+    0 0 40px rgba(34, 211, 238, 0.4);
+  pointer-events: none;
+  animation: en-badge-blink 2s ease-in-out infinite;
+}
+
+@keyframes en-badge-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+
+/* Variables — pages outillage (calcul, bibliothèque, style.css…) */
+html.theme-electric-neon {
+  --bg: var(--neon-bg);
+  --bg2: var(--neon-bg);
+  --primary: var(--neon-yellow);
+  --accent: var(--neon-yellow);
+  --surface: var(--neon-panel);
+  --surface2: rgba(12, 18, 32, 0.95);
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --text-muted: #94a3b8;
+  --border: rgba(34, 211, 238, 0.25);
+  --bg-card: var(--neon-panel);
+}
+
+html.theme-electric-neon .container,
+html.theme-electric-neon main,
+html.theme-electric-neon .page,
+html.theme-electric-neon .docs-page,
+html.theme-electric-neon .calc-workspace,
+html.theme-electric-neon .site-footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Header pages style.css */
+html.theme-electric-neon .site-header {
+  background: var(--neon-panel);
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg, var(--neon-cyan), var(--neon-yellow), var(--neon-cyan)) 1;
+  box-shadow: 0 0 24px rgba(34, 211, 238, 0.15);
+}
+
+html.theme-electric-neon .logo-text .accent,
+html.theme-electric-neon .main-nav a.active,
+html.theme-electric-neon .accent {
+  color: var(--neon-yellow);
+  text-shadow: 0 0 12px rgba(250, 204, 21, 0.4);
+}
+
+html.theme-electric-neon .main-nav a:hover {
+  color: var(--neon-cyan);
+}
+
+html.theme-electric-neon .nav-btn {
+  background: var(--neon-yellow);
+  color: var(--neon-bg);
+  box-shadow: 0 0 14px rgba(250, 204, 21, 0.4);
+}
+
+html.theme-electric-neon .logo-img {
+  border-color: var(--neon-yellow);
+  box-shadow: 0 0 12px rgba(250, 204, 21, 0.5);
+}
+
+/* Calcul, bibliothèque, documentation */
+html.theme-electric-neon .hero,
+html.theme-electric-neon .container,
+html.theme-electric-neon .page {
+  position: relative;
+  z-index: 1;
+}
+
+html.theme-electric-neon .calc-workspace,
+html.theme-electric-neon .type-card,
+html.theme-electric-neon .book-card-inner,
+html.theme-electric-neon .book-card,
+html.theme-electric-neon .library-search,
+html.theme-electric-neon .lang-switch,
+html.theme-electric-neon .feature-card,
+html.theme-electric-neon .stat,
+html.theme-electric-neon .doc-module-card,
+html.theme-electric-neon .doc-resource-card,
+html.theme-electric-neon .support-card,
+html.theme-electric-neon .job-card,
+html.theme-electric-neon .calc-help,
+html.theme-electric-neon .result-box {
+  background: var(--neon-panel) !important;
+  border: 1px solid rgba(34, 211, 238, 0.25) !important;
+  box-shadow: inset 0 0 30px rgba(34, 211, 238, 0.03);
+}
+
+html.theme-electric-neon .type-card,
+html.theme-electric-neon .book-card-inner,
+html.theme-electric-neon .book-card,
+html.theme-electric-neon .feature-card {
+  animation: en-card-pulse 3s ease-in-out infinite;
+  animation-delay: calc(var(--en-i, 0) * 0.12s);
+}
+
+html.theme-electric-neon .type-card:hover,
+html.theme-electric-neon .type-card.selected,
+html.theme-electric-neon .book-card-inner:hover,
+html.theme-electric-neon .book-card:hover,
+html.theme-electric-neon .feature-card:hover {
+  border-color: var(--neon-yellow) !important;
+  box-shadow: 0 0 18px rgba(250, 204, 21, 0.25) !important;
+  animation: none;
+}
+
+/* Lecteur PDF */
+html.theme-electric-neon .reader-header,
+html.theme-electric-neon .reader-toolbar,
+html.theme-electric-neon .reader-pager,
+html.theme-electric-neon .thumb-panel {
+  background: var(--neon-panel) !important;
+  border-color: rgba(34, 211, 238, 0.25) !important;
+  box-shadow: 0 0 16px rgba(34, 211, 238, 0.08);
+}
+
+html.theme-electric-neon .btn-primary {
+  background: var(--neon-yellow) !important;
+  color: var(--neon-bg) !important;
+  border-color: var(--neon-yellow) !important;
+}
+
+html.theme-electric-neon .btn.tool-active,
+html.theme-electric-neon .lang-btn.active {
+  box-shadow: 0 0 12px rgba(250, 204, 21, 0.4);
+}
+
+html.theme-electric-neon .calc-workspace-title,
+html.theme-electric-neon .section-title,
+html.theme-electric-neon .page-hero h1 {
+  color: #fff;
+  text-shadow: 0 0 16px rgba(34, 211, 238, 0.2);
+}
+
+/* Pages outillage — priorité sur les <style> inline */
+html.theme-electric-neon body {
+  background: var(--neon-bg) !important;
+  background-image: none !important;
+}
+
+html.theme-electric-neon .hero h1 {
+  color: #fff !important;
+  text-shadow: 0 0 16px rgba(34, 211, 238, 0.25);
+}
+
+html.theme-electric-neon .type-card {
+  background: var(--neon-panel) !important;
+  border-color: rgba(34, 211, 238, 0.3) !important;
+}
+
+html.theme-electric-neon .picker-mode-btn,
+html.theme-electric-neon .sub-type-btn,
+html.theme-electric-neon .voltage-btn,
+html.theme-electric-neon .focus-expand {
+  background: rgba(6, 10, 18, 0.85) !important;
+  color: var(--muted) !important;
+}
+
+html.theme-electric-neon .picker-toolbar-label,
+html.theme-electric-neon .types-section-label {
+  color: var(--neon-cyan) !important;
+}
+
+/* Bibliothèque PDF */
+html.theme-electric-neon .library-hero-row h1 {
+  color: var(--neon-yellow) !important;
+  text-shadow: 0 0 16px rgba(250, 204, 21, 0.35);
+}
+
+html.theme-electric-neon .library-hero-row p,
+html.theme-electric-neon .catalog-updated,
+html.theme-electric-neon .library-count {
+  color: var(--muted) !important;
+}
+
+html.theme-electric-neon .library-collections-panel__title,
+html.theme-electric-neon .library-filters-panel__title,
+html.theme-electric-neon .library-collection-heading {
+  color: var(--neon-cyan) !important;
+  text-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
+}
+
+html.theme-electric-neon .book-collection,
+html.theme-electric-neon .book-filter {
+  background: rgba(6, 10, 18, 0.9) !important;
+  border: 1px solid rgba(34, 211, 238, 0.3) !important;
+  color: var(--text) !important;
+}
+
+html.theme-electric-neon .book-collection:hover,
+html.theme-electric-neon .book-filter:hover {
+  border-color: var(--neon-cyan) !important;
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.25) !important;
+}
+
+html.theme-electric-neon .book-collection--active,
+html.theme-electric-neon .book-filter--active {
+  background: var(--neon-yellow) !important;
+  color: var(--neon-bg) !important;
+  border-color: var(--neon-yellow) !important;
+  box-shadow: 0 0 16px rgba(250, 204, 21, 0.4) !important;
+}
+
+html.theme-electric-neon .library-sort,
+html.theme-electric-neon .library-search {
+  background: rgba(6, 10, 18, 0.9) !important;
+  border-color: rgba(34, 211, 238, 0.3) !important;
+  color: #e2e8f0 !important;
+}
+
+html.theme-electric-neon .book-cover {
+  background: rgba(6, 10, 18, 0.95) !important;
+}
+
+html.theme-electric-neon .book-category,
+html.theme-electric-neon .book-collection-tag {
+  color: var(--neon-cyan) !important;
+}
+
+html.theme-electric-neon .book-title {
+  color: #fff !important;
+}
+
+html.theme-electric-neon .book-btn,
+html.theme-electric-neon .book-btn--primary {
+  border-color: rgba(34, 211, 238, 0.35) !important;
+}
+
+html.theme-electric-neon .book-btn--primary {
+  background: var(--neon-yellow) !important;
+  color: var(--neon-bg) !important;
+  box-shadow: 0 0 14px rgba(250, 204, 21, 0.35) !important;
+}
+
+html.theme-electric-neon .library-knx-gift__inner {
+  background: var(--neon-panel) !important;
+  border-color: rgba(34, 211, 238, 0.25) !important;
+}
+
+html.theme-electric-neon main.page,
+html.theme-electric-neon .library-books-root,
+html.theme-electric-neon .library-group {
+  background: transparent !important;
+}
+
+html.theme-electric-neon .picker-mode-btn.active,
+html.theme-electric-neon .sub-type-btn.active,
+html.theme-electric-neon .type-chip.active,
+html.theme-electric-neon .focus-chip.active,
+html.theme-electric-neon .voltage-btn.active,
+html.theme-electric-neon .btn-calc,
+html.theme-electric-neon .btn-primary {
+  box-shadow: 0 0 16px rgba(250, 204, 21, 0.35);
+}
+
+html.theme-electric-neon input,
+html.theme-electric-neon select,
+html.theme-electric-neon textarea {
+  background: rgba(6, 10, 18, 0.9);
+  border-color: rgba(34, 211, 238, 0.3);
+  color: #e2e8f0;
+}
+
+html.theme-electric-neon input:focus,
+html.theme-electric-neon select:focus,
+html.theme-electric-neon textarea:focus {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.25);
+}
+
+html.theme-electric-neon .docs-hero-badge,
+html.theme-electric-neon .hero-badge {
+  border-color: rgba(34, 211, 238, 0.4);
+  color: var(--neon-cyan);
+  background: rgba(34, 211, 238, 0.08);
+}
+
+html.theme-electric-neon .nav-links a:hover,
+html.theme-electric-neon .nav-links a.active {
+  color: var(--neon-yellow);
+  text-shadow: 0 0 8px rgba(250, 204, 21, 0.35);
+}
+
+html.theme-electric-neon .result-box,
+html.theme-electric-neon .bal-pro-meta {
+  border-color: rgba(34, 211, 238, 0.3);
+  background: rgba(34, 211, 238, 0.06);
+}
+
+/* ——— Boutons (tout le site) ——— */
+html.theme-electric-neon button,
+html.theme-electric-neon .btn,
+html.theme-electric-neon a.btn,
+html.theme-electric-neon .ec-btn,
+html.theme-electric-neon input[type="button"],
+html.theme-electric-neon input[type="submit"],
+html.theme-electric-neon .picker-mode-btn,
+html.theme-electric-neon .sub-type-btn,
+html.theme-electric-neon .voltage-btn,
+html.theme-electric-neon .type-chip,
+html.theme-electric-neon .focus-chip,
+html.theme-electric-neon .focus-expand,
+html.theme-electric-neon .lang-btn,
+html.theme-electric-neon .btn-calc,
+html.theme-electric-neon .btn-dl,
+html.theme-electric-neon .btn-store,
+html.theme-electric-neon .nav-btn,
+html.theme-electric-neon .book-btn,
+html.theme-electric-neon .devis-item-add {
+  border: 1px solid rgba(34, 211, 238, 0.32) !important;
+  transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s !important;
+}
+
+html.theme-electric-neon button:hover:not(:disabled),
+html.theme-electric-neon .btn:hover:not(:disabled),
+html.theme-electric-neon a.btn:hover,
+html.theme-electric-neon .ec-btn:hover,
+html.theme-electric-neon .picker-mode-btn:hover,
+html.theme-electric-neon .sub-type-btn:hover,
+html.theme-electric-neon .voltage-btn:hover,
+html.theme-electric-neon .type-chip:hover,
+html.theme-electric-neon .focus-chip:hover,
+html.theme-electric-neon .lang-btn:hover,
+html.theme-electric-neon .btn-calc:hover,
+html.theme-electric-neon .btn-dl:hover {
+  border-color: var(--neon-cyan) !important;
+  box-shadow: 0 0 14px rgba(34, 211, 238, 0.35) !important;
+}
+
+html.theme-electric-neon button.active,
+html.theme-electric-neon .btn.active,
+html.theme-electric-neon .picker-mode-btn.active,
+html.theme-electric-neon .sub-type-btn.active,
+html.theme-electric-neon .type-chip.active,
+html.theme-electric-neon .focus-chip.active,
+html.theme-electric-neon .voltage-btn.active,
+html.theme-electric-neon .lang-btn.active,
+html.theme-electric-neon .ec-btn--primary,
+html.theme-electric-neon .btn-primary,
+html.theme-electric-neon .btn-calc {
+  background: var(--neon-yellow) !important;
+  color: var(--neon-bg) !important;
+  border-color: var(--neon-yellow) !important;
+  box-shadow: 0 0 18px rgba(250, 204, 21, 0.45) !important;
+}
+
+/* Titres & panneaux */
+html.theme-electric-neon h1,
+html.theme-electric-neon h2,
+html.theme-electric-neon h3,
+html.theme-electric-neon .hero h1,
+html.theme-electric-neon .ec-section-title {
+  text-shadow: 0 0 14px rgba(34, 211, 238, 0.18);
+}
+
+/* Devis professionnels */
+html.theme-electric-neon .devis-card,
+html.theme-electric-neon .catalog-panel,
+html.theme-electric-neon .catalog-table-wrap,
+html.theme-electric-neon .catalog-row,
+html.theme-electric-neon .cat-head,
+html.theme-electric-neon .cat-block {
+  background: var(--neon-panel) !important;
+  border-color: rgba(34, 211, 238, 0.22) !important;
+}
+
+html.theme-electric-neon .devis-card:hover {
+  border-color: var(--neon-yellow) !important;
+  box-shadow: 0 0 14px rgba(250, 204, 21, 0.22) !important;
+}
+
+html.theme-electric-neon .panel h2,
+html.theme-electric-neon .modal h3,
+html.theme-electric-neon .hero h1 {
+  color: var(--neon-yellow) !important;
+  text-shadow: 0 0 12px rgba(250, 204, 21, 0.3);
+}
+
+html.theme-electric-neon .modal {
+  background: var(--neon-panel) !important;
+  border: 1px solid rgba(34, 211, 238, 0.3) !important;
+  box-shadow: 0 0 28px rgba(34, 211, 238, 0.15) !important;
+}
+
+html.theme-electric-neon .modal-overlay {
+  background: rgba(3, 5, 8, 0.82) !important;
+}
+
+html.theme-electric-neon .cat-chip {
+  background: rgba(6, 10, 18, 0.9) !important;
+  border-color: rgba(34, 211, 238, 0.3) !important;
+  color: var(--muted) !important;
+}
+
+html.theme-electric-neon .cat-chip.active {
+  background: var(--neon-yellow) !important;
+  color: var(--neon-bg) !important;
+  border-color: var(--neon-yellow) !important;
+  box-shadow: 0 0 14px rgba(250, 204, 21, 0.35) !important;
+}
+
+html.theme-electric-neon .btn--ghost {
+  background: rgba(6, 10, 18, 0.85) !important;
+  color: #e2e8f0 !important;
+  border-color: rgba(34, 211, 238, 0.3) !important;
+}
+
+html.theme-electric-neon .btn--danger {
+  background: rgba(248, 113, 113, 0.12) !important;
+  border-color: rgba(248, 113, 113, 0.4) !important;
+  color: #fca5a5 !important;
+}
+
+html.theme-electric-neon .catalog-inp-qty,
+html.theme-electric-neon .catalog-inp-price,
+html.theme-electric-neon .catalog-search {
+  background: rgba(6, 10, 18, 0.9) !important;
+  border-color: rgba(34, 211, 238, 0.3) !important;
+}
+
+html.theme-electric-neon .catalog-add-btn {
+  background: var(--neon-yellow) !important;
+  color: var(--neon-bg) !important;
+  box-shadow: 0 0 12px rgba(250, 204, 21, 0.35) !important;
+}
+
+html.theme-electric-neon .items-table th {
+  color: var(--neon-cyan) !important;
+}
+
+html.theme-electric-neon .items-table .col-total,
+html.theme-electric-neon .devis-card .amount,
+html.theme-electric-neon .totals-row strong {
+  color: var(--neon-yellow) !important;
+}
+
+html.theme-electric-neon .lang-switcher {
+  border-color: rgba(34, 211, 238, 0.3) !important;
+  background: rgba(6, 10, 18, 0.9) !important;
+}
+
+html.theme-electric-neon .card,
+html.theme-electric-neon .panel,
+html.theme-electric-neon .devis-panel,
+html.theme-electric-neon .devis-line,
+html.theme-electric-neon .modal-content,
+html.theme-electric-neon .auth-card,
+html.theme-electric-neon .dashboard-card,
+html.theme-electric-neon .quiz-card,
+html.theme-electric-neon .schema-panel,
+html.theme-electric-neon .unifilar-panel {
+  background: var(--neon-panel) !important;
+  border: 1px solid rgba(34, 211, 238, 0.22) !important;
+  box-shadow: inset 0 0 24px rgba(34, 211, 238, 0.03);
+}
+
+/* Électro-Centrale */
+html.theme-electric-neon .ec-topbar,
+html.theme-electric-neon .ec-header,
+html.theme-electric-neon .ec-nav-main,
+html.theme-electric-neon .ec-hero-card,
+html.theme-electric-neon .ec-cat-card,
+html.theme-electric-neon .ec-promo-card,
+html.theme-electric-neon .ec-product-card,
+html.theme-electric-neon .ec-service-card {
+  background: var(--neon-panel) !important;
+  border-color: rgba(34, 211, 238, 0.22) !important;
+}
+
+html.theme-electric-neon .ec-cat-card:hover,
+html.theme-electric-neon .ec-hero-card:hover,
+html.theme-electric-neon .ec-product-card:hover {
+  border-color: var(--neon-yellow) !important;
+  box-shadow: 0 0 16px rgba(250, 204, 21, 0.22) !important;
+}
+
+html.theme-electric-neon .ec-search {
+  background: rgba(6, 10, 18, 0.9) !important;
+  border-color: rgba(34, 211, 238, 0.3) !important;
+}
+
+html.theme-electric-neon .nav,
+html.theme-electric-neon .site-header,
+html.theme-electric-neon .reader-header,
+html.theme-electric-neon .ec-header,
+html.theme-electric-neon .ec-nav-main {
+  z-index: 100 !important;
+}
+
+html.theme-electric-neon .en-preview-badge {
+  z-index: 200 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-electric-neon .en-glow-orb,
+  html.theme-electric-neon .en-circuit path,
+  html.theme-electric-neon .en-hero-frame,
+  html.theme-electric-neon .quick-item,
+  html.theme-electric-neon .type-card,
+  html.theme-electric-neon .book-card,
+  html.theme-electric-neon .feature-card,
+  html.theme-electric-neon .en-preview-badge {
+    animation: none;
+  }
+}
