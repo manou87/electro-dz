@@ -29,9 +29,11 @@
   }
 
   function portY(sym, cy, size, which) {
+    var I = iec();
     var half = size / 2;
     var p = sym.ports[which];
-    return cy - half + p[1] * (size / iec().VIEWBOX);
+    var vb = I && I.symVb ? I.symVb(sym) : (sym.viewBox || 48);
+    return cy - half + p[1] * (size / vb);
   }
 
   function placeIec(parts, id, cx, cy, size) {
@@ -196,7 +198,7 @@
         400
       )
     );
-    parts.push(lbl(24, 56, 'Symboles IEC 60617 — Hager / electrosuisse', 7, 'start', 400));
+    parts.push(lbl(24, 56, 'Symboles Hager Normen — IEC 60617 (base officielle PDF)', 7, 'start', 400));
 
     var trunkEnd = chainTrunk(parts, I, supply, mp);
     busY = trunkEnd.bottom + 22;

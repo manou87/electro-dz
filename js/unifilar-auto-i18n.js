@@ -6,7 +6,7 @@
       'page.lead':
         'Layout type CYPELEC : tronc (~ → Compteur → DG → DDR) → barre bus → départs avec libellés à droite → tableau Référence / Puissance demandée.',
       'symbols.note':
-        'Symboles IEC 60617 (Hager / electrosuisse) : source ~, compteur M, disjoncteur, DDR, lampe, prise, moteur, chauffe…',
+        'Symboles officiels extraits du PDF Hager Normen (315 symboles IEC 60617) — voir symboles-hager.html',
       'btn.regen': 'Regénérer',
       'btn.editor': 'Ouvrir dans l’éditeur',
       'btn.print': 'Imprimer',
