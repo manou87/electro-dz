@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 /**
- * Soumet le sitemap aux moteurs (IndexNow + ping Bing).
- * Usage: node scripts/submit-search-engines.mjs
+ * Soumet sitemap + URLs prioritaires aux moteurs (IndexNow).
  */
 import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
@@ -13,28 +12,31 @@ const SITEMAP = `${SITE}/sitemap.xml`;
 const KEY = readFileSync(join(ROOT, "indexnow-key.txt"), "utf8").trim();
 const KEY_LOCATION = `${SITE}/${KEY}.txt`;
 
+const PRIORITY = [
+  `${SITE}/`,
+  `${SITE}/index-fr.html`,
+  `${SITE}/bibliotheque.html`,
+  `${SITE}/calcul-electrique.html`,
+  `${SITE}/documentation.html`,
+  `${SITE}/schemas-plans.html`,
+];
+
 function parseSitemap(xml) {
   return [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].trim());
 }
 
-async function pingBing() {
-  const url = `https://www.bing.com/ping?sitemap=${encodeURIComponent(SITEMAP)}`;
-  const res = await fetch(url);
-  const text = await res.text();
-  console.log(`[Bing ping] ${res.status} ${text.slice(0, 120)}`);
-  return res.ok;
-}
-
-async function submitIndexNow(urls) {
+async function submitIndexNow(urls, label) {
+  const unique = [...new Set(urls)];
   const body = {
     host: "electro-dz.com",
     key: KEY,
     keyLocation: KEY_LOCATION,
-    urlList: urls,
+    urlList: unique,
   };
   const endpoints = [
     "https://api.indexnow.org/indexnow",
     "https://www.bing.com/indexnow",
+    "https://yandex.com/indexnow",
   ];
   for (const endpoint of endpoints) {
     const res = await fetch(endpoint, {
@@ -42,17 +44,24 @@ async function submitIndexNow(urls) {
       headers: { "Content-Type": "application/json; charset=utf-8" },
       body: JSON.stringify(body),
     });
-    console.log(`[IndexNow ${endpoint}] ${res.status}`);
+    console.log(`[IndexNow ${label} → ${endpoint}] ${res.status}`);
   }
 }
 
+async function pingBingSitemap() {
+  const url = `https://www.bing.com/ping?sitemap=${encodeURIComponent(SITEMAP)}`;
+  const res = await fetch(url);
+  console.log(`[Bing sitemap ping] ${res.status}`);
+}
+
 async function main() {
-  const local = readFileSync(join(ROOT, "sitemap.xml"), "utf8");
-  const urls = parseSitemap(local);
-  console.log(`URLs: ${urls.length}`);
-  await pingBing();
-  await submitIndexNow(urls.slice(0, 100));
-  console.log("Done.");
+  const xml = readFileSync(join(ROOT, "sitemap.xml"), "utf8");
+  const urls = parseSitemap(xml);
+  console.log(`Sitemap: ${urls.length} URLs`);
+  await pingBingSitemap();
+  await submitIndexNow(PRIORITY, "priority");
+  await submitIndexNow(urls, "all");
+  console.log("Indexation externe soumise.");
 }
 
 main().catch((e) => {
