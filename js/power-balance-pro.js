@@ -757,13 +757,17 @@ ${printScript}
       alert(tr('balUnifilarErr'));
       return;
     }
+    if (!U.ensureDrawioEngine?.()) {
+      alert(tr('balUnifilarModuleErr'));
+      return;
+    }
     try {
       const payload = JSON.stringify(lastReport);
       sessionStorage.setItem('electrodz-unifilar-source-report-v1', payload);
       localStorage.setItem('electrodz-unifilar-source-report-v1', payload);
     } catch (_) { /* ignore */ }
     if (!U.saveProject(built)) {
-      alert(tr('balUnifilarErr') + ' (module unifilaire non chargé — rechargez la page.)');
+      alert(tr('balUnifilarSaveErr'));
       return;
     }
     window.location.href = 'unifilaire-auto.html?fresh=1';
