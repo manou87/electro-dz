@@ -15,7 +15,7 @@
     logo: ICON,
     image: ICON,
     description:
-      "Outils numériques pour électriciens : calculs, normes PDF, schémas, formations — Suisse et Algérie.",
+      "La grande plateforme algérienne de l'électricité — l'expérience suisse. Calculs pro, normes PDF, schémas IEC, formation et devis pour électriciens.",
     sameAs: [
       "https://www.facebook.com/share/1TXqM56Ncd/",
       "https://www.tiktok.com/@elektrodzch",
