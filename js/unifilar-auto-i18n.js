@@ -4,7 +4,7 @@
       'meta.title': 'Unifilaire auto — DZSWISS ELEC',
       'page.title': 'Schéma unifilaire (depuis le bilan)',
       'page.lead':
-        'Gabarit bureau d’études : arrivée (~ → M → DG → DDR → barre), départs verticaux, symboles de charge, tableau des puissances.',
+        'Layout type CYPELEC : tronc (~ → Compteur → DG → DDR) → barre bus → départs avec libellés à droite → tableau Référence / Puissance demandée.',
       'symbols.note':
         'Aperçu SVG clair (sans éditeur embarqué). « Ouvrir dans l’éditeur » = draw.io pour retouches. Indicatif — à valider sur site.',
       'btn.regen': 'Regénérer',
