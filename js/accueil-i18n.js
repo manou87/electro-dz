@@ -1,8 +1,9 @@
 (function () {
   var T = {
     fr: {
-      "meta.title": "DZSWISS ELEC — Outils pour électriciens",
-      "logo.sub": "La qualité suisse en Algérie.",
+      "meta.title": "Electro DZ | DZSWISS ELEC — Outils pour électriciens",
+      "meta.description": "Electro DZ — site officiel : calculs électriques, PDF NIBT/NFC, schémas, quiz et outils pour électriciens en Suisse et Algérie.",
+      "logo.sub": "Electro DZ — La qualité suisse en Algérie.",
       "nav.login": "Connexion",
       "nav.join": "Rejoindre",
       "hero.title": "DZSWISS ELEC",
@@ -98,8 +99,9 @@
       "arrow": "→",
     },
     ar: {
-      "meta.title": "DZSWISS ELEC — أدوات للكهربائيين",
-      "logo.sub": "الجودة السويسرية في الجزائر.",
+      "meta.title": "Electro DZ | DZSWISS ELEC — أدوات للكهربائيين",
+      "meta.description": "Electro DZ — الموقع الرسمي: حسابات كهربائية، PDF تقنية، مخططات، اختبارات وأدوات للكهربائيين في سويسرا والجزائر.",
+      "logo.sub": "Electro DZ — الجودة السويسرية في الجزائر.",
       "nav.login": "دخول",
       "nav.join": "انضم إلينا",
       "hero.title": "DZSWISS ELEC",
@@ -204,6 +206,19 @@
     root.lang = lang === "ar" ? "ar" : "fr";
     root.dir = lang === "ar" ? "rtl" : "ltr";
     document.title = T[lang]["meta.title"];
+
+    var desc = document.querySelector('meta[name="description"]');
+    if (desc && T[lang]["meta.description"]) {
+      desc.setAttribute("content", T[lang]["meta.description"]);
+    }
+    var ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute("content", T[lang]["meta.title"]);
+    var ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc && T[lang]["meta.description"]) {
+      ogDesc.setAttribute("content", T[lang]["meta.description"]);
+    }
+    var twTitle = document.querySelector('meta[name="twitter:title"]');
+    if (twTitle) twTitle.setAttribute("content", T[lang]["meta.title"]);
 
     document.querySelectorAll("[data-i18n]").forEach(function (el) {
       var key = el.getAttribute("data-i18n");

@@ -1,0 +1,18 @@
+# Electro DZ — site officiel https://electro-dz.com
+User-agent: *
+Allow: /
+
+# Brouillons et pages privées (non indexées)
+Disallow: /preview-accueil-avec-store.html
+Disallow: /preview-accueil-hub.html
+Disallow: /electro-centrale.html
+Disallow: /electro-centrale-catalogue.html
+Disallow: /electro-centrale-produit.html
+Disallow: /auth-callback.html
+Disallow: /dashboard.html
+Disallow: /login.html
+Disallow: /register.html
+Disallow: /lecteur-pdf.html
+Disallow: /presentation.html
+
+Sitemap: https://electro-dz.com/sitemap.xml
