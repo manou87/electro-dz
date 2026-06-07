@@ -1,0 +1,24 @@
+name: Submit sitemap to search engines
+
+on:
+  workflow_run:
+    workflows: ["Deploy site to GitHub Pages"]
+    types: [completed]
+  workflow_dispatch:
+
+jobs:
+  submit:
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ping Bing sitemap
+        run: |
+          curl -fsS "https://www.bing.com/ping?sitemap=https://electro-dz.com/sitemap.xml" || true
+      - name: IndexNow submission
+        run: |
+          KEY=$(cat indexnow-key.txt)
+          URLS=$(grep -oP '(?<=<loc>)[^<]+' sitemap.xml | head -100 | jq -R -s -c 'split("\n") | map(select(length>0))')
+          curl -fsS -X POST "https://api.indexnow.org/indexnow" \
+            -H "Content-Type: application/json" \
+            -d "{\"host\":\"electro-dz.com\",\"key\":\"${KEY}\",\"keyLocation\":\"https://electro-dz.com/${KEY}.txt\",\"urlList\":${URLS}}" || true
