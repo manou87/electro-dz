@@ -1,6 +1,5 @@
 /**
- * Unifilaire — gabarit type CYPELEC / bureau d’études.
- * Tronc vertical → barre bus (entre 1er et dernier départ) → départs → tableau Réf./Pd.
+ * Unifilaire — layout type CYPELEC, symboles strictement IEC 60617 (ElectroDzIecSymbols).
  */
 (function (g) {
   'use strict';
@@ -13,10 +12,13 @@
 
   var COL_W = 118;
   var TRUNK_X = 108;
-  var SYM = 34;
-  var BRK_W = 40;
-  var BRK_H = 20;
-  var LABEL_DX = 28;
+  var PROT_SIZE = 40;
+  var LOAD_SIZE = 44;
+  var LABEL_DX = 30;
+
+  function iec() {
+    return g.ElectroDzIecSymbols;
+  }
 
   function esc(s) {
     return String(s ?? '')
@@ -26,10 +28,24 @@
       .replace(/"/g, '&quot;');
   }
 
+  function portY(sym, cy, size, which) {
+    var half = size / 2;
+    var p = sym.ports[which];
+    return cy - half + p[1] * (size / iec().VIEWBOX);
+  }
+
+  function placeIec(parts, id, cx, cy, size) {
+    var I = iec();
+    if (!I) return { top: cy - size / 2, bottom: cy + size / 2 };
+    parts.push(I.renderSymbolG(id, cx, cy, size));
+    var sym = I.getSymbol(id);
+    return { top: portY(sym, cy, size, 'n'), bottom: portY(sym, cy, size, 's'), cy: cy, id: id };
+  }
+
   function vWire(x, y1, y2) {
     var ya = Math.min(y1, y2);
     var yb = Math.max(y1, y2);
-    if (yb - ya < 1) return '';
+    if (yb - ya < 0.5) return '';
     return (
       '<line x1="' + x + '" y1="' + ya + '" x2="' + x + '" y2="' + yb + '" stroke="' + WIRE + '" stroke-width="2"/>'
     );
@@ -38,7 +54,7 @@
   function hWire(x1, x2, y, thick) {
     var xa = Math.min(x1, x2);
     var xb = Math.max(x1, x2);
-    if (xb - xa < 1) return '';
+    if (xb - xa < 0.5) return '';
     return (
       '<line x1="' + xa + '" y1="' + y + '" x2="' + xb + '" y2="' + y + '" stroke="' + BUS + '" stroke-width="' + (thick ? 3.5 : 2) + '"/>'
     );
@@ -57,90 +73,6 @@
     });
     parts.push('</text>');
     return parts.join('');
-  }
-
-  function gAc(cx, cy) {
-    return (
-      '<circle cx="' + cx + '" cy="' + cy + '" r="15" fill="#fff" stroke="' + INK + '" stroke-width="1.5"/>' +
-      '<path d="M' + (cx - 8) + ' ' + cy + 'c3-6 5-6 8 0s5 6 8 0" fill="none" stroke="' + INK + '" stroke-width="1.2"/>'
-    );
-  }
-
-  function gMeter(cx, cy) {
-    return (
-      '<rect x="' + (cx - 16) + '" y="' + (cy - 12) + '" width="32" height="24" fill="#fff" stroke="' + INK + '" stroke-width="1.4"/>' +
-      '<text x="' + cx + '" y="' + (cy + 5) + '" text-anchor="middle" font-family="' + FONT + '" font-size="13" font-weight="700" fill="' + INK + '">M</text>'
-    );
-  }
-
-  function gBreaker(cx, cy) {
-    var x = cx - BRK_W / 2;
-    var y = cy - BRK_H / 2;
-    return (
-      '<rect x="' + x + '" y="' + y + '" width="' + BRK_W + '" height="' + BRK_H + '" fill="#fff" stroke="' + INK + '" stroke-width="1.3"/>' +
-      '<line x1="' + (x + 5) + '" y1="' + (y + BRK_H - 4) + '" x2="' + (x + BRK_W - 5) + '" y2="' + (y + 4) + '" stroke="' + INK + '" stroke-width="1.4"/>' +
-      '<line x1="' + (x + 5) + '" y1="' + (y + 4) + '" x2="' + (x + BRK_W - 5) + '" y2="' + (y + BRK_H - 4) + '" stroke="' + INK + '" stroke-width="1.4"/>'
-    );
-  }
-
-  function gRcd(cx, cy) {
-    var x = cx - BRK_W / 2;
-    var y = cy - BRK_H / 2;
-    return (
-      gBreaker(cx, cy) +
-      '<path d="M' + (cx - 4) + ' ' + (y + BRK_H + 1) + ' L' + cx + ' ' + (y + BRK_H + 6) + ' L' + (cx + 4) + ' ' + (y + BRK_H + 1) + '" fill="none" stroke="' + INK + '" stroke-width="1.1"/>'
-    );
-  }
-
-  function gLamp(cx, cy) {
-    return (
-      '<circle cx="' + cx + '" cy="' + cy + '" r="11" fill="#fff" stroke="' + INK + '" stroke-width="1.4"/>' +
-      '<line x1="' + (cx - 6) + '" y1="' + (cy - 6) + '" x2="' + (cx + 6) + '" y2="' + (cy + 6) + '" stroke="' + INK + '" stroke-width="1.2"/>' +
-      '<line x1="' + (cx + 6) + '" y1="' + (cy - 6) + '" x2="' + (cx - 6) + '" y2="' + (cy + 6) + '" stroke="' + INK + '" stroke-width="1.2"/>'
-    );
-  }
-
-  function gMotor(cx, cy) {
-    return (
-      '<circle cx="' + cx + '" cy="' + cy + '" r="13" fill="#fff" stroke="' + INK + '" stroke-width="1.4"/>' +
-      lbl(cx, cy + 4, 'M', 12, 'middle', 700)
-    );
-  }
-
-  function gSocket(cx, cy) {
-    return (
-      '<path d="M' + (cx - 9) + ' ' + (cy + 2) + ' A9 9 0 0 1 ' + (cx + 9) + ' ' + (cy + 2) + '" fill="none" stroke="' + INK + '" stroke-width="1.4"/>' +
-      '<line x1="' + (cx - 4) + '" y1="' + (cy + 2) + '" x2="' + (cx - 4) + '" y2="' + (cy + 9) + '" stroke="' + INK + '" stroke-width="1.2"/>' +
-      '<line x1="' + (cx + 4) + '" y1="' + (cy + 2) + '" x2="' + (cx + 4) + '" y2="' + (cy + 9) + '" stroke="' + INK + '" stroke-width="1.2"/>'
-    );
-  }
-
-  function gHeater(cx, cy) {
-    return (
-      '<rect x="' + (cx - 12) + '" y="' + (cy - 7) + '" width="24" height="16" fill="#fff" stroke="' + INK + '" stroke-width="1.3"/>' +
-      '<path d="M' + (cx - 8) + ' ' + (cy + 5) + ' L' + (cx - 3) + ' ' + (cy - 3) + ' L' + cx + ' ' + (cy + 3) + ' L' + (cx + 3) + ' ' + (cy - 3) + ' L' + (cx + 8) + ' ' + (cy + 5) + '" fill="none" stroke="' + INK + '" stroke-width="1.2"/>'
-    );
-  }
-
-  function gLoad(cx, cy) {
-    return gHeater(cx, cy);
-  }
-
-  function resolveLoad(c) {
-    var tid = c.templateId || '';
-    if (/^light_/.test(tid) || c.usage === 'lighting') return gLamp;
-    if (/^motor_/.test(tid) || c.usage === 'motors' || c.usage === 'welding') return gMotor;
-    if (/^sockets_/.test(tid) || c.usage === 'sockets') return gSocket;
-    if (
-      tid === 'water_heater' ||
-      tid === 'heating_electric' ||
-      tid === 'cooker' ||
-      tid === 'oven' ||
-      tid === 'dryer' ||
-      c.usage === 'heating'
-    )
-      return gHeater;
-    return gLoad;
   }
 
   function colX(i) {
@@ -164,6 +96,31 @@
     ];
     if (c.rcd) lines.push('DDR 30 mA Type A');
     return lines;
+  }
+
+  function chainTrunk(parts, I, supply, mp) {
+    var items = [
+      { id: I.resolveSourceSymbol(supply), size: PROT_SIZE, label: I.getSymbol(I.resolveSourceSymbol(supply)).label },
+      { id: 'energy_meter', size: PROT_SIZE, label: 'Compteur' },
+      { id: 'circuit_breaker', size: PROT_SIZE, label: mainBreakerLabel(mp) },
+      { id: 'rcd', size: PROT_SIZE, label: mainRcdLabel(mp) },
+    ];
+    var cy = 74;
+    var prev = null;
+    items.forEach(function (item, idx) {
+      if (idx > 0) cy = prev.bottom + 18 + item.size / 2;
+      var p = placeIec(parts, item.id, TRUNK_X, cy, item.size);
+      if (prev) parts.push(vWire(TRUNK_X, prev.bottom, p.top));
+      if (idx === 0 && supply) {
+        parts.push(lbl(TRUNK_X + LABEL_DX, cy - 4, supply.isTri ? '400 V 3~ N PE' : '230 V ~ N PE', 8));
+      } else if (item.label) {
+        var lines = item.label.indexOf('\n') >= 0 ? item.label.split('\n') : [item.label];
+        if (idx === 2 || idx === 3) parts.push(lblBlock(TRUNK_X + LABEL_DX, cy - 8, lines, 8));
+        else parts.push(lbl(TRUNK_X + LABEL_DX, cy - 4, item.label, 8));
+      }
+      prev = p;
+    });
+    return prev;
   }
 
   function drawTable(parts, circuits, tableY) {
@@ -197,76 +154,77 @@
 
   function buildProSvg(project, h) {
     h = h || {};
+    var I = iec();
+    if (!I) {
+      return (
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 80" width="100%">' +
+        '<text x="20" y="40" font-size="12" fill="#b91c1c">Bibliothèque IEC non chargée — rechargez la page.</text></svg>'
+      );
+    }
+
     var circuits = project.circuits || [];
     var n = Math.max(1, circuits.length);
     var mp = project.mainProtection || { inA: 32, rcdInA: 63, rcdMa: 30, rcdType: 'AC' };
     var supply = project.supply || {};
-
-    var busY = 198;
-    var protY = busY + 24;
-    var loadY = protY + 88;
-    var tableY = loadY + 42;
-    var pageW = Math.max(420, 24 + 118 + n * COL_W + 48);
-    var pageH = tableY + 56;
 
     var colXs = [];
     for (var i = 0; i < n; i++) colXs.push(colX(i));
     var busX1 = colXs[0];
     var busX2 = colXs[n - 1];
 
+    var busY = 0;
+    var loadY = 0;
+    var tableY = 0;
+    var pageW = Math.max(420, 24 + 118 + n * COL_W + 48);
+    var pageH = 0;
+
     var parts = [
-      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + pageW + ' ' + pageH + '" width="100%" style="max-width:100%;background:#fff;font-family:' + FONT + '">',
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + pageW + ' 400" width="100%" style="max-width:100%;background:#fff;font-family:' + FONT + '">',
       '<rect width="100%" height="100%" fill="#fff"/>',
     ];
 
     var title = project.board || 'TABLEAU';
     if (project.meta && project.meta.ref) title = project.meta.ref + ' — ' + title;
     parts.push(lbl(24, 26, title, 14, 'start', 800));
-    var sub =
-      'Pd ' + (supply.pTotalKw || '—') + ' kW · I ' + (Math.round((supply.ibA || 0) * 10) / 10) + ' A · cos ' + (supply.cosPhi != null ? supply.cosPhi : '—');
-    parts.push(lbl(24, 42, sub, 9, 'start', 400));
-    if (h.sourceShort) parts.push(lbl(24, 56, h.sourceShort(supply), 8, 'start', 400));
+    parts.push(
+      lbl(
+        24,
+        42,
+        'Pd ' + (supply.pTotalKw || '—') + ' kW · I ' + (Math.round((supply.ibA || 0) * 10) / 10) + ' A · cos ' + (supply.cosPhi != null ? supply.cosPhi : '—'),
+        9,
+        'start',
+        400
+      )
+    );
+    parts.push(lbl(24, 56, 'Symboles IEC 60617 — Hager / electrosuisse', 7, 'start', 400));
 
-    var y = 78;
-    parts.push(gAc(TRUNK_X, y));
-    if (h.sourceShort) parts.push(lbl(TRUNK_X + LABEL_DX, y + 4, h.sourceShort(supply), 8));
-
-    y += 22;
-    parts.push(vWire(TRUNK_X, y - 10, y + 4));
-    parts.push(gMeter(TRUNK_X, y + 14));
-    parts.push(lbl(TRUNK_X + LABEL_DX, y + 12, 'Compteur', 8));
-
-    y += 32;
-    parts.push(vWire(TRUNK_X, y - 4, y + 6));
-    var yDg = y + 6 + BRK_H / 2;
-    parts.push(gBreaker(TRUNK_X, yDg));
-    parts.push(lblBlock(TRUNK_X + LABEL_DX, yDg - 6, [mainBreakerLabel(mp)], 8));
-
-    y = yDg + BRK_H / 2 + 8;
-    parts.push(vWire(TRUNK_X, y, y + 10));
-    var yRcd = y + 10 + BRK_H / 2;
-    parts.push(gRcd(TRUNK_X, yRcd));
-    parts.push(lblBlock(TRUNK_X + LABEL_DX, yRcd - 8, [mainRcdLabel(mp)], 8));
-
-    var yBusTop = yRcd + BRK_H / 2 + 6;
-    parts.push(vWire(TRUNK_X, yBusTop, busY));
+    var trunkEnd = chainTrunk(parts, I, supply, mp);
+    busY = trunkEnd.bottom + 22;
+    parts.push(vWire(TRUNK_X, trunkEnd.bottom, busY));
     if (n > 1) parts.push(hWire(busX1, busX2, busY, true));
 
     circuits.forEach(function (c, i) {
       var cx = colXs[i];
-      var brkY = protY + BRK_H / 2;
-      parts.push(vWire(cx, busY, protY));
-      if (c.rcd) parts.push(gRcd(cx, brkY));
-      else parts.push(gBreaker(cx, brkY));
-      parts.push(lblBlock(cx + LABEL_DX, protY - 2, branchLabels(c), 7.5, MUTED));
-      parts.push(vWire(cx, protY + BRK_H, loadY - 16));
-      parts.push(resolveLoad(c)(cx, loadY));
-      parts.push(lbl(cx, loadY + 22, c.schemaRef || c.circuitRef || '—', 9, 'middle', 700));
+      var protId = I.resolveBranchProtection(c);
+      var loadId = I.resolveLoadSymbol(c);
+      var protCy = busY + 16 + PROT_SIZE / 2;
+      var prot = placeIec(parts, protId, cx, protCy, PROT_SIZE);
+      parts.push(vWire(cx, busY, prot.top));
+      parts.push(lblBlock(cx + LABEL_DX, protCy - 10, branchLabels(c), 7.5, MUTED));
+      var loadCy = prot.bottom + 18 + LOAD_SIZE / 2;
+      var load = placeIec(parts, loadId, cx, loadCy, LOAD_SIZE);
+      parts.push(vWire(cx, prot.bottom, load.top));
+      parts.push(lbl(cx, load.bottom + 12, c.schemaRef || c.circuitRef || '—', 9, 'middle', 700));
+      loadY = Math.max(loadY, load.bottom);
     });
 
+    tableY = loadY + 36;
     drawTable(parts, circuits, tableY);
+    pageH = tableY + 56;
 
-    parts.push(lbl(24, pageH - 10, 'Généré depuis le bilan de puissance — indicatif NFC 15-100.', 7, 'start', 400));
+    parts[0] =
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + pageW + ' ' + pageH + '" width="100%" style="max-width:100%;background:#fff;font-family:' + FONT + '">';
+    parts.push(lbl(24, pageH - 10, 'Généré depuis le bilan — indicatif NFC 15-100. Symboles IEC 60617.', 7, 'start', 400));
     parts.push('</svg>');
     return parts.join('');
   }

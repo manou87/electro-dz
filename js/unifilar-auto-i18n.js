@@ -6,7 +6,7 @@
       'page.lead':
         'Layout type CYPELEC : tronc (~ → Compteur → DG → DDR) → barre bus → départs avec libellés à droite → tableau Référence / Puissance demandée.',
       'symbols.note':
-        'Aperçu SVG clair (sans éditeur embarqué). « Ouvrir dans l’éditeur » = draw.io pour retouches. Indicatif — à valider sur site.',
+        'Symboles IEC 60617 (Hager / electrosuisse) : source ~, compteur M, disjoncteur, DDR, lampe, prise, moteur, chauffe…',
       'btn.regen': 'Regénérer',
       'btn.editor': 'Ouvrir dans l’éditeur',
       'btn.print': 'Imprimer',

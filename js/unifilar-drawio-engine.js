@@ -1,20 +1,8 @@
 /**
- * Moteur unifilaire draw.io — même logique de layout que unifilar-pro-svg (type CYPELEC).
+ * Moteur unifilaire draw.io — layout CYPELEC + symboles IEC 60617 (images SVG normées).
  */
 (function (g) {
   'use strict';
-
-  var MX = {
-    ac: 'shape=mxgraph.electrical.signal_sources.ac_source;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;',
-    meter: 'shape=mxgraph.electrical.meters.voltmeter;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;',
-    breaker: 'shape=mxgraph.electrical.electro_mechanical.circuit_breaker;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;',
-    rcd: 'shape=mxgraph.electrical.miscellaneous.residual_current_device;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;',
-    motor: 'shape=mxgraph.electrical.rot_mechanical.motor;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;',
-    lamp: 'shape=mxgraph.electrical.lamps.incandescent_bulb;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;',
-    load: 'shape=mxgraph.electrical.miscellaneous.load;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;',
-    socket: 'shape=mxgraph.electrical.electro_mechanical.receptacle;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;',
-    heater: 'shape=mxgraph.electrical.resistors.heating_element;html=1;whiteSpace=wrap;aspect=fixed;align=center;strokeColor=#0f172a;fillColor=#ffffff;',
-  };
 
   var WIRE_V = 'line;strokeWidth=2;strokeColor=#2563eb;direction=south;html=1;';
   var WIRE_H = 'line;strokeWidth=2;strokeColor=#2563eb;html=1;';
@@ -24,10 +12,13 @@
 
   var TRUNK_X = 108;
   var COL_W = 118;
-  var SYM = 48;
-  var BRK = 56;
-  var BRK_H = 22;
-  var LABEL_DX = 32;
+  var PROT = 48;
+  var LOAD = 52;
+  var LABEL_DX = 34;
+
+  function iec() {
+    return g.ElectroDzIecSymbols;
+  }
 
   function escXml(s) {
     return String(s ?? '')
@@ -37,21 +28,19 @@
       .replace(/"/g, '&quot;');
   }
 
-  function resolveLoadMx(c) {
-    var tid = c.templateId || '';
-    if (/^light_/.test(tid) || c.usage === 'lighting') return MX.lamp;
-    if (/^motor_/.test(tid) || c.usage === 'motors' || c.usage === 'welding') return MX.motor;
-    if (/^sockets_/.test(tid) || c.usage === 'sockets') return MX.socket;
-    if (tid === 'water_heater' || tid === 'heating_electric' || tid === 'cooker' || tid === 'oven' || tid === 'dryer' || c.usage === 'heating')
-      return MX.heater;
-    return MX.load;
-  }
-
   function colX(i) {
     return TRUNK_X + i * COL_W;
   }
 
+  function iecStyle(id, w, h) {
+    var I = iec();
+    return I ? I.drawioImageStyle(id, w || PROT, h || PROT) : 'rounded=0;whiteSpace=wrap;html=1;';
+  }
+
   function buildDrawioXml(project, helpers) {
+    var I = iec();
+    if (!I) return '';
+
     var h = helpers || {};
     var circuits = project.circuits || [];
     var n = Math.max(1, circuits.length);
@@ -86,18 +75,14 @@
     var colXs = [];
     for (var i = 0; i < n; i++) colXs.push(colX(i));
 
-    var busY = 198;
-    var protY = busY + 24;
-    var loadY = protY + 88;
-    var tableY = loadY + 42;
     var pageW = Math.max(520, 24 + 118 + n * COL_W + 80);
-    var pageH = tableY + 80;
+    var pageH = 520;
 
     var title = project.board || 'TABLEAU';
     if (project.meta && project.meta.ref) title = project.meta.ref + ' — ' + title;
     vtx(title, TXT_TITLE, 24, 16, 400, 24);
     vtx(
-      'Pd ' + (supply.pTotalKw || '—') + ' kW · I ' + (supply.ibA || '—') + ' A · cos ' + (supply.cosPhi != null ? supply.cosPhi : '—'),
+      'Pd ' + (supply.pTotalKw || '—') + ' kW · I ' + (supply.ibA || '—') + ' A · symboles IEC 60617',
       TXT,
       24,
       40,
@@ -105,55 +90,68 @@
       18
     );
 
-    var y = 72;
-    vtx('', MX.ac, TRUNK_X - SYM / 2, y, SYM, SYM);
-    if (h.sourceShort) vtx(h.sourceShort(supply), TXT, TRUNK_X + LABEL_DX, y + 14, 120, 16);
-    y += SYM + 8;
-    wireV(TRUNK_X, y, 14);
-    y += 14;
-    vtx('M', MX.meter, TRUNK_X - SYM / 2, y, SYM, SYM);
-    vtx('Compteur', TXT, TRUNK_X + LABEL_DX, y + 16, 80, 14);
-    y += SYM + 10;
-    wireV(TRUNK_X, y, 12);
-    y += 12;
-    vtx('', MX.breaker, TRUNK_X - BRK / 2, y, BRK, BRK_H);
-    vtx('Disj. général — Courbe C, In: ' + (mp.inA || 32) + ' A', TXT, TRUNK_X + LABEL_DX, y + 2, 200, 28);
-    y += BRK_H + 8;
-    wireV(TRUNK_X, y, 12);
-    y += 12;
-    vtx('', MX.rcd, TRUNK_X - BRK / 2, y, BRK, BRK_H);
-    vtx('DDR ' + (mp.rcdInA || 63) + ' A — ' + (mp.rcdMa || 30) + ' mA ' + (mp.rcdType || 'AC'), TXT, TRUNK_X + LABEL_DX, y, 200, 28);
-    y += BRK_H + 6;
-    wireV(TRUNK_X, y, busY - y);
+    var y = 64;
+    var trunkIds = [
+      I.resolveSourceSymbol(supply),
+      'energy_meter',
+      'circuit_breaker',
+      'rcd',
+    ];
+    var trunkLabels = [
+      supply.isTri ? '400 V 3~ N PE' : '230 V ~ N PE',
+      'Compteur',
+      'Disj. général — Courbe C, In: ' + (mp.inA || 32) + ' A',
+      'DDR ' + (mp.rcdInA || 63) + ' A — ' + (mp.rcdMa || 30) + ' mA ' + (mp.rcdType || 'AC'),
+    ];
+    var prevBottom = y;
+    trunkIds.forEach(function (symId, idx) {
+      if (idx > 0) y = prevBottom + 12;
+      vtx('', iecStyle(symId, PROT, PROT), TRUNK_X - PROT / 2, y, PROT, PROT);
+      vtx(trunkLabels[idx], TXT, TRUNK_X + LABEL_DX, y + 14, 200, 16);
+      if (idx > 0) wireV(TRUNK_X, prevBottom + PROT, 12);
+      prevBottom = y;
+      y += PROT;
+    });
+
+    var busY = y + 16;
+    wireV(TRUNK_X, y, 16);
     if (n > 1) wireH(colXs[0], busY, colXs[n - 1] - colXs[0], true);
 
     circuits.forEach(function (c, i) {
       var cx = colXs[i];
-      wireV(cx, busY, protY - busY);
-      vtx('', c.rcd ? MX.rcd : MX.breaker, cx - BRK / 2, protY, BRK, BRK_H);
+      var protY = busY + 14;
+      var protId = I.resolveBranchProtection(c);
+      var loadId = I.resolveLoadSymbol(c);
+      wireV(cx, busY, 14);
+      vtx('', iecStyle(protId, PROT, PROT), cx - PROT / 2, protY, PROT, PROT);
       var ref = c.schemaRef || c.circuitRef || '—';
-      var lines =
+      vtx(
         ref +
-        (c.label && c.label !== '—' ? ' — ' + c.label : '') +
-        '\nMagnétothermique, Courbe ' +
-        (c.curve || 'C') +
-        ', In: ' +
-        c.inA +
-        ' A\nIb ' +
-        c.ibA +
-        ' A — Pd ' +
-        (c.pdemW / 1000).toFixed(2) +
-        ' kW' +
-        (c.rcd ? '\nDDR 30 mA Type A' : '');
-      vtx(lines, TXT + 'fontSize=8;fontColor=#475569;', cx + LABEL_DX, protY - 2, 160, 48);
-      wireV(cx, protY + BRK_H, loadY - (protY + BRK_H));
-      vtx('', resolveLoadMx(c), cx - SYM / 2, loadY, SYM, SYM);
-      vtx(ref, TXT + 'fontSize=9;fontStyle=1;align=center;', cx - 28, loadY + SYM - 4, 56, 14);
+          (c.label && c.label !== '—' ? ' — ' + c.label : '') +
+          '\nCourbe ' +
+          (c.curve || 'C') +
+          ', In: ' +
+          c.inA +
+          ' A · Ib ' +
+          c.ibA +
+          ' A · Pd ' +
+          (c.pdemW / 1000).toFixed(2) +
+          ' kW',
+        TXT + 'fontSize=8;fontColor=#475569;',
+        cx + LABEL_DX,
+        protY,
+        170,
+        40
+      );
+      var loadY = protY + PROT + 16;
+      wireV(cx, protY + PROT, 16);
+      vtx('', iecStyle(loadId, LOAD, LOAD), cx - LOAD / 2, loadY, LOAD, LOAD);
+      vtx(ref, TXT + 'fontSize=9;fontStyle=1;align=center;', cx - 28, loadY + LOAD - 6, 56, 14);
     });
 
+    var tableY = 400;
     var x0 = 24;
     var labelW = 118;
-    var tableW = labelW + n * COL_W;
     vtx('Référence', TXT + 'fontStyle=1;fontColor=#dc2626;', x0 + 8, tableY + 4, 100, 16);
     vtx('Puissance demandée', TXT + 'fontStyle=1;fontColor=#dc2626;', x0 + 8, tableY + 24, 100, 16);
     circuits.forEach(function (c, i) {
@@ -164,7 +162,7 @@
 
     return (
       '<mxfile host="DZSWISS ELEC" agent="unifilar-drawio-engine" version="22.1.0" type="device">' +
-      '<diagram name="' + escXml(project.board) + '" id="unifilar-pro">' +
+      '<diagram name="' + escXml(project.board) + '" id="unifilar-iec">' +
       '<mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="0" fold="1" page="1" pageScale="1" pageWidth="' + pageW + '" pageHeight="' + pageH + '" math="0" shadow="0">' +
       '<root><mxCell id="0"/><mxCell id="1" parent="0"/>' +
       cells.join('') +
@@ -173,8 +171,6 @@
   }
 
   g.ElectroDzUnifilarDrawio = {
-    MX: MX,
     buildDrawioXml: buildDrawioXml,
-    resolveLoadMx: resolveLoadMx,
   };
 })(typeof window !== 'undefined' ? window : globalThis);
