@@ -243,12 +243,12 @@
         },
         "tsd": {
           "values": [
-            0.02
+            0.2
           ],
-          "default": 0.02,
+          "default": 0.2,
           "unit": "s",
           "fixed": true,
-          "source": "Schneider DOCA0141 — Micrologic 2.3 (So, tsd non réglable)"
+          "source": "Schneider DOCA0141 — Micrologic 2.3 (So = 0,2 s fixe)"
         },
         "ii": {
           "min": 2,

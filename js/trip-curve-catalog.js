@@ -821,6 +821,13 @@
     if (iiOff && s.ii?.off) ii = null;
     else if (s.ii) ii = Math.min(Math.max(ii, s.ii.min), s.ii.max);
 
+    const irAbs = irClamped * inA;
+    if (tu.hasShortTime && ii != null && !iiOff) {
+      const isdAbs = isdClamped * irAbs;
+      const minIiMult = Math.ceil((isdAbs / inA) * 1.02 * 10) / 10;
+      if (ii * inA <= isdAbs) ii = Math.min(s.ii?.max ?? ii, Math.max(minIiMult, s.ii?.min ?? 2));
+    }
+
     return {
       brandId: getBrandId(),
       brand: catalog.brand,
@@ -915,6 +922,13 @@
     if (p.hasShortTime && p.isd < 1.5) {
       msgEl.textContent = tr('tcWarnIsdMin');
       return false;
+    }
+    if (p.hasShortTime && p.ii != null) {
+      const irA = (p.fixedIr ? 1 : (p.ir || 1)) * p.in;
+      if (p.ii * p.in <= p.isd * irA) {
+        msgEl.textContent = tr('tcWarnIiAboveIsd');
+        return false;
+      }
     }
     msgEl.textContent = '';
     return true;

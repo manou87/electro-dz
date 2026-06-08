@@ -22,7 +22,48 @@
     Z: { mag: [2, 3], label: 'Z', norm: 'IEC 60947-2' },
   };
 
-  const PALETTE = ['#facc15', '#22d3ee', '#f472b6', '#4ade80', '#fb923c', '#a78bfa', '#f87171', '#38bdf8'];
+  const CURVE_COLORS = [
+    { hex: '#facc15', key: 'tcColorYellow', fr: 'Jaune', ar: 'أصفر' },
+    { hex: '#22d3ee', key: 'tcColorCyan', fr: 'Cyan', ar: 'سماوي' },
+    { hex: '#f472b6', key: 'tcColorPink', fr: 'Rose', ar: 'وردي' },
+    { hex: '#4ade80', key: 'tcColorGreen', fr: 'Vert', ar: 'أخضر' },
+    { hex: '#fb923c', key: 'tcColorOrange', fr: 'Orange', ar: 'برتقالي' },
+    { hex: '#a78bfa', key: 'tcColorPurple', fr: 'Violet', ar: 'بنفسجي' },
+    { hex: '#f87171', key: 'tcColorRed', fr: 'Rouge', ar: 'أحمر' },
+    { hex: '#38bdf8', key: 'tcColorBlue', fr: 'Bleu', ar: 'أزرق' },
+  ];
+  /** @deprecated — utiliser CURVE_COLORS */
+  const PALETTE = CURVE_COLORS.map((c) => c.hex);
+
+  function curveColorEntry(idx) {
+    const n = CURVE_COLORS.length;
+    return CURVE_COLORS[((idx % n) + n) % n];
+  }
+
+  function curveColorName(p, idx) {
+    const ci = p.colorIdx != null ? p.colorIdx : idx;
+    const entry = curveColorEntry(ci);
+    const t = tr(entry.key);
+    if (t && t !== entry.key) return t;
+    return lang() === 'fr' ? entry.fr : entry.ar;
+  }
+
+  /** Courant max tracé à droite de Ii (Icu saisi, Icc, ou borne graphe). */
+  function mfgCurveHighI(p, d) {
+    const icu = getIcuA();
+    const icc = getIccA();
+    let hi = X_MAX;
+    if (icu && icu > d.instI) hi = Math.min(hi, icu);
+    if (icc && icc > d.instI) hi = Math.max(hi, Math.min(icc, X_MAX));
+    return Math.max(d.instI * 1.02, hi);
+  }
+
+  function assignCurveColor(p) {
+    const entry = curveColorEntry(nextColor);
+    p.color = entry.hex;
+    p.colorIdx = nextColor % CURVE_COLORS.length;
+    nextColor++;
+  }
 
   // Bornes du graphe
   const X_MIN = 1, X_MAX = 20000;       // courant (A), échelle log
@@ -30,8 +71,9 @@
   const Y_AXIS_MAX_CAP = 36000;
   /** Paliers d'échelle temps pour l'axe Y (s). */
   const Y_AXIS_TICKS = [0.001, 0.005, 0.01, 0.1, 1, 10, 100, 1000, 3600, 10000, 36000];
+  /** Plancher axe temps (s) — 1 ms affiché « 0 ms » ; paliers 5 ms et 10 ms visibles dans le graphe. */
   const Y_AXIS_MIN = 0.001;
-  let plotYLo = 0.01;
+  let plotYLo = 0.001;
   let plotYHi = 3600;
 
   // Enveloppe thermique calée sur les POINTS D'ESSAI de la CEI 60898-1
@@ -127,13 +169,15 @@
 
   function mfgThresholds(p) {
     const irA = p.fixedIr ? p.in : (p.ir || 1) * p.in;
-    const isdA = p.hasShortTime && p.isd != null ? p.isd * irA : irA * 6;
-    const iiA = p.ii != null && p.ii > 0 ? p.ii * p.in : X_MAX * 0.5;
+    let isdA = p.hasShortTime && p.isd != null ? p.isd * irA : irA * 6;
+    isdA = Math.max(isdA, irA * 1.05);
+    let iiA = p.ii != null && p.ii > 0 ? p.ii * p.in : X_MAX * 0.5;
+    if (p.hasShortTime) iiA = Math.max(iiA, isdA * 1.02);
     return {
       irA,
       isdA,
       iiA,
-      tsd: p.tsd != null ? p.tsd : 0,
+      tsd: p.tsd != null && p.tsd > 0 ? p.tsd : (p.hasShortTime ? 0.2 : 0),
       instTS: p.instTS || 0.02,
       noTripMult: 1.05,
     };
@@ -194,23 +238,28 @@
   /** Points de tracé : long (courbe), palier court (Tsd), palier instantané. */
   function curveDataManufacturer(p) {
     const th = mfgThresholds(p);
+    const scaled = mfgScaledAnchors(p, p.longAnchors || []);
     const long = [];
     const startM = th.noTripMult * 1.002;
-    const endM = p.hasShortTime ? th.isdA / th.irA : th.iiA / th.irA;
-    const scaled = mfgScaledAnchors(p, p.longAnchors || []);
+    const kneeI = p.hasShortTime ? th.isdA : th.iiA;
+    const endM = kneeI / th.irA;
     for (let m = startM; m < endM * 0.998; m *= 1.04) {
       const t = interpLogLog(scaled, m);
       long.push({ i: m * th.irA, t: Math.min(t, Y_DATA_CAP * 5) });
     }
-    long.push({ i: endM * th.irA * 0.998, t: long.length ? long[long.length - 1].t : 1 });
+    const tKnee = Math.min(interpLogLog(scaled, endM * 0.998), Y_DATA_CAP * 5);
+    if (!long.length || long[long.length - 1].i < kneeI * 0.995) {
+      long.push({ i: kneeI, t: tKnee });
+    } else {
+      long[long.length - 1] = { i: kneeI, t: tKnee };
+    }
 
-    const shortI = th.isdA;
-    const instI = th.iiA;
     return {
       long,
-      shortI,
-      instI,
+      shortI: th.isdA,
+      instI: th.iiA,
       tsd: th.tsd,
+      tKnee,
       instTS: th.instTS,
       hasShortTime: p.hasShortTime,
       irA: th.irA,
@@ -275,8 +324,8 @@
     return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
   }
 
-  /** Libellé court sur le bouton : référence + calibre In. */
-  function legendChipShort(p) {
+  /** Libellé court sur le bouton : n° couleur + référence + calibre In. */
+  function legendChipShort(p, idx) {
     const inA = Math.round(p.in);
     let name = '';
     if (isMfg(p)) name = String(p.deviceLabel || p.deviceId || 'MCCB').trim();
@@ -284,7 +333,8 @@
     else if (isMccb(p)) name = `MCCB${p.mccbCat === 'B' ? ' B' : ''}`;
     else name = deviceTag(p);
     const curve = isMfgMcb(p) ? ` ${p.curve || 'C'}` : '';
-    return `${name}${curve} · ${inA} A`;
+    const tag = `#${idx + 1} ${curveColorName(p, idx)}`;
+    return `${tag} · ${name}${curve} · ${inA} A`;
   }
 
   function legendChipTitle(p) {
@@ -548,10 +598,10 @@
     return Y_AXIS_MAX_CAP;
   }
 
-  /** Axe temps : bas = plancher magnétique (~10 ms), haut = temps max utile des courbes affichées. */
+  /** Axe temps : bas = 1 ms (libellé 0 ms), haut = temps max utile des courbes affichées. */
   function computePlotYRange() {
     let yHi = 60;
-    let yLo = T_INST_FAST;
+    let yLo = Y_AXIS_MIN;
     const sampleI = (k, n) => Math.pow(
       10,
       Math.log10(X_MIN) + (k / n) * (Math.log10(X_MAX) - Math.log10(X_MIN)),
@@ -692,10 +742,11 @@
 
     ctx.font = font;
     const items = visible.map((p) => {
+      const idx = state.indexOf(p);
       const anchorI = (isMfgMccb(p) || isMccb(p)) ? mfgEffectiveIn(enrichNormMccb(p)) : p.in;
-      const text = shortCanvasLabel(p);
-      const w = ctx.measureText(text).width + 12;
-      return { p, text, anchorX: sx(anchorI), w };
+      const text = `#${idx + 1} ${curveColorName(p, idx)}`;
+      const w = ctx.measureText(text).width + 14;
+      return { p, idx, text, anchorX: sx(anchorI), w };
     }).sort((a, b) => a.anchorX - b.anchorX);
 
     const placed = [];
@@ -807,7 +858,14 @@
     ctx.fillText(note, bx + padX, by + padY + rowH + items.length * rowH + 1);
   }
 
-  /** Disjoncteur norme / MCB catalogue — lignes colorées par zone physique. */
+  /** Courant max (A) pour le palier instantané MCB — bord du graphe ou Icc si plus bas. */
+  function mcbCurveHighI() {
+    const icc = getIccA();
+    if (icc && icc >= X_MIN) return Math.min(X_MAX, icc);
+    return X_MAX;
+  }
+
+  /** Disjoncteur norme / MCB catalogue — tunnel thermique + bande magnétique IEC 60898. */
   function drawNormBreakerZoned(ctx, p, sx, sy) {
     const c = p.color;
     const curveP = isMfgMcb(p) ? { in: p.in, curve: p.curve || 'C', dev: 'mcb' } : p;
@@ -816,33 +874,33 @@
     const fastTh = d.fast.thermal.map((pt) => ({ x: sx(pt.i), y: sy(pt.t) }));
     const sMagX = sx(d.slow.magI);
     const fMagX = sx(d.fast.magI);
-    const sInstY = sy(d.slow.tInst);
-    const fInstY = sy(d.fast.tInst);
-    const xEnd = sx(X_MAX);
+    const xEnd = sx(mcbCurveHighI());
+    const instY = sy(d.slow.tInst);
+    const bottomY = sy(plotYLo);
     const slowEnd = slowTh[slowTh.length - 1];
     const fastEnd = fastTh[fastTh.length - 1];
 
     ctx.beginPath();
     smoothSubPath(ctx, slowTh, true);
-    ctx.lineTo(sMagX, sInstY);
-    ctx.lineTo(xEnd, sInstY);
-    ctx.lineTo(xEnd, fInstY);
-    ctx.lineTo(fMagX, fInstY);
+    if (slowEnd) ctx.lineTo(sMagX, slowEnd.y);
+    ctx.lineTo(sMagX, instY);
+    ctx.lineTo(xEnd, instY);
+    ctx.lineTo(fMagX, instY);
     if (fastEnd) ctx.lineTo(fMagX, fastEnd.y);
     smoothSubPath(ctx, fastTh.slice().reverse(), false);
     ctx.closePath();
     ctx.fillStyle = hexA(p.color, 0.06);
     ctx.fill();
+    fillInstantSkirt(ctx, sMagX, xEnd, instY, bottomY, c);
 
     strokePts(ctx, slowTh, c, 2.2, true);
     if (slowEnd) {
-      strokeSeg(ctx, slowEnd.x, slowEnd.y, sMagX, sInstY, c, 2.4);
-      strokeSeg(ctx, sMagX, sInstY, xEnd, sInstY, c, 2.4);
+      strokeSeg(ctx, slowEnd.x, slowEnd.y, sMagX, instY, c, 2.4);
     }
+    if (xEnd > sMagX + 1) strokeSeg(ctx, sMagX, instY, xEnd, instY, c, 2.4);
     strokePts(ctx, fastTh, c, 1.5, true);
     if (fastEnd) {
-      strokeSeg(ctx, fastEnd.x, fastEnd.y, fMagX, fInstY, c, 1.6);
-      strokeSeg(ctx, fMagX, fInstY, xEnd, fInstY, c, 1.6);
+      strokeSeg(ctx, fastEnd.x, fastEnd.y, fMagX, instY, c, 1.6);
     }
 
     ctx.setLineDash([4, 4]);
@@ -1076,14 +1134,14 @@
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'left';
     const header = 'À ' + fmtIexact(I) + ' :';
-    const lines = state.map((p) => {
+    const lines = state.map((p, i) => {
       const { tf, ts } = deviceTripBand(p, I);
       let verdict;
       if (!isFinite(tf) && !isFinite(ts)) verdict = tr('tcNoTrip');
       else if (ts > geom.plotYHi) verdict = '> ' + fmtTexact(geom.plotYHi);
       else if (Math.abs(tf - ts) / ts < 0.02) verdict = fmtTexact(ts); // bornes confondues
       else verdict = fmtTexact(tf) + ' – ' + fmtTexact(ts);
-      return { txt: `${deviceLabel(p)} : ${verdict}`, color: p.color, trips: isFinite(ts) };
+      return { txt: `#${i + 1} ${curveColorName(p, i)} · ${deviceLabel(p)} : ${verdict}`, color: p.color, trips: isFinite(ts) };
     });
 
     const rowH = 15;
@@ -1135,11 +1193,18 @@
   }
 
   function fmtTime(s) {
+    if (s <= 0) return '0 ms';
     if (s < 0.01) return (s * 1000).toFixed(s < 0.001 ? 2 : 1).replace(/\.?0+$/, '') + ' ms';
     if (s < 1) return Math.round(s * 1000) + ' ms';
     if (s < 60) return (Number.isInteger(s) ? s : s.toFixed(1)) + ' s';
     if (s < 3600) return (s / 60) + ' min';
     return (s / 3600) + ' h';
+  }
+
+  /** Libellé axe Y — 1 ms affiché « 0 ms » (convention courbes pro, échelle log). */
+  function fmtTimeAxis(v) {
+    if (v === 0.001) return '0 ms';
+    return fmtTime(v);
   }
 
   function drawGridX(ctx, sx, padT, plotH, plotW) {
@@ -1225,8 +1290,21 @@
       ctx.lineTo(padL + plotW, Y);
       ctx.stroke();
       ctx.fillStyle = th.axisY;
-      ctx.fillText(fmtTime(v), padL - 5, Y);
+      ctx.fillText(fmtTimeAxis(v), padL - 5, Y);
     });
+  }
+
+  /** Remplissage sous le plancher instantané (10 ms → bas du graphe) pour éviter la bande vide. */
+  function fillInstantSkirt(ctx, x0, x1, instY, bottomY, color) {
+    if (bottomY <= instY + 0.5 || x1 <= x0 + 1) return;
+    ctx.beginPath();
+    ctx.moveTo(x0, instY);
+    ctx.lineTo(x1, instY);
+    ctx.lineTo(x1, bottomY);
+    ctx.lineTo(x0, bottomY);
+    ctx.closePath();
+    ctx.fillStyle = hexA(color, 0.06);
+    ctx.fill();
   }
 
   /**
@@ -1279,8 +1357,9 @@
     }
     const sMagX = sx(mag[0] * inA);
     const fMagX = sx(mag[1] * inA);
+    const xEnd = sx(mcbCurveHighI());
     const instY = sy(p.instTS || T_INST_SLOW);
-    const xEnd = sx(X_MAX);
+    const bottomY = sy(plotYLo);
     if (!slowPts.length) return;
     const slowEnd = slowPts[slowPts.length - 1];
     const fastEnd = fastPts[fastPts.length - 1];
@@ -1288,17 +1367,19 @@
     ctx.beginPath();
     smoothSubPath(ctx, slowPts, true);
     ctx.lineTo(sMagX, slowEnd.y);
-    ctx.lineTo(fMagX, instY);
+    ctx.lineTo(sMagX, instY);
     ctx.lineTo(xEnd, instY);
+    ctx.lineTo(fMagX, instY);
     if (fastEnd) ctx.lineTo(fMagX, fastEnd.y);
     smoothSubPath(ctx, fastPts.slice().reverse(), false);
     ctx.closePath();
     ctx.fillStyle = hexA(p.color, 0.06);
     ctx.fill();
+    fillInstantSkirt(ctx, sMagX, xEnd, instY, bottomY, c);
 
     strokePts(ctx, slowPts, c, 2.2, true);
-    strokeSeg(ctx, slowEnd.x, slowEnd.y, fMagX, instY, c, 2.4);
-    strokeSeg(ctx, fMagX, instY, xEnd, instY, c, 2.4);
+    strokeSeg(ctx, slowEnd.x, slowEnd.y, sMagX, instY, c, 2.4);
+    if (xEnd > sMagX + 1) strokeSeg(ctx, sMagX, instY, xEnd, instY, c, 2.4);
     strokePts(ctx, fastPts, c, 1.5, true);
     if (fastEnd) strokeSeg(ctx, fastEnd.x, fastEnd.y, fMagX, instY, c, 1.6);
 
@@ -1312,68 +1393,71 @@
     ctx.setLineDash([]);
   }
 
-  /** Tracé MCCB constructeur (long / court Tsd / instantané Ii). */
+  /** Tracé MCCB constructeur — zones L / SD / I synchronisées sur Ir, Isd, Ii. */
   function drawManufacturer(ctx, p, sx, sy) {
     const d = curveDataManufacturer(p);
-    const slowPts = d.long.map((pt) => ({ x: sx(pt.i), y: sy(pt.t * MFG_TOL_SLOW) }));
-    const fastPts = d.long.map((pt) => ({ x: sx(pt.i), y: sy(pt.t * MFG_TOL_FAST) }));
-    const xEnd = sx(X_MAX);
-
-    let sMagX = sx(d.shortI);
-    let sInstY = sy(d.tsd * MFG_TOL_SLOW);
-    let fInstY = sy(d.tsd * MFG_TOL_FAST);
-    const instX = sx(d.instI);
-    const instY = sy(d.instTS);
-
-    if (!d.hasShortTime) {
-      sMagX = instX;
-      sInstY = instY;
-      fInstY = instY;
-    }
-
     const c = p.color;
     const shortDash = [5, 3];
-    const slowEnd = slowPts[slowPts.length - 1];
+    const isdX = sx(d.shortI);
+    const iiX = sx(d.instI);
+    const xEnd = sx(mfgCurveHighI(p, d));
+    const instY = sy(d.instTS);
+    const bottomY = sy(plotYLo);
+    const capY = (t) => sy(Math.min(t, plotYHi));
+    /** Palier court distinct de l'instantané (~10–20 ms) ? */
+    const tsdPlateau = d.hasShortTime && d.tsd > d.instTS * 2.5;
+    const tsdY = capY(d.tsd);
+
+    const slowLong = d.long.map((pt) => ({ x: sx(pt.i), y: capY(pt.t * MFG_TOL_SLOW) }));
+    const fastLong = d.long.map((pt) => ({ x: sx(pt.i), y: capY(pt.t * MFG_TOL_FAST) }));
+    if (!slowLong.length) return;
+
+    const slowEnd = slowLong[slowLong.length - 1];
+    const fastEnd = fastLong[fastLong.length - 1];
 
     ctx.beginPath();
-    smoothSubPath(ctx, slowPts, true);
-    if (d.hasShortTime) {
-      ctx.lineTo(sMagX, sInstY);
-      ctx.lineTo(instX, sInstY);
+    smoothSubPath(ctx, slowLong, true);
+    if (d.hasShortTime && tsdPlateau) {
+      ctx.lineTo(isdX, tsdY);
+      ctx.lineTo(iiX, tsdY);
+      ctx.lineTo(iiX, instY);
+    } else if (d.hasShortTime) {
+      ctx.lineTo(isdX, instY);
+      ctx.lineTo(iiX, instY);
+    } else {
+      ctx.lineTo(iiX, instY);
     }
-    ctx.lineTo(instX, instY);
-    ctx.lineTo(xEnd, instY);
-    ctx.lineTo(xEnd, fInstY);
-    if (d.hasShortTime) ctx.lineTo(instX, fInstY);
-    ctx.lineTo(fastPts.length ? fastPts[fastPts.length - 1].x : sx(d.irA), fInstY);
-    smoothSubPath(ctx, fastPts.slice().reverse(), false);
+    if (fastEnd) {
+      if (d.hasShortTime && tsdPlateau) {
+        ctx.lineTo(iiX, capY(d.tsd * MFG_TOL_FAST));
+        ctx.lineTo(isdX, capY(d.tsd * MFG_TOL_FAST));
+      }
+      ctx.lineTo(fastEnd.x, fastEnd.y);
+    }
+    smoothSubPath(ctx, fastLong.slice().reverse(), false);
     ctx.closePath();
     ctx.fillStyle = hexA(c, 0.06);
     ctx.fill();
+    fillInstantSkirt(ctx, iiX, xEnd, instY, bottomY, c);
 
-    strokePts(ctx, slowPts, c, 2.2, true);
-    if (d.hasShortTime && slowEnd) {
-      strokeSeg(ctx, slowEnd.x, slowEnd.y, sMagX, sInstY, c, 2.2, shortDash);
-      strokeSeg(ctx, sMagX, sInstY, instX, sInstY, c, 2.2, shortDash);
-    } else if (slowEnd) {
-      strokeSeg(ctx, slowEnd.x, slowEnd.y, instX, instY, c, 2.4);
+    strokePts(ctx, slowLong, c, 2.2, true);
+    if (d.hasShortTime && tsdPlateau) {
+      strokeSeg(ctx, slowEnd.x, slowEnd.y, isdX, tsdY, c, 2.2);
+      strokeSeg(ctx, isdX, tsdY, iiX, tsdY, c, 2.2, shortDash);
+      if (tsdY < instY - 1) strokeSeg(ctx, iiX, tsdY, iiX, instY, c, 2.4);
+    } else if (d.hasShortTime) {
+      strokeSeg(ctx, slowEnd.x, slowEnd.y, isdX, instY, c, 2.2);
+      if (iiX > isdX + 2) strokeSeg(ctx, isdX, instY, iiX, instY, c, 2.2, shortDash);
+    } else {
+      strokeSeg(ctx, slowEnd.x, slowEnd.y, iiX, instY, c, 2.4);
     }
-    strokeSeg(ctx, instX, instY, xEnd, instY, c, 2.4);
-    strokePts(ctx, fastPts, c, 1.5, true);
-    if (d.hasShortTime) {
-      const fastEnd = fastPts[fastPts.length - 1];
-      if (fastEnd) strokeSeg(ctx, fastEnd.x, fastEnd.y, sMagX, fInstY, c, 1.6, shortDash);
-    }
-    strokeSeg(ctx, instX, fInstY, xEnd, fInstY, c, 1.6);
+    if (iiX < xEnd - 1) strokeSeg(ctx, iiX, instY, xEnd, instY, c, 2.4);
 
-    ctx.setLineDash([4, 4]);
-    ctx.strokeStyle = hexA(c, 0.45);
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(sx(p.in), sy(plotYLo));
-    ctx.lineTo(sx(p.in), sy(plotYHi));
-    ctx.stroke();
-    ctx.setLineDash([]);
+    strokePts(ctx, fastLong, c, 1.5, true);
+    if (fastEnd) {
+      const fastJoinY = d.hasShortTime && tsdPlateau ? capY(d.tsd * MFG_TOL_FAST) : instY;
+      strokeSeg(ctx, fastEnd.x, fastEnd.y, isdX, fastJoinY, c, 1.6);
+    }
 
     drawThresholdLabels(ctx, p, sx, sy, d);
   }
@@ -1917,7 +2001,7 @@
       if (r === 'amont' || r === 'aval') {
         state.forEach((x) => { if (x.role === r) x.role = 'autre'; });
       }
-      p.color = PALETTE[nextColor % PALETTE.length];
+      assignCurveColor(p);
       p._preview = true;
       state.push(p);
       previewIndex = state.length - 1;
@@ -1989,20 +2073,24 @@
 
   function renderLegend() {
     const box = document.getElementById('tc-legend');
+    const hint = document.getElementById('tc-curve-color-hint');
     if (!box) return;
     if (!state.length) {
       box.innerHTML = `<span style="color:var(--muted);font-size:0.85rem">${tr('tcEmpty')}</span>`;
+      if (hint) hint.hidden = true;
       return;
     }
+    if (hint) hint.hidden = false;
     box.innerHTML = state.map((p, i) => {
       const roleCls = p.role === 'amont' ? ' tc-role-amont' : p.role === 'aval' ? ' tc-role-aval' : '';
       const roleLbl = p.role === 'amont' ? tr('tcRoleAmont') : p.role === 'aval' ? tr('tcRoleAval') : '';
       const editCls = i === editIndex ? ' tc-chip-edit' : '';
       const prevCls = p._preview ? ' tc-chip-preview' : '';
-      const title = `${roleLbl ? roleLbl + ' — ' : ''}${legendChipTitle(p)} · ${tr('tcEditHint')}`;
+      const colName = curveColorName(p, i);
+      const title = `${roleLbl ? roleLbl + ' — ' : ''}#${i + 1} ${colName} — ${legendChipTitle(p)} · ${tr('tcEditHint')}`;
       return `<button type="button" class="tc-chip-btn${roleCls}${editCls}${prevCls}" style="--tc-chip:${p.color}" data-tc-edit="${i}" title="${escapeAttr(title)}" aria-pressed="${i === editIndex ? 'true' : 'false'}">
-        <span class="tc-dot" style="background:${p.color}"></span>
-        <span class="tc-chip-lbl">${escapeAttr(legendChipShort(p))}</span>
+        <span class="tc-dot" style="background:${p.color}" aria-hidden="true">${i + 1}</span>
+        <span class="tc-chip-lbl">${escapeAttr(legendChipShort(p, i))}</span>
         <span class="tc-chip-remove" data-tc-remove="${i}" role="presentation" aria-hidden="true">×</span>
       </button>`;
     }).join('');
@@ -2216,9 +2304,8 @@
     if (!skipRoleDedup && (r === 'amont' || r === 'aval')) {
       state.forEach((x) => { if (x.role === r) x.role = 'autre'; });
     }
-    p.color = PALETTE[nextColor % PALETTE.length];
+    assignCurveColor(p);
     state.push(p);
-    nextColor++;
     refresh();
     return true;
   }
@@ -2281,9 +2368,8 @@
       if (r === 'amont' || r === 'aval') {
         state.forEach((x) => { if (x.role === r) x.role = 'autre'; });
       }
-      p.color = PALETTE[nextColor % PALETTE.length];
+      assignCurveColor(p);
       state.push(p);
-      nextColor++;
       refresh();
       return;
     }

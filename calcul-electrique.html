@@ -50,6 +50,9 @@
     body.picker-compact .types-strip{display:flex}
     body.calc-focus .types-picker-panel{display:none}
     body.calc-focus .focus-bar{display:flex}
+    body.app-embed .nav,body.app-embed .hero,body.app-embed footer{display:none!important}
+    body.app-embed .container{padding-top:12px}
+    body.app-embed .focus-expand{display:none}
     .focus-bar{display:none;align-items:center;gap:10px;margin-bottom:16px}
     .focus-expand{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#fff;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:0.8rem;font-weight:700;white-space:nowrap}
     .focus-chips{display:flex;gap:6px;overflow-x:auto;flex:1;-webkit-overflow-scrolling:touch}
@@ -227,7 +230,8 @@
     .tc-chip-lbl{pointer-events:none}
     .tc-chip-remove{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;margin:0 -1px 0 1px;border-radius:4px;background:rgba(0,0,0,0.25);color:#94a3b8;font-size:0.9rem;line-height:1;font-weight:700;pointer-events:auto}
     .tc-chip-remove:hover{color:#f87171;background:rgba(248,113,113,0.2)}
-    .tc-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+    .tc-dot{width:16px;height:16px;border-radius:50%;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;font-size:0.58rem;font-weight:900;color:#0b1424;line-height:1;box-shadow:0 0 0 1px rgba(0,0,0,0.35)}
+    .tc-curve-color-hint{margin:0 6px 4px;font-size:0.68rem;color:var(--muted);line-height:1.3}
     .tc-role{font-size:0.66rem;font-weight:800;padding:2px 6px;border-radius:5px;letter-spacing:0.3px;text-transform:uppercase}
     .tc-role-amont{background:#1d4ed8;color:#fff}
     .tc-role-aval{background:#059669;color:#fff}
@@ -747,6 +751,7 @@
         </div>
         <div class="tc-graph-studio" id="tc-graph-studio">
           <div id="tc-legend" class="tc-legend"></div>
+          <p id="tc-curve-color-hint" class="tc-curve-color-hint" data-i18n="tcCurveColorHint" hidden></p>
           <canvas id="tc-canvas" class="tc-canvas" width="900" height="540"></canvas>
           <div class="tc-tune-recap" id="tc-tune-recap" aria-live="polite">
             <span id="tc-ir-live"></span>
