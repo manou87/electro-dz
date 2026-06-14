@@ -1,7 +1,7 @@
 /**
- * Accès preview simulation — vous seul connaissez la clé.
- * URL : https://electro-dz.com/simulation-swissdz.html?cle=VOTRE_CLE
- * Changez PREVIEW_KEY ci-dessous, puis republiez le site.
+ * Accès preview simulation (désactivé en production — voir simulation-swissdz.html).
+ * Pour réactiver en test : ajouter <script src="js/simulation-preview-gate.js"></script>
+ * URL : https://electro-dz.com/simulation-swissdz.html?cle=swissdz-test-2026
  */
 (function () {
   var PREVIEW_KEY = 'swissdz-test-2026'
