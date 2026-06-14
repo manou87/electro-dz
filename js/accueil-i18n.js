@@ -22,9 +22,9 @@
       "quick.training": "Formations",
       "quick.training.hint":
         "450 questions pour maîtriser la norme NF C 15-100, pas à pas",
-      "quick.swissdz": "Simulation SwissDZ",
+      "quick.swissdz": "Simulateur SwissDZ",
       "quick.swissdz.hint":
-        "Tableau DIN, câblage guidé, composants EVC — méthode suisse",
+        "Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel",
       "quick.job": "Emploi · bientôt",
       "quick.quote": "Devis",
       "quick.social": "Réseaux",
@@ -71,9 +71,9 @@
       "tools.schema.title": "Schémas et plans",
       "tools.schema.desc": "Éditeur pro intégré — unifilaire, symboles électriques, PNG, SVG, impression",
       "tools.schema.link": "Ouvrir l'éditeur →",
-      "tools.swissdz.title": "Simulation SwissDZ",
+      "tools.swissdz.title": "Simulateur SwissDZ",
       "tools.swissdz.desc":
-        "ElectraLearn Pro — tableau électrique DIN, câblage pas-à-pas, atelier virtuel",
+        "Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel",
       "tools.swissdz.link": "Lancer la simulation →",
       "tools.quote.title": "Devis et chantiers",
       "tools.quote.desc": "Catalogue complet, sauvegarde locale et impression PDF",
@@ -126,9 +126,9 @@
       "quick.training": "تكوين",
       "quick.training.hint":
         "450 سؤالاً لإتقان معيار NF C 15-100 خطوة بخطوة",
-      "quick.swissdz": "محاكاة SwissDZ",
+      "quick.swissdz": "محاكي SwissDZ",
       "quick.swissdz.hint":
-        "لوحة DIN، توصيل موجّه، مكونات EVC — منهج سويسري",
+        "أول محاكي للكهربائيين في الجزائر — لوحة، ورشة ومخطط أحادي الطور احترافي",
       "quick.job": "عمل · قريباً",
       "quick.quote": "عروض أسعار",
       "quick.social": "شبكات",
@@ -175,9 +175,9 @@
       "tools.schema.title": "مخططات ورسوم",
       "tools.schema.desc": "محرر مدمج — أحادي الخط، رموز كهربائية، PNG، SVG، طباعة",
       "tools.schema.link": "فتح المحرر ←",
-      "tools.swissdz.title": "محاكاة SwissDZ",
+      "tools.swissdz.title": "محاكي SwissDZ",
       "tools.swissdz.desc":
-        "ElectraLearn Pro — لوحة DIN، توصيل موجّه، ورشة افتراضية",
+        "أول محاكي للكهربائيين في الجزائر — لوحة، ورشة ومخطط أحادي الطور احترافي",
       "tools.swissdz.link": "تشغيل المحاكاة ←",
       "tools.quote.title": "عروض أسعار ومشاريع",
       "tools.quote.desc": "كتالوج كامل، حفظ محلي وطباعة PDF",

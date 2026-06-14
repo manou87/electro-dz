@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="js/theme-electric-neon.js"></script>
-  <meta name="description" content="Electro DZ — Simulation SwissDZ : tableau électrique DIN, câblage guidé pas-à-pas, composants EVC — SwissDZ" />
+  <meta name="description" content="Simulateur SwissDZ — Premier simulateur pour les électriciens en Algérie : tableau, atelier & schéma unifilaire professionnel" />
   <meta name="robots" content="index, follow"/>
-  <title>Electro DZ — Simulation SwissDZ | SwissDZ</title>
+  <title>Simulateur SwissDZ — tableau, atelier & unifilaire pro | Electro DZ</title>
   <link rel="icon" href="assets/app-icon.png" type="image/png" />
   <link rel="stylesheet" href="css/simulation-swissdz.css" />
   <link rel="canonical" href="https://electro-dz.com/simulation-swissdz.html" />
@@ -17,10 +17,10 @@
       <img src="assets/app-icon.png" alt="" width="32" height="32" decoding="async" />
       <span>Swiss<span class="accent">DZ</span></span>
     </a>
-    <span class="sim-title" data-i18n="title">Simulation SwissDZ — Electro DZ</span>
+    <span class="sim-title" data-i18n="title">Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel</span>
     <div class="sim-modules" role="tablist" aria-label="Modules">
-      <button type="button" class="sim-mod-btn" data-mod="1" data-i18n="mod.tableau">Tableau DIN</button>
-      <button type="button" class="sim-mod-btn active" data-mod="3" data-i18n="mod.ar">Atelier virtuel</button>
+      <button type="button" class="sim-mod-btn" data-mod="1" data-i18n="mod.tableau">Tableau</button>
+      <button type="button" class="sim-mod-btn active" data-mod="3" data-i18n="mod.ar">Atelier</button>
     </div>
     <div class="sim-lang">
       <button type="button" class="lang-btn active" data-lang="fr" aria-label="Français">FR</button>
@@ -34,7 +34,7 @@
       <iframe
         id="simFrame"
         src="simulation-swissdz/index.html?embed=1&m=3"
-        title="Simulation SwissDZ — Electro DZ"
+        title="Simulateur SwissDZ — tableau, atelier & unifilaire professionnel"
         allow="fullscreen"
         loading="eager"
       ></iframe>
@@ -49,22 +49,22 @@
       var STORAGE = "electrodz-site-lang";
       var T = {
         fr: {
-          "meta.title": "Electro DZ — Simulation SwissDZ | SwissDZ",
-          "meta.desc": "Simulateur interactif : tableau électrique DIN, câblage guidé, composants EVC — méthode suisse.",
-          title: "Simulation SwissDZ — Electro DZ",
+          "meta.title": "Simulateur SwissDZ — tableau, atelier & unifilaire pro | Electro DZ",
+          "meta.desc": "Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel.",
+          title: "Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel",
           loading: "Chargement du simulateur…",
-          footer: "Outil pédagogique SwissDZ — NFC 15-100 · IEC 60364. Toute installation réelle doit être vérifiée par un professionnel habilité.",
-          "mod.tableau": "Tableau DIN",
-          "mod.ar": "Atelier virtuel",
+          footer: "SwissDZ · NFC 15-100 · IEC 60364. Toute installation réelle doit être vérifiée par un professionnel habilité.",
+          "mod.tableau": "Tableau",
+          "mod.ar": "Atelier",
         },
         ar: {
-          "meta.title": "Electro DZ — محاكاة SwissDZ | SwissDZ",
-          "meta.desc": "محاكي تفاعلي: لوحة كهربائية DIN، توصيل موجّه، مكونات EVC — منهج سويسري.",
-          title: "محاكاة SwissDZ — Electro DZ",
+          "meta.title": "محاكي SwissDZ — لوحة، ورشة ومخطط أحادي احترافي | Electro DZ",
+          "meta.desc": "أول محاكي للكهربائيين في الجزائر — لوحة كهربائية، ورشة افتراضية ومخطط أحادي الطور احترافي.",
+          title: "أول محاكي للكهربائيين في الجزائر — لوحة، ورشة ومخطط أحادي الطور احترافي",
           loading: "جاري تحميل المحاكي…",
-          footer: "أداة تعليمية SwissDZ — NFC 15-100 · IEC 60364. أي تركيب حقيقي يجب أن يتحقق منه مختص مؤهل.",
-          "mod.tableau": "لوحة DIN",
-          "mod.ar": "ورشة توصيل افتراضية",
+          footer: "SwissDZ · NFC 15-100 · IEC 60364. أي تركيب حقيقي يجب أن يتحقق منه مختص مؤهل.",
+          "mod.tableau": "لوحة",
+          "mod.ar": "ورشة",
         },
       };
 

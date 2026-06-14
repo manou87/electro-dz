@@ -30,7 +30,7 @@
       "section.quiz.perk3": "Révision ciblée : norme NF C 15-100 (2015) intégrée au site",
       "cta.quiz": "Commencer le questionnaire →",
       "cta.note": "Gratuit · mobile et ordinateur",
-      "section.sim.hook": "Simulation SwissDZ — ElectraLearn Pro",
+      "section.sim.hook": "Simulateur SwissDZ — tableau, atelier & unifilaire pro",
       "section.sim.lead":
         "Tableau électrique DIN, câblage guidé pas-à-pas avec composants EVC officiels, atelier virtuel de câblage — sans inscription.",
       "section.sim.perk1": "Module tableau : rail DIN, drag & drop, unifilaire",
