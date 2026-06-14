@@ -1,8 +1,8 @@
 /**
  * Bibliothèque de symboles IEC 60617 pour schémas unifilaires.
  * Réf. : Hager « Normen » (symboles schémas électriques, NIBT 2020 / electrosuisse).
- * Glyphes appareils alignés Hager Normen (IEC 60617) — pas de lignes de câbles.
- * Grille 48×48, connexions N/S.
+ * Glyphes : rendu PNG extrait de pdf/hager-normen.pdf (js/hager-glyphs-b64.js).
+ * Grille 48×48, connexions N/S. Barre/liaison = traits SVG (pas des symboles Hager).
  */
 (function (g) {
   'use strict';
@@ -250,12 +250,37 @@
     ev_charger: 'appliance',
   };
 
+  function hagerPng(id) {
+    var glyphs = g.ElectroDzHagerGlyphsB64;
+    return glyphs && glyphs[id] ? glyphs[id] : null;
+  }
+
+  function symbolBody(id) {
+    var png = hagerPng(id);
+    if (png) {
+      return (
+        '<image x="0" y="0" width="48" height="48" preserveAspectRatio="xMidYMid meet" ' +
+        'href="data:image/png;base64,' +
+        png +
+        '"/>'
+      );
+    }
+    return (SYMBOL_DB[id] || SYMBOL_DB.resistor_load).body;
+  }
+
   function getSymbol(id) {
-    return SYMBOL_DB[id] || SYMBOL_DB.resistor_load;
+    var sym = SYMBOL_DB[id] || SYMBOL_DB.resistor_load;
+    return {
+      id: sym.id,
+      label: sym.label,
+      category: sym.category,
+      body: symbolBody(sym.id),
+      ports: sym.ports,
+      fromHagerPdf: !!hagerPng(sym.id),
+    };
   }
 
   function symbolSvg(id, w, h) {
-    var sym = getSymbol(id);
     w = w || VB;
     h = h || VB;
     return (
@@ -268,17 +293,18 @@
       '" height="' +
       h +
       '">' +
-      sym.body +
+      symbolBody(id) +
       '</svg>'
     );
   }
 
   function symbolDataUri(id) {
+    var png = hagerPng(id);
+    if (png) return 'data:image/png;base64,' + png;
     return 'data:image/svg+xml,' + encodeURIComponent(symbolSvg(id, VB, VB));
   }
 
   function renderSymbolG(id, cx, cy, size) {
-    var sym = getSymbol(id);
     size = size || 48;
     var half = size / 2;
     return (
@@ -289,7 +315,7 @@
       ') scale(' +
       size / VB +
       ')">' +
-      sym.body +
+      symbolBody(id) +
       '</g>'
     );
   }

@@ -1,11 +1,11 @@
 /**
- * Traductions module devis web — FR / AR (aligné app DZSWISS ELEC).
+ * Traductions module devis web — FR / AR (aligné app SwissDZ).
  */
 (function (g) {
   'use strict';
 
   const fr = {
-    pageTitle: 'Devis | DZSWISS ELEC',
+    pageTitle: 'Devis | SwissDZ',
     metaDescription: 'Créez et imprimez vos devis électricité — catalogue complet comme l\'application',
     brandTagline: 'Précision suisse, passion algérienne',
     navHome: 'Accueil',
@@ -57,7 +57,7 @@
     errItems: 'Ajoutez au moins un article',
     savedOk: 'Devis enregistré',
     confirmDelete: 'Supprimer ce devis ?',
-    footerCopy: '© 2026 DZSWISS ELEC — Tous droits réservés',
+    footerCopy: '© 2026 SwissDZ — Tous droits réservés',
     printValidity: 'VALIDITÉ: 30 jours',
     printCompany: 'INFORMATIONS ENTREPRISE',
     printClient: 'INFORMATIONS CLIENT',
@@ -70,7 +70,7 @@
     printTotal: 'TOTAL',
     printSigInstaller: 'Signature Installateur',
     printSigClient: 'Signature Client',
-    printFooterApp: 'Devis créé par l\'application DZSWISS ELEC',
+    printFooterApp: 'Devis créé par l\'application SwissDZ',
     devisNo: 'DEVIS N°',
     date: 'Date',
     labelName: 'Nom',
@@ -82,7 +82,7 @@
   };
 
   const ar = {
-    pageTitle: 'عروض الأسعار | DZSWISS ELEC',
+    pageTitle: 'عروض الأسعار | SwissDZ',
     metaDescription: 'إنشاء وطباعة عروض الأسعار الكهربائية — نفس كتالوج التطبيق',
     brandTagline: 'دقة سويسرية، شغف جزائري',
     navHome: 'الرئيسية',
@@ -134,7 +134,7 @@
     errItems: 'أضف مادة واحدة على الأقل',
     savedOk: 'تم حفظ العرض',
     confirmDelete: 'حذف هذا العرض؟',
-    footerCopy: '© 2026 DZSWISS ELEC — جميع الحقوق محفوظة',
+    footerCopy: '© 2026 SwissDZ — جميع الحقوق محفوظة',
     printValidity: 'الصلاحية: 30 يوم',
     printCompany: 'معلومات المؤسسة',
     printClient: 'معلومات العميل',
@@ -147,7 +147,7 @@
     printTotal: 'المجموع',
     printSigInstaller: 'توقيع المثبت',
     printSigClient: 'توقيع العميل',
-    printFooterApp: 'تم إنشاء العرض بواسطة تطبيق DZSWISS ELEC',
+    printFooterApp: 'تم إنشاء العرض بواسطة تطبيق SwissDZ',
     devisNo: 'عرض رقم',
     date: 'التاريخ',
     labelName: 'الاسم',

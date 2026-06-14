@@ -94,7 +94,8 @@
       try {
         await window.ElectroDzFavorites?.mergeLocalAfterLogin?.();
       } catch (_) {}
-      location.replace(window.ElectroDzAuth.redirectAfterAuth());
+      const dest = window.ElectroDzAuth.redirectAfterAuth();
+      location.replace(dest);
     } catch (e) {
       fail(e?.message || String(e));
     }

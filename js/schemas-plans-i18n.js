@@ -6,10 +6,10 @@
 
   var T = {
     fr: {
-      "meta.title": "Schémas et plans — DZSWISS ELEC",
+      "meta.title": "Schémas et plans — SwissDZ",
       "meta.desc":
         "Éditeur professionnel de schémas unifilaires et plans (diagrams.net) — export, impression, infos chantier.",
-      "brand": "DZSWISS ELEC",
+      "brand": "SwissDZ",
       "page.title": "Schémas et plans",
       "loading": "Chargement de l'éditeur…",
       "status.ready": "Prêt",
@@ -33,13 +33,13 @@
       "confirm.new": "Créer un nouveau schéma ? Les modifications non enregistrées seront perdues.",
       "footer":
         "Éditeur intégré : diagrams.net (draw.io) — logiciel open source. Symboles électriques via bibliothèques intégrées.",
-      "print.title": "Schéma — DZSWISS ELEC",
+      "print.title": "Schéma — SwissDZ",
     },
     ar: {
-      "meta.title": "مخططات ورسوم — DZSWISS ELEC",
+      "meta.title": "مخططات ورسوم — SwissDZ",
       "meta.desc":
         "محرر احترافي للمخططات أحادية الخط والمخططات (diagrams.net) — تصدير وطباعة ومعلومات الورشة.",
-      "brand": "DZSWISS ELEC",
+      "brand": "SwissDZ",
       "page.title": "مخططات ورسوم",
       "loading": "جاري تحميل المحرر…",
       "status.ready": "جاهز",
@@ -63,7 +63,7 @@
       "confirm.new": "إنشاء مخطط جديد؟ ستُفقد التعديلات غير المحفوظة.",
       "footer":
         "محرر مدمج: diagrams.net (draw.io) — برمجية مفتوحة المصدر. رموز كهربائية عبر المكتبات المدمجة.",
-      "print.title": "مخطط — DZSWISS ELEC",
+      "print.title": "مخطط — SwissDZ",
     },
   };
 

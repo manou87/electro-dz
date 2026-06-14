@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="robots" content="noindex,nofollow"/>
+  <title>APERÇU — Accueil + Store Othman | SwissDZ</title>
+  <style>
+    :root{
+      --bg:#0a0f1a;--border:rgba(255,255,255,0.1);--accent:#facc15;
+      --text:#f1f5f9;--muted:#94a3b8;--store:#f97316;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:'Segoe UI',Tahoma,'Noto Sans Arabic',system-ui,sans-serif;
+      background:var(--bg);color:var(--text);line-height:1.5;min-height:100vh;
+    }
+    a{color:inherit;text-decoration:none}
+    .preview-banner{
+      background:#1e3a5f;color:#fff;text-align:center;padding:8px 12px;
+      font-size:.75rem;font-weight:700;position:sticky;top:0;z-index:300;
+    }
+    .preview-banner span{font-weight:500;opacity:.85;display:block;margin-top:2px}
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      padding:10px 4%;border-bottom:1px solid var(--border);
+      background:rgba(10,15,26,0.94);
+    }
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--accent)}
+    .brand img{width:48px;height:48px;border-radius:50%;border:2px solid rgba(250,204,21,.45)}
+    .brand small{display:block;font-size:.65rem;color:var(--muted);font-weight:600}
+    .nav-links{display:flex;gap:12px;font-size:.72rem;color:var(--muted);flex-wrap:wrap}
+    .nav-links a:hover{color:var(--accent)}
+    .nav-links .is-new{color:var(--store);font-weight:800}
+    .wrap{max-width:1140px;margin:0 auto;padding:0 5% 40px}
+    .hero{
+      padding:14px 0;display:flex;align-items:center;justify-content:space-between;
+      gap:12px;flex-wrap:wrap;
+    }
+    .hero-sub{font-size:.82rem;color:var(--accent);font-weight:600;max-width:28rem}
+    .hero-apps{display:flex;gap:8px}
+    .hero-apps span{
+      width:40px;height:40px;border-radius:10px;background:var(--accent);
+      display:flex;align-items:center;justify-content:center;font-size:.65rem;color:#0f172a;font-weight:800;
+    }
+
+    /* ——— NOUVEAU : bandeau store ——— */
+    .store-promo{
+      display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;
+      padding:14px 16px;margin-bottom:14px;
+      border:1px solid rgba(249,115,22,.45);
+      border-radius:14px;
+      background:rgba(249,115,22,.08);
+    }
+    @media(max-width:720px){.store-promo{grid-template-columns:1fr}}
+    .store-promo__badge{
+      display:inline-block;font-size:.62rem;font-weight:800;text-transform:uppercase;
+      letter-spacing:.06em;padding:3px 8px;border-radius:4px;
+      background:var(--store);color:#fff;margin-bottom:6px;
+    }
+    .store-promo h2{font-size:1.05rem;font-weight:800;margin-bottom:4px}
+    .store-promo p{font-size:.78rem;color:var(--muted);max-width:32rem}
+    .store-promo__meta{font-size:.68rem;color:var(--muted);margin-top:6px}
+    .store-promo__thumbs{
+      display:flex;gap:8px;align-items:center;
+    }
+    .store-promo__thumbs img{
+      width:72px;height:56px;object-fit:cover;border-radius:8px;
+      border:1px solid var(--border);
+    }
+    .store-promo__cta{
+      display:inline-flex;align-items:center;gap:6px;margin-top:10px;
+      padding:8px 14px;border-radius:999px;font-size:.78rem;font-weight:800;
+      background:var(--store);color:#fff;
+    }
+    .store-promo__cta:hover{filter:brightness(1.08)}
+
+    .quick-access{border-top:1px solid var(--border);padding:12px 0}
+    .quick-access h2{
+      font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;
+      color:var(--accent);margin-bottom:10px;font-weight:800;
+    }
+    .quick-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+    }
+    @media(min-width:800px){.quick-grid{grid-template-columns:repeat(3,1fr)}}
+    .quick-item{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:8px;padding:16px 8px;min-height:100px;
+      border:1px solid var(--border);border-radius:12px;
+      border-top:3px solid var(--qa,var(--accent));
+      background:rgba(255,255,255,.04);
+    }
+    .quick-item--store{--qa:var(--store);position:relative}
+    .quick-item--store::after{
+      content:'جديد';position:absolute;top:6px;inset-inline-start:6px;
+      font-size:.55rem;font-weight:800;padding:2px 6px;border-radius:4px;
+      background:var(--store);color:#fff;
+    }
+    .quick-item .ico{
+      width:32px;height:32px;border-radius:8px;
+      background:rgba(255,255,255,.08);
+      display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+    }
+    .quick-item span{font-size:.8rem;font-weight:800}
+
+    .spotlight{margin-top:20px}
+    .spotlight-label{font-size:.75rem;color:var(--muted);font-weight:800;margin-bottom:8px}
+    .spotlight-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+    @media(min-width:700px){.spotlight-grid{grid-template-columns:repeat(4,1fr)}}
+    .spot-card{
+      padding:12px;border-radius:10px;border:1px solid var(--border);
+      min-height:80px;position:relative;
+    }
+    .spot-card--store{border-color:rgba(249,115,22,.5);background:rgba(249,115,22,.1)}
+    .spot-card h3{font-size:.82rem;margin-top:6px}
+    .spot-tag{font-size:.6rem;font-weight:800;color:var(--accent)}
+
+    .plan-box{
+      margin-top:24px;padding:16px;border-radius:12px;
+      border:1px dashed rgba(148,163,184,.4);background:rgba(255,255,255,.03);
+      font-size:.8rem;color:var(--muted);
+    }
+    .plan-box h3{color:var(--accent);font-size:.9rem;margin-bottom:8px}
+    .plan-box ol{padding-inline-start:1.2rem}
+    .plan-box li{margin-bottom:6px}
+    .plan-box strong{color:var(--text)}
+  </style>
+</head>
+<body>
+  <p class="preview-banner">
+    PROPOSITION — Accueil SwissDZ avec store Othman Electrique
+    <span>Maquette locale · non publiée · comparez avec index.html actuel</span>
+  </p>
+
+  <nav class="nav">
+    <a href="index.html" class="brand">
+      <img src="assets/app-icon.png" alt="" width="48" height="48"/>
+      <div>
+        SwissDZ
+        <small>الجودة السويسرية في الجزائر</small>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="calcul-electrique.html">الحسابات</a>
+      <a href="bibliotheque.html">مكتبة PDF</a>
+      <a href="electro-centrale.html" class="is-new">عثمان للكهرباء · متجر</a>
+      <a href="emploi.html">العمل</a>
+      <a href="login.html">دخول</a>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="hero">
+      <div>
+        <p class="hero-sub">من المخطط إلى الورشة: حسابات موثوقة، معايير واضحة — للمحترفين</p>
+      </div>
+      <div class="hero-apps" aria-hidden="true">
+        <span>GP</span><span></span>
+      </div>
+    </section>
+
+    <!-- ═══ NOUVEAUTÉ 1 : bandeau store ═══ -->
+    <a class="store-promo" href="electro-centrale.html">
+      <div>
+        <span class="store-promo__badge">متجر أونلاين · الجزائر</span>
+        <h2>عثمان للكهرباء — تجهيزات كهربائية</h2>
+        <p>مفاتيح، كوابل، لوحات، إضاءة LED، حماية… أكثر من 90 منتجاً مع صور وأسعار إرشادية.</p>
+        <p class="store-promo__meta">Othman Electrique · livraison &amp; retrait — bientôt panier en ligne</p>
+        <span class="store-promo__cta">تصفح المتجر ←</span>
+      </div>
+      <div class="store-promo__thumbs" aria-hidden="true">
+        <img src="assets/electro-centrale/sonepar/hero-signify.jpg" alt=""/>
+        <img src="assets/electro-centrale/sonepar/prod-disj.jpg" alt=""/>
+        <img src="assets/electro-centrale/sonepar/prod-cable.jpg" alt=""/>
+      </div>
+    </a>
+
+    <!-- ═══ NOUVEAUTÉ 2 : tuile « Shop » dans accès rapide (grille 3×3) ═══ -->
+    <section class="quick-access">
+      <h2>وصول سريع</h2>
+      <div class="quick-grid">
+        <a class="quick-item" style="--qa:#facc15" href="calcul-electrique.html">
+          <span class="ico">⚡</span><span>الحسابات</span>
+        </a>
+        <a class="quick-item quick-item--store" href="electro-centrale.html">
+          <span class="ico">🛒</span><span>المتجر</span>
+        </a>
+        <a class="quick-item" style="--qa:#f87171" href="bibliotheque.html">
+          <span class="ico">📕</span><span>PDF</span>
+        </a>
+        <a class="quick-item" style="--qa:#60a5fa" href="documentation.html">
+          <span class="ico">📘</span><span>الوثائق</span>
+        </a>
+        <a class="quick-item" style="--qa:#a78bfa" href="formations.html">
+          <span class="ico">🎓</span><span>التكوين</span>
+        </a>
+        <a class="quick-item" style="--qa:#34d399" href="emploi.html">
+          <span class="ico">💼</span><span>العمل</span>
+        </a>
+        <a class="quick-item" style="--qa:#fb923c" href="devis.html">
+          <span class="ico">📋</span><span>عروض</span>
+        </a>
+        <a class="quick-item" style="--qa:#c084fc" href="#communaute">
+          <span class="ico">👥</span><span>شبكات</span>
+        </a>
+        <a class="quick-item" style="--qa:#38bdf8" href="support.html">
+          <span class="ico">❓</span><span>الدعم</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ═══ NOUVEAUTÉ 3 : carte store dans « Les plus demandés » ═══ -->
+    <section class="spotlight">
+      <p class="spotlight-label">الأكثر طلباً</p>
+      <div class="spotlight-grid">
+        <a class="spot-card" href="calcul-electrique.html">
+          <span class="spot-tag">أداة</span><h3>حسابات كهربائية</h3>
+        </a>
+        <a class="spot-card" href="bibliotheque.html">
+          <span class="spot-tag">PDF</span><h3>مكتبة تقنية</h3>
+        </a>
+        <a class="spot-card spot-card--store" href="electro-centrale.html">
+          <span class="spot-tag" style="color:var(--store)">متجر</span><h3>عثمان للكهرباء</h3>
+        </a>
+        <a class="spot-card" href="emploi.html">
+          <span class="spot-tag">عمل</span><h3>عروض الشغل</h3>
+        </a>
+      </div>
+    </section>
+
+    <aside class="plan-box" dir="ltr" lang="fr">
+      <h3>Plan d’intégration (quand vous publierez le store)</h3>
+      <ol>
+        <li><strong>Pages store</strong> — retirer <code>noindex</code> sur <code>electro-centrale*.html</code>, pousser assets + JSON sur GitHub.</li>
+        <li><strong>Accueil</strong> — bandeau promo + tuile « المتجر » + lien nav (comme cette maquette).</li>
+        <li><strong>i18n</strong> — clés FR/AR dans <code>accueil-i18n.js</code> (shop.title, shop.cta…).</li>
+        <li><strong>Commerce</strong> — garder <code>commerce.html</code> en brouillon (annuaire magasins) ; le shop Othman reste séparé.</li>
+        <li><strong>Phase 2</strong> — panier, WhatsApp commande, ou liaison avec l’app mobile.</li>
+      </ol>
+    </aside>
+  </div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="50%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0c4a6e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="600" fill="url(#bg4)"/>
+  <g stroke="#facc15" stroke-width="2" fill="none" opacity="0.55">
+    <path d="M150 450 L350 250 L550 350 L750 150 L1050 300"/>
+    <circle cx="350" cy="250" r="6" fill="#facc15"/>
+    <circle cx="750" cy="150" r="6" fill="#facc15"/>
+  </g>
+  <text x="60" y="520" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="22" font-weight="700" opacity="0.85">Sch�mas � Devis � Formation</text>
+</svg>

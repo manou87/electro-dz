@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 3,
+  "id": "Foco LED",
+  "name": "Foco LED",
+  "category": "Genericos",
+  "tagPrefix": "HL",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 4800,
+      "height": 8400
+    }
+  },
+  "terminals": [
+    {
+      "id": "F",
+      "label": "F",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.5,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "N",
+      "label": "N",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.276458,
+      "ny": 0.884405,
+      "direction": "left",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "ac",
+    "activationRule": "load",
+    "terminalPairs": [
+      {
+        "id": "F-N",
+        "terminals": [
+          "F",
+          "N"
+        ],
+        "simBehavior": "load_lamp",
+        "currentPath": "sink",
+        "terminalTypes": {
+          "F": "power_ac",
+          "N": "power_ac"
+        }
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+      },
+      "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+      }
+    }
+  }
+}

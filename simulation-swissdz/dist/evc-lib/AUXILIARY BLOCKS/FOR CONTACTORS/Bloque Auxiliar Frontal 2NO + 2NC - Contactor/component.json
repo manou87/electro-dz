@@ -1,0 +1,197 @@
+{
+  "schemaVersion": 3,
+  "id": "Bloque Auxiliar Frontal 2NO + 2NC - Contactor",
+  "name": "Bloque Auxiliar Frontal 2NO + 2NC - Contactor",
+  "category": "Control",
+  "tagPrefix": "KM",
+  "tagInherit": true,
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 2900,
+      "height": 3300
+    }
+  },
+  "terminals": [
+    {
+      "id": "53",
+      "label": "53",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.12931,
+      "ny": 0.05303,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "83",
+      "label": "83",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.872414,
+      "ny": 0.05303,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "54",
+      "label": "54",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.12931,
+      "ny": 0.947273,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "84",
+      "label": "84",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.872414,
+      "ny": 0.947273,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "61",
+      "label": "61",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.375862,
+      "ny": 0.05303,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "71",
+      "label": "71",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.627586,
+      "ny": 0.05303,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "62",
+      "label": "62",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.375862,
+      "ny": 0.947273,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "72",
+      "label": "72",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.627586,
+      "ny": 0.947273,
+      "direction": "bottom",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "any",
+    "activationRule": "docked",
+    "terminalPairs": [
+      {
+        "id": "contact_no_1",
+        "terminals": [
+          "53",
+          "54"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+          "53": "contact_no",
+          "54": "contact_no"
+        }
+      },
+      {
+        "id": "contact_no_2",
+        "terminals": [
+          "83",
+          "84"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+          "83": "contact_no",
+          "84": "contact_no"
+        }
+      },
+      {
+        "id": "contact_nc_1",
+        "terminals": [
+          "61",
+          "62"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+          "61": "contact_nc",
+          "62": "contact_nc"
+        }
+      },
+      {
+        "id": "contact_nc_2",
+        "terminals": [
+          "71",
+          "72"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+          "71": "contact_nc",
+          "72": "contact_nc"
+        }
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+      },
+      "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+      }
+    }
+  },
+  "docking": {
+    "mountable": false,
+    "zLayer": 3,
+    "attachesAs": {
+      "type": "auxiliary_contact",
+      "dockSize": {
+        "cols": 2,
+        "rows": 3
+      },
+      "hideTerminalsOnDock": [],
+      "overlapPx": 0
+    },
+    "zones": []
+  }
+}

@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 3,
+  "id": "Guardamotor 0,63-1 A",
+  "name": "Guardamotor 0,63-1 A",
+  "category": "Potencia",
+  "tagPrefix": "QM",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 3600,
+      "height": 7200
+    }
+  },
+  "terminals": [
+    {
+      "id": "1",
+      "label": "1/L1",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.166667,
+      "ny": 0.019306,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "3",
+      "label": "3/L2",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.5,
+      "ny": 0.019306,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "5",
+      "label": "5/L3",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.833333,
+      "ny": 0.019306,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "2",
+      "label": "2/T1",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.166667,
+      "ny": 0.978333,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "4",
+      "label": "4/T2",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.5,
+      "ny": 0.978333,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "6",
+      "label": "6/T3",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.833333,
+      "ny": 0.978333,
+      "direction": "bottom",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "ac",
+    "activationRule": "protection",
+    "terminalPairs": [
+      {
+        "id": "pole_1",
+        "terminals": [
+          "1",
+          "2"
+        ],
+        "simBehavior": "protection_mpcb",
+        "currentPath": "series",
+        "terminalTypes": {
+          "1": "power_ac",
+          "2": "power_ac"
+        }
+      },
+      {
+        "id": "pole_2",
+        "terminals": [
+          "3",
+          "4"
+        ],
+        "simBehavior": "protection_mpcb",
+        "currentPath": "series",
+        "terminalTypes": {
+          "3": "power_ac",
+          "4": "power_ac"
+        }
+      },
+      {
+        "id": "pole_3",
+        "terminals": [
+          "5",
+          "6"
+        ],
+        "simBehavior": "protection_mpcb",
+        "currentPath": "series",
+        "terminalTypes": {
+          "5": "power_ac",
+          "6": "power_ac"
+        }
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+      },
+      "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+      }
+    }
+  },
+  "docking": {
+    "mountable": true,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "itm_3p",
+      "dockSize": {
+        "cols": 3,
+        "rows": 2
+      },
+      "hideTerminalsOnDock": [],
+      "overlapPx": 0
+    },
+    "zones": [
+      {
+        "id": "left_aux",
+        "label": "Auxiliar izquierdo",
+        "position": "left",
+        "rect": {
+          "x": -1200,
+          "y": 0,
+          "w": 1224,
+          "h": 7181
+        },
+        "anchor": {
+          "nx": -0.163333,
+          "ny": 0.498681
+        },
+        "gridSize": {
+          "cols": 1,
+          "rows": 6
+        },
+        "accepts": [
+          "auxiliary_contact"
+        ],
+        "bridge": null,
+        "childAlignment": "right_center",
+        "childZLayer": 2,
+        "hideHostTerminals": null
+      },
+      {
+        "id": "right_aux",
+        "label": "Auxiliar derecho",
+        "position": "right",
+        "rect": {
+          "x": 3600,
+          "y": 0,
+          "w": 1200,
+          "h": 7200
+        },
+        "anchor": {
+          "nx": 1.166667,
+          "ny": 0.5
+        },
+        "gridSize": {
+          "cols": 1,
+          "rows": 6
+        },
+        "accepts": [
+          "auxiliary_contact"
+        ],
+        "bridge": null,
+        "childAlignment": "left_center",
+        "childZLayer": 2,
+        "hideHostTerminals": null
+      },
+      {
+        "id": "over_aux",
+        "label": "Auxiliar frontal",
+        "position": "over",
+        "rect": {
+          "x": 0,
+          "y": 1500,
+          "w": 3600,
+          "h": 600
+        },
+        "anchor": {
+          "nx": 0.5,
+          "ny": 0.25
+        },
+        "gridSize": {
+          "cols": 3,
+          "rows": 1
+        },
+        "accepts": [
+          "auxiliary_contact"
+        ],
+        "bridge": null,
+        "childAlignment": "center",
+        "childZLayer": 3,
+        "hideHostTerminals": null
+      }
+    ]
+  }
+}

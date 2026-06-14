@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 3,
+  "id": "Pulsador DOWN 1NO+1NC",
+  "name": "Pulsador DOWN 1NO+1NC",
+  "category": "Accionamientos",
+  "tagPrefix": "S",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 1800,
+      "height": 2100
+    }
+  },
+  "terminals": [
+    {
+      "id": "1A",
+      "label": "1A",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.296667,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "3A",
+      "label": "3A",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.727778,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "2A",
+      "label": "2A",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.296667,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "4A",
+      "label": "4A",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.727778,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "any",
+    "activationRule": "pushbutton",
+    "terminalPairs": [
+      {
+        "id": "contact-nc-a",
+        "terminals": [
+          "1A",
+          "2A"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+          "1A": "contact_nc",
+          "2A": "contact_nc"
+        }
+      },
+      {
+        "id": "contact-no-b",
+        "terminals": [
+          "3A",
+          "4A"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+          "3A": "contact_no",
+          "4A": "contact_no"
+        }
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+      },
+      "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+      }
+    }
+  }
+}

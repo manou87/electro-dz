@@ -52,7 +52,7 @@ async function main() {
     };
   } else {
     const rl = createInterface({ input: process.stdin, output: process.stdout });
-    console.log("\n📚 Ajouter un livre — DZSWISS ELEC\n");
+    console.log("\n📚 Ajouter un livre — SwissDZ\n");
     console.log("Catégories:", categories.join(", "));
     const id = await ask(rl, "ID (slug unique, ex: guide-tableau)");
     if (catalog.books.some((b) => b.id === id)) {

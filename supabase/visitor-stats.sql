@@ -1,4 +1,4 @@
--- Compteur de visites site DZSWISS ELEC — exécuter une fois dans Supabase → SQL Editor
+-- Compteur de visites site SwissDZ — exécuter une fois dans Supabase → SQL Editor
 
 create table if not exists public.site_visitor_stats (
   id int primary key default 1 check (id = 1),

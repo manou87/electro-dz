@@ -6,7 +6,7 @@
 
   var T = {
     fr: {
-      "meta.title": "Documentation — DZSWISS ELEC",
+      "meta.title": "Documentation — SwissDZ",
       "meta.desc":
         "Documentation technique pour électriciens : monophasé, triphasé, magnétisme, énergie.",
       "nav.home": "Accueil",
@@ -47,7 +47,7 @@
       "footer.nav": "Navigation",
       "footer.support": "Support",
       "footer.privacy": "Confidentialité",
-      "footer.copy": "© 2026 DZSWISS ELEC. Tous droits réservés.",
+      "footer.copy": "© 2026 SwissDZ. Tous droits réservés.",
       "res.mono.1": "Phaseurs en alternatif (80 formules)",
       "res.mono.2": "Phaseurs — version 2 par page",
       "res.mono.3": "Phaseurs complexes",
@@ -72,7 +72,7 @@
       "res.nrj.2": "Statistiques OFEN officielles",
     },
     ar: {
-      "meta.title": "التوثيق التقني — DZSWISS ELEC",
+      "meta.title": "التوثيق التقني — SwissDZ",
       "meta.desc":
         "توثيق تقني للكهربائيين: أحادي الطور، ثلاثي الطور، مغناطيسية، طاقة وموارد.",
       "nav.home": "الرئيسية",
@@ -113,7 +113,7 @@
       "footer.nav": "التنقل",
       "footer.support": "الدعم",
       "footer.privacy": "الخصوصية",
-      "footer.copy": "© 2026 DZSWISS ELEC. جميع الحقوق محفوظة.",
+      "footer.copy": "© 2026 SwissDZ. جميع الحقوق محفوظة.",
       "res.mono.1": "الأطوار في التيار المتناوب (80 صيغة)",
       "res.mono.2": "الأطوار — نسخة صفحتين",
       "res.mono.3": "أطوار مركبة",

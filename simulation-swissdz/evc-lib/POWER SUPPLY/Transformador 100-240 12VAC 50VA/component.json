@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 3,
+  "id": "Transformador 100-240 12VAC 50VA",
+  "name": "Transformador 100-240 12VAC 50VA",
+  "category": "Potencia",
+  "tagPrefix": "T",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 4800,
+      "height": 8400
+    }
+  },
+  "terminals": [
+    {
+      "id": "N1",
+      "label": "N-out",
+      "signal": "Control",
+      "role": "output",
+      "nx": 0.125,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "N2",
+      "label": "N-out",
+      "signal": "Control",
+      "role": "output",
+      "nx": 0.375,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "L1",
+      "label": "L-out",
+      "signal": "Control",
+      "role": "output",
+      "nx": 0.625,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "L2",
+      "label": "L-out",
+      "signal": "Control",
+      "role": "output",
+      "nx": 0.875,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "PE",
+      "label": "PE",
+      "signal": "Potencia",
+      "role": "input",
+      "nx": 0.25,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "N",
+      "label": "N-in",
+      "signal": "Potencia",
+      "role": "input",
+      "nx": 0.5,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "L",
+      "label": "L-in",
+      "signal": "Potencia",
+      "role": "input",
+      "nx": 0.75,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "transformer",
+    "enabled": true,
+    "voltage": "ac",
+    "activationRule": "transformer",
+    "terminalPairs": [
+      {
+        "id": "bridge_L",
+        "terminals": [
+          "L1",
+          "L2",
+          "L"
+        ],
+        "simBehavior": "junction",
+        "currentPath": "series"
+      },
+      {
+        "id": "bridge_N",
+        "terminals": [
+          "N1",
+          "N2",
+          "N"
+        ],
+        "simBehavior": "junction",
+        "currentPath": "series"
+      },
+      {
+        "id": "indicator",
+        "terminals": [
+          "L1",
+          "N1"
+        ],
+        "simBehavior": "transformer_indicator",
+        "currentPath": "sink"
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+      },
+      "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+      }
+    }
+  },
+  "docking": {
+    "mountable": true,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "general_montable_riel_din",
+      "dockSize": {
+        "cols": 4,
+        "rows": 2
+      },
+      "hideTerminalsOnDock": [],
+      "overlapPx": 0
+    },
+    "zones": []
+  }
+}

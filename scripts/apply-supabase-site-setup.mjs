@@ -187,7 +187,7 @@ async function runAllSql() {
 }
 
 async function main() {
-  console.log('DZSWISS ELEC — réglages Supabase SITE WEB\n');
+  console.log('SwissDZ — réglages Supabase SITE WEB\n');
 
   await runAllSql();
   await patchAuthConfig();

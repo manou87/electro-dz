@@ -6,7 +6,7 @@
 
   var T = {
     fr: {
-      "meta.title": "Méthode d'apprentissage suisse — DZSWISS ELEC",
+      "meta.title": "Méthode d'apprentissage suisse — SwissDZ",
       "meta.desc":
         "Apprenez la norme NF C 15-100 avec le grand questionnaire interactif — 450 questions, gratuit en ligne.",
       "nav.home": "Accueil",
@@ -30,10 +30,18 @@
       "section.quiz.perk3": "Révision ciblée : norme NF C 15-100 (2015) intégrée au site",
       "cta.quiz": "Commencer le questionnaire →",
       "cta.note": "Gratuit · mobile et ordinateur",
-      "footer.copy": "© 2026 DZSWISS ELEC — electro-dz.com",
+      "section.sim.hook": "Simulation SwissDZ — ElectraLearn Pro",
+      "section.sim.lead":
+        "Tableau électrique DIN, câblage guidé pas-à-pas avec composants EVC officiels, atelier virtuel de câblage — sans inscription.",
+      "section.sim.perk1": "Module tableau : rail DIN, drag & drop, unifilaire",
+      "section.sim.perk2": "Atelier virtuel : scénarios débutant et pro, fils animés, hotspots interactifs",
+      "section.sim.perk3": "Méthode suisse — NFC 15-100 · IEC 60364",
+      "cta.sim": "Lancer la simulation →",
+      "cta.sim.note": "Gratuit · mobile et ordinateur",
+      "footer.copy": "© 2026 SwissDZ — electro-dz.com",
     },
     ar: {
-      "meta.title": "منهج تعلّم سويسري — DZSWISS ELEC",
+      "meta.title": "منهج تعلّم سويسري — SwissDZ",
       "meta.desc":
         "تعلّم معيار NF C 15-100 عبر استبيان تفاعلي ضخم — 450 سؤالاً، مجاني على الموقع.",
       "nav.home": "الرئيسية",
@@ -57,7 +65,15 @@
       "section.quiz.perk3": "مراجعة موجهة: معيار NF C 15-100 (2015) على الموقع",
       "cta.quiz": "ابدأ الاستبيان الآن ←",
       "cta.note": "مجاني · هاتف وحاسوب",
-      "footer.copy": "© 2026 DZSWISS ELEC — electro-dz.com",
+      "section.sim.hook": "محاكاة SwissDZ — ElectraLearn Pro",
+      "section.sim.lead":
+        "لوحة كهربائية DIN، توصيل موجّه خطوة بخطوة بمكونات EVC رسمية، ورشة توصيل افتراضية — دون تسجيل.",
+      "section.sim.perk1": "وحدة اللوحة: سكة DIN، سحب وإفلات، مخطط أحادي",
+      "section.sim.perk2": "ورشة افتراضية: سيناريوهات مبتدئ ومحترف، أسلاك متحركة، نقاط تفاعل",
+      "section.sim.perk3": "منهج سويسري — NFC 15-100 · IEC 60364",
+      "cta.sim": "تشغيل المحاكاة ←",
+      "cta.sim.note": "مجاني · هاتف وحاسوب",
+      "footer.copy": "© 2026 SwissDZ — electro-dz.com",
     },
   };
 

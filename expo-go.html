@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Expo Go — Electro DZ</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:system-ui,sans-serif;
+      background:#0f172a;
+      color:#e2e8f0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+    .card{
+      max-width:420px;
+      width:100%;
+      text-align:center;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(250,204,21,.35);
+      border-radius:20px;
+      padding:28px 24px 32px;
+    }
+    h1{font-size:1.35rem;color:#facc15;margin-bottom:8px}
+    p{font-size:.95rem;color:#94a3b8;line-height:1.5;margin-bottom:16px}
+    img.qr{
+      width:min(320px,80vw);
+      height:auto;
+      background:#fff;
+      border-radius:12px;
+      padding:12px;
+      margin:8px auto 20px;
+      display:block;
+    }
+    .url{
+      font-family:ui-monospace,monospace;
+      font-size:.9rem;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(34,211,238,.3);
+      border-radius:10px;
+      padding:12px 14px;
+      color:#22d3ee;
+      word-break:break-all;
+      user-select:all;
+    }
+    ol{text-align:left;margin:16px auto 0;max-width:340px;color:#cbd5e1;font-size:.88rem;line-height:1.6}
+    li{margin-bottom:6px}
+    .ok{color:#4ade80;font-size:.85rem;margin-top:14px}
+    .web{color:#94a3b8;font-size:.82rem;margin-top:10px}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Expo Go — Tester l'app</h1>
+    <p>Scannez ce QR avec <strong>Expo Go</strong> (iPhone / Android), même Wi‑Fi que le Mac.</p>
+    <img class="qr" src="expo-go-qr.png?v=8081" width="320" height="320" alt="QR code Expo Go"/>
+    <p class="url" id="url">exp://192.168.1.98:8081</p>
+    <p class="ok" id="status">Détection du port Metro…</p>
+    <p class="web" id="web-hint"></p>
+    <ol>
+      <li>Même Wi‑Fi sur téléphone et ordinateur (pas de VPN)</li>
+      <li>App <strong>Expo Go</strong> → Scanner le QR</li>
+      <li>Sinon : Projets → « Entrer l'URL » → coller l'URL ci-dessus</li>
+      <li>Regénérer le QR : <code>npm run qr</code> dans le dossier app</li>
+    </ol>
+  </div>
+  <script>
+    var LAN_IP = '192.168.1.98';
+    var statusEl = document.getElementById('status');
+    var urlEl = document.getElementById('url');
+    var webHint = document.getElementById('web-hint');
+
+    function probe(port) {
+      return fetch('http://127.0.0.1:' + port + '/status')
+        .then(function (r) { return r.text(); })
+        .then(function (t) {
+          return /packager-status:\s*running/i.test(t) ? port : null;
+        })
+        .catch(function () { return null; });
+    }
+
+    function findMetro() {
+      var ports = [];
+      for (var p = 8081; p <= 8100; p++) ports.push(p);
+      return ports.reduce(function (chain, port) {
+        return chain.then(function (found) {
+          if (found) return found;
+          return probe(port);
+        });
+      }, Promise.resolve(null));
+    }
+
+    findMetro().then(function (port) {
+      if (!port) {
+        statusEl.textContent = '⚠ Metro arrêté — lancez : npm run dev';
+        statusEl.style.color = '#f87171';
+        return;
+      }
+      var expUrl = 'exp://' + LAN_IP + ':' + port;
+      urlEl.textContent = expUrl;
+      statusEl.textContent = '✓ Metro en ligne — port ' + port;
+      statusEl.style.color = '#4ade80';
+      if (port === 8082) {
+        webHint.textContent = 'Web navigateur : http://localhost:8082';
+      } else if (port === 8081) {
+        webHint.textContent = 'Web navigateur : http://localhost:8082 (si expo start --web --port 8082)';
+      }
+    });
+  </script>
+</body>
+</html>

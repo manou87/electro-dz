@@ -1,4 +1,4 @@
--- DZSWISS ELEC — exécuter TOUT ce fichier une fois (SQL Editor Supabase)
+-- SwissDZ — exécuter TOUT ce fichier une fois (SQL Editor Supabase)
 -- Ou : node scripts/apply-supabase-site-setup.mjs (avec token Management API)
 
 -- ========== 1. Compteur visiteurs ==========

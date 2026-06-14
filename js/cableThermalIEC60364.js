@@ -1,4 +1,4 @@
-/** Porté depuis utils/cableThermalIEC60364.ts (app DZSWISS ELEC) */
+/** Porté depuis utils/cableThermalIEC60364.ts (app SwissDZ) */
 /**
  * Dimensionnement thermique des canalisations — base IEC 60364-5-52 (Fig. G20 Guide Schneider /
  * tableau B.52.4 CEI), facteurs de groupement k4 (Fig. G16 / B.52.17 CEI).
@@ -11,8 +11,10 @@ const IEC_SECTIONS_MM2 = [
     1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240, 300, 400, 500, 630, 800, 1000,
 ];
 /** Calibres « colonnes » Tableau 10 NF / disjoncteurs (A) */
+/** Calibres disjoncteurs / Ib — Tableau 10 NF + calibres TGBT (jusqu'à 2500 A) */
 const NFC_BREAKER_COLUMNS = [
     10, 13, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630,
+    800, 1000, 1250, 1600, 2000, 2500,
 ];
 /** Courants admissibles Iz (A) — Cu, PVC, 3G, Fig. G20 (30 °C air / 20 °C sol pour D) */
 const IZ_CU_PVC_G20 = {

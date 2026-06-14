@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 3,
+  "id": "Temporizador retardo a la conexión 1 - 30s",
+  "name": {
+    "es": "Temporizador retardo a la conexión 1 - 30s",
+    "en": "ON DELAY Timer 1 - 30s"
+  },
+  "category": {
+    "es": "Control",
+    "en": "Control"
+  },
+  "tagPrefix": "KM",
+  "tagInherit": true,
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 2900,
+      "height": 3300
+    }
+  },
+  "terminals": [
+    {
+      "id": "55",
+      "label": "55",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.173448,
+      "ny": 0.05303,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "67",
+      "label": "67",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.832414,
+      "ny": 0.05303,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "56",
+      "label": "56",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.173448,
+      "ny": 0.947273,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "68",
+      "label": "68",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.832414,
+      "ny": 0.947273,
+      "direction": "bottom",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "any",
+    "activationRule": "docked",
+    "terminalPairs": [
+      {
+        "id": "contact_no_ton",
+        "terminals": [
+          "67",
+          "68"
+        ],
+        "simBehavior": "contact_no_ton",
+        "currentPath": "series",
+        "terminalTypes": {
+          "67": "contact_no",
+          "68": "contact_no"
+        }
+      },
+      {
+        "id": "contact_nc_ton",
+        "terminals": [
+          "55",
+          "56"
+        ],
+        "simBehavior": "contact_nc_ton",
+        "currentPath": "series",
+        "terminalTypes": {
+          "55": "contact_nc",
+          "56": "contact_nc"
+        }
+      }
+    ],
+    "timerDelay": 5.0,
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+      },
+      "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+      }
+    },
+    "rotaryControls": [
+      {
+        "id": "timer_delay",
+        "label": {
+          "es": "Tiempo",
+          "en": "Time"
+        },
+        "circle": {
+          "cx": 0.5,
+          "cy": 0.5,
+          "r": 0.234848
+        },
+        "parameterField": "simTimerDelay",
+        "valueMin": 1.0,
+        "valueMax": 30.0,
+        "angleStartDeg": 2.0,
+        "angleEndDeg": -244.0
+      }
+    ]
+  },
+  "docking": {
+    "mountable": false,
+    "zLayer": 3,
+    "attachesAs": {
+      "type": "timer_block",
+      "dockSize": {
+        "cols": 2,
+        "rows": 3
+      },
+      "hideTerminalsOnDock": [],
+      "overlapPx": 0
+    },
+    "zones": []
+  }
+}

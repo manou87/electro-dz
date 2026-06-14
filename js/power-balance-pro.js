@@ -372,7 +372,7 @@
     const inner = `<div class="page">
 <header class="hdr">
   <div>
-    <div class="brand">DZSWISS ELEC</div>
+    <div class="brand">SwissDZ</div>
     <h1>${esc(tr('balExportTitle'))}</h1>
     <div class="date">${esc(dateStr)}</div>
   </div>
@@ -430,7 +430,7 @@ ${reportGroupsHtml(tr('balByLocation'), ad.byLocation)}
     lines.push(`${tr('balanceIbApprox')} ${ad.ibA} ${tr('unitA')} · ${tr('balCosFinal')} ${ad.cosPhiFinal}`);
     appendGroupToTxt(lines, tr('balByBoard'), ad.byBoard);
     appendGroupToTxt(lines, tr('balByLocation'), ad.byLocation);
-    lines.push('', r.data.formula, '', tr('balDisclaimer'), '—', 'DZSWISS ELEC — electro-dz.com');
+    lines.push('', r.data.formula, '', tr('balDisclaimer'), '—', 'SwissDZ — electro-dz.com');
     return lines;
   }
 

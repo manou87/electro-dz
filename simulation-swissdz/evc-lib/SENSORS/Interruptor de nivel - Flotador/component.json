@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 3,
+  "id": "Interruptor de nivel - Flotador",
+  "name": "Interruptor de nivel - Flotador",
+  "category": "Control",
+  "tagPrefix": "SL",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 7200,
+      "height": 10800
+    }
+  },
+  "terminals": [
+    {
+      "id": "BN",
+      "label": "BN",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.0,
+      "ny": 0.407407,
+      "direction": "left",
+      "guideLength": 60
+    },
+    {
+      "id": "BK",
+      "label": "BK",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.0,
+      "ny": 0.505278,
+      "direction": "left",
+      "guideLength": 60
+    },
+    {
+      "id": "BL",
+      "label": "BL",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.0,
+      "ny": 0.607315,
+      "direction": "left",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "any",
+    "activationRule": "switch",
+    "terminalPairs": [
+      {
+        "id": "contac-nc",
+        "terminals": [
+          "BN",
+          "BK"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+          "BN": "contact_nc",
+          "BK": "contact_nc"
+        }
+      },
+      {
+        "id": "contac-no",
+        "terminals": [
+          "BK",
+          "BL"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+          "BK": "contact_no",
+          "BL": "contact_no"
+        }
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+      },
+      "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+      }
+    }
+  }
+}

@@ -10,7 +10,7 @@ function cableTextTpl(tpl,vars){return tpl.replace(/\{(\w+)\}/g,(_,k)=>String(va
 
 const normalizedSections = [1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240, 300, 400, 500, 630, 800, 1000];
 // Calibres de disjoncteurs normalisés IEC 60364-5-52
-const normalizedBreakerCalibers = [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000];
+const normalizedBreakerCalibers = [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000, 2500];
 const temperatureFactorsPVC = [
     { temp: 10, factor: 1.22 },
     { temp: 15, factor: 1.15 },

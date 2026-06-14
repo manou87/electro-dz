@@ -1,0 +1,2925 @@
+{
+  "version": 2,
+  "status": "draft",
+  "updated": "2026-05-23",
+  "source": "Structure et libellés inspirés de Sonepar Suisse (sonepar.ch) — données démo, non affilié.",
+  "brand": {
+    "nameFr": "Othman Electrique",
+    "nameAr": "عثمان للكهرباء",
+    "taglineFr": "Shop en ligne — matériel électrique",
+    "taglineAr": "متجر أونلاين — مواد كهربائية",
+    "regionFr": "Algérie",
+    "regionAr": "الجزائر"
+  },
+  "header": {
+    "searchPlaceholderFr": "Référence, marque ou mot-clé…",
+    "searchPlaceholderAr": "مرجع، ماركة أو كلمة مفتاحية…",
+    "nav": [
+      {
+        "id": "assortiment",
+        "labelFr": "Assortiment",
+        "labelAr": "التشكيلة",
+        "href": "electro-centrale-catalogue.html"
+      },
+      {
+        "id": "promotions",
+        "labelFr": "Promotions",
+        "labelAr": "عروض",
+        "href": "electro-centrale.html#promotions"
+      },
+      {
+        "id": "nouveautes",
+        "labelFr": "Nouveautés",
+        "labelAr": "جديد",
+        "href": "electro-centrale.html#nouveautes"
+      },
+      {
+        "id": "services",
+        "labelFr": "Services",
+        "labelAr": "خدمات",
+        "href": "electro-centrale.html#services"
+      },
+      {
+        "id": "fournisseurs",
+        "labelFr": "Fournisseurs",
+        "labelAr": "موردون",
+        "href": "electro-centrale.html#fournisseurs"
+      },
+      {
+        "id": "publications",
+        "labelFr": "Publications",
+        "labelAr": "منشورات",
+        "href": "electro-centrale.html#publications"
+      },
+      {
+        "id": "energies",
+        "labelFr": "Énergies renouvelables",
+        "labelAr": "طاقات متجددة",
+        "href": "electro-centrale-catalogue.html?cat=energies-renouvelables"
+      }
+    ]
+  },
+  "heroSlides": [
+    {
+      "id": "signify",
+      "badgeFr": "Action",
+      "titleFr": "Une équipe d'éclairage sur laquelle on peut compter",
+      "descFr": "10 % sur de nombreux luminaires et lampes LED et jusqu'à 15 % sur votre prochain projet.",
+      "href": "electro-centrale-catalogue.html?cat=eclairage",
+      "imageUrl": "assets/electro-centrale/sonepar/hero-signify.jpg",
+      "badgeAr": "عرض",
+      "titleAr": "فريق إضاءة يمكن الاعتماد عليه",
+      "descAr": "خصم 10٪ على إنارة LED وحتى 15٪ على مشروعك القادم."
+    },
+    {
+      "id": "tradeforce",
+      "badgeFr": "Action",
+      "titleFr": "Bornes TRADEFORCE",
+      "descFr": "Des connexions sûres, rapides et sans outil – testées selon les normes EN et UL.",
+      "href": "electro-centrale-catalogue.html?cat=boites-derivation",
+      "imageUrl": "assets/electro-centrale/sonepar/hero-tradeforce.jpg",
+      "badgeAr": "عرض",
+      "titleAr": "موصلات TRADEFORCE",
+      "descAr": "توصيلات آمنة وسريعة بدون أدوات — EN و UL."
+    },
+    {
+      "id": "vario",
+      "badgeFr": "Nouveau",
+      "titleFr": "Vario – 4 pôles jusqu'à 140 A",
+      "descFr": "Interrupteurs 4 pôles IP65 pour un raccordement sûr et simple.",
+      "href": "electro-centrale-catalogue.html?cat=industrie-automation",
+      "imageUrl": "assets/electro-centrale/sonepar/hero-vario.jpg",
+      "badgeAr": "جديد",
+      "titleAr": "Vario — 4 أقطاب حتى 140 A",
+      "descAr": "قواطع 4 أقطاب IP65 — توصيل آمن وبسيط."
+    },
+    {
+      "id": "printemps",
+      "badgeFr": "Action",
+      "titleFr": "Nouveautés & promotions de printemps",
+      "descFr": "Solutions d'éclairage innovantes : haute efficacité et design sophistiqué.",
+      "href": "electro-centrale.html#promotions",
+      "imageUrl": "assets/electro-centrale/sonepar/hero-printemps.jpg",
+      "badgeAr": "عرض",
+      "titleAr": "جديد وعروض الربيع",
+      "descAr": "حلول إضاءة مبتكرة — كفاءة وتصميم."
+    }
+  ],
+  "configurators": [
+    {
+      "id": "pv",
+      "titleFr": "Configurateur PV",
+      "titleAr": "مُكوّن الطاقة الشمسية",
+      "descFr": "Dimensionnez une installation photovoltaïque (maquette).",
+      "href": "calcul-electrique.html",
+      "descAr": "حدّد تركيبك الشمسي (نموذج)."
+    }
+  ],
+  "assortment": [
+    {
+      "id": "materiaux-terre",
+      "slug": "2791-materiaux-terre",
+      "nameFr": "Matériaux de mise à terre et d'encastrements",
+      "nameAr": "مواد التأريض والتغليف",
+      "productCount": 9,
+      "subcategories": [
+        {
+          "id": "barres-terre",
+          "nameFr": "Barres et conducteurs de terre",
+          "productCount": 3,
+          "nameAr": "قضبان وموصلات التأريض"
+        },
+        {
+          "id": "bornes-terre",
+          "nameFr": "Bornes et connecteurs de terre",
+          "productCount": 3,
+          "nameAr": "وصلات ومشابك التأريض"
+        },
+        {
+          "id": "encastrements",
+          "nameFr": "Boîtes d'encastrement et platines",
+          "productCount": 3,
+          "nameAr": "علب تغليف ولوحات"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-materiaux-terre.jpg"
+    },
+    {
+      "id": "tubes-canaux",
+      "slug": "2792-tubes-canaux",
+      "nameFr": "Tubes et canaux",
+      "nameAr": "أنابيب وقنوات",
+      "productCount": 9,
+      "subcategories": [
+        {
+          "id": "tubes-pvc",
+          "nameFr": "Tubes PVC / ICTA",
+          "productCount": 3,
+          "nameAr": "أنابيب PVC / ICTA"
+        },
+        {
+          "id": "goulottes",
+          "nameFr": "Goulottes et chemins de câbles",
+          "productCount": 3,
+          "nameAr": "قنوات ومسارات الكابلات"
+        },
+        {
+          "id": "accessoires-canalisation",
+          "nameFr": "Accessoires de canalisation",
+          "productCount": 3,
+          "nameAr": "ملحقات التمديد"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-tubes-canaux.jpg"
+    },
+    {
+      "id": "filscables",
+      "slug": "2793-filscables",
+      "nameFr": "Fils / câbles",
+      "nameAr": "أسلاك / كوابل",
+      "productCount": 12,
+      "subcategories": [
+        {
+          "id": "cables-bt-rigide",
+          "nameFr": "Câbles à basse tension rigide",
+          "productCount": 3,
+          "nameAr": "كوابل جهد منخفض صلبة"
+        },
+        {
+          "id": "cables-bt-souple",
+          "nameFr": "Câbles à basse tension souple",
+          "productCount": 3,
+          "nameAr": "كوابل جهد منخفض مرنة"
+        },
+        {
+          "id": "cables-donnees-cuivre",
+          "nameFr": "Câbles de données / communication (cuivre)",
+          "productCount": 3,
+          "nameAr": "كوابل بيانات / اتصالات (نحاس)"
+        },
+        {
+          "id": "cables-donnees-fo",
+          "nameFr": "Câbles de données / communication (FO)",
+          "productCount": 3,
+          "nameAr": "كوابل بيانات / اتصالات (ألياف)"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-filscables.jpg"
+    },
+    {
+      "id": "boites-derivation",
+      "slug": "2794-boites-derivation",
+      "nameFr": "Boîtes de dérivation / connecteurs / isolations",
+      "nameAr": "علب توزيع / موصلات / عزل",
+      "productCount": 9,
+      "subcategories": [
+        {
+          "id": "boites-derivation",
+          "nameFr": "Boîtes de dérivation",
+          "productCount": 3,
+          "nameAr": "علب توزيع"
+        },
+        {
+          "id": "bornes-wago",
+          "nameFr": "Bornes et connecteurs (Wago, etc.)",
+          "productCount": 3,
+          "nameAr": "وصلات وموصلات (Wago وغ.)"
+        },
+        {
+          "id": "isolations",
+          "nameFr": "Isolations et gaines thermo",
+          "productCount": 3,
+          "nameAr": "عزل وأغلفة حرارية"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-boites.jpg"
+    },
+    {
+      "id": "appareillage",
+      "slug": "appareillage",
+      "nameFr": "Appareillage",
+      "nameAr": "أجهزة التركيب",
+      "productCount": 9,
+      "subcategories": [
+        {
+          "id": "prises-interrupteurs",
+          "nameFr": "Prises et interrupteurs",
+          "productCount": 3,
+          "nameAr": "مقابس ومفاتيح"
+        },
+        {
+          "id": "modulaire",
+          "nameFr": "Appareillage modulaire",
+          "productCount": 3,
+          "nameAr": "أجهزة تركيب modulaire"
+        },
+        {
+          "id": "prises-industrielles",
+          "nameFr": "Prises industrielles",
+          "productCount": 3,
+          "nameAr": "مقابس صناعية"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-appareillage.jpg"
+    },
+    {
+      "id": "tableaux",
+      "slug": "tableaux-armoires",
+      "nameFr": "Tableaux et armoires",
+      "nameAr": "لوحات وخزائن",
+      "productCount": 9,
+      "subcategories": [
+        {
+          "id": "coffrets",
+          "nameFr": "Coffrets et armoires",
+          "productCount": 3,
+          "nameAr": "صناديق وخزائن"
+        },
+        {
+          "id": "disjoncteurs",
+          "nameFr": "Disjoncteurs et différentiels",
+          "productCount": 3,
+          "nameAr": "قواطع وتفاضلية"
+        },
+        {
+          "id": "accessoires-tableau",
+          "nameFr": "Accessoires de tableau",
+          "productCount": 3,
+          "nameAr": "ملحقات اللوحة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-tableaux.jpg"
+    },
+    {
+      "id": "eclairage",
+      "slug": "eclairage",
+      "nameFr": "Éclairage",
+      "nameAr": "إضاءة",
+      "productCount": 9,
+      "subcategories": [
+        {
+          "id": "luminaires-interieur",
+          "nameFr": "Luminaires intérieur",
+          "productCount": 3,
+          "nameAr": "إنارة داخلية"
+        },
+        {
+          "id": "luminaires-exterieur",
+          "nameFr": "Luminaires extérieur",
+          "productCount": 3,
+          "nameAr": "إنارة خارجية"
+        },
+        {
+          "id": "led-sources",
+          "nameFr": "LED et sources lumineuses",
+          "productCount": 3,
+          "nameAr": "LED ومصادر إضاءة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-eclairage.jpg"
+    },
+    {
+      "id": "industrie-automation",
+      "slug": "industrie-automation",
+      "nameFr": "Industrie & automation",
+      "nameAr": "صناعة وأتمتة",
+      "productCount": 9,
+      "subcategories": [
+        {
+          "id": "contacteurs",
+          "nameFr": "Contacteurs et relais",
+          "productCount": 3,
+          "nameAr": "قواطع تحكم ومرحلات"
+        },
+        {
+          "id": "sectionneurs",
+          "nameFr": "Sectionneurs",
+          "productCount": 3,
+          "nameAr": "قواطع عزل"
+        },
+        {
+          "id": "automates",
+          "nameFr": "Automates et variateurs",
+          "productCount": 3,
+          "nameAr": "PLC ومحولات سرعة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-industrie.jpg"
+    },
+    {
+      "id": "reseaux-donnees",
+      "slug": "reseaux-donnees",
+      "nameFr": "Réseaux & données",
+      "nameAr": "شبكات وبيانات",
+      "productCount": 9,
+      "subcategories": [
+        {
+          "id": "baie-rj45",
+          "nameFr": "Baies et RJ45",
+          "productCount": 3,
+          "nameAr": "خزائن و RJ45"
+        },
+        {
+          "id": "wifi-omada",
+          "nameFr": "Wi-Fi 7 et switches",
+          "productCount": 3,
+          "nameAr": "Wi-Fi 7 وم switches"
+        },
+        {
+          "id": "fibre",
+          "nameFr": "Fibre optique",
+          "productCount": 3,
+          "nameAr": "ألياف بصرية"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-reseaux.jpg"
+    },
+    {
+      "id": "energies-renouvelables",
+      "slug": "energies-renouvelables",
+      "nameFr": "Énergies renouvelables",
+      "nameAr": "طاقات متجددة",
+      "productCount": 9,
+      "subcategories": [
+        {
+          "id": "photovoltaique",
+          "nameFr": "Photovoltaïque",
+          "productCount": 3,
+          "nameAr": "طاقة شمسية"
+        },
+        {
+          "id": "bornes-recharge",
+          "nameFr": "Bornes de recharge e-mobilité",
+          "productCount": 3,
+          "nameAr": "محطات شحن السيارات"
+        },
+        {
+          "id": "onduleurs",
+          "nameFr": "Onduleurs et stockage",
+          "productCount": 3,
+          "nameAr": "محولات وتخزين"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-energies.jpg"
+    }
+  ],
+  "novelties": [
+    {
+      "id": "tesys-vario",
+      "badgeFr": "Nouveau",
+      "titleFr": "TeSys Vario – Interrupteurs 4 pôles jusqu'à 140 A",
+      "descFr": "Interrupteurs 4 pôles IP65 pour un raccordement sûr et simple.",
+      "brand": "Schneider Electric",
+      "cat": "industrie-automation",
+      "imageUrl": "assets/electro-centrale/sonepar/novelty-vario.jpg",
+      "badgeAr": "جديد",
+      "titleAr": "TeSys Vario — قواطع 4 أقطاب حتى 140 A",
+      "descAr": "قواطع 4 أقطاب IP65 — توصيل آمن."
+    },
+    {
+      "id": "push-x",
+      "badgeFr": "Nouveau",
+      "titleFr": "Technologie Push-X – Phoenix Contact",
+      "descFr": "Raccordement direct de conducteurs souples et rigides.",
+      "brand": "Phoenix Contact",
+      "cat": "boites-derivation",
+      "imageUrl": "assets/electro-centrale/sonepar/novelty-pushx.jpg",
+      "badgeAr": "جديد",
+      "titleAr": "تقنية Push-X — Phoenix Contact",
+      "descAr": "توصيل مباشر للأسلاك المرنة والصلبة."
+    },
+    {
+      "id": "podis-emob",
+      "badgeFr": "Nouveau",
+      "titleFr": "E-mobilité enfichable avec podis®",
+      "descFr": "Réalisez vos projets de recharge plus efficacement.",
+      "brand": "Wieland",
+      "cat": "energies-renouvelables",
+      "imageUrl": "assets/electro-centrale/sonepar/novelty-podis.jpg",
+      "badgeAr": "جديد",
+      "titleAr": "شحن السيارات podis®",
+      "descAr": "مشاريع شحن أكثر فعالية."
+    },
+    {
+      "id": "dali-dimmer",
+      "badgeFr": "Nouveau",
+      "titleFr": "Potentiomètre de puissance multi-maître DALI-2",
+      "descFr": "Gradation professionnelle pour l'éclairage.",
+      "brand": "Tridonic",
+      "cat": "eclairage",
+      "imageUrl": "assets/electro-centrale/sonepar/novelty-dali.jpg",
+      "badgeAr": "جديد",
+      "titleAr": "منظم قدرة DALI-2",
+      "descAr": "تحكم احترافي بالإضاءة."
+    },
+    {
+      "id": "abb-flexline",
+      "badgeFr": "Nouveau",
+      "titleFr": "ABB FlexLine® & distributeurs",
+      "descFr": "Installer plus vite, gagner de la place.",
+      "brand": "ABB",
+      "cat": "tableaux",
+      "imageUrl": "assets/electro-centrale/sonepar/novelty-abb.jpg",
+      "badgeAr": "جديد",
+      "titleAr": "ABB FlexLine® وموزعات",
+      "descAr": "تركيب أسرع — توفير مساحة."
+    },
+    {
+      "id": "wago-221",
+      "badgeFr": "Nouveau",
+      "titleFr": "Borne de connexion 221 – 10 entrées",
+      "descFr": "Levier ouvrir – insérer – fermer, sans outil.",
+      "brand": "Wago",
+      "cat": "boites-derivation",
+      "imageUrl": "assets/electro-centrale/sonepar/novelty-wago.jpg",
+      "badgeAr": "جديد",
+      "titleAr": "وصلة Wago 221 — 10 مداخل",
+      "descAr": "فتح — إدخال — إغلاق بدون أدوات."
+    }
+  ],
+  "promotions": [
+    {
+      "id": "signify-promo",
+      "badgeFr": "Action",
+      "titleFr": "Éclairage Signify",
+      "descFr": "10 % LED et jusqu'à 15 % sur votre prochain projet.",
+      "cat": "eclairage",
+      "imageUrl": "assets/electro-centrale/sonepar/promo-signify.png",
+      "badgeAr": "عرض",
+      "titleAr": "إضاءة Signify",
+      "descAr": "خصم 10٪ على LED وحتى 15٪ على مشروعك القادم."
+    },
+    {
+      "id": "tradeforce-promo",
+      "badgeFr": "Action",
+      "titleFr": "Bornes TRADEFORCE",
+      "descFr": "Connexions sûres, rapides, sans outil – EN et UL.",
+      "cat": "boites-derivation",
+      "imageUrl": "assets/electro-centrale/sonepar/promo-tradeforce.jpg",
+      "badgeAr": "عرض",
+      "titleAr": "موصلات TRADEFORCE",
+      "descAr": "توصيلات آمنة وسريعة بدون أدوات — EN و UL."
+    },
+    {
+      "id": "excel-networking",
+      "badgeFr": "Action",
+      "titleFr": "Câbles données Excel Networking",
+      "descFr": "Prix promotionnels en mai sur câbles et accessoires.",
+      "cat": "reseaux-donnees",
+      "imageUrl": "assets/electro-centrale/sonepar/promo-excel.jpg",
+      "badgeAr": "عرض",
+      "titleAr": "كوابل بيانات Excel Networking",
+      "descAr": "أسعار ترويجية في مايو على الكوابل والملحقات."
+    },
+    {
+      "id": "gamme-eclairage-2026",
+      "badgeFr": "Action",
+      "titleFr": "Gamme principale éclairage 2026",
+      "descFr": "Prix nets attractifs jusqu'au 31.08.2026.",
+      "cat": "eclairage",
+      "imageUrl": "assets/electro-centrale/sonepar/promo-eclairage-2026.jpg",
+      "badgeAr": "عرض",
+      "titleAr": "تشكيلة الإضاءة الرئيسية 2026",
+      "descAr": "أسعار صافية جذابة حتى 31.08.2026."
+    },
+    {
+      "id": "norlys",
+      "badgeFr": "Action",
+      "titleFr": "Luminaires extérieurs Norlys",
+      "descFr": "Bornes & appliques murales haut de gamme, fabriquées en Europe.",
+      "cat": "eclairage",
+      "imageUrl": "assets/electro-centrale/sonepar/promo-norlys.jpg",
+      "badgeAr": "عرض",
+      "titleAr": "إنارة خارجية Norlys",
+      "descAr": "أعمدة ووحدات جدارية premium — صنع أوروبي."
+    },
+    {
+      "id": "finder-minuteries",
+      "badgeFr": "Action",
+      "titleFr": "Minuteries cage d'escalier Finder",
+      "descFr": "Éclairer aussi longtemps que nécessaire.",
+      "cat": "appareillage",
+      "imageUrl": "assets/electro-centrale/sonepar/promo-finder.jpg",
+      "badgeAr": "عرض",
+      "titleAr": "مؤقتات سلم Finder",
+      "descAr": "إضاءة طالما يلزم."
+    },
+    {
+      "id": "eaton-dd",
+      "badgeFr": "Action",
+      "titleFr": "Disjoncteurs différentiels combinés Eaton",
+      "descFr": "Protection optimale en un seul appareil.",
+      "cat": "tableaux",
+      "imageUrl": "assets/electro-centrale/sonepar/promo-eaton.jpg",
+      "badgeAr": "عرض",
+      "titleAr": "قواطع تفاضلية Eaton",
+      "descAr": "حماية مثلى في جهاز واحد."
+    },
+    {
+      "id": "weidmueller-spd",
+      "badgeFr": "Action",
+      "titleFr": "Protection surtensions Weidmüller",
+      "descFr": "Installation sûre, gain de temps.",
+      "cat": "tableaux",
+      "imageUrl": "assets/electro-centrale/sonepar/promo-weidmueller.jpg",
+      "badgeAr": "عرض",
+      "titleAr": "حماية صواعق Weidmüller",
+      "descAr": "تركيب آمن وتوفير وقت."
+    }
+  ],
+  "services": [
+    {
+      "id": "digital",
+      "titleFr": "Services numériques",
+      "descFr": "Services qui simplifient le quotidien : listes, devis, documentation en ligne.",
+      "href": "devis.html",
+      "imageUrl": "assets/electro-centrale/sonepar/service-digital.jpg",
+      "titleAr": "خدمات رقمية",
+      "descAr": "قوائم، عروض أسعار ووثائق أونلاين."
+    },
+    {
+      "id": "emploi",
+      "titleFr": "Emploi & carrière",
+      "descFr": "Évolution personnelle et solutions durables dans le secteur électrique.",
+      "href": "emploi.html",
+      "imageUrl": "assets/electro-centrale/sonepar/service-emploi.png",
+      "titleAr": "وظائف ومسار مهني",
+      "descAr": "تطور مهني في قطاع الكهرباء."
+    },
+    {
+      "id": "fournisseurs",
+      "titleFr": "Nos fournisseurs",
+      "descFr": "Marques premium, conçues pour durer et créer de la valeur.",
+      "href": "#fournisseurs",
+      "imageUrl": "assets/electro-centrale/sonepar/service-fournisseurs.png",
+      "titleAr": "موردونا",
+      "descAr": "ماركات premium — جودة وقيمة."
+    },
+    {
+      "id": "publications",
+      "titleFr": "Nos publications",
+      "descFr": "Catalogues, brochures et rapports — collection structurée.",
+      "href": "bibliotheque.html",
+      "imageUrl": "assets/electro-centrale/sonepar/service-publications.png",
+      "titleAr": "منشوراتنا",
+      "descAr": "فهارس وكتيبات وتقارير — مجموعة منظمة."
+    }
+  ],
+  "suppliers": [
+    "ABB",
+    "Schneider Electric",
+    "Legrand",
+    "Hager",
+    "Phoenix Contact",
+    "Wago",
+    "Eaton",
+    "Weidmüller",
+    "Signify",
+    "Tridonic",
+    "Finder",
+    "TP-Link Omada",
+    "Norlys",
+    "MAX HAURI",
+    "BBC Cellpack",
+    "Wieland"
+  ],
+  "publications": [
+    {
+      "titleFr": "Distributeurs et plus … — édition 2026",
+      "descFr": "Brochure compacte, sûre, informative.",
+      "href": "bibliotheque.html",
+      "titleAr": "الموزعون والمزيد… — إصدار 2026",
+      "descAr": "كتيب موجز، موثوق ومفيد."
+    },
+    {
+      "titleFr": "Gamme principale éclairage 2026",
+      "descFr": "Nouveaux produits jusqu'au 31.08.2026.",
+      "href": "electro-centrale-catalogue.html?cat=eclairage",
+      "titleAr": "تشكيلة الإضاءة الرئيسية 2026",
+      "descAr": "منتجات جديدة حتى 31.08.2026."
+    },
+    {
+      "titleFr": "Normes & ouvrages techniques",
+      "descFr": "Bibliothèque PDF SwissDZ.",
+      "href": "bibliotheque.html",
+      "titleAr": "معايير ومراجع تقنية",
+      "descAr": "مكتبة PDF SwissDZ."
+    }
+  ],
+  "events": [
+    {
+      "titleFr": "Electric Day Lausanne 2026",
+      "descFr": "Dernières tendances énergies renouvelables (référence Sonepar CH).",
+      "dateFr": "2026",
+      "titleAr": "يوم الكهرباء لوزان 2026",
+      "descAr": "أحدث اتجاهات الطاقات المتجددة (مرجع Sonepar CH).",
+      "dateAr": "2026"
+    }
+  ],
+  "products": [
+    {
+      "id": "p-materiaux-terre-barres-terre-1",
+      "sku": "OTH-1001",
+      "cat": "materiaux-terre",
+      "sub": "barres-terre",
+      "nameFr": "Barre de terre cuivre 25×4 mm — 2 m",
+      "nameAr": "قضيب تأريض نحاس 25×4 مم — 2 م",
+      "brand": "Legrand",
+      "price": 1850,
+      "currency": "DZD",
+      "unit": "m",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Barres et conducteurs de terre",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/tradeforce-isoliermittel.jpg"
+    },
+    {
+      "id": "p-materiaux-terre-barres-terre-2",
+      "sku": "OTH-1002",
+      "cat": "materiaux-terre",
+      "sub": "barres-terre",
+      "nameFr": "Barre de terre isolée 10×3 mm",
+      "nameAr": "قضيب تأريض معزول 10×3 مم",
+      "brand": "Schneider Electric",
+      "price": 920,
+      "currency": "DZD",
+      "unit": "m",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Barres et conducteurs de terre",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-materiaux-terre.jpg"
+    },
+    {
+      "id": "p-materiaux-terre-barres-terre-3",
+      "sku": "OTH-1003",
+      "cat": "materiaux-terre",
+      "sub": "barres-terre",
+      "nameFr": "Conducteur de protection 16 mm² vert/jaune",
+      "nameAr": "سلك حماية 16 مم² أخضر/أصفر",
+      "brand": "Nexans",
+      "price": 780,
+      "currency": "DZD",
+      "unit": "m",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Barres et conducteurs de terre",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-cable.jpg"
+    },
+    {
+      "id": "p-materiaux-terre-bornes-terre-1",
+      "sku": "OTH-1004",
+      "cat": "materiaux-terre",
+      "sub": "bornes-terre",
+      "nameFr": "Borne de terre type B 16 mm²",
+      "nameAr": "مشبك تأريض نوع B 16 مم²",
+      "brand": "Legrand",
+      "price": 450,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Bornes et connecteurs de terre",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/tradeforce-kabel.jpg"
+    },
+    {
+      "id": "p-materiaux-terre-bornes-terre-2",
+      "sku": "OTH-1005",
+      "cat": "materiaux-terre",
+      "sub": "bornes-terre",
+      "nameFr": "Connecteur de terre pour barrette",
+      "nameAr": "وصل تأريض للقضيب",
+      "brand": "ABB",
+      "price": 620,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Bornes et connecteurs de terre",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/hero-tradeforce.jpg"
+    },
+    {
+      "id": "p-materiaux-terre-bornes-terre-3",
+      "sku": "OTH-1006",
+      "cat": "materiaux-terre",
+      "sub": "bornes-terre",
+      "nameFr": "Pince de terre universelle",
+      "nameAr": "مشبك تأريض universal",
+      "brand": "Hager",
+      "price": 380,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Bornes et connecteurs de terre",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/tradeforce-isoliermittel.jpg"
+    },
+    {
+      "id": "p-materiaux-terre-encastrements-1",
+      "sku": "OTH-1007",
+      "cat": "materiaux-terre",
+      "sub": "encastrements",
+      "nameFr": "Boîte d'encastrement 1 poste — profondeur 40 mm",
+      "nameAr": "علبة تغليف 1 مخرج — عمق 40 مم",
+      "brand": "Legrand",
+      "price": 120,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Boîtes d'encastrement et platines",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-boites.jpg"
+    },
+    {
+      "id": "p-materiaux-terre-encastrements-2",
+      "sku": "OTH-1008",
+      "cat": "materiaux-terre",
+      "sub": "encastrements",
+      "nameFr": "Platine universelle 2 postes",
+      "nameAr": "لوحة 2 مخرج",
+      "brand": "Schneider Electric",
+      "price": 95,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Boîtes d'encastrement et platines",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18052.jpg"
+    },
+    {
+      "id": "p-materiaux-terre-encastrements-3",
+      "sku": "OTH-1009",
+      "cat": "materiaux-terre",
+      "sub": "encastrements",
+      "nameFr": "Boîte étanche IP55 4 postes",
+      "nameAr": "علبة مقاومة IP55 — 4 مخرج",
+      "brand": "Legrand",
+      "price": 340,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Boîtes d'encastrement et platines",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-materiaux-terre.jpg"
+    },
+    {
+      "id": "p-tubes-canaux-tubes-pvc-2",
+      "sku": "OTH-1010",
+      "cat": "tubes-canaux",
+      "sub": "tubes-pvc",
+      "nameFr": "Tube ICTA Ø25 mm (3 m)",
+      "nameAr": "أنبوب ICTA Ø25 مم (3 م)",
+      "brand": "Legrand",
+      "price": 620,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Tubes PVC / ICTA",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-tubes.jpg"
+    },
+    {
+      "id": "p-tubes-canaux-tubes-pvc-3",
+      "sku": "OTH-1011",
+      "cat": "tubes-canaux",
+      "sub": "tubes-pvc",
+      "nameFr": "Coude ICTA Ø20 mm — 90°",
+      "nameAr": "زاوية ICTA Ø20 مم — 90°",
+      "brand": "Legrand",
+      "price": 85,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Tubes PVC / ICTA",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/tradeforce-isolierband.jpg"
+    },
+    {
+      "id": "p-tubes-canaux-goulottes-1",
+      "sku": "OTH-1012",
+      "cat": "tubes-canaux",
+      "sub": "goulottes",
+      "nameFr": "Goulotte PVC 60×40 mm — 2 m",
+      "nameAr": "قناة PVC 60×40 مم — 2 م",
+      "brand": "Legrand",
+      "price": 890,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Goulottes et chemins de câbles",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18606.jpg"
+    },
+    {
+      "id": "p-tubes-canaux-goulottes-2",
+      "sku": "OTH-1013",
+      "cat": "tubes-canaux",
+      "sub": "goulottes",
+      "nameFr": "Coude goulotte 60×40 mm",
+      "nameAr": "زاوية قناة 60×40 مم",
+      "brand": "Legrand",
+      "price": 210,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Goulottes et chemins de câbles",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-tubes-canaux.jpg"
+    },
+    {
+      "id": "p-tubes-canaux-goulottes-3",
+      "sku": "OTH-1014",
+      "cat": "tubes-canaux",
+      "sub": "goulottes",
+      "nameFr": "Chemin de câbles perforé 100 mm",
+      "nameAr": "مسار كابلات مثقوب 100 مم",
+      "brand": "Schneider Electric",
+      "price": 1450,
+      "currency": "DZD",
+      "unit": "m",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Goulottes et chemins de câbles",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18052.jpg"
+    },
+    {
+      "id": "p-tubes-canaux-accessoires-canalisation-1",
+      "sku": "OTH-1015",
+      "cat": "tubes-canaux",
+      "sub": "accessoires-canalisation",
+      "nameFr": "Collier de fixation Ø20 mm (lot 100)",
+      "nameAr": "حلقة تثبيت Ø20 مم (100)",
+      "brand": "Legrand",
+      "price": 650,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Accessoires de canalisation",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18052.jpg"
+    },
+    {
+      "id": "p-tubes-canaux-accessoires-canalisation-2",
+      "sku": "OTH-1016",
+      "cat": "tubes-canaux",
+      "sub": "accessoires-canalisation",
+      "nameFr": "Bouchon de finition goulotte",
+      "nameAr": "غطاء نهاية القناة",
+      "brand": "Legrand",
+      "price": 45,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Accessoires de canalisation",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18606.jpg"
+    },
+    {
+      "id": "p-tubes-canaux-accessoires-canalisation-3",
+      "sku": "OTH-1017",
+      "cat": "tubes-canaux",
+      "sub": "accessoires-canalisation",
+      "nameFr": "Support mural goulotte",
+      "nameAr": "حامل جدار للقناة",
+      "brand": "ABB",
+      "price": 180,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Accessoires de canalisation",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-tubes-canaux.jpg"
+    },
+    {
+      "id": "p-filscables-cables-bt-rigide-3",
+      "sku": "OTH-1018",
+      "cat": "filscables",
+      "sub": "cables-bt-rigide",
+      "nameFr": "Câble U1000 R2V 3G6 mm²",
+      "nameAr": "كابل U1000 R2V 3G6 مم²",
+      "brand": "Nexans",
+      "price": 980,
+      "currency": "DZD",
+      "unit": "m",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Câbles à basse tension rigide",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-cable.jpg"
+    },
+    {
+      "id": "p-filscables-cables-bt-souple-2",
+      "sku": "OTH-1019",
+      "cat": "filscables",
+      "sub": "cables-bt-souple",
+      "nameFr": "H07RN-F 3G2,5 mm²",
+      "nameAr": "H07RN-F 3G2.5 مم²",
+      "brand": "Nexans",
+      "price": 450,
+      "currency": "DZD",
+      "unit": "m",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Câbles à basse tension souple",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-cable.jpg"
+    },
+    {
+      "id": "p-filscables-cables-bt-souple-3",
+      "sku": "OTH-1020",
+      "cat": "filscables",
+      "sub": "cables-bt-souple",
+      "nameFr": "Câble souple 5G1,5 mm²",
+      "nameAr": "كابل مرن 5G1.5 مم²",
+      "brand": "Legrand",
+      "price": 320,
+      "currency": "DZD",
+      "unit": "m",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Câbles à basse tension souple",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-filscables.jpg"
+    },
+    {
+      "id": "p-filscables-cables-donnees-cuivre-2",
+      "sku": "OTH-1021",
+      "cat": "filscables",
+      "sub": "cables-donnees-cuivre",
+      "nameFr": "Câble Cat.6 U/UTP — 305 m",
+      "nameAr": "كابل Cat.6 U/UTP — 305 م",
+      "brand": "Excel Networking",
+      "price": 28500,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Câbles de données / communication (cuivre)",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-network.jpg"
+    },
+    {
+      "id": "p-filscables-cables-donnees-cuivre-3",
+      "sku": "OTH-1022",
+      "cat": "filscables",
+      "sub": "cables-donnees-cuivre",
+      "nameFr": "Câble coaxial RG6 blindé",
+      "nameAr": "كابل coaxial RG6 معزول",
+      "brand": "Legrand",
+      "price": 290,
+      "currency": "DZD",
+      "unit": "m",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Câbles de données / communication (cuivre)",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/promo-excel.jpg"
+    },
+    {
+      "id": "p-filscables-cables-donnees-fo-1",
+      "sku": "OTH-1023",
+      "cat": "filscables",
+      "sub": "cables-donnees-fo",
+      "nameFr": "Câble fibre OM3 — 12 fibres",
+      "nameAr": "كابل ألياف OM3 — 12 ليف",
+      "brand": "Corning",
+      "price": 1250,
+      "currency": "DZD",
+      "unit": "m",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Câbles de données / communication (FO)",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-network.jpg"
+    },
+    {
+      "id": "p-filscables-cables-donnees-fo-2",
+      "sku": "OTH-1024",
+      "cat": "filscables",
+      "sub": "cables-donnees-fo",
+      "nameFr": "Jarretière LC/LC duplex OM3",
+      "nameAr": "وصلة LC/LC duplex OM3",
+      "brand": "Corning",
+      "price": 890,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Câbles de données / communication (FO)",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18533.jpg"
+    },
+    {
+      "id": "p-filscables-cables-donnees-fo-3",
+      "sku": "OTH-1025",
+      "cat": "filscables",
+      "sub": "cables-donnees-fo",
+      "nameFr": "Boîte de raccordement FO 24 fibres",
+      "nameAr": "علبة توصيل ألياف 24 ليف",
+      "brand": "Legrand",
+      "price": 4200,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Câbles de données / communication (FO)",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18217.jpg"
+    },
+    {
+      "id": "p-boites-derivation-boites-derivation-1",
+      "sku": "OTH-1026",
+      "cat": "boites-derivation",
+      "sub": "boites-derivation",
+      "nameFr": "Boîte de dérivation 100×100 mm IP55",
+      "nameAr": "علبة توزيع 100×100 مم IP55",
+      "brand": "Legrand",
+      "price": 520,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Boîtes de dérivation",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-boites.jpg"
+    },
+    {
+      "id": "p-boites-derivation-boites-derivation-2",
+      "sku": "OTH-1027",
+      "cat": "boites-derivation",
+      "sub": "boites-derivation",
+      "nameFr": "Boîte étanche 150×110 mm",
+      "nameAr": "علبة مقاومة 150×110 مم",
+      "brand": "Schneider Electric",
+      "price": 780,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Boîtes de dérivation",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/hero-tradeforce.jpg"
+    },
+    {
+      "id": "p-boites-derivation-boites-derivation-3",
+      "sku": "OTH-1028",
+      "cat": "boites-derivation",
+      "sub": "boites-derivation",
+      "nameFr": "Boîte encastrée 4 entrées",
+      "nameAr": "علبة توزيع 4 مداخل",
+      "brand": "Legrand",
+      "price": 340,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Boîtes de dérivation",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18490.jpg"
+    },
+    {
+      "id": "p-boites-derivation-bornes-wago-1",
+      "sku": "OTH-1029",
+      "cat": "boites-derivation",
+      "sub": "bornes-wago",
+      "nameFr": "Borne Wago 221 — 5 entrées",
+      "nameAr": "وصلة Wago 221 — 5 مداخل",
+      "brand": "Wago",
+      "price": 245,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Bornes et connecteurs (Wago, etc.)",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-wago.jpg"
+    },
+    {
+      "id": "p-boites-derivation-bornes-wago-2",
+      "sku": "OTH-1030",
+      "cat": "boites-derivation",
+      "sub": "bornes-wago",
+      "nameFr": "Borne Wago 221 — 3 entrées",
+      "nameAr": "وصلة Wago 221 — 3 مداخل",
+      "brand": "Wago",
+      "price": 195,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Bornes et connecteurs (Wago, etc.)",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/novelty-wago.jpg"
+    },
+    {
+      "id": "p-boites-derivation-bornes-wago-3",
+      "sku": "OTH-1031",
+      "cat": "boites-derivation",
+      "sub": "bornes-wago",
+      "nameFr": "Borne Wago 222 — 5 entrées",
+      "nameAr": "وصلة Wago 222 — 5 مداخل",
+      "brand": "Wago",
+      "price": 265,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Bornes et connecteurs (Wago, etc.)",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18490.jpg"
+    },
+    {
+      "id": "p-boites-derivation-isolations-1",
+      "sku": "OTH-1032",
+      "cat": "boites-derivation",
+      "sub": "isolations",
+      "nameFr": "Gaine thermo 3/1 — 2 mm (noir)",
+      "nameAr": "غلاف حراري 3/1 — 2 مم (أسود)",
+      "brand": "Legrand",
+      "price": 45,
+      "currency": "DZD",
+      "unit": "m",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Isolations et gaines thermo",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/tradeforce-isolierband.jpg"
+    },
+    {
+      "id": "p-boites-derivation-isolations-2",
+      "sku": "OTH-1033",
+      "cat": "boites-derivation",
+      "sub": "isolations",
+      "nameFr": "Gaine thermo 6/2 — 1 m",
+      "nameAr": "غلاف حراري 6/2 — 1 م",
+      "brand": "Legrand",
+      "price": 85,
+      "currency": "DZD",
+      "unit": "m",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Isolations et gaines thermo",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/tradeforce-isoliermittel.jpg"
+    },
+    {
+      "id": "p-boites-derivation-isolations-3",
+      "sku": "OTH-1034",
+      "cat": "boites-derivation",
+      "sub": "isolations",
+      "nameFr": "Ruban isolant PVC 19 mm",
+      "nameAr": "شريط عزل PVC 19 مم",
+      "brand": "3M",
+      "price": 120,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Isolations et gaines thermo",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-cable.jpg"
+    },
+    {
+      "id": "p-appareillage-prises-interrupteurs-1",
+      "sku": "OTH-1035",
+      "cat": "appareillage",
+      "sub": "prises-interrupteurs",
+      "nameFr": "Prise 16 A 2P+T — blanc",
+      "nameAr": "مقبس 16 A 2P+T — أبيض",
+      "brand": "Legrand",
+      "price": 420,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Prises et interrupteurs",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-appareillage.jpg"
+    },
+    {
+      "id": "p-appareillage-prises-interrupteurs-2",
+      "sku": "OTH-1036",
+      "cat": "appareillage",
+      "sub": "prises-interrupteurs",
+      "nameFr": "Interrupteur va-et-vient",
+      "nameAr": "مفتاح ثنائي",
+      "brand": "Legrand",
+      "price": 380,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Prises et interrupteurs",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-appareillage-extra.jpg"
+    },
+    {
+      "id": "p-appareillage-prises-interrupteurs-3",
+      "sku": "OTH-1037",
+      "cat": "appareillage",
+      "sub": "prises-interrupteurs",
+      "nameFr": "Prise double 2P+T",
+      "nameAr": "مقبس مزدوج 2P+T",
+      "brand": "Schneider Electric",
+      "price": 650,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Prises et interrupteurs",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18487.jpg"
+    },
+    {
+      "id": "p-appareillage-modulaire-1",
+      "sku": "OTH-1038",
+      "cat": "appareillage",
+      "sub": "modulaire",
+      "nameFr": "Contacteur modulaire 20 A — 2 NO",
+      "nameAr": "قاطع تحكم 20 A — 2 NO",
+      "brand": "Schneider Electric",
+      "price": 1850,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Appareillage modulaire",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-vario.jpg"
+    },
+    {
+      "id": "p-appareillage-modulaire-2",
+      "sku": "OTH-1039",
+      "cat": "appareillage",
+      "sub": "modulaire",
+      "nameFr": "Minuterie modulaire 16 A",
+      "nameAr": "مؤقت 16 A",
+      "brand": "Legrand",
+      "price": 2200,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Appareillage modulaire",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/promo-finder.jpg"
+    },
+    {
+      "id": "p-appareillage-modulaire-3",
+      "sku": "OTH-1040",
+      "cat": "appareillage",
+      "sub": "modulaire",
+      "nameFr": "Parafoudre modulaire Type 2",
+      "nameAr": "مانع صواعق Type 2",
+      "brand": "Legrand",
+      "price": 8900,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Appareillage modulaire",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/promo-weidmueller.jpg"
+    },
+    {
+      "id": "p-appareillage-prises-industrielles-1",
+      "sku": "OTH-1041",
+      "cat": "appareillage",
+      "sub": "prises-industrielles",
+      "nameFr": "Prise industrielle 32 A 3P+T IP67",
+      "nameAr": "مقبس صناعي 32 A 3P+T IP67",
+      "brand": "Legrand",
+      "price": 4200,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Prises industrielles",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-appareillage.jpg"
+    },
+    {
+      "id": "p-appareillage-prises-industrielles-2",
+      "sku": "OTH-1042",
+      "cat": "appareillage",
+      "sub": "prises-industrielles",
+      "nameFr": "Prise CEE 16 A — 3P+N+T",
+      "nameAr": "مقبس CEE 16 A — 3P+N+T",
+      "brand": "ABB",
+      "price": 2800,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Prises industrielles",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-appareillage-extra.jpg"
+    },
+    {
+      "id": "p-appareillage-prises-industrielles-3",
+      "sku": "OTH-1043",
+      "cat": "appareillage",
+      "sub": "prises-industrielles",
+      "nameFr": "Fiche mobile 32 A IP67",
+      "nameAr": "فيش متحرك 32 A IP67",
+      "brand": "Legrand",
+      "price": 3600,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Prises industrielles",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18487.jpg"
+    },
+    {
+      "id": "p-tableaux-coffrets-1",
+      "sku": "OTH-1044",
+      "cat": "tableaux",
+      "sub": "coffrets",
+      "nameFr": "Coffret étanche 12 modules IP65",
+      "nameAr": "صندوق 12 وحدة IP65",
+      "brand": "Legrand",
+      "price": 8900,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Coffrets et armoires",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-tableaux.jpg"
+    },
+    {
+      "id": "p-tableaux-coffrets-2",
+      "sku": "OTH-1045",
+      "cat": "tableaux",
+      "sub": "coffrets",
+      "nameFr": "Armoire 2 rangées — 36 modules",
+      "nameAr": "خزانة صفين — 36 وحدة",
+      "brand": "Schneider Electric",
+      "price": 24500,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Coffrets et armoires",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-disj.jpg"
+    },
+    {
+      "id": "p-tableaux-coffrets-3",
+      "sku": "OTH-1046",
+      "cat": "tableaux",
+      "sub": "coffrets",
+      "nameFr": "Coffret saillie 8 modules",
+      "nameAr": "صندوق 8 وحدة",
+      "brand": "Legrand",
+      "price": 4200,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Coffrets et armoires",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18500.jpg"
+    },
+    {
+      "id": "p-tableaux-disjoncteurs-1",
+      "sku": "OTH-1047",
+      "cat": "tableaux",
+      "sub": "disjoncteurs",
+      "nameFr": "Disjoncteur 16 A courbe C",
+      "nameAr": "قاطع 16 A منحنى C",
+      "brand": "Schneider Electric",
+      "price": 1250,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Disjoncteurs et différentiels",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-disj.jpg"
+    },
+    {
+      "id": "p-tableaux-disjoncteurs-2",
+      "sku": "OTH-1048",
+      "cat": "tableaux",
+      "sub": "disjoncteurs",
+      "nameFr": "Disjoncteur différentiel 40 A 30 mA",
+      "nameAr": "قاطع تفاضلي 40 A 30 mA",
+      "brand": "Eaton",
+      "price": 8900,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Disjoncteurs et différentiels",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-eaton-dd.jpg"
+    },
+    {
+      "id": "p-tableaux-disjoncteurs-3",
+      "sku": "OTH-1049",
+      "cat": "tableaux",
+      "sub": "disjoncteurs",
+      "nameFr": "Disjoncteur 32 A courbe C",
+      "nameAr": "قاطع 32 A منحنى C",
+      "brand": "Schneider Electric",
+      "price": 1680,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Disjoncteurs et différentiels",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/promo-eaton.jpg"
+    },
+    {
+      "id": "p-tableaux-accessoires-tableau-1",
+      "sku": "OTH-1050",
+      "cat": "tableaux",
+      "sub": "accessoires-tableau",
+      "nameFr": "Peigne phase 12 modules",
+      "nameAr": "شريط طور 12 وحدة",
+      "brand": "Legrand",
+      "price": 850,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Accessoires de tableau",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-tableaux.jpg"
+    },
+    {
+      "id": "p-tableaux-accessoires-tableau-2",
+      "sku": "OTH-1051",
+      "cat": "tableaux",
+      "sub": "accessoires-tableau",
+      "nameFr": "Goulotte GTL pour coffret",
+      "nameAr": "قناة GTL للصندوق",
+      "brand": "Legrand",
+      "price": 1200,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Accessoires de tableau",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18606.jpg"
+    },
+    {
+      "id": "p-tableaux-accessoires-tableau-3",
+      "sku": "OTH-1052",
+      "cat": "tableaux",
+      "sub": "accessoires-tableau",
+      "nameFr": "Porte transparente coffret 12 M",
+      "nameAr": "باب شفاف صندوق 12 M",
+      "brand": "Legrand",
+      "price": 2100,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Accessoires de tableau",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18524.jpg"
+    },
+    {
+      "id": "p-eclairage-luminaires-interieur-1",
+      "sku": "OTH-1053",
+      "cat": "eclairage",
+      "sub": "luminaires-interieur",
+      "nameFr": "Panneau LED 60×60 36 W",
+      "nameAr": "لوحة LED 60×60 36 W",
+      "brand": "Signify",
+      "price": 6800,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Luminaires intérieur",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-led.jpg"
+    },
+    {
+      "id": "p-eclairage-luminaires-interieur-2",
+      "sku": "OTH-1054",
+      "cat": "eclairage",
+      "sub": "luminaires-interieur",
+      "nameFr": "Downlight LED 12 W 4000 K",
+      "nameAr": "سبوت LED 12 W 4000 K",
+      "brand": "Signify",
+      "price": 1850,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Luminaires intérieur",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/led-smartbalance.jpg"
+    },
+    {
+      "id": "p-eclairage-luminaires-interieur-3",
+      "sku": "OTH-1055",
+      "cat": "eclairage",
+      "sub": "luminaires-interieur",
+      "nameFr": "Réglette LED 120 cm 36 W",
+      "nameAr": "تراك LED 120 سم 36 W",
+      "brand": "Legrand",
+      "price": 3200,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Luminaires intérieur",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/hero-signify.jpg"
+    },
+    {
+      "id": "p-eclairage-luminaires-exterieur-1",
+      "sku": "OTH-1056",
+      "cat": "eclairage",
+      "sub": "luminaires-exterieur",
+      "nameFr": "Projecteur LED 50 W IP65",
+      "nameAr": "كشاف LED 50 W IP65",
+      "brand": "Norlys",
+      "price": 8900,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Luminaires extérieur",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-led.jpg"
+    },
+    {
+      "id": "p-eclairage-luminaires-exterieur-2",
+      "sku": "OTH-1057",
+      "cat": "eclairage",
+      "sub": "luminaires-exterieur",
+      "nameFr": "Applique murale LED extérieure",
+      "nameAr": "وحدة جدار LED خارجية",
+      "brand": "Norlys",
+      "price": 5200,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Luminaires extérieur",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/promo-norlys.jpg"
+    },
+    {
+      "id": "p-eclairage-luminaires-exterieur-3",
+      "sku": "OTH-1058",
+      "cat": "eclairage",
+      "sub": "luminaires-exterieur",
+      "nameFr": "Borne lumineuse sol 1 m",
+      "nameAr": "عمود إنارة 1 م",
+      "brand": "Norlys",
+      "price": 12500,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Luminaires extérieur",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/promo-eclairage-2026.jpg"
+    },
+    {
+      "id": "p-eclairage-led-sources-1",
+      "sku": "OTH-1059",
+      "cat": "eclairage",
+      "sub": "led-sources",
+      "nameFr": "Ampoule LED E27 10 W 4000 K",
+      "nameAr": "مصباح LED E27 10 W 4000 K",
+      "brand": "Signify",
+      "price": 420,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "LED et sources lumineuses",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/led-coreline.jpg"
+    },
+    {
+      "id": "p-eclairage-led-sources-2",
+      "sku": "OTH-1060",
+      "cat": "eclairage",
+      "sub": "led-sources",
+      "nameFr": "Tube LED T8 120 cm 18 W",
+      "nameAr": "أنبوب LED T8 120 سم 18 W",
+      "brand": "Signify",
+      "price": 890,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "LED et sources lumineuses",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-eclairage.jpg"
+    },
+    {
+      "id": "p-eclairage-led-sources-3",
+      "sku": "OTH-1061",
+      "cat": "eclairage",
+      "sub": "led-sources",
+      "nameFr": "Spot GU10 LED 5 W",
+      "nameAr": "سبوت GU10 LED 5 W",
+      "brand": "Legrand",
+      "price": 380,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "LED et sources lumineuses",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-led.jpg"
+    },
+    {
+      "id": "p-industrie-automation-contacteurs-1",
+      "sku": "OTH-1062",
+      "cat": "industrie-automation",
+      "sub": "contacteurs",
+      "nameFr": "Contacteur 25 A — 3 NO",
+      "nameAr": "قاطع تحكم 25 A — 3 NO",
+      "brand": "Schneider Electric",
+      "price": 4200,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Contacteurs et relais",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-vario.jpg"
+    },
+    {
+      "id": "p-industrie-automation-contacteurs-2",
+      "sku": "OTH-1063",
+      "cat": "industrie-automation",
+      "sub": "contacteurs",
+      "nameFr": "Relais auxiliaire 1 NO + 1 NF",
+      "nameAr": "مرحل مساعد 1 NO + 1 NF",
+      "brand": "Schneider Electric",
+      "price": 980,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Contacteurs et relais",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/novelty-vario.jpg"
+    },
+    {
+      "id": "p-industrie-automation-contacteurs-3",
+      "sku": "OTH-1064",
+      "cat": "industrie-automation",
+      "sub": "contacteurs",
+      "nameFr": "Contacteur 40 A — bobine 230 V",
+      "nameAr": "قاطع تحكم 40 A — 230 V",
+      "brand": "Eaton",
+      "price": 5800,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Contacteurs et relais",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/hero-vario.jpg"
+    },
+    {
+      "id": "p-industrie-automation-sectionneurs-1",
+      "sku": "OTH-1065",
+      "cat": "industrie-automation",
+      "sub": "sectionneurs",
+      "nameFr": "TeSys Vario 4P 63 A IP65",
+      "nameAr": "TeSys Vario 4P 63 A IP65",
+      "brand": "Schneider Electric",
+      "price": 24500,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Sectionneurs",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-vario.jpg"
+    },
+    {
+      "id": "p-industrie-automation-sectionneurs-2",
+      "sku": "OTH-1066",
+      "cat": "industrie-automation",
+      "sub": "sectionneurs",
+      "nameFr": "Sectionneur 3P 125 A",
+      "nameAr": "قاطع عزل 3P 125 A",
+      "brand": "Schneider Electric",
+      "price": 18900,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Sectionneurs",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18481.jpg"
+    },
+    {
+      "id": "p-industrie-automation-sectionneurs-3",
+      "sku": "OTH-1067",
+      "cat": "industrie-automation",
+      "sub": "sectionneurs",
+      "nameFr": "Interrupteur-sectionneur 4P 32 A",
+      "nameAr": "قاطع عزل 4P 32 A",
+      "brand": "ABB",
+      "price": 9800,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Sectionneurs",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/novelty-vario.jpg"
+    },
+    {
+      "id": "p-industrie-automation-automates-1",
+      "sku": "OTH-1068",
+      "cat": "industrie-automation",
+      "sub": "automates",
+      "nameFr": "Automate compact 14 E/S",
+      "nameAr": "PLC مدمج 14 I/O",
+      "brand": "Schneider Electric",
+      "price": 42000,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Automates et variateurs",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-industrie.jpg"
+    },
+    {
+      "id": "p-industrie-automation-automates-2",
+      "sku": "OTH-1069",
+      "cat": "industrie-automation",
+      "sub": "automates",
+      "nameFr": "Variateur 3 kW — mono",
+      "nameAr": "محول سرعة 3 kW",
+      "brand": "Schneider Electric",
+      "price": 28500,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Automates et variateurs",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18443.jpg"
+    },
+    {
+      "id": "p-industrie-automation-automates-3",
+      "sku": "OTH-1070",
+      "cat": "industrie-automation",
+      "sub": "automates",
+      "nameFr": "Module E/S numérique 8 entrées",
+      "nameAr": "وحدة I/O رقمية 8 مداخل",
+      "brand": "Siemens",
+      "price": 8900,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Automates et variateurs",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18481.jpg"
+    },
+    {
+      "id": "p-reseaux-donnees-baie-rj45-1",
+      "sku": "OTH-1071",
+      "cat": "reseaux-donnees",
+      "sub": "baie-rj45",
+      "nameFr": "Baie 19\" 12 U — profondeur 600 mm",
+      "nameAr": "خزانة 19\" 12 U",
+      "brand": "Legrand",
+      "price": 42000,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Baies et RJ45",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-network.jpg"
+    },
+    {
+      "id": "p-reseaux-donnees-baie-rj45-2",
+      "sku": "OTH-1072",
+      "cat": "reseaux-donnees",
+      "sub": "baie-rj45",
+      "nameFr": "Panneau de brassage 24 ports Cat.6",
+      "nameAr": "لوحة توصيل 24 منفذ Cat.6",
+      "brand": "Excel Networking",
+      "price": 8900,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Baies et RJ45",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/promo-excel.jpg"
+    },
+    {
+      "id": "p-reseaux-donnees-baie-rj45-3",
+      "sku": "OTH-1073",
+      "cat": "reseaux-donnees",
+      "sub": "baie-rj45",
+      "nameFr": "Organiseur de câbles 1 U",
+      "nameAr": "منظم كابلات 1 U",
+      "brand": "Legrand",
+      "price": 1200,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Baies et RJ45",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-cable.jpg"
+    },
+    {
+      "id": "p-reseaux-donnees-wifi-omada-2",
+      "sku": "OTH-1074",
+      "cat": "reseaux-donnees",
+      "sub": "wifi-omada",
+      "nameFr": "Contrôleur Omada OC200",
+      "nameAr": "متحكم Omada OC200",
+      "brand": "TP-Link Omada",
+      "price": 32000,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Wi-Fi 7 et switches",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-wifi.jpg"
+    },
+    {
+      "id": "p-reseaux-donnees-wifi-omada-3",
+      "sku": "OTH-1075",
+      "cat": "reseaux-donnees",
+      "sub": "wifi-omada",
+      "nameFr": "Switch PoE 8 ports Gigabit",
+      "nameAr": "سويتش PoE 8 منافذ",
+      "brand": "TP-Link Omada",
+      "price": 14500,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Wi-Fi 7 et switches",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18217.jpg"
+    },
+    {
+      "id": "p-reseaux-donnees-fibre-1",
+      "sku": "OTH-1076",
+      "cat": "reseaux-donnees",
+      "sub": "fibre",
+      "nameFr": "Panneau fibre 24 ports LC",
+      "nameAr": "لوحة ألياف 24 منفذ LC",
+      "brand": "Legrand",
+      "price": 12500,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Fibre optique",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-network.jpg"
+    },
+    {
+      "id": "p-reseaux-donnees-fibre-2",
+      "sku": "OTH-1077",
+      "cat": "reseaux-donnees",
+      "sub": "fibre",
+      "nameFr": "Boîtier FO 12 fibres murale",
+      "nameAr": "علبة ألياف 12 ليف",
+      "brand": "Corning",
+      "price": 6800,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Fibre optique",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18533.jpg"
+    },
+    {
+      "id": "p-reseaux-donnees-fibre-3",
+      "sku": "OTH-1078",
+      "cat": "reseaux-donnees",
+      "sub": "fibre",
+      "nameFr": "Module SFP 1 G multimode",
+      "nameAr": "وحدة SFP 1 G multimode",
+      "brand": "TP-Link Omada",
+      "price": 4200,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Fibre optique",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18217.jpg"
+    },
+    {
+      "id": "p-energies-renouvelables-photovoltaique-1",
+      "sku": "OTH-1079",
+      "cat": "energies-renouvelables",
+      "sub": "photovoltaique",
+      "nameFr": "Panneau solaire 450 Wc mono",
+      "nameAr": "لوح شمسي 450 Wc",
+      "brand": "Longi",
+      "price": 42000,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Photovoltaïque",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-energies.jpg"
+    },
+    {
+      "id": "p-energies-renouvelables-photovoltaique-2",
+      "sku": "OTH-1080",
+      "cat": "energies-renouvelables",
+      "sub": "photovoltaique",
+      "nameFr": "Structure toiture — 1 panneau",
+      "nameAr": "هيكل سقف — لوح واحد",
+      "brand": "Schletter",
+      "price": 8500,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Photovoltaïque",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18558.jpg"
+    },
+    {
+      "id": "p-energies-renouvelables-photovoltaique-3",
+      "sku": "OTH-1081",
+      "cat": "energies-renouvelables",
+      "sub": "photovoltaique",
+      "nameFr": "Câble solaire 6 mm² — 100 m",
+      "nameAr": "كابل شمسي 6 مم² — 100 م",
+      "brand": "Nexans",
+      "price": 12500,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Photovoltaïque",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-cable.jpg"
+    },
+    {
+      "id": "p-energies-renouvelables-bornes-recharge-1",
+      "sku": "OTH-1082",
+      "cat": "energies-renouvelables",
+      "sub": "bornes-recharge",
+      "nameFr": "Borne murale 7,4 kW",
+      "nameAr": "محطة شحن جدارية 7.4 kW",
+      "brand": "ABB",
+      "price": 89000,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Bornes de recharge e-mobilité",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-emob.jpg"
+    },
+    {
+      "id": "p-energies-renouvelables-bornes-recharge-2",
+      "sku": "OTH-1083",
+      "cat": "energies-renouvelables",
+      "sub": "bornes-recharge",
+      "nameFr": "Borne 22 kW triphasée",
+      "nameAr": "محطة 22 kW ثلاثية",
+      "brand": "ABB",
+      "price": 185000,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Bornes de recharge e-mobilité",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/novelty-podis.jpg"
+    },
+    {
+      "id": "p-energies-renouvelables-bornes-recharge-3",
+      "sku": "OTH-1084",
+      "cat": "energies-renouvelables",
+      "sub": "bornes-recharge",
+      "nameFr": "Câble Type 2 — 5 m",
+      "nameAr": "كابل Type 2 — 5 م",
+      "brand": "ABB",
+      "price": 12500,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Bornes de recharge e-mobilité",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18526.jpg"
+    },
+    {
+      "id": "p-energies-renouvelables-onduleurs-1",
+      "sku": "OTH-1085",
+      "cat": "energies-renouvelables",
+      "sub": "onduleurs",
+      "nameFr": "Onduleur hybride 5 kW",
+      "nameAr": "محول هجين 5 kW",
+      "brand": "Huawei",
+      "price": 285000,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Onduleurs et stockage",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18526.jpg"
+    },
+    {
+      "id": "p-energies-renouvelables-onduleurs-2",
+      "sku": "OTH-1086",
+      "cat": "energies-renouvelables",
+      "sub": "onduleurs",
+      "nameFr": "Micro-onduleur 800 W",
+      "nameAr": "مايكرو محول 800 W",
+      "brand": "Enphase",
+      "price": 89000,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Onduleurs et stockage",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-energies.jpg"
+    },
+    {
+      "id": "p-energies-renouvelables-onduleurs-3",
+      "sku": "OTH-1087",
+      "cat": "energies-renouvelables",
+      "sub": "onduleurs",
+      "nameFr": "Batterie stockage 5 kWh",
+      "nameAr": "بطارية تخزين 5 kWh",
+      "brand": "Huawei",
+      "price": 420000,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "low",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Onduleurs et stockage",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18558.jpg"
+    },
+    {
+      "id": "p-tubes-canaux-tubes-pvc-1",
+      "sku": "OTH-1001",
+      "cat": "tubes-canaux",
+      "sub": "tubes-pvc",
+      "nameFr": "Tube ICTA Ø20 mm (3 m)",
+      "nameAr": "أنبوب ICTA Ø20 مم (3 م)",
+      "brand": "Legrand",
+      "price": 480,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Tubes PVC / ICTA",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-tubes-canaux.jpg"
+    },
+    {
+      "id": "p-filscables-cables-bt-rigide-1",
+      "sku": "OTH-1002",
+      "cat": "filscables",
+      "sub": "cables-bt-rigide",
+      "nameFr": "Câble H07V-K 2,5 mm² vert/jaune",
+      "nameAr": "كابل H07V-K 2.5 مم² أخضر/أصفر",
+      "brand": "Nexans",
+      "price": 185,
+      "currency": "DZD",
+      "unit": "m",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Câbles à basse tension rigide",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/tradeforce-kabel.jpg"
+    },
+    {
+      "id": "p-filscables-cables-bt-rigide-2",
+      "sku": "OTH-1003",
+      "cat": "filscables",
+      "sub": "cables-bt-rigide",
+      "nameFr": "Câble NYM-J 3G2,5 mm²",
+      "nameAr": "كابل NYM-J 3G2.5 مم²",
+      "brand": "ABB",
+      "price": 420,
+      "currency": "DZD",
+      "unit": "m",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Câbles à basse tension rigide",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/cat-filscables.jpg"
+    },
+    {
+      "id": "p-filscables-cables-bt-souple-1",
+      "sku": "OTH-1004",
+      "cat": "filscables",
+      "sub": "cables-bt-souple",
+      "nameFr": "H05VV-F 3G1,5 mm²",
+      "nameAr": "H05VV-F 3G1.5 مم²",
+      "brand": "Legrand",
+      "price": 210,
+      "currency": "DZD",
+      "unit": "m",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Câbles à basse tension souple",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/tradeforce-kabel.jpg"
+    },
+    {
+      "id": "p-filscables-cables-donnees-cuivre-1",
+      "sku": "OTH-1005",
+      "cat": "filscables",
+      "sub": "cables-donnees-cuivre",
+      "nameFr": "Câble données Cat.6A S/FTP",
+      "nameAr": "كابل بيانات Cat.6A S/FTP",
+      "brand": "Excel Networking",
+      "price": 380,
+      "currency": "DZD",
+      "unit": "m",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Câbles de données / communication (cuivre)",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18217.jpg"
+    },
+    {
+      "id": "p-reseaux-donnees-wifi-omada-1",
+      "sku": "OTH-1006",
+      "cat": "reseaux-donnees",
+      "sub": "wifi-omada",
+      "nameFr": "Point d'accès Wi-Fi 7 Omada",
+      "nameAr": "نقطة وصول Wi-Fi 7 Omada",
+      "brand": "TP-Link Omada",
+      "price": 19500,
+      "currency": "DZD",
+      "unit": "pce",
+      "stock": "in_stock",
+      "descFr": "Référence professionnelle — livraison chantier Algérie (démo).",
+      "descAr": "مرجع احترافي — توصيل للورشة في الجزائر (تجريبي).",
+      "specs": [
+        {
+          "labelFr": "Famille",
+          "value": "Wi-Fi 7 et switches",
+          "labelAr": "الفئة"
+        }
+      ],
+      "imageUrl": "assets/electro-centrale/sonepar/prod-18547.jpg"
+    }
+  ],
+  "algeriaLink": {
+    "labelFr": "Acheter en Algérie",
+    "labelAr": "الشراء في الجزائر",
+    "descFr": "Sonepar n'est pas présent en Algérie — consultez nos distributeurs locaux.",
+    "href": "commerce.html",
+    "descAr": "اطلب من موزعينا المحليين — توصيل للورشة."
+  },
+  "mediaNoteFr": "Visuels téléchargés depuis sonepar.ch pour maquette brouillon uniquement — droits Sonepar / fabricants.",
+  "mediaNoteAr": "صور من sonepar.ch للنموذج فقط.",
+  "othmanShop": {
+    "subjectFr": "Othman Electrique — shop en ligne",
+    "subjectAr": "عثمان للكهرباء — متجر أونلاين",
+    "headlineFr": "Premier fournisseur de matériel électrique en ligne en Algérie",
+    "headlineAr": "أول مورّد لمواد الكهرباء أونلاين في الجزائر",
+    "hookFr": "Plus besoin d'aller au Hamiz.",
+    "hookAr": "لا حاجة للذهاب إلى الحميز.",
+    "promiseFr": "Inscription · liste matériel · confirmation fournisseur · livraison chantier le jour même.",
+    "promiseAr": "تسجيل · قائمة مواد · تأكيد المورد · توصيل للورشة في نفس اليوم.",
+    "heroPhotos": [
+      {
+        "url": "assets/electro-centrale/sonepar/cat-appareillage-extra.jpg",
+        "altFr": "Éclairage pro",
+        "altAr": "إضاءة احترافية"
+      },
+      {
+        "url": "assets/electro-centrale/sonepar/cat-appareillage.jpg",
+        "altFr": "Câbles",
+        "altAr": "كوابل"
+      },
+      {
+        "url": "assets/electro-centrale/sonepar/cat-boites.jpg",
+        "altFr": "Tableaux",
+        "altAr": "لوحات"
+      },
+      {
+        "url": "assets/electro-centrale/sonepar/cat-eclairage.jpg",
+        "altFr": "Connexion",
+        "altAr": "توصيل"
+      },
+      {
+        "url": "assets/electro-centrale/sonepar/cat-energies.jpg",
+        "altFr": "LED",
+        "altAr": "LED"
+      },
+      {
+        "url": "assets/electro-centrale/sonepar/cat-filscables.jpg",
+        "altFr": "Industrie",
+        "altAr": "صناعة"
+      }
+    ],
+    "steps": [
+      {
+        "imageUrl": "assets/electro-centrale/sonepar/service-digital.jpg",
+        "labelFr": "Inscription",
+        "labelAr": "تسجيل",
+        "shortFr": "Sur le site",
+        "shortAr": "على الموقع"
+      },
+      {
+        "imageUrl": "assets/electro-centrale/sonepar/service-publications.png",
+        "labelFr": "Liste matériel",
+        "labelAr": "قائمة المواد",
+        "shortFr": "Votre papier",
+        "shortAr": "ورقة المواد"
+      },
+      {
+        "imageUrl": "assets/electro-centrale/sonepar/service-fournisseurs.png",
+        "labelFr": "Confirmation",
+        "labelAr": "تأكيد",
+        "shortFr": "Fournisseur",
+        "shortAr": "المورد"
+      },
+      {
+        "imageUrl": "assets/electro-centrale/sonepar/prod-cable.jpg",
+        "labelFr": "Livraison",
+        "labelAr": "توصيل",
+        "shortFr": "Chantier · même jour",
+        "shortAr": "الورشة · نفس اليوم"
+      }
+    ],
+    "ctas": [
+      {
+        "labelFr": "S'inscrire",
+        "labelAr": "تسجيل",
+        "href": "login.html",
+        "primary": true
+      },
+      {
+        "labelFr": "Catalogue",
+        "labelAr": "المنتجات",
+        "href": "electro-centrale-catalogue.html",
+        "primary": false
+      },
+      {
+        "labelFr": "Ma liste",
+        "labelAr": "قائمتي",
+        "href": "devis.html",
+        "primary": false
+      }
+    ]
+  },
+  "defaultLang": "ar",
+  "categories": {},
+  "i18n": {
+    "draftBannerFr": "⚠️ BROUILLON — Othman Electrique shop en ligne",
+    "draftBannerAr": "⚠️ مسودة — متجر عثمان للكهرباء أونلاين",
+    "topbarFr": "Othman Electrique — shop en ligne · Algérie",
+    "topbarAr": "عثمان للكهرباء — متجر أونلاين · الجزائر",
+    "footerFr": "© 2026 Othman Electrique",
+    "footerAr": "© 2026 عثمان للكهرباء",
+    "catalogueTitleFr": "Catalogue — Othman Electrique",
+    "catalogueTitleAr": "المنتجات — عثمان للكهرباء",
+    "draftCatalogueFr": "⚠️ BROUILLON — Catalogue produits",
+    "draftCatalogueAr": "⚠️ مسودة — قائمة المنتجات",
+    "draftProductFr": "⚠️ BROUILLON — Fiche produit",
+    "draftProductAr": "⚠️ مسودة — صفحة المنتج",
+    "productTitleFr": "Produit — Othman Electrique",
+    "productTitleAr": "منتج — عثمان للكهرباء",
+    "homeTitleFr": "Othman Electrique — Shop en ligne · Algérie",
+    "homeTitleAr": "عثمان للكهرباء — متجر أونلاين · الجزائر",
+    "unitPceFr": "pce",
+    "unitPceAr": "قطعة",
+    "unitMFr": "m",
+    "unitMAr": "م"
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 3,
+  "id": "Barra de Neutro (N) - 6T A",
+  "name": "Barra de Neutro (N) - 6T A",
+  "category": "Distribución",
+  "tagPrefix": "",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 1200,
+      "height": 7200
+    },
+    "original": "original.png"
+  },
+  "terminals": [
+    {
+      "id": "N",
+      "label": "N",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.781667,
+      "ny": 0.083333,
+      "direction": "right",
+      "guideLength": 60
+    },
+    {
+      "id": "N1",
+      "label": "N1",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.721667,
+      "ny": 0.25,
+      "direction": "right",
+      "guideLength": 60
+    },
+    {
+      "id": "N2",
+      "label": "N2",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.721667,
+      "ny": 0.416667,
+      "direction": "right",
+      "guideLength": 60
+    },
+    {
+      "id": "N3",
+      "label": "N3",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.721667,
+      "ny": 0.583333,
+      "direction": "right",
+      "guideLength": 60
+    },
+    {
+      "id": "N4",
+      "label": "N4",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.721667,
+      "ny": 0.75,
+      "direction": "right",
+      "guideLength": 60
+    },
+    {
+      "id": "N5",
+      "label": "N5",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.721667,
+      "ny": 0.916667,
+      "direction": "right",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "any",
+    "activationRule": "none",
+    "terminalPairs": [
+      {
+        "id": "bus",
+        "terminals": [
+          "N",
+          "N1",
+          "N2",
+          "N3",
+          "N4",
+          "N5"
+        ],
+        "simBehavior": "junction",
+        "currentPath": "series",
+        "terminalTypes": {
+          "N": "power_ac",
+          "N1": "power_ac",
+          "N2": "power_ac",
+          "N3": "power_ac",
+          "N4": "power_ac",
+          "N5": "power_ac"
+        }
+      }
+    ]
+  }
+}

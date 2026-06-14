@@ -161,7 +161,7 @@
     });
 
     return (
-      '<mxfile host="DZSWISS ELEC" agent="unifilar-drawio-engine" version="22.1.0" type="device">' +
+      '<mxfile host="SwissDZ" agent="unifilar-drawio-engine" version="22.1.0" type="device">' +
       '<diagram name="' + escXml(project.board) + '" id="unifilar-iec">' +
       '<mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="0" fold="1" page="1" pageScale="1" pageWidth="' + pageW + '" pageHeight="' + pageH + '" math="0" shadow="0">' +
       '<root><mxCell id="0"/><mxCell id="1" parent="0"/>' +

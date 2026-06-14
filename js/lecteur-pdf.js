@@ -1443,7 +1443,7 @@
 
   function initPdf(src) {
     pdfUrl = src;
-    document.title = (lang === "ar" ? titleAr : titleFr) + " — DZSWISS ELEC";
+    document.title = (lang === "ar" ? titleAr : titleFr) + " — SwissDZ";
     if (els.download) els.download.href = src;
     if (els.openFallback) els.openFallback.href = src;
 

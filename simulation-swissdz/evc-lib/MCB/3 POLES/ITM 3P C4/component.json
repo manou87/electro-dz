@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 3,
+  "id": "ITM 3P C4",
+  "name": "ITM 3P C4",
+  "category": "Proteccion",
+  "tagPrefix": "Q",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 3600,
+      "height": 7200
+    }
+  },
+  "terminals": [
+    {
+      "id": "1",
+      "label": "1",
+      "signal": "Potencia",
+      "role": "input",
+      "nx": 0.166667,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "3",
+      "label": "3",
+      "signal": "Potencia",
+      "role": "input",
+      "nx": 0.5,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "2",
+      "label": "2",
+      "signal": "Potencia",
+      "role": "output",
+      "nx": 0.166667,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "4",
+      "label": "4",
+      "signal": "Potencia",
+      "role": "output",
+      "nx": 0.5,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "5",
+      "label": "5",
+      "signal": "Potencia",
+      "role": "input",
+      "nx": 0.833333,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "6",
+      "label": "6",
+      "signal": "Potencia",
+      "role": "output",
+      "nx": 0.833333,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "any",
+    "activationRule": "protection",
+    "terminalPairs": [
+      {
+        "id": "pole_1",
+        "terminals": [
+          "1",
+          "2"
+        ],
+        "simBehavior": "protection_mcb",
+        "currentPath": "series",
+        "terminalTypes": {
+          "1": "power_ac",
+          "2": "power_ac"
+        }
+      },
+      {
+        "id": "pole_2",
+        "terminals": [
+          "3",
+          "4"
+        ],
+        "simBehavior": "protection_mcb",
+        "currentPath": "series",
+        "terminalTypes": {
+          "3": "power_ac",
+          "4": "power_ac"
+        }
+      },
+      {
+        "id": "pole_3",
+        "terminals": [
+          "5",
+          "6"
+        ],
+        "simBehavior": "protection_mcb",
+        "currentPath": "series",
+        "terminalTypes": {
+          "5": "power_ac",
+          "6": "power_ac"
+        }
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+      },
+      "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+      }
+    }
+  },
+  "docking": {
+    "mountable": true,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "itm_3p",
+      "dockSize": {
+        "cols": 3,
+        "rows": 2
+      },
+      "hideTerminalsOnDock": [],
+      "overlapPx": 0
+    },
+    "zones": []
+  }
+}

@@ -1,0 +1,267 @@
+{
+  "schemaVersion": 3,
+  "id": "LOGO! 230RCE",
+  "name": "LOGO! 230RCE",
+  "category": "PLC",
+  "tagPrefix": "A",
+  "graphics": {
+    "preview": "preview.png",
+    "original": "original.png",
+    "size": {
+      "width": 6600,
+      "height": 8400
+    }
+  },
+  "terminals": [
+    {
+      "id": "L1",
+      "label": "L1",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.090909,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "N",
+      "label": "N",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.173333,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "I1",
+      "label": "I1",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.255909,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "I2",
+      "label": "I2",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.338333,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "I3",
+      "label": "I3",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.420909,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "I4",
+      "label": "I4",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.503333,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "I5",
+      "label": "I5",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.585909,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "I6",
+      "label": "I6",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.668333,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "I7",
+      "label": "I7",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.750909,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "I8",
+      "label": "I8",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.833333,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "Q1.1",
+      "label": "Q1.1",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.090909,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "Q1.2",
+      "label": "Q1.2",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.181818,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "Q2.2",
+      "label": "Q2.2",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.429242,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "Q2.1",
+      "label": "Q2.1",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.338333,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "Q3.2",
+      "label": "Q3.2",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.676818,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "Q3.1",
+      "label": "Q3.1",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.585909,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "Q4.2",
+      "label": "Q4.2",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.909091,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "Q4.1",
+      "label": "Q4.1",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.818182,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "PE",
+      "label": "PE",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.633182,
+      "ny": 0.869048,
+      "direction": "bottom",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "passive",
+    "borneType": "N"
+  },
+  "docking": {
+    "mountable": false,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "plc",
+      "dockSize": {
+        "cols": 6,
+        "rows": 2
+      },
+      "hideTerminalsOnDock": [],
+      "overlapPx": 0
+    },
+    "zones": [
+      {
+        "id": "modulo_logo8",
+        "label": "modulo_logo8",
+        "position": "right",
+        "rect": {
+          "x": 6600,
+          "y": 0,
+          "w": 8400,
+          "h": 8400
+        },
+        "anchor": {
+          "nx": 1.636364,
+          "ny": 0.5
+        },
+        "gridSize": {
+          "cols": 7,
+          "rows": 7
+        },
+        "accepts": [
+          "modulo_plc"
+        ],
+        "bridge": null,
+        "childAlignment": "left_center",
+        "childZLayer": 2,
+        "hideHostTerminals": null
+      }
+    ]
+  }
+}

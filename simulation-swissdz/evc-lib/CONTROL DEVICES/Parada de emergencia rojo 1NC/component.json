@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 3,
+  "id": "Parada de emergencia rojo 1NC",
+  "name": "Parada de emergencia rojo 1NC",
+  "category": "Accionamientos",
+  "tagPrefix": "S",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 1800,
+      "height": 2100
+    }
+  },
+  "terminals": [
+    {
+      "id": "1",
+      "label": "1",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.296667,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "2",
+      "label": "2",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.296667,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "any",
+    "activationRule": "switch",
+    "terminalPairs": [
+      {
+        "id": "contact_nc",
+        "terminals": [
+          "1",
+          "2"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+          "1": "contact_nc",
+          "2": "contact_nc"
+        }
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+      },
+      "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+      }
+    }
+  }
+}

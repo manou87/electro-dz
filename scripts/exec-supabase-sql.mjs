@@ -112,7 +112,7 @@ async function verifyApi() {
 
 async function main() {
   const query = fs.readFileSync(SQL_FILE, 'utf8');
-  console.log('DZSWISS — exécution SQL Supabase\n');
+  console.log('SwissDZ — exécution SQL Supabase\n');
 
   const token = loadToken();
   if (token) {

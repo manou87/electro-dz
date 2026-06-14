@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 3,
+  "id": "Bloque Auxiliar Lateral 1NO+1NC - Guardamotor",
+  "name": "Bloque Auxiliar Lateral 1NO+1NC - Guardamotor",
+  "category": "Control",
+  "tagPrefix": "QM",
+  "tagInherit": true,
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 1200,
+      "height": 7200
+    },
+    "original": "original.png"
+  },
+  "terminals": [
+    {
+      "id": "31",
+      "label": "31",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.5,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "43",
+      "label": "43",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.5,
+      "ny": 0.208333,
+      "direction": "top",
+      "guideLength": 30
+    },
+    {
+      "id": "44",
+      "label": "44",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.5,
+      "ny": 0.791667,
+      "direction": "bottom",
+      "guideLength": 30
+    },
+    {
+      "id": "32",
+      "label": "32",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.5,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "any",
+    "activationRule": "docked",
+    "terminalPairs": [
+      {
+        "id": "contact_nc",
+        "terminals": [
+          "31",
+          "32"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+          "31": "contact_nc",
+          "32": "contact_nc"
+        }
+      },
+      {
+        "id": "contact_no",
+        "terminals": [
+          "43",
+          "44"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+          "43": "contact_no",
+          "44": "contact_no"
+        }
+      }
+    ]
+  },
+  "docking": {
+    "mountable": false,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "auxiliary_contact",
+      "dockSize": {
+        "cols": 1,
+        "rows": 3
+      },
+      "hideTerminalsOnDock": [],
+      "overlapPx": 0
+    },
+    "zones": []
+  }
+}

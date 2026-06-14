@@ -1,0 +1,3902 @@
+[
+  {
+    "id": "ACTUATORS/Foco LED",
+    "path": "ACTUATORS/Foco LED",
+    "name": "Foco LED",
+    "category": "Genericos",
+    "tagPrefix": "HL",
+    "width": 4800,
+    "height": 8400,
+    "terminals": [
+      {
+        "id": "F",
+        "label": "F",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "N",
+        "label": "N",
+        "signal": "Potencia",
+        "nx": 0.276458,
+        "ny": 0.884405,
+        "direction": "left",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "ACTUATORS/Motor 6 terminales",
+    "path": "ACTUATORS/Motor 6 terminales",
+    "name": "Motor 6 terminales",
+    "category": "Motores",
+    "tagPrefix": "M",
+    "width": 9600,
+    "height": 10200,
+    "terminals": [
+      {
+        "id": "U1",
+        "label": "U1",
+        "signal": "Potencia",
+        "nx": 0.328125,
+        "ny": 0.117647,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "V1",
+        "label": "V1",
+        "signal": "Potencia",
+        "nx": 0.46875,
+        "ny": 0.117647,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "W1",
+        "label": "W1",
+        "signal": "Potencia",
+        "nx": 0.609375,
+        "ny": 0.117647,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "U2",
+        "label": "U2",
+        "signal": "Potencia",
+        "nx": 0.46875,
+        "ny": 0.25,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "V2",
+        "label": "V2",
+        "signal": "Potencia",
+        "nx": 0.609375,
+        "ny": 0.25,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "W2",
+        "label": "W2",
+        "signal": "Potencia",
+        "nx": 0.328125,
+        "ny": 0.25,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "PE",
+        "label": "PE",
+        "signal": "Potencia",
+        "nx": 0.238646,
+        "ny": 0.044118,
+        "direction": "top",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "AUXILIARY BLOCKS/FOR CONTACTORS/Bloque Auxiliar Frontal 2NO + 2NC - Contactor",
+    "path": "AUXILIARY BLOCKS/FOR CONTACTORS/Bloque Auxiliar Frontal 2NO + 2NC - Contactor",
+    "name": "Bloque Auxiliar Frontal 2NO + 2NC - Contactor",
+    "category": "Control",
+    "tagPrefix": "KM",
+    "width": 2900,
+    "height": 3300,
+    "terminals": [
+      {
+        "id": "53",
+        "label": "53",
+        "signal": "Control",
+        "nx": 0.12931,
+        "ny": 0.05303,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "83",
+        "label": "83",
+        "signal": "Control",
+        "nx": 0.872414,
+        "ny": 0.05303,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "54",
+        "label": "54",
+        "signal": "Control",
+        "nx": 0.12931,
+        "ny": 0.947273,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "84",
+        "label": "84",
+        "signal": "Control",
+        "nx": 0.872414,
+        "ny": 0.947273,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "61",
+        "label": "61",
+        "signal": "Control",
+        "nx": 0.375862,
+        "ny": 0.05303,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "71",
+        "label": "71",
+        "signal": "Control",
+        "nx": 0.627586,
+        "ny": 0.05303,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "62",
+        "label": "62",
+        "signal": "Control",
+        "nx": 0.375862,
+        "ny": 0.947273,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "72",
+        "label": "72",
+        "signal": "Control",
+        "nx": 0.627586,
+        "ny": 0.947273,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "AUXILIARY BLOCKS/FOR CONTACTORS/Temporizador retardo a la conexion 1 - 30s",
+    "path": "AUXILIARY BLOCKS/FOR CONTACTORS/Temporizador retardo a la conexion 1 - 30s",
+    "name": "ON DELAY Timer 1 - 30s",
+    "category": "Control",
+    "tagPrefix": "KM",
+    "width": 2900,
+    "height": 3300,
+    "terminals": [
+      {
+        "id": "55",
+        "label": "55",
+        "signal": "Control",
+        "nx": 0.173448,
+        "ny": 0.05303,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "67",
+        "label": "67",
+        "signal": "Control",
+        "nx": 0.832414,
+        "ny": 0.05303,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "56",
+        "label": "56",
+        "signal": "Control",
+        "nx": 0.173448,
+        "ny": 0.947273,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "68",
+        "label": "68",
+        "signal": "Control",
+        "nx": 0.832414,
+        "ny": 0.947273,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "SwissDz/Télérupteur SDZ-TL116",
+    "path": "SwissDz/Télérupteur SDZ-TL116",
+    "name": "Télérupteur SDZ-TL116",
+    "category": "Control",
+    "tagPrefix": "TL",
+    "width": 2900,
+    "height": 8700,
+    "terminals": [
+      {
+        "id": "55",
+        "label": "1",
+        "signal": "Control",
+        "nx": 0.173448,
+        "ny": 0.05303,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "67",
+        "label": "3",
+        "signal": "Control",
+        "nx": 0.832414,
+        "ny": 0.05303,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "56",
+        "label": "2",
+        "signal": "Control",
+        "nx": 0.173448,
+        "ny": 0.947273,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "68",
+        "label": "4",
+        "signal": "Control",
+        "nx": 0.832414,
+        "ny": 0.947273,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "SwissDz/Minuterie SDZ-MN110",
+    "path": "SwissDz/Minuterie SDZ-MN110",
+    "name": "Minuterie SDZ-MN110",
+    "category": "Control",
+    "tagPrefix": "MN",
+    "width": 2900,
+    "height": 8700,
+    "terminals": [
+      {
+        "id": "55",
+        "label": "55",
+        "signal": "Control",
+        "nx": 0.173448,
+        "ny": 0.05303,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "67",
+        "label": "67",
+        "signal": "Control",
+        "nx": 0.832414,
+        "ny": 0.05303,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "56",
+        "label": "56",
+        "signal": "Control",
+        "nx": 0.173448,
+        "ny": 0.947273,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "68",
+        "label": "68",
+        "signal": "Control",
+        "nx": 0.832414,
+        "ny": 0.947273,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "AUXILIARY BLOCKS/FOR MPCB/Bloque Auxiliar Frontal 1NO+1NC - Guardamotor",
+    "path": "AUXILIARY BLOCKS/FOR MPCB/Bloque Auxiliar Frontal 1NO+1NC - Guardamotor",
+    "name": "Bloque Auxiliar Frontal 1NO+1NC - Guardamotor",
+    "category": "Control",
+    "tagPrefix": "QM",
+    "width": 3600,
+    "height": 600,
+    "terminals": [
+      {
+        "id": "21",
+        "label": "21",
+        "signal": "Control",
+        "nx": 0.125,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "22",
+        "label": "22",
+        "signal": "Control",
+        "nx": 0.375,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "13",
+        "label": "13",
+        "signal": "Control",
+        "nx": 0.625,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "14",
+        "label": "14",
+        "signal": "Control",
+        "nx": 0.875,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "AUXILIARY BLOCKS/FOR MPCB/Bloque Auxiliar Lateral 1NO+1NC - Guardamotor",
+    "path": "AUXILIARY BLOCKS/FOR MPCB/Bloque Auxiliar Lateral 1NO+1NC - Guardamotor",
+    "name": "Bloque Auxiliar Lateral 1NO+1NC - Guardamotor",
+    "category": "Control",
+    "tagPrefix": "QM",
+    "width": 1200,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "31",
+        "label": "31",
+        "signal": "Control",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "43",
+        "label": "43",
+        "signal": "Control",
+        "nx": 0.5,
+        "ny": 0.208333,
+        "direction": "top",
+        "guideLength": 30
+      },
+      {
+        "id": "44",
+        "label": "44",
+        "signal": "Control",
+        "nx": 0.5,
+        "ny": 0.791667,
+        "direction": "bottom",
+        "guideLength": 30
+      },
+      {
+        "id": "32",
+        "label": "32",
+        "signal": "Control",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "CONTACTORS/Contactor 0911",
+    "path": "CONTACTORS/Contactor 0911",
+    "name": "Contactor 0911",
+    "category": "Power",
+    "tagPrefix": "KM",
+    "width": 3600,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1/L1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3/L2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5/L3",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2/T1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4/T2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6/T3",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "13",
+        "label": "13",
+        "signal": "Control",
+        "nx": 0.343056,
+        "ny": 0.208333,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "21",
+        "label": "21",
+        "signal": "Control",
+        "nx": 0.653056,
+        "ny": 0.208333,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "A1",
+        "label": "A1",
+        "signal": "Control",
+        "nx": 0.880556,
+        "ny": 0.208333,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "14",
+        "label": "14",
+        "signal": "Control",
+        "nx": 0.343056,
+        "ny": 0.791667,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "22",
+        "label": "22",
+        "signal": "Control",
+        "nx": 0.653056,
+        "ny": 0.791667,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "A2",
+        "label": "A2",
+        "signal": "Control",
+        "nx": 0.880556,
+        "ny": 0.791667,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "CONTACTORS/Contactor 1211",
+    "path": "CONTACTORS/Contactor 1211",
+    "name": "Contactor 1211",
+    "category": "Potencia",
+    "tagPrefix": "KM",
+    "width": 3600,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1/L1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3/L2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5/L3",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2/T1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4/T2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6/T3",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "13",
+        "label": "13",
+        "signal": "Control",
+        "nx": 0.343056,
+        "ny": 0.208333,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "21",
+        "label": "21",
+        "signal": "Control",
+        "nx": 0.653056,
+        "ny": 0.208333,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "A1",
+        "label": "A1",
+        "signal": "Control",
+        "nx": 0.880556,
+        "ny": 0.208333,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "14",
+        "label": "14",
+        "signal": "Control",
+        "nx": 0.343056,
+        "ny": 0.791667,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "22",
+        "label": "22",
+        "signal": "Control",
+        "nx": 0.653056,
+        "ny": 0.791667,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "A2",
+        "label": "A2",
+        "signal": "Control",
+        "nx": 0.880556,
+        "ny": 0.791667,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "CONTACTORS/Contactor 1811",
+    "path": "CONTACTORS/Contactor 1811",
+    "name": "Contactor 1811",
+    "category": "Potencia",
+    "tagPrefix": "KM",
+    "width": 3600,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1/L1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3/L2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5/L3",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2/T1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4/T2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6/T3",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "13",
+        "label": "13",
+        "signal": "Control",
+        "nx": 0.343056,
+        "ny": 0.208333,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "21",
+        "label": "21",
+        "signal": "Control",
+        "nx": 0.653056,
+        "ny": 0.208333,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "A1",
+        "label": "A1",
+        "signal": "Control",
+        "nx": 0.880556,
+        "ny": 0.208333,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "14",
+        "label": "14",
+        "signal": "Control",
+        "nx": 0.343056,
+        "ny": 0.791667,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "22",
+        "label": "22",
+        "signal": "Control",
+        "nx": 0.653056,
+        "ny": 0.791667,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "A2",
+        "label": "A2",
+        "signal": "Control",
+        "nx": 0.880556,
+        "ny": 0.791667,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "CONTROL DEVICES/Interuptor de conmutacion simple",
+    "path": "CONTROL DEVICES/Interuptor de conmutacion simple",
+    "name": "Interuptor de conmutacion simple",
+    "category": "Accionamientos",
+    "tagPrefix": "S",
+    "width": 4800,
+    "height": 8400,
+    "terminals": [
+      {
+        "id": "COM",
+        "label": "COM",
+        "signal": "Potencia",
+        "nx": 0,
+        "ny": 0.5,
+        "direction": "left",
+        "guideLength": 60
+      },
+      {
+        "id": "L1",
+        "label": "L1",
+        "signal": "Potencia",
+        "nx": 1,
+        "ny": 0.428571,
+        "direction": "right",
+        "guideLength": 60
+      },
+      {
+        "id": "L2",
+        "label": "L2",
+        "signal": "Potencia",
+        "nx": 1,
+        "ny": 0.571429,
+        "direction": "right",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "CONTROL DEVICES/Interuptor simple",
+    "path": "CONTROL DEVICES/Interuptor simple",
+    "name": "Interuptor simple",
+    "category": "Accionamientos",
+    "tagPrefix": "S",
+    "width": 4800,
+    "height": 8400,
+    "terminals": [
+      {
+        "id": "COM",
+        "label": "COM",
+        "signal": "Potencia",
+        "nx": 0,
+        "ny": 0.5,
+        "direction": "left",
+        "guideLength": 60
+      },
+      {
+        "id": "L1",
+        "label": "L1",
+        "signal": "Potencia",
+        "nx": 1,
+        "ny": 0.5,
+        "direction": "right",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "CONTROL DEVICES/Parada de emergencia rojo 1NC",
+    "path": "CONTROL DEVICES/Parada de emergencia rojo 1NC",
+    "name": "Parada de emergencia rojo 1NC",
+    "category": "Accionamientos",
+    "tagPrefix": "S",
+    "width": 1800,
+    "height": 2100,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Control",
+        "nx": 0.296667,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Control",
+        "nx": 0.296667,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "CONTROL DEVICES/Pulsador azul 1NO+1NC",
+    "path": "CONTROL DEVICES/Pulsador azul 1NO+1NC",
+    "name": "Pulsador azul 1NO+1NC",
+    "category": "Accionamientos",
+    "tagPrefix": "S",
+    "width": 1800,
+    "height": 2100,
+    "terminals": [
+      {
+        "id": "1A",
+        "label": "1A",
+        "signal": "Control",
+        "nx": 0.296667,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3A",
+        "label": "3A",
+        "signal": "Control",
+        "nx": 0.727778,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2A",
+        "label": "2A",
+        "signal": "Control",
+        "nx": 0.296667,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4A",
+        "label": "4A",
+        "signal": "Control",
+        "nx": 0.727778,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "CONTROL DEVICES/Pulsador DOWN 1NO+1NC",
+    "path": "CONTROL DEVICES/Pulsador DOWN 1NO+1NC",
+    "name": "Pulsador DOWN 1NO+1NC",
+    "category": "Accionamientos",
+    "tagPrefix": "S",
+    "width": 1800,
+    "height": 2100,
+    "terminals": [
+      {
+        "id": "1A",
+        "label": "1A",
+        "signal": "Control",
+        "nx": 0.296667,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3A",
+        "label": "3A",
+        "signal": "Control",
+        "nx": 0.727778,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2A",
+        "label": "2A",
+        "signal": "Control",
+        "nx": 0.296667,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4A",
+        "label": "4A",
+        "signal": "Control",
+        "nx": 0.727778,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "CONTROL DEVICES/Pulsador rojo 1NC",
+    "path": "CONTROL DEVICES/Pulsador rojo 1NC",
+    "name": "Pulsador rojo 1NC",
+    "category": "Accionamientos",
+    "tagPrefix": "S",
+    "width": 1800,
+    "height": 2100,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Control",
+        "nx": 0.296667,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Control",
+        "nx": 0.296667,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "CONTROL DEVICES/Pulsador UP 1NO",
+    "path": "CONTROL DEVICES/Pulsador UP 1NO",
+    "name": "Pulsador UP 1NO",
+    "category": "Accionamientos",
+    "tagPrefix": "S",
+    "width": 1800,
+    "height": 2100,
+    "terminals": [
+      {
+        "id": "3",
+        "label": "3",
+        "signal": "Control",
+        "nx": 0.296667,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4",
+        "signal": "Control",
+        "nx": 0.296667,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "CONTROL DEVICES/Pulsador verde 1NO",
+    "path": "CONTROL DEVICES/Pulsador verde 1NO",
+    "name": "Pulsador verde 1NO",
+    "category": "Accionamientos",
+    "tagPrefix": "S",
+    "width": 1800,
+    "height": 2100,
+    "terminals": [
+      {
+        "id": "3",
+        "label": "3",
+        "signal": "Control",
+        "nx": 0.296667,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4",
+        "signal": "Control",
+        "nx": 0.296667,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "CONTROL DEVICES/Selector de 2 posiciones 1NO",
+    "path": "CONTROL DEVICES/Selector de 2 posiciones 1NO",
+    "name": "Selector de 2 posiciones 1NO",
+    "category": "Accionamientos",
+    "tagPrefix": "S",
+    "width": 1800,
+    "height": 2100,
+    "terminals": [
+      {
+        "id": "3",
+        "label": "3",
+        "signal": "Control",
+        "nx": 0.296667,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4",
+        "signal": "Control",
+        "nx": 0.296667,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "DIN RAIL/10P-Riel DIN 35 mm",
+    "path": "DIN RAIL/10P-Riel DIN 35 mm",
+    "name": "10P-Riel DIN 35 mm",
+    "category": "Estructura",
+    "tagPrefix": "X",
+    "width": 14400,
+    "height": 2400,
+    "terminals": [],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "DIN RAIL/12P-Riel DIN 35 mm",
+    "path": "DIN RAIL/12P-Riel DIN 35 mm",
+    "name": "12P-Riel DIN 35 mm",
+    "category": "Estructura",
+    "tagPrefix": "X",
+    "width": 16800,
+    "height": 2400,
+    "terminals": [],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "DIN RAIL/14P-Riel DIN 35 mm",
+    "path": "DIN RAIL/14P-Riel DIN 35 mm",
+    "name": "14P-Riel DIN 35 mm",
+    "category": "Estructura",
+    "tagPrefix": "X",
+    "width": 19200,
+    "height": 2400,
+    "terminals": [],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "DIN RAIL/16P-Riel DIN 35 mm",
+    "path": "DIN RAIL/16P-Riel DIN 35 mm",
+    "name": "16P-Riel DIN 35 mm",
+    "category": "Estructura",
+    "tagPrefix": "X",
+    "width": 21600,
+    "height": 2400,
+    "terminals": [],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "DIN RAIL/18P-Riel DIN 35 mm",
+    "path": "DIN RAIL/18P-Riel DIN 35 mm",
+    "name": "18P-Riel DIN 35 mm",
+    "category": "Estructura",
+    "tagPrefix": "X",
+    "width": 24000,
+    "height": 2400,
+    "terminals": [],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "DIN RAIL/20P-Riel DIN 35 mm",
+    "path": "DIN RAIL/20P-Riel DIN 35 mm",
+    "name": "20P-Riel DIN 35 mm",
+    "category": "Estructura",
+    "tagPrefix": "X",
+    "width": 26400,
+    "height": 2400,
+    "terminals": [],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "DIN RAIL/4P-Riel DIN 35 mm",
+    "path": "DIN RAIL/4P-Riel DIN 35 mm",
+    "name": "4P-Riel DIN 35 mm",
+    "category": "Estructura",
+    "tagPrefix": "X",
+    "width": 7200,
+    "height": 2400,
+    "terminals": [],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "DIN RAIL/6P-Riel DIN 35 mm",
+    "path": "DIN RAIL/6P-Riel DIN 35 mm",
+    "name": "6P-Riel DIN 35 mm",
+    "category": "Estructura",
+    "tagPrefix": "X",
+    "width": 9600,
+    "height": 2400,
+    "terminals": [],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "DIN RAIL/8P-Riel DIN 35 mm",
+    "path": "DIN RAIL/8P-Riel DIN 35 mm",
+    "name": "8P-Riel DIN 35 mm",
+    "category": "Estructura",
+    "tagPrefix": "X",
+    "width": 12000,
+    "height": 2400,
+    "terminals": [],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "DISTRIBUTION/DISTRIBUTION BUSBARS/Barra de Neutro (N) - 6T A",
+    "path": "DISTRIBUTION/DISTRIBUTION BUSBARS/Barra de Neutro (N) - 6T A",
+    "name": "Barra de Neutro (N) - 6T A",
+    "category": "Distribución",
+    "tagPrefix": "",
+    "width": 1200,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "N",
+        "label": "N",
+        "signal": "Potencia",
+        "nx": 0.781667,
+        "ny": 0.083333,
+        "direction": "right",
+        "guideLength": 60
+      },
+      {
+        "id": "N1",
+        "label": "N1",
+        "signal": "Potencia",
+        "nx": 0.721667,
+        "ny": 0.25,
+        "direction": "right",
+        "guideLength": 60
+      },
+      {
+        "id": "N2",
+        "label": "N2",
+        "signal": "Potencia",
+        "nx": 0.721667,
+        "ny": 0.416667,
+        "direction": "right",
+        "guideLength": 60
+      },
+      {
+        "id": "N3",
+        "label": "N3",
+        "signal": "Potencia",
+        "nx": 0.721667,
+        "ny": 0.583333,
+        "direction": "right",
+        "guideLength": 60
+      },
+      {
+        "id": "N4",
+        "label": "N4",
+        "signal": "Potencia",
+        "nx": 0.721667,
+        "ny": 0.75,
+        "direction": "right",
+        "guideLength": 60
+      },
+      {
+        "id": "N5",
+        "label": "N5",
+        "signal": "Potencia",
+        "nx": 0.721667,
+        "ny": 0.916667,
+        "direction": "right",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "DISTRIBUTION/DISTRIBUTION BUSBARS/Barra de Tierra (PE) - 6T A",
+    "path": "DISTRIBUTION/DISTRIBUTION BUSBARS/Barra de Tierra (PE) - 6T A",
+    "name": "Barra de Tierra (PE) - 6T A",
+    "category": "Distribución",
+    "tagPrefix": "",
+    "width": 1200,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "PE",
+        "label": "PE",
+        "signal": "Potencia",
+        "nx": 0.781667,
+        "ny": 0.083333,
+        "direction": "right",
+        "guideLength": 60
+      },
+      {
+        "id": "PE1",
+        "label": "PE1",
+        "signal": "Potencia",
+        "nx": 0.721667,
+        "ny": 0.25,
+        "direction": "right",
+        "guideLength": 60
+      },
+      {
+        "id": "PE2",
+        "label": "PE2",
+        "signal": "Potencia",
+        "nx": 0.721667,
+        "ny": 0.416667,
+        "direction": "right",
+        "guideLength": 60
+      },
+      {
+        "id": "PE3",
+        "label": "PE3",
+        "signal": "Potencia",
+        "nx": 0.721667,
+        "ny": 0.583333,
+        "direction": "right",
+        "guideLength": 60
+      },
+      {
+        "id": "PE4",
+        "label": "PE4",
+        "signal": "Potencia",
+        "nx": 0.721667,
+        "ny": 0.75,
+        "direction": "right",
+        "guideLength": 60
+      },
+      {
+        "id": "PE5",
+        "label": "PE5",
+        "signal": "Potencia",
+        "nx": 0.721667,
+        "ny": 0.916667,
+        "direction": "right",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "DISTRIBUTION/TERMINAL BLOCKS/Borne azul",
+    "path": "DISTRIBUTION/TERMINAL BLOCKS/Borne azul",
+    "name": "Borne azul",
+    "category": "Distribución",
+    "tagPrefix": "N",
+    "width": 600,
+    "height": 3600,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "DISTRIBUTION/TERMINAL BLOCKS/Borne gris",
+    "path": "DISTRIBUTION/TERMINAL BLOCKS/Borne gris",
+    "name": "Borne gris",
+    "category": "Distribución",
+    "tagPrefix": "X",
+    "width": 600,
+    "height": 3600,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "DISTRIBUTION/TERMINAL BLOCKS/Borne verde",
+    "path": "DISTRIBUTION/TERMINAL BLOCKS/Borne verde",
+    "name": "Borne verde",
+    "category": "Distribución",
+    "tagPrefix": "PE",
+    "width": 600,
+    "height": 3600,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "MCB/1 POLE/ITM 1P C10",
+    "path": "MCB/1 POLE/ITM 1P C10",
+    "name": "ITM 1P C10",
+    "category": "Proteccion",
+    "tagPrefix": "Q",
+    "width": 1200,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "MCB/1 POLE/ITM 1P C2",
+    "path": "MCB/1 POLE/ITM 1P C2",
+    "name": "ITM 1P C2",
+    "category": "Proteccion",
+    "tagPrefix": "Q",
+    "width": 1200,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "MCB/1 POLE/ITM 1P C4",
+    "path": "MCB/1 POLE/ITM 1P C4",
+    "name": "ITM 1P C4",
+    "category": "Proteccion",
+    "tagPrefix": "Q",
+    "width": 1200,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "MCB/1 POLE/ITM 1P C6",
+    "path": "MCB/1 POLE/ITM 1P C6",
+    "name": "ITM 1P C6",
+    "category": "Proteccion",
+    "tagPrefix": "Q",
+    "width": 1200,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "MCB/2 POLES/ITM 2P C10",
+    "path": "MCB/2 POLES/ITM 2P C10",
+    "name": "ITM 2P C10",
+    "category": "Proteccion",
+    "tagPrefix": "Q",
+    "width": 2400,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "nx": 0.25,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3",
+        "signal": "Potencia",
+        "nx": 0.75,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "nx": 0.25,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4",
+        "signal": "Potencia",
+        "nx": 0.75,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "MCB/2 POLES/ITM 2P C2",
+    "path": "MCB/2 POLES/ITM 2P C2",
+    "name": "ITM 2P C2",
+    "category": "Proteccion",
+    "tagPrefix": "Q",
+    "width": 2400,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "nx": 0.25,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3",
+        "signal": "Potencia",
+        "nx": 0.75,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "nx": 0.25,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4",
+        "signal": "Potencia",
+        "nx": 0.75,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "MCB/2 POLES/ITM 2P C4",
+    "path": "MCB/2 POLES/ITM 2P C4",
+    "name": "ITM 2P C4",
+    "category": "Proteccion",
+    "tagPrefix": "Q",
+    "width": 2400,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "nx": 0.25,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3",
+        "signal": "Potencia",
+        "nx": 0.75,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "nx": 0.25,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4",
+        "signal": "Potencia",
+        "nx": 0.75,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "MCB/2 POLES/ITM 2P C6",
+    "path": "MCB/2 POLES/ITM 2P C6",
+    "name": "ITM 2P C6",
+    "category": "Proteccion",
+    "tagPrefix": "Q",
+    "width": 2400,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "nx": 0.25,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3",
+        "signal": "Potencia",
+        "nx": 0.75,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "nx": 0.25,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4",
+        "signal": "Potencia",
+        "nx": 0.75,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "MCB/3 POLES/ITM 3P C10",
+    "path": "MCB/3 POLES/ITM 3P C10",
+    "name": "ITM 3P C10",
+    "category": "Proteccion",
+    "tagPrefix": "Q",
+    "width": 3600,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "MCB/3 POLES/ITM 3P C2",
+    "path": "MCB/3 POLES/ITM 3P C2",
+    "name": "ITM 3P C2",
+    "category": "Proteccion",
+    "tagPrefix": "Q",
+    "width": 3600,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "MCB/3 POLES/ITM 3P C4",
+    "path": "MCB/3 POLES/ITM 3P C4",
+    "name": "ITM 3P C4",
+    "category": "Proteccion",
+    "tagPrefix": "Q",
+    "width": 3600,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "MCB/3 POLES/ITM 3P C6",
+    "path": "MCB/3 POLES/ITM 3P C6",
+    "name": "ITM 3P C6",
+    "category": "Proteccion",
+    "tagPrefix": "Q",
+    "width": 3600,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "MCB/4 POLES/ITM 4P C10",
+    "path": "MCB/4 POLES/ITM 4P C10",
+    "name": "ITM 4P C10",
+    "category": "Proteccion",
+    "tagPrefix": "Q",
+    "width": 4800,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "nx": 0.125,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3",
+        "signal": "Potencia",
+        "nx": 0.375,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "nx": 0.125,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4",
+        "signal": "Potencia",
+        "nx": 0.375,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5",
+        "signal": "Potencia",
+        "nx": 0.625,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6",
+        "signal": "Potencia",
+        "nx": 0.625,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "8",
+        "label": "8",
+        "signal": "Potencia",
+        "nx": 0.875,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "7",
+        "label": "7",
+        "signal": "Potencia",
+        "nx": 0.875,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "MCB/4 POLES/ITM 4P C16",
+    "path": "MCB/4 POLES/ITM 4P C16",
+    "name": "ITM 4P C16",
+    "category": "Proteccion",
+    "tagPrefix": "Q",
+    "width": 4800,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "nx": 0.125,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3",
+        "signal": "Potencia",
+        "nx": 0.375,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "nx": 0.125,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4",
+        "signal": "Potencia",
+        "nx": 0.375,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5",
+        "signal": "Potencia",
+        "nx": 0.625,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6",
+        "signal": "Potencia",
+        "nx": 0.625,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "8",
+        "label": "8",
+        "signal": "Potencia",
+        "nx": 0.875,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "7",
+        "label": "7",
+        "signal": "Potencia",
+        "nx": 0.875,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "MCB/4 POLES/ITM 4P C20",
+    "path": "MCB/4 POLES/ITM 4P C20",
+    "name": "ITM 4P C20",
+    "category": "Proteccion",
+    "tagPrefix": "Q",
+    "width": 4800,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "nx": 0.125,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3",
+        "signal": "Potencia",
+        "nx": 0.375,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "nx": 0.125,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4",
+        "signal": "Potencia",
+        "nx": 0.375,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5",
+        "signal": "Potencia",
+        "nx": 0.625,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6",
+        "signal": "Potencia",
+        "nx": 0.625,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "8",
+        "label": "8",
+        "signal": "Potencia",
+        "nx": 0.875,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "7",
+        "label": "7",
+        "signal": "Potencia",
+        "nx": 0.875,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "MPCB/Guardamotor 0,25-0,4 A",
+    "path": "MPCB/Guardamotor 0,25-0,4 A",
+    "name": "Guardamotor 0,25-0,4 A",
+    "category": "Potencia",
+    "tagPrefix": "QM",
+    "width": 3600,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1/L1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3/L2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5/L3",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2/T1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4/T2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6/T3",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "MPCB/Guardamotor 0,4-0,63 A",
+    "path": "MPCB/Guardamotor 0,4-0,63 A",
+    "name": "Guardamotor 0,4-0,63 A",
+    "category": "Potencia",
+    "tagPrefix": "QM",
+    "width": 3600,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1/L1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3/L2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5/L3",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2/T1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4/T2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6/T3",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "MPCB/Guardamotor 0,63-1 A",
+    "path": "MPCB/Guardamotor 0,63-1 A",
+    "name": "Guardamotor 0,63-1 A",
+    "category": "Potencia",
+    "tagPrefix": "QM",
+    "width": 3600,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1/L1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3/L2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5/L3",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2/T1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4/T2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6/T3",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "MPCB/Guardamotor 1-1,6 A",
+    "path": "MPCB/Guardamotor 1-1,6 A",
+    "name": "Guardamotor 1-1,6 A",
+    "category": "Potencia",
+    "tagPrefix": "QM",
+    "width": 3600,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1/L1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3/L2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5/L3",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2/T1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4/T2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6/T3",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "MPCB/Guardamotor 1,6-2.5 A",
+    "path": "MPCB/Guardamotor 1,6-2.5 A",
+    "name": "Guardamotor 1,6-2.5 A",
+    "category": "Potencia",
+    "tagPrefix": "QM",
+    "width": 3600,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1/L1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3/L2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5/L3",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2/T1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4/T2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6/T3",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "MPCB/Guardamotor 2,5-4 A",
+    "path": "MPCB/Guardamotor 2,5-4 A",
+    "name": "Guardamotor 2,5-4 A",
+    "category": "Potencia",
+    "tagPrefix": "QM",
+    "width": 3600,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1/L1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3/L2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5/L3",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2/T1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4/T2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6/T3",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "PLC/LOGO! 230RCE",
+    "path": "PLC/LOGO! 230RCE",
+    "name": "LOGO! 230RCE",
+    "category": "PLC",
+    "tagPrefix": "A",
+    "width": 6600,
+    "height": 8400,
+    "terminals": [
+      {
+        "id": "L1",
+        "label": "L1",
+        "signal": "Control",
+        "nx": 0.090909,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "N",
+        "label": "N",
+        "signal": "Control",
+        "nx": 0.173333,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "I1",
+        "label": "I1",
+        "signal": "Control",
+        "nx": 0.255909,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "I2",
+        "label": "I2",
+        "signal": "Control",
+        "nx": 0.338333,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "I3",
+        "label": "I3",
+        "signal": "Control",
+        "nx": 0.420909,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "I4",
+        "label": "I4",
+        "signal": "Control",
+        "nx": 0.503333,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "I5",
+        "label": "I5",
+        "signal": "Control",
+        "nx": 0.585909,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "I6",
+        "label": "I6",
+        "signal": "Control",
+        "nx": 0.668333,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "I7",
+        "label": "I7",
+        "signal": "Control",
+        "nx": 0.750909,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "I8",
+        "label": "I8",
+        "signal": "Control",
+        "nx": 0.833333,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "Q1.1",
+        "label": "Q1.1",
+        "signal": "Control",
+        "nx": 0.090909,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "Q1.2",
+        "label": "Q1.2",
+        "signal": "Control",
+        "nx": 0.181818,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "Q2.2",
+        "label": "Q2.2",
+        "signal": "Control",
+        "nx": 0.429242,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "Q2.1",
+        "label": "Q2.1",
+        "signal": "Control",
+        "nx": 0.338333,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "Q3.2",
+        "label": "Q3.2",
+        "signal": "Control",
+        "nx": 0.676818,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "Q3.1",
+        "label": "Q3.1",
+        "signal": "Control",
+        "nx": 0.585909,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "Q4.2",
+        "label": "Q4.2",
+        "signal": "Control",
+        "nx": 0.909091,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "Q4.1",
+        "label": "Q4.1",
+        "signal": "Control",
+        "nx": 0.818182,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "PE",
+        "label": "PE",
+        "signal": "Potencia",
+        "nx": 0.633182,
+        "ny": 0.869048,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "POWER SUPPLY/Borne -",
+    "path": "POWER SUPPLY/Borne -",
+    "name": "Borne -",
+    "category": "Potencia",
+    "tagPrefix": "X",
+    "width": 600,
+    "height": 3600,
+    "terminals": [
+      {
+        "id": "-1",
+        "label": "-",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "-2",
+        "label": "-",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "POWER SUPPLY/Borne +",
+    "path": "POWER SUPPLY/Borne +",
+    "name": "Borne +",
+    "category": "Potencia",
+    "tagPrefix": "X",
+    "width": 600,
+    "height": 3600,
+    "terminals": [
+      {
+        "id": "+",
+        "label": "+",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "-",
+        "label": "-",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "POWER SUPPLY/Borne L",
+    "path": "POWER SUPPLY/Borne L",
+    "name": "Borne L",
+    "category": "Potencia",
+    "tagPrefix": "X",
+    "width": 600,
+    "height": 3600,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "L",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "L",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "POWER SUPPLY/Borne L1",
+    "path": "POWER SUPPLY/Borne L1",
+    "name": "Borne L1",
+    "category": "Potencia",
+    "tagPrefix": "X",
+    "width": 600,
+    "height": 3600,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "L1",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "L1",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "POWER SUPPLY/Borne L2",
+    "path": "POWER SUPPLY/Borne L2",
+    "name": "Borne L2",
+    "category": "Potencia",
+    "tagPrefix": "X",
+    "width": 600,
+    "height": 3600,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "L2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "L2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "POWER SUPPLY/Borne L3",
+    "path": "POWER SUPPLY/Borne L3",
+    "name": "Borne L3",
+    "category": "Potencia",
+    "tagPrefix": "X",
+    "width": 600,
+    "height": 3600,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "L3",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "L3",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "POWER SUPPLY/Borne N",
+    "path": "POWER SUPPLY/Borne N",
+    "name": "Borne N",
+    "category": "Potencia",
+    "tagPrefix": "X",
+    "width": 600,
+    "height": 3600,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "N",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "N",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "POWER SUPPLY/Borne PE",
+    "path": "POWER SUPPLY/Borne PE",
+    "name": "Borne PE",
+    "category": "Potencia",
+    "tagPrefix": "X",
+    "width": 600,
+    "height": 3600,
+    "terminals": [
+      {
+        "id": "1",
+        "label": "PE",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "PE",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "preview.png",
+    "imageOn": "preview.png"
+  },
+  {
+    "id": "POWER SUPPLY/Power Supply 100-240VAC 12VDC 5A",
+    "path": "POWER SUPPLY/Power Supply 100-240VAC 12VDC 5A",
+    "name": "Power Supply 100-240VAC 12VDC 5A",
+    "category": "Potencia",
+    "tagPrefix": "G",
+    "width": 4800,
+    "height": 8400,
+    "terminals": [
+      {
+        "id": "DC+1",
+        "label": "+",
+        "signal": "Control",
+        "nx": 0.125,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "DC+2",
+        "label": "+",
+        "signal": "Control",
+        "nx": 0.375,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "DC-1",
+        "label": "-",
+        "signal": "Control",
+        "nx": 0.625,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "DC-2",
+        "label": "-",
+        "signal": "Control",
+        "nx": 0.875,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "PE",
+        "label": "PE",
+        "signal": "Potencia",
+        "nx": 0.25,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "N",
+        "label": "N",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "L",
+        "label": "L",
+        "signal": "Potencia",
+        "nx": 0.75,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "POWER SUPPLY/Transformador 100-240 12VAC 50VA",
+    "path": "POWER SUPPLY/Transformador 100-240 12VAC 50VA",
+    "name": "Transformador 100-240 12VAC 50VA",
+    "category": "Potencia",
+    "tagPrefix": "T",
+    "width": 4800,
+    "height": 8400,
+    "terminals": [
+      {
+        "id": "N1",
+        "label": "N-out",
+        "signal": "Control",
+        "nx": 0.125,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "N2",
+        "label": "N-out",
+        "signal": "Control",
+        "nx": 0.375,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "L1",
+        "label": "L-out",
+        "signal": "Control",
+        "nx": 0.625,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "L2",
+        "label": "L-out",
+        "signal": "Control",
+        "nx": 0.875,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "PE",
+        "label": "PE",
+        "signal": "Potencia",
+        "nx": 0.25,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "N",
+        "label": "N-in",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "L",
+        "label": "L-in",
+        "signal": "Potencia",
+        "nx": 0.75,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "RCCB/ID 2P 25A 30mA",
+    "path": "RCCB/ID 2P 25A 30mA",
+    "name": "ID 2P 25A 30mA",
+    "category": "Proteccion",
+    "tagPrefix": "QF",
+    "width": 2400,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "N1",
+        "label": "N",
+        "signal": "Potencia",
+        "nx": 0.25,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "nx": 0.75,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "N2",
+        "label": "N",
+        "signal": "Potencia",
+        "nx": 0.25,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "nx": 0.75,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "RCCB/ID 2P 40A 30mA",
+    "path": "RCCB/ID 2P 40A 30mA",
+    "name": "ID 2P 40A 30mA",
+    "category": "Proteccion",
+    "tagPrefix": "QF",
+    "width": 2400,
+    "height": 7200,
+    "terminals": [
+      {
+        "id": "N1",
+        "label": "N",
+        "signal": "Potencia",
+        "nx": 0.25,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "nx": 0.75,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "N2",
+        "label": "N",
+        "signal": "Potencia",
+        "nx": 0.25,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "nx": 0.75,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "SENSORS/Interruptor de nivel - Flotador",
+    "path": "SENSORS/Interruptor de nivel - Flotador",
+    "name": "Interruptor de nivel - Flotador",
+    "category": "Control",
+    "tagPrefix": "SL",
+    "width": 7200,
+    "height": 10800,
+    "terminals": [
+      {
+        "id": "BN",
+        "label": "BN",
+        "signal": "Control",
+        "nx": 0,
+        "ny": 0.407407,
+        "direction": "left",
+        "guideLength": 60
+      },
+      {
+        "id": "BK",
+        "label": "BK",
+        "signal": "Control",
+        "nx": 0,
+        "ny": 0.505278,
+        "direction": "left",
+        "guideLength": 60
+      },
+      {
+        "id": "BL",
+        "label": "BL",
+        "signal": "Control",
+        "nx": 0,
+        "ny": 0.607315,
+        "direction": "left",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "SIGNALING/Piloto LED Rojo",
+    "path": "SIGNALING/Piloto LED Rojo",
+    "name": "Piloto LED Rojo",
+    "category": "Senalizacion",
+    "tagPrefix": "H",
+    "width": 1200,
+    "height": 1800,
+    "terminals": [
+      {
+        "id": "X1",
+        "label": "X1",
+        "signal": "Control",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "X2",
+        "label": "X2",
+        "signal": "Control",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "SIGNALING/Piloto LED Verde",
+    "path": "SIGNALING/Piloto LED Verde",
+    "name": "Piloto LED Verde",
+    "category": "Senalizacion",
+    "tagPrefix": "H",
+    "width": 1200,
+    "height": 1800,
+    "terminals": [
+      {
+        "id": "X1",
+        "label": "X1",
+        "signal": "Control",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "X2",
+        "label": "X2",
+        "signal": "Control",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "THERMAL OVERLOAD RELAYS/Rele termico 0,25-0,4 A",
+    "path": "THERMAL OVERLOAD RELAYS/Rele termico 0,25-0,4 A",
+    "name": "Relé térmico 0,25-0,4 A",
+    "category": "Potencia",
+    "tagPrefix": "F",
+    "width": 3600,
+    "height": 4800,
+    "terminals": [
+      {
+        "id": "2",
+        "label": "2/T1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4/T2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6/T3",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "1",
+        "label": "1/L1",
+        "signal": "Potencia",
+        "nx": 0.182222,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3/L2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5/L3",
+        "signal": "Potencia",
+        "nx": 0.815,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "97",
+        "label": "97",
+        "signal": "Control",
+        "nx": 0.124722,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "98",
+        "label": "98",
+        "signal": "Control",
+        "nx": 0.377778,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "95",
+        "label": "95",
+        "signal": "Control",
+        "nx": 0.630833,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "96",
+        "label": "96",
+        "signal": "Control",
+        "nx": 0.883889,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "THERMAL OVERLOAD RELAYS/Rele termico 0,4-0,63 A",
+    "path": "THERMAL OVERLOAD RELAYS/Rele termico 0,4-0,63 A",
+    "name": "Thermal overload relay 0,4-0,63 A",
+    "category": "Power",
+    "tagPrefix": "F",
+    "width": 3600,
+    "height": 4800,
+    "terminals": [
+      {
+        "id": "2",
+        "label": "2/T1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4/T2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6/T3",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "1",
+        "label": "1/L1",
+        "signal": "Potencia",
+        "nx": 0.182222,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3/L2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5/L3",
+        "signal": "Potencia",
+        "nx": 0.815,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "97",
+        "label": "97",
+        "signal": "Control",
+        "nx": 0.124722,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "98",
+        "label": "98",
+        "signal": "Control",
+        "nx": 0.377778,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "95",
+        "label": "95",
+        "signal": "Control",
+        "nx": 0.630833,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "96",
+        "label": "96",
+        "signal": "Control",
+        "nx": 0.883889,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "THERMAL OVERLOAD RELAYS/Rele termico 0,63-1 A",
+    "path": "THERMAL OVERLOAD RELAYS/Rele termico 0,63-1 A",
+    "name": "Relé térmico 0,63-1 A",
+    "category": "Potencia",
+    "tagPrefix": "F",
+    "width": 3600,
+    "height": 4800,
+    "terminals": [
+      {
+        "id": "2",
+        "label": "2/T1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4/T2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6/T3",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "1",
+        "label": "1/L1",
+        "signal": "Potencia",
+        "nx": 0.182222,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3/L2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5/L3",
+        "signal": "Potencia",
+        "nx": 0.815,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "97",
+        "label": "97",
+        "signal": "Control",
+        "nx": 0.124722,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "98",
+        "label": "98",
+        "signal": "Control",
+        "nx": 0.377778,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "95",
+        "label": "95",
+        "signal": "Control",
+        "nx": 0.630833,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "96",
+        "label": "96",
+        "signal": "Control",
+        "nx": 0.883889,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  },
+  {
+    "id": "THERMAL OVERLOAD RELAYS/Rele termico 1,6-2,5 A",
+    "path": "THERMAL OVERLOAD RELAYS/Rele termico 1,6-2,5 A",
+    "name": "Relé térmico 1,6-2,5 A",
+    "category": "Potencia",
+    "tagPrefix": "F",
+    "width": 3600,
+    "height": 4800,
+    "terminals": [
+      {
+        "id": "2",
+        "label": "2/T1",
+        "signal": "Potencia",
+        "nx": 0.166667,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4/T2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6/T3",
+        "signal": "Potencia",
+        "nx": 0.833333,
+        "ny": 1,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "1",
+        "label": "1/L1",
+        "signal": "Potencia",
+        "nx": 0.182222,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3/L2",
+        "signal": "Potencia",
+        "nx": 0.5,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5/L3",
+        "signal": "Potencia",
+        "nx": 0.815,
+        "ny": 0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "97",
+        "label": "97",
+        "signal": "Control",
+        "nx": 0.124722,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "98",
+        "label": "98",
+        "signal": "Control",
+        "nx": 0.377778,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "95",
+        "label": "95",
+        "signal": "Control",
+        "nx": 0.630833,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "96",
+        "label": "96",
+        "signal": "Control",
+        "nx": 0.883889,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "imageOff": "state_off_lo.png",
+    "imageOn": "state_on_lo.png"
+  }
+]

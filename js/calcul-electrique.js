@@ -566,11 +566,21 @@
     reorderPrioritySections();
     applyI18n();
     let startId = 'power_balance';
+    let enterFocus = false;
     try {
-      const saved = localStorage.getItem('electrodz-calc-active');
-      if (saved && CALC_TYPES.some((c) => c.id === saved)) startId = saved;
+      const params = new URLSearchParams(location.search);
+      const urlCalc = params.get('calc');
+      if (urlCalc && CALC_TYPES.some((c) => c.id === urlCalc)) {
+        startId = urlCalc;
+      } else {
+        const saved = localStorage.getItem('electrodz-calc-active');
+        if (saved && CALC_TYPES.some((c) => c.id === saved)) startId = saved;
+      }
+      const isAppEmbed = params.get('app') === '1';
+      enterFocus = isAppEmbed;
+      if (isAppEmbed) document.body.classList.add('app-embed');
     } catch (_) { /* ignore */ }
-    activateCalc(startId, false);
+    activateCalc(startId, enterFocus);
     window.ElectroDzTripCurveCatalog?.loadCatalog?.();
 
     document.getElementById('picker-grid')?.addEventListener('click', () => setPickerMode('grid'));

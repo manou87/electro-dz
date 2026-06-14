@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 3,
+  "id": "Piloto LED Verde",
+  "name": "Piloto LED Verde",
+  "category": "Senalizacion",
+  "tagPrefix": "H",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 1200,
+      "height": 1800
+    }
+  },
+  "terminals": [
+    {
+      "id": "X1",
+      "label": "X1",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.5,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "X2",
+      "label": "X2",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.5,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "both",
+    "activationRule": "load",
+    "terminalPairs": [
+      {
+        "id": "lamp",
+        "terminals": [
+          "X1",
+          "X2"
+        ],
+        "simBehavior": "load_lamp",
+        "currentPath": "sink",
+        "terminalTypes": {
+          "X1": "power_ac",
+          "X2": "power_ac"
+        }
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+      },
+      "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+      }
+    }
+  }
+}

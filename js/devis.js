@@ -604,7 +604,7 @@ body{font-family:Segoe UI,Arial,sans-serif;padding:20px;color:#000;background:#f
 <div class="print-info-columns">
 <div class="print-info-column">
 <div class="print-section-title">${escHtml(tr('printCompany'))}</div>
-<p><strong>${escHtml(tr('labelCompany'))}:</strong> ${escHtml(co.companyName || 'DZSWISS ELEC')}</p>
+<p><strong>${escHtml(tr('labelCompany'))}:</strong> ${escHtml(co.companyName || 'SwissDZ')}</p>
 ${co.services ? `<p><strong>${escHtml(tr('labelServices'))}:</strong> ${escHtml(co.services)}</p>` : ''}
 <p><strong>${escHtml(tr('labelPhone'))}:</strong> ${escHtml(co.phone || '+213 555 123 456')}</p>
 <p><strong>${escHtml(tr('labelEmail'))}:</strong> ${escHtml(co.email || 'contact@electrodz.dz')}</p>

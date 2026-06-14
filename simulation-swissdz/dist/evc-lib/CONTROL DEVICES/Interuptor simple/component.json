@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 3,
+  "id": "Interuptor simple",
+  "name": "Interuptor simple",
+  "category": "Accionamientos",
+  "tagPrefix": "S",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 4800,
+      "height": 8400
+    }
+  },
+  "terminals": [
+    {
+      "id": "COM",
+      "label": "COM",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.0,
+      "ny": 0.5,
+      "direction": "left",
+      "guideLength": 60
+    },
+    {
+      "id": "L1",
+      "label": "L1",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 1.0,
+      "ny": 0.5,
+      "direction": "right",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "any",
+    "activationRule": "switch",
+    "terminalPairs": [
+      {
+        "id": "contact",
+        "terminals": [
+          "COM",
+          "L1"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+          "COM": "contact_no",
+          "L1": "contact_no"
+        }
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+      },
+      "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+      }
+    }
+  }
+}

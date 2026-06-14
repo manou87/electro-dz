@@ -195,7 +195,7 @@ def rewrite_fill(q, mod_title):
     )
     q["questionAr"] = f"للتحقق من قواعد «{mod_title}»، أي وثيقة يجب الرجوع إليها؟"
     q["optionsFr"] = [
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque DZSWISS ELEC",
+        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
         "Un catalogue fabricant uniquement",
         "Un forum de discussion en ligne",
         "Aucun texte normatif",

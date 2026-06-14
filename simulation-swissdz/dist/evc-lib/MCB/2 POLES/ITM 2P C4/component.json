@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 3,
+  "id": "ITM 2P C4",
+  "name": "ITM 2P C4",
+  "category": "Proteccion",
+  "tagPrefix": "Q",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 2400,
+      "height": 7200
+    }
+  },
+  "terminals": [
+    {
+      "id": "1",
+      "label": "1",
+      "signal": "Potencia",
+      "role": "input",
+      "nx": 0.25,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "3",
+      "label": "3",
+      "signal": "Potencia",
+      "role": "input",
+      "nx": 0.75,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "2",
+      "label": "2",
+      "signal": "Potencia",
+      "role": "output",
+      "nx": 0.25,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "4",
+      "label": "4",
+      "signal": "Potencia",
+      "role": "output",
+      "nx": 0.75,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "any",
+    "activationRule": "protection",
+    "terminalPairs": [
+      {
+        "id": "pole_1",
+        "terminals": [
+          "1",
+          "2"
+        ],
+        "simBehavior": "protection_mcb",
+        "currentPath": "series",
+        "terminalTypes": {
+          "1": "power_ac",
+          "2": "power_ac"
+        }
+      },
+      {
+        "id": "pole_2",
+        "terminals": [
+          "3",
+          "4"
+        ],
+        "simBehavior": "protection_mcb",
+        "currentPath": "series",
+        "terminalTypes": {
+          "3": "power_ac",
+          "4": "power_ac"
+        }
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+      },
+      "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+      }
+    }
+  },
+  "docking": {
+    "mountable": true,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "itm_2p",
+      "dockSize": {
+        "cols": 2,
+        "rows": 2
+      },
+      "hideTerminalsOnDock": [],
+      "overlapPx": 0
+    },
+    "zones": []
+  }
+}

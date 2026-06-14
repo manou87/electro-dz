@@ -1,7 +1,7 @@
 (function () {
   var T = {
     fr: {
-      'meta.title': 'Unifilaire auto — DZSWISS ELEC',
+      'meta.title': 'Unifilaire auto — SwissDZ',
       'page.title': 'Schéma unifilaire (depuis le bilan)',
       'page.lead':
         'Layout type CYPELEC : tronc (~ → Compteur → DG → DDR) → barre bus → départs avec libellés à droite → tableau Référence / Puissance demandée.',
@@ -25,7 +25,7 @@
         'Calibres In indicatifs. Le schéma utilise diagrams.net (open source) — vérifiez calibres, DDR et câbles sur site avant dossier.',
     },
     ar: {
-      'meta.title': 'مخطط أحادي تلقائي — DZSWISS ELEC',
+      'meta.title': 'مخطط أحادي تلقائي — SwissDZ',
       'page.title': 'مخطط أحادي الخط (من موازنة القدرة)',
       'page.lead':
         'وضع تلقائي للدوائر بمراجع و In إرشادي مع رموز IEC من diagrams.net.',

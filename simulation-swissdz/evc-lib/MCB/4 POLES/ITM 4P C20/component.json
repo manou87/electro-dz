@@ -1,0 +1,196 @@
+{
+  "schemaVersion": 3,
+  "id": "ITM 4P C20",
+  "name": "ITM 4P C20",
+  "category": "Proteccion",
+  "tagPrefix": "Q",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 4800,
+      "height": 7200
+    }
+  },
+  "terminals": [
+    {
+      "id": "1",
+      "label": "1",
+      "signal": "Potencia",
+      "role": "input",
+      "nx": 0.125,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "3",
+      "label": "3",
+      "signal": "Potencia",
+      "role": "input",
+      "nx": 0.375,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "2",
+      "label": "2",
+      "signal": "Potencia",
+      "role": "output",
+      "nx": 0.125,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "4",
+      "label": "4",
+      "signal": "Potencia",
+      "role": "output",
+      "nx": 0.375,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "5",
+      "label": "5",
+      "signal": "Potencia",
+      "role": "input",
+      "nx": 0.625,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "6",
+      "label": "6",
+      "signal": "Potencia",
+      "role": "output",
+      "nx": 0.625,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "8",
+      "label": "8",
+      "signal": "Potencia",
+      "role": "output",
+      "nx": 0.875,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "7",
+      "label": "7",
+      "signal": "Potencia",
+      "role": "input",
+      "nx": 0.875,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "any",
+    "activationRule": "protection",
+    "terminalPairs": [
+      {
+        "id": "pole_1",
+        "terminals": [
+          "1",
+          "2"
+        ],
+        "simBehavior": "protection_mcb",
+        "currentPath": "series",
+        "terminalTypes": {
+          "1": "power_ac",
+          "2": "power_ac"
+        }
+      },
+      {
+        "id": "pole_2",
+        "terminals": [
+          "3",
+          "4"
+        ],
+        "simBehavior": "protection_mcb",
+        "currentPath": "series",
+        "terminalTypes": {
+          "3": "power_ac",
+          "4": "power_ac"
+        }
+      },
+      {
+        "id": "pole_3",
+        "terminals": [
+          "5",
+          "6"
+        ],
+        "simBehavior": "protection_mcb",
+        "currentPath": "series",
+        "terminalTypes": {
+          "5": "power_ac",
+          "6": "power_ac"
+        }
+      },
+      {
+        "id": "pole_4",
+        "terminals": [
+          "8",
+          "7"
+        ],
+        "simBehavior": "protection_mcb",
+        "currentPath": "series",
+        "terminalTypes": {
+          "8": "power_ac",
+          "7": "power_ac"
+        }
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+      },
+      "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+      }
+    }
+  },
+  "docking": {
+    "mountable": true,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "itm_4p",
+      "dockSize": {
+        "cols": 4,
+        "rows": 2
+      },
+      "hideTerminalsOnDock": [],
+      "overlapPx": 0
+    },
+    "zones": []
+  }
+}

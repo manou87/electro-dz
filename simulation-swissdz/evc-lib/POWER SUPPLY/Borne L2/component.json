@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 3,
+  "id": "Borne L2",
+  "name": "Borne L2",
+  "category": "Potencia",
+  "tagPrefix": "X",
+  "graphics": {
+    "preview": "preview.png",
+    "original": "original.png",
+    "size": {
+      "width": 600,
+      "height": 3600
+    }
+  },
+  "terminals": [
+    {
+      "id": "1",
+      "label": "L2",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.5,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "2",
+      "label": "L2",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.5,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "enabled": true,
+    "voltage": "ac",
+    "activationRule": "source",
+    "terminalPairs": [
+      {
+        "id": "source_l2",
+        "terminals": [
+          "1",
+          "2"
+        ],
+        "simBehavior": "source_l2",
+        "currentPath": "source",
+        "terminalTypes": {
+          "1": "source_l2",
+          "2": "source_l2"
+        }
+      }
+    ]
+  },
+  "docking": {
+    "mountable": true,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "bornera",
+      "dockSize": {
+        "cols": 1,
+        "rows": 2
+      },
+      "hideTerminalsOnDock": [],
+      "overlapPx": 0
+    },
+    "zones": []
+  }
+}

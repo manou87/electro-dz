@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr" data-theme="atelier">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <link rel="icon" href="assets/app-icon.png" type="image/png"/>
+  <title>Electro DZ — Aperçu Pulse (hors-ligne)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --bg:#0B1120;
+      --bg2:#111827;
+      --surface:rgba(255,255,255,0.06);
+      --border:rgba(255,255,255,0.10);
+      --accent:#F5B942;
+      --accent-soft:#E8C97A;
+      --text:#F1F5F9;
+      --muted:#94A3B8;
+      --dim:#64748B;
+      --radius:18px;
+      --glow:rgba(245,185,66,0.18);
+    }
+    [data-theme="studio"]{
+      --bg:#1E293B;
+      --bg2:#334155;
+      --surface:rgba(255,255,255,0.08);
+      --border:rgba(255,255,255,0.14);
+      --glow:rgba(232,201,122,0.14);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Inter',system-ui,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    button{font-family:inherit;cursor:pointer}
+
+    .preview-banner{
+      position:sticky;top:0;z-index:300;
+      background:linear-gradient(90deg,#7c2d12,#b45309,#7c2d12);
+      color:#fff;text-align:center;
+      font-size:.72rem;font-weight:800;letter-spacing:.08em;
+      padding:7px 12px;text-transform:uppercase;
+    }
+    .preview-banner a{color:#fde68a;text-decoration:underline;margin-left:8px}
+
+    .circuit-bg{
+      position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.9;
+    }
+    .glow-orb{
+      position:fixed;top:-18vh;left:25vw;width:50vw;height:35vh;
+      border-radius:50%;background:var(--glow);
+      filter:blur(60px);z-index:0;pointer-events:none;
+      animation:pulseGlow 6s ease-in-out infinite;
+    }
+    @keyframes pulseGlow{0%,100%{opacity:.5}50%{opacity:1}}
+    @media(prefers-reduced-motion:reduce){
+      .glow-orb{animation:none}
+    }
+
+    .page{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 20px 48px}
+
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      margin:16px 0 20px;padding:10px 14px;
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:16px;backdrop-filter:blur(18px);
+    }
+    .brand{display:flex;align-items:center;gap:12px;min-width:0;flex:1}
+    .brand img{
+      width:48px;height:48px;border-radius:50%;
+      border:2px solid rgba(245,185,66,.55);background:rgba(0,0,0,.3);
+    }
+    .brand h1{
+      font-family:'Outfit',sans-serif;font-size:1.05rem;font-weight:800;
+      color:var(--text);line-height:1.2;
+    }
+    .brand p{font-size:.68rem;color:var(--muted);font-weight:600}
+
+    .toolbar{display:flex;align-items:center;gap:8px;flex-shrink:0}
+    .lang-pill{
+      display:inline-flex;padding:3px;border-radius:12px;
+      background:var(--surface);border:1px solid var(--border);
+    }
+    .lang-pill button{
+      background:none;border:none;color:var(--muted);
+      padding:5px 10px;border-radius:9px;font-size:.68rem;font-weight:700;
+    }
+    .lang-pill button.active{background:var(--accent);color:var(--bg)}
+    .icon-btn{
+      width:36px;height:36px;border-radius:12px;
+      border:1px solid var(--border);background:rgba(245,185,66,.10);
+      display:flex;align-items:center;justify-content:center;
+      color:var(--accent);font-size:1rem;
+    }
+
+    .hero{text-align:center;padding:8px 0 28px}
+    .hero .logo-lg{
+      width:72px;height:72px;border-radius:50%;
+      border:2px solid rgba(245,185,66,.55);margin-bottom:12px;
+    }
+    .hero h2{
+      font-family:'Outfit',sans-serif;font-size:clamp(1.5rem,4vw,2rem);
+      font-weight:800;margin-bottom:6px;
+    }
+    .hero .tagline{color:var(--accent);font-weight:600;font-size:.95rem;margin-bottom:4px}
+    .hero .sub{color:var(--muted);font-size:.85rem;max-width:32rem;margin:0 auto 16px}
+    .store-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+    .store-btn{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 16px;border-radius:12px;font-weight:700;font-size:.82rem;
+      border:1px solid var(--border);transition:transform .2s,box-shadow .2s;
+    }
+    .store-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.35)}
+    .store-btn--play{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+    .store-btn--apple{background:var(--surface);color:var(--text)}
+
+    .section{margin-bottom:28px}
+    .section-label{
+      font-size:.7rem;font-weight:800;letter-spacing:.14em;
+      text-transform:uppercase;color:var(--muted);margin-bottom:14px;
+    }
+
+    .tools-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:12px;
+    }
+    @media(min-width:720px){
+      .tools-grid{grid-template-columns:repeat(4,1fr)}
+    }
+
+    .glass-card{
+      position:relative;display:flex;flex-direction:column;align-items:center;
+      text-align:center;padding:18px 14px;border-radius:var(--radius);
+      background:var(--surface);border:1px solid var(--border);
+      transition:transform .22s,box-shadow .22s,border-color .22s;
+      overflow:hidden;min-height:140px;
+    }
+    .glass-card::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:2px;
+      background:var(--card-accent, var(--accent));opacity:.45;
+    }
+    .glass-card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 12px 32px rgba(0,0,0,.35),0 0 0 1px var(--card-accent, var(--accent));
+      border-color:color-mix(in srgb, var(--card-accent, var(--accent)) 40%, transparent);
+    }
+    .glass-card .ico{
+      width:52px;height:52px;border-radius:16px;
+      background:rgba(255,255,255,.95);border:1px solid rgba(0,0,0,.08);
+      display:flex;align-items:center;justify-content:center;
+      margin-bottom:10px;font-size:1.5rem;
+    }
+    .glass-card strong{font-size:.88rem;font-weight:800;display:block;margin-bottom:3px}
+    .glass-card span{font-size:.72rem;color:var(--muted)}
+
+    .featured{
+      margin-top:12px;display:flex;align-items:center;gap:16px;
+      padding:18px 20px;border-radius:var(--radius);
+      background:var(--surface);border:1px solid rgba(8,145,178,.35);
+      transition:transform .22s,box-shadow .22s;
+    }
+    .featured:hover{
+      transform:translateY(-3px);
+      box-shadow:0 12px 28px rgba(8,145,178,.2);
+    }
+    .featured .ico{
+      width:52px;height:52px;border-radius:16px;flex-shrink:0;
+      background:rgba(255,255,255,.95);
+      display:flex;align-items:center;justify-content:center;font-size:1.5rem;
+    }
+    .featured .body{flex:1;min-width:0}
+    .featured h3{font-family:'Outfit',sans-serif;font-size:1rem;font-weight:800;margin-bottom:2px}
+    .featured p{font-size:.78rem;color:var(--muted)}
+    .featured .arrow{color:var(--accent);font-size:1.4rem;font-weight:300}
+
+    .social-scroll{
+      display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;
+      scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+    }
+    .social-scroll::-webkit-scrollbar{height:4px}
+    .social-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+    .social-card{
+      flex:0 0 100px;scroll-snap-align:start;
+      display:flex;flex-direction:column;align-items:center;gap:8px;
+      padding:16px 12px;border-radius:16px;
+      background:var(--surface);border:1px solid var(--border);
+      transition:transform .2s;
+    }
+    .social-card:hover{transform:translateY(-3px)}
+    .social-card .ico{font-size:1.4rem}
+    .social-card strong{font-size:.78rem}
+    .social-card span{font-size:.62rem;color:var(--muted)}
+
+    .more-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+    }
+    @media(max-width:640px){.more-grid{grid-template-columns:repeat(2,1fr)}}
+
+    .mini-card{
+      display:block;padding:14px;border-radius:14px;
+      background:var(--surface);border:1px solid var(--border);
+      transition:transform .2s,border-color .2s;
+    }
+    .mini-card:hover{transform:translateY(-2px);border-color:rgba(245,185,66,.35)}
+    .mini-card h4{font-size:.82rem;font-weight:800;margin-bottom:2px}
+    .mini-card p{font-size:.68rem;color:var(--muted)}
+
+    .dedication{
+      margin-top:8px;padding:14px 16px;border-radius:14px;
+      background:var(--surface);border:1px solid var(--border);
+      font-size:.78rem;color:var(--dim);text-align:center;
+    }
+    .dedication summary{
+      cursor:pointer;font-weight:700;color:var(--muted);list-style:none;
+    }
+    .dedication summary::-webkit-details-marker{display:none}
+    .dedication[open] p{margin-top:8px}
+
+    footer{
+      text-align:center;padding:24px 0 8px;
+      font-size:.75rem;color:var(--dim);
+    }
+    .badge-pulse{
+      display:inline-block;margin-top:6px;
+      padding:4px 10px;border-radius:999px;
+      background:rgba(245,185,66,.15);color:var(--accent);
+      font-weight:800;font-size:.65rem;letter-spacing:.1em;
+    }
+
+    html[dir="rtl"] body{font-family:'Inter','Tahoma',system-ui,sans-serif}
+    html[dir="rtl"] .featured{flex-direction:row-reverse;text-align:right}
+    html[dir="rtl"] .brand{text-align:right}
+  </style>
+</head>
+<body>
+
+  <div class="preview-banner">
+    ⚡ APERÇU HORS-LIGNE — Design Pulse (non publié)
+    <a href="index-fr.html">Voir le site actuel →</a>
+  </div>
+
+  <svg class="circuit-bg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+        <circle cx="1" cy="1" r="1" fill="rgba(255,255,255,0.04)"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#grid)"/>
+    <line x1="10%" y1="22%" x2="55%" y2="35%" stroke="rgba(245,185,66,0.06)" stroke-width="1"/>
+    <line x1="55%" y1="35%" x2="72%" y2="28%" stroke="rgba(245,185,66,0.06)" stroke-width="1"/>
+    <line x1="72%" y1="28%" x2="85%" y2="45%" stroke="rgba(245,185,66,0.06)" stroke-width="1"/>
+    <circle cx="55%" cy="35%" r="3" fill="rgba(245,185,66,0.08)"/>
+    <circle cx="72%" cy="28%" r="2.5" fill="rgba(245,185,66,0.08)"/>
+  </svg>
+  <div class="glow-orb" aria-hidden="true"></div>
+
+  <div class="page">
+    <header class="topbar">
+      <a href="preview-pulse.html" class="brand">
+        <img src="assets/app-icon.png" alt="Electro DZ" width="48" height="48"/>
+        <div>
+          <h1 data-i18n="brand">SwissDZ</h1>
+          <p data-i18n="tagline">Plateforme algérienne — expérience suisse</p>
+        </div>
+      </a>
+      <div class="toolbar">
+        <div class="lang-pill" role="group" aria-label="Langue">
+          <button type="button" class="active" data-lang="fr">FR</button>
+          <button type="button" data-lang="ar">عربي</button>
+        </div>
+        <button type="button" class="icon-btn" id="themeToggle" aria-label="Changer le thème">🌙</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <img src="assets/app-icon.png" alt="" class="logo-lg" width="72" height="72"/>
+      <h2>Electro DZ</h2>
+      <p class="tagline" data-i18n="hero.tagline">Votre atelier électrique en ligne</p>
+      <p class="sub" data-i18n="hero.sub">Calculs, normes PDF, schémas IEC, formation et devis — 100 % gratuit.</p>
+      <div class="store-row">
+        <a class="store-btn store-btn--play" href="https://play.google.com/store/apps/details?id=com.electrodz.app" target="_blank" rel="noopener">
+          ▶ Google Play
+        </a>
+        <a class="store-btn store-btn--apple" href="https://apps.apple.com/ch/app/electrodz/id6752301246?l=fr-FR" target="_blank" rel="noopener">
+           App Store
+        </a>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Outils principaux">
+      <p class="section-label" data-i18n="tools.label">Outils professionnels</p>
+      <div class="tools-grid">
+        <a class="glass-card" href="calcul-electrique.html" style="--card-accent:#2563EB">
+          <span class="ico">🧮</span>
+          <strong data-i18n="tool.calc">Calculs</strong>
+          <span data-i18n="tool.calc.sub">Câbles, tension, cos φ</span>
+        </a>
+        <a class="glass-card" href="bibliotheque.html" style="--card-accent:#EF4444">
+          <span class="ico">📚</span>
+          <strong data-i18n="tool.pdf">Bibliothèque PDF</strong>
+          <span data-i18n="tool.pdf.sub">NIBT, NFC, normes</span>
+        </a>
+        <a class="glass-card" href="schemas-plans.html" style="--card-accent:#16A34A">
+          <span class="ico">📐</span>
+          <strong data-i18n="tool.schema">Schémas & plans</strong>
+          <span data-i18n="tool.schema.sub">Unifilaire, symboles IEC</span>
+        </a>
+        <a class="glass-card" href="formations.html#quiz" style="--card-accent:#7C3AED">
+          <span class="ico">🎓</span>
+          <strong data-i18n="tool.train">Formations</strong>
+          <span data-i18n="tool.train.sub">450 questions NFC 15-100</span>
+        </a>
+      </div>
+
+      <a class="featured" href="documentation.html">
+        <span class="ico">⚡</span>
+        <div class="body">
+          <h3 data-i18n="tool.docs">Documentation électrotechnique</h3>
+          <p data-i18n="tool.docs.sub">Monophasé, triphasé, magnétisme, énergie — PDF + GeoGebra</p>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+    </section>
+
+    <section class="section" aria-label="Autres rubriques">
+      <p class="section-label" data-i18n="more.label">Autres accès</p>
+      <div class="more-grid">
+        <a class="mini-card" href="devis.html">
+          <h4 data-i18n="more.quote">Devis</h4>
+          <p data-i18n="more.quote.sub">Catalogue & PDF</p>
+        </a>
+        <a class="mini-card" href="emploi.html">
+          <h4 data-i18n="more.job">Emploi</h4>
+          <p data-i18n="more.job.sub">Offres prochainement</p>
+        </a>
+        <a class="mini-card" href="support.html">
+          <h4 data-i18n="more.help">Support</h4>
+          <p data-i18n="more.help.sub">FAQ & assistance</p>
+        </a>
+        <a class="mini-card" href="login.html">
+          <h4 data-i18n="more.member">Espace membre</h4>
+          <p data-i18n="more.member.sub">Favoris PDF</p>
+        </a>
+        <a class="mini-card" href="contact.html">
+          <h4 data-i18n="more.contact">Contact</h4>
+          <p data-i18n="more.contact.sub">Questions & partenariats</p>
+        </a>
+        <a class="mini-card" href="presentation.html">
+          <h4 data-i18n="more.about">À propos</h4>
+          <p data-i18n="more.about.sub">SwissDZ</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="section" id="communaute" aria-label="Communauté">
+      <p class="section-label" data-i18n="social.label">Communauté</p>
+      <div class="social-scroll">
+        <a class="social-card" href="https://wa.me/213555429960" target="_blank" rel="noopener" style="--card-accent:#25D366">
+          <span class="ico">💬</span>
+          <strong>WhatsApp</strong>
+          <span>+213 555 429 960</span>
+        </a>
+        <a class="social-card" href="https://youtube.com/@electro-dz-suisse" target="_blank" rel="noopener">
+          <span class="ico">▶️</span>
+          <strong>YouTube</strong>
+          <span>@electro-dz-suisse</span>
+        </a>
+        <a class="social-card" href="https://www.tiktok.com/@elektrodzch" target="_blank" rel="noopener">
+          <span class="ico">🎵</span>
+          <strong>TikTok</strong>
+          <span>@elektrodzch</span>
+        </a>
+        <a class="social-card" href="https://www.facebook.com/share/1TXqM56Ncd/" target="_blank" rel="noopener">
+          <span class="ico">📘</span>
+          <strong>Facebook</strong>
+          <span>Electro DZ</span>
+        </a>
+      </div>
+    </section>
+
+    <details class="dedication">
+      <summary data-i18n="dedication.summary">Sadaqa pour les parents — appuyez pour lire</summary>
+      <p data-i18n="dedication.text">Application et plateforme gratuites pour les électriciens — dédiées à mon père (رحمه الله) et à ma mère (حفظها الله).</p>
+    </details>
+
+    <footer>
+      <p>© 2026 SwissDZ — electro-dz.com</p>
+      <span class="badge-pulse">APERÇU PULSE · HORS-LIGNE</span>
+    </footer>
+  </div>
+
+  <script>
+    (function(){
+      var T = {
+        fr: {
+          brand: "SwissDZ",
+          tagline: "Plateforme algérienne — expérience suisse",
+          "hero.tagline": "Votre atelier électrique en ligne",
+          "hero.sub": "Calculs, normes PDF, schémas IEC, formation et devis — 100 % gratuit.",
+          "tools.label": "Outils professionnels",
+          "tool.calc": "Calculs", "tool.calc.sub": "Câbles, tension, cos φ",
+          "tool.pdf": "Bibliothèque PDF", "tool.pdf.sub": "NIBT, NFC, normes",
+          "tool.schema": "Schémas & plans", "tool.schema.sub": "Unifilaire, symboles IEC",
+          "tool.train": "Formations", "tool.train.sub": "450 questions NFC 15-100",
+          "tool.docs": "Documentation électrotechnique",
+          "tool.docs.sub": "Monophasé, triphasé, magnétisme, énergie — PDF + GeoGebra",
+          "more.label": "Autres accès",
+          "more.quote": "Devis", "more.quote.sub": "Catalogue & PDF",
+          "more.job": "Emploi", "more.job.sub": "Offres prochainement",
+          "more.help": "Support", "more.help.sub": "FAQ & assistance",
+          "more.member": "Espace membre", "more.member.sub": "Favoris PDF",
+          "more.contact": "Contact", "more.contact.sub": "Questions & partenariats",
+          "more.about": "À propos", "more.about.sub": "SwissDZ",
+          "social.label": "Communauté",
+          "dedication.summary": "Sadaqa pour les parents — appuyez pour lire",
+          "dedication.text": "Application et plateforme gratuites pour les électriciens — dédiées à mon père (رحمه الله) et à ma mère (حفظها الله)."
+        },
+        ar: {
+          brand: "SwissDZ",
+          tagline: "المنصة الجزائرية — الخبرة السويسرية",
+          "hero.tagline": "ورشتك الكهربائية على الإنترنت",
+          "hero.sub": "حسابات، معايير PDF، مخططات IEC، تكوين وعروض أسعار — مجاني 100٪.",
+          "tools.label": "أدوات احترافية",
+          "tool.calc": "الحسابات", "tool.calc.sub": "كابلات، جهد، معامل القدرة",
+          "tool.pdf": "مكتبة PDF", "tool.pdf.sub": "NIBT، NFC، المعايير",
+          "tool.schema": "مخططات وخطط", "tool.schema.sub": "أحادي الخط، رموز IEC",
+          "tool.train": "التكوين", "tool.train.sub": "450 سؤال NFC 15-100",
+          "tool.docs": "التوثيق الكهروتقني",
+          "tool.docs.sub": "أحادي، ثلاثي، مغناطيسية، طاقة — PDF + GeoGebra",
+          "more.label": "وصول آخر",
+          "more.quote": "عروض الأسعار", "more.quote.sub": "كتالوج و PDF",
+          "more.job": "العمل", "more.job.sub": "عروض قريبًا",
+          "more.help": "الدعم", "more.help.sub": "أسئلة شائعة",
+          "more.member": "فضاء الأعضاء", "more.member.sub": "مفضلات PDF",
+          "more.contact": "اتصل بنا", "more.contact.sub": "أسئلة وشراكات",
+          "more.about": "حول", "more.about.sub": "SwissDZ",
+          "social.label": "المجتمع",
+          "dedication.summary": "صدقة على الوالدين — اضغط للقراءة",
+          "dedication.text": "تطبيق ومنصة مجانية للكهربائيين — إهداء لوالدي (رحمه الله) ووالدتي (حفظها الله)."
+        }
+      };
+
+      var lang = 'fr';
+      var theme = 'atelier';
+
+      function applyLang(l){
+        lang = l;
+        document.documentElement.lang = l;
+        document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
+        document.querySelectorAll('[data-i18n]').forEach(function(el){
+          var k = el.getAttribute('data-i18n');
+          if(T[l] && T[l][k]) el.textContent = T[l][k];
+        });
+        document.querySelectorAll('.lang-pill button').forEach(function(btn){
+          btn.classList.toggle('active', btn.getAttribute('data-lang') === l);
+        });
+      }
+
+      document.querySelectorAll('.lang-pill button').forEach(function(btn){
+        btn.addEventListener('click', function(){ applyLang(btn.getAttribute('data-lang')); });
+      });
+
+      document.getElementById('themeToggle').addEventListener('click', function(){
+        theme = theme === 'atelier' ? 'studio' : 'atelier';
+        document.documentElement.setAttribute('data-theme', theme);
+        this.textContent = theme === 'atelier' ? '🌙' : '☀️';
+      });
+    })();
+  </script>
+</body>
+</html>

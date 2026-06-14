@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Test mobile — Simulation SwissDz</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, sans-serif;
+      background: #12141a;
+      color: #e8eaee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    main {
+      max-width: 420px;
+      text-align: center;
+      background: #1d2027;
+      border: 1px solid #32363f;
+      border-radius: 16px;
+      padding: 28px 24px;
+    }
+    h1 { font-size: 1.15rem; margin: 0 0 8px; }
+    p { color: #9aa0ab; font-size: 0.9rem; line-height: 1.5; margin: 0 0 16px; }
+    img {
+      width: min(280px, 80vw);
+      height: auto;
+      border-radius: 12px;
+      background: #fff;
+      padding: 12px;
+    }
+    code {
+      display: block;
+      word-break: break-all;
+      font-size: 0.75rem;
+      background: #14161b;
+      border: 1px solid #32363f;
+      border-radius: 8px;
+      padding: 10px;
+      margin-top: 16px;
+      color: #3dcd58;
+    }
+    .note { font-size: 0.8rem; margin-top: 12px; color: #6b7280; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>📱 Test sur téléphone</h1>
+    <p>Même Wi‑Fi que ce Mac · scanne le QR code avec l’appareil photo ou Chrome.</p>
+    <img src="preview-mobile-qr.png" width="280" height="280" alt="QR code test mobile" />
+    <code id="url"></code>
+    <p class="note">Serveur local · changements visibles avant mise en ligne sur electro-dz.com</p>
+  </main>
+  <script>
+    document.getElementById('url').textContent =
+      'http://192.168.1.98:8765/simulation-swissdz.html?cle=swissdz-test-2026'
+  </script>
+</body>
+</html>

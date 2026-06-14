@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 3,
+  "id": "Power Supply 100-240VAC 12VDC 5A",
+  "name": "Power Supply 100-240VAC 12VDC 5A",
+  "category": "Potencia",
+  "tagPrefix": "G",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 4800,
+      "height": 8400
+    }
+  },
+  "terminals": [
+    {
+      "id": "DC+1",
+      "label": "+",
+      "signal": "Control",
+      "role": "output",
+      "nx": 0.125,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "DC+2",
+      "label": "+",
+      "signal": "Control",
+      "role": "output",
+      "nx": 0.375,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "DC-1",
+      "label": "-",
+      "signal": "Control",
+      "role": "output",
+      "nx": 0.625,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "DC-2",
+      "label": "-",
+      "signal": "Control",
+      "role": "output",
+      "nx": 0.875,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "PE",
+      "label": "PE",
+      "signal": "Potencia",
+      "role": "input",
+      "nx": 0.25,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "N",
+      "label": "N",
+      "signal": "Potencia",
+      "role": "input",
+      "nx": 0.5,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "L",
+      "label": "L",
+      "signal": "Potencia",
+      "role": "input",
+      "nx": 0.75,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "power_supply_dc",
+    "enabled": true,
+    "voltage": "ac",
+    "activationRule": "power_supply_dc",
+    "terminalPairs": [
+      {
+        "id": "ac_input",
+        "terminals": [
+          "L",
+          "N"
+        ],
+        "simBehavior": "psu_ac_input",
+        "currentPath": "sink"
+      },
+      {
+        "id": "dc_plus",
+        "terminals": [
+          "DC+1",
+          "DC+2"
+        ],
+        "simBehavior": "source_dc_plus",
+        "currentPath": "source",
+        "activeInStates": [
+          "on"
+        ]
+      },
+      {
+        "id": "dc_minus",
+        "terminals": [
+          "DC-1",
+          "DC-2"
+        ],
+        "simBehavior": "source_dc_minus",
+        "currentPath": "source",
+        "activeInStates": [
+          "on"
+        ]
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+      },
+      "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+      }
+    }
+  },
+  "docking": {
+    "mountable": true,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "general_montable_riel_din",
+      "dockSize": {
+        "cols": 4,
+        "rows": 2
+      },
+      "hideTerminalsOnDock": [],
+      "overlapPx": 0
+    },
+    "zones": []
+  }
+}

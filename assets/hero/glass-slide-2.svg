@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0a1628"/>
+      <stop offset="100%" stop-color="#172554"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="600" fill="url(#bg2)"/>
+  <ellipse cx="400" cy="300" rx="220" ry="120" fill="#facc15" opacity="0.08"/>
+  <ellipse cx="900" cy="200" rx="180" ry="100" fill="#38bdf8" opacity="0.12"/>
+  <g fill="none" stroke="#94a3b8" stroke-width="1.5" opacity="0.4">
+    <path d="M100 500 Q300 350 500 400 T900 280"/>
+    <path d="M150 520 Q350 380 550 430 T950 300"/>
+  </g>
+  <text x="60" y="80" fill="#facc15" font-family="system-ui,sans-serif" font-size="28" font-weight="800" opacity="0.9">NFC � NIBT</text>
+  <text x="60" y="115" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="16" opacity="0.8">Normes &amp; calculs pro</text>
+</svg>

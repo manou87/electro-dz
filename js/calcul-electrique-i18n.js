@@ -1,11 +1,11 @@
 /**
- * Traductions calculateur web — FR / AR (aligné app DZSWISS ELEC).
+ * Traductions calculateur web — FR / AR (aligné app SwissDZ).
  */
 (function (g) {
   'use strict';
 
   const fr = {
-    pageTitle: 'Calculs électriques | DZSWISS ELEC',
+    pageTitle: 'Calculs électriques | SwissDZ',
     brandTagline: 'Précision suisse, passion algérienne',
     brandSurprise: 'Bientôt, les surprises…',
     navHome: 'Accueil',
@@ -13,7 +13,7 @@
     navDocs: 'Documentation',
     navCalc: 'Calculs',
     heroTitle: 'Calculatrice électrique',
-    heroSub: 'Même interface que l\'application DZSWISS ELEC — choisissez un calcul puis saisissez les valeurs',
+    heroSub: 'Même interface que l\'application SwissDZ — choisissez un calcul puis saisissez les valeurs',
     pickerLabel: 'Affichage des types de calcul',
     pickerPriority: 'Outils pro',
     pickerOther: 'Autres calculs',
@@ -23,7 +23,7 @@
     btnCalculate: '⚡ Calculer',
     resultPlaceholder: 'Le résultat s\'affichera ici',
     helpTitle: 'Fonctionnement de ce calcul',
-    footerCopy: '© 2026 DZSWISS ELEC — Tous droits réservés',
+    footerCopy: '© 2026 SwissDZ — Tous droits réservés',
     voltageMono: 'Monophasé',
     voltageTri: 'Triphasé',
     conductorCu: 'Cuivre (Cu)',
@@ -433,7 +433,7 @@
     balExportPdfHint: 'Pour un PDF : Imprimer → Enregistrer au format PDF',
     balExportFileHint:
       'Téléchargez le rapport HTML (fond blanc, format A4) : ouvrez-le dans le navigateur puis Imprimer ou Enregistrer en PDF.',
-    balExportTitle: 'Bilan de puissance — DZSWISS ELEC',
+    balExportTitle: 'Bilan de puissance — SwissDZ',
     balDisclaimer:
       'Calcul indicatif (Pd, Qd, Sd, Ib) — vérifier NFC 15-100, prescriptions distributeur et note de calcul officielle avant dossier.',
     balTotal: 'Totaux',
@@ -488,7 +488,7 @@
     phBalanceKu: 'Ku',
     phBalanceKs: 'Ks',
     balanceIbApprox: 'Ib ≈',
-    metaDescription: 'DZSWISS ELEC — Calculs électriques professionnels',
+    metaDescription: 'SwissDZ — Calculs électriques professionnels',
     copperInterpDetail: 'R₂₀ = {r20} Ω · ΔT = {dt} °C',
     breakingTimeExplIT:
       'Schéma IT : pas de durée unique ici — surveillance de l’isolement ; en cas de 2e défaut, voir IEC 60364-4-41 (IT).',
@@ -518,7 +518,7 @@
   };
 
   const ar = {
-    pageTitle: 'الحسابات الكهربائية | DZSWISS ELEC',
+    pageTitle: 'الحسابات الكهربائية | SwissDZ',
     brandTagline: 'دقة سويسرية، شغف جزائري',
     brandSurprise: 'قريباً… مفاجآت قادمة',
     navHome: 'الرئيسية',
@@ -526,7 +526,7 @@
     navDocs: 'الوثائق',
     navCalc: 'الحسابات',
     heroTitle: 'الحسابات الكهربائية',
-    heroSub: 'نفس واجهة تطبيق DZSWISS ELEC — اختر نوع الحساب ثم أدخل القيم',
+    heroSub: 'نفس واجهة تطبيق SwissDZ — اختر نوع الحساب ثم أدخل القيم',
     pickerLabel: 'ترتيب أنواع الحساب',
     pickerPriority: 'أدوات احترافية',
     pickerOther: 'حسابات أخرى',
@@ -536,7 +536,7 @@
     btnCalculate: '⚡ احسب',
     resultPlaceholder: 'النتيجة ستظهر هنا',
     helpTitle: 'كيف يعمل هذا الحساب؟',
-    footerCopy: '© 2026 DZSWISS ELEC — جميع الحقوق محفوظة',
+    footerCopy: '© 2026 SwissDZ — جميع الحقوق محفوظة',
     voltageMono: 'أحادي',
     voltageTri: 'ثلاثي',
     conductorCu: 'نحاس (Cu)',
@@ -944,7 +944,7 @@
     balExportPdfHint: 'لـ PDF: طباعة ← حفظ بصيغة PDF',
     balExportFileHint:
       'حمّل تقرير HTML (خلفية بيضاء، A4): افتحه في المتصفح ثم اطبع أو احفظ PDF.',
-    balExportTitle: 'موازنة القدرة — DZSWISS ELEC',
+    balExportTitle: 'موازنة القدرة — SwissDZ',
     balDisclaimer:
       'حساب إرشادي (Pd، Qd، Sd، Ib) — تحقق من NFC 15-100 واشتراطات الموزّع والحساب الرسمي قبل الملف.',
     balTotal: 'المجاميع',
@@ -999,7 +999,7 @@
     phBalanceKu: 'Ku',
     phBalanceKs: 'Ks',
     balanceIbApprox: 'Ib ≈',
-    metaDescription: 'DZSWISS ELEC — حسابات كهربائية مهنية',
+    metaDescription: 'SwissDZ — حسابات كهربائية مهنية',
     copperInterpDetail: 'R₂₀ = {r20} Ω · ΔT = {dt} °م',
     breakingTimeExplIT:
       'نظام IT: لا مدة وحدة هنا — مراقبة العزل؛ عطل ثانٍ: راجع IEC 60364-4-41.',

@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 3,
+  "id": "Barra de Tierra (PE) - 6T A",
+  "name": "Barra de Tierra (PE) - 6T A",
+  "category": "Distribución",
+  "tagPrefix": "",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 1200,
+      "height": 7200
+    },
+    "original": "original.png"
+  },
+  "terminals": [
+    {
+      "id": "PE",
+      "label": "PE",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.781667,
+      "ny": 0.083333,
+      "direction": "right",
+      "guideLength": 60
+    },
+    {
+      "id": "PE1",
+      "label": "PE1",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.721667,
+      "ny": 0.25,
+      "direction": "right",
+      "guideLength": 60
+    },
+    {
+      "id": "PE2",
+      "label": "PE2",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.721667,
+      "ny": 0.416667,
+      "direction": "right",
+      "guideLength": 60
+    },
+    {
+      "id": "PE3",
+      "label": "PE3",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.721667,
+      "ny": 0.583333,
+      "direction": "right",
+      "guideLength": 60
+    },
+    {
+      "id": "PE4",
+      "label": "PE4",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.721667,
+      "ny": 0.75,
+      "direction": "right",
+      "guideLength": 60
+    },
+    {
+      "id": "PE5",
+      "label": "PE5",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.721667,
+      "ny": 0.916667,
+      "direction": "right",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "any",
+    "activationRule": "none",
+    "terminalPairs": [
+      {
+        "id": "bus",
+        "terminals": [
+          "PE",
+          "PE1",
+          "PE2",
+          "PE3",
+          "PE4",
+          "PE5"
+        ],
+        "simBehavior": "junction",
+        "currentPath": "series",
+        "terminalTypes": {
+          "PE": "power_ac",
+          "PE1": "power_ac",
+          "PE2": "power_ac",
+          "PE3": "power_ac",
+          "PE4": "power_ac",
+          "PE5": "power_ac"
+        }
+      }
+    ]
+  }
+}

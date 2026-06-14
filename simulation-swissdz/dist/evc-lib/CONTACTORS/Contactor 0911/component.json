@@ -1,0 +1,399 @@
+{
+  "schemaVersion": 3,
+  "id": "Contactor 0911",
+  "name": {
+    "es": "Contactor 0911",
+    "en": "Contactor 0911"
+  },
+  "category": {
+    "es": "Potencia",
+    "en": "Power"
+  },
+  "tagPrefix": "KM",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 3600,
+      "height": 7200
+    }
+  },
+  "terminals": [
+    {
+      "id": "1",
+      "label": "1/L1",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.166667,
+      "ny": 0.019306,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "3",
+      "label": "3/L2",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.5,
+      "ny": 0.019306,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "5",
+      "label": "5/L3",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.833333,
+      "ny": 0.019306,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "2",
+      "label": "2/T1",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.166667,
+      "ny": 0.978333,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "4",
+      "label": "4/T2",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.5,
+      "ny": 0.978333,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "6",
+      "label": "6/T3",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.833333,
+      "ny": 0.978333,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "13",
+      "label": "13",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.343056,
+      "ny": 0.208333,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "21",
+      "label": "21",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.653056,
+      "ny": 0.208333,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "A1",
+      "label": "A1",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.880556,
+      "ny": 0.208333,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "14",
+      "label": "14",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.343056,
+      "ny": 0.791667,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "22",
+      "label": "22",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.653056,
+      "ny": 0.791667,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "A2",
+      "label": "A2",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.880556,
+      "ny": 0.791667,
+      "direction": "bottom",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "ac",
+    "activationRule": "coil",
+    "terminalPairs": [
+      {
+        "id": "coil",
+        "terminals": [
+          "A1",
+          "A2"
+        ],
+        "simBehavior": "coil",
+        "currentPath": "sink",
+        "terminalTypes": {
+          "A1": "coil_in",
+          "A2": "coil_in"
+        }
+      },
+      {
+        "id": "power_1",
+        "terminals": [
+          "1",
+          "2"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+          "1": "power_ac",
+          "2": "power_ac"
+        }
+      },
+      {
+        "id": "power_2",
+        "terminals": [
+          "3",
+          "4"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+          "3": "power_ac",
+          "4": "power_ac"
+        }
+      },
+      {
+        "id": "power_3",
+        "terminals": [
+          "5",
+          "6"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+          "5": "power_ac",
+          "6": "power_ac"
+        }
+      },
+      {
+        "id": "aux_no",
+        "terminals": [
+          "13",
+          "14"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+          "13": "contact_no",
+          "14": "contact_no"
+        }
+      },
+      {
+        "id": "aux_nc",
+        "terminals": [
+          "21",
+          "22"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+          "21": "contact_nc",
+          "22": "contact_nc"
+        }
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+      },
+      "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+      }
+    }
+  },
+  "docking": {
+    "mountable": true,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "contactor_3p",
+      "dockSize": {
+        "cols": 3,
+        "rows": 2
+      },
+      "hideTerminalsOnDock": [],
+      "overlapPx": 0
+    },
+    "zones": [
+      {
+        "id": "left_aux",
+        "label": {
+          "es": "Auxiliar izquierdo",
+          "en": "Left auxiliary"
+        },
+        "position": "left",
+        "rect": {
+          "x": -1200,
+          "y": 0,
+          "w": 1224,
+          "h": 7181
+        },
+        "anchor": {
+          "nx": -0.163333,
+          "ny": 0.498681
+        },
+        "gridSize": {
+          "cols": 1,
+          "rows": 6
+        },
+        "accepts": [
+          "auxiliary_contact"
+        ],
+        "bridge": null,
+        "childAlignment": "right_center",
+        "childZLayer": 2,
+        "hideHostTerminals": null
+      },
+      {
+        "id": "right_aux",
+        "label": {
+          "es": "Auxiliar derecho",
+          "en": "Right auxiliary"
+        },
+        "position": "right",
+        "rect": {
+          "x": 3600,
+          "y": 0,
+          "w": 1200,
+          "h": 7200
+        },
+        "anchor": {
+          "nx": 1.166667,
+          "ny": 0.5
+        },
+        "gridSize": {
+          "cols": 1,
+          "rows": 6
+        },
+        "accepts": [
+          "auxiliary_contact"
+        ],
+        "bridge": null,
+        "childAlignment": "left_center",
+        "childZLayer": 2,
+        "hideHostTerminals": null
+      },
+      {
+        "id": "bottom_relay",
+        "label": {
+          "es": "Relé térmico",
+          "en": "Thermal overload relay"
+        },
+        "position": "bottom",
+        "rect": {
+          "x": 0,
+          "y": 6400,
+          "w": 3600,
+          "h": 4800
+        },
+        "anchor": {
+          "nx": 0.5,
+          "ny": 1.222222
+        },
+        "gridSize": {
+          "cols": 3,
+          "rows": 4
+        },
+        "accepts": [
+          "thermal_relay_3p"
+        ],
+        "bridge": [
+          {
+            "hostTerminal": "2",
+            "childTerminal": "1"
+          },
+          {
+            "hostTerminal": "4",
+            "childTerminal": "3"
+          },
+          {
+            "hostTerminal": "6",
+            "childTerminal": "5"
+          }
+        ],
+        "childAlignment": "top_center",
+        "childZLayer": 2,
+        "hideHostTerminals": null
+      },
+      {
+        "id": "over_aux",
+        "label": {
+          "es": "Auxiliar frontal",
+          "en": "Front auxiliary"
+        },
+        "position": "over",
+        "rect": {
+          "x": 700,
+          "y": 1955,
+          "w": 2900,
+          "h": 3300
+        },
+        "anchor": {
+          "nx": 0.597222,
+          "ny": 0.500694
+        },
+        "gridSize": {
+          "cols": 2,
+          "rows": 3
+        },
+        "accepts": [
+          "auxiliary_contact",
+          "timer_block"
+        ],
+        "bridge": null,
+        "childAlignment": "center",
+        "childZLayer": 3,
+        "hideHostTerminals": null
+      }
+    ]
+  }
+}

@@ -1,5 +1,5 @@
 /**
- * SEO global — JSON-LD Organisation + WebSite (Electro DZ / DZSWISS ELEC)
+ * SEO global — JSON-LD Organisation + WebSite (Electro DZ / SwissDZ)
  */
 (function () {
   var SITE = "https://electro-dz.com";
@@ -10,7 +10,7 @@
     "@type": "Organization",
     "@id": SITE + "/#organization",
     name: "Electro DZ",
-    alternateName: ["DZSWISS ELEC", "Electro DZ CH", "electro-dz"],
+    alternateName: ["SwissDZ", "Electro DZ CH", "electro-dz"],
     url: SITE,
     logo: ICON,
     image: ICON,
@@ -37,7 +37,7 @@
     "@type": "WebSite",
     "@id": SITE + "/#website",
     name: "Electro DZ",
-    alternateName: "DZSWISS ELEC",
+    alternateName: "SwissDZ",
     url: SITE,
     publisher: { "@id": SITE + "/#organization" },
     inLanguage: ["fr", "ar"],

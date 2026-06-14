@@ -25,7 +25,8 @@
     const s = document.createElement('style');
     s.id = 'edz-auth-ui-style';
     s.textContent =
-      '.nav-extra.edz-auth-off,[data-nav-login].edz-auth-off,[data-nav-register].edz-auth-off{display:none!important}';
+      '.nav-extra.edz-auth-off,[data-nav-login].edz-auth-off,[data-nav-register].edz-auth-off{display:none!important}' +
+      '.nav-auth:empty{display:none}';
     document.head.appendChild(s);
   }
 

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="js/theme-electric-neon.js"></script>
+  <meta name="description" content="Electro DZ — Simulation SwissDZ : tableau électrique DIN, câblage guidé pas-à-pas, composants EVC — SwissDZ" />
+  <meta name="robots" content="noindex, nofollow"/>
+  <title>Electro DZ — Simulation SwissDZ | SwissDZ</title>
+  <script src="js/simulation-preview-gate.js"></script>
+  <link rel="icon" href="assets/app-icon.png" type="image/png" />
+  <link rel="stylesheet" href="css/simulation-swissdz.css" />
+  <link rel="canonical" href="https://electro-dz.com/simulation-swissdz.html" />
+</head>
+<body class="sim-page">
+  <header class="sim-topbar">
+    <a href="index-fr.html" class="sim-brand" data-i18n-href-fr="index-fr.html" data-i18n-href-ar="index.html">
+      <img src="assets/app-icon.png" alt="" width="32" height="32" decoding="async" />
+      <span>Swiss<span class="accent">DZ</span></span>
+    </a>
+    <span class="sim-title" data-i18n="title">Simulation SwissDZ — Electro DZ</span>
+    <div class="sim-modules" role="tablist" aria-label="Modules">
+      <button type="button" class="sim-mod-btn" data-mod="1" data-i18n="mod.tableau">Tableau DIN</button>
+      <button type="button" class="sim-mod-btn active" data-mod="3" data-i18n="mod.ar">Atelier virtuel</button>
+    </div>
+    <div class="sim-lang">
+      <button type="button" class="lang-btn active" data-lang="fr" aria-label="Français">FR</button>
+      <button type="button" class="lang-btn" data-lang="ar" aria-label="العربية">AR</button>
+    </div>
+  </header>
+
+  <div class="sim-workspace">
+    <div class="sim-frame-wrap">
+      <p class="sim-loading" id="simLoading" data-i18n="loading">Chargement du simulateur…</p>
+      <iframe
+        id="simFrame"
+        src="simulation-swissdz/index.html?embed=1&m=3"
+        title="Simulation SwissDZ — Electro DZ"
+        allow="fullscreen"
+        loading="eager"
+      ></iframe>
+    </div>
+    <p class="sim-footer-note" data-i18n="footer">
+      Outil pédagogique SwissDZ — NFC 15-100 · IEC 60364. Toute installation réelle doit être vérifiée par un professionnel habilité.
+    </p>
+  </div>
+
+  <script>
+    (function () {
+      var STORAGE = "electrodz-site-lang";
+      var T = {
+        fr: {
+          "meta.title": "Electro DZ — Simulation SwissDZ | SwissDZ",
+          "meta.desc": "Simulateur interactif : tableau électrique DIN, câblage guidé, composants EVC — méthode suisse.",
+          title: "Simulation SwissDZ — Electro DZ",
+          loading: "Chargement du simulateur…",
+          footer: "Outil pédagogique SwissDZ — NFC 15-100 · IEC 60364. Toute installation réelle doit être vérifiée par un professionnel habilité.",
+          "mod.tableau": "Tableau DIN",
+          "mod.ar": "Atelier virtuel",
+        },
+        ar: {
+          "meta.title": "Electro DZ — محاكاة SwissDZ | SwissDZ",
+          "meta.desc": "محاكي تفاعلي: لوحة كهربائية DIN، توصيل موجّه، مكونات EVC — منهج سويسري.",
+          title: "محاكاة SwissDZ — Electro DZ",
+          loading: "جاري تحميل المحاكي…",
+          footer: "أداة تعليمية SwissDZ — NFC 15-100 · IEC 60364. أي تركيب حقيقي يجب أن يتحقق منه مختص مؤهل.",
+          "mod.tableau": "لوحة DIN",
+          "mod.ar": "ورشة توصيل افتراضية",
+        },
+      };
+
+      var lang = localStorage.getItem(STORAGE) === "fr" ? "fr" : "ar";
+      if (document.documentElement.lang === "fr") lang = "fr";
+
+      function t(k) {
+        return (T[lang] && T[lang][k]) || T.fr[k] || k;
+      }
+
+      function applyLang(next) {
+        lang = next === "fr" ? "fr" : "ar";
+        localStorage.setItem(STORAGE, lang);
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+        document.title = t("meta.title");
+        var meta = document.querySelector('meta[name="description"]');
+        if (meta) meta.setAttribute("content", t("meta.desc"));
+        document.querySelectorAll("[data-i18n]").forEach(function (el) {
+          el.textContent = t(el.getAttribute("data-i18n"));
+        });
+        var brand = document.querySelector(".sim-brand");
+        if (brand) brand.setAttribute("href", lang === "fr" ? "index-fr.html" : "index.html");
+        document.querySelectorAll(".sim-lang .lang-btn").forEach(function (btn) {
+          btn.classList.toggle("active", btn.getAttribute("data-lang") === lang);
+        });
+      }
+
+      document.querySelectorAll(".sim-lang .lang-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          applyLang(btn.getAttribute("data-lang"));
+        });
+      });
+
+      var frame = document.getElementById("simFrame");
+      var loading = document.getElementById("simLoading");
+      var activeMod = "3";
+
+      function loadModule(mod) {
+        activeMod = mod;
+        if (loading) loading.hidden = false;
+        if (frame) frame.src = "simulation-swissdz/index.html?embed=1&m=" + mod;
+        document.querySelectorAll(".sim-mod-btn").forEach(function (btn) {
+          btn.classList.toggle("active", btn.getAttribute("data-mod") === mod);
+        });
+      }
+
+      document.querySelectorAll(".sim-mod-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          loadModule(btn.getAttribute("data-mod"));
+        });
+      });
+
+      if (frame && loading) {
+        frame.addEventListener("load", function () {
+          loading.hidden = true;
+        });
+      }
+
+      applyLang(lang);
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,300 @@
+/**
+ * Electro DZ — thème Liquid Glass (preview locale ?glass=1)
+ * Option 1 : glassmorphism, blobs animés, hero carousel
+ */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
+html.theme-liquid-glass {
+  --lg-glass: rgba(15, 23, 42, 0.55);
+  --lg-glass-border: rgba(255, 255, 255, 0.14);
+  --lg-glass-highlight: rgba(255, 255, 255, 0.08);
+  --lg-blur: 18px;
+  --lg-electric: #38bdf8;
+}
+
+html.theme-liquid-glass body {
+  font-family: 'Plus Jakarta Sans', 'IBM Plex Sans Arabic', 'Segoe UI', system-ui, sans-serif;
+  background: #060a12;
+  background-image: none;
+  position: relative;
+  overflow-x: hidden;
+}
+
+html[dir="rtl"].theme-liquid-glass body {
+  font-family: 'IBM Plex Sans Arabic', 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+}
+
+/* Fond liquide */
+html.theme-liquid-glass .lg-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+html.theme-liquid-glass .lg-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.55;
+  will-change: transform;
+}
+
+html.theme-liquid-glass .lg-blob--1 {
+  width: 55vmax;
+  height: 55vmax;
+  top: -18%;
+  left: -12%;
+  background: radial-gradient(circle, rgba(250, 204, 21, 0.45), transparent 68%);
+  animation: lg-drift-1 22s ease-in-out infinite;
+}
+
+html.theme-liquid-glass .lg-blob--2 {
+  width: 48vmax;
+  height: 48vmax;
+  top: 35%;
+  right: -15%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.4), transparent 70%);
+  animation: lg-drift-2 26s ease-in-out infinite;
+}
+
+html.theme-liquid-glass .lg-blob--3 {
+  width: 40vmax;
+  height: 40vmax;
+  bottom: -12%;
+  left: 25%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.35), transparent 72%);
+  animation: lg-drift-3 20s ease-in-out infinite;
+}
+
+@keyframes lg-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(8%, 6%) scale(1.08); }
+}
+
+@keyframes lg-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-10%, 4%) scale(1.05); }
+}
+
+@keyframes lg-drift-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(6%, -8%) scale(1.1); }
+}
+
+/* Contenu au-dessus du fond */
+html.theme-liquid-glass .nav,
+html.theme-liquid-glass .wrap,
+html.theme-liquid-glass .footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Nav verre */
+html.theme-liquid-glass .nav {
+  background: var(--lg-glass);
+  border-bottom: 1px solid var(--lg-glass-border);
+  backdrop-filter: blur(var(--lg-blur));
+  -webkit-backdrop-filter: blur(var(--lg-blur));
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+html.theme-liquid-glass .brand-icon {
+  box-shadow: 0 0 24px rgba(250, 204, 21, 0.35);
+}
+
+/* Hero carousel + panneau glass */
+html.theme-liquid-glass .lg-hero-wrap {
+  margin: 8px 0 14px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--lg-glass-border);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+  position: relative;
+  min-height: 168px;
+}
+
+html.theme-liquid-glass .lg-hero-carousel {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+html.theme-liquid-glass .lg-hero-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 1.4s ease, transform 8s ease;
+}
+
+html.theme-liquid-glass .lg-hero-slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+html.theme-liquid-glass .lg-hero-slide::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    rgba(6, 10, 18, 0.88) 0%,
+    rgba(6, 10, 18, 0.55) 45%,
+    rgba(6, 10, 18, 0.75) 100%
+  );
+}
+
+html.theme-liquid-glass .lg-hero-dots {
+  position: absolute;
+  bottom: 10px;
+  inset-inline-end: 14px;
+  z-index: 2;
+  display: flex;
+  gap: 6px;
+}
+
+html.theme-liquid-glass .lg-hero-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+html.theme-liquid-glass .lg-hero-dot.is-active {
+  background: var(--accent);
+  transform: scale(1.25);
+}
+
+html.theme-liquid-glass .lg-hero-glass {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 18px 20px;
+  background: rgba(15, 23, 42, 0.42);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid var(--lg-glass-highlight);
+}
+
+html.theme-liquid-glass .hero-surprise {
+  color: var(--lg-electric);
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+html.theme-liquid-glass .hero-sub {
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
+}
+
+html.theme-liquid-glass .btn-dl {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Grille lanceur — cartes verre */
+html.theme-liquid-glass .quick-access {
+  background: var(--lg-glass);
+  border: 1px solid var(--lg-glass-border);
+  border-radius: 20px;
+  padding: 16px 14px 14px;
+  backdrop-filter: blur(var(--lg-blur));
+  -webkit-backdrop-filter: blur(var(--lg-blur));
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+html.theme-liquid-glass .quick-access h2 {
+  color: var(--lg-electric);
+}
+
+html.theme-liquid-glass .quick-item {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.03)
+  );
+  border: 1px solid var(--lg-glass-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px;
+  box-shadow: inset 0 1px 0 var(--lg-glass-highlight);
+}
+
+html.theme-liquid-glass .quick-item:hover {
+  border-color: rgba(250, 204, 21, 0.5);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 12px 32px rgba(250, 204, 21, 0.15);
+  background: linear-gradient(
+    145deg,
+    rgba(250, 204, 21, 0.12),
+    rgba(255, 255, 255, 0.05)
+  );
+}
+
+html.theme-liquid-glass .accueil-more,
+html.theme-liquid-glass .spot-card,
+html.theme-liquid-glass .hub-card,
+html.theme-liquid-glass .social-card {
+  background: var(--lg-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-color: var(--lg-glass-border);
+}
+
+html.theme-liquid-glass .footer {
+  background: transparent;
+  border-top: 1px solid var(--lg-glass-border);
+  margin-top: 12px;
+  padding-top: 16px;
+}
+
+/* Badge preview */
+html.theme-liquid-glass .lg-preview-badge {
+  position: fixed;
+  bottom: 12px;
+  inset-inline-start: 12px;
+  z-index: 300;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #0f172a;
+  background: linear-gradient(135deg, #facc15, #fde047);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 20px rgba(250, 204, 21, 0.4);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-liquid-glass .lg-blob {
+    animation: none;
+  }
+  html.theme-liquid-glass .lg-hero-slide {
+    transition: opacity 0.4s ease;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  html.theme-liquid-glass .lg-hero-wrap {
+    min-height: 140px;
+  }
+  html.theme-liquid-glass .lg-hero-glass {
+    padding: 14px 14px;
+  }
+}

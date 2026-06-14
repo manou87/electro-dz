@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 3,
+  "id": "16P-Riel DIN 35 mm",
+  "name": "16P-Riel DIN 35 mm",
+  "category": "Estructura",
+  "tagPrefix": "X",
+  "graphics": {
+    "preview": "preview.png",
+    "original": "original.png",
+    "size": {
+      "width": 21600,
+      "height": 2400
+    }
+  },
+  "terminals": [],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static"
+  },
+  "docking": {
+    "mountable": false,
+    "zLayer": 0,
+    "isDinRail": true,
+    "railAxis": "horizontal",
+    "mountZone": {
+      "nx0": 0,
+      "ny0": 0,
+      "nx1": 1,
+      "ny1": 1
+    },
+    "acceptsMountable": true,
+    "zones": [
+      {
+        "id": "rail_mount",
+        "label": "Zona de montaje",
+        "position": "top",
+        "rect": {
+          "x": 1200,
+          "y": 0,
+          "w": 19200,
+          "h": 2400
+        },
+        "anchor": {
+          "nx": 0.5,
+          "ny": 0.5
+        },
+        "gridSize": {
+          "cols": 16,
+          "rows": 2
+        },
+        "accepts": [
+          "contactor_3p",
+          "itm_1p",
+          "itm_2p",
+          "itm_3p",
+          "itm_4p",
+          "id_2p",
+          "id_4p",
+          "aux_1p",
+          "aux_2p",
+          "aux_4p",
+          "bornera",
+          "rele_fases",
+          "plc",
+          "modulo_plc",
+          "general_montable_riel_din"
+        ],
+        "bridge": null,
+        "childAlignment": "bottom_center",
+        "childZLayer": 2,
+        "hideHostTerminals": null
+      }
+    ]
+  }
+}
