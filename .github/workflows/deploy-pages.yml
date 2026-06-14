@@ -1,8 +1,10 @@
 name: Deploy site to GitHub Pages
 
+# Le site est publié automatiquement par « pages build and deployment » (source : branche main).
+# Ce workflow Actions échouait car l’artifact dépasse 1 Go (PDF + simulateur).
+# Conservé en déclenchement manuel uniquement, si besoin plus tard.
+
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -23,8 +25,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      - name: Préparer l’artifact (sans outils dev)
+        run: |
+          mkdir -p _site
+          rsync -a \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='.venv-pdf' \
+            --exclude='node_modules' \
+            --exclude='scripts' \
+            --exclude='supabase' \
+            ./ _site/
+          du -sh _site
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
