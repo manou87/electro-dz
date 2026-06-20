@@ -241,6 +241,51 @@
       });
   }
 
+  function extractQuote(text) {
+    const m = String(text || "").match(/«\s*([\s\S]+?)\s*»/);
+    return m ? m[1].trim() : "";
+  }
+
+  function questionIntro(q) {
+    if (q.statementFr) {
+      return t(
+        "Selon la norme NF C 15-100, cette affirmation est-elle correcte ?",
+        "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟"
+      );
+    }
+    const raw = t(q.questionFr, q.questionAr);
+    const idx = raw.indexOf("«");
+    if (idx > 0) return raw.slice(0, idx).trim();
+    return raw;
+  }
+
+  function questionStatement(q) {
+    if (q.statementFr) return q.statementFr;
+    const fr = extractQuote(q.questionFr);
+    if (fr) return fr;
+    return extractQuote(q.questionAr);
+  }
+
+  function renderQuestionBody(q) {
+    const intro = questionIntro(q);
+    const statement = questionStatement(q);
+    let html = '<p class="quiz-question">' + escapeHtml(intro) + "</p>";
+    if (statement && (q.type === "truefalse" || q.statementFr)) {
+      html +=
+        '<blockquote class="quiz-statement" lang="fr">' +
+        "« " +
+        escapeHtml(statement) +
+        " »</blockquote>";
+      if (lang === "ar") {
+        html +=
+          '<p class="quiz-statement-note">' +
+          escapeHtml(t("(extrait NF C 15-100 — français)", "(مقتطف NF C 15-100 — فرنسي)")) +
+          "</p>";
+      }
+    }
+    return html;
+  }
+
   function renderLadder(totalLevels, current) {
     let html = '<div class="quiz-ladder" aria-hidden="true">';
     for (let i = 1; i <= totalLevels; i++) {
@@ -512,10 +557,7 @@
       escapeHtml(t(plan.disclaimerFr, plan.disclaimerAr)) +
       "</p>";
     html += '<div class="quiz-card" data-quiz-card>';
-    html +=
-      '<p class="quiz-question">' +
-      escapeHtml(t(q.questionFr, q.questionAr)) +
-      "</p>";
+    html += renderQuestionBody(q);
     html += '<div class="quiz-options">';
 
     if (questionDisplay.type === "truefalse") {

@@ -70,6 +70,24 @@
   color: #f1f5f9;
 }
 
+.quiz-statement {
+  margin: 0 0 12px;
+  padding: 14px 16px;
+  border-inline-start: 3px solid #facc15;
+  background: rgba(250, 204, 21, 0.08);
+  border-radius: 0 10px 10px 0;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: #fde68a;
+  font-weight: 500;
+}
+
+.quiz-statement-note {
+  margin: -4px 0 16px;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
 .quiz-options {
   display: flex;
   flex-direction: column;

@@ -15,6 +15,8 @@ MOD_DIR = os.path.join(
     "data/quiz/nf-c15-100-2015/modules",
 )
 
+AR_TF_INTRO = "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟"
+
 AUTO_MC = re.compile(r"^Concernant cette règle")
 AUTO_TF = re.compile(r"^Selon la norme NF C 15-100\s*:")
 FILL = re.compile(r"^Palier \d+ — pour approfondir")
@@ -171,11 +173,12 @@ def rewrite_auto_tf(q):
     quote = extract_quote(q["questionFr"])
     if quote:
         short = clean_text(quote, 120)
+        q["statementFr"] = short
         q["questionFr"] = (
             "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? "
             f"« {short} »"
         )
-        q["questionAr"] = f"حسب معيار NF C 15-100، هل العبارة صحيحة؟ «{short[:80]}»"
+        q["questionAr"] = AR_TF_INTRO
     ok = q.get("correctAnswer") is True
     q["explanationFr"] = (
         ("Oui : l'affirmation est conforme au texte de la norme. ")
