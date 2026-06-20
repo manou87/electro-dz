@@ -376,8 +376,8 @@
       '<p class="quiz-leaderboard-lead">' +
       escapeHtml(
         t(
-          "Après le module, entrez votre pseudo ci-dessous puis cliquez le bouton jaune. Sans délai minimum.",
-          "بعد الوحدة، أدخل اسمك المستعار ثم الزر الأصفر. بدون وقت أدنى."
+          "Après le module, entrez votre pseudo ci-dessous puis cliquez le bouton jaune.",
+          "بعد الوحدة، أدخل اسمك المستعار ثم الزر الأصفر."
         )
       ) +
       "</p>" +
@@ -431,9 +431,7 @@
       msg.textContent = t("Envoi en cours…", "جاري الإرسال…");
 
       const meta = moduleMetaFromSlug(moduleSlug);
-      const durationSec = moduleStartedAt
-        ? Math.max(1, Math.round((Date.now() - moduleStartedAt) / 1000))
-        : 1;
+      const durationSec = 1;
 
       window.QuizLeaderboard.submitScore({
         pseudo: pseudo,

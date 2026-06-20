@@ -69,10 +69,6 @@ begin
     return jsonb_build_object('ok', false, 'error', 'score_invalid');
   end if;
 
-  if p_duration_sec is null or p_duration_sec < 1 or p_duration_sec > 7200 then
-    return jsonb_build_object('ok', false, 'error', 'duration_invalid');
-  end if;
-
   v_pseudo_norm := lower(v_pseudo);
   v_pct := round(100.0 * p_score / p_total)::int;
 
@@ -110,7 +106,7 @@ begin
     p_score,
     p_total,
     v_pct,
-    p_duration_sec,
+    coalesce(nullif(p_duration_sec, 0), 1),
     v_user_id,
     v_verified,
     now()
