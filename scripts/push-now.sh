@@ -34,6 +34,13 @@ if [[ -z "$TOKEN" ]]; then
   exit 1
 fi
 
+if command -v node >/dev/null 2>&1; then
+  export GITHUB_TOKEN="$TOKEN"
+  if ! node scripts/verify-github-token.mjs; then
+    exit 1
+  fi
+fi
+
 export GIT_TERMINAL_PROMPT=0
 git push "https://${USER}:${TOKEN}@github.com/manou87/electro-dz.git" main
 
