@@ -24,20 +24,13 @@
       "section.quiz.hook":
         "450 questions pour maîtriser la norme NF C 15-100, pas à pas",
       "section.quiz.lead":
-        "QCM, Vrai/Faux, explications immédiates et renvoi au texte officiel après chaque réponse — sans inscription.",
+        "QCM, Vrai/Faux, explications immédiates et renvoi au texte officiel — sans inscription · classement optionnel avec pseudo.",
       "section.quiz.perk1": "6 modules · 5 paliers · 75 questions par module",
       "section.quiz.perk2": "Progressez à votre rythme — score à la fin de chaque module",
-      "section.quiz.perk3": "Révision ciblée : norme NF C 15-100 (2015) intégrée au site",
+      "section.quiz.perk3": "Classement Top 50 : entrez avec un pseudo après chaque module",
       "cta.quiz": "Commencer le questionnaire →",
+      "cta.leaderboard": "Voir le classement →",
       "cta.note": "Gratuit · mobile et ordinateur",
-      "section.sim.hook": "Simulateur SwissDZ — tableau, atelier & unifilaire pro",
-      "section.sim.lead":
-        "Tableau électrique DIN, câblage guidé pas-à-pas avec composants EVC officiels, atelier virtuel de câblage — sans inscription.",
-      "section.sim.perk1": "Module tableau : rail DIN, drag & drop, unifilaire",
-      "section.sim.perk2": "Atelier virtuel : scénarios débutant et pro, fils animés, hotspots interactifs",
-      "section.sim.perk3": "Méthode suisse — NFC 15-100 · IEC 60364",
-      "cta.sim": "Lancer la simulation →",
-      "cta.sim.note": "Gratuit · mobile et ordinateur",
       "footer.copy": "© 2026 SwissDZ — electro-dz.com",
     },
     ar: {
@@ -59,20 +52,13 @@
       "section.quiz.hook":
         "450 سؤالاً لإتقان معيار NF C 15-100 خطوة بخطوة",
       "section.quiz.lead":
-        "اختيار من متعدد، صح/خطأ، تفسير فوري وإحالة إلى النص الرسمي بعد كل إجابة — دون تسجيل.",
+        "اختيار من متعدد، صح/خطأ، تفسير فوري — دون تسجيل · تصنيف اختياري باسم مستعار.",
       "section.quiz.perk1": "6 وحدات · 5 مستويات · 75 سؤالاً لكل وحدة",
       "section.quiz.perk2": "تقدّم على وتيرتك — النتيجة في نهاية كل وحدة",
-      "section.quiz.perk3": "مراجعة موجهة: معيار NF C 15-100 (2015) على الموقع",
+      "section.quiz.perk3": "تصنيف Top 50: أدخل باسم مستعار بعد كل وحدة",
       "cta.quiz": "ابدأ الاستبيان الآن ←",
+      "cta.leaderboard": "عرض التصنيف ←",
       "cta.note": "مجاني · هاتف وحاسوب",
-      "section.sim.hook": "محاكاة SwissDZ — ElectraLearn Pro",
-      "section.sim.lead":
-        "لوحة كهربائية DIN، توصيل موجّه خطوة بخطوة بمكونات EVC رسمية، ورشة توصيل افتراضية — دون تسجيل.",
-      "section.sim.perk1": "وحدة اللوحة: سكة DIN، سحب وإفلات، مخطط أحادي",
-      "section.sim.perk2": "ورشة افتراضية: سيناريوهات مبتدئ ومحترف، أسلاك متحركة، نقاط تفاعل",
-      "section.sim.perk3": "منهج سويسري — NFC 15-100 · IEC 60364",
-      "cta.sim": "تشغيل المحاكاة ←",
-      "cta.sim.note": "مجاني · هاتف وحاسوب",
       "footer.copy": "© 2026 SwissDZ — electro-dz.com",
     },
   };

@@ -17,6 +17,8 @@
   let score = 0;
   let answered = false;
   let questionDisplay = null;
+  let moduleStartedAt = 0;
+  let scoreSubmitted = false;
   const params = new URLSearchParams(location.search);
   const moduleSlug = params.get("module");
 
@@ -292,14 +294,134 @@
     });
     html += "</div>";
     html +=
-      '<p style="margin-top:20px;text-align:center"><a class="quiz-btn-ghost" href="bibliotheque.html">' +
-      escapeHtml(t("← Bibliothèque PDF", "← مكتبة PDF")) +
+      '<p class="quiz-home-links">' +
+      '<a class="quiz-btn-ghost" href="quiz-classement.html">' +
+      escapeHtml(t("🏆 Voir le classement", "🏆 التصنيف")) +
+      '</a> · <a class="quiz-btn-ghost" href="bibliotheque.html">' +
+      escapeHtml(t("Bibliothèque PDF", "مكتبة PDF")) +
       '</a> · <a class="quiz-btn-ghost" href="' +
       escapeHtml(plan.pdfUrl) +
       '" target="_blank" rel="noopener">' +
-      escapeHtml(t("Ouvrir la norme PDF", "فتح معيار PDF")) +
+      escapeHtml(t("Norme PDF", "معيار PDF")) +
       "</a></p>";
     root.innerHTML = html;
+  }
+
+  function moduleMetaFromSlug(slug) {
+    if (!plan || !slug) return { slug: slug, id: "" };
+    const mod = plan.modules.find(function (m) {
+      return m.slug === slug || m.id === slug;
+    });
+    return mod ? { slug: mod.slug, id: mod.id } : { slug: slug, id: "" };
+  }
+
+  function renderLeaderboardBox(total, pct) {
+    const saved =
+      window.QuizLeaderboard && window.QuizLeaderboard.getSavedPseudo
+        ? window.QuizLeaderboard.getSavedPseudo()
+        : "";
+    return (
+      '<div class="quiz-leaderboard-box" data-quiz-leaderboard>' +
+      "<h3>" +
+      escapeHtml(t("Entrer au classement", "دخول التصنيف")) +
+      "</h3>" +
+      '<p class="quiz-leaderboard-lead">' +
+      escapeHtml(
+        t(
+          "Choisissez un pseudo (3–16 caractères). Optionnel — le quiz reste sans inscription.",
+          "اختر اسماً مستعاراً (3–16 حرفاً). اختياري — الاختبار بدون تسجيل."
+        )
+      ) +
+      "</p>" +
+      '<label class="quiz-leaderboard-label" for="quiz-pseudo-input">' +
+      escapeHtml(t("Pseudo", "الاسم المستعار")) +
+      "</label>" +
+      '<input id="quiz-pseudo-input" class="quiz-leaderboard-input" type="text" maxlength="16" autocomplete="nickname" data-quiz-pseudo value="' +
+      escapeHtml(saved) +
+      '" placeholder="' +
+      escapeHtml(t("Ex. Karim_DZ", "مثال Karim_DZ")) +
+      '" />' +
+      '<button type="button" class="quiz-btn-next quiz-leaderboard-submit" data-quiz-submit-score>' +
+      escapeHtml(t("Envoyer mon score", "إرسال نتيجتي")) +
+      "</button>" +
+      '<p class="quiz-leaderboard-msg" data-quiz-submit-msg hidden></p>' +
+      '<p class="quiz-leaderboard-hint">' +
+      escapeHtml(
+        t(
+          "Score enregistré : " + score + "/" + total + " (" + pct + "%)",
+          "النتيجة: " + score + "/" + total + " (" + pct + "%)"
+        )
+      ) +
+      ' · <a href="quiz-classement.html">' +
+      escapeHtml(t("Voir le classement →", "عرض التصنيف ←")) +
+      "</a></p></div>"
+    );
+  }
+
+  function bindLeaderboardSubmit(total) {
+    const box = root.querySelector("[data-quiz-leaderboard]");
+    if (!box || !window.QuizLeaderboard || scoreSubmitted) return;
+
+    const input = box.querySelector("[data-quiz-pseudo]");
+    const btn = box.querySelector("[data-quiz-submit-score]");
+    const msg = box.querySelector("[data-quiz-submit-msg]");
+    if (!input || !btn || !msg) return;
+
+    btn.addEventListener("click", function () {
+      if (scoreSubmitted) return;
+      const pseudo = window.QuizLeaderboard.normalizePseudo(input.value);
+      msg.hidden = false;
+      msg.classList.remove("quiz-leaderboard-msg--ok", "quiz-leaderboard-msg--err");
+
+      if (!window.QuizLeaderboard.isValidPseudo(pseudo)) {
+        msg.textContent = window.QuizLeaderboard.errorMessage("pseudo_invalid", lang);
+        msg.classList.add("quiz-leaderboard-msg--err");
+        return;
+      }
+
+      btn.disabled = true;
+      msg.textContent = t("Envoi en cours…", "جاري الإرسال…");
+
+      const meta = moduleMetaFromSlug(moduleSlug);
+      const durationSec = moduleStartedAt
+        ? Math.max(1, Math.round((Date.now() - moduleStartedAt) / 1000))
+        : Math.max(300, total * 4);
+
+      window.QuizLeaderboard.submitScore({
+        pseudo: pseudo,
+        moduleSlug: meta.slug,
+        moduleId: meta.id,
+        score: score,
+        total: total,
+        durationSec: durationSec,
+      }).then(function (res) {
+        btn.disabled = false;
+        if (res && res.ok) {
+          scoreSubmitted = true;
+          msg.textContent = t(
+            "Score enregistré ! Consultez le classement.",
+            "تم تسجيل النتيجة! راجع التصنيف."
+          );
+          msg.classList.add("quiz-leaderboard-msg--ok");
+          btn.textContent = t("Score enregistré ✓", "تم التسجيل ✓");
+          btn.disabled = true;
+          return;
+        }
+        const code = (res && res.error) || "network";
+        if (code === "not_better" && res.best != null) {
+          msg.textContent =
+            window.QuizLeaderboard.errorMessage("not_better", lang) +
+            " (" +
+            res.best +
+            "/" +
+            total +
+            ")";
+        } else {
+          msg.textContent = window.QuizLeaderboard.errorMessage(code, lang);
+        }
+        msg.classList.add("quiz-leaderboard-msg--err");
+      });
+    });
   }
 
   function currentLevelQuestions() {
@@ -330,18 +452,16 @@
       '<p class="quiz-score-pct">' +
       escapeHtml(pct + "%") +
       "</p></div>" +
-      '<p style="color:#94a3b8;margin:16px 0">' +
-      escapeHtml(
-        t(
-          "Validez les paragraphes sur votre PDF 2015 avant de publier ce module.",
-          "تحقق من الفقرات على PDF 2015 قبل نشر هذه الوحدة."
-        )
-      ) +
-      '</p><a class="quiz-btn-next" href="quiz-nfc-15-100.html">' +
+      renderLeaderboardBox(total, pct) +
+      '<div class="quiz-result-actions">' +
+      '<a class="quiz-btn-next" href="quiz-nfc-15-100.html">' +
       escapeHtml(t("Autres modules", "وحدات أخرى")) +
-      '</a> <a class="quiz-btn-ghost" href="bibliotheque.html" style="margin-inline-start:10px">' +
+      '</a> <a class="quiz-btn-ghost" href="quiz-classement.html">' +
+      escapeHtml(t("Classement", "التصنيف")) +
+      '</a> <a class="quiz-btn-ghost" href="bibliotheque.html">' +
       escapeHtml(t("Bibliothèque", "المكتبة")) +
-      "</a></div>";
+      "</a></div></div>";
+    bindLeaderboardSubmit(total);
   }
 
   function renderQuestion() {
@@ -548,6 +668,8 @@
         qIndex = 0;
         levelIndex = 0;
         score = 0;
+        scoreSubmitted = false;
+        moduleStartedAt = Date.now();
         renderQuestion();
       })
       .catch(function (err) {

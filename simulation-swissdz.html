@@ -19,8 +19,8 @@
     </a>
     <span class="sim-title" data-i18n="title">Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel</span>
     <div class="sim-modules" role="tablist" aria-label="Modules">
-      <button type="button" class="sim-mod-btn" data-mod="1" data-i18n="mod.tableau">Tableau</button>
-      <button type="button" class="sim-mod-btn active" data-mod="3" data-i18n="mod.ar">Atelier</button>
+      <button type="button" class="sim-mod-btn active" data-mod="1" data-i18n="mod.tableau">Tableau</button>
+      <button type="button" class="sim-mod-btn" data-mod="3" data-i18n="mod.ar">Atelier</button>
     </div>
     <div class="sim-lang">
       <button type="button" class="lang-btn active" data-lang="fr" aria-label="Français">FR</button>
@@ -33,7 +33,7 @@
       <p class="sim-loading" id="simLoading" data-i18n="loading">Chargement du simulateur…</p>
       <iframe
         id="simFrame"
-        src="simulation-swissdz/index.html?embed=1&m=3"
+        src="simulation-swissdz/index.html?embed=1&m=1"
         title="Simulateur SwissDZ — tableau, atelier & unifilaire professionnel"
         allow="fullscreen"
         loading="eager"
@@ -101,7 +101,7 @@
 
       var frame = document.getElementById("simFrame");
       var loading = document.getElementById("simLoading");
-      var activeMod = "3";
+      var activeMod = "1";
 
       function loadModule(mod) {
         activeMod = mod;

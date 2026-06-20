@@ -182,3 +182,6 @@ create policy "Site membres lisent media"
   on storage.objects for select
   to authenticated
   using (bucket_id = 'media');
+
+-- ========== 4. Classement quiz NF C 15-100 ==========
+-- Exécuter aussi : supabase/quiz-leaderboard.sql (table + RPC submit/get)
