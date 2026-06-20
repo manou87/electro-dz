@@ -373,8 +373,8 @@
       '<p class="quiz-leaderboard-lead">' +
       escapeHtml(
         t(
-          "Choisissez un pseudo (3–16 caractères). Optionnel — le quiz reste sans inscription.",
-          "اختر اسماً مستعاراً (3–16 حرفاً). اختياري — الاختبار بدون تسجيل."
+          "Choisissez un pseudo (3–16 caractères) puis envoyez — obligatoire pour apparaître au classement.",
+          "اختر اسماً مستعاراً (3–16 حرفاً) ثم أرسل — ضروري للظهور في التصنيف."
         )
       ) +
       "</p>" +

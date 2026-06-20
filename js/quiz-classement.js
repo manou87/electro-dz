@@ -130,8 +130,8 @@
         '" class="quiz-lb-empty">' +
         escapeHtml(
           t(
-            "Aucun score pour l’instant — soyez le premier !",
-            "لا نتائج بعد — كن الأول!"
+            "Aucun score enregistré pour l’instant. Terminer un module ne suffit pas : à la fin, entrez un pseudo et cliquez « Envoyer mon score » (module ≥ 5 min).",
+            "لا نتائج بعد. إنهاء الوحدة لا يكفي: في النهاية أدخل اسماً مستعاراً واضغط «إرسال نتيجتي» (الوحدة ≥ 5 دقائق)."
           )
         ) +
         "</td></tr>";
