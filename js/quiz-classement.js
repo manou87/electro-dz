@@ -130,8 +130,8 @@
         '" class="quiz-lb-empty">' +
         escapeHtml(
           t(
-            "Aucun score enregistré pour l’instant. Terminer un module ne suffit pas : à la fin, entrez un pseudo et cliquez « Envoyer mon score » (module ≥ 5 min).",
-            "لا نتائج بعد. إنهاء الوحدة لا يكفي: في النهاية أدخل اسماً مستعاراً واضغط «إرسال نتيجتي» (الوحدة ≥ 5 دقائق)."
+            "Aucun score enregistré pour l’instant. Terminer un module ne suffit pas : à la fin, entrez un pseudo et cliquez « Envoyer mon score » (environ 2 min 30 de jeu pour 75 questions).",
+            "لا نتائج بعد. إنهاء الوحدة لا يكفي: في النهاية أدخل اسماً مستعاراً واضغط «إرسال نتيجتي» (حوالي 2 د 30 للوحدة)."
           )
         ) +
         "</td></tr>";

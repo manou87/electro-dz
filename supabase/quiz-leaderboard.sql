@@ -70,7 +70,7 @@ begin
     return jsonb_build_object('ok', false, 'error', 'score_invalid');
   end if;
 
-  v_min_duration := greatest(300, p_total * 4);
+  v_min_duration := greatest(120, p_total * 2);
   if p_duration_sec is null or p_duration_sec < v_min_duration or p_duration_sec > 7200 then
     return jsonb_build_object('ok', false, 'error', 'duration_invalid');
   end if;

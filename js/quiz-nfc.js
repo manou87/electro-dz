@@ -430,7 +430,7 @@
       const meta = moduleMetaFromSlug(moduleSlug);
       const durationSec = moduleStartedAt
         ? Math.max(1, Math.round((Date.now() - moduleStartedAt) / 1000))
-        : Math.max(300, total * 4);
+        : Math.max(120, total * 2);
 
       window.QuizLeaderboard.submitScore({
         pseudo: pseudo,
