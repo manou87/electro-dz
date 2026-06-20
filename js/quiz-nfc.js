@@ -366,20 +366,23 @@
         ? window.QuizLeaderboard.getSavedPseudo()
         : "";
     return (
-      '<div class="quiz-leaderboard-box" data-quiz-leaderboard>' +
+      '<div class="quiz-leaderboard-box quiz-leaderboard-box--prominent" data-quiz-leaderboard id="quiz-participant-form">' +
+      '<p class="quiz-leaderboard-kicker">' +
+      escapeHtml(t("📋 Classement", "📋 التصنيف")) +
+      "</p>" +
       "<h3>" +
-      escapeHtml(t("Entrer au classement", "دخول التصنيف")) +
+      escapeHtml(t("Votre nom de participant", "اسمك في التصنيف")) +
       "</h3>" +
       '<p class="quiz-leaderboard-lead">' +
       escapeHtml(
         t(
-          "Choisissez un pseudo (3–16 caractères) puis envoyez — obligatoire pour apparaître au classement.",
-          "اختر اسماً مستعاراً (3–16 حرفاً) ثم أرسل — ضروري للظهور في التصنيف."
+          "Après le module, entrez votre pseudo ci-dessous puis cliquez le bouton jaune. Sans délai minimum.",
+          "بعد الوحدة، أدخل اسمك المستعار ثم الزر الأصفر. بدون وقت أدنى."
         )
       ) +
       "</p>" +
       '<label class="quiz-leaderboard-label" for="quiz-pseudo-input">' +
-      escapeHtml(t("Pseudo", "الاسم المستعار")) +
+      escapeHtml(t("Nom / pseudo (3–16 caractères)", "الاسم / اسم مستعار (3–16)")) +
       "</label>" +
       '<input id="quiz-pseudo-input" class="quiz-leaderboard-input" type="text" maxlength="16" autocomplete="nickname" data-quiz-pseudo value="' +
       escapeHtml(saved) +
@@ -387,7 +390,7 @@
       escapeHtml(t("Ex. Karim_DZ", "مثال Karim_DZ")) +
       '" />' +
       '<button type="button" class="quiz-btn-next quiz-leaderboard-submit" data-quiz-submit-score>' +
-      escapeHtml(t("Envoyer mon score", "إرسال نتيجتي")) +
+      escapeHtml(t("Enregistrer mon score au classement", "تسجيل نتيجتي في التصنيف")) +
       "</button>" +
       '<p class="quiz-leaderboard-msg" data-quiz-submit-msg hidden></p>' +
       '<p class="quiz-leaderboard-hint">' +
@@ -430,7 +433,7 @@
       const meta = moduleMetaFromSlug(moduleSlug);
       const durationSec = moduleStartedAt
         ? Math.max(1, Math.round((Date.now() - moduleStartedAt) / 1000))
-        : Math.max(120, total * 2);
+        : 1;
 
       window.QuizLeaderboard.submitScore({
         pseudo: pseudo,
@@ -507,6 +510,12 @@
       escapeHtml(t("Bibliothèque", "المكتبة")) +
       "</a></div></div>";
     bindLeaderboardSubmit(total);
+    const form = document.getElementById("quiz-participant-form");
+    if (form && form.scrollIntoView) {
+      setTimeout(function () {
+        form.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 120);
+    }
   }
 
   function renderQuestion() {

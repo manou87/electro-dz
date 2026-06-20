@@ -18,14 +18,24 @@
       title: "Classement Quiz NF C 15-100",
       sub: "Top 50 — pseudo libre · connexion Google optionnelle (badge ✓)",
       disclaimer:
-        "Classement optionnel : le quiz reste jouable sans inscription. Seul votre meilleur score par module est conservé.",
+        "Chaque score envoyé avec un pseudo apparaît ici. Meilleur score conservé par module.",
+      howtoTitle: "Comment apparaître au classement ?",
+      howto1: "1. Jouez un module jusqu’à la fin (75 questions).",
+      howto2: "2. À l’écran « Module terminé », entrez votre nom de participant.",
+      howto3: "3. Cliquez « Enregistrer mon score au classement ».",
+      howtoPlay: "Jouer le quiz →",
       back: "← Quiz",
     },
     ar: {
       title: "تصنيف اختبار NF C 15-100",
       sub: "Top 50 — اسم مستعار · تسجيل Google اختياري (✓)",
       disclaimer:
-        "تصنيف اختياري: الاختبار بدون تسجيل. يُحفظ أفضل نتيجة لكل وحدة فقط.",
+        "كل نتيجة ترسلها باسم مستعار تظهر هنا. يُحفظ أفضل نتيجة لكل وحدة.",
+      howtoTitle: "كيف تظهر في التصنيف؟",
+      howto1: "1. العب وحدة كاملة (75 سؤالاً).",
+      howto2: "2. في شاشة «اكتملت الوحدة»، أدخل اسمك.",
+      howto3: "3. اضغط «تسجيل نتيجتي في التصنيف».",
+      howtoPlay: "ابدأ الاختبار ←",
       back: "← الاختبار",
     },
   };
@@ -69,6 +79,29 @@
       const key = el.getAttribute("data-i18n-clb");
       if (key) el.textContent = tKey(key);
     });
+  }
+
+  function renderHowTo() {
+    return (
+      '<div class="quiz-lb-howto">' +
+      "<h2>" +
+      escapeHtml(tKey("howtoTitle")) +
+      "</h2>" +
+      "<ol>" +
+      "<li>" +
+      escapeHtml(tKey("howto1")) +
+      "</li>" +
+      "<li>" +
+      escapeHtml(tKey("howto2")) +
+      "</li>" +
+      "<li>" +
+      escapeHtml(tKey("howto3")) +
+      "</li>" +
+      "</ol>" +
+      '<a class="quiz-btn-next" href="quiz-nfc-15-100.html">' +
+      escapeHtml(tKey("howtoPlay")) +
+      "</a></div>"
+    );
   }
 
   function renderFilters() {
@@ -130,8 +163,8 @@
         '" class="quiz-lb-empty">' +
         escapeHtml(
           t(
-            "Aucun score enregistré pour l’instant. Terminer un module ne suffit pas : à la fin, entrez un pseudo et cliquez « Envoyer mon score » (environ 2 min 30 de jeu pour 75 questions).",
-            "لا نتائج بعد. إنهاء الوحدة لا يكفي: في النهاية أدخل اسماً مستعاراً واضغط «إرسال نتيجتي» (حوالي 2 د 30 للوحدة)."
+            "Aucun score pour l’instant. Jouez un module, puis entrez votre nom à la fin et cliquez « Enregistrer mon score ».",
+            "لا نتائج بعد. العب وحدة ثم أدخل اسمك في النهاية واضغط «تسجيل نتيجتي»."
           )
         ) +
         "</td></tr>";
@@ -197,7 +230,7 @@
       renderError(res.error);
       return;
     }
-    root.innerHTML = renderTable(res.rows);
+    root.innerHTML = renderHowTo() + renderTable(res.rows);
   }
 
   document.querySelectorAll(".lang-btn").forEach(function (btn) {

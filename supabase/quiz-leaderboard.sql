@@ -49,7 +49,6 @@ declare
   v_verified boolean;
   v_existing int;
   v_pct int;
-  v_min_duration int;
 begin
   v_user_id := auth.uid();
   v_verified := v_user_id is not null;
@@ -70,8 +69,7 @@ begin
     return jsonb_build_object('ok', false, 'error', 'score_invalid');
   end if;
 
-  v_min_duration := greatest(120, p_total * 2);
-  if p_duration_sec is null or p_duration_sec < v_min_duration or p_duration_sec > 7200 then
+  if p_duration_sec is null or p_duration_sec < 1 or p_duration_sec > 7200 then
     return jsonb_build_object('ok', false, 'error', 'duration_invalid');
   end if;
 
@@ -83,7 +81,7 @@ begin
   where b.pseudo_norm = v_pseudo_norm
     and b.module_slug = trim(p_module_slug);
 
-  if v_existing is not null and p_score <= v_existing then
+  if v_existing is not null and p_score < v_existing then
     return jsonb_build_object(
       'ok', false,
       'error', 'not_better',
