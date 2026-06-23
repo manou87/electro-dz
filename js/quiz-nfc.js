@@ -4,7 +4,7 @@
 (function () {
   const STORAGE_LANG = "electrodz-site-lang";
   const PLAN_URL = "data/quiz/nf-c15-100-2015/plan-modules.json";
-  const QUIZ_BUILD = "20260624e";
+  const QUIZ_BUILD = "20260624g";
   const LOCAL_QUIZ_URL = "http://localhost:8765/quiz-nfc-15-100.html";
 
   const page = document.querySelector(".quiz-page");
@@ -271,7 +271,59 @@
     return extractQuote(q.questionAr);
   }
 
+  function renderQuestionFigure(q) {
+    if (!q.imageUrl) return "";
+    const src = resolveSiteUrl(q.imageUrl);
+    const cap = t(q.imageCaptionFr, q.imageCaptionAr);
+    let html = '<figure class="quiz-figure">';
+    html +=
+      '<button type="button" class="quiz-figure-zoom" data-figure-zoom aria-label="' +
+      escapeHtml(t("Agrandir l'image", "تكبير الصورة")) +
+      '">';
+    html +=
+      '<img src="' +
+      escapeHtml(src) +
+      '" alt="" class="quiz-figure-img" loading="lazy" decoding="async" />';
+    html += "</button>";
+    if (cap) {
+      html += '<figcaption class="quiz-figure-cap">' + escapeHtml(cap) + "</figcaption>";
+    }
+    html += "</figure>";
+    return html;
+  }
+
+  function bindFigureZoom(card) {
+    if (!card) return;
+    const btn = card.querySelector("[data-figure-zoom]");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      const img = btn.querySelector("img");
+      if (!img || !img.src) return;
+      const overlay = document.createElement("div");
+      overlay.className = "quiz-figure-overlay";
+      overlay.innerHTML =
+        '<button type="button" class="quiz-figure-overlay-close" aria-label="' +
+        escapeHtml(t("Fermer", "إغلاق")) +
+        '">×</button><img src="' +
+        escapeHtml(img.src) +
+        '" alt="" />';
+      function close() {
+        overlay.remove();
+        document.body.style.overflow = "";
+      }
+      overlay.addEventListener("click", function (e) {
+        if (e.target === overlay || e.target.closest(".quiz-figure-overlay-close")) close();
+      });
+      document.body.style.overflow = "hidden";
+      document.body.appendChild(overlay);
+    });
+  }
+
   function renderQuestionBody(q) {
+    let html = "";
+    if (q.imageUrl) {
+      html += renderQuestionFigure(q);
+    }
     const ctx = t(q.contextFr, q.contextAr);
     const intro = t(
       "Selon la norme NF C 15-100, cette affirmation est-elle correcte ?",
@@ -280,7 +332,6 @@
     const statement = q.statementFr || "";
 
     if (q.type === "truefalse" && (ctx || statement)) {
-      let html = "";
       if (ctx) {
         html +=
           '<p class="quiz-question-context"><strong>' +
@@ -305,7 +356,8 @@
     }
 
     const full = t(q.questionFr, q.questionAr);
-    return '<p class="quiz-question quiz-question--full">' + escapeHtml(full) + "</p>";
+    html += '<p class="quiz-question quiz-question--full">' + escapeHtml(full) + "</p>";
+    return html;
   }
 
   function renderLadder(totalLevels, current) {
@@ -1402,6 +1454,7 @@
           "</button>";
       });
     }
+    html += '</div><div data-quiz-actions class="quiz-actions quiz-actions--inline"></div>';
     html +=
       '<p class="quiz-source-hint">' +
       escapeHtml(
@@ -1411,9 +1464,10 @@
         )
       ) +
       "</p>";
-    html += '</div><div data-quiz-feedback></div></div>';
+    html += '<div data-quiz-feedback></div></div>';
 
     root.innerHTML = html;
+    bindFigureZoom(root.querySelector("[data-quiz-card]"));
     ensureQuizQuitBar(
       t(moduleData.titleFr, moduleData.titleAr) +
         " · " +
@@ -1482,19 +1536,24 @@
         "</span>";
     }
     fbHtml += "</div>";
-    fbHtml +=
-      '<div class="quiz-actions" style="margin-top:16px"><button type="button" class="quiz-btn-next" data-next>' +
-      escapeHtml(nextButtonLabel(countInLevel)) +
-      "</button></div>";
 
     fb.innerHTML = fbHtml;
+
+    const actions = root.querySelector("[data-quiz-actions]");
+    if (actions) {
+      actions.innerHTML =
+        '<button type="button" class="quiz-btn-next" data-next>' +
+        escapeHtml(nextButtonLabel(countInLevel)) +
+        "</button>";
+      actions.querySelector("[data-next]").addEventListener("click", function () {
+        qIndex++;
+        answered = false;
+        lastChosen = null;
+        renderQuestion();
+      });
+    }
+
     updateMidQuizSaveBar();
-    fb.querySelector("[data-next]").addEventListener("click", function () {
-      qIndex++;
-      answered = false;
-      lastChosen = null;
-      renderQuestion();
-    });
   }
 
   function onAnswer(q, chosen, countInLevel) {

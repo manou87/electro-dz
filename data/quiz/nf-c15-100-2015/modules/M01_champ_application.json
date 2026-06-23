@@ -328,51 +328,53 @@
       "id": "m01_L2_q02",
       "level": 2,
       "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Première lettre « T » des schémas (§ 312.2) :",
-      "questionAr": "الحرف « T » (§ 312.2):",
+      "type": "image",
+      "questionFr": "Quel régime de neutre (schéma de liaison à la terre) est représenté sur cette figure ?",
+      "questionAr": "أي نظام للنقطة المحايدة (مخطط التأريض) يمثّله هذا الشكل؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures/m01-fig-312A-tns.png",
+      "imageCaptionFr": "Extrait Figure 312A — NF C 15-100, § 312.2 (p. 72 du PDF bibliothèque)",
+      "imageCaptionAr": "Figure 312A — NF C 15-100",
       "optionsFr": [
-        "Masses à la terre",
-        "Point d'alimentation relié directement à la terre",
-        "Isolation totale",
-        "Neutre distribué"
+        "Schéma TN-S",
+        "Schéma TN-C",
+        "Schéma TT"
       ],
       "optionsAr": [
-        "الكتل للأرض",
-        "نقطة التغذية موصلة مباشرة بالأرض",
-        "عزل كامل",
-        "محايد موزع"
+        "TN-S",
+        "TN-C",
+        "TT"
       ],
-      "correctAnswer": 1,
-      "explanationFr": "§ 312.2 : T = liaison directe alimentation/terre.",
-      "explanationAr": "§ 312.2: T = ربط التغذية بالأرض.",
-      "normRef": "NF C 15-100 — § 312.2 (p. 71)",
-      "pdfPage": 71
+      "correctAnswer": 0,
+      "explanationFr": "Conducteur PE (vert/jaune) séparé du neutre N sur tout le schéma → TN-S (§ 312.2.1). Voir Figure 312A p. 72.",
+      "explanationAr": "Conducteur PE (vert/jaune) séparé du neutre N sur tout le schéma → TN-S (§ 312.2.1).",
+      "normRef": "NF C 15-100 — Figure 312A (§ 312.2)",
+      "pdfPage": 72
     },
     {
       "id": "m01_L2_q03",
       "level": 2,
       "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Deuxième lettre « N » (schéma TN) :",
-      "questionAr": "الحرف « N » (TN):",
+      "type": "image",
+      "questionFr": "Quel régime de neutre (schéma de liaison à la terre) est représenté sur cette figure ?",
+      "questionAr": "أي نظام للنقطة المحايدة (مخطط التأريض) يمثّله هذا الشكل؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures/m01-fig-312B-tncs.png",
+      "imageCaptionFr": "Extrait Figure 312B — NF C 15-100, § 312.2 (p. 73 du PDF bibliothèque)",
+      "imageCaptionAr": "Figure 312B — NF C 15-100",
       "optionsFr": [
-        "Alimentation isolée",
-        "Masses reliées au point mis à la terre de l'alimentation",
-        "Pas de PE",
-        "TBTS obligatoire"
+        "Schéma TN-C-S",
+        "Schéma TN-S",
+        "Schéma TN-C"
       ],
       "optionsAr": [
-        "تغذية معزولة",
-        "الكتل موصلة بنقطة التغذية الموصلة بالأرض",
-        "لا PE",
-        "TBTS إلزامي"
+        "TN-C-S",
+        "TN-S",
+        "TN-C"
       ],
-      "correctAnswer": 1,
-      "explanationFr": "§ 312.2 : N = masses au point d'alimentation mis à la terre.",
-      "explanationAr": "§ 312.2: N = الكتل للنقطة الموصلة بالأرض.",
-      "normRef": "NF C 15-100 — § 312.2 (p. 71)",
-      "pdfPage": 71
+      "correctAnswer": 0,
+      "explanationFr": "PEN en partie du schéma puis séparation N + PE → TN-C-S (§ 312.2.1). Voir Figure 312B p. 73.",
+      "explanationAr": "PEN en partie du schéma puis séparation N + PE → TN-C-S (§ 312.2.1).",
+      "normRef": "NF C 15-100 — Figure 312B (§ 312.2)",
+      "pdfPage": 73
     },
     {
       "id": "m01_L2_q04",
@@ -406,26 +408,27 @@
       "id": "m01_L2_q06",
       "level": 2,
       "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
-      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "type": "image",
+      "questionFr": "Quel régime de neutre (schéma de liaison à la terre) est représenté sur cette figure ?",
+      "questionAr": "أي نظام للنقطة المحايدة (مخطط التأريض) يمثّله هذا الشكل؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures/m01-fig-312C-tnc.png",
+      "imageCaptionFr": "Extrait Figure 312C — NF C 15-100, § 312.2 (p. 73 du PDF bibliothèque)",
+      "imageCaptionAr": "Figure 312C — NF C 15-100",
       "optionsFr": [
-        "Cette obligation ne figure pas dans la norme NF C 15-100.",
-        "Règle réservée aux installations haute tension uniquement.",
-        "Les connexions des conducteurs entre eux et avec les autres matériels électriques doivent être exécutées de façon à assurer des contacts sûrs et durab…",
-        "Aucune exigence de ce type dans la norme."
+        "Schéma TN-C",
+        "Schéma TN-S",
+        "Schéma IT"
       ],
       "optionsAr": [
-        "عبارة مخالفة للمعيار",
-        "للجهد العالي فقط",
-        "عبارة مطابقة للمعيار",
-        "غير موجودة في المعيار"
+        "TN-C",
+        "TN-S",
+        "IT"
       ],
-      "correctAnswer": 2,
-      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § NF C 15-100 (p. 39), page 39 du PDF.",
-      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § NF C 15-100 (p. 39)، ص. 39.",
-      "normRef": "NF C 15-100 — § NF C 15-100 (p. 39)",
-      "pdfPage": 39
+      "correctAnswer": 0,
+      "explanationFr": "Neutre et protection combinés en PEN sur tout le schéma → TN-C. Voir Figure 312C p. 73.",
+      "explanationAr": "Neutre et protection combinés en PEN sur tout le schéma → TN-C.",
+      "normRef": "NF C 15-100 — Figure 312C (§ 312.2)",
+      "pdfPage": 73
     },
     {
       "id": "m01_L2_q07",
@@ -459,26 +462,27 @@
       "id": "m01_L2_q09",
       "level": 2,
       "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
-      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "type": "image",
+      "questionFr": "Quel régime de neutre (schéma de liaison à la terre) est représenté sur cette figure ?",
+      "questionAr": "أي نظام للنقطة المحايدة (مخطط التأريض) يمثّله هذا الشكل؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures/m01-fig-312D-tt.png",
+      "imageCaptionFr": "Extrait Figure 312D — NF C 15-100, § 312.2 (p. 73 du PDF bibliothèque)",
+      "imageCaptionAr": "Figure 312D — NF C 15-100",
       "optionsFr": [
-        "Règle réservée aux installations haute tension uniquement.",
-        "Cette obligation ne figure pas dans la norme NF C 15-100.",
-        "Aucune exigence de ce type dans la norme.",
-        "En outre, en service normal, les personnes et les animaux domestiques ne doivent encourir aucun risque de brûlure.…"
+        "Schéma TT",
+        "Schéma TN-S",
+        "Schéma IT"
       ],
       "optionsAr": [
-        "للجهد العالي فقط",
-        "عبارة مخالفة للمعيار",
-        "غير موجودة في المعيار",
-        "عبارة مطابقة للمعيار"
+        "TT",
+        "TN-S",
+        "IT"
       ],
-      "correctAnswer": 3,
-      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § NF C 15-100 (p. 33), page 33 du PDF.",
-      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § NF C 15-100 (p. 33)، ص. 33.",
-      "normRef": "NF C 15-100 — § NF C 15-100 (p. 33)",
-      "pdfPage": 33
+      "correctAnswer": 0,
+      "explanationFr": "Masse reliée à une prise de terre indépendante de l'alimentation → TT (§ 312.2.2). Voir Figure 312D p. 73.",
+      "explanationAr": "Masse reliée à une prise de terre indépendante de l'alimentation → TT (§ 312.2.2).",
+      "normRef": "NF C 15-100 — Figure 312D (§ 312.2)",
+      "pdfPage": 73
     },
     {
       "id": "m01_L2_q10",
@@ -512,26 +516,27 @@
       "id": "m01_L2_q12",
       "level": 2,
       "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
-      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
+      "type": "image",
+      "questionFr": "Quel régime de neutre (schéma de liaison à la terre) est représenté sur cette figure ?",
+      "questionAr": "أي نظام للنقطة المحايدة (مخطط التأريض) يمثّله هذا الشكل؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures/m01-fig-312E-it.png",
+      "imageCaptionFr": "Extrait Figure 312E — NF C 15-100, § 312.2 (p. 74 du PDF bibliothèque)",
+      "imageCaptionAr": "Figure 312E — NF C 15-100",
       "optionsFr": [
-        "Aucune exigence de ce type dans la norme.",
-        "Cette obligation ne figure pas dans la norme NF C 15-100.",
-        "Règle réservée aux installations haute tension uniquement.",
-        "NF C 15 -100 Titre 1 - 10 - Les dispositifs de protection doivent fonctionner à des valeu rs de courant, de ten sion et de temps adaptées aux caractér…"
+        "Schéma IT",
+        "Schéma TT",
+        "Schéma TN-C"
       ],
       "optionsAr": [
-        "غير موجودة في المعيار",
-        "عبارة مخالفة للمعيار",
-        "للجهد العالي فقط",
-        "عبارة مطابقة للمعيار"
+        "IT",
+        "TT",
+        "TN-C"
       ],
-      "correctAnswer": 3,
-      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § 100 (p. 37), page 37 du PDF.",
-      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § 100 (p. 37)، ص. 37.",
-      "normRef": "NF C 15-100 — § 100 (p. 37)",
-      "pdfPage": 37
+      "correctAnswer": 0,
+      "explanationFr": "Point d'alimentation relié à la terre via une impédance, masses à la terre → IT (§ 312.2.3). Voir Figure 312E p. 74.",
+      "explanationAr": "Point d'alimentation relié à la terre via une impédance, masses à la terre → IT (§ 312.2.3).",
+      "normRef": "NF C 15-100 — Figure 312E (§ 312.2)",
+      "pdfPage": 74
     },
     {
       "id": "m01_L2_q13",
