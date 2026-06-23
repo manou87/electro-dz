@@ -391,7 +391,7 @@
           escapeHtml(ctx) +
           "</strong></p>";
       }
-      if (preamble) {
+      if (preamble && !subject) {
         html +=
           '<p class="quiz-norm-preamble-label">' +
           escapeHtml(
