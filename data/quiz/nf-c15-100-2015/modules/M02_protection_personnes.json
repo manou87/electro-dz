@@ -78,14 +78,16 @@
       "level": 1,
       "difficulty": "facile",
       "type": "truefalse",
-      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Ce dispositif doit actionner un signal sonore ou un signal visuel »",
+      "questionFr": "Concernant : § 411.6.3 — contrôleur permanent d'isolement (schéma IT, défaut d'isolement). Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Le contrôleur permanent d'isolement doit actionner un signal sonore ou un signal visuel »",
       "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
       "correctAnswer": true,
       "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 104) — page 104 du PDF.",
       "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 104) — page 104 du PDF.",
       "normRef": "NF C 15-100 — § NF C 15-100 (p. 104)",
       "pdfPage": 104,
-      "statementFr": "Ce dispositif doit actionner un signal sonore ou un signal visuel"
+      "statementFr": "Le contrôleur permanent d'isolement doit actionner un signal sonore ou un signal visuel",
+      "contextFr": "§ 411.6.3 — contrôleur permanent d'isolement (schéma IT, défaut d'isolement)",
+      "contextAr": "§ 411.6.3 — مراقب العزل الدائم (نظام IT، عطل العزل)"
     },
     {
       "id": "m02_L1_q05",
@@ -198,14 +200,16 @@
       "level": 1,
       "difficulty": "facile",
       "type": "truefalse",
-      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Cette mesure de protection n'est pas destinée à alimenter des appareils présentant un faible niveau d'isolement »",
+      "questionFr": "Concernant : § 413.3 — alimentation d'un seul matériel depuis une source séparée (TBTS / séparation). Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Cette mesure de protection n'est pas destinée à alimenter des appareils présentant un faible niveau d'isolement »",
       "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
       "correctAnswer": true,
       "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 109) — page 109 du PDF.",
       "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 109) — page 109 du PDF.",
       "normRef": "NF C 15-100 — § NF C 15-100 (p. 109)",
       "pdfPage": 109,
-      "statementFr": "Cette mesure de protection n'est pas destinée à alimenter des appareils présentant un faible niveau d'isolement"
+      "statementFr": "Cette mesure de protection n'est pas destinée à alimenter des appareils présentant un faible niveau d'isolement",
+      "contextFr": "§ 413.3 — alimentation d'un seul matériel depuis une source séparée (TBTS / séparation)",
+      "contextAr": "§ 413.3 — تغذية معدة واحدة من مصدر منفصل"
     },
     {
       "id": "m02_L1_q12",
@@ -251,14 +255,16 @@
       "level": 1,
       "difficulty": "facile",
       "type": "truefalse",
-      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Les caractéristiques de fonctionnement de ce dispositif DR doivent être choisies conformément au tableau 41A »",
+      "questionFr": "Concernant : § 411.5.2 — schéma TT, dispositif différentiel-résiduel (DDR). Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Les caractéristiques de fonctionnement du dispositif différentiel-résiduel (DDR) doivent être choisies conformément au tableau 41A »",
       "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
       "correctAnswer": true,
       "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 273) — page 273 du PDF.",
       "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 273) — page 273 du PDF.",
       "normRef": "NF C 15-100 — § NF C 15-100 (p. 273)",
       "pdfPage": 273,
-      "statementFr": "Les caractéristiques de fonctionnement de ce dispositif DR doivent être choisies conformément au tableau 41A"
+      "statementFr": "Les caractéristiques de fonctionnement du dispositif différentiel-résiduel (DDR) doivent être choisies conformément au tableau 41A",
+      "contextFr": "§ 411.5.2 — schéma TT, dispositif différentiel-résiduel (DDR)",
+      "contextAr": "§ 411.5.2 — نظام TT، قاطع تفاضلي (DDR)"
     },
     {
       "id": "m02_L1_q15",
@@ -485,14 +491,16 @@
       "level": 2,
       "difficulty": "moyen",
       "type": "truefalse",
-      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Cette barrière isolante ne ne doit pas pouvoir être enlevée qu'à l'aide d'un outil »",
+      "questionFr": "Concernant : § 412.2 — protection par obstacle (barrière isolante). Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « La barrière isolante ne doit pas pouvoir être enlevée qu'à l'aide d'un outil »",
       "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
       "correctAnswer": false,
       "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 108) — page 108 du PDF.",
       "explanationAr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). NF C 15-100 — § NF C 15-100 (p. 108) — page 108 du PDF.",
       "normRef": "NF C 15-100 — § NF C 15-100 (p. 108)",
       "pdfPage": 108,
-      "statementFr": "Cette barrière isolante ne ne doit pas pouvoir être enlevée qu'à l'aide d'un outil"
+      "statementFr": "La barrière isolante ne doit pas pouvoir être enlevée qu'à l'aide d'un outil",
+      "contextFr": "§ 412.2 — protection par obstacle (barrière isolante)",
+      "contextAr": "§ 412.2 — الحماية بحاجز عازل"
     },
     {
       "id": "m02_L2_q12",
@@ -787,14 +795,16 @@
       "level": 3,
       "difficulty": "moyen",
       "type": "truefalse",
-      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « De plus, la condition suivante doit être remplie : Pour les réseaux à courant alternatif RA x If ≤ 50 V Pour les réseaux à courant continu RA x If ≤ 120 V où RA est la résistance de mise à la terre des masses »",
+      "questionFr": "Concernant : § 413.2 — schéma IT, liaison équipotentielle des masses (condition RA × If). Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « De plus, la condition suivante doit être remplie : Pour les réseaux à courant alternatif RA x If ≤ 50 V Pour les réseaux à courant continu RA x If ≤ 120 V où RA est la résistance de mise à la terre des masses »",
       "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
       "correctAnswer": true,
       "explanationFr": "Oui : l'affirmation reprend le texte de la norme NF C 15-100. Référence : NF C 15-100 — § 120 (p. 103) — page 103 du PDF.",
       "explanationAr": "نعم: العبارة مطابقة لنص المعيار NF C 15-100. المرجع: NF C 15-100 — § 120 (p. 103) — ص. 103.",
       "normRef": "NF C 15-100 — § 120 (p. 103)",
       "pdfPage": 103,
-      "statementFr": "De plus, la condition suivante doit être remplie : Pour les réseaux à courant alternatif RA x If ≤ 50 V Pour les réseaux à courant continu RA x If ≤ 120 V où RA est la résistance de mise à la terre des masses"
+      "statementFr": "De plus, la condition suivante doit être remplie : Pour les réseaux à courant alternatif RA x If ≤ 50 V Pour les réseaux à courant continu RA x If ≤ 120 V où RA est la résistance de mise à la terre des masses",
+      "contextFr": "§ 413.2 — schéma IT, liaison équipotentielle des masses (condition RA × If)",
+      "contextAr": "§ 413.2 — نظام IT، الربط متساوي الجهد للكتل"
     },
     {
       "id": "m02_L3_q14",
@@ -1062,14 +1072,16 @@
       "level": 4,
       "difficulty": "difficile",
       "type": "truefalse",
-      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « A ce système équipotentiel doivent être reliés les conducteurs de protection de tous les matériels, y compris ceux des prises de courant »",
+      "questionFr": "Concernant : § 414.4 — liaison équipotentielle principale (schéma IT). Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Au système équipotentiel principal doivent être reliés les conducteurs de protection de tous les matériels, y compris ceux des prises de courant »",
       "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
       "correctAnswer": true,
       "explanationFr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 114) — page 114 du PDF.",
       "explanationAr": "Oui : l'affirmation est conforme au texte de la norme. NF C 15-100 — § NF C 15-100 (p. 114) — page 114 du PDF.",
       "normRef": "NF C 15-100 — § NF C 15-100 (p. 114)",
       "pdfPage": 114,
-      "statementFr": "A ce système équipotentiel doivent être reliés les conducteurs de protection de tous les matériels, y compris ceux des prises de courant"
+      "statementFr": "Au système équipotentiel principal doivent être reliés les conducteurs de protection de tous les matériels, y compris ceux des prises de courant",
+      "contextFr": "§ 414.4 — liaison équipotentielle principale (schéma IT)",
+      "contextAr": "§ 414.4 — الربط متساوي الجهد الرئيسي (نظام IT)"
     },
     {
       "id": "m02_L4_q14",

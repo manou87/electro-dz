@@ -4,7 +4,7 @@
 (function () {
   const STORAGE_LANG = "electrodz-site-lang";
   const PLAN_URL = "data/quiz/nf-c15-100-2015/plan-modules.json";
-  const QUIZ_BUILD = "20260624c";
+  const QUIZ_BUILD = "20260624d";
   const LOCAL_QUIZ_URL = "http://localhost:8765/quiz-nfc-15-100.html";
 
   const page = document.querySelector(".quiz-page");
@@ -270,27 +270,35 @@
   }
 
   function renderQuestionBody(q) {
-    if (lang === "ar" && q.type === "truefalse" && q.statementFr) {
-      let html =
-        '<p class="quiz-question">' +
-        escapeHtml(
-          q.questionAr && q.questionAr.indexOf("«") >= 0
-            ? q.questionAr
-            : t(
-                "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
-                "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟"
-              )
-        ) +
-        "</p>";
-      html +=
-        '<blockquote class="quiz-statement" lang="fr">' +
-        "« " +
-        escapeHtml(q.statementFr) +
-        " »</blockquote>";
-      html +=
-        '<p class="quiz-statement-note">' +
-        escapeHtml(t("(extrait NF C 15-100 — français)", "(مقتطف NF C 15-100 — فرنسي)")) +
-        "</p>";
+    const ctx = t(q.contextFr, q.contextAr);
+    const intro = t(
+      "Selon la norme NF C 15-100, cette affirmation est-elle correcte ?",
+      "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟"
+    );
+    const statement = q.statementFr || "";
+
+    if (q.type === "truefalse" && (ctx || statement)) {
+      let html = "";
+      if (ctx) {
+        html +=
+          '<p class="quiz-question-context"><strong>' +
+          escapeHtml(ctx) +
+          "</strong></p>";
+      }
+      html += '<p class="quiz-question">' + escapeHtml(intro) + "</p>";
+      if (statement) {
+        html +=
+          '<blockquote class="quiz-statement" lang="fr">' +
+          "« " +
+          escapeHtml(statement) +
+          " »</blockquote>";
+        if (lang === "ar") {
+          html +=
+            '<p class="quiz-statement-note">' +
+            escapeHtml(t("(extrait NF C 15-100 — français)", "(مقتطف NF C 15-100 — فرنسي)")) +
+            "</p>";
+        }
+      }
       return html;
     }
 
