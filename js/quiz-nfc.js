@@ -4,6 +4,8 @@
 (function () {
   const STORAGE_LANG = "electrodz-site-lang";
   const PLAN_URL = "data/quiz/nf-c15-100-2015/plan-modules.json";
+  const QUIZ_BUILD = "20260623d";
+  const LOCAL_QUIZ_URL = "http://localhost:8765/quiz-nfc-15-100.html";
 
   const page = document.querySelector(".quiz-page");
   const root = document.querySelector("[data-quiz-root]");
@@ -19,6 +21,7 @@
   let questionDisplay = null;
   let moduleStartedAt = 0;
   let scoreSubmitted = false;
+  let moduleReady = false;
   const params = new URLSearchParams(location.search);
   const moduleSlug = params.get("module");
 
@@ -299,6 +302,8 @@
   }
 
   function renderHome() {
+    removeMidQuizSaveBar();
+    removeQuizQuitBar();
     let html =
       '<div class="quiz-hero"><h1>' +
       escapeHtml(t("Quiz NF C 15-100 (2015)", "اختبار NF C 15-100 (2015)")) +
@@ -311,10 +316,31 @@
       ) +
       "</p></div>";
     html +=
+      '<p class="quiz-build-tag" data-quiz-build>Quiz test · build ' +
+      QUIZ_BUILD +
+      "</p>";
+    html += renderParticipantForm({
+      variant: "home",
+      inputId: "quiz-pseudo-home",
+      extraClass: "quiz-participant-setup",
+      validateButton: true,
+    });
+    html +=
+      '<p class="quiz-participant-note">' +
+      escapeHtml(
+        t(
+          "Lettres latines, chiffres, _ - . · si le nom est pris, un code est ajouté (ex. -7F2)",
+          "حروف لاتينية وأرقام و _ - . · إن كان الاسم مستخدماً يُضاف رمز (مثال -7F2)"
+        )
+      ) +
+      "</p>";
+    html +=
       '<p class="quiz-disclaimer">' +
       escapeHtml(t(plan.disclaimerFr, plan.disclaimerAr)) +
       "</p>";
-    html += '<div class="quiz-modules">';
+    html +=
+      '<div class="quiz-ready-banner" data-quiz-ready-banner hidden aria-live="polite"></div>';
+    html += '<div class="quiz-modules" data-quiz-modules>';
     plan.modules.forEach(function (m) {
       const isPilot = m.status === "pilot" || m.status === "validated-pdf";
       const href = isPilot
@@ -350,6 +376,493 @@
       escapeHtml(t("Norme PDF", "معيار PDF")) +
       "</a></p>";
     root.innerHTML = html;
+    const participantBox = root.querySelector("[data-participant-box]");
+    bindParticipantValidate(participantBox);
+    bindHomeModuleGuards();
+    const saved = savedPseudo();
+    if (saved && isValidPseudoForReserve(saved)) {
+      showHomeReadyScreen({ pseudo: saved, suffixAdded: false, raw: saved });
+    }
+  }
+
+  function showHomeReadyScreen(result) {
+    const box = root.querySelector("[data-participant-box]");
+    if (!box || !result || !result.pseudo) return;
+
+    box.setAttribute("data-participant-valid", "1");
+    box.className = "quiz-leaderboard-box quiz-leaderboard-box--prominent quiz-participant-setup quiz-participant-box--success";
+
+    let sub =
+      result.suffixAdded && result.raw
+        ? t(
+            "Code ajouté car « " + result.raw + " » était déjà pris.",
+            "أُضيف رمز لأن « " + result.raw + " » مستخدم."
+          )
+        : t("Vous pouvez maintenant choisir un module.", "يمكنك الآن اختيار وحدة.");
+
+    box.innerHTML =
+      '<div class="quiz-participant-success">' +
+      '<div class="quiz-participant-success-icon" aria-hidden="true">✓</div>' +
+      "<h3>" +
+      escapeHtml(t("Surnom accepté !", "تم قبول الاسم!")) +
+      "</h3>" +
+      '<p class="quiz-participant-success-name">' +
+      escapeHtml(result.pseudo) +
+      "</p>" +
+      '<p class="quiz-participant-success-sub">' +
+      escapeHtml(sub) +
+      "</p>" +
+      '<button type="button" class="quiz-btn-ghost quiz-participant-edit" data-participant-edit>' +
+      escapeHtml(t("Modifier mon surnom", "تعديل الاسم")) +
+      "</button></div>";
+
+    const editBtn = box.querySelector("[data-participant-edit]");
+    if (editBtn) {
+      editBtn.addEventListener("click", function () {
+        showHomeEditForm();
+      });
+    }
+
+    const banner = root.querySelector("[data-quiz-ready-banner]");
+    if (banner) {
+      banner.hidden = false;
+      banner.innerHTML =
+        "<h2>" +
+        escapeHtml(t("Étape 2 — Choisissez un module", "الخطوة 2 — اختر وحدة")) +
+        "</h2><p>" +
+        escapeHtml(
+          t(
+            "Cliquez sur M01, M02… pour commencer le quiz avec votre surnom.",
+            "اضغط M01 أو M02… لبدء الاختبار باسمك."
+          )
+        ) +
+        "</p>";
+    }
+
+    const modules = root.querySelector("[data-quiz-modules]");
+    if (modules) {
+      modules.classList.add("quiz-modules--ready");
+      setTimeout(function () {
+        if (modules.scrollIntoView) {
+          modules.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 200);
+    }
+  }
+
+  function showHomeEditForm() {
+    const banner = root.querySelector("[data-quiz-ready-banner]");
+    if (banner) {
+      banner.hidden = true;
+      banner.innerHTML = "";
+    }
+    const modules = root.querySelector("[data-quiz-modules]");
+    if (modules) modules.classList.remove("quiz-modules--ready");
+
+    const saved = savedPseudo();
+    const box = root.querySelector("[data-participant-box]");
+    if (!box) {
+      renderHome();
+      return;
+    }
+
+    const parent = box.parentNode;
+    const tmp = document.createElement("div");
+    tmp.innerHTML = renderParticipantForm({
+      variant: "home",
+      inputId: "quiz-pseudo-home",
+      extraClass: "quiz-participant-setup",
+      validateButton: true,
+    });
+    const newBox = tmp.firstElementChild;
+    parent.replaceChild(newBox, box);
+
+    bindParticipantValidate(newBox);
+    const input = newBox.querySelector("[data-quiz-pseudo]");
+    if (input) {
+      input.value = saved || "";
+      if (input.focus) input.focus();
+      if (input.select) input.select();
+    }
+    if (newBox.scrollIntoView) {
+      newBox.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }
+
+  function bindHomeModuleGuards() {
+    root.querySelectorAll(".quiz-module-card--active").forEach(function (link) {
+      link.addEventListener("click", function (e) {
+        const box = root.querySelector("[data-participant-box]");
+        if (!box || box.getAttribute("data-participant-valid") !== "1") {
+          e.preventDefault();
+          const msg = box && box.querySelector("[data-participant-validate-msg]");
+          if (msg) {
+            msg.hidden = false;
+            msg.textContent = t(
+              "Validez d’abord votre surnom avec le bouton « Valider mon surnom ».",
+              "أكّد اسمك أولاً بزر «تأكيد الاسم»."
+            );
+            msg.classList.remove("quiz-leaderboard-msg--ok");
+            msg.classList.add("quiz-leaderboard-msg--err");
+          }
+          if (box && box.scrollIntoView) {
+            box.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        }
+      });
+    });
+  }
+
+  const STORAGE_PSEUDO = "quiz-nfc-pseudo";
+
+  function savePseudoLocal(pseudo) {
+    try {
+      localStorage.setItem(STORAGE_PSEUDO, pseudo);
+    } catch (_) {}
+    if (window.QuizLeaderboard && window.QuizLeaderboard.savePseudo) {
+      window.QuizLeaderboard.savePseudo(pseudo);
+    }
+  }
+
+  function savedPseudo() {
+    if (window.QuizLeaderboard && window.QuizLeaderboard.getSavedPseudo) {
+      const fromApi = window.QuizLeaderboard.getSavedPseudo();
+      if (fromApi) return fromApi;
+    }
+    try {
+      return localStorage.getItem(STORAGE_PSEUDO) || "";
+    } catch (_) {
+      return "";
+    }
+  }
+
+  function normalizePseudoInput(raw) {
+    if (window.QuizLeaderboard && window.QuizLeaderboard.normalizePseudo) {
+      return window.QuizLeaderboard.normalizePseudo(raw);
+    }
+    return String(raw || "").trim();
+  }
+
+  function isValidPseudoBaseLocal(pseudo) {
+    return /^[A-Za-z0-9_\-\.]{3,12}$/.test(pseudo);
+  }
+
+  function isValidPseudoLocal(pseudo) {
+    return /^[A-Za-z0-9_\-\.]{3,16}$/.test(pseudo);
+  }
+
+  function isValidPseudoForReserve(raw) {
+    return isValidPseudoBaseLocal(raw) || isValidPseudoLocal(raw);
+  }
+
+  function pseudoErrorMessage(code) {
+    const fr = {
+      pseudo_invalid: "Pseudo invalide (3–12 caractères : lettres, chiffres, _ - .)",
+      network_reserve:
+        "Impossible de valider le surnom. Vérifiez votre connexion puis rechargez (Cmd+Shift+R).",
+      outdated: "Version obsolète — rechargez la page (Cmd+Shift+R).",
+      config: "Classement indisponible (configuration serveur).",
+    };
+    const ar = {
+      pseudo_invalid: "اسم مستعار غير صالح (3–12 حرفاً).",
+      network_reserve: "تعذّر التحقق من الاسم. تحقق من الشبكة وأعد التحميل.",
+      outdated: "نسخة قديمة — أعد تحميل الصفحة.",
+      config: "التصنيف غير متاح.",
+    };
+    const dict = lang === "ar" ? ar : fr;
+    return dict[code] || dict.network_reserve;
+  }
+
+  async function reservePseudoDirect(base) {
+    const pseudo = normalizePseudoInput(base);
+    if (!isValidPseudoForReserve(pseudo)) {
+      return { ok: false, error: "pseudo_invalid" };
+    }
+    const cfg = window.ElectroDzSite && window.ElectroDzSite.supabase;
+    if (!cfg || !cfg.url || !cfg.anonKey) {
+      return { ok: false, error: "config" };
+    }
+    const controller = new AbortController();
+    const timer = setTimeout(function () {
+      controller.abort();
+    }, 12000);
+    try {
+      const res = await fetch(cfg.url + "/rest/v1/rpc/reserve_quiz_pseudo", {
+        method: "POST",
+        headers: {
+          apikey: cfg.anonKey,
+          Authorization: "Bearer " + cfg.anonKey,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ p_base: pseudo }),
+        signal: controller.signal,
+      });
+      if (!res.ok) {
+        return { ok: false, error: res.status === 404 ? "outdated" : "network_reserve" };
+      }
+      const data = await res.json();
+      if (data && data.ok) savePseudoLocal(data.pseudo);
+      return data || { ok: false, error: "network_reserve" };
+    } catch (err) {
+      console.error("reserve_quiz_pseudo", err);
+      return { ok: false, error: "network_reserve" };
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  function participantLeadText(variant) {
+    if (variant === "home") {
+      return t(
+        "Saisissez un surnom puis cliquez « Valider ». Pas de compte Google nécessaire.",
+        "أدخل اسماً مستعاراً ثم «تأكيد». لا حاجة لحساب Google."
+      );
+    }
+    if (variant === "intro") {
+      return t(
+        "Confirmez votre surnom pour apparaître au classement à la fin du module.",
+        "أكّد اسمك المستعار للظهور في التصنيف بعد انتهاء الوحدة."
+      );
+    }
+    return t(
+      "Cliquez le bouton jaune pour envoyer votre score au classement.",
+      "اضغط الزر الأصفر لإرسال نتيجتك إلى التصنيف."
+    );
+  }
+
+  function renderParticipantForm(opts) {
+    opts = opts || {};
+    const variant = opts.variant || "home";
+    const inputId = opts.inputId || "quiz-pseudo-input";
+    const saved = savedPseudo();
+    const prominent =
+      variant === "home" || variant === "intro" ? " quiz-leaderboard-box--prominent" : "";
+    const title =
+      variant === "result"
+        ? t("Envoyer au classement", "إرسال إلى التصنيف")
+        : t("Votre surnom de participant", "اسمك المستعار");
+
+    return (
+      '<div class="quiz-leaderboard-box' +
+      prominent +
+      (opts.extraClass ? " " + opts.extraClass : "") +
+      '" data-participant-box data-participant-variant="' +
+      escapeHtml(variant) +
+      '"' +
+      (opts.leaderboard ? ' data-quiz-leaderboard id="quiz-participant-form"' : "") +
+      ">" +
+      '<p class="quiz-leaderboard-kicker">' +
+      escapeHtml(t("📋 Classement", "📋 التصنيف")) +
+      "</p>" +
+      "<h3>" +
+      escapeHtml(title) +
+      "</h3>" +
+      '<p class="quiz-leaderboard-lead">' +
+      escapeHtml(participantLeadText(variant)) +
+      "</p>" +
+      '<label class="quiz-leaderboard-label" for="' +
+      escapeHtml(inputId) +
+      '">' +
+      escapeHtml(t("Nom / pseudo (3–12 caractères)", "الاسم / اسم مستعار (3–12)")) +
+      "</label>" +
+      '<input id="' +
+      escapeHtml(inputId) +
+      '" class="quiz-leaderboard-input" type="text" maxlength="16" autocomplete="nickname" data-quiz-pseudo value="' +
+      escapeHtml(saved) +
+      '" placeholder="' +
+      escapeHtml(t("Ex. Karim_DZ", "مثال Karim_DZ")) +
+      '" />' +
+      (opts.validateButton
+        ? '<button type="button" class="quiz-btn-next quiz-leaderboard-submit" data-participant-validate>' +
+          escapeHtml(t("Valider mon surnom", "تأكيد الاسم")) +
+          "</button>" +
+          '<p class="quiz-leaderboard-msg" data-participant-validate-msg hidden></p>'
+        : "") +
+      (opts.submitButton
+        ? '<button type="button" class="quiz-btn-next quiz-leaderboard-submit" data-quiz-submit-score>' +
+          escapeHtml(t("Enregistrer mon score au classement", "تسجيل نتيجتي في التصنيف")) +
+          "</button>" +
+          '<p class="quiz-leaderboard-msg" data-quiz-submit-msg hidden></p>'
+        : "") +
+      (opts.hint
+        ? '<p class="quiz-leaderboard-hint">' + escapeHtml(opts.hint) + "</p>"
+        : "") +
+      (opts.footerHtml || "") +
+      "</div>"
+    );
+  }
+
+  function bindParticipantAutosave(box) {
+    if (!box || !window.QuizLeaderboard) return;
+    const input = box.querySelector("[data-quiz-pseudo]");
+    if (!input) return;
+    function trySave() {
+      const pseudo = window.QuizLeaderboard.normalizePseudo(input.value);
+      if (window.QuizLeaderboard.isValidPseudo(pseudo)) {
+        window.QuizLeaderboard.savePseudo(pseudo);
+      }
+    }
+    input.addEventListener("blur", trySave);
+    input.addEventListener("change", trySave);
+  }
+
+  function bindParticipantValidate(box) {
+    if (!box) return;
+    const input = box.querySelector("[data-quiz-pseudo]");
+    const btn = box.querySelector("[data-participant-validate]");
+    const msg = box.querySelector("[data-participant-validate-msg]");
+    if (!input || !btn) return;
+
+    const btnDefault = t("Valider mon surnom", "تأكيد الاسم");
+    const btnOk = t("Surnom validé ✓", "تم التأكيد ✓");
+
+    function doValidate() {
+      const variant = box.getAttribute("data-participant-variant") || "home";
+      if (msg) {
+        msg.hidden = false;
+        msg.classList.remove("quiz-leaderboard-msg--ok", "quiz-leaderboard-msg--err");
+        msg.classList.add("quiz-leaderboard-msg--wait");
+        msg.textContent = t("Vérification en cours…", "جاري التحقق…");
+      }
+      btn.disabled = true;
+      input.disabled = true;
+      btn.textContent = t("Vérification…", "جاري التحقق…");
+
+      validateAndReserveParticipant(input, msg)
+        .then(function (result) {
+          input.disabled = false;
+          btn.disabled = false;
+          btn.textContent = btnDefault;
+
+          if (result && result.pseudo) {
+            if (variant === "home") {
+              showHomeReadyScreen(result);
+            } else {
+              box.setAttribute("data-participant-valid", "1");
+              btn.textContent = btnOk;
+            }
+          } else {
+            box.removeAttribute("data-participant-valid");
+            if (msg) {
+              msg.hidden = false;
+              msg.classList.remove("quiz-leaderboard-msg--wait");
+            }
+          }
+        })
+        .catch(function (err) {
+          console.error("validate pseudo", err);
+          input.disabled = false;
+          btn.disabled = false;
+          btn.textContent = btnDefault;
+          box.removeAttribute("data-participant-valid");
+          if (msg) {
+            msg.hidden = false;
+            msg.classList.remove("quiz-leaderboard-msg--wait");
+            msg.textContent = pseudoErrorMessage("network_reserve");
+            msg.classList.add("quiz-leaderboard-msg--err");
+          }
+        });
+    }
+
+    btn.addEventListener("click", doValidate);
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        doValidate();
+      }
+    });
+    input.addEventListener("input", function () {
+      box.removeAttribute("data-participant-valid");
+      btn.textContent = btnDefault;
+      if (msg) msg.hidden = true;
+    });
+  }
+
+  async function validateAndReserveParticipant(input, msgEl) {
+    try {
+      const raw = normalizePseudoInput(input.value);
+      const saved = savedPseudo();
+      if (
+        saved &&
+        (saved === raw ||
+          (/^[A-Za-z0-9_\-\.]{3,12}$/.test(raw) &&
+            saved.toLowerCase().startsWith(raw.toLowerCase() + "-")))
+      ) {
+        input.value = saved;
+        savePseudoLocal(saved);
+        if (msgEl) {
+          msgEl.hidden = false;
+          msgEl.classList.remove("quiz-leaderboard-msg--wait", "quiz-leaderboard-msg--err");
+          msgEl.textContent = t("Surnom enregistré ✓ : " + saved, "تم حفظ الاسم ✓ : " + saved);
+          msgEl.classList.add("quiz-leaderboard-msg--ok");
+        }
+        return { pseudo: saved, suffixAdded: false, raw: raw };
+      }
+
+      if (!isValidPseudoForReserve(raw)) {
+        if (msgEl) {
+          msgEl.hidden = false;
+          msgEl.classList.remove("quiz-leaderboard-msg--wait");
+          msgEl.textContent = pseudoErrorMessage("pseudo_invalid");
+          msgEl.classList.add("quiz-leaderboard-msg--err");
+        }
+        return null;
+      }
+
+      if (msgEl) {
+        msgEl.hidden = false;
+        msgEl.classList.remove("quiz-leaderboard-msg--ok", "quiz-leaderboard-msg--err");
+        msgEl.classList.add("quiz-leaderboard-msg--wait");
+        msgEl.textContent = t("Vérification du surnom…", "جاري التحقق من الاسم…");
+      }
+
+      const res = await reservePseudoDirect(raw);
+      if (!res || !res.ok) {
+        const code = (res && res.error) || "network_reserve";
+        if (msgEl) {
+          msgEl.classList.remove("quiz-leaderboard-msg--wait");
+          msgEl.textContent = pseudoErrorMessage(code);
+          msgEl.classList.add("quiz-leaderboard-msg--err");
+        }
+        return null;
+      }
+
+      input.value = res.pseudo;
+      savePseudoLocal(res.pseudo);
+      if (msgEl) {
+        msgEl.classList.remove("quiz-leaderboard-msg--wait");
+        msgEl.textContent = res.suffix_added
+          ? t(
+              "Surnom : " +
+                res.pseudo +
+                " (code ajouté car « " +
+                raw +
+                " » était déjà pris)",
+              "الاسم: " +
+                res.pseudo +
+                " (أُضيف رمز لأن « " +
+                raw +
+                " » مستخدم)"
+            )
+          : t("Surnom enregistré ✓ : " + res.pseudo, "تم حفظ الاسم ✓ : " + res.pseudo);
+        msgEl.classList.remove("quiz-leaderboard-msg--err");
+        msgEl.classList.add("quiz-leaderboard-msg--ok");
+      }
+      return {
+        pseudo: res.pseudo,
+        suffixAdded: !!res.suffix_added,
+        raw: raw,
+      };
+    } catch (err) {
+      console.error("validateAndReserveParticipant", err);
+      if (msgEl) {
+        msgEl.hidden = false;
+        msgEl.classList.remove("quiz-leaderboard-msg--wait");
+        msgEl.textContent = pseudoErrorMessage("network_reserve");
+        msgEl.classList.add("quiz-leaderboard-msg--err");
+      }
+      return null;
+    }
   }
 
   function moduleMetaFromSlug(slug) {
@@ -360,50 +873,324 @@
     return mod ? { slug: mod.slug, id: mod.id } : { slug: slug, id: "" };
   }
 
+  function renderModuleIntro() {
+    removeMidQuizSaveBar();
+    removeQuizQuitBar();
+    const meta = moduleMetaFromSlug(moduleSlug);
+    root.innerHTML =
+      '<div class="quiz-hero"><h1 style="font-size:1.35rem">' +
+      escapeHtml(t(moduleData.titleFr, moduleData.titleAr)) +
+      "</h1><p>" +
+      escapeHtml(
+        t(
+          meta.id + " — 5 paliers × 15 questions",
+          meta.id + " — 5 مراحل × 15 سؤالاً"
+        )
+      ) +
+      "</p></div>" +
+      renderParticipantForm({
+        variant: "intro",
+        inputId: "quiz-pseudo-intro",
+        extraClass: "quiz-participant-setup",
+      }) +
+      '<p class="quiz-leaderboard-msg" data-participant-intro-msg hidden></p>' +
+      '<div class="quiz-result-actions">' +
+      '<button type="button" class="quiz-btn-next" data-module-start>' +
+      escapeHtml(t("Commencer le module", "ابدأ الوحدة")) +
+      "</button> " +
+      '<a class="quiz-btn-ghost" href="' +
+      quizHomeHref() +
+      '">' +
+      escapeHtml(t("✕ Quitter le quiz", "✕ مغادرة الاختبار")) +
+      "</a></div>";
+
+    const box = root.querySelector("[data-participant-box]");
+    bindParticipantValidate(box);
+    const input = root.querySelector("[data-quiz-pseudo]");
+    const msg = root.querySelector("[data-participant-intro-msg]");
+    const startBtn = root.querySelector("[data-module-start]");
+    if (input && input.focus) input.focus();
+
+    if (startBtn && input) {
+      const startLabel = t("Commencer le module", "ابدأ الوحدة");
+      startBtn.addEventListener("click", function () {
+        if (msg) {
+          msg.hidden = false;
+          msg.classList.remove("quiz-leaderboard-msg--ok", "quiz-leaderboard-msg--err");
+          msg.classList.add("quiz-leaderboard-msg--wait");
+          msg.textContent = t("Vérification du surnom…", "جاري التحقق من الاسم…");
+        }
+        startBtn.disabled = true;
+        input.disabled = true;
+        startBtn.textContent = t("Préparation du quiz…", "تحضير الاختبار…");
+
+        validateAndReserveParticipant(input, msg)
+          .then(function (result) {
+            input.disabled = false;
+            if (!result || !result.pseudo) {
+              startBtn.disabled = false;
+              startBtn.textContent = startLabel;
+              if (msg) msg.classList.remove("quiz-leaderboard-msg--wait");
+              return;
+            }
+            startBtn.textContent = t("C'est parti ! ✓", "انطلاق! ✓");
+            moduleReady = true;
+            moduleStartedAt = Date.now();
+            scoreSubmitted = false;
+            qIndex = 0;
+            levelIndex = 0;
+            score = 0;
+            setTimeout(function () {
+              renderQuestion();
+            }, 400);
+          })
+          .catch(function (err) {
+            console.error("start module", err);
+            input.disabled = false;
+            startBtn.disabled = false;
+            startBtn.textContent = startLabel;
+            if (msg) {
+              msg.hidden = false;
+              msg.classList.remove("quiz-leaderboard-msg--wait");
+              msg.textContent = window.QuizLeaderboard
+                ? window.QuizLeaderboard.errorMessage("network", lang)
+                : t("Erreur — réessayez.", "خطأ — حاول مجدداً.");
+              msg.classList.add("quiz-leaderboard-msg--err");
+            }
+          });
+      });
+    }
+  }
+
   function renderLeaderboardBox(total, pct) {
-    const saved =
-      window.QuizLeaderboard && window.QuizLeaderboard.getSavedPseudo
-        ? window.QuizLeaderboard.getSavedPseudo()
-        : "";
+    return renderParticipantForm({
+      variant: "result",
+      inputId: "quiz-pseudo-input",
+      leaderboard: true,
+      submitButton: true,
+      hint: t(
+        "Score : " + score + "/" + total + " (" + pct + "%)",
+        "النتيجة: " + score + "/" + total + " (" + pct + "%)"
+      ),
+      footerHtml:
+        '<p class="quiz-leaderboard-hint"><a href="quiz-classement.html">' +
+        escapeHtml(t("Voir le classement →", "عرض التصنيف ←")) +
+        "</a></p>",
+    });
+  }
+
+  function questionsAnsweredCount() {
+    if (!moduleData) return 0;
+    const byLevel = questionsByLevel(moduleData.questions);
+    const keys = sortedLevelKeys(byLevel);
+    let n = 0;
+    for (let i = 0; i < levelIndex; i++) {
+      n += (byLevel[keys[i]] || []).length;
+    }
+    n += qIndex;
+    if (answered) n += 1;
+    return n;
+  }
+
+  function renderMidQuizSaveBarHtml() {
+    const answered = questionsAnsweredCount();
+    const pseudo = savedPseudo();
     return (
-      '<div class="quiz-leaderboard-box quiz-leaderboard-box--prominent" data-quiz-leaderboard id="quiz-participant-form">' +
-      '<p class="quiz-leaderboard-kicker">' +
-      escapeHtml(t("📋 Classement", "📋 التصنيف")) +
+      '<div class="quiz-save-bar" data-quiz-save-bar role="region" aria-label="' +
+      escapeHtml(t("Enregistrement au classement", "التسجيل في التصنيف")) +
+      '">' +
+      '<div class="quiz-save-bar-inner">' +
+      '<div class="quiz-save-bar-text">' +
+      '<p class="quiz-save-bar-title">' +
+      escapeHtml(t("💾 Enregistrer vos points", "💾 حفظ نقاطك")) +
       "</p>" +
-      "<h3>" +
-      escapeHtml(t("Votre nom de participant", "اسمك في التصنيف")) +
-      "</h3>" +
-      '<p class="quiz-leaderboard-lead">' +
+      '<p class="quiz-save-bar-score" data-quiz-save-score>' +
       escapeHtml(
         t(
-          "Après le module, entrez votre pseudo ci-dessous puis cliquez le bouton jaune.",
-          "بعد الوحدة، أدخل اسمك المستعار ثم الزر الأصفر."
+          "Score actuel : " + score + "/" + answered,
+          "النتيجة الحالية: " + score + "/" + answered
         )
       ) +
       "</p>" +
-      '<label class="quiz-leaderboard-label" for="quiz-pseudo-input">' +
-      escapeHtml(t("Nom / pseudo (3–16 caractères)", "الاسم / اسم مستعار (3–16)")) +
-      "</label>" +
-      '<input id="quiz-pseudo-input" class="quiz-leaderboard-input" type="text" maxlength="16" autocomplete="nickname" data-quiz-pseudo value="' +
-      escapeHtml(saved) +
-      '" placeholder="' +
-      escapeHtml(t("Ex. Karim_DZ", "مثال Karim_DZ")) +
-      '" />' +
-      '<button type="button" class="quiz-btn-next quiz-leaderboard-submit" data-quiz-submit-score>' +
-      escapeHtml(t("Enregistrer mon score au classement", "تسجيل نتيجتي في التصنيف")) +
+      '<p class="quiz-save-bar-hint">' +
+      escapeHtml(
+        t(
+          "Vous pouvez quitter le module — votre score partiel part au classement.",
+          "يمكنك مغادرة الوحدة — تُرسل نتيجتك الجزئية إلى التصنيف."
+        )
+      ) +
+      "</p>" +
+      (pseudo
+        ? '<p class="quiz-save-bar-pseudo">' +
+          escapeHtml(t("Surnom : ", "الاسم: ") + pseudo) +
+          "</p>"
+        : "") +
+      "</div>" +
+      '<div class="quiz-save-bar-actions">' +
+      '<button type="button" class="quiz-btn-next quiz-save-bar-btn" data-quiz-save-partial' +
+      (answered < 1 ? " disabled" : "") +
+      ">" +
+      escapeHtml(t("Enregistrer au classement", "تسجيل في التصنيف")) +
       "</button>" +
-      '<p class="quiz-leaderboard-msg" data-quiz-submit-msg hidden></p>' +
-      '<p class="quiz-leaderboard-hint">' +
-      escapeHtml(
-        t(
-          "Score enregistré : " + score + "/" + total + " (" + pct + "%)",
-          "النتيجة: " + score + "/" + total + " (" + pct + "%)"
-        )
-      ) +
-      ' · <a href="quiz-classement.html">' +
-      escapeHtml(t("Voir le classement →", "عرض التصنيف ←")) +
-      "</a></p></div>"
+      '<a class="quiz-btn-ghost quiz-save-bar-quit" href="' +
+      quizHomeHref() +
+      '">' +
+      escapeHtml(t("Quitter", "مغادرة")) +
+      "</a></div></div>" +
+      '<p class="quiz-save-bar-msg quiz-leaderboard-msg" data-quiz-save-msg hidden></p>' +
+      "</div>"
     );
+  }
+
+  function updateMidQuizSaveBar() {
+    const bar = document.querySelector("[data-quiz-save-bar]");
+    if (!bar) return;
+    const answered = questionsAnsweredCount();
+    const scoreEl = bar.querySelector("[data-quiz-save-score]");
+    const btn = bar.querySelector("[data-quiz-save-partial]");
+    const pseudoEl = bar.querySelector(".quiz-save-bar-pseudo");
+    const pseudo = savedPseudo();
+    if (scoreEl) {
+      scoreEl.textContent = t(
+        "Score actuel : " + score + "/" + answered,
+        "النتيجة الحالية: " + score + "/" + answered
+      );
+    }
+    if (btn) btn.disabled = answered < 1;
+    if (pseudoEl) {
+      pseudoEl.textContent = t("Surnom : ", "الاسم: ") + (pseudo || "—");
+    } else if (pseudo) {
+      const text = bar.querySelector(".quiz-save-bar-text");
+      if (text) {
+        const p = document.createElement("p");
+        p.className = "quiz-save-bar-pseudo";
+        p.textContent = t("Surnom : ", "الاسم: ") + pseudo;
+        text.appendChild(p);
+      }
+    }
+  }
+
+  function ensureMidQuizSaveBar() {
+    let bar = document.querySelector("[data-quiz-save-bar]");
+    if (!bar) {
+      const wrap = document.createElement("div");
+      wrap.innerHTML = renderMidQuizSaveBarHtml();
+      bar = wrap.firstElementChild;
+      page.appendChild(bar);
+      bindMidQuizSave(bar);
+    }
+    updateMidQuizSaveBar();
+  }
+
+  function removeMidQuizSaveBar() {
+    const bar = document.querySelector("[data-quiz-save-bar]");
+    if (bar) bar.remove();
+  }
+
+  function quizHomeHref() {
+    return "quiz-nfc-15-100.html";
+  }
+
+  function ensureQuizQuitBar(label) {
+    let bar = document.querySelector("[data-quiz-quit-bar]");
+    const text = label || t("Quiz en cours", "الاختبار جارٍ");
+    if (!bar) {
+      const wrap = document.createElement("div");
+      wrap.innerHTML =
+        '<div class="quiz-quit-bar" data-quiz-quit-bar>' +
+        '<span class="quiz-quit-bar-label">' +
+        escapeHtml(text) +
+        "</span>" +
+        '<a class="quiz-quit-bar-btn" href="' +
+        quizHomeHref() +
+        '">' +
+        escapeHtml(t("✕ Quitter le quiz", "✕ مغادرة الاختبار")) +
+        "</a></div>";
+      bar = wrap.firstElementChild;
+      page.insertBefore(bar, page.firstChild);
+    } else {
+      const lbl = bar.querySelector(".quiz-quit-bar-label");
+      if (lbl) lbl.textContent = text;
+    }
+  }
+
+  function removeQuizQuitBar() {
+    const bar = document.querySelector("[data-quiz-quit-bar]");
+    if (bar) bar.remove();
+  }
+
+  function bindMidQuizSave(bar) {
+    if (!bar || !window.QuizLeaderboard) return;
+    const btn = bar.querySelector("[data-quiz-save-partial]");
+    const msg = bar.querySelector("[data-quiz-save-msg]");
+    if (!btn) return;
+
+    btn.addEventListener("click", function () {
+      const total = questionsAnsweredCount();
+      if (total < 1) return;
+
+      let pseudo = savedPseudo();
+      if (!window.QuizLeaderboard.isValidPseudo(pseudo)) {
+        if (msg) {
+          msg.hidden = false;
+          msg.textContent = t(
+            "Surnom manquant — retournez à l’accueil quiz pour valider votre nom.",
+            "الاسم مفقود — ارجع لصفحة الاختبار لتأكيد اسمك."
+          );
+          msg.classList.add("quiz-leaderboard-msg--err");
+        }
+        return;
+      }
+
+      btn.disabled = true;
+      if (msg) {
+        msg.hidden = false;
+        msg.classList.remove("quiz-leaderboard-msg--ok", "quiz-leaderboard-msg--err");
+        msg.textContent = t("Envoi en cours…", "جاري الإرسال…");
+      }
+
+      const meta = moduleMetaFromSlug(moduleSlug);
+      window.QuizLeaderboard.submitScore({
+        pseudo: pseudo,
+        moduleSlug: meta.slug,
+        moduleId: meta.id,
+        score: score,
+        total: total,
+        durationSec: 1,
+      }).then(function (res) {
+        if (res && res.ok) {
+          if (msg) {
+            msg.textContent = t(
+              "Score enregistré ! Vous pouvez quitter ou continuer.",
+              "تم التسجيل! يمكنك المغادرة أو المتابعة."
+            );
+            msg.classList.add("quiz-leaderboard-msg--ok");
+          }
+          btn.textContent = t("Score enregistré ✓", "تم التسجيل ✓");
+          setTimeout(function () {
+            btn.textContent = t("Enregistrer au classement", "تسجيل في التصنيف");
+            btn.disabled = questionsAnsweredCount() < 1;
+          }, 2500);
+          return;
+        }
+        const code = (res && res.error) || "network_score";
+        if (msg) {
+          if (code === "not_better" && res.best != null) {
+            msg.textContent =
+              window.QuizLeaderboard.errorMessage("not_better", lang) +
+              " (" +
+              res.best +
+              "/" +
+              total +
+              ")";
+          } else {
+            msg.textContent = window.QuizLeaderboard.errorMessage(code, lang);
+          }
+          msg.classList.add("quiz-leaderboard-msg--err");
+        }
+        btn.disabled = questionsAnsweredCount() < 1;
+      });
+    });
   }
 
   function bindLeaderboardSubmit(total) {
@@ -453,7 +1240,7 @@
           btn.disabled = true;
           return;
         }
-        const code = (res && res.error) || "network";
+        const code = (res && res.error) || "network_score";
         if (code === "not_better" && res.best != null) {
           msg.textContent =
             window.QuizLeaderboard.errorMessage("not_better", lang) +
@@ -477,6 +1264,8 @@
   }
 
   function renderWin() {
+    removeMidQuizSaveBar();
+    removeQuizQuitBar();
     const total = moduleData.questions.length;
     const totalLevels = sortedLevelKeys(questionsByLevel(moduleData.questions)).length;
     const pct = total ? Math.round((score / total) * 100) : 0;
@@ -508,6 +1297,7 @@
       escapeHtml(t("Bibliothèque", "المكتبة")) +
       "</a></div></div>";
     bindLeaderboardSubmit(total);
+    bindParticipantAutosave(root.querySelector("[data-quiz-leaderboard]"));
     const form = document.getElementById("quiz-participant-form");
     if (form && form.scrollIntoView) {
       setTimeout(function () {
@@ -600,16 +1390,15 @@
       ) +
       "</p>";
     html += '</div><div data-quiz-feedback></div></div>';
-    html +=
-      '<div class="quiz-actions"><a class="quiz-btn-ghost" href="quiz-nfc-15-100.html">' +
-      escapeHtml(t("Modules", "الوحدات")) +
-      '</a><a class="quiz-btn-ghost" href="' +
-      escapeHtml(lecteurPdfHref(q.pdfPage || 1)) +
-      '">' +
-      escapeHtml(t("PDF en ligne", "PDF على الإنترنت")) +
-      "</a></div>";
 
     root.innerHTML = html;
+    ensureQuizQuitBar(
+      t(moduleData.titleFr, moduleData.titleAr) +
+        " · " +
+        t("Palier ", "مرحلة ") +
+        currentLevelNum
+    );
+    ensureMidQuizSaveBar();
 
     root.querySelectorAll(".quiz-opt").forEach(function (btn) {
       btn.addEventListener("click", function () {
@@ -675,6 +1464,7 @@
       "</button></div>";
 
     fb.innerHTML = fbHtml;
+    updateMidQuizSaveBar();
     fb.querySelector("[data-next]").addEventListener("click", function () {
       qIndex++;
       renderQuestion();
@@ -699,9 +1489,63 @@
     });
   });
 
+  function showQuizLoadError(err) {
+    const isFile = location.protocol === "file:";
+    let detail = "";
+    if (isFile) {
+      detail =
+        t(
+          "Vous avez ouvert le fichier HTML directement (double-clic). Le quiz doit passer par un serveur web.",
+          "لقد فتحت ملف HTML مباشرة. يجب فتح الاختبار عبر خادم ويب."
+        ) +
+        " " +
+        t("Ouvrez ce lien :", "افتح هذا الرابط:") +
+        ' <a href="' +
+        LOCAL_QUIZ_URL +
+        '" style="color:#facc15">' +
+        LOCAL_QUIZ_URL +
+        "</a>. " +
+        t(
+          "Ou lancez dans le Terminal : cd website && ./scripts/serve-local.sh",
+          "أو نفّذ في الطرفية: cd website && ./scripts/serve-local.sh"
+        );
+    } else if (err && err.message) {
+      detail = escapeHtml(String(err.message));
+    }
+    root.innerHTML =
+      '<div style="color:#f87171;padding:20px;max-width:36rem;margin:0 auto;line-height:1.5">' +
+      "<p><strong>" +
+      escapeHtml(
+        t(
+          isFile
+            ? "Ouvrez le quiz via le serveur local"
+            : "Impossible de charger le quiz",
+          isFile ? "افتح الاختبار عبر الخادم المحلي" : "تعذر تحميل الاختبار"
+        )
+      ) +
+      "</strong></p>" +
+      (detail ? "<p>" + detail + "</p>" : "") +
+      (!isFile
+        ? "<p>" +
+          escapeHtml(
+            t(
+              "Vérifiez votre connexion ou réessayez plus tard.",
+              "تحقق من الاتصال أو حاول لاحقاً."
+            )
+          ) +
+          "</p>"
+        : "") +
+      "</div>";
+    console.error(err);
+  }
+
   applyLang(lang);
 
   function run() {
+    if (location.protocol === "file:") {
+      showQuizLoadError(new Error("file protocol"));
+      return;
+    }
     fetchJson(PLAN_URL)
       .then(function (p) {
         plan = p;
@@ -718,20 +1562,11 @@
         levelIndex = 0;
         score = 0;
         scoreSubmitted = false;
-        moduleStartedAt = Date.now();
-        renderQuestion();
+        moduleReady = false;
+        renderModuleIntro();
       })
       .catch(function (err) {
-        root.innerHTML =
-          '<p style="color:#f87171;padding:20px">' +
-          escapeHtml(
-            t(
-              "Impossible de charger le quiz. Ouvrez le site via un serveur local (pas file://).",
-              "تعذر تحميل الاختبار. افتح الموقع عبر خادم محلي."
-            )
-          ) +
-          "</p>";
-        console.error(err);
+        showQuizLoadError(err);
       });
   }
 

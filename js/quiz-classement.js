@@ -20,8 +20,8 @@
       disclaimer:
         "Chaque score envoyé avec un pseudo apparaît ici. Meilleur score conservé par module.",
       howtoTitle: "Comment apparaître au classement ?",
-      howto1: "1. Jouez un module jusqu’à la fin (75 questions).",
-      howto2: "2. À l’écran « Module terminé », entrez votre nom de participant.",
+      howto1: "1. Choisissez votre surnom sur la page quiz (avant de jouer).",
+      howto2: "2. Jouez un module jusqu’à la fin (75 questions).",
       howto3: "3. Cliquez « Enregistrer mon score au classement ».",
       howtoPlay: "Jouer le quiz →",
       back: "← Quiz",
@@ -32,8 +32,8 @@
       disclaimer:
         "كل نتيجة ترسلها باسم مستعار تظهر هنا. يُحفظ أفضل نتيجة لكل وحدة.",
       howtoTitle: "كيف تظهر في التصنيف؟",
-      howto1: "1. العب وحدة كاملة (75 سؤالاً).",
-      howto2: "2. في شاشة «اكتملت الوحدة»، أدخل اسمك.",
+      howto1: "1. اختر اسمك المستعار في صفحة الاختبار (قبل اللعب).",
+      howto2: "2. العب وحدة كاملة (75 سؤالاً).",
       howto3: "3. اضغط «تسجيل نتيجتي في التصنيف».",
       howtoPlay: "ابدأ الاختبار ←",
       back: "← الاختبار",
