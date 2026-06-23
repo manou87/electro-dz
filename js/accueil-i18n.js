@@ -21,7 +21,7 @@
       "quick.plans.hint": "Unifilaire, symboles IEC, export & impression",
       "quick.training": "Formations",
       "quick.training.hint":
-        "450 questions pour maîtriser la norme NF C 15-100, pas à pas",
+        "472 questions pour maîtriser la norme NF C 15-100, pas à pas",
       "quick.swissdz": "Simulateur SwissDZ",
       "quick.swissdz.hint":
         "Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel",
@@ -50,7 +50,7 @@
       "docs.doc.desc": "Monophasé, triphasé, magnétisme, énergie",
       "docs.doc.link": "Voir les modules →",
       "docs.train.title": "Une méthode d'apprentissage suisse en Algérie",
-      "docs.train.desc": "Grand questionnaire NF C 15-100 — 450 questions, gratuit",
+      "docs.train.desc": "Grand questionnaire NF C 15-100 — 472 questions, gratuit",
       "docs.train.link": "Lancer le questionnaire →",
       "pill.quiz": "Quiz",
       "pill.trainLater": "À venir",
@@ -125,7 +125,7 @@
       "quick.plans.hint": "أحادي الخط، رموز IEC، تصدير وطباعة",
       "quick.training": "تكوين",
       "quick.training.hint":
-        "450 سؤالاً لإتقان معيار NF C 15-100 خطوة بخطوة",
+        "472 سؤالاً لإتقان معيار NF C 15-100 خطوة بخطوة",
       "quick.swissdz": "محاكي SwissDZ",
       "quick.swissdz.hint":
         "أول محاكي للكهربائيين في الجزائر — لوحة، ورشة ومخطط أحادي الطور احترافي",
@@ -154,7 +154,7 @@
       "docs.doc.desc": "أحادي الطور، ثلاثي الطور، مغناطيسية، طاقة",
       "docs.doc.link": "عرض الوحدات ←",
       "docs.train.title": "منهج تعلّم سويسري في الجزائر",
-      "docs.train.desc": "استبيان ضخم NF C 15-100 — 450 سؤالاً، مجاني",
+      "docs.train.desc": "استبيان ضخم NF C 15-100 — 472 سؤالاً، مجاني",
       "docs.train.link": "ابدأ الاستبيان ←",
       "pill.quiz": "اختبار",
       "pill.trainLater": "لاحقاً",

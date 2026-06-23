@@ -579,6 +579,110 @@
       "pdfPage": 476
     },
     {
+      "id": "m06_L2_q16",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "image",
+      "questionFr": "Quel type de branchement est représenté sur ce schéma ?",
+      "questionAr": "أي نوع توصيل يمثّله هذا المخطط؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures/m06-fig-562A-branchement.png",
+      "imageCaptionFr": "Schéma AGCP — sans texte explicatif",
+      "imageCaptionAr": "Schéma AGCP — sans texte explicatif",
+      "optionsFr": [
+        "Branchement à puissance limitée",
+        "Branchement à puissance surveillée",
+        "Branchement normal sans limitation"
+      ],
+      "optionsAr": [
+        "قدرة محدودة",
+        "قدرة مراقبة",
+        "توصيل عادي"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Dispositif complémentaire de coupure d'urgence en aval de l'AGCP → puissance limitée (Figure 562A).",
+      "explanationAr": "جهاز إيقاف طوارئ إضافي → قدرة محدودة.",
+      "normRef": "NF C 15-100 — Figure 562A (§ 562)",
+      "pdfPage": 357
+    },
+    {
+      "id": "m06_L2_q17",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "image",
+      "questionFr": "Quel type de branchement est représenté sur ce schéma ?",
+      "questionAr": "أي نوع توصيل يمثّله هذا المخطط؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures/m06-fig-562B-branchement.png",
+      "imageCaptionFr": "Schéma branchement — sans texte explicatif",
+      "imageCaptionAr": "Schéma branchement — sans texte explicatif",
+      "optionsFr": [
+        "Branchement à puissance surveillée",
+        "Branchement à puissance limitée",
+        "Branchement provisoire de chantier"
+      ],
+      "optionsAr": [
+        "قدرة مراقبة",
+        "قدرة محدودة",
+        "توصيل مؤقت"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "AGCP utilisable comme coupure d'urgence, circuit sécurité en amont → puissance surveillée (Figure 562B).",
+      "explanationAr": "AGCP كإيقاف طوارئ → قدرة مراقبة.",
+      "normRef": "NF C 15-100 — Figure 562B (§ 562)",
+      "pdfPage": 357
+    },
+    {
+      "id": "m06_L2_q18",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "image",
+      "questionFr": "Comment est matérialisée la GTL sur cet exemple ?",
+      "questionAr": "كيف نُفّذت GTL في هذا المثال؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures/m06-fig-771A-gtl-parois.png",
+      "imageCaptionFr": "GTL — exemple sans titre de figure",
+      "imageCaptionAr": "GTL — exemple sans titre de figure",
+      "optionsFr": [
+        "Par parois (local dédié)",
+        "Par goulottes et coffrets saillants",
+        "Sans GTL (câbles apparents)"
+      ],
+      "optionsAr": [
+        "بجدران (غرفة مخصصة)",
+        "بقنوات بارزة",
+        "بدون GTL"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "GTL délimitée par parois formant un volume dédié (Figure 771A).",
+      "explanationAr": "GTL بجدران في غرفة مخصصة.",
+      "normRef": "NF C 15-100 — Figure 771A (§ 771)",
+      "pdfPage": 480
+    },
+    {
+      "id": "m06_L2_q19",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "image",
+      "questionFr": "Comment est réalisée cette GTL saillie ?",
+      "questionAr": "كيف نُفّذت GTL البارزة؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures/m06-fig-771B-gtl-goulottes.png",
+      "imageCaptionFr": "GTL saillie — sans titre de figure",
+      "imageCaptionAr": "GTL saillie — sans titre de figure",
+      "optionsFr": [
+        "Par goulottes et coffrets saillants",
+        "Par parois d'un local dédié",
+        "Enterrée sous dalle uniquement"
+      ],
+      "optionsAr": [
+        "بقنوات وصناديق",
+        "بجدران غرفة",
+        "مدفونة فقط"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "GTL saillie par goulottes et coffrets (Figure 771B).",
+      "explanationAr": "GTL بارزة بقنوات وصناديق.",
+      "normRef": "NF C 15-100 — Figure 771B (§ 771)",
+      "pdfPage": 481
+    },
+    {
       "id": "m06_L3_q01",
       "level": 3,
       "difficulty": "moyen",

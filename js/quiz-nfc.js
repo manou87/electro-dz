@@ -1,10 +1,10 @@
 /**
- * Quiz NF C 15-100 (2015) — parcours par paliers (5 niveaux × 15 questions).
+ * Quiz NF C 15-100 (2015) — parcours par paliers (5 niveaux, questions variables par module).
  */
 (function () {
   const STORAGE_LANG = "electrodz-site-lang";
   const PLAN_URL = "data/quiz/nf-c15-100-2015/plan-modules.json";
-  const QUIZ_BUILD = "20260624o";
+  const QUIZ_BUILD = "20260625a";
   const LOCAL_QUIZ_URL = "http://localhost:8765/quiz-nfc-15-100.html";
 
   const page = document.querySelector(".quiz-page");
@@ -463,6 +463,14 @@
     return html;
   }
 
+  function planTotalQuestions() {
+    if (!plan || !plan.modules) return 0;
+    if (plan.totalQuestions) return plan.totalQuestions;
+    return plan.modules.reduce(function (s, m) {
+      return s + (m.targetQuestions || 0);
+    }, 0);
+  }
+
   function renderHome() {
     removeMidQuizSaveBar();
     removeQuizQuitBar();
@@ -472,8 +480,12 @@
       "</h1><p>" +
       escapeHtml(
         t(
-          "Révision par modules — 5 paliers × 15 questions ; score à la fin",
-          "مراجعة حسب الوحدات — 5 مراحل × 15 أسئلة؛ النتيجة في النهاية"
+          "Révision par modules — " +
+            planTotalQuestions() +
+            " questions · 5 paliers (dont 27 visuelles sur schéma)",
+          "مراجعة حسب الوحدات — " +
+            planTotalQuestions() +
+            " سؤالاً · 5 مراحل (منها 27 بصور مخططات)"
         )
       ) +
       "</p></div>";
@@ -523,7 +535,15 @@
           : " · " + escapeHtml(t("Bientôt", "قريبًا"))) +
         '</span><div class="quiz-module-title">' +
         escapeHtml(t(m.titleFr, m.titleAr)) +
-        "</div></a>";
+        "</div>" +
+        (m.targetQuestions
+          ? '<div class="quiz-module-meta">' +
+            escapeHtml(
+              t(m.targetQuestions + " questions", m.targetQuestions + " سؤالاً")
+            ) +
+            "</div>"
+          : "") +
+        "</a>";
     });
     html += "</div>";
     html +=
@@ -1037,14 +1057,15 @@
     removeMidQuizSaveBar();
     removeQuizQuitBar();
     const meta = moduleMetaFromSlug(moduleSlug);
+    const modQs = moduleData.questions ? moduleData.questions.length : 0;
     root.innerHTML =
       '<div class="quiz-hero"><h1 style="font-size:1.35rem">' +
       escapeHtml(t(moduleData.titleFr, moduleData.titleAr)) +
       "</h1><p>" +
       escapeHtml(
         t(
-          meta.id + " — 5 paliers × 15 questions",
-          meta.id + " — 5 مراحل × 15 سؤالاً"
+          meta.id + " — " + modQs + " questions · 5 paliers",
+          meta.id + " — " + modQs + " سؤالاً · 5 مراحل"
         )
       ) +
       "</p></div>" +

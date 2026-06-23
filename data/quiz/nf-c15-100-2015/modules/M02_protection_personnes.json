@@ -581,6 +581,136 @@
       "pdfPage": 217
     },
     {
+      "id": "m02_L2_q16",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "image",
+      "questionFr": "Quel type de boucle de défaut est représenté sur cette figure (schémas TN) ?",
+      "questionAr": "أي نوع من حلقة العطل يمثّله هذا الشكل (مخططات TN)؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures/m02-fig-411A-boucle-tn.png",
+      "imageCaptionFr": "Boucle de défaut — schéma seul",
+      "imageCaptionAr": "Boucle de défaut — schéma seul",
+      "optionsFr": [
+        "Boucle en schéma TN-C ou TN-S",
+        "Boucle en schéma TT",
+        "Boucle en schéma IT"
+      ],
+      "optionsAr": [
+        "حلقة TN-C أو TN-S",
+        "حلقة TT",
+        "حلقة IT"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Défaut phase-masse, retour du courant par le PE/PEN vers la source → boucles TN (Figure 411A).",
+      "explanationAr": "عطل phase-masse مع عودة عبر PE/PEN → TN.",
+      "normRef": "NF C 15-100 — Figure 411A (§ 411)",
+      "pdfPage": 99
+    },
+    {
+      "id": "m02_L2_q17",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "image",
+      "questionFr": "Quel schéma de liaison à la terre correspond à cette boucle de défaut ?",
+      "questionAr": "أي مخطط تأريض يطابق حلقة العطل هذه؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures/m02-fig-411B-boucle-tt.png",
+      "imageCaptionFr": "Boucle de défaut — schéma seul",
+      "imageCaptionAr": "Boucle de défaut — schéma seul",
+      "optionsFr": [
+        "Schéma TT",
+        "Schéma TN-S",
+        "Schéma IT"
+      ],
+      "optionsAr": [
+        "TT",
+        "TN-S",
+        "IT"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Masse sur prise de terre locale, retour de défaut par la terre → TT (Figure 411B).",
+      "explanationAr": "كتلة على أرضية محلية → TT.",
+      "normRef": "NF C 15-100 — Figure 411B (§ 411)",
+      "pdfPage": 101
+    },
+    {
+      "id": "m02_L2_q18",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "image",
+      "questionFr": "Quel régime correspond à ce premier défaut (installation isolée de la terre) ?",
+      "questionAr": "أي نظام يطابق هذا العطل الأول (تركيب معزول عن الأرض)؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures/m02-fig-411C-boucle-it-isole.png",
+      "imageCaptionFr": "Premier défaut IT — schéma seul",
+      "imageCaptionAr": "Premier défaut IT — schéma seul",
+      "optionsFr": [
+        "Schéma IT",
+        "Schéma TT",
+        "Schéma TN-S"
+      ],
+      "optionsAr": [
+        "IT",
+        "TT",
+        "TN-S"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Point d'alimentation isolé de la terre, premier défaut limité → IT (Figure 411C).",
+      "explanationAr": "نقطة تغذية معزولة → IT.",
+      "normRef": "NF C 15-100 — Figure 411C (§ 411)",
+      "pdfPage": 102
+    },
+    {
+      "id": "m02_L2_q19",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "image",
+      "questionFr": "En schéma IT, comment le neutre est-il relié à la terre sur ce schéma de premier défaut ?",
+      "questionAr": "في مخطط IT، كيف يُربط المحايد بالأرض في هذا العطل الأول؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures/m02-fig-411D-boucle-it-neutre.png",
+      "imageCaptionFr": "Premier défaut IT — schéma seul",
+      "imageCaptionAr": "Premier défaut IT — schéma seul",
+      "optionsFr": [
+        "Via une impédance",
+        "Par liaison directe (court-circuit)",
+        "Sans aucune liaison à la terre"
+      ],
+      "optionsAr": [
+        "عبر معاوقة",
+        "ربط مباشر",
+        "بدون ربط بالأرض"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Neutre relié à la terre par impédance → premier défaut IT (Figure 411D).",
+      "explanationAr": "محايد مربوط بالأرض عبر معاوقة.",
+      "normRef": "NF C 15-100 — Figure 411D (§ 411)",
+      "pdfPage": 103
+    },
+    {
+      "id": "m02_L2_q20",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "image",
+      "questionFr": "Quel cas de défaut est illustré sur cette figure ?",
+      "questionAr": "أي حالة عطل يوضّحها هذا الشكل؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures/m02-fig-411E-double-defaut-it.png",
+      "imageCaptionFr": "Double défaut IT — schéma seul",
+      "imageCaptionAr": "Double défaut IT — schéma seul",
+      "optionsFr": [
+        "Double défaut en schéma IT",
+        "Premier défaut IT isolé",
+        "Défaut en schéma TT"
+      ],
+      "optionsAr": [
+        "عطل مزدوج IT",
+        "عطل أول IT",
+        "عطل TT"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Deux défauts simultanés sur masses en IT → double défaut (Figure 411E).",
+      "explanationAr": "عطلان على كتلتين → عطل مزدوج IT.",
+      "normRef": "NF C 15-100 — Figure 411E (§ 411)",
+      "pdfPage": 105
+    },
+    {
       "id": "m02_L3_q01",
       "level": 3,
       "difficulty": "moyen",

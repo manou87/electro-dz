@@ -1,0 +1,116 @@
+{
+  "generatedAt": "2026-06-11",
+  "modules": {
+    "M01": {
+      "file": "M01_champ_application.json",
+      "questions": 77,
+      "byType": {
+        "multiple": 46,
+        "truefalse": 24,
+        "image": 7
+      },
+      "byLevel": {
+        "1": 15,
+        "2": 17,
+        "3": 15,
+        "4": 15,
+        "5": 15
+      },
+      "imageAdded": 2
+    },
+    "M02": {
+      "file": "M02_protection_personnes.json",
+      "questions": 80,
+      "byType": {
+        "multiple": 30,
+        "truefalse": 45,
+        "image": 5
+      },
+      "byLevel": {
+        "1": 15,
+        "2": 20,
+        "3": 15,
+        "4": 15,
+        "5": 15
+      },
+      "imageAdded": 5
+    },
+    "M03": {
+      "file": "M03_mise_a_la_terre.json",
+      "questions": 75,
+      "byType": {
+        "multiple": 48,
+        "truefalse": 27
+      },
+      "byLevel": {
+        "1": 15,
+        "2": 15,
+        "3": 15,
+        "4": 15,
+        "5": 15
+      },
+      "imageAdded": 0
+    },
+    "M04": {
+      "file": "M04_circuits_protections.json",
+      "questions": 78,
+      "byType": {
+        "multiple": 66,
+        "truefalse": 9,
+        "image": 3
+      },
+      "byLevel": {
+        "1": 15,
+        "2": 18,
+        "3": 15,
+        "4": 15,
+        "5": 15
+      },
+      "imageAdded": 3
+    },
+    "M05": {
+      "file": "M05_locaux_humides.json",
+      "questions": 83,
+      "byType": {
+        "multiple": 59,
+        "truefalse": 16,
+        "image": 8
+      },
+      "byLevel": {
+        "1": 15,
+        "2": 23,
+        "3": 15,
+        "4": 15,
+        "5": 15
+      },
+      "imageAdded": 8
+    },
+    "M06": {
+      "file": "M06_tableau_gtl.json",
+      "questions": 79,
+      "byType": {
+        "multiple": 32,
+        "truefalse": 43,
+        "image": 4
+      },
+      "byLevel": {
+        "1": 15,
+        "2": 19,
+        "3": 15,
+        "4": 15,
+        "5": 15
+      },
+      "imageAdded": 4
+    }
+  },
+  "totals": {
+    "questions": 472,
+    "image": 27,
+    "multiple": 281,
+    "truefalse": 164,
+    "addedThisRun": 22,
+    "imageQuestionsNew": 22,
+    "questionsBefore": 450,
+    "questionsAfter": 472
+  }
+}

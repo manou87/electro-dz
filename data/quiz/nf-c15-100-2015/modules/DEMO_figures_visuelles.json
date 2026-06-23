@@ -1,0 +1,214 @@
+{
+  "titleFr": "Démo — questions visuelles (aperçu local)",
+  "titleAr": "عرض — أسئلة بصور (محلي)",
+  "questions": [
+    {
+      "id": "demo_q01",
+      "level": 1,
+      "difficulty": "moyen",
+      "type": "image",
+      "questionFr": "Selon la NF C 15-100 (§ 701), quel aménagement de salle de douches est représenté sur ce plan ?",
+      "questionAr": "حسب NF C 15-100 (§ 701)، أي ترتيب لغرف الاستحمام يمثّله هذا المخطط؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures-preview/preview-701C-douches-cabines-deshabilloir.png",
+      "imageCaptionFr": "Figure 701C — aperçu local (sans titre sur l'image)",
+      "imageCaptionAr": "شكل 701C — معاينة محلية",
+      "optionsFr": [
+        "Cabines de douche et déshabilloir individuel",
+        "Cabines de douche sans déshabilloir individuel",
+        "Salle de douches sans cabine"
+      ],
+      "optionsAr": [
+        "مقصورات استحمام وغرفة تبديل فردية",
+        "مقصورات بدون غرفة تبديل فردية",
+        "استحمام بدون مقصورة"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Figure 701C : cabines de douche avec déshabilloir individuel (zones colorées distinctes). Voir p. 390.",
+      "explanationAr": "شكل 701C: مقصورات مع غرفة تبديل فردية.",
+      "normRef": "NF C 15-100 — Figure 701C (§ 701)",
+      "pdfPage": 390
+    },
+    {
+      "id": "demo_q02",
+      "level": 1,
+      "difficulty": "moyen",
+      "type": "image",
+      "questionFr": "Sur ce schéma de bassin (piscine ou pédiluve), quelle zone correspond au volume 0 ?",
+      "questionAr": "على مخطط الحوض (مسبح أو حوض وضوء)، أي منطقة تمثّل الحجم 0؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures-preview/preview-702A-piscine-pediluve.png",
+      "imageCaptionFr": "Figure 702A — volumes piscine / pédiluve",
+      "imageCaptionAr": "شكل 702A — أحجام المسبح",
+      "optionsFr": [
+        "L'intérieur du bassin (eau)",
+        "La zone autour du bassin sur 2 m",
+        "La zone extérieure au-delà du volume 1"
+      ],
+      "optionsAr": [
+        "داخل الحوض (الماء)",
+        "المنطقة حول الحوض على 2 م",
+        "المنطقة خارج الحجم 1"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Le volume 0 est l'intérieur du bassin contenant l'eau. Voir Figure 702A p. 402.",
+      "explanationAr": "الحجم 0 هو داخل الحوض.",
+      "normRef": "NF C 15-100 — Figure 702A (§ 702)",
+      "pdfPage": 402
+    },
+    {
+      "id": "demo_q03",
+      "level": 1,
+      "difficulty": "moyen",
+      "type": "image",
+      "questionFr": "Quel schéma de liaison à la terre est illustré par cette boucle de défaut ?",
+      "questionAr": "أي مخطط تأريض يوضّحه حلقة العطل هذه؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures-preview/preview-411B-boucle-tt.png",
+      "imageCaptionFr": "Figure 411B — boucle de défaut",
+      "imageCaptionAr": "شكل 411B — حلقة عطل",
+      "optionsFr": [
+        "Schéma TT",
+        "Schéma TN-S",
+        "Schéma IT"
+      ],
+      "optionsAr": [
+        "TT",
+        "TN-S",
+        "IT"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Masse et prise de terre indépendantes de l'alimentation → boucle de défaut en schéma TT. Figure 411B p. 101.",
+      "explanationAr": "كتلة وأرضية مستقلة → TT.",
+      "normRef": "NF C 15-100 — Figure 411B (§ 411)",
+      "pdfPage": 101
+    },
+    {
+      "id": "demo_q04",
+      "level": 1,
+      "difficulty": "moyen",
+      "type": "image",
+      "questionFr": "Quel cas de défaut est illustré sur cette figure ?",
+      "questionAr": "أي حالة عطل يوضّحها هذا الشكل؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures-preview/preview-411E-double-defaut-it.png",
+      "imageCaptionFr": "Figure 411E — double défaut",
+      "imageCaptionAr": "شكل 411E — عطل مزدوج",
+      "optionsFr": [
+        "Double défaut en schéma IT",
+        "Premier défaut IT (installation isolée)",
+        "Défaut en schéma TT"
+      ],
+      "optionsAr": [
+        "عطل مزدوج في IT",
+        "عطل أول في IT",
+        "عطل في TT"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Deux masses sous tension en schéma IT → double défaut. Figure 411E p. 105.",
+      "explanationAr": "كتلتان تحت الجهد في IT → عطل مزدوج.",
+      "normRef": "NF C 15-100 — Figure 411E (§ 411)",
+      "pdfPage": 105
+    },
+    {
+      "id": "demo_q05",
+      "level": 1,
+      "difficulty": "moyen",
+      "type": "image",
+      "questionFr": "Quelle mise en œuvre de parafoudre est représentée sur ce schéma ?",
+      "questionAr": "أي تركيب لمانع الصواعق يمثّله هذا المخطط؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures-preview/preview-534B-parafoudre-tt.png",
+      "imageCaptionFr": "Schéma de raccordement — § 534 (sans légende de figure)",
+      "imageCaptionAr": "مخطط التوصيل — § 534",
+      "optionsFr": [
+        "Parafoudre en schéma TT",
+        "Parafoudre en schéma TN",
+        "Parafoudre en schéma IT"
+      ],
+      "optionsAr": [
+        "مانع صواعق في TT",
+        "مانع صواعق في TN",
+        "مانع صواعق في IT"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Raccordement du parafoudre adapté au schéma TT. Figure 534B p. 283.",
+      "explanationAr": "توصيل مانع الصواعق في مخطط TT.",
+      "normRef": "NF C 15-100 — Figure 534B (§ 534)",
+      "pdfPage": 283
+    },
+    {
+      "id": "demo_q06",
+      "level": 1,
+      "difficulty": "moyen",
+      "type": "image",
+      "questionFr": "Quel type de branchement est représenté sur cette figure ?",
+      "questionAr": "أي نوع من التوصيل يمثّله هذا الشكل؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures-preview/preview-562A-branchement-puissance-limitee.png",
+      "imageCaptionFr": "Schéma AGCP — § 562 (sans texte explicatif)",
+      "imageCaptionAr": "مخطط AGCP — § 562",
+      "optionsFr": [
+        "Branchement à puissance limitée",
+        "Branchement à puissance surveillée",
+        "Branchement normal (sans limitation)"
+      ],
+      "optionsAr": [
+        "توصيل بقدرة محدودة",
+        "توصيل بقدرة مراقبة",
+        "توصيل عادي"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Dispositif limitant la puissance disponible → branchement à puissance limitée. Figure 562A p. 357.",
+      "explanationAr": "جهاز يحدّ القدرة → توصيل بقدرة محدودة.",
+      "normRef": "NF C 15-100 — Figure 562A (§ 562)",
+      "pdfPage": 357
+    },
+    {
+      "id": "demo_q07",
+      "level": 1,
+      "difficulty": "moyen",
+      "type": "image",
+      "questionFr": "Comment est réalisée cette GTL saillie sur l'exemple ?",
+      "questionAr": "كيف نُفّذت GTL البارزة في هذا المثال؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures-preview/preview-771B-gtl-goulottes.png",
+      "imageCaptionFr": "Figure 771B — GTL saillie",
+      "imageCaptionAr": "شكل 771B — GTL بارزة",
+      "optionsFr": [
+        "Par goulottes et coffrets saillants",
+        "Par parois d'un local dédié",
+        "Sans GTL (câbles apparents)"
+      ],
+      "optionsAr": [
+        "بقنوات وصناديق بارزة",
+        "بجدران غرفة مخصصة",
+        "بدون GTL"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "GTL saillie matérialisée par goulottes et coffrets. Figure 771B p. 481.",
+      "explanationAr": "GTL بارزة بقنوات وصناديق.",
+      "normRef": "NF C 15-100 — Figure 771B (§ 771)",
+      "pdfPage": 481
+    },
+    {
+      "id": "demo_q08",
+      "level": 1,
+      "difficulty": "moyen",
+      "type": "image",
+      "questionFr": "Quel schéma de liaison à la terre en courant continu est représenté sur cette figure ?",
+      "questionAr": "أي مخطط تأريض في التيار المستمر يمثّله هذا الشكل؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures-preview/preview-312F-tns-courant-continu.png",
+      "imageCaptionFr": "Figure 312F — courant continu",
+      "imageCaptionAr": "شكل 312F — تيار مستمر",
+      "optionsFr": [
+        "Schéma TN-S",
+        "Schéma TN-C",
+        "Schéma TT"
+      ],
+      "optionsAr": [
+        "TN-S",
+        "TN-C",
+        "TT"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Conducteur PE séparé du neutre sur tout le schéma en courant continu → TN-S. Figure 312F p. 76.",
+      "explanationAr": "PE منفصل عن المحايد → TN-S.",
+      "normRef": "NF C 15-100 — Figure 312F (§ 312)",
+      "pdfPage": 76
+    }
+  ]
+}

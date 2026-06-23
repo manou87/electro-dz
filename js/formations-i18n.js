@@ -8,7 +8,7 @@
     fr: {
       "meta.title": "Méthode d'apprentissage suisse — SwissDZ",
       "meta.desc":
-        "Apprenez la norme NF C 15-100 avec le grand questionnaire interactif — 450 questions, gratuit en ligne.",
+        "Apprenez la norme NF C 15-100 avec le grand questionnaire interactif — 472 questions, gratuit en ligne.",
       "nav.home": "Accueil",
       "nav.train": "Formations",
       "nav.docs": "Documentation",
@@ -22,10 +22,10 @@
       "hero.sub":
         "Le grand questionnaire interactif sur la norme NF C 15-100 (2015) — pour réviser avant l'examen, le contrôle ou sur le chantier.",
       "section.quiz.hook":
-        "450 questions pour maîtriser la norme NF C 15-100, pas à pas",
+        "472 questions pour maîtriser la norme NF C 15-100, pas à pas",
       "section.quiz.lead":
         "QCM, Vrai/Faux, explications immédiates et renvoi au texte officiel — sans inscription · classement optionnel avec pseudo.",
-      "section.quiz.perk1": "6 modules · 5 paliers · 75 questions par module",
+      "section.quiz.perk1": "6 modules · 472 questions · 27 visuelles (schémas)",
       "section.quiz.perk2": "Progressez à votre rythme — score à la fin de chaque module",
       "section.quiz.perk3": "Classement Top 50 : entrez avec un pseudo après chaque module",
       "cta.quiz": "Commencer le questionnaire →",
@@ -36,7 +36,7 @@
     ar: {
       "meta.title": "منهج تعلّم سويسري — SwissDZ",
       "meta.desc":
-        "تعلّم معيار NF C 15-100 عبر استبيان تفاعلي ضخم — 450 سؤالاً، مجاني على الموقع.",
+        "تعلّم معيار NF C 15-100 عبر استبيان تفاعلي ضخم — 472 سؤالاً، مجاني على الموقع.",
       "nav.home": "الرئيسية",
       "nav.train": "التكوين",
       "nav.docs": "التوثيق",
@@ -50,10 +50,10 @@
       "hero.sub":
         "استبيان تفاعلي ضخم حول معيار NF C 15-100 (2015) — للمراجعة قبل الامتحان أو التفتيش أو على الورشة.",
       "section.quiz.hook":
-        "450 سؤالاً لإتقان معيار NF C 15-100 خطوة بخطوة",
+        "472 سؤالاً لإتقان معيار NF C 15-100 خطوة بخطوة",
       "section.quiz.lead":
         "اختيار من متعدد، صح/خطأ، تفسير فوري — دون تسجيل · تصنيف اختياري باسم مستعار.",
-      "section.quiz.perk1": "6 وحدات · 5 مستويات · 75 سؤالاً لكل وحدة",
+      "section.quiz.perk1": "6 وحدات · 472 سؤالاً · 27 بصور مخططات",
       "section.quiz.perk2": "تقدّم على وتيرتك — النتيجة في نهاية كل وحدة",
       "section.quiz.perk3": "تصنيف Top 50: أدخل باسم مستعار بعد كل وحدة",
       "cta.quiz": "ابدأ الاستبيان الآن ←",

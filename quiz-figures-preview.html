@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aperçu figures quiz — NF C 15-100</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      line-height: 1.5;
+      padding: 20px 5% 48px;
+    }
+    h1 { color: #facc15; font-size: 1.4rem; margin-bottom: 8px; }
+    .intro { color: #94a3b8; font-size: 0.9rem; max-width: 42rem; margin-bottom: 24px; }
+    .intro a { color: #facc15; }
+    h2 {
+      margin: 28px 0 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(250,204,21,0.35);
+      color: #fde68a;
+      font-size: 1.1rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    figure {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    figure a { display: block; }
+    figure img {
+      display: block;
+      width: 100%;
+      background: #fff;
+      cursor: zoom-in;
+    }
+    figcaption {
+      padding: 10px 12px;
+      font-size: 0.82rem;
+      color: #cbd5e1;
+    }
+    figcaption strong { color: #f8fafc; display: block; margin-bottom: 4px; }
+    .tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(250,204,21,0.15);
+      color: #facc15;
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Aperçu — figures proposées pour le quiz visuel</h1>
+  <p class="intro">
+    Recadrages pour le quiz : <strong>schéma complet</strong>, sans titres « Figure … » ni paragraphes qui donnent la réponse
+    (comme pour les schémas 312A–E déjà en quiz).
+  <a href="quiz-demo-figures.html" style="font-weight:700">▶ Essayer la démo quiz (8 questions)</a>
+  · <a href="quiz-nfc-15-100.html">← Retour au quiz</a>
+  </p>
+
+  <h2>M05 — Volumes salles d'eau &amp; piscines (701 / 702)</h2>
+  <div class="grid" id="m05"></div>
+
+  <h2>M02 — Boucles de défaut (411)</h2>
+  <div class="grid" id="m02"></div>
+
+  <h2>M04 — Parafoudres (534)</h2>
+  <div class="grid" id="m04"></div>
+
+  <h2>M06 — Branchement &amp; GTL (562 / 771)</h2>
+  <div class="grid" id="m06"></div>
+
+  <h2>M01 — Régimes de neutre courant continu (312F / 312G)</h2>
+  <div class="grid" id="m01"></div>
+
+  <h2>Déjà en quiz — régimes de neutre alternatif (312A–E)</h2>
+  <div class="grid" id="done"></div>
+
+  <script>
+    const BASE_PREVIEW = "data/quiz/nf-c15-100-2015/figures-preview/";
+    const BASE_QUIZ = "data/quiz/nf-c15-100-2015/figures/";
+    const items = {
+      m05: [
+        ["preview-701C-douches-cabines-deshabilloir.png", "701C", "Douches : cabines + déshabilloir"],
+        ["preview-701D-douches-cabines-sans-deshabilloir.png", "701D", "Douches : cabines sans déshabilloir"],
+        ["preview-701E-douches-sans-cabine.png", "701E", "Douches sans cabine"],
+        ["preview-702A-piscine-pediluve.png", "702A", "Piscine / pédiluve — volumes"],
+        ["preview-702B-bassin-au-dessus-sol.png", "702B", "Bassin au-dessus du sol"],
+        ["preview-702C-volumes-cloison-plan.png", "702C", "Volumes plan + cloison"],
+        ["preview-702D-volumes-cloison-plan-2.png", "702D", "Volumes plan + cloison (2)"],
+        ["preview-702E-fontaine.png", "702E", "Fontaine — volumes"],
+      ],
+      m02: [
+        ["preview-411A-boucle-tnc-tns.png", "411A", "Boucle défaut TN-C / TN-S"],
+        ["preview-411B-boucle-tt.png", "411B", "Boucle défaut TT"],
+        ["preview-411C-boucle-it-isole.png", "411C", "Premier défaut IT isolé"],
+        ["preview-411D-boucle-it-neutre-terre.png", "411D", "Premier défaut IT neutre à la terre"],
+        ["preview-411E-double-defaut-it.png", "411E", "Double défaut IT"],
+      ],
+      m04: [
+        ["preview-534A-parafoudre-tn.png", "534A", "Parafoudre schéma TN"],
+        ["preview-534B-parafoudre-tt.png", "534B", "Parafoudre schéma TT"],
+        ["preview-534C-parafoudre-it.png", "534C", "Parafoudre schéma IT"],
+      ],
+      m06: [
+        ["preview-562A-branchement-puissance-limitee.png", "562A", "Branchement puissance limitée"],
+        ["preview-562B-branchement-puissance-surveillee.png", "562B", "Branchement puissance surveillée"],
+        ["preview-771A-gtl-parois.png", "771A", "GTL par parois"],
+        ["preview-771B-gtl-goulottes.png", "771B", "GTL goulottes / coffrets"],
+      ],
+      m01: [
+        ["preview-312F-tns-courant-continu.png", "312F", "TN-S courant continu"],
+        ["preview-312G-tnc-courant-continu.png", "312G", "TN-C courant continu"],
+      ],
+      done: [
+        ["m01-fig-312A-tns.png", "312A", "TN-S (quiz actuel)", BASE_QUIZ],
+        ["m01-fig-312B-tncs.png", "312B", "TN-C-S (quiz actuel)", BASE_QUIZ],
+        ["m01-fig-312C-tnc.png", "312C", "TN-C (quiz actuel)", BASE_QUIZ],
+        ["m01-fig-312D-tt.png", "312D", "TT (quiz actuel)", BASE_QUIZ],
+        ["m01-fig-312E-it.png", "312E", "IT (quiz actuel)", BASE_QUIZ],
+      ],
+    };
+    Object.keys(items).forEach(function (id) {
+      const root = document.getElementById(id);
+      items[id].forEach(function (row) {
+        const file = row[0];
+        const fig = row[1];
+        const label = row[2];
+        const base = row[3] || BASE_PREVIEW;
+        const src = base + file;
+        root.innerHTML +=
+          '<figure><a href="' + src + '" target="_blank" rel="noopener">' +
+          '<img src="' + src + '" alt="" loading="lazy" /></a>' +
+          '<figcaption><span class="tag">' + fig + '</span><strong>' + label + '</strong></figcaption></figure>';
+      });
+    });
+  </script>
+</body>
+</html>

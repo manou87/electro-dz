@@ -3,10 +3,11 @@
   "normTitle": "NF C 15-100 (2015) — édition AFNOR",
   "normYear": 2015,
   "pdfUrl": "pdf/francais/nf-c15-100-2015/nf-c15-100-2015.pdf",
-  "bookId": "nf-c15-100-2015",
   "bookTitleFr": "NF C 15-100 (2015) — édition AFNOR",
   "bookTitleAr": "NF C 15-100 (2015) — الطبعة الرسمية AFNOR",
   "bibliothequeUrl": "bibliotheque.html",
+  "totalQuestions": 472,
+  "totalImageQuestions": 27,
   "disclaimerFr": "Quiz de révision pédagogique. Réponses relues sur le PDF NF C 15-100 de la bibliothèque uniquement (pas d'autre source). Ne remplace pas une habilitation officielle ni le texte intégral AFNOR.",
   "disclaimerAr": "اختبار مراجعة تعليمي. الإجابات من PDF NF C 15-100 فقط. لا يغني عن التأهيل الرسمي ولا عن نص المعيار الكامل من AFNOR.",
   "modules": [
@@ -16,7 +17,7 @@
       "titleFr": "Champ d'application & définitions",
       "titleAr": "مجال التطبيق والتعاريف",
       "status": "validated-pdf",
-      "targetQuestions": 75,
+      "targetQuestions": 77,
       "questionsPerLevel": 15,
       "levels": 5,
       "dataFile": "modules/M01_champ_application.json"
@@ -27,7 +28,7 @@
       "titleFr": "Protection des personnes (DDR, contacts)",
       "titleAr": "حماية الأشخاص (قواطع تفاضلية، ملامسة)",
       "status": "validated-pdf",
-      "targetQuestions": 75,
+      "targetQuestions": 80,
       "questionsPerLevel": 15,
       "levels": 5,
       "dataFile": "modules/M02_protection_personnes.json"
@@ -49,7 +50,7 @@
       "titleFr": "Circuits, sections & protections",
       "titleAr": "الدوائر والمقاطع والحماية",
       "status": "validated-pdf",
-      "targetQuestions": 75,
+      "targetQuestions": 78,
       "questionsPerLevel": 15,
       "levels": 5,
       "dataFile": "modules/M04_circuits_protections.json"
@@ -60,7 +61,7 @@
       "titleFr": "Locaux humides & volumes (salles d'eau)",
       "titleAr": "الأماكن الرطبة والحجوم (حمامات)",
       "status": "validated-pdf",
-      "targetQuestions": 75,
+      "targetQuestions": 83,
       "questionsPerLevel": 15,
       "levels": 5,
       "dataFile": "modules/M05_locaux_humides.json"
@@ -71,7 +72,7 @@
       "titleFr": "Tableau, GTL & organisation",
       "titleAr": "اللوحة و GTL والتنظيم",
       "status": "validated-pdf",
-      "targetQuestions": 75,
+      "targetQuestions": 79,
       "questionsPerLevel": 15,
       "levels": 5,
       "dataFile": "modules/M06_tableau_gtl.json"

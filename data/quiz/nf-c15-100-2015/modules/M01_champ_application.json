@@ -595,6 +595,58 @@
       "pdfPage": 37
     },
     {
+      "id": "m01_L2_q16",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "image",
+      "questionFr": "Quel schéma de liaison à la terre en courant continu est représenté sur cette figure ?",
+      "questionAr": "أي مخطط تأريض في التيار المستمر يمثّله هذا الشكل؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures/m01-fig-312F-tns-cc.png",
+      "imageCaptionFr": "Schéma de liaison à la terre — courant continu (sans légende)",
+      "imageCaptionAr": "Schéma de liaison à la terre — courant continu (sans légende)",
+      "optionsFr": [
+        "Schéma TN-S",
+        "Schéma TN-C",
+        "Schéma TT"
+      ],
+      "optionsAr": [
+        "TN-S",
+        "TN-C",
+        "TT"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "PE séparé du conducteur relié à la terre sur tout le schéma → TN-S en courant continu (Figure 312F, § 312.2.4).",
+      "explanationAr": "PE منفصل → TN-S في تيار مستمر.",
+      "normRef": "NF C 15-100 — Figure 312F (§ 312.2.4)",
+      "pdfPage": 76
+    },
+    {
+      "id": "m01_L2_q17",
+      "level": 2,
+      "difficulty": "moyen",
+      "type": "image",
+      "questionFr": "Quel schéma de liaison à la terre en courant continu est représenté sur cette figure ?",
+      "questionAr": "أي مخطط تأريض في التيار المستمر يمثّله هذا الشكل؟",
+      "imageUrl": "data/quiz/nf-c15-100-2015/figures/m01-fig-312G-tnc-cc.png",
+      "imageCaptionFr": "Schéma de liaison à la terre — courant continu (sans légende)",
+      "imageCaptionAr": "Schéma de liaison à la terre — courant continu (sans légende)",
+      "optionsFr": [
+        "Schéma TN-C",
+        "Schéma TN-S",
+        "Schéma IT"
+      ],
+      "optionsAr": [
+        "TN-C",
+        "TN-S",
+        "IT"
+      ],
+      "correctAnswer": 0,
+      "explanationFr": "Conducteur de protection combiné au neutre (PEN) → TN-C en courant continu (Figure 312G).",
+      "explanationAr": "PEN → TN-C في تيار مستمر.",
+      "normRef": "NF C 15-100 — Figure 312G (§ 312.2.4)",
+      "pdfPage": 77
+    },
+    {
       "id": "m01_L3_q01",
       "level": 3,
       "difficulty": "moyen",
