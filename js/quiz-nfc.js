@@ -4,7 +4,7 @@
 (function () {
   const STORAGE_LANG = "electrodz-site-lang";
   const PLAN_URL = "data/quiz/nf-c15-100-2015/plan-modules.json";
-  const QUIZ_BUILD = "20260624l";
+  const QUIZ_BUILD = "20260624m";
   const LOCAL_QUIZ_URL = "http://localhost:8765/quiz-nfc-15-100.html";
 
   const page = document.querySelector(".quiz-page");
@@ -45,11 +45,16 @@
     });
   }
 
+  function siteBasePath() {
+    const p = window.location.pathname.replace(/[^/]*$/, "");
+    return p.endsWith("/") ? p : p + "/";
+  }
+
   function resolveSiteUrl(path) {
     if (!path) return "";
     if (/^https?:\/\//i.test(path)) return path;
-    const base = window.location.href.replace(/[^/]*$/, "");
-    return base + path.replace(/^\//, "");
+    if (path.charAt(0) === "/") return window.location.origin + path;
+    return window.location.origin + siteBasePath() + path.replace(/^\//, "");
   }
 
   function pdfSectionFromQuestion(q) {
@@ -295,16 +300,22 @@
     if (!q.imageUrl) return "";
     const src = resolveSiteUrl(q.imageUrl);
     const cap = t(q.imageCaptionFr, q.imageCaptionAr);
+    const errMsg = t(
+      "Image du schéma indisponible — rechargez la page ou ouvrez le quiz via le site (pas en fichier local).",
+      "صورة المخطط غير متاحة — أعد تحميل الصفحة أو افتح الاختبار عبر الموقع."
+    );
     let html = '<figure class="quiz-figure">';
-    html +=
-      '<button type="button" class="quiz-figure-zoom" data-figure-zoom aria-label="' +
-      escapeHtml(t("Agrandir l'image", "تكبير الصورة")) +
-      '">';
+    html += '<div class="quiz-figure-frame" data-figure-zoom role="button" tabindex="0" aria-label="' +
+      escapeHtml(t("Agrandir l'image", "تكبير الصورة")) + '">';
     html +=
       '<img src="' +
       escapeHtml(src) +
-      '" alt="" class="quiz-figure-img" loading="lazy" decoding="async" />';
-    html += "</button>";
+      '" alt="' +
+      escapeHtml(t("Schéma NF C 15-100", "مخطط NF C 15-100")) +
+      '" class="quiz-figure-img" loading="eager" decoding="async" data-quiz-figure-img onerror="this.classList.add(\'quiz-figure-img--error\');var n=this.nextElementSibling;if(n)n.hidden=false;" />';
+    html +=
+      '<p class="quiz-figure-error" hidden>' + escapeHtml(errMsg) + "</p>";
+    html += "</div>";
     if (cap) {
       html += '<figcaption class="quiz-figure-cap">' + escapeHtml(cap) + "</figcaption>";
     }
@@ -314,11 +325,11 @@
 
   function bindFigureZoom(card) {
     if (!card) return;
-    const btn = card.querySelector("[data-figure-zoom]");
-    if (!btn) return;
-    btn.addEventListener("click", function () {
-      const img = btn.querySelector("img");
-      if (!img || !img.src) return;
+    const frame = card.querySelector("[data-figure-zoom]");
+    if (!frame) return;
+    function openZoom() {
+      const img = frame.querySelector("[data-quiz-figure-img]");
+      if (!img || !img.src || img.classList.contains("quiz-figure-img--error")) return;
       const overlay = document.createElement("div");
       overlay.className = "quiz-figure-overlay";
       overlay.innerHTML =
@@ -336,6 +347,13 @@
       });
       document.body.style.overflow = "hidden";
       document.body.appendChild(overlay);
+    }
+    frame.addEventListener("click", openZoom);
+    frame.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openZoom();
+      }
     });
   }
 
