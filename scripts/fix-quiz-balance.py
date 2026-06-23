@@ -71,8 +71,11 @@ def fix_question(q):
         if quote and stable_seed(qid + "tf") % 2 == 0:
             fake = false_variant(quote)
             if fake != quote:
+                q["statementFr"] = fake
                 q["questionFr"] = (
-                    "Selon la norme NF C 15-100 : « " + fake[:200] + ("…" if len(fake) > 200 else "") + " »"
+                    "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « "
+                    + fake
+                    + " »"
                 )
                 qar = q.get("questionAr", "")
                 if qar.startswith("حسب معيار") or qar.startswith("حسب PDF"):
