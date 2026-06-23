@@ -123,6 +123,13 @@
   padding: 24px;
 }
 
+.quiz-question--full {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  line-height: 1.55;
+}
+
 .quiz-question {
   font-size: 1.15rem;
   font-weight: 600;

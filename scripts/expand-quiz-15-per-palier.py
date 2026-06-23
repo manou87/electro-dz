@@ -84,8 +84,8 @@ def extract_facts(pages):
 def make_tf(module_id, level, idx, stmt, ref, page, neg):
     qid = f"{module_id.lower()}_q{level:02d}_{idx:02d}"
     # Question V/F : énoncé tel que dans le PDF (affirmation)
-    qfr = "Selon la norme NF C 15-100 : « " + stmt[:180] + ("…" if len(stmt) > 180 else "") + " »"
-    qar = "حسب معيار NF C 15-100: «" + stmt[:120] + "»"
+    qfr = "Selon la norme NF C 15-100 : « " + stmt + " »"
+    qar = AR_TF_INTRO
     # Citation exacte du PDF : l'affirmation reproduite est conforme (Vrai).
     correct = True
     efr = f"Texte PDF p. {page} — § {ref}."

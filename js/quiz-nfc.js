@@ -4,7 +4,7 @@
 (function () {
   const STORAGE_LANG = "electrodz-site-lang";
   const PLAN_URL = "data/quiz/nf-c15-100-2015/plan-modules.json";
-  const QUIZ_BUILD = "20260623d";
+  const QUIZ_BUILD = "20260624a";
   const LOCAL_QUIZ_URL = "http://localhost:8765/quiz-nfc-15-100.html";
 
   const page = document.querySelector(".quiz-page");
@@ -270,23 +270,32 @@
   }
 
   function renderQuestionBody(q) {
-    const intro = questionIntro(q);
-    const statement = questionStatement(q);
-    let html = '<p class="quiz-question">' + escapeHtml(intro) + "</p>";
-    if (statement && (q.type === "truefalse" || q.statementFr)) {
+    if (lang === "ar" && q.type === "truefalse" && q.statementFr) {
+      let html =
+        '<p class="quiz-question">' +
+        escapeHtml(
+          q.questionAr && q.questionAr.indexOf("«") >= 0
+            ? q.questionAr
+            : t(
+                "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+                "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟"
+              )
+        ) +
+        "</p>";
       html +=
         '<blockquote class="quiz-statement" lang="fr">' +
         "« " +
-        escapeHtml(statement) +
+        escapeHtml(q.statementFr) +
         " »</blockquote>";
-      if (lang === "ar") {
-        html +=
-          '<p class="quiz-statement-note">' +
-          escapeHtml(t("(extrait NF C 15-100 — français)", "(مقتطف NF C 15-100 — فرنسي)")) +
-          "</p>";
-      }
+      html +=
+        '<p class="quiz-statement-note">' +
+        escapeHtml(t("(extrait NF C 15-100 — français)", "(مقتطف NF C 15-100 — فرنسي)")) +
+        "</p>";
+      return html;
     }
-    return html;
+
+    const full = t(q.questionFr, q.questionAr);
+    return '<p class="quiz-question quiz-question--full">' + escapeHtml(full) + "</p>";
   }
 
   function renderLadder(totalLevels, current) {

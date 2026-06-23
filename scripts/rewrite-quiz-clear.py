@@ -172,7 +172,7 @@ def rewrite_auto_mc(q):
 def rewrite_auto_tf(q):
     quote = extract_quote(q["questionFr"])
     if quote:
-        short = clean_text(quote, 120)
+        short = quote
         q["statementFr"] = short
         q["questionFr"] = (
             "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? "
