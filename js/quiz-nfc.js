@@ -4,7 +4,7 @@
 (function () {
   const STORAGE_LANG = "electrodz-site-lang";
   const PLAN_URL = "data/quiz/nf-c15-100-2015/plan-modules.json";
-  const QUIZ_BUILD = "20260624m";
+  const QUIZ_BUILD = "20260624n";
   const LOCAL_QUIZ_URL = "http://localhost:8765/quiz-nfc-15-100.html";
 
   const page = document.querySelector(".quiz-page");
@@ -298,7 +298,8 @@
 
   function renderQuestionFigure(q) {
     if (!q.imageUrl) return "";
-    const src = resolveSiteUrl(q.imageUrl);
+    let src = resolveSiteUrl(q.imageUrl);
+    src += (src.indexOf("?") >= 0 ? "&" : "?") + "v=" + encodeURIComponent(QUIZ_BUILD);
     const cap = t(q.imageCaptionFr, q.imageCaptionAr);
     const errMsg = t(
       "Image du schéma indisponible — rechargez la page ou ouvrez le quiz via le site (pas en fichier local).",
