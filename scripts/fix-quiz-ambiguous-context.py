@@ -19,12 +19,34 @@ AR_INTRO = "حسب معيار NF C 15-100، هل العبارة التالية �
 # contextFr + statementFr réécrit (sujet explicite)
 MANUAL = {
     "m01_L1_q04": {
-        "contextFr": "§ 133.2.1 Tension — choix des matériels électriques pour l'installation",
-        "contextAr": "§ 133.2.1 الجهد — اختيار المعدات الكهربائية للمنشأة",
+        "contextFr": "§ 133.2.1 Tension",
+        "contextAr": "§ 133.2.1 الجهد",
+        "subjectFr": "Matériels électriques de l'installation",
+        "subjectAr": "المعدات الكهربائية للمنشأة",
         "statementFr": (
-            "Les matériels électriques doivent être appropriés à la catégorie "
+            "Ces matériels doivent être appropriés à la catégorie "
             "de surtension prévue"
         ),
+        "statementDisplayFr": (
+            "Les matériels électriques de l'installation doivent être "
+            "appropriés à la catégorie de surtension prévue"
+        ),
+    },
+    "m03_L1_q07": {
+        "contextFr": "§ 542.3.2 — liaison d'un conducteur de terre à une prise de terre (cette connexion)",
+        "contextAr": "§ 542.3.2 — ربط موصل الأرض بقطب التأريض",
+    },
+    "m03_L1_q13": {
+        "contextFr": "§ 543.4.3 — séparation neutre / PE après un point PEN (cette prescription)",
+        "contextAr": "§ 543.4.3 — فصل المحايد / PE بعد نقطة PEN",
+    },
+    "m06_L4_q07": {
+        "contextFr": "§ 771.558.4.2 — installation des tableaux de répartition divisionnaires dans les salles d'eau",
+        "contextAr": "§ 771.558.4.2 — تركيب لوحات التوزيع الفرعية في غرف المياه",
+    },
+    "m06_L5_q04": {
+        "contextFr": "§ 542.3.2 — liaison d'un conducteur de terre à une prise de terre (cette connexion)",
+        "contextAr": "§ 542.3.2 — ربط موصل الأرض بقطب التأريض",
     },
     "m02_L1_q04": {
         "contextFr": "§ 411.6.3 — contrôleur permanent d'isolement (schéma IT, défaut d'isolement)",
@@ -124,11 +146,19 @@ MANUAL = {
 def apply_fix(q, fix):
     q["contextFr"] = fix["contextFr"]
     q["contextAr"] = fix.get("contextAr", fix["contextFr"])
+    if fix.get("subjectFr"):
+        q["subjectFr"] = fix["subjectFr"]
+        q["subjectAr"] = fix.get("subjectAr", fix["subjectFr"])
+    if fix.get("preambleFr"):
+        q["preambleFr"] = re.sub(r"\s+", " ", fix["preambleFr"]).strip()
+        q["preambleAr"] = fix.get("preambleAr", q["preambleFr"])
+    if fix.get("statementDisplayFr"):
+        q["statementDisplayFr"] = re.sub(r"\s+", " ", fix["statementDisplayFr"]).strip()
     if fix.get("statementFr"):
         q["statementFr"] = re.sub(r"\s+", " ", fix["statementFr"]).strip()
-    st = q.get("statementFr") or ""
+    st = q.get("statementDisplayFr") or q.get("statementFr") or ""
     q["questionFr"] = (
-        f"Concernant : {fix['contextFr']}. {FR_INTRO} « {st} »"
+        f"Concernant : {fix.get('subjectFr') or fix['contextFr']}. {FR_INTRO} « {st} »"
     )
     q["questionFr"] = re.sub(r"\s+", " ", q["questionFr"]).strip()
     q["questionAr"] = AR_INTRO

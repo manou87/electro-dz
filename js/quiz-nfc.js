@@ -4,7 +4,7 @@
 (function () {
   const STORAGE_LANG = "electrodz-site-lang";
   const PLAN_URL = "data/quiz/nf-c15-100-2015/plan-modules.json";
-  const QUIZ_BUILD = "20260624g";
+  const QUIZ_BUILD = "20260624l";
   const LOCAL_QUIZ_URL = "http://localhost:8765/quiz-nfc-15-100.html";
 
   const page = document.querySelector(".quiz-page");
@@ -220,10 +220,30 @@
     return html;
   }
 
-  function moduleFileFromSlug(slug) {
-    const mod = plan.modules.find(function (m) {
+  function normalizeModuleKey(s) {
+    return String(s || "").trim().toLowerCase();
+  }
+
+  function findModule(slug) {
+    if (!plan || !slug) return null;
+    const key = normalizeModuleKey(slug);
+    let mod = plan.modules.find(function (m) {
       return m.slug === slug || m.id === slug;
     });
+    if (mod) return mod;
+    mod = plan.modules.find(function (m) {
+      return normalizeModuleKey(m.slug) === key || normalizeModuleKey(m.id) === key;
+    });
+    if (mod) return mod;
+    return (
+      plan.modules.find(function (m) {
+        return normalizeModuleKey(m.slug).indexOf(key) === 0;
+      }) || null
+    );
+  }
+
+  function moduleFileFromSlug(slug) {
+    const mod = findModule(slug);
     if (mod && mod.dataFile) return "data/quiz/nf-c15-100-2015/" + mod.dataFile;
     return "data/quiz/nf-c15-100-2015/modules/" + slug + ".json";
   }
@@ -325,18 +345,70 @@
       html += renderQuestionFigure(q);
     }
     const ctx = t(q.contextFr, q.contextAr);
-    const intro = t(
-      "Selon la norme NF C 15-100, cette affirmation est-elle correcte ?",
-      "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟"
-    );
-    const statement = q.statementFr || "";
+    const subject = t(q.subjectFr, q.subjectAr);
+    const preamble = t(q.preambleFr, q.preambleAr);
+    let intro;
+    if (subject) {
+      intro = t(
+        "Selon la norme NF C 15-100, concernant " +
+          subject +
+          ", cette affirmation est-elle correcte ?",
+        "حسب معيار NF C 15-100، بخصوص " + subject + "، هل العبارة التالية صحيحة؟"
+      );
+    } else if (preamble) {
+      intro = t(
+        "Cette deuxième phrase est-elle conforme au texte de la norme NF C 15-100 ?",
+        "هل هذه الجملة الثانية مطابقة لنص المعيار NF C 15-100؟"
+      );
+    } else {
+      intro = t(
+        "Selon la norme NF C 15-100, cette affirmation est-elle correcte ?",
+        "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟"
+      );
+    }
+    let statement = q.statementDisplayFr || q.statementFr || "";
+    if (!q.statementDisplayFr && subject && /^Ces matériels\b/i.test(statement)) {
+      statement = statement.replace(/^Ces matériels/i, "Les " + subject.charAt(0).toLowerCase() + subject.slice(1));
+    }
 
-    if (q.type === "truefalse" && (ctx || statement)) {
-      if (ctx) {
+    if (q.type === "truefalse" && (ctx || subject || preamble || statement)) {
+      if (subject) {
+        html +=
+          '<div class="quiz-question-subject" role="note">' +
+          '<span class="quiz-question-subject-label">' +
+          escapeHtml(t("Sujet de la question", "موضوع السؤال")) +
+          "</span>" +
+          "<strong>" +
+          escapeHtml(subject) +
+          "</strong>";
+        if (ctx) {
+          html += '<span class="quiz-question-subject-ref">' + escapeHtml(ctx) + "</span>";
+        }
+        html += "</div>";
+      } else if (ctx) {
         html +=
           '<p class="quiz-question-context"><strong>' +
           escapeHtml(ctx) +
           "</strong></p>";
+      }
+      if (preamble) {
+        html +=
+          '<p class="quiz-norm-preamble-label">' +
+          escapeHtml(
+            t(
+              "Dans la norme, la phrase précédente dit :",
+              "في المعيار، الجملة السابقة تقول:"
+            )
+          ) +
+          "</p>";
+        html +=
+          '<blockquote class="quiz-norm-preamble" lang="fr">« ' +
+          escapeHtml(preamble) +
+          " »</blockquote>";
+        html +=
+          '<p class="quiz-norm-preamble-label">' +
+          escapeHtml(t("Puis la norme ajoute :", "ثم يضيف المعيار:")) +
+          "</p>";
       }
       html += '<p class="quiz-question">' + escapeHtml(intro) + "</p>";
       if (statement) {
@@ -938,9 +1010,7 @@
 
   function moduleMetaFromSlug(slug) {
     if (!plan || !slug) return { slug: slug, id: "" };
-    const mod = plan.modules.find(function (m) {
-      return m.slug === slug || m.id === slug;
-    });
+    const mod = findModule(slug);
     return mod ? { slug: mod.slug, id: mod.id } : { slug: slug, id: "" };
   }
 
