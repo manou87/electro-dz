@@ -4,7 +4,7 @@
 (function () {
   const STORAGE_LANG = "electrodz-site-lang";
   const PLAN_URL = "data/quiz/nf-c15-100-2015/plan-modules.json";
-  const QUIZ_BUILD = "20260624d";
+  const QUIZ_BUILD = "20260624e";
   const LOCAL_QUIZ_URL = "http://localhost:8765/quiz-nfc-15-100.html";
 
   const page = document.querySelector(".quiz-page");
@@ -22,6 +22,8 @@
   let moduleStartedAt = 0;
   let scoreSubmitted = false;
   let moduleReady = false;
+  let quizFinished = false;
+  let lastChosen = null;
   const params = new URLSearchParams(location.search);
   const moduleSlug = params.get("module");
 
@@ -952,6 +954,7 @@
             }
             startBtn.textContent = t("C'est parti ! ✓", "انطلاق! ✓");
             moduleReady = true;
+            quizFinished = false;
             moduleStartedAt = Date.now();
             scoreSubmitted = false;
             qIndex = 0;
@@ -1281,6 +1284,7 @@
   }
 
   function renderWin() {
+    quizFinished = true;
     removeMidQuizSaveBar();
     removeQuizQuitBar();
     const total = moduleData.questions.length;
@@ -1344,8 +1348,9 @@
     }
 
     const q = levelQs[qIndex];
-    answered = false;
-    questionDisplay = buildQuestionDisplay(q);
+    if (!answered) {
+      questionDisplay = buildQuestionDisplay(q);
+    }
 
     let html =
       '<div class="quiz-hero" style="margin-bottom:16px"><h1 style="font-size:1.25rem">' +
@@ -1423,6 +1428,10 @@
         onAnswer(q, parseInt(btn.getAttribute("data-opt"), 10), levelQs.length);
       });
     });
+
+    if (answered && lastChosen !== null) {
+      paintAnswerFeedback(q, lastChosen, levelQs.length);
+    }
   }
 
   function nextButtonLabel(countInLevel) {
@@ -1439,12 +1448,13 @@
     return t("Palier suivant →", "المرحلة التالية ←");
   }
 
-  function onAnswer(q, chosen, countInLevel) {
-    answered = true;
+  function paintAnswerFeedback(q, chosen, countInLevel) {
     const disp = questionDisplay || buildQuestionDisplay(q);
     const correct = chosen === disp.correctBtnIndex;
 
     const fb = root.querySelector("[data-quiz-feedback]");
+    if (!fb) return;
+
     root.querySelectorAll(".quiz-opt").forEach(function (btn, i) {
       btn.disabled = true;
       const ok = i === disp.correctBtnIndex;
@@ -1453,8 +1463,6 @@
         btn.classList.add("quiz-opt--wrong");
       }
     });
-
-    if (correct) score++;
 
     let fbHtml =
       '<div class="quiz-feedback ' +
@@ -1465,8 +1473,7 @@
         ? t("✓ Bonne réponse", "✓ إجابة صحيحة")
         : t("✗ Mauvaise réponse", "✗ إجابة خاطئة")
     );
-    fbHtml +=
-      "<br>" + escapeHtml(t(q.explanationFr, q.explanationAr));
+    fbHtml += "<br>" + escapeHtml(t(q.explanationFr, q.explanationAr));
     fbHtml += renderPdfSourceBlock(q);
     if (q.trapFr && lang !== "ar") {
       fbHtml +=
@@ -1484,8 +1491,42 @@
     updateMidQuizSaveBar();
     fb.querySelector("[data-next]").addEventListener("click", function () {
       qIndex++;
+      answered = false;
+      lastChosen = null;
       renderQuestion();
     });
+  }
+
+  function onAnswer(q, chosen, countInLevel) {
+    answered = true;
+    lastChosen = chosen;
+    const disp = questionDisplay || buildQuestionDisplay(q);
+    if (chosen === disp.correctBtnIndex) score++;
+    paintAnswerFeedback(q, chosen, countInLevel);
+  }
+
+  function rerenderCurrentView() {
+    if (!plan) {
+      run();
+      return;
+    }
+    if (!moduleSlug) {
+      renderHome();
+      return;
+    }
+    if (!moduleData) {
+      run();
+      return;
+    }
+    if (quizFinished) {
+      renderWin();
+      return;
+    }
+    if (!moduleReady) {
+      renderModuleIntro();
+      return;
+    }
+    renderQuestion();
   }
 
   function applyLang(l) {
@@ -1502,7 +1543,7 @@
   document.querySelectorAll(".lang-btn").forEach(function (btn) {
     btn.addEventListener("click", function () {
       applyLang(btn.hasAttribute("data-lang-fr") ? "fr" : "ar");
-      run();
+      rerenderCurrentView();
     });
   });
 
