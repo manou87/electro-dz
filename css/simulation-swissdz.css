@@ -53,6 +53,7 @@
 }
 
 .sim-mod-btn {
+  --sim-mod-accent: #94a3b8;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -62,22 +63,40 @@
   cursor: pointer;
   text-align: start;
   border: 2px solid rgba(255, 255, 255, 0.14);
-  background: linear-gradient(145deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.9) 100%);
+  border-top: 3px solid var(--sim-mod-accent);
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.07) 0%, rgba(15, 23, 42, 0.9) 100%);
   color: #e2e8f0;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
-  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.sim-mod-btn[data-mod="1"] {
+  --sim-mod-accent: #e30613;
+}
+
+.sim-mod-btn[data-mod="3"] {
+  --sim-mod-accent: #34d399;
 }
 
 .sim-mod-btn:hover {
   transform: translateY(-2px);
-  border-color: rgba(250, 204, 21, 0.55);
-  box-shadow: 0 8px 28px rgba(250, 204, 21, 0.12);
+  border-color: rgba(255, 255, 255, 0.22);
+  border-top-color: var(--sim-mod-accent);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.09) 0%, rgba(15, 23, 42, 0.92) 100%);
 }
 
 .sim-mod-btn.active {
-  border-color: #e30613;
-  background: linear-gradient(145deg, rgba(227, 6, 19, 0.28) 0%, rgba(127, 29, 29, 0.35) 100%);
-  box-shadow: 0 8px 32px rgba(227, 6, 19, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  border-color: color-mix(in srgb, var(--sim-mod-accent) 55%, transparent);
+  border-top-color: var(--sim-mod-accent);
+  background: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--sim-mod-accent) 14%, transparent) 0%,
+    rgba(15, 23, 42, 0.94) 100%
+  );
+  box-shadow:
+    0 8px 28px color-mix(in srgb, var(--sim-mod-accent) 28%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .sim-mod-icon {
@@ -92,9 +111,19 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.sim-mod-btn[data-mod="1"] .sim-mod-icon {
+  background: rgba(227, 6, 19, 0.12);
+  border-color: rgba(227, 6, 19, 0.35);
+}
+
+.sim-mod-btn[data-mod="3"] .sim-mod-icon {
+  background: rgba(52, 211, 153, 0.12);
+  border-color: rgba(52, 211, 153, 0.35);
+}
+
 .sim-mod-btn.active .sim-mod-icon {
-  background: rgba(227, 6, 19, 0.25);
-  border-color: rgba(250, 204, 21, 0.35);
+  background: color-mix(in srgb, var(--sim-mod-accent) 18%, transparent);
+  border-color: color-mix(in srgb, var(--sim-mod-accent) 45%, transparent);
 }
 
 .sim-mod-text {
@@ -113,7 +142,7 @@
 }
 
 .sim-mod-btn.active .sim-mod-title {
-  color: #fef08a;
+  color: #f8fafc;
 }
 
 .sim-mod-desc {
@@ -124,7 +153,7 @@
 }
 
 .sim-mod-btn.active .sim-mod-desc {
-  color: #fecaca;
+  color: #cbd5e1;
 }
 
 .sim-lang {
