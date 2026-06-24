@@ -18,10 +18,6 @@
       <span>Swiss<span class="accent">DZ</span></span>
     </a>
     <span class="sim-title" data-i18n="title">Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel</span>
-    <div class="sim-modules" role="tablist" aria-label="Modules">
-      <button type="button" class="sim-mod-btn active" data-mod="1" data-i18n="mod.tableau">Tableau</button>
-      <button type="button" class="sim-mod-btn" data-mod="3" data-i18n="mod.ar">Atelier</button>
-    </div>
     <div class="sim-lang">
       <button type="button" class="lang-btn active" data-lang="fr" aria-label="Français">FR</button>
       <button type="button" class="lang-btn" data-lang="ar" aria-label="العربية">AR</button>
@@ -29,6 +25,22 @@
   </header>
 
   <div class="sim-workspace">
+    <nav class="sim-module-bar" role="tablist" aria-label="Modules du simulateur">
+      <button type="button" class="sim-mod-btn active" data-mod="1">
+        <span class="sim-mod-icon" aria-hidden="true">⚡</span>
+        <span class="sim-mod-text">
+          <span class="sim-mod-title" data-i18n="mod.tableau">Tableau</span>
+          <span class="sim-mod-desc" data-i18n="mod.tableau.desc">Glissez vos disjoncteurs · unifilaire en 1 clic</span>
+        </span>
+      </button>
+      <button type="button" class="sim-mod-btn" data-mod="3">
+        <span class="sim-mod-icon" aria-hidden="true">🔧</span>
+        <span class="sim-mod-text">
+          <span class="sim-mod-title" data-i18n="mod.ar">Atelier</span>
+          <span class="sim-mod-desc" data-i18n="mod.ar.desc">Câblage virtuel · scénarios pro & débutant</span>
+        </span>
+      </button>
+    </nav>
     <div class="sim-frame-wrap">
       <p class="sim-loading" id="simLoading" data-i18n="loading">Chargement du simulateur…</p>
       <iframe
@@ -55,7 +67,9 @@
           loading: "Chargement du simulateur…",
           footer: "SwissDZ · NFC 15-100 · IEC 60364. Toute installation réelle doit être vérifiée par un professionnel habilité.",
           "mod.tableau": "Tableau",
+          "mod.tableau.desc": "Glissez vos disjoncteurs · unifilaire en 1 clic",
           "mod.ar": "Atelier",
+          "mod.ar.desc": "Câblage virtuel · scénarios pro & débutant",
         },
         ar: {
           "meta.title": "محاكي SwissDZ — لوحة، ورشة ومخطط أحادي احترافي | Electro DZ",
@@ -64,7 +78,9 @@
           loading: "جاري تحميل المحاكي…",
           footer: "SwissDZ · NFC 15-100 · IEC 60364. أي تركيب حقيقي يجب أن يتحقق منه مختص مؤهل.",
           "mod.tableau": "لوحة",
+          "mod.tableau.desc": "اسحب القواطع · مخطط أحادي بضغطة واحدة",
           "mod.ar": "ورشة",
+          "mod.ar.desc": "تمديدات افتراضية · سيناريوهات احترافية ومبتدئة",
         },
       };
 
