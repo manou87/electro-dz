@@ -642,7 +642,7 @@ html.theme-electric-neon .btn-dl:hover {
   box-shadow: 0 0 14px rgba(34, 211, 238, 0.35) !important;
 }
 
-html.theme-electric-neon button.active,
+html.theme-electric-neon button.active:not(.sim-mod-btn),
 html.theme-electric-neon .btn.active,
 html.theme-electric-neon .picker-mode-btn.active,
 html.theme-electric-neon .sub-type-btn.active,
