@@ -65,11 +65,18 @@
     return "https://pfalstad.github.io/circuitjs1/circuitjs.html";
   }
 
+  var FALSTAD_LANG = "fr";
+
+  function withLang(url) {
+    var sep = url.indexOf("?") >= 0 ? "&" : "?";
+    return url + sep + "lang=" + FALSTAD_LANG + "&_v=" + Date.now();
+  }
+
   function loadFrame() {
     showLoading();
     var url = currentUrl();
     frame.removeAttribute("srcdoc");
-    frame.src = url + (url.indexOf("?") >= 0 ? "&" : "?") + "_v=" + Date.now();
+    frame.src = withLang(url);
 
     if (loadTimer) clearTimeout(loadTimer);
     loadTimer = setTimeout(function () {
@@ -104,7 +111,7 @@
 
   if (btnOpenBrowser) {
     btnOpenBrowser.addEventListener("click", function () {
-      window.open(onlineFallbackUrl(), "_blank", "noopener,noreferrer");
+      window.open(withLang(onlineFallbackUrl()), "_blank", "noopener,noreferrer");
     });
   }
 
