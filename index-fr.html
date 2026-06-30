@@ -148,7 +148,16 @@
       .hero-surprise{display:none}
       .hero-sub{font-size:.72rem}
     }
-    .hero-cta{flex-shrink:0;display:flex;gap:8px;flex-wrap:wrap}
+    .hero-cta{
+      flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:6px;
+    }
+    .hero-app-line{
+      font-size:.78rem;color:var(--accent);font-weight:700;line-height:1.35;
+      text-align:end;max-width:13rem;margin:0;
+    }
+    html[dir="rtl"] .hero-cta{align-items:flex-start}
+    html[dir="rtl"] .hero-app-line{text-align:start}
+    .hero-store-btns{display:flex;gap:8px;flex-wrap:wrap}
     .btn-dl{
       display:inline-flex;align-items:center;justify-content:center;
       width:42px;height:42px;padding:0;border-radius:10px;
@@ -156,7 +165,8 @@
     }
     .btn-dl .store-ico{width:22px;height:22px;display:block}
     .btn-dl:hover{transform:translateY(-1px);box-shadow:0 6px 16px var(--accent-glow)}
-    .btn-dl--play{background:var(--accent);color:#0f172a;border:1px solid var(--accent)}
+    .btn-dl--play{background:var(--surface);border:1px solid var(--border)}
+    .btn-dl--play:hover{border-color:var(--accent);box-shadow:0 6px 16px rgba(0,0,0,0.3)}
     .btn-dl--apple{
       background:var(--surface);color:var(--text);
       border:1px solid var(--border);
@@ -463,12 +473,20 @@
       </div>
       
       <div class="hero-cta">
+        <p class="hero-app-line" data-i18n="hero.appLine">Application gratuite — Android &amp; iPhone</p>
+        <div class="hero-store-btns">
         <a href="https://play.google.com/store/apps/details?id=com.electrodz.app" class="btn-dl btn-dl--play" target="_blank" rel="noopener noreferrer" data-i18n-aria="hero.androidLabel" aria-label="Télécharger sur Google Play">
-          <svg class="store-ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 20.5V3.5c0-.69.49-1.21 1.17-1.21.32 0 .63.12.86.35l13.13 7.5c.72.42.72 1.46 0 1.88L5.03 20.15c-.23.23-.54.35-.86.35-.68 0-1.17-.52-1.17-1.21z"/></svg>
+          <svg class="store-ico store-ico--play" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="#32bb07" d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.61 3,21.09 3,20.5Z"/>
+            <path fill="#f9ab00" d="M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12Z"/>
+            <path fill="#e94235" d="M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81Z"/>
+            <path fill="#487fef" d="M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
+          </svg>
         </a>
         <a href="https://apps.apple.com/ch/app/electrodz/id6752301246?l=fr-FR" class="btn-dl btn-dl--apple" target="_blank" rel="noopener noreferrer" data-i18n-aria="hero.appleLabel" aria-label="Télécharger sur l'App Store">
           <svg class="store-ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
         </a>
+        </div>
       </div>
     </section>
 
