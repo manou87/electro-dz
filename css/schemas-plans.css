@@ -56,6 +56,10 @@
   min-height: calc(100vh - 88px);
 }
 
+.falstad-page .schemas-editor-wrap iframe {
+  touch-action: none;
+}
+
 .falstad-error {
   position: absolute;
   inset: 0;
