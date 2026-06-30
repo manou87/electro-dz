@@ -9,6 +9,8 @@
     { value: "default", labelFr: "Ordre du catalogue", labelAr: "الترتيب الافتراضي" },
     { value: "date-desc", labelFr: "Plus récent d'abord", labelAr: "الأحدث أولاً" },
     { value: "date-asc", labelFr: "Plus ancien d'abord", labelAr: "الأقدم أولاً" },
+    { value: "title-asc", labelFr: "A → Z", labelAr: "أ → ي" },
+    { value: "title-desc", labelFr: "Z → A", labelAr: "ي → أ" },
   ];
 
   const els = {
@@ -222,35 +224,57 @@
     return hay.indexOf(q) !== -1;
   }
 
-  function bookSortYear(book) {
-    const y = Number(book.year);
-    if (Number.isFinite(y) && y > 0) return y;
+  function bookTitleKey(book) {
+    const title =
+      lang === "ar"
+        ? book.titleAr || book.titleFr || book.id || ""
+        : book.titleFr || book.titleAr || book.id || "";
+    return normalize(title);
+  }
+
+  function bookSortTimestamp(book) {
     if (book.addedDate) {
-      const d = Date.parse(book.addedDate);
-      if (Number.isFinite(d)) return d / 86400000;
+      const d = Date.parse(String(book.addedDate));
+      if (Number.isFinite(d)) return d;
     }
-    return -1;
+    if (Number.isFinite(book._catalogIndex) && book._catalogIndex >= 0) {
+      const base = catalog && catalog.updated ? Date.parse(catalog.updated + "T12:00:00Z") : Date.parse("2024-01-01T12:00:00Z");
+      if (Number.isFinite(base)) {
+        return base + book._catalogIndex * 60000;
+      }
+      return book._catalogIndex;
+    }
+    const y = Number(book.year);
+    if (Number.isFinite(y) && y > 0) {
+      const d = Date.parse(y + "-07-01T12:00:00Z");
+      if (Number.isFinite(d)) return d;
+    }
+    return 0;
+  }
+
+  function compareTitles(a, b) {
+    const ta = bookTitleKey(a);
+    const tb = bookTitleKey(b);
+    const cmp = ta.localeCompare(tb, lang === "ar" ? "ar" : "fr", { sensitivity: "base" });
+    if (cmp !== 0) return cmp;
+    return String(a.id || "").localeCompare(String(b.id || ""));
   }
 
   function sortBooks(books) {
     if (sortBy === "default") return books.slice();
     const list = books.slice();
     list.sort(function (a, b) {
-      const ya = bookSortYear(a);
-      const yb = bookSortYear(b);
-      const aUnk = ya < 0;
-      const bUnk = yb < 0;
-      if (aUnk && bUnk) {
-        return String(a.titleFr || a.id || "").localeCompare(String(b.titleFr || b.id || ""));
-      }
-      if (aUnk) return 1;
-      if (bUnk) return -1;
+      if (sortBy === "title-asc") return compareTitles(a, b);
+      if (sortBy === "title-desc") return compareTitles(b, a);
+
+      const ta = bookSortTimestamp(a);
+      const tb = bookSortTimestamp(b);
       if (sortBy === "date-desc") {
-        if (yb !== ya) return yb - ya;
+        if (tb !== ta) return tb - ta;
       } else if (sortBy === "date-asc") {
-        if (ya !== yb) return ya - yb;
+        if (ta !== tb) return ta - tb;
       }
-      return String(a.titleFr || a.id || "").localeCompare(String(b.titleFr || b.id || ""));
+      return compareTitles(a, b);
     });
     return list;
   }
@@ -438,6 +462,19 @@
     const meta = [];
     if (book.pages) meta.push(t(book.pages + " p.", book.pages + " ص."));
     if (book.year) meta.push(String(book.year));
+    if (book.addedDate && (sortBy === "date-desc" || sortBy === "date-asc")) {
+      try {
+        const d = new Date(book.addedDate + "T12:00:00");
+        meta.push(
+          t(
+            "Ajouté le " + d.toLocaleDateString("fr-CH"),
+            "أُضيف في " + d.toLocaleDateString("ar-DZ")
+          )
+        );
+      } catch (_e) {
+        meta.push(book.addedDate);
+      }
+    }
     if (meta.length) {
       const pMeta = document.createElement("p");
       pMeta.className = "book-extra";
@@ -878,7 +915,11 @@
               ? t("Triés par date (récent)", "مرتبة حسب التاريخ (الأحدث)")
               : sortBy === "date-asc"
                 ? t("Triés par date (ancien)", "مرتبة حسب التاريخ (الأقدم)")
-                : t("Tous les ouvrages", "كل الكتب");
+                : sortBy === "title-asc"
+                  ? t("Triés A → Z", "مرتبة أ → ي")
+                  : sortBy === "title-desc"
+                    ? t("Triés Z → A", "مرتبة ي → أ")
+                    : t("Tous les ouvrages", "كل الكتب");
         }
       }
       renderGrid(els.grid, all);
@@ -897,6 +938,11 @@
       })
       .then(function (data) {
         catalog = data;
+        if (Array.isArray(catalog.books)) {
+          catalog.books.forEach(function (book, index) {
+            book._catalogIndex = index;
+          });
+        }
         if (els.updated && data.updated) {
           els.updated.textContent = t(
             "Catalogue mis à jour le " + data.updated,

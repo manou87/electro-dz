@@ -314,6 +314,7 @@ for (const entry of IMPORTS) {
     lang: entry.lang,
     pages: 0,
     year: entry.year || 0,
+    addedDate: new Date().toISOString().slice(0, 10),
     pdfUrl,
     featured: !!entry.featured,
     coverImageFr: `assets/covers/${entry.id}-fr.svg`,
