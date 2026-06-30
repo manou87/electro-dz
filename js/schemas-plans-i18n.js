@@ -1,19 +1,19 @@
 /**
- * Plans et schémas électriques (Falstad) — FR / AR
+ * Simulation professionnelle (circuitjs) — FR / AR
  */
 (function () {
   var STORAGE = "electrodz-site-lang";
 
   var T = {
     fr: {
-      "meta.title": "Plans et schémas électriques — SwissDZ",
+      "meta.title": "Simulation professionnelle — SwissDZ",
       "meta.desc":
-        "Simulateur Falstad intégré : circuits électriques interactifs, schémas, essais AC/DC — comme dans l'app Electro DZ.",
+        "Simulateur professionnel intégré : circuits électriques interactifs, schémas, essais AC/DC — comme dans l'app Electro DZ.",
       "brand": "SwissDZ",
-      "page.title": "Plans et schémas électriques",
+      "page.title": "Simulation professionnelle",
       "loading": "Chargement du simulateur…",
       "footer":
-        "Simulateur intégré : Falstad Circuit (circuitjs) — comme dans l'application Electro DZ.",
+        "Simulateur de circuits intégré — comme dans l'application Electro DZ.",
       "error.title": "Impossible de charger le simulateur",
       "error.msg":
         "Causes possibles : connexion internet faible ou ressource temporairement indisponible. Réessayez ou ouvrez dans le navigateur.",
@@ -21,14 +21,14 @@
       "error.browser": "Ouvrir dans le navigateur",
     },
     ar: {
-      "meta.title": "المخططات والرسومات الكهربائية — SwissDZ",
+      "meta.title": "محاكاة احترافية — SwissDZ",
       "meta.desc":
-        "محاكي Falstad مدمج: دوائر كهربائية تفاعلية ومخططات وتجارب AC/DC — كما في تطبيق Electro DZ.",
+        "محاكي احترافي مدمج: دوائر كهربائية تفاعلية ومخططات وتجارب AC/DC — كما في تطبيق Electro DZ.",
       "brand": "SwissDZ",
-      "page.title": "المخططات والرسومات الكهربائية",
+      "page.title": "محاكاة احترافية",
       "loading": "جاري تحميل المحاكي…",
       "footer":
-        "محاكي مدمج: Falstad Circuit (circuitjs) — كما في تطبيق Electro DZ.",
+        "محاكي دوائر مدمج — كما في تطبيق Electro DZ.",
       "error.title": "تعذر تحميل المحاكي",
       "error.msg":
         "الأسباب المحتملة: اتصال إنترنت ضعيف أو مورد غير متاح مؤقتاً. أعد المحاولة أو افتح في المتصفح.",
