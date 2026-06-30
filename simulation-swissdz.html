@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="js/theme-electric-neon.js"></script>
-  <meta name="description" content="Simulateur SwissDZ — Premier simulateur pour les électriciens en Algérie : tableau, atelier & schéma unifilaire professionnel" />
+  <meta name="description" content="Simulateur SwissDZ — tableau électrique, atelier virtuel & schéma unifilaire professionnel" />
   <meta name="robots" content="index, follow"/>
   <title>Simulateur SwissDZ — tableau, atelier & unifilaire pro | Electro DZ</title>
   <link rel="icon" href="assets/app-icon.png" type="image/png" />
-  <link rel="stylesheet" href="css/simulation-swissdz.css?v=20260625c" />
+  <link rel="stylesheet" href="css/simulation-swissdz.css?v=20260630a" />
   <link rel="canonical" href="https://electro-dz.com/simulation-swissdz.html" />
 </head>
 <body class="sim-page">
@@ -17,7 +17,6 @@
       <img src="assets/app-icon.png" alt="" width="32" height="32" decoding="async" />
       <span>Swiss<span class="accent">DZ</span></span>
     </a>
-    <span class="sim-title" data-i18n="title">Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel</span>
     <div class="sim-lang">
       <button type="button" class="lang-btn active" data-lang="fr" aria-label="Français">FR</button>
       <button type="button" class="lang-btn" data-lang="ar" aria-label="العربية">AR</button>
@@ -62,8 +61,7 @@
       var T = {
         fr: {
           "meta.title": "Simulateur SwissDZ — tableau, atelier & unifilaire pro | Electro DZ",
-          "meta.desc": "Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel.",
-          title: "Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel",
+          "meta.desc": "Simulateur SwissDZ — tableau électrique, atelier virtuel & schéma unifilaire professionnel.",
           loading: "Chargement du simulateur…",
           footer: "SwissDZ · NFC 15-100 · IEC 60364. Toute installation réelle doit être vérifiée par un professionnel habilité.",
           "mod.tableau": "Tableau",
@@ -73,8 +71,7 @@
         },
         ar: {
           "meta.title": "محاكي SwissDZ — لوحة، ورشة ومخطط أحادي احترافي | Electro DZ",
-          "meta.desc": "أول محاكي للكهربائيين في الجزائر — لوحة كهربائية، ورشة افتراضية ومخطط أحادي الطور احترافي.",
-          title: "أول محاكي للكهربائيين في الجزائر — لوحة، ورشة ومخطط أحادي الطور احترافي",
+          "meta.desc": "محاكي SwissDZ — لوحة كهربائية، ورشة افتراضية ومخطط أحادي الطور احترافي.",
           loading: "جاري تحميل المحاكي…",
           footer: "SwissDZ · NFC 15-100 · IEC 60364. أي تركيب حقيقي يجب أن يتحقق منه مختص مؤهل.",
           "mod.tableau": "لوحة",
@@ -118,24 +115,52 @@
       var frame = document.getElementById("simFrame");
       var loading = document.getElementById("simLoading");
       var activeMod = "1";
+      var frameReady = false;
+
+      function prefetchAtelier() {
+        fetch("simulation-swissdz/evc-lib/manifest.json", { cache: "force-cache" })
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (data) {
+            if (data) {
+              try { sessionStorage.setItem("evc-manifest", JSON.stringify(data)); } catch (e) {}
+            }
+          })
+          .catch(function () {});
+      }
+
+      if ("requestIdleCallback" in window) {
+        requestIdleCallback(prefetchAtelier);
+      } else {
+        setTimeout(prefetchAtelier, 1500);
+      }
 
       function loadModule(mod) {
         activeMod = mod;
-        if (loading) loading.hidden = false;
-        if (frame) frame.src = "simulation-swissdz/index.html?embed=1&m=" + mod;
         document.querySelectorAll(".sim-mod-btn").forEach(function (btn) {
           btn.classList.toggle("active", btn.getAttribute("data-mod") === mod);
         });
+        if (frameReady && frame && frame.contentWindow) {
+          frame.contentWindow.postMessage({ type: "swissdz-set-module", mod: mod }, "*");
+          return;
+        }
+        if (loading) loading.hidden = false;
+        if (frame) frame.src = "simulation-swissdz/index.html?embed=1&m=" + mod;
       }
 
       document.querySelectorAll(".sim-mod-btn").forEach(function (btn) {
+        var mod = btn.getAttribute("data-mod");
+        if (mod === "3") {
+          btn.addEventListener("mouseenter", prefetchAtelier, { once: true });
+          btn.addEventListener("focus", prefetchAtelier, { once: true });
+        }
         btn.addEventListener("click", function () {
-          loadModule(btn.getAttribute("data-mod"));
+          loadModule(mod);
         });
       });
 
       if (frame && loading) {
         frame.addEventListener("load", function () {
+          frameReady = true;
           loading.hidden = true;
         });
       }
