@@ -1,69 +1,39 @@
 /**
- * Schémas et plans — FR / AR
+ * Plans et schémas électriques (Falstad) — FR / AR
  */
 (function () {
   var STORAGE = "electrodz-site-lang";
 
   var T = {
     fr: {
-      "meta.title": "Schémas et plans — SwissDZ",
+      "meta.title": "Plans et schémas électriques — SwissDZ",
       "meta.desc":
-        "Éditeur professionnel de schémas unifilaires et plans (diagrams.net) — export, impression, infos chantier.",
+        "Simulateur Falstad intégré : circuits électriques interactifs, schémas, essais AC/DC — comme dans l'app Electro DZ.",
       "brand": "SwissDZ",
-      "page.title": "Schémas et plans",
-      "loading": "Chargement de l'éditeur…",
-      "status.ready": "Prêt",
-      "status.saved": "Enregistré",
-      "status.dirty": "Modifications…",
-      "btn.new": "Nouveau",
-      "btn.open": "Ouvrir",
-      "btn.save": "Enregistrer",
-      "btn.print": "Imprimer",
-      "btn.png": "PNG",
-      "btn.svg": "SVG",
-      "btn.pdf": "PDF",
-      "btn.meta": "Infos chantier",
-      "meta.title": "Informations du dossier",
-      "meta.project": "Nom du projet / chantier",
-      "meta.client": "Client",
-      "meta.site": "Adresse / site",
-      "meta.author": "Réalisé par",
-      "meta.date": "Date",
-      "meta.notes": "Notes / remarques",
-      "confirm.new": "Créer un nouveau schéma ? Les modifications non enregistrées seront perdues.",
+      "page.title": "Plans et schémas électriques",
+      "loading": "Chargement du simulateur…",
       "footer":
-        "Éditeur intégré : diagrams.net (draw.io) — logiciel open source. Symboles électriques via bibliothèques intégrées.",
-      "print.title": "Schéma — SwissDZ",
+        "Simulateur intégré : Falstad Circuit (circuitjs) — comme dans l'application Electro DZ.",
+      "error.title": "Impossible de charger le simulateur",
+      "error.msg":
+        "Causes possibles : connexion internet faible ou ressource temporairement indisponible. Réessayez ou ouvrez dans le navigateur.",
+      "error.retry": "Réessayer",
+      "error.browser": "Ouvrir dans le navigateur",
     },
     ar: {
-      "meta.title": "مخططات ورسوم — SwissDZ",
+      "meta.title": "المخططات والرسومات الكهربائية — SwissDZ",
       "meta.desc":
-        "محرر احترافي للمخططات أحادية الخط والمخططات (diagrams.net) — تصدير وطباعة ومعلومات الورشة.",
+        "محاكي Falstad مدمج: دوائر كهربائية تفاعلية ومخططات وتجارب AC/DC — كما في تطبيق Electro DZ.",
       "brand": "SwissDZ",
-      "page.title": "مخططات ورسوم",
-      "loading": "جاري تحميل المحرر…",
-      "status.ready": "جاهز",
-      "status.saved": "تم الحفظ",
-      "status.dirty": "تعديلات…",
-      "btn.new": "جديد",
-      "btn.open": "فتح",
-      "btn.save": "حفظ",
-      "btn.print": "طباعة",
-      "btn.png": "PNG",
-      "btn.svg": "SVG",
-      "btn.pdf": "PDF",
-      "btn.meta": "معلومات الورشة",
-      "meta.title": "معلومات الملف",
-      "meta.project": "اسم المشروع / الورشة",
-      "meta.client": "الزبون",
-      "meta.site": "العنوان / الموقع",
-      "meta.author": "أعدّه",
-      "meta.date": "التاريخ",
-      "meta.notes": "ملاحظات",
-      "confirm.new": "إنشاء مخطط جديد؟ ستُفقد التعديلات غير المحفوظة.",
+      "page.title": "المخططات والرسومات الكهربائية",
+      "loading": "جاري تحميل المحاكي…",
       "footer":
-        "محرر مدمج: diagrams.net (draw.io) — برمجية مفتوحة المصدر. رموز كهربائية عبر المكتبات المدمجة.",
-      "print.title": "مخطط — SwissDZ",
+        "محاكي مدمج: Falstad Circuit (circuitjs) — كما في تطبيق Electro DZ.",
+      "error.title": "تعذر تحميل المحاكي",
+      "error.msg":
+        "الأسباب المحتملة: اتصال إنترنت ضعيف أو مورد غير متاح مؤقتاً. أعد المحاولة أو افتح في المتصفح.",
+      "error.retry": "إعادة المحاولة",
+      "error.browser": "فتح في المتصفح",
     },
   };
 
