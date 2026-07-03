@@ -403,6 +403,18 @@
       .social-grid{grid-template-columns:repeat(2,1fr)}
       .quick-grid{grid-template-columns:repeat(4,1fr);min-height:min(62vh,480px)}
     }
+    @media(max-width:768px){
+      .hero{flex-direction:column;align-items:stretch;gap:10px}
+      .hero-text{flex:none;width:100%;min-width:0}
+      .hero-text .hero-sub{max-width:none}
+      .hero-cta{width:100%;justify-content:flex-start}
+      .hero-app-line{white-space:normal;width:100%}
+      .en-hero-inner{flex-direction:column;align-items:stretch;gap:10px}
+      .en-hero-inner .hero-text{flex:none;width:100%}
+      .en-hero-inner .hero-sub{max-width:none}
+      .en-hero-inner .hero-cta{width:100%;justify-content:flex-start}
+      .en-hero-inner .hero-app-line{white-space:normal;width:100%}
+    }
     @media(max-width:520px){
       .quick-grid{
         grid-template-columns:repeat(2,1fr);
@@ -416,8 +428,6 @@
       .quick-item .ico-hint{font-size:.52rem;max-width:9.5rem}
       .spotlight-grid,.hub-grid{grid-template-columns:1fr}
       .spot-card .ico-wrap{display:none}
-      .hero-text p{white-space:normal}
-      .hero{flex-direction:column;align-items:flex-start;gap:6px}
     }
   </style>
 </head>
