@@ -182,6 +182,7 @@ async function runAllSql() {
     return;
   }
   await runSqlFile('visitor-stats.sql');
+  await runSqlFile('visitor-stats-by-country.sql');
   await runSqlFile('pdf-stats-and-favorites.sql');
   await runSqlFile('site-setup.sql');
 }
