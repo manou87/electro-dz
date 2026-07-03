@@ -395,6 +395,12 @@
     .compare-note a{color:var(--accent);font-weight:700;text-decoration:underline}
 
     .footer{text-align:center;padding:28px 5% 40px;border-top:1px solid var(--border);color:var(--muted);font-size:.82rem}
+    .footer-bottom{
+      margin:0;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+      gap:2px 8px;line-height:1.45;
+    }
+    .footer-dot{opacity:.42}
+    .footer-signature{font-size:inherit;opacity:.88}
     .visitor-stats{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 14px;margin-top:10px;font-size:.78rem}
     .visitor-stats strong{color:var(--accent);font-weight:800;font-variant-numeric:tabular-nums}
     .visitor-sep{opacity:.45}
@@ -739,7 +745,11 @@
   </div>
 
   <footer class="footer">
-    <p data-i18n="footer">© 2026 SwissDZ — electro-dz.com</p>
+    <p class="footer-bottom">
+      <span data-i18n="footer">© 2026 SwissDZ — electro-dz.com</span>
+      <span class="footer-dot" aria-hidden="true">·</span>
+      <span class="footer-signature" data-i18n="footer.signature" lang="ar" dir="rtl">من طرف أخوكم عثمان كهربائي جزائري في سويسرا لا تنسونا من صالح دعائكم</span>
+    </p>
   </footer>
 
   <script src="js/site-config.js"></script>
