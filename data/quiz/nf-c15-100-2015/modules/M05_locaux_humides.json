@@ -496,126 +496,82 @@
       "id": "m05_L2_q11",
       "level": 2,
       "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Un forum de discussion en ligne",
-        "Aucun texte normatif",
-        "Un catalogue fabricant uniquement"
-      ],
-      "optionsAr": [
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "منتدى إنترنت",
-        "لا وثيقة معيارية",
-        "كتالوج شركة فقط"
-      ],
-      "correctAnswer": 0,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 380).",
-      "explanationAr": "راجع PDF ص. 380.",
-      "normRef": "NF C 15-100 (p. 380)",
-      "pdfPage": 380
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « La charge doit être déconnectée pendant l'essai. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation reprend le texte de la norme NF C 15-100. Référence : NF C 15-100 — § NF C 15-100 (p. 375) — page 375 du PDF.",
+      "explanationAr": "نعم: العبارة مطابقة لنص المعيار NF C 15-100. المرجع: NF C 15-100 — § NF C 15-100 (p. 375) — ص. 375.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 375)",
+      "pdfPage": 375,
+      "statementFr": "La charge doit être déconnectée pendant l'essai."
     },
     {
       "id": "m05_L2_q12",
       "level": 2,
       "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Un catalogue fabricant uniquement",
-        "Un forum de discussion en ligne",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Aucun texte normatif"
-      ],
-      "optionsAr": [
-        "كتالوج شركة فقط",
-        "منتدى إنترنت",
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "لا وثيقة معيارية"
-      ],
-      "correctAnswer": 2,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 382).",
-      "explanationAr": "راجع PDF ص. 382.",
-      "normRef": "NF C 15-100 (p. 382)",
-      "pdfPage": 382
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « La source de courant utilisée pour l'essai ne doit pas être séparée du réseau de distribution (par exemple par un transformateur à deux enroulements). »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). Référence : NF C 15-100 — § NF C 15-100 (p. 376) — page 376 du PDF.",
+      "explanationAr": "لا: العبارة غير مطابقة لنص المعيار (فخ). المرجع: NF C 15-100 — § NF C 15-100 (p. 376) — ص. 376.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 376)",
+      "pdfPage": 376,
+      "statementFr": "La source de courant utilisée pour l'essai ne doit pas être séparée du réseau de distribution (par exemple par un transformateur à deux enroulements)."
     },
     {
       "id": "m05_L2_q13",
       "level": 2,
       "difficulty": "moyen",
       "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
       "optionsFr": [
-        "Aucun texte normatif",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Un forum de discussion en ligne",
-        "Un catalogue fabricant uniquement"
+        "La source de courant utilisée pour l'essai doit être séparée du réseau de distribution (par exemple par un transformateur à deux enroulements).",
+        "La source de courant utilisée pour l'essai ne doit pas être séparée du réseau de distribution (par exemple par un transformateur à deux enroulements).",
+        "Aucune exigence de ce type dans la norme.",
+        "Règle réservée aux installations haute tension uniquement."
       ],
       "optionsAr": [
-        "لا وثيقة معيارية",
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "منتدى إنترنت",
-        "كتالوج شركة فقط"
+        "عبارة مطابقة للمعيار",
+        "عبارة مخالفة للمعيار",
+        "غير موجودة في المعيار",
+        "للجهد العالي فقط"
       ],
-      "correctAnswer": 1,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 391).",
-      "explanationAr": "راجع PDF ص. 391.",
-      "normRef": "NF C 15-100 (p. 391)",
-      "pdfPage": 391
+      "correctAnswer": 0,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § NF C 15-100 (p. 376), page 376 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § NF C 15-100 (p. 376)، ص. 376.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 376)",
+      "pdfPage": 376
     },
     {
       "id": "m05_L2_q14",
       "level": 2,
       "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Un catalogue fabricant uniquement",
-        "Un forum de discussion en ligne",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Aucun texte normatif"
-      ],
-      "optionsAr": [
-        "كتالوج شركة فقط",
-        "منتدى إنترنت",
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "لا وثيقة معيارية"
-      ],
-      "correctAnswer": 2,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 379).",
-      "explanationAr": "راجع PDF ص. 379.",
-      "normRef": "NF C 15-100 (p. 379)",
-      "pdfPage": 379
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « 701.53 Appareillage Dans le volume 0, aucun appareillage ne doit être installé. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation reprend le texte de la norme NF C 15-100. Référence : NF C 15-100 — § 701.53 (p. 381) — page 381 du PDF.",
+      "explanationAr": "نعم: العبارة مطابقة لنص المعيار NF C 15-100. المرجع: NF C 15-100 — § 701.53 (p. 381) — ص. 381.",
+      "normRef": "NF C 15-100 — § 701.53 (p. 381)",
+      "pdfPage": 381,
+      "statementFr": "701.53 Appareillage Dans le volume 0, aucun appareillage ne doit être installé."
     },
     {
       "id": "m05_L2_q15",
       "level": 2,
       "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Un forum de discussion en ligne",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Aucun texte normatif",
-        "Un catalogue fabricant uniquement"
-      ],
-      "optionsAr": [
-        "منتدى إنترنت",
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "لا وثيقة معيارية",
-        "كتالوج شركة فقط"
-      ],
-      "correctAnswer": 1,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 381).",
-      "explanationAr": "راجع PDF ص. 381.",
-      "normRef": "NF C 15-100 (p. 381)",
-      "pdfPage": 381
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « B2 – Doivent être reliées à la liaison équipotentielle a) les canalisations métalliques d'eau chaude, d'eau froide, de vidange, de gaz. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation reprend le texte de la norme NF C 15-100. Référence : NF C 15-100 — § NF C 15-100 (p. 393) — page 393 du PDF.",
+      "explanationAr": "نعم: العبارة مطابقة لنص المعيار NF C 15-100. المرجع: NF C 15-100 — § NF C 15-100 (p. 393) — ص. 393.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 393)",
+      "pdfPage": 393,
+      "statementFr": "B2 – Doivent être reliées à la liaison équipotentielle a) les canalisations métalliques d'eau chaude, d'eau froide, de vidange, de gaz."
     },
     {
       "id": "m05_L2_q16",
@@ -880,301 +836,191 @@
       "id": "m05_L3_q04",
       "level": 3,
       "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Aucun texte normatif",
-        "Un catalogue fabricant uniquement",
-        "Un forum de discussion en ligne"
-      ],
-      "optionsAr": [
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "لا وثيقة معيارية",
-        "كتالوج شركة فقط",
-        "منتدى إنترنت"
-      ],
-      "correctAnswer": 0,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 391).",
-      "explanationAr": "راجع PDF ص. 391.",
-      "normRef": "NF C 15-100 (p. 391)",
-      "pdfPage": 391
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « B2 – ne doivent pas être reliées à la liaison équipotentielle a) les canalisations métalliques d'eau chaude, d'eau froide, de vidange, de gaz. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). Référence : NF C 15-100 — § NF C 15-100 (p. 393) — page 393 du PDF.",
+      "explanationAr": "لا: العبارة غير مطابقة لنص المعيار (فخ). المرجع: NF C 15-100 — § NF C 15-100 (p. 393) — ص. 393.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 393)",
+      "pdfPage": 393,
+      "statementFr": "B2 – ne doivent pas être reliées à la liaison équipotentielle a) les canalisations métalliques d'eau chaude, d'eau froide, de vidange, de gaz."
     },
     {
       "id": "m05_L3_q05",
       "level": 3,
       "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Un forum de discussion en ligne",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Un catalogue fabricant uniquement",
-        "Aucun texte normatif"
-      ],
-      "optionsAr": [
-        "منتدى إنترنت",
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "كتالوج شركة فقط",
-        "لا وثيقة معيارية"
-      ],
-      "correctAnswer": 1,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 380).",
-      "explanationAr": "راجع PDF ص. 380.",
-      "normRef": "NF C 15-100 (p. 380)",
-      "pdfPage": 380
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « 701.52 Canalisations 701.520.01 Les canalisations ne doivent pas présenter une isolation satisfaisant aux règles de la protection par isolation double ou renforcée et ne comporter aucun revêtement métallique. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). Référence : NF C 15-100 — § 701.52 (p. 381) — page 381 du PDF.",
+      "explanationAr": "لا: العبارة غير مطابقة لنص المعيار (فخ). المرجع: NF C 15-100 — § 701.52 (p. 381) — ص. 381.",
+      "normRef": "NF C 15-100 — § 701.52 (p. 381)",
+      "pdfPage": 381,
+      "statementFr": "701.52 Canalisations 701.520.01 Les canalisations ne doivent pas présenter une isolation satisfaisant aux règles de la protection par isolation double ou renforcée et ne comporter aucun revêtement métallique."
     },
     {
       "id": "m05_L3_q06",
       "level": 3,
       "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Un forum de discussion en ligne",
-        "Aucun texte normatif",
-        "Un catalogue fabricant uniquement"
-      ],
-      "optionsAr": [
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "منتدى إنترنت",
-        "لا وثيقة معيارية",
-        "كتالوج شركة فقط"
-      ],
-      "correctAnswer": 0,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 383).",
-      "explanationAr": "راجع PDF ص. 383.",
-      "normRef": "NF C 15-100 (p. 383)",
-      "pdfPage": 383
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Dans les volumes 1 et 2, les canalisations ne doivent pas être limitées à celles nécessaires à l'alimentation des appareils situés dans ces volumes. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). Référence : NF C 15-100 — § NF C 15-100 (p. 381) — page 381 du PDF.",
+      "explanationAr": "لا: العبارة غير مطابقة لنص المعيار (فخ). المرجع: NF C 15-100 — § NF C 15-100 (p. 381) — ص. 381.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 381)",
+      "pdfPage": 381,
+      "statementFr": "Dans les volumes 1 et 2, les canalisations ne doivent pas être limitées à celles nécessaires à l'alimentation des appareils situés dans ces volumes."
     },
     {
       "id": "m05_L3_q07",
       "level": 3,
       "difficulty": "moyen",
       "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
       "optionsFr": [
-        "Un catalogue fabricant uniquement",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Un forum de discussion en ligne",
-        "Aucun texte normatif"
+        "Dans les volumes 1 et 2, les canalisations doivent être limitées à celles nécessaires à l'alimentation des appareils situés dans ces volumes.",
+        "Cette obligation ne figure pas dans la norme NF C 15-100.",
+        "Aucune exigence de ce type dans la norme.",
+        "Règle réservée aux installations haute tension uniquement."
       ],
       "optionsAr": [
-        "كتالوج شركة فقط",
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "منتدى إنترنت",
-        "لا وثيقة معيارية"
+        "عبارة مطابقة للمعيار",
+        "عبارة مخالفة للمعيار",
+        "غير موجودة في المعيار",
+        "للجهد العالي فقط"
       ],
-      "correctAnswer": 1,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 379).",
-      "explanationAr": "راجع PDF ص. 379.",
-      "normRef": "NF C 15-100 (p. 379)",
-      "pdfPage": 379
+      "correctAnswer": 0,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § NF C 15-100 (p. 381), page 381 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § NF C 15-100 (p. 381)، ص. 381.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 381)",
+      "pdfPage": 381
     },
     {
       "id": "m05_L3_q08",
       "level": 3,
       "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Un forum de discussion en ligne",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Aucun texte normatif",
-        "Un catalogue fabricant uniquement"
-      ],
-      "optionsAr": [
-        "منتدى إنترنت",
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "لا وثيقة معيارية",
-        "كتالوج شركة فقط"
-      ],
-      "correctAnswer": 1,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 382).",
-      "explanationAr": "راجع PDF ص. 382.",
-      "normRef": "NF C 15-100 (p. 382)",
-      "pdfPage": 382
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « 701.53 Appareillage Dans le volume 0, aucun appareillage ne ne doit pas être installé. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). Référence : NF C 15-100 — § 701.53 (p. 381) — page 381 du PDF.",
+      "explanationAr": "لا: العبارة غير مطابقة لنص المعيار (فخ). المرجع: NF C 15-100 — § 701.53 (p. 381) — ص. 381.",
+      "normRef": "NF C 15-100 — § 701.53 (p. 381)",
+      "pdfPage": 381,
+      "statementFr": "701.53 Appareillage Dans le volume 0, aucun appareillage ne ne doit pas être installé."
     },
     {
       "id": "m05_L3_q09",
       "level": 3,
       "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Un forum de discussion en ligne",
-        "Un catalogue fabricant uniquement",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Aucun texte normatif"
-      ],
-      "optionsAr": [
-        "منتدى إنترنت",
-        "كتالوج شركة فقط",
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "لا وثيقة معيارية"
-      ],
-      "correctAnswer": 2,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 393).",
-      "explanationAr": "راجع PDF ص. 393.",
-      "normRef": "NF C 15-100 (p. 393)",
-      "pdfPage": 393
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « - soit protégés par un DDR de courant différentiel-résiduel assigné au plus égal à 30 mA. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation reprend le texte de la norme NF C 15-100. Référence : NF C 15-100 — § NF C 15-100 (p. 383) — page 383 du PDF.",
+      "explanationAr": "نعم: العبارة مطابقة لنص المعيار NF C 15-100. المرجع: NF C 15-100 — § NF C 15-100 (p. 383) — ص. 383.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 383)",
+      "pdfPage": 383,
+      "statementFr": "- soit protégés par un DDR de courant différentiel-résiduel assigné au plus égal à 30 mA."
     },
     {
       "id": "m05_L3_q10",
       "level": 3,
       "difficulty": "moyen",
       "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
       "optionsFr": [
-        "Un forum de discussion en ligne",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Un catalogue fabricant uniquement",
-        "Aucun texte normatif"
+        "Une liai son équipotentielle, réalisée conformément aux indications de 415.2 et de 543, doit relier tous les éléments conducteurs du local et les masses des …",
+        "Une liai son équipotentielle, réalisée conformément aux indications de 415.2 et de 543, ne doit pas relier tous les éléments conducteurs du local et les masses des matériels électr",
+        "Aucune exigence de ce type dans la norme.",
+        "Règle réservée aux installations haute tension uniquement."
       ],
       "optionsAr": [
-        "منتدى إنترنت",
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "كتالوج شركة فقط",
-        "لا وثيقة معيارية"
+        "عبارة مطابقة للمعيار",
+        "عبارة مخالفة للمعيار",
+        "غير موجودة في المعيار",
+        "للجهد العالي فقط"
       ],
-      "correctAnswer": 1,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 381).",
-      "explanationAr": "راجع PDF ص. 381.",
-      "normRef": "NF C 15-100 (p. 381)",
-      "pdfPage": 381
+      "correctAnswer": 0,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § 415.2 (p. 389), page 389 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § 415.2 (p. 389)، ص. 389.",
+      "normRef": "NF C 15-100 — § 415.2 (p. 389)",
+      "pdfPage": 389
     },
     {
       "id": "m05_L3_q11",
       "level": 3,
       "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Aucun texte normatif",
-        "Un forum de discussion en ligne",
-        "Un catalogue fabricant uniquement"
-      ],
-      "optionsAr": [
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "لا وثيقة معيارية",
-        "منتدى إنترنت",
-        "كتالوج شركة فقط"
-      ],
-      "correctAnswer": 0,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 391).",
-      "explanationAr": "راجع PDF ص. 391.",
-      "normRef": "NF C 15-100 (p. 391)",
-      "pdfPage": 391
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Pour les pédiluves, les prescriptions relatives aux piscines ne doivent pas être appliquées. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). Référence : NF C 15-100 — § NF C 15-100 (p. 395) — page 395 du PDF.",
+      "explanationAr": "لا: العبارة غير مطابقة لنص المعيار (فخ). المرجع: NF C 15-100 — § NF C 15-100 (p. 395) — ص. 395.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 395)",
+      "pdfPage": 395,
+      "statementFr": "Pour les pédiluves, les prescriptions relatives aux piscines ne doivent pas être appliquées."
     },
     {
       "id": "m05_L3_q12",
       "level": 3,
       "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Un catalogue fabricant uniquement",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Aucun texte normatif",
-        "Un forum de discussion en ligne"
-      ],
-      "optionsAr": [
-        "كتالوج شركة فقط",
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "لا وثيقة معيارية",
-        "منتدى إنترنت"
-      ],
-      "correctAnswer": 1,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 380).",
-      "explanationAr": "راجع PDF ص. 380.",
-      "normRef": "NF C 15-100 (p. 380)",
-      "pdfPage": 380
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « 701.320.3 Les cabines de douche individuelles ne doivent pas répondre aux prescriptions des paragraphes 701.1 à 701.5. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). Référence : NF C 15-100 — § 701.320.3 (p. 379) — page 379 du PDF.",
+      "explanationAr": "لا: العبارة غير مطابقة لنص المعيار (فخ). المرجع: NF C 15-100 — § 701.320.3 (p. 379) — ص. 379.",
+      "normRef": "NF C 15-100 — § 701.320.3 (p. 379)",
+      "pdfPage": 379,
+      "statementFr": "701.320.3 Les cabines de douche individuelles ne doivent pas répondre aux prescriptions des paragraphes 701.1 à 701.5."
     },
     {
       "id": "m05_L3_q13",
       "level": 3,
       "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Aucun texte normatif",
-        "Un catalogue fabricant uniquement",
-        "Un forum de discussion en ligne",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ"
-      ],
-      "optionsAr": [
-        "لا وثيقة معيارية",
-        "كتالوج شركة فقط",
-        "منتدى إنترنت",
-        "معيار NF C 15-100 (2015) — PDF المكتبة"
-      ],
-      "correctAnswer": 3,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 383).",
-      "explanationAr": "راجع PDF ص. 383.",
-      "normRef": "NF C 15-100 (p. 383)",
-      "pdfPage": 383
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Les chauffe-eau à accumulation ne doivent pas être installés dans le volume 3 et hors volumes. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). Référence : NF C 15-100 — § NF C 15-100 (p. 382) — page 382 du PDF.",
+      "explanationAr": "لا: العبارة غير مطابقة لنص المعيار (فخ). المرجع: NF C 15-100 — § NF C 15-100 (p. 382) — ص. 382.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 382)",
+      "pdfPage": 382,
+      "statementFr": "Les chauffe-eau à accumulation ne doivent pas être installés dans le volume 3 et hors volumes."
     },
     {
       "id": "m05_L3_q14",
       "level": 3,
       "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Un forum de discussion en ligne",
-        "Un catalogue fabricant uniquement",
-        "Aucun texte normatif",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ"
-      ],
-      "optionsAr": [
-        "منتدى إنترنت",
-        "كتالوج شركة فقط",
-        "لا وثيقة معيارية",
-        "معيار NF C 15-100 (2015) — PDF المكتبة"
-      ],
-      "correctAnswer": 3,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 379).",
-      "explanationAr": "راجع PDF ص. 379.",
-      "normRef": "NF C 15-100 (p. 379)",
-      "pdfPage": 379
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « L'encastrement ne doit pas alors être effectué suivant les règles du paragraphe 529.1.2 pour les canali sations en conduits encastrés, elle peut êt re réalisée par un conducteur de »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). Référence : NF C 15-100 — § 529.1.2 (p. 391) — page 391 du PDF.",
+      "explanationAr": "لا: العبارة غير مطابقة لنص المعيار (فخ). المرجع: NF C 15-100 — § 529.1.2 (p. 391) — ص. 391.",
+      "normRef": "NF C 15-100 — § 529.1.2 (p. 391)",
+      "pdfPage": 391,
+      "statementFr": "L'encastrement ne doit pas alors être effectué suivant les règles du paragraphe 529.1.2 pour les canali sations en conduits encastrés, elle peut êt re réalisée par un conducteur de"
     },
     {
       "id": "m05_L3_q15",
       "level": 3,
       "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Aucun texte normatif",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Un forum de discussion en ligne",
-        "Un catalogue fabricant uniquement"
-      ],
-      "optionsAr": [
-        "لا وثيقة معيارية",
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "منتدى إنترنت",
-        "كتالوج شركة فقط"
-      ],
-      "correctAnswer": 1,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 382).",
-      "explanationAr": "راجع PDF ص. 382.",
-      "normRef": "NF C 15-100 (p. 382)",
-      "pdfPage": 382
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « - soit protégés par un DDR de courant différentiel-résiduel assigné au moins égal à 30 mA. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). Référence : NF C 15-100 — § NF C 15-100 (p. 383) — page 383 du PDF.",
+      "explanationAr": "لا: العبارة غير مطابقة لنص المعيار (فخ). المرجع: NF C 15-100 — § NF C 15-100 (p. 383) — ص. 383.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 383)",
+      "pdfPage": 383,
+      "statementFr": "- soit protégés par un DDR de courant différentiel-résiduel assigné au moins égal à 30 mA."
     },
     {
       "id": "m05_L4_q01",
@@ -1254,302 +1100,203 @@
     {
       "id": "m05_L4_q04",
       "level": 4,
-      "difficulty": "moyen",
+      "difficulty": "difficile",
       "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
       "optionsFr": [
-        "Aucun texte normatif",
-        "Un forum de discussion en ligne",
-        "Un catalogue fabricant uniquement",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ"
+        "la cloison doit avoir une hauteur au moins égale à celle de la pomme de douche.",
+        "la cloison ne doit pas avoir une hauteur au moins égale à celle de la pomme de douche.",
+        "Aucune exigence de ce type dans la norme.",
+        "Règle réservée aux installations haute tension uniquement."
       ],
       "optionsAr": [
-        "لا وثيقة معيارية",
-        "منتدى إنترنت",
-        "كتالوج شركة فقط",
-        "معيار NF C 15-100 (2015) — PDF المكتبة"
+        "عبارة مطابقة للمعيار",
+        "عبارة مخالفة للمعيار",
+        "غير موجودة في المعيار",
+        "للجهد العالي فقط"
       ],
-      "correctAnswer": 3,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 381).",
-      "explanationAr": "راجع PDF ص. 381.",
-      "normRef": "NF C 15-100 (p. 381)",
-      "pdfPage": 381
+      "correctAnswer": 0,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § NF C 15-100 (p. 389), page 389 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § NF C 15-100 (p. 389)، ص. 389.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 389)",
+      "pdfPage": 389
     },
     {
       "id": "m05_L4_q05",
       "level": 4,
-      "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Un catalogue fabricant uniquement",
-        "Aucun texte normatif",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Un forum de discussion en ligne"
-      ],
-      "optionsAr": [
-        "كتالوج شركة فقط",
-        "لا وثيقة معيارية",
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "منتدى إنترنت"
-      ],
-      "correctAnswer": 2,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 393).",
-      "explanationAr": "راجع PDF ص. 393.",
-      "normRef": "NF C 15-100 (p. 393)",
-      "pdfPage": 393
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Les conducteurs ne doivent pas être noyés directement dans les parois ; »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation reprend le texte de la norme NF C 15-100. Référence : NF C 15-100 — § NF C 15-100 (p. 391) — page 391 du PDF.",
+      "explanationAr": "نعم: العبارة مطابقة لنص المعيار NF C 15-100. المرجع: NF C 15-100 — § NF C 15-100 (p. 391) — ص. 391.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 391)",
+      "pdfPage": 391,
+      "statementFr": "Les conducteurs ne doivent pas être noyés directement dans les parois ;"
     },
     {
       "id": "m05_L4_q06",
       "level": 4,
-      "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Un forum de discussion en ligne",
-        "Aucun texte normatif",
-        "Un catalogue fabricant uniquement"
-      ],
-      "optionsAr": [
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "منتدى إنترنت",
-        "لا وثيقة معيارية",
-        "كتالوج شركة فقط"
-      ],
-      "correctAnswer": 0,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 382).",
-      "explanationAr": "راجع PDF ص. 382.",
-      "normRef": "NF C 15-100 (p. 382)",
-      "pdfPage": 382
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « La charge ne doit pas être déconnectée pendant l'essai. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). Référence : NF C 15-100 — § NF C 15-100 (p. 375) — page 375 du PDF.",
+      "explanationAr": "لا: العبارة غير مطابقة لنص المعيار (فخ). المرجع: NF C 15-100 — § NF C 15-100 (p. 375) — ص. 375.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 375)",
+      "pdfPage": 375,
+      "statementFr": "La charge ne doit pas être déconnectée pendant l'essai."
     },
     {
       "id": "m05_L4_q07",
       "level": 4,
-      "difficulty": "moyen",
+      "difficulty": "difficile",
       "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
       "optionsFr": [
-        "Aucun texte normatif",
-        "Un forum de discussion en ligne",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Un catalogue fabricant uniquement"
+        "Dans le volume 3, sont admis des socles de prise de courant, des interrupteurs et autres appareillages à condition d'être : • soit ali mentés individuelle me…",
+        "Cette obligation ne figure pas dans la norme NF C 15-100.",
+        "Aucune exigence de ce type dans la norme.",
+        "Règle réservée aux installations haute tension uniquement."
       ],
       "optionsAr": [
-        "لا وثيقة معيارية",
-        "منتدى إنترنت",
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "كتالوج شركة فقط"
+        "عبارة مطابقة للمعيار",
+        "عبارة مخالفة للمعيار",
+        "غير موجودة في المعيار",
+        "للجهد العالي فقط"
       ],
-      "correctAnswer": 2,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 379).",
-      "explanationAr": "راجع PDF ص. 379.",
-      "normRef": "NF C 15-100 (p. 379)",
-      "pdfPage": 379
+      "correctAnswer": 0,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § 413.3 (p. 382), page 382 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § 413.3 (p. 382)، ص. 382.",
+      "normRef": "NF C 15-100 — § 413.3 (p. 382)",
+      "pdfPage": 382
     },
     {
       "id": "m05_L4_q08",
       "level": 4,
-      "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Un forum de discussion en ligne",
-        "Un catalogue fabricant uniquement",
-        "Aucun texte normatif"
-      ],
-      "optionsAr": [
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "منتدى إنترنت",
-        "كتالوج شركة فقط",
-        "لا وثيقة معيارية"
-      ],
-      "correctAnswer": 0,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 383).",
-      "explanationAr": "راجع PDF ص. 383.",
-      "normRef": "NF C 15-100 (p. 383)",
-      "pdfPage": 383
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Le courant I ∆ pour lequel le dispositif fonctionne doit être supérieur à I ∆n. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). Référence : NF C 15-100 — § NF C 15-100 (p. 375) — page 375 du PDF.",
+      "explanationAr": "لا: العبارة غير مطابقة لنص المعيار (فخ). المرجع: NF C 15-100 — § NF C 15-100 (p. 375) — ص. 375.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 375)",
+      "pdfPage": 375,
+      "statementFr": "Le courant I ∆ pour lequel le dispositif fonctionne doit être supérieur à I ∆n."
     },
     {
       "id": "m05_L4_q09",
       "level": 4,
-      "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Un catalogue fabricant uniquement",
-        "Aucun texte normatif",
-        "Un forum de discussion en ligne"
-      ],
-      "optionsAr": [
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "كتالوج شركة فقط",
-        "لا وثيقة معيارية",
-        "منتدى إنترنت"
-      ],
-      "correctAnswer": 0,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 380).",
-      "explanationAr": "راجع PDF ص. 380.",
-      "normRef": "NF C 15-100 (p. 380)",
-      "pdfPage": 380
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « la cloison ne doit pas avoir une hauteur au moins égale à celle de la pomme de douche. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). Référence : NF C 15-100 — § NF C 15-100 (p. 389) — page 389 du PDF.",
+      "explanationAr": "لا: العبارة غير مطابقة لنص المعيار (فخ). المرجع: NF C 15-100 — § NF C 15-100 (p. 389) — ص. 389.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 389)",
+      "pdfPage": 389,
+      "statementFr": "la cloison ne doit pas avoir une hauteur au moins égale à celle de la pomme de douche."
     },
     {
       "id": "m05_L4_q10",
       "level": 4,
-      "difficulty": "moyen",
+      "difficulty": "difficile",
       "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
       "optionsFr": [
-        "Un forum de discussion en ligne",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Un catalogue fabricant uniquement",
-        "Aucun texte normatif"
+        "701.414.2 Dans le volume 0, seule la mesure de protection par TBTS de tension nominale au plus égale à 12 V en courant alternatif ou 30 V en courant continu …",
+        "701.414.2 Dans le volume 0, seule la mesure de protection par TBTS de tension nominale au moins égale à 12 V en courant alternatif ou 30 V en courant continu est admise, la source ",
+        "Aucune exigence de ce type dans la norme.",
+        "Règle réservée aux installations haute tension uniquement."
       ],
       "optionsAr": [
-        "منتدى إنترنت",
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "كتالوج شركة فقط",
-        "لا وثيقة معيارية"
+        "عبارة مطابقة للمعيار",
+        "عبارة مخالفة للمعيار",
+        "غير موجودة في المعيار",
+        "للجهد العالي فقط"
       ],
-      "correctAnswer": 1,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 391).",
-      "explanationAr": "راجع PDF ص. 391.",
-      "normRef": "NF C 15-100 (p. 391)",
-      "pdfPage": 391
+      "correctAnswer": 0,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § 701.414.2 (p. 380), page 380 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § 701.414.2 (p. 380)، ص. 380.",
+      "normRef": "NF C 15-100 — § 701.414.2 (p. 380)",
+      "pdfPage": 380
     },
     {
       "id": "m05_L4_q11",
       "level": 4,
-      "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Un catalogue fabricant uniquement",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Aucun texte normatif",
-        "Un forum de discussion en ligne"
-      ],
-      "optionsAr": [
-        "كتالوج شركة فقط",
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "لا وثيقة معيارية",
-        "منتدى إنترنت"
-      ],
-      "correctAnswer": 1,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 381).",
-      "explanationAr": "راجع PDF ص. 381.",
-      "normRef": "NF C 15-100 (p. 381)",
-      "pdfPage": 381
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Par exemple, s'il n'est pas possible de relier certains éléments conducteurs et masses à l'intérieur de la salle d'eau, cette liaison peut être réalisée à l'extérieur dans des locaux au plus près de la salle d’eau. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation reprend le texte de la norme NF C 15-100. Référence : NF C 15-100 — § NF C 15-100 (p. 391) — page 391 du PDF.",
+      "explanationAr": "نعم: العبارة مطابقة لنص المعيار NF C 15-100. المرجع: NF C 15-100 — § NF C 15-100 (p. 391) — ص. 391.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 391)",
+      "pdfPage": 391,
+      "statementFr": "Par exemple, s'il n'est pas possible de relier certains éléments conducteurs et masses à l'intérieur de la salle d'eau, cette liaison peut être réalisée à l'extérieur dans des locaux au plus près de la salle d’eau."
     },
     {
       "id": "m05_L4_q12",
       "level": 4,
-      "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Un catalogue fabricant uniquement",
-        "Aucun texte normatif",
-        "Un forum de discussion en ligne"
-      ],
-      "optionsAr": [
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "كتالوج شركة فقط",
-        "لا وثيقة معيارية",
-        "منتدى إنترنت"
-      ],
-      "correctAnswer": 0,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 393).",
-      "explanationAr": "راجع PDF ص. 393.",
-      "normRef": "NF C 15-100 (p. 393)",
-      "pdfPage": 393
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Pour les pédiluves, les prescriptions relatives aux piscines doivent être appliquées. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation reprend le texte de la norme NF C 15-100. Référence : NF C 15-100 — § NF C 15-100 (p. 395) — page 395 du PDF.",
+      "explanationAr": "نعم: العبارة مطابقة لنص المعيار NF C 15-100. المرجع: NF C 15-100 — § NF C 15-100 (p. 395) — ص. 395.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 395)",
+      "pdfPage": 395,
+      "statementFr": "Pour les pédiluves, les prescriptions relatives aux piscines doivent être appliquées."
     },
     {
       "id": "m05_L4_q13",
       "level": 4,
-      "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Un forum de discussion en ligne",
-        "Aucun texte normatif",
-        "Un catalogue fabricant uniquement",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ"
-      ],
-      "optionsAr": [
-        "منتدى إنترنت",
-        "لا وثيقة معيارية",
-        "كتالوج شركة فقط",
-        "معيار NF C 15-100 (2015) — PDF المكتبة"
-      ],
-      "correctAnswer": 3,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 382).",
-      "explanationAr": "راجع PDF ص. 382.",
-      "normRef": "NF C 15-100 (p. 382)",
-      "pdfPage": 382
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Les conducteurs doivent être noyés directement dans les parois ; »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": false,
+      "explanationFr": "Non : l'affirmation n'est pas conforme au texte de la norme (piège). Référence : NF C 15-100 — § NF C 15-100 (p. 391) — page 391 du PDF.",
+      "explanationAr": "لا: العبارة غير مطابقة لنص المعيار (فخ). المرجع: NF C 15-100 — § NF C 15-100 (p. 391) — ص. 391.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 391)",
+      "pdfPage": 391,
+      "statementFr": "Les conducteurs doivent être noyés directement dans les parois ;"
     },
     {
       "id": "m05_L4_q14",
       "level": 4,
-      "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Un forum de discussion en ligne",
-        "Un catalogue fabricant uniquement",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Aucun texte normatif"
-      ],
-      "optionsAr": [
-        "منتدى إنترنت",
-        "كتالوج شركة فقط",
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "لا وثيقة معيارية"
-      ],
-      "correctAnswer": 2,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 379).",
-      "explanationAr": "راجع PDF ص. 379.",
-      "normRef": "NF C 15-100 (p. 379)",
-      "pdfPage": 379
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Le courant I ∆ pour lequel le dispositif fonctionne ne doit pas être supérieur à I ∆n. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation reprend le texte de la norme NF C 15-100. Référence : NF C 15-100 — § NF C 15-100 (p. 375) — page 375 du PDF.",
+      "explanationAr": "نعم: العبارة مطابقة لنص المعيار NF C 15-100. المرجع: NF C 15-100 — § NF C 15-100 (p. 375) — ص. 375.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 375)",
+      "pdfPage": 375,
+      "statementFr": "Le courant I ∆ pour lequel le dispositif fonctionne ne doit pas être supérieur à I ∆n."
     },
     {
       "id": "m05_L4_q15",
       "level": 4,
-      "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Aucun texte normatif",
-        "Un forum de discussion en ligne",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Un catalogue fabricant uniquement"
-      ],
-      "optionsAr": [
-        "لا وثيقة معيارية",
-        "منتدى إنترنت",
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "كتالوج شركة فقط"
-      ],
-      "correctAnswer": 2,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 383).",
-      "explanationAr": "راجع PDF ص. 383.",
-      "normRef": "NF C 15-100 (p. 383)",
-      "pdfPage": 383
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Les chauffe-eau à accumulation doivent être installés dans le volume 3 et hors volumes. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation reprend le texte de la norme NF C 15-100. Référence : NF C 15-100 — § NF C 15-100 (p. 382) — page 382 du PDF.",
+      "explanationAr": "نعم: العبارة مطابقة لنص المعيار NF C 15-100. المرجع: NF C 15-100 — § NF C 15-100 (p. 382) — ص. 382.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 382)",
+      "pdfPage": 382,
+      "statementFr": "Les chauffe-eau à accumulation doivent être installés dans le volume 3 et hors volumes."
     },
     {
       "id": "m05_L5_q01",
@@ -1617,301 +1364,213 @@
     {
       "id": "m05_L5_q04",
       "level": 5,
-      "difficulty": "moyen",
+      "difficulty": "difficile",
       "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
       "optionsFr": [
-        "Aucun texte normatif",
-        "Un forum de discussion en ligne",
-        "Un catalogue fabricant uniquement",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ"
+        "Si l'essai est effectué avec un courant à la fréquence industrielle, l'impédance interne du voltmètre utilisé doit être d'au moins 200 Ω /V.",
+        "Si l'essai est effectué avec un courant à la fréquence industrielle, l'impédance interne du voltmètre utilisé ne doit pas être d'au moins 200 Ω /V.",
+        "Aucune exigence de ce type dans la norme.",
+        "Règle réservée aux installations haute tension uniquement."
       ],
       "optionsAr": [
-        "لا وثيقة معيارية",
-        "منتدى إنترنت",
-        "كتالوج شركة فقط",
-        "معيار NF C 15-100 (2015) — PDF المكتبة"
+        "عبارة مطابقة للمعيار",
+        "عبارة مخالفة للمعيار",
+        "غير موجودة في المعيار",
+        "للجهد العالي فقط"
       ],
-      "correctAnswer": 3,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 393).",
-      "explanationAr": "راجع PDF ص. 393.",
-      "normRef": "NF C 15-100 (p. 393)",
-      "pdfPage": 393
+      "correctAnswer": 0,
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § 200 (p. 376), page 376 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § 200 (p. 376)، ص. 376.",
+      "normRef": "NF C 15-100 — § 200 (p. 376)",
+      "pdfPage": 376
     },
     {
       "id": "m05_L5_q05",
       "level": 5,
-      "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Aucun texte normatif",
-        "Un forum de discussion en ligne",
-        "Un catalogue fabricant uniquement",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ"
-      ],
-      "optionsAr": [
-        "لا وثيقة معيارية",
-        "منتدى إنترنت",
-        "كتالوج شركة فقط",
-        "معيار NF C 15-100 (2015) — PDF المكتبة"
-      ],
-      "correctAnswer": 3,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 383).",
-      "explanationAr": "راجع PDF ص. 383.",
-      "normRef": "NF C 15-100 (p. 383)",
-      "pdfPage": 383
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « 701.414.1 Lorsque la TBTS est utilisée, la protection contre les contacts directs doit être assurée, quelle que soit la tension nominale, au moyen de barrières ou d'enveloppes présentant au moins le degré de protection IP2X. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation reprend le texte de la norme NF C 15-100. Référence : NF C 15-100 — § 701.414.1 (p. 380) — page 380 du PDF.",
+      "explanationAr": "نعم: العبارة مطابقة لنص المعيار NF C 15-100. المرجع: NF C 15-100 — § 701.414.1 (p. 380) — ص. 380.",
+      "normRef": "NF C 15-100 — § 701.414.1 (p. 380)",
+      "pdfPage": 380,
+      "statementFr": "701.414.1 Lorsque la TBTS est utilisée, la protection contre les contacts directs doit être assurée, quelle que soit la tension nominale, au moyen de barrières ou d'enveloppes présentant au moins le degré de protection IP2X."
     },
     {
       "id": "m05_L5_q06",
       "level": 5,
-      "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Un forum de discussion en ligne",
-        "Aucun texte normatif",
-        "Un catalogue fabricant uniquement"
-      ],
-      "optionsAr": [
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "منتدى إنترنت",
-        "لا وثيقة معيارية",
-        "كتالوج شركة فقط"
-      ],
-      "correctAnswer": 0,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 381).",
-      "explanationAr": "راجع PDF ص. 381.",
-      "normRef": "NF C 15-100 (p. 381)",
-      "pdfPage": 381
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Les cloisons des cabines de douches doivent avoir une hauteur au moins égale à celle des pommes de douche avec un minimum de 2 mètres. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation reprend le texte de la norme NF C 15-100. Référence : NF C 15-100 — § NF C 15-100 (p. 389) — page 389 du PDF.",
+      "explanationAr": "نعم: العبارة مطابقة لنص المعيار NF C 15-100. المرجع: NF C 15-100 — § NF C 15-100 (p. 389) — ص. 389.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 389)",
+      "pdfPage": 389,
+      "statementFr": "Les cloisons des cabines de douches doivent avoir une hauteur au moins égale à celle des pommes de douche avec un minimum de 2 mètres."
     },
     {
       "id": "m05_L5_q07",
       "level": 5,
-      "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Aucun texte normatif",
-        "Un catalogue fabricant uniquement",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Un forum de discussion en ligne"
-      ],
-      "optionsAr": [
-        "لا وثيقة معيارية",
-        "كتالوج شركة فقط",
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "منتدى إنترنت"
-      ],
-      "correctAnswer": 2,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 379).",
-      "explanationAr": "راجع PDF ص. 379.",
-      "normRef": "NF C 15-100 (p. 379)",
-      "pdfPage": 379
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Dans les volumes 1 et 2, les canalisations doivent être limitées à celles nécessaires à l'alimentation des appareils situés dans ces volumes. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation reprend le texte de la norme NF C 15-100. Référence : NF C 15-100 — § NF C 15-100 (p. 381) — page 381 du PDF.",
+      "explanationAr": "نعم: العبارة مطابقة لنص المعيار NF C 15-100. المرجع: NF C 15-100 — § NF C 15-100 (p. 381) — ص. 381.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 381)",
+      "pdfPage": 381,
+      "statementFr": "Dans les volumes 1 et 2, les canalisations doivent être limitées à celles nécessaires à l'alimentation des appareils situés dans ces volumes."
     },
     {
       "id": "m05_L5_q08",
       "level": 5,
-      "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Aucun texte normatif",
-        "Un forum de discussion en ligne",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Un catalogue fabricant uniquement"
-      ],
-      "optionsAr": [
-        "لا وثيقة معيارية",
-        "منتدى إنترنت",
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "كتالوج شركة فقط"
-      ],
-      "correctAnswer": 2,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 391).",
-      "explanationAr": "راجع PDF ص. 391.",
-      "normRef": "NF C 15-100 (p. 391)",
-      "pdfPage": 391
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Une liai son équipotentielle, réalisée conformément aux indications de 415.2 et de 543, doit relier tous les éléments conducteurs du local et les masses des matériels électriques. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation reprend le texte de la norme NF C 15-100. Référence : NF C 15-100 — § 415.2 (p. 389) — page 389 du PDF.",
+      "explanationAr": "نعم: العبارة مطابقة لنص المعيار NF C 15-100. المرجع: NF C 15-100 — § 415.2 (p. 389) — ص. 389.",
+      "normRef": "NF C 15-100 — § 415.2 (p. 389)",
+      "pdfPage": 389,
+      "statementFr": "Une liai son équipotentielle, réalisée conformément aux indications de 415.2 et de 543, doit relier tous les éléments conducteurs du local et les masses des matériels électriques."
     },
     {
       "id": "m05_L5_q09",
       "level": 5,
-      "difficulty": "moyen",
+      "difficulty": "difficile",
       "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
+      "questionFr": "Selon la norme NF C 15-100, quelle proposition reprend fidèlement l'exigence de la norme ?",
+      "questionAr": "حسب معيار NF C 15-100، أي عبارة تعكس متطلب المعيار بدقة؟",
       "optionsFr": [
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Un catalogue fabricant uniquement",
-        "Aucun texte normatif",
-        "Un forum de discussion en ligne"
+        "la cloison doit avoir une hauteur au moins égale à celle de la pomme de douche.",
+        "la cloison ne doit pas avoir une hauteur au moins égale à celle de la pomme de douche.",
+        "Aucune exigence de ce type dans la norme.",
+        "Règle réservée aux installations haute tension uniquement."
       ],
       "optionsAr": [
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "كتالوج شركة فقط",
-        "لا وثيقة معيارية",
-        "منتدى إنترنت"
+        "عبارة مطابقة للمعيار",
+        "عبارة مخالفة للمعيار",
+        "غير موجودة في المعيار",
+        "للجهد العالي فقط"
       ],
       "correctAnswer": 0,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 382).",
-      "explanationAr": "راجع PDF ص. 382.",
-      "normRef": "NF C 15-100 (p. 382)",
-      "pdfPage": 382
+      "explanationFr": "La bonne réponse reprend le texte normatif. Référence : NF C 15-100 — § NF C 15-100 (p. 389), page 389 du PDF.",
+      "explanationAr": "الإجابة الصحيحة من نص المعيار — NF C 15-100 — § NF C 15-100 (p. 389)، ص. 389.",
+      "normRef": "NF C 15-100 — § NF C 15-100 (p. 389)",
+      "pdfPage": 389
     },
     {
       "id": "m05_L5_q10",
       "level": 5,
-      "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Un catalogue fabricant uniquement",
-        "Aucun texte normatif",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Un forum de discussion en ligne"
-      ],
-      "optionsAr": [
-        "كتالوج شركة فقط",
-        "لا وثيقة معيارية",
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "منتدى إنترنت"
-      ],
-      "correctAnswer": 2,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 380).",
-      "explanationAr": "راجع PDF ص. 380.",
-      "normRef": "NF C 15-100 (p. 380)",
-      "pdfPage": 380
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Dans le volume 3, sont admis des socles de prise de courant, des interrupteurs et autres appareillages à condition d'être : • soit ali mentés individuelle ment par un transformateur de séparation conformément à 413.3 ; »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation reprend le texte de la norme NF C 15-100. Référence : NF C 15-100 — § 413.3 (p. 382) — page 382 du PDF.",
+      "explanationAr": "نعم: العبارة مطابقة لنص المعيار NF C 15-100. المرجع: NF C 15-100 — § 413.3 (p. 382) — ص. 382.",
+      "normRef": "NF C 15-100 — § 413.3 (p. 382)",
+      "pdfPage": 382,
+      "statementFr": "Dans le volume 3, sont admis des socles de prise de courant, des interrupteurs et autres appareillages à condition d'être : • soit ali mentés individuelle ment par un transformateur de séparation conformément à 413.3 ;"
     },
     {
       "id": "m05_L5_q11",
       "level": 5,
-      "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Un catalogue fabricant uniquement",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Un forum de discussion en ligne",
-        "Aucun texte normatif"
-      ],
-      "optionsAr": [
-        "كتالوج شركة فقط",
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "منتدى إنترنت",
-        "لا وثيقة معيارية"
-      ],
-      "correctAnswer": 1,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 393).",
-      "explanationAr": "راجع PDF ص. 393.",
-      "normRef": "NF C 15-100 (p. 393)",
-      "pdfPage": 393
+      "difficulty": "difficile",
+      "type": "truefalse",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « 701.414.2 Dans le volume 0, seule la mesure de protection par TBTS de tension nominale au plus égale à 12 V en courant alternatif ou 30 V en courant continu est admise, la source de sécurité étant installée en dehors des volumes 0, 1 et 2. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "correctAnswer": true,
+      "explanationFr": "Oui : l'affirmation reprend le texte de la norme NF C 15-100. Référence : NF C 15-100 — § 701.414.2 (p. 380) — page 380 du PDF.",
+      "explanationAr": "نعم: العبارة مطابقة لنص المعيار NF C 15-100. المرجع: NF C 15-100 — § 701.414.2 (p. 380) — ص. 380.",
+      "normRef": "NF C 15-100 — § 701.414.2 (p. 380)",
+      "pdfPage": 380,
+      "statementFr": "701.414.2 Dans le volume 0, seule la mesure de protection par TBTS de tension nominale au plus égale à 12 V en courant alternatif ou 30 V en courant continu est admise, la source de sécurité étant installée en dehors des volumes 0, 1 et 2."
     },
     {
       "id": "m05_L5_q12",
       "level": 5,
-      "difficulty": "moyen",
       "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
+      "difficulty": "difficile",
+      "questionFr": "Selon la norme NF C 15-100 (Tableau 701A), quel degré de protection minimum est exigé pour les matériels dans le volume 0 ?",
+      "questionAr": "حسب جدول 701A، ما درجة الحماية الدنيا في الحجم 0؟",
       "optionsFr": [
-        "Aucun texte normatif",
-        "Un forum de discussion en ligne",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Un catalogue fabricant uniquement"
+        "IPX7",
+        "IPX4",
+        "IPX3",
+        "IPX1"
       ],
       "optionsAr": [
-        "لا وثيقة معيارية",
-        "منتدى إنترنت",
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "كتالوج شركة فقط"
+        "IPX7",
+        "IPX4",
+        "IPX3",
+        "IPX1"
       ],
-      "correctAnswer": 2,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 383).",
-      "explanationAr": "راجع PDF ص. 383.",
-      "normRef": "NF C 15-100 (p. 383)",
-      "pdfPage": 383
+      "correctAnswer": 0,
+      "explanationFr": "§ 701.512.2 / Tableau 701A : dans le volume 0, les matériels doivent posséder au moins IPX7. Voir p. 381 du PDF.",
+      "explanationAr": "الحجم 0: IPX7 كحد أدنى — ص. 381.",
+      "normRef": "NF C 15-100 — § 701.512.2 / Tableau 701A (p. 381)",
+      "pdfPage": 381
     },
     {
       "id": "m05_L5_q13",
       "level": 5,
-      "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Aucun texte normatif",
-        "Un forum de discussion en ligne",
-        "Un catalogue fabricant uniquement"
-      ],
-      "optionsAr": [
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "لا وثيقة معيارية",
-        "منتدى إنترنت",
-        "كتالوج شركة فقط"
-      ],
-      "correctAnswer": 0,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 381).",
-      "explanationAr": "راجع PDF ص. 381.",
-      "normRef": "NF C 15-100 (p. 381)",
-      "pdfPage": 381
+      "type": "truefalse",
+      "difficulty": "difficile",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « Les chauffe-eau instantanés peuvent être installés dans les volumes 1 et 2 à condition qu’ils soient protégés par un DDR assigné au plus égal à 30 mA. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "statementFr": "Les chauffe-eau instantanés peuvent être installés dans les volumes 1 et 2 à condition qu’ils soient protégés par un DDR assigné au plus égal à 30 mA.",
+      "correctAnswer": true,
+      "explanationFr": "Oui : texte § 701 (p. 383) du PDF NF C 15-100.",
+      "explanationAr": "نعم — ص. 383.",
+      "normRef": "NF C 15-100 — § 701 (p. 383)",
+      "pdfPage": 383
     },
     {
       "id": "m05_L5_q14",
       "level": 5,
-      "difficulty": "moyen",
       "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
+      "difficulty": "difficile",
+      "questionFr": "Selon la norme NF C 15-100 (§ 701.71), une cabine de douche individuelle comporte :",
+      "questionAr": "§ 701.71: كابينة دش فردية تتكون من:",
       "optionsFr": [
-        "Un catalogue fabricant uniquement",
-        "Aucun texte normatif",
-        "Un forum de discussion en ligne",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ"
+        "La douche (volume 1) et un déshabilloir (volume 3)",
+        "Uniquement le volume 0",
+        "Un volume 2 sans déshabilloir",
+        "Aucune distinction de volumes"
       ],
       "optionsAr": [
-        "كتالوج شركة فقط",
-        "لا وثيقة معيارية",
-        "منتدى إنترنت",
-        "معيار NF C 15-100 (2015) — PDF المكتبة"
+        "الدش (حجم 1) وغرفة تبديل (حجم 3)",
+        "الحجم 0 فقط",
+        "حجم 2 بدون تبديل",
+        "بدون حجوم"
       ],
-      "correctAnswer": 3,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 379).",
-      "explanationAr": "راجع PDF ص. 379.",
-      "normRef": "NF C 15-100 (p. 379)",
-      "pdfPage": 379
+      "correctAnswer": 0,
+      "explanationFr": "§ 701.71.1 : cabine = douche (volume 1) + déshabilloir (volume 3). Voir p. 389.",
+      "explanationAr": "§ 701.71.1 — ص. 389.",
+      "normRef": "NF C 15-100 — § 701.71.1 (p. 389)",
+      "pdfPage": 389
     },
     {
       "id": "m05_L5_q15",
       "level": 5,
-      "difficulty": "moyen",
-      "type": "multiple",
-      "questionFr": "Pour vérifier les règles du thème « Locaux humides & volumes (salles d'eau) » dans ce palier, quel document officiel la norme NF C 15-100 impose-t-elle de consulter ?",
-      "questionAr": "للتحقق من قواعد «Locaux humides & volumes (salles d'eau)»، أي وثيقة يجب الرجوع إليها؟",
-      "optionsFr": [
-        "Un forum de discussion en ligne",
-        "Aucun texte normatif",
-        "Le document NF C 15-100 (2015) — PDF de la bibliothèque SwissDZ",
-        "Un catalogue fabricant uniquement"
-      ],
-      "optionsAr": [
-        "منتدى إنترنت",
-        "لا وثيقة معيارية",
-        "معيار NF C 15-100 (2015) — PDF المكتبة",
-        "كتالوج شركة فقط"
-      ],
-      "correctAnswer": 2,
-      "explanationFr": "Toutes les réponses du quiz sont relues sur le PDF NF C 15-100 (voir p. 391).",
-      "explanationAr": "راجع PDF ص. 391.",
-      "normRef": "NF C 15-100 (p. 391)",
+      "type": "truefalse",
+      "difficulty": "difficile",
+      "questionFr": "Selon la norme NF C 15-100, cette affirmation est-elle correcte ? « La liaison équipotentielle supplémentaire a pour but d’égaliser les potentiels de tous les éléments conducteurs et de toutes les masses de la salle d’eau. »",
+      "questionAr": "حسب معيار NF C 15-100، هل العبارة التالية صحيحة؟",
+      "statementFr": "La liaison équipotentielle supplémentaire a pour but d’égaliser les potentiels de tous les éléments conducteurs et de toutes les masses de la salle d’eau.",
+      "correctAnswer": true,
+      "explanationFr": "Oui : annexe informative 701 — liaison équipotentielle supplémentaire, p. 391 du PDF.",
+      "explanationAr": "نعم — الربط متساوي الجهد الإضافي — ص. 391.",
+      "normRef": "NF C 15-100 — Annexe 701 LES (p. 391)",
       "pdfPage": 391
     }
   ],
