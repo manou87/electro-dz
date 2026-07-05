@@ -135,16 +135,16 @@
       }
 
       function loadModule(mod) {
+        if (activeMod === mod && frameReady) return;
         activeMod = mod;
         document.querySelectorAll(".sim-mod-btn").forEach(function (btn) {
           btn.classList.toggle("active", btn.getAttribute("data-mod") === mod);
         });
-        if (frameReady && frame && frame.contentWindow) {
-          frame.contentWindow.postMessage({ type: "swissdz-set-module", mod: mod }, "*");
-          return;
-        }
+        frameReady = false;
         if (loading) loading.hidden = false;
-        if (frame) frame.src = "simulation-swissdz/index.html?embed=1&m=" + mod;
+        if (frame) {
+          frame.src = "simulation-swissdz/index.html?embed=1&m=" + mod;
+        }
       }
 
       document.querySelectorAll(".sim-mod-btn").forEach(function (btn) {
