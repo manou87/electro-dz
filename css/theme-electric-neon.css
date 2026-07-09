@@ -666,6 +666,33 @@ html.theme-electric-neon .devis-item-add {
   transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s !important;
 }
 
+/* Compteur visiteurs — texte sur fond thème, pas de pastille blanche */
+html.theme-electric-neon .edz-visitor-stat {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #e2e8f0 !important;
+}
+html.theme-electric-neon .edz-visitor-stat:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+html.theme-electric-neon .edz-visitor-bar {
+  background: var(--neon-bg) !important;
+  border-top-color: rgba(250, 204, 21, 0.22) !important;
+  color: #e2e8f0 !important;
+}
+html.theme-electric-neon .edz-visitor-bar strong {
+  color: #fff !important;
+}
+html.theme-electric-neon .edz-visitor-panel__close {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #94a3b8 !important;
+}
+
 html.theme-electric-neon button:hover:not(:disabled),
 html.theme-electric-neon .btn:hover:not(:disabled),
 html.theme-electric-neon a.btn:hover,

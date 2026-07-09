@@ -120,29 +120,40 @@
       .edz-visitor-bar{
         position:fixed;bottom:0;left:0;right:0;z-index:180;
         display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
-        gap:8px 18px;
+        gap:8px 12px;
         padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));
-        font-size:.88rem;color:#e2e8f0;
-        background:rgba(15,23,42,0.98);
-        border-top:2px solid rgba(250,204,21,0.55);
-        backdrop-filter:blur(12px);
-        box-shadow:0 -6px 24px rgba(0,0,0,0.45);
+        font-size:.82rem;color:#e2e8f0;
+        background:var(--neon-bg,var(--bg,#030508));
+        border-top:1px solid var(--border,rgba(250,204,21,0.22));
+        box-shadow:none;
       }
       .edz-visitor-stat{
-        cursor:pointer;border-radius:6px;padding:2px 4px;margin:-2px -4px;
-        transition:background .15s;
+        cursor:pointer;
+        margin:0;
+        padding:2px 4px;
+        border:none;
+        border-radius:6px;
+        background:transparent;
+        color:#e2e8f0;
+        font:inherit;
+        font-size:.82rem;
+        line-height:1.45;
+        box-shadow:none;
+        transition:color .15s,background .15s;
+        -webkit-appearance:none;
+        appearance:none;
       }
       .edz-visitor-stat:hover,.edz-visitor-stat:focus-visible{
-        background:rgba(250,204,21,0.12);outline:2px solid rgba(250,204,21,0.35);outline-offset:2px;
+        background:rgba(255,255,255,0.06);
+        outline:none;
       }
       .edz-visitor-bar strong{
-        color:#facc15;font-weight:900;font-size:1.05rem;
+        color:#fff;font-weight:800;font-size:.95rem;
         font-variant-numeric:tabular-nums;
         min-width:1.5em;display:inline-block;text-align:center;
-        text-decoration:underline dotted rgba(250,204,21,0.45);
-        text-underline-offset:3px;
+        text-decoration:none;
       }
-      .edz-visitor-bar .visitor-sep{opacity:.5}
+      .edz-visitor-bar .visitor-sep{opacity:.45;color:#e2e8f0}
       body.edz-has-visitor-bar{
         padding-bottom:calc(52px + env(safe-area-inset-bottom,0px));
       }
@@ -155,10 +166,10 @@
         width:min(22rem,calc(100vw - 24px));
         max-height:min(42vh,320px);
         display:flex;flex-direction:column;
-        background:rgba(15,23,42,0.99);
-        border:1px solid rgba(250,204,21,0.4);
+        background:var(--neon-panel,rgba(8,12,22,0.96));
+        border:1px solid rgba(250,204,21,0.35);
         border-radius:12px 12px 0 0;
-        box-shadow:0 -8px 32px rgba(0,0,0,0.55);
+        box-shadow:0 -8px 28px rgba(0,0,0,0.4);
         overflow:hidden;
       }
       .edz-visitor-panel[hidden]{display:none!important}
