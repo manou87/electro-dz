@@ -202,6 +202,15 @@
       background:linear-gradient(165deg,rgba(250,204,21,0.1),rgba(255,255,255,0.04));
     }
     .quick-item--calc{--quick-accent:#facc15}
+    .quick-item--balance{--quick-accent:#34d399}
+    .quick-item--balance .ico-wrap{background:rgba(52,211,153,0.12);border-color:rgba(52,211,153,0.4)}
+    .quick-item--balance .ico{stroke:#34d399}
+    .quick-item--curve{--quick-accent:#2dd4bf}
+    .quick-item--curve .ico-wrap{background:rgba(45,212,191,0.12);border-color:rgba(45,212,191,0.4)}
+    .quick-item--curve .ico{stroke:#2dd4bf}
+    .quick-item--cable{--quick-accent:#a78bfa}
+    .quick-item--cable .ico-wrap{background:rgba(167,139,250,0.12);border-color:rgba(167,139,250,0.4)}
+    .quick-item--cable .ico{stroke:#a78bfa}
     .quick-item--pdf{--quick-accent:#f87171}
     .quick-item--docs{--quick-accent:#60a5fa}
     .quick-item--schema{--quick-accent:#4ade80}
@@ -428,8 +437,8 @@
     @media(max-width:520px){
       .quick-grid{
         grid-template-columns:repeat(2,1fr);
-        grid-template-rows:repeat(4,minmax(0,1fr));
-        min-height:min(72vh,520px);gap:10px;
+        grid-template-rows:repeat(5,minmax(0,1fr));
+        min-height:min(72vh,560px);gap:10px;
       }
       .quick-item{padding:12px 8px}
       .quick-item .ico-wrap{width:48px;height:48px}
@@ -445,6 +454,9 @@
 
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
     <symbol id="ico-calc" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h2M12 10h2M8 14h2M12 14h2M8 18h8"/></symbol>
+    <symbol id="ico-balance" viewBox="0 0 24 24"><path d="M4 20h16M6 20V10h3v10M11 20V6h3v14M16 20v-7h3v7"/><path d="M3 4h6l2 4H5zM13 4h6l2 4h-6z"/></symbol>
+    <symbol id="ico-curve" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M5 16c3-1 4-8 7-8s3 6 6 5 3-5 3-5"/></symbol>
+    <symbol id="ico-cable" viewBox="0 0 24 24"><path d="M4 8h6M14 8h6M4 16h6M14 16h6"/><rect x="9" y="5" width="6" height="6" rx="1"/><rect x="9" y="13" width="6" height="6" rx="1"/></symbol>
     <symbol id="ico-pdf" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></symbol>
     <symbol id="ico-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></symbol>
     <symbol id="ico-school" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-6 10 6-10 6z"/><path d="M6 12v5c0 1 2 3 6 3s6-2 6-3v-5"/></symbol>
@@ -516,6 +528,18 @@
           <span class="ico-wrap"><svg class="ico"><use href="#ico-calc"/></svg></span>
           <span class="ico-label" data-i18n="quick.calc">Calculs</span>
         </a>
+        <a class="quick-item quick-item--balance" href="calcul-electrique.html?calc=power_balance">
+          <span class="ico-wrap"><svg class="ico"><use href="#ico-balance"/></svg></span>
+          <span class="ico-label" data-i18n="quick.balance">Bilan de puissance</span>
+        </a>
+        <a class="quick-item quick-item--curve" href="calcul-electrique.html?calc=trip_curve">
+          <span class="ico-wrap"><svg class="ico"><use href="#ico-curve"/></svg></span>
+          <span class="ico-label" data-i18n="quick.curve">Courbes de protection</span>
+        </a>
+        <a class="quick-item quick-item--cable" href="calcul-electrique.html?calc=cable_section">
+          <span class="ico-wrap"><svg class="ico"><use href="#ico-cable"/></svg></span>
+          <span class="ico-label" data-i18n="quick.cable">Section de câbles</span>
+        </a>
         <a class="quick-item quick-item--sim" href="simulation-swissdz.html">
           <span class="ico-wrap"><svg class="ico"><use href="#ico-simulator"/></svg></span>
           <span class="quick-labels">
@@ -545,174 +569,8 @@
             <span class="ico-hint" data-i18n="quick.training.hint">472 questions pour maîtriser la norme NF C 15-100, pas à pas</span>
           </span>
         </a>
-        <a class="quick-item quick-item--job" href="emploi.html">
-          <span class="ico-wrap ico-wrap--job"><svg class="ico"><use href="#ico-briefcase"/></svg></span>
-          <span class="ico-label" data-i18n="quick.job">Emploi</span>
-        </a>
-        <a class="quick-item quick-item--social" href="#communaute">
-          <span class="ico-wrap ico-wrap--social"><svg class="ico"><use href="#ico-users"/></svg></span>
-          <span class="ico-label" data-i18n="quick.social">Réseaux</span>
-        </a>
-        <a class="quick-item quick-item--help" href="support.html">
-          <span class="ico-wrap"><svg class="ico"><use href="#ico-help"/></svg></span>
-          <span class="ico-label" data-i18n="quick.support">Support</span>
-        </a>
       </div>
     </section>
-
-    <details class="accueil-more">
-      <summary data-i18n="more.toggle">Autres rubriques</summary>
-      <div class="accueil-more__inner">
-    <!-- 3 options phares -->
-    <section class="spotlight">
-      <p class="spotlight-label" data-i18n="spot.label">Les plus demandés</p>
-      <div class="spotlight-grid">
-        <a class="spot-card spot-card--calc" href="calcul-electrique.html">
-          <span class="spot-tag" data-i18n="spot.calc.tag">Outil pro</span>
-          <h3 data-i18n="spot.calc.title">Calculs électriques</h3>
-          <p data-i18n="spot.calc.desc">Câbles, chute de tension, cos φ, court-circuit — normes CH et DZ</p>
-          <span class="spot-go" data-i18n="arrow">→</span>
-          <span class="ico-wrap"><svg class="ico"><use href="#ico-calc"/></svg></span>
-        </a>
-        <a class="spot-card spot-card--pdf" href="bibliotheque.html">
-          <span class="spot-tag" data-i18n="spot.pdf.tag">PDF gratuits</span>
-          <h3 data-i18n="spot.pdf.title">Bibliothèque technique</h3>
-          <p data-i18n="spot.pdf.desc">Normes, manuels et ouvrages à lire en ligne</p>
-          <span class="spot-go" data-i18n="arrow">→</span>
-          <span class="ico-wrap ico-wrap--pdf"><svg class="ico"><use href="#ico-pdf"/></svg></span>
-        </a>
-        <a class="spot-card spot-card--job" href="emploi.html">
-          <span class="spot-tag" data-i18n="spot.job.tag">Carrière</span>
-          <h3 data-i18n="spot.job.title">Offres d'emploi</h3>
-          <p data-i18n="spot.job.desc">Opportunités pour électriciens — Suisse et Algérie</p>
-          <span class="spot-go" data-i18n="arrow">→</span>
-          <span class="ico-wrap ico-wrap--job"><svg class="ico"><use href="#ico-briefcase"/></svg></span>
-        </a>
-      </div>
-    </section>
-
-    <!-- Documentation PDF -->
-    <section class="hub-block">
-      <div class="hub-block-head">
-        <h2 data-i18n="docs.title">Documentation PDF</h2>
-        <p data-i18n="docs.sub">Normes, manuels et ouvrages à consulter en ligne</p>
-      </div>
-      <div class="hub-grid">
-        <a class="hub-card" href="bibliotheque.html">
-          <div class="hub-card-top">
-            <span class="ico-wrap ico-wrap--pdf"><svg class="ico"><use href="#ico-pdf"/></svg></span>
-            <span class="hub-pill pill-pdf" data-i18n="pill.pdf">PDF</span>
-          </div>
-          <h3 data-i18n="docs.lib.title">Documentation PDF</h3>
-          <p data-i18n="docs.lib.desc">Livres et normes (NIBT, NFC…) classés par thème</p>
-          <span class="hub-link" data-i18n="docs.lib.link">Parcourir la bibliothèque →</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- Outils -->
-    <section class="hub-block">
-      <div class="hub-block-head">
-        <h2 data-i18n="tools.title">Outils professionnels</h2>
-        <p data-i18n="tools.sub">Calculer, simuler et gérer vos chantiers</p>
-      </div>
-      <div class="hub-grid">
-        <a class="hub-card" href="calcul-electrique.html">
-          <div class="hub-card-top">
-            <span class="ico-wrap"><svg class="ico"><use href="#ico-calc"/></svg></span>
-            <span class="hub-pill pill-calc" data-i18n="pill.calc">Calcul</span>
-          </div>
-          <h3 data-i18n="tools.calc.title">Calculs en ligne</h3>
-          <p data-i18n="tools.calc.desc">Ohm, puissance, sections, chute de tension</p>
-          <span class="hub-link" data-i18n="tools.calc.link">Lancer un calcul →</span>
-        </a>
-        <a class="hub-card" href="schemas-plans.html">
-          <div class="hub-card-top">
-            <span class="ico-wrap"><svg class="ico"><use href="#ico-schema"/></svg></span>
-            <span class="hub-pill pill-schema" data-i18n="pill.schema">CAO</span>
-          </div>
-          <h3 data-i18n="tools.schema.title">Schémas et plans</h3>
-          <p data-i18n="tools.schema.desc">Éditeur pro intégré — unifilaire, symboles électriques</p>
-          <span class="hub-link" data-i18n="tools.schema.link">Ouvrir l'éditeur →</span>
-        </a>
-        <a class="hub-card" href="simulation-swissdz.html">
-          <div class="hub-card-top">
-            <span class="ico-wrap ico-wrap--sim"><svg class="ico"><use href="#ico-simulator"/></svg></span>
-            <span class="hub-pill pill-app">SwissDZ</span>
-          </div>
-          <h3 data-i18n="tools.swissdz.title">Simulateur SwissDZ</h3>
-          <p data-i18n="tools.swissdz.desc">Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel</p>
-          <span class="hub-link" data-i18n="tools.swissdz.link">Lancer la simulation →</span>
-        </a>
-        <a class="hub-card" href="login.html" data-hub-member>
-          <div class="hub-card-top">
-            <span class="ico-wrap"><svg class="ico"><use href="#ico-users"/></svg></span>
-            <span class="hub-pill pill-app" data-i18n="pill.member">Membre</span>
-          </div>
-          <h3 data-i18n="tools.member.title">Espace membre</h3>
-          <p data-i18n="tools.member.desc" data-hub-member-desc>Google ou e-mail — favoris PDF</p>
-          <span class="hub-link" data-i18n="tools.member.link" data-hub-member-link>Connexion →</span>
-        </a>
-        <a class="hub-card" href="devis.html">
-          <div class="hub-card-top">
-            <span class="ico-wrap"><svg class="ico"><use href="#ico-clipboard"/></svg></span>
-            <span class="hub-pill pill-app" data-i18n="pill.app">Application</span>
-          </div>
-          <h3 data-i18n="tools.quote.title">Devis et chantiers</h3>
-          <p data-i18n="tools.quote.desc">Créez des devis et suivez vos projets (compte requis)</p>
-          <span class="hub-link" data-i18n="tools.quote.link">Créer un compte →</span>
-        </a>
-        <a class="hub-card" href="https://play.google.com/store/apps/details?id=com.electrodz.app">
-          <div class="hub-card-top">
-            <span class="ico-wrap"><svg class="ico"><use href="#ico-circuit"/></svg></span>
-            <span class="hub-pill pill-app" data-i18n="pill.sim">Simulateur</span>
-          </div>
-          <h3 data-i18n="tools.sim.title">Circuits interactifs</h3>
-          <p data-i18n="tools.sim.desc">Testez vos montages avant le chantier</p>
-          <span class="hub-link" data-i18n="tools.sim.link">Dans l'application →</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- Emploi -->
-    <section class="hub-block">
-      <div class="hub-block-head">
-        <h2 data-i18n="job.title">Emploi et réseau pro</h2>
-        <p data-i18n="job.sub">Trouvez une mission ou contactez l'équipe</p>
-      </div>
-      <div class="hub-grid">
-        <a class="hub-card" href="emploi.html">
-          <div class="hub-card-top">
-            <span class="ico-wrap ico-wrap--job"><svg class="ico"><use href="#ico-briefcase"/></svg></span>
-            <span class="hub-pill pill-job" data-i18n="pill.soon">Bientôt</span>
-          </div>
-          <h3 data-i18n="job.offers.title">Offres de travail</h3>
-          <p data-i18n="job.offers.desc">Annonces pour électriciens en Suisse et en Algérie</p>
-          <span class="hub-link" data-i18n="job.offers.link">Voir les offres →</span>
-        </a>
-        <a class="hub-card" href="contact.html">
-          <div class="hub-card-top">
-            <span class="ico-wrap"><svg class="ico"><use href="#ico-mail"/></svg></span>
-            <span class="hub-pill pill-free" data-i18n="pill.contact">Contact</span>
-          </div>
-          <h3 data-i18n="job.contact.title">Nous écrire</h3>
-          <p data-i18n="job.contact.desc">Questions, partenariats, signalement</p>
-          <span class="hub-link" data-i18n="job.contact.link">Page contact →</span>
-        </a>
-        <a class="hub-card" href="support.html">
-          <div class="hub-card-top">
-            <span class="ico-wrap"><svg class="ico"><use href="#ico-help"/></svg></span>
-            <span class="hub-pill pill-free" data-i18n="pill.help">Aide</span>
-          </div>
-          <h3 data-i18n="job.help.title">Support</h3>
-          <p data-i18n="job.help.desc">FAQ et assistance technique</p>
-          <span class="hub-link" data-i18n="job.help.link">Obtenir de l'aide →</span>
-        </a>
-      </div>
-    </section>
-
-      </div>
-    </details>
 
     <!-- Communauté / réseaux sociaux -->
     <section class="social-band" id="communaute">
