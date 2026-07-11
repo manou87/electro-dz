@@ -247,19 +247,17 @@ html.theme-electric-neon .btn-dl:hover {
   box-shadow: 0 0 28px rgba(250, 204, 21, 0.65);
 }
 
-/* Lanceur — cartes néon */
+/* Lanceur — tuiles néon directes (sans cadre / titre de section) */
 html.theme-electric-neon .quick-access {
-  background: var(--neon-panel);
-  border: 1px solid rgba(34, 211, 238, 0.25);
-  border-radius: 16px;
-  padding: 16px 14px;
-  box-shadow: inset 0 0 40px rgba(34, 211, 238, 0.04);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 4px 0 6px;
+  box-shadow: none;
 }
 
 html.theme-electric-neon .quick-access h2 {
-  color: var(--neon-cyan);
-  text-shadow: 0 0 14px rgba(34, 211, 238, 0.6);
-  letter-spacing: 0.14em;
+  display: none;
 }
 
 html.theme-electric-neon .quick-item {
