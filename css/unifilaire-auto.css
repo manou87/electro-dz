@@ -105,21 +105,30 @@
 }
 
 .unif-preview {
-  background: #fff;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.18);
   border-radius: 10px;
-  padding: 12px;
-  overflow: auto;
-  min-height: 360px;
+  padding: 14px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  min-height: min(55dvh, 560px);
 }
 
 .unif-svg-pro-wrap {
   width: 100%;
   overflow-x: auto;
+  background: #ffffff;
 }
 
-.unif-svg-pro-wrap svg {
+.unif-svg-pro-wrap svg,
+.unif-preview svg.unif-svg-swissdz {
   display: block;
   margin: 0 auto;
+  min-width: 420px;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  background: #ffffff;
 }
 
 .unif-circuits-table {

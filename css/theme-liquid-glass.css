@@ -220,16 +220,12 @@ html.theme-liquid-glass .quick-access h2 {
 }
 
 html.theme-liquid-glass .quick-item {
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.1),
-    rgba(255, 255, 255, 0.03)
-  );
+  background: transparent;
   border: 1px solid var(--lg-glass-border);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border-radius: 16px;
-  box-shadow: inset 0 1px 0 var(--lg-glass-highlight);
+  box-shadow: none;
 }
 
 html.theme-liquid-glass .quick-item:hover {
@@ -246,12 +242,17 @@ html.theme-liquid-glass .quick-item:hover {
 
 html.theme-liquid-glass .accueil-more,
 html.theme-liquid-glass .spot-card,
-html.theme-liquid-glass .hub-card,
-html.theme-liquid-glass .social-card {
+html.theme-liquid-glass .hub-card {
   background: var(--lg-glass);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-color: var(--lg-glass-border);
+}
+
+html.theme-liquid-glass .social-card {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 html.theme-liquid-glass .footer {
@@ -259,6 +260,13 @@ html.theme-liquid-glass .footer {
   border-top: 1px solid var(--lg-glass-border);
   margin-top: 12px;
   padding-top: 16px;
+  color: #e2e8f0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.75);
+}
+
+html.theme-liquid-glass .footer-signature {
+  color: #fff;
+  font-weight: 600;
 }
 
 /* Badge preview */

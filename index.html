@@ -56,49 +56,49 @@
       position:sticky;top:0;z-index:210;
     }
     .edz-ticker{
-      display:flex;align-items:stretch;height:36px;
+      display:flex;align-items:stretch;height:40px;
       background:#0c1220;
       border-bottom:1px solid rgba(250,204,21,0.4);
       overflow:hidden;
+      direction:ltr; /* isolé du RTL page — sinon les versets disparaissent */
     }
+    html[dir="rtl"] .edz-ticker{flex-direction:row-reverse}
     .edz-ticker__tag{
       flex-shrink:0;display:flex;align-items:center;padding:0 12px;
       background:var(--accent);color:var(--bg);
-      font-size:.65rem;font-weight:900;letter-spacing:.07em;text-transform:uppercase;
+      font-size:.7rem;font-weight:900;letter-spacing:.04em;
     }
     .edz-ticker__viewport{
-      flex:1;min-width:0;overflow:hidden;
+      flex:1;min-width:0;overflow:hidden;direction:ltr;
       mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
       -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
     }
-    html[dir="rtl"] .edz-ticker__viewport{
-      mask-image:linear-gradient(270deg,transparent,#000 6%,#000 94%,transparent);
-      -webkit-mask-image:linear-gradient(270deg,transparent,#000 6%,#000 94%,transparent);
-    }
     .edz-ticker__track{
-      display:inline-flex;align-items:center;gap:40px;height:100%;
-      padding-inline:16px;white-space:nowrap;
-      animation:edz-marquee 28s linear infinite;
+      display:inline-flex;flex-direction:row;align-items:center;gap:8px;height:100%;
+      padding-inline:16px;white-space:nowrap;direction:ltr;
+      animation:edz-marquee 120s linear infinite;
+      will-change:transform;
     }
-    html[dir="rtl"] .edz-ticker__track{animation-name:edz-marquee-rtl}
     .edz-ticker:hover .edz-ticker__track{animation-play-state:paused}
-    .edz-ticker__item{
-      display:inline-flex;align-items:center;gap:8px;
-      font-size:.78rem;font-weight:650;color:var(--text);
-      text-decoration:none;
+    .edz-ticker__ayah{
+      display:inline-flex;align-items:center;gap:10px;
+      font-size:.82rem;font-weight:600;color:var(--text);
+      cursor:default;letter-spacing:.01em;
+      direction:rtl;unicode-bidi:isolate;
     }
-    .edz-ticker__item:hover{color:var(--accent)}
-    .edz-ticker__item em{
-      font-style:normal;color:var(--accent);font-weight:800;
+    .edz-ticker__ayah-text{font-family:"Amiri","Scheherazade New","Noto Naskh Arabic","Traditional Arabic",serif}
+    .edz-ticker__ayah-ref{
+      color:var(--accent);font-weight:800;font-size:.7rem;
+      opacity:.95;white-space:nowrap;
     }
-    .edz-ticker__sep{opacity:.35;user-select:none}
+    .edz-ticker__sep--verse{
+      opacity:.55;padding-inline:22px;font-size:.85rem;color:var(--accent);
+      user-select:none;flex-shrink:0;
+    }
+    /* Défilement gauche → droite */
     @keyframes edz-marquee{
-      from{transform:translateX(0)}
-      to{transform:translateX(-50%)}
-    }
-    @keyframes edz-marquee-rtl{
-      from{transform:translateX(0)}
-      to{transform:translateX(50%)}
+      from{transform:translate3d(-50%,0,0)}
+      to{transform:translate3d(0,0,0)}
     }
     @media (prefers-reduced-motion:reduce){
       .edz-ticker__track{animation:none;transform:none}
@@ -237,9 +237,9 @@
       min-height:min(72vh,620px);
     }
     .quick-item{
-      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
       gap:10px;min-height:0;height:100%;padding:14px 10px;
-      background:linear-gradient(165deg,rgba(255,255,255,0.07),rgba(255,255,255,0.02));
+      background:transparent;
       border:1px solid var(--border);border-radius:12px;
       border-top:3px solid var(--quick-accent,var(--accent));
       transition:transform .2s,border-color .2s,box-shadow .2s,background .2s;
@@ -247,8 +247,8 @@
     .quick-item:hover{
       transform:translateY(-3px);
       border-color:rgba(250,204,21,0.45);
-      box-shadow:0 8px 24px rgba(0,0,0,0.35);
-      background:linear-gradient(165deg,rgba(250,204,21,0.1),rgba(255,255,255,0.04));
+      box-shadow:0 8px 24px rgba(0,0,0,0.2);
+      background:transparent;
     }
     .quick-item--calc{--quick-accent:#facc15}
     .quick-item--balance{--quick-accent:#34d399}
@@ -297,21 +297,33 @@
     .ico-wrap--yt{background:rgba(239,68,68,0.12);border-color:rgba(239,68,68,0.35)}
     .ico-wrap--fb .ico{stroke:#60a5fa}
     .ico-wrap--fb{background:rgba(59,130,246,0.12);border-color:rgba(59,130,246,0.35)}
-    .quick-item .ico-wrap{width:52px;height:52px;border-radius:13px}
-    .quick-item .ico{width:28px;height:28px;stroke-width:2}
+    .quick-item .ico-wrap{
+      flex-shrink:0;
+      width:52px;height:52px;border-radius:13px;
+      background:rgba(255,255,255,0.1);
+      border:1.5px solid var(--quick-accent,var(--accent));
+    }
+    .quick-item .ico{
+      width:28px;height:28px;
+      stroke:var(--quick-accent,var(--accent));
+      stroke-width:2.4;
+      filter:drop-shadow(0 1px 2px rgba(0,0,0,0.65));
+    }
     .quick-item .ico-label{
-      font-size:.84rem;font-weight:800;text-align:center;color:var(--text);
+      font-size:.9rem;font-weight:800;text-align:center;color:#fff;
       line-height:1.2;max-width:100%;word-break:break-word;
+      text-shadow:0 1px 3px rgba(0,0,0,0.85),0 0 10px rgba(0,0,0,0.45);
     }
     .quick-item .quick-labels{
       display:flex;flex-direction:column;align-items:center;gap:3px;max-width:100%;
     }
     .quick-item .ico-hint{
-      font-size:.58rem;font-weight:600;line-height:1.2;text-align:center;
-      color:#c4b5fd;max-width:10.5rem;opacity:.95;
+      font-size:.6rem;font-weight:700;line-height:1.25;text-align:center;
+      color:#e2e8f0;max-width:10.5rem;opacity:1;
+      text-shadow:0 1px 2px rgba(0,0,0,0.8);
     }
-    .quick-item--train .ico-hint{color:#ddd6fe}
-    .quick-item--schema .ico-hint{color:#86efac}
+    .quick-item--train .ico-hint{color:#ede9fe}
+    .quick-item--schema .ico-hint{color:#bbf7d0}
 
     /* Rubriques secondaires — repliées par défaut */
     .accueil-more{
@@ -420,25 +432,43 @@
     .social-band{
       margin:8px 0 16px;padding:12px 10px;
       border-radius:12px;
-      background:linear-gradient(135deg,rgba(250,204,21,0.06),rgba(168,85,247,0.06));
-      border:1px solid rgba(250,204,21,0.2);
+      background:transparent;
+      border:none;
     }
-    .social-band h2{font-size:.88rem;font-weight:800;text-align:center;margin-bottom:4px}
-    .social-band .social-sub{text-align:center;color:var(--muted);font-size:.72rem;margin-bottom:10px}
+    .social-band h2{
+      font-size:.92rem;font-weight:800;text-align:center;margin-bottom:4px;color:#fff;
+      text-shadow:0 1px 3px rgba(0,0,0,0.85);
+    }
+    .social-band .social-sub{
+      text-align:center;color:#e2e8f0;font-size:.74rem;margin-bottom:10px;
+      text-shadow:0 1px 2px rgba(0,0,0,0.75);
+    }
     .social-grid{
       display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
+      align-items:stretch;
     }
     .social-card{
-      display:flex;flex-direction:column;align-items:center;text-align:center;
+      display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+      text-align:center;height:100%;
       padding:10px 8px;border-radius:8px;
-      background:rgba(0,0,0,0.35);border:1px solid var(--border);
-      transition:transform .2s,box-shadow .2s;
+      background:transparent;border:1px solid var(--border);
+      transition:transform .2s,box-shadow .2s,border-color .2s;
     }
-    .social-card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,0.4)}
-    .social-card .ico-wrap{width:36px;height:36px;margin-bottom:8px}
-    .social-card .ico{width:19px;height:19px}
-    .social-card strong{font-size:.8rem;display:block;margin-bottom:2px;color:#fff}
-    .social-card span{font-size:.68rem;color:var(--muted)}
+    .social-card:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,0,0,0.25)}
+    .social-card .ico-wrap{
+      flex-shrink:0;width:40px;height:40px;margin-bottom:8px;
+      background:rgba(255,255,255,0.1);border-width:1.5px;
+    }
+    .social-card .ico{width:22px;height:22px;stroke-width:2.2;
+      filter:drop-shadow(0 1px 2px rgba(0,0,0,0.65))}
+    .social-card strong{
+      font-size:.84rem;display:block;margin-bottom:2px;color:#fff;font-weight:800;
+      text-shadow:0 1px 3px rgba(0,0,0,0.85);
+    }
+    .social-card span{
+      font-size:.7rem;color:#e2e8f0;font-weight:600;
+      text-shadow:0 1px 2px rgba(0,0,0,0.75);
+    }
     .social-card--wa:hover{border-color:#25d366;box-shadow:0 8px 24px rgba(37,211,102,0.25)}
     .social-card--tt:hover{border-color:#fff;box-shadow:0 8px 24px rgba(255,255,255,0.15)}
     .social-card--yt:hover{border-color:#ff0000;box-shadow:0 8px 24px rgba(255,0,0,0.25)}
@@ -451,16 +481,22 @@
     }
     .compare-note a{color:var(--accent);font-weight:700;text-decoration:underline}
 
-    .footer{text-align:center;padding:28px 5% 40px;border-top:1px solid var(--border);color:var(--muted);font-size:.82rem}
+    .footer{
+      text-align:center;padding:28px 5% 40px;
+      border-top:1px solid rgba(255,255,255,0.18);
+      background:transparent;
+      color:#e2e8f0;font-size:.86rem;
+      text-shadow:0 1px 2px rgba(0,0,0,0.75);
+    }
     .footer-bottom{
       margin:0;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
       gap:2px 8px;line-height:1.45;
     }
-    .footer-dot{opacity:.42}
-    .footer-signature{font-size:inherit;opacity:.88}
-    .visitor-stats{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 14px;margin-top:10px;font-size:.78rem}
-    .visitor-stats strong{color:var(--accent);font-weight:800;font-variant-numeric:tabular-nums}
-    .visitor-sep{opacity:.45}
+    .footer-dot{opacity:.7;color:#fff}
+    .footer-signature{font-size:inherit;opacity:1;color:#fff;font-weight:600}
+    .visitor-stats{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 14px;margin-top:10px;font-size:.8rem;color:#e2e8f0}
+    .visitor-stats strong{color:var(--accent);font-weight:800;font-variant-numeric:tabular-nums;text-shadow:0 0 8px rgba(250,204,21,0.35)}
+    .visitor-sep{opacity:.7}
 
     @media(max-width:900px){
       .spotlight-grid,.hub-grid{grid-template-columns:repeat(2,1fr)}
@@ -526,29 +562,42 @@
   </svg>
 
   <div class="site-chrome">
-  <div class="edz-ticker" role="region" aria-label="Annonces" data-i18n-aria="ticker.aria">
-    <span class="edz-ticker__tag" data-i18n="ticker.tag">معلومة</span>
+  <div class="edz-ticker" role="region" aria-label="أخبار يومية" data-i18n-aria="ticker.aria">
+    <span class="edz-ticker__tag" data-i18n="ticker.tag">أخبار يومية</span>
     <div class="edz-ticker__viewport">
       <div class="edz-ticker__track">
-        <a class="edz-ticker__item" href="formations.html#quiz"><span data-i18n="ticker.1">اختبار NFC — 472 سؤالاً مجاناً</span></a>
-        <span class="edz-ticker__sep" aria-hidden="true">·</span>
-        <a class="edz-ticker__item" href="calcul-electrique.html?calc=power_balance"><span data-i18n="ticker.2">موازنة القدرة — احسب Pd</span></a>
-        <span class="edz-ticker__sep" aria-hidden="true">·</span>
-        <a class="edz-ticker__item" href="calcul-electrique.html?calc=cable_section"><span data-i18n="ticker.3">مقطع الكابلات — تحديد سريع</span></a>
-        <span class="edz-ticker__sep" aria-hidden="true">·</span>
-        <a class="edz-ticker__item" href="simulation-swissdz.html"><span data-i18n="ticker.4">محاكي SwissDZ — لوحة ومخطط أحادي</span></a>
-        <span class="edz-ticker__sep" aria-hidden="true">·</span>
-        <a class="edz-ticker__item" href="https://play.google.com/store/apps/details?id=com.electrodz.app" target="_blank" rel="noopener noreferrer"><span data-i18n="ticker.5">تطبيق مجاني — أندرويد وآيفون</span></a>
-        <span class="edz-ticker__sep" aria-hidden="true">·</span>
-        <a class="edz-ticker__item" href="formations.html#quiz"><span data-i18n="ticker.1">اختبار NFC — 472 سؤالاً مجاناً</span></a>
-        <span class="edz-ticker__sep" aria-hidden="true">·</span>
-        <a class="edz-ticker__item" href="calcul-electrique.html?calc=power_balance"><span data-i18n="ticker.2">موازنة القدرة — احسب Pd</span></a>
-        <span class="edz-ticker__sep" aria-hidden="true">·</span>
-        <a class="edz-ticker__item" href="calcul-electrique.html?calc=cable_section"><span data-i18n="ticker.3">مقطع الكابلات — تحديد سريع</span></a>
-        <span class="edz-ticker__sep" aria-hidden="true">·</span>
-        <a class="edz-ticker__item" href="simulation-swissdz.html"><span data-i18n="ticker.4">محاكي SwissDZ — لوحة ومخطط أحادي</span></a>
-        <span class="edz-ticker__sep" aria-hidden="true">·</span>
-        <a class="edz-ticker__item" href="https://play.google.com/store/apps/details?id=com.electrodz.app" target="_blank" rel="noopener noreferrer"><span data-i18n="ticker.5">تطبيق مجاني — أندرويد وآيفون</span></a>
+        <span class="edz-ticker__item edz-ticker__ayah" lang="ar" dir="rtl"><span class="edz-ticker__ayah-text">﴿ وَفِي السَّمَاءِ رِزْقُكُمْ وَمَا تُوعَدُونَ ﴾</span><span class="edz-ticker__ayah-ref">سورة الذاريات — ٢٢</span></span>
+        <span class="edz-ticker__sep edz-ticker__sep--verse" aria-hidden="true">✦</span>
+        <span class="edz-ticker__item edz-ticker__ayah" lang="ar" dir="rtl"><span class="edz-ticker__ayah-text">﴿ إِنَّ اللَّهَ هُوَ الرَّزَّاقُ ذُو الْقُوَّةِ الْمَتِينُ ﴾</span><span class="edz-ticker__ayah-ref">سورة الذاريات — ٥٨</span></span>
+        <span class="edz-ticker__sep edz-ticker__sep--verse" aria-hidden="true">✦</span>
+        <span class="edz-ticker__item edz-ticker__ayah" lang="ar" dir="rtl"><span class="edz-ticker__ayah-text">﴿ وَمَا مِن دَابَّةٍ فِي الْأَرْضِ إِلَّا عَلَى اللَّهِ رِزْقُهَا ﴾</span><span class="edz-ticker__ayah-ref">سورة هود — ٦</span></span>
+        <span class="edz-ticker__sep edz-ticker__sep--verse" aria-hidden="true">✦</span>
+        <span class="edz-ticker__item edz-ticker__ayah" lang="ar" dir="rtl"><span class="edz-ticker__ayah-text">﴿ وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا ۝ وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ ﴾</span><span class="edz-ticker__ayah-ref">سورة الطلاق — ٢–٣</span></span>
+        <span class="edz-ticker__sep edz-ticker__sep--verse" aria-hidden="true">✦</span>
+        <span class="edz-ticker__item edz-ticker__ayah" lang="ar" dir="rtl"><span class="edz-ticker__ayah-text">﴿ وَمَا أَنفَقْتُم مِّن شَيْءٍ فَهُوَ يُخْلِفُهُ ۖ وَهُوَ خَيْرُ الرَّازِقِينَ ﴾</span><span class="edz-ticker__ayah-ref">سورة سبأ — ٣٩</span></span>
+        <span class="edz-ticker__sep edz-ticker__sep--verse" aria-hidden="true">✦</span>
+        <span class="edz-ticker__item edz-ticker__ayah" lang="ar" dir="rtl"><span class="edz-ticker__ayah-text">﴿ إِنَّ اللَّهَ يَرْزُقُ مَن يَشَاءُ بِغَيْرِ حِسَابٍ ﴾</span><span class="edz-ticker__ayah-ref">سورة آل عمران — ٣٧</span></span>
+        <span class="edz-ticker__sep edz-ticker__sep--verse" aria-hidden="true">✦</span>
+        <span class="edz-ticker__item edz-ticker__ayah" lang="ar" dir="rtl"><span class="edz-ticker__ayah-text">﴿ اللَّهُ لَطِيفٌ بِعِبَادِهِ يَرْزُقُ مَن يَشَاءُ ۖ وَهُوَ الْقَوِيُّ الْعَزِيزُ ﴾</span><span class="edz-ticker__ayah-ref">سورة الشورى — ١٩</span></span>
+        <span class="edz-ticker__sep edz-ticker__sep--verse" aria-hidden="true">✦</span>
+        <span class="edz-ticker__item edz-ticker__ayah" lang="ar" dir="rtl"><span class="edz-ticker__ayah-text">﴿ إِنَّ رَبِّي يَبْسُطُ الرِّزْقَ لِمَن يَشَاءُ وَيَقْدِرُ ﴾</span><span class="edz-ticker__ayah-ref">سورة سبأ — ٣٦</span></span>
+        <span class="edz-ticker__sep edz-ticker__sep--verse" aria-hidden="true">✦</span>
+        <span class="edz-ticker__item edz-ticker__ayah" lang="ar" dir="rtl"><span class="edz-ticker__ayah-text">﴿ وَفِي السَّمَاءِ رِزْقُكُمْ وَمَا تُوعَدُونَ ﴾</span><span class="edz-ticker__ayah-ref">سورة الذاريات — ٢٢</span></span>
+        <span class="edz-ticker__sep edz-ticker__sep--verse" aria-hidden="true">✦</span>
+        <span class="edz-ticker__item edz-ticker__ayah" lang="ar" dir="rtl"><span class="edz-ticker__ayah-text">﴿ إِنَّ اللَّهَ هُوَ الرَّزَّاقُ ذُو الْقُوَّةِ الْمَتِينُ ﴾</span><span class="edz-ticker__ayah-ref">سورة الذاريات — ٥٨</span></span>
+        <span class="edz-ticker__sep edz-ticker__sep--verse" aria-hidden="true">✦</span>
+        <span class="edz-ticker__item edz-ticker__ayah" lang="ar" dir="rtl"><span class="edz-ticker__ayah-text">﴿ وَمَا مِن دَابَّةٍ فِي الْأَرْضِ إِلَّا عَلَى اللَّهِ رِزْقُهَا ﴾</span><span class="edz-ticker__ayah-ref">سورة هود — ٦</span></span>
+        <span class="edz-ticker__sep edz-ticker__sep--verse" aria-hidden="true">✦</span>
+        <span class="edz-ticker__item edz-ticker__ayah" lang="ar" dir="rtl"><span class="edz-ticker__ayah-text">﴿ وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا ۝ وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ ﴾</span><span class="edz-ticker__ayah-ref">سورة الطلاق — ٢–٣</span></span>
+        <span class="edz-ticker__sep edz-ticker__sep--verse" aria-hidden="true">✦</span>
+        <span class="edz-ticker__item edz-ticker__ayah" lang="ar" dir="rtl"><span class="edz-ticker__ayah-text">﴿ وَمَا أَنفَقْتُم مِّن شَيْءٍ فَهُوَ يُخْلِفُهُ ۖ وَهُوَ خَيْرُ الرَّازِقِينَ ﴾</span><span class="edz-ticker__ayah-ref">سورة سبأ — ٣٩</span></span>
+        <span class="edz-ticker__sep edz-ticker__sep--verse" aria-hidden="true">✦</span>
+        <span class="edz-ticker__item edz-ticker__ayah" lang="ar" dir="rtl"><span class="edz-ticker__ayah-text">﴿ إِنَّ اللَّهَ يَرْزُقُ مَن يَشَاءُ بِغَيْرِ حِسَابٍ ﴾</span><span class="edz-ticker__ayah-ref">سورة آل عمران — ٣٧</span></span>
+        <span class="edz-ticker__sep edz-ticker__sep--verse" aria-hidden="true">✦</span>
+        <span class="edz-ticker__item edz-ticker__ayah" lang="ar" dir="rtl"><span class="edz-ticker__ayah-text">﴿ اللَّهُ لَطِيفٌ بِعِبَادِهِ يَرْزُقُ مَن يَشَاءُ ۖ وَهُوَ الْقَوِيُّ الْعَزِيزُ ﴾</span><span class="edz-ticker__ayah-ref">سورة الشورى — ١٩</span></span>
+        <span class="edz-ticker__sep edz-ticker__sep--verse" aria-hidden="true">✦</span>
+        <span class="edz-ticker__item edz-ticker__ayah" lang="ar" dir="rtl"><span class="edz-ticker__ayah-text">﴿ إِنَّ رَبِّي يَبْسُطُ الرِّزْقَ لِمَن يَشَاءُ وَيَقْدِرُ ﴾</span><span class="edz-ticker__ayah-ref">سورة سبأ — ٣٦</span></span>
+        <span class="edz-ticker__sep edz-ticker__sep--verse" aria-hidden="true">✦</span>
       </div>
     </div>
   </div>

@@ -156,6 +156,12 @@
 
   function wrapHero(hero) {
     if (!hero || hero.dataset.enDone) return;
+    /* Page calcul : pas de grand bandeau néon — on garde le hero compact */
+    if (document.body && document.body.querySelector('.calc-workspace')) {
+      hero.dataset.enDone = '1';
+      hero.classList.add('en-hero-calc-compact');
+      return;
+    }
     hero.dataset.enDone = '1';
 
     var frame = document.createElement('div');

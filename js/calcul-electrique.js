@@ -35,6 +35,7 @@
 
   let activeId = 'ohm_law';
   let focusMode = false;
+  let soloMode = false;
   let pickerMode = 'grid';
 
   function getLang() {
@@ -74,6 +75,18 @@
   function calcDesc(id) {
     return tr(`calcDesc_${id}`);
   }
+
+  /** Lexique affiché à côté de la formule (bilan de puissance). */
+  const HELP_GLOSS = {
+    power_balance: [
+      ['Pi', 'glossPi'],
+      ['Ku', 'glossKu'],
+      ['Ks', 'glossKs'],
+      ['Pd', 'glossPd'],
+      ['Ib', 'glossIb'],
+      ['Σ', 'glossSum'],
+    ],
+  };
 
   function applyI18n() {
     const lang = getLang();
@@ -200,6 +213,7 @@
     const title = document.getElementById('calc-active-title');
     const helpText = document.getElementById('calc-help-text');
     const helpTitle = document.getElementById('calc-help-title');
+    const helpGloss = document.getElementById('calc-help-gloss');
     const heroTitle = document.getElementById('hero-title');
     const heroSub = document.getElementById('hero-sub');
     const pickerLabel = document.getElementById('picker-label');
@@ -208,6 +222,26 @@
     if (title) title.textContent = calcName(activeId);
     if (helpText) helpText.textContent = calcDesc(activeId);
     if (helpTitle) helpTitle.textContent = tr('helpTitle');
+    if (helpGloss) {
+      const terms = HELP_GLOSS[activeId] || [];
+      if (!terms.length) {
+        helpGloss.hidden = true;
+        helpGloss.innerHTML = '';
+      } else {
+        helpGloss.hidden = false;
+        helpGloss.innerHTML = terms
+          .map(function (pair) {
+            return (
+              '<li><strong>' +
+              pair[0] +
+              '</strong><span>' +
+              tr(pair[1]) +
+              '</span></li>'
+            );
+          })
+          .join('');
+      }
+    }
     if (heroTitle) heroTitle.textContent = tr('heroTitle');
     if (heroSub) heroSub.textContent = tr('heroSub');
     if (pickerLabel) pickerLabel.textContent = tr('pickerLabel');
@@ -217,6 +251,8 @@
     }
     const expand = document.getElementById('focus-expand');
     if (expand) expand.textContent = tr('focusGrid');
+    const soloBack = document.getElementById('solo-back-link');
+    if (soloBack) soloBack.textContent = tr('soloBack');
     const pg = document.getElementById('picker-grid');
     const pc = document.getElementById('picker-compact');
     if (pg) pg.textContent = tr('pickerGrid');
@@ -564,7 +600,6 @@
     } catch (_) { /* ignore */ }
 
     reorderPrioritySections();
-    applyI18n();
     let startId = 'power_balance';
     let enterFocus = false;
     try {
@@ -572,14 +607,22 @@
       const urlCalc = params.get('calc');
       if (urlCalc && CALC_TYPES.some((c) => c.id === urlCalc)) {
         startId = urlCalc;
+        /* Lien depuis l’accueil / deep link : une seule section, pas la grille d’outils */
+        soloMode = true;
+        focusMode = true;
+        enterFocus = true;
+        document.body.classList.add('calc-solo', 'calc-focus');
       } else {
         const saved = localStorage.getItem('electrodz-calc-active');
         if (saved && CALC_TYPES.some((c) => c.id === saved)) startId = saved;
       }
       const isAppEmbed = params.get('app') === '1';
-      enterFocus = isAppEmbed;
-      if (isAppEmbed) document.body.classList.add('app-embed');
+      if (isAppEmbed) {
+        enterFocus = true;
+        document.body.classList.add('app-embed');
+      }
     } catch (_) { /* ignore */ }
+    applyI18n();
     activateCalc(startId, enterFocus);
     window.ElectroDzTripCurveCatalog?.loadCatalog?.();
 

@@ -85,31 +85,38 @@
     var board = (boardFilter || '').trim();
 
     var rows = (ad.detailRows || []).filter(function (r) {
+      if (!(r.pdem > 0)) return false;
       if (!board) return true;
       var b = (r.board || '').trim() || '—';
       return b === board;
     });
     if (!rows.length) return { error: 'no_rows' };
 
-    var grouped = groupCircuits(rows);
-    var circuits = grouped.map(function (g1, idx) {
-      var ib = circuitIbA(g1.pdemW, g1.cosPhi, isTri, Uline);
-      var inA = roundUpStandardIn(ib);
-      return {
-        id: 'dep-' + idx,
-        schemaRef: g1.schemaRef,
-        circuitRef: g1.circuitRef,
-        label: g1.label,
-        location: g1.location,
-        pdemW: Math.round(g1.pdemW),
-        ibA: Math.round(ib * 10) / 10,
-        inA: inA,
-        curve: g1.pdemW > 4000 ? 'C' : 'C',
-        rcd: needsTypeA(g1.usage, g1.templateId),
-        usage: g1.usage,
-        templateId: g1.templateId || '',
-      };
-    });
+    /* Une colonne par charge du bilan (toutes visibles en même temps, comme le simulateur). */
+    var circuits = rows
+      .map(function (row, idx) {
+        var ib = circuitIbA(row.pdem, row.cosPhi, isTri, Uline);
+        var inA = roundUpStandardIn(ib);
+        return {
+          id: 'dep-' + idx,
+          schemaRef: (row.schemaRef || '').trim() || (row.circuitRef || '').trim() || 'C' + (idx + 1),
+          circuitRef: (row.circuitRef || '').trim(),
+          label: row.label || '—',
+          location: row.location,
+          pdemW: Math.round(row.pdem || 0),
+          ibA: Math.round(ib * 10) / 10,
+          inA: inA,
+          cosPhi: row.cosPhi != null ? row.cosPhi : null,
+          curve: 'C',
+          rcd: needsTypeA(row.usage, row.templateId),
+          usage: row.usage,
+          templateId: row.templateId || '',
+          count: 1,
+        };
+      })
+      .sort(function (a, b) {
+        return String(a.schemaRef).localeCompare(String(b.schemaRef), undefined, { numeric: true });
+      });
 
     var pBoard = rows.reduce(function (s, r) {
       return s + r.pdem;
@@ -131,7 +138,7 @@
         client: meta.client || '',
         engineer: meta.engineer || '',
       },
-      board: board || rows[0].board || 'TABLEAU',
+      board: board || 'Tous les tableaux',
       supply: {
         Uline: Uline,
         isTri: isTri,
@@ -144,7 +151,19 @@
         inA: Math.max(mainIn, circuits.reduce(function (m, c) {
           return Math.max(m, c.inA);
         }, 16)),
-        rcdInA: 63,
+        rcdInA: (function () {
+          var rcd = circuits.filter(function (c) {
+            return c.rcd;
+          });
+          if (!rcd.length) return 40;
+          var ibSum = rcd.reduce(function (s, c) {
+            return s + (c.ibA || 0);
+          }, 0);
+          var maxIn = rcd.reduce(function (m, c) {
+            return Math.max(m, c.inA || 0);
+          }, 0);
+          return roundUpStandardIn(Math.max(ibSum, maxIn));
+        })(),
         rcdMa: 30,
         rcdType: circuits.some(function (c) {
           return c.rcd;

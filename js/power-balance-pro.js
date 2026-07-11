@@ -11,9 +11,33 @@
   const MAX_ROWS = 40;
 
   const FALLBACK_CATALOG = {
-    boards: ['TGBT', 'TD-RDC', 'TD-ETAGE1', 'LOCAL-TECH'],
-    locations: ['RDC', 'R+1', 'R+2', 'SOUS-SOL', 'LOCAL-TECH'],
-    templates: [{ id: 'custom', usage: 'custom' }],
+    boards: ['TGBT', 'TGBT-AUX', 'TD-RDC', 'TD-ETAGE1', 'TD-ETAGE2', 'TD-ETAGE3', 'LOCAL-TECH'],
+    locations: ['RDC', 'R+1', 'R+2', 'R+3', 'SOUS-SOL', 'CAVE', 'GRENIER', 'EXT', 'LOCAL-TECH', 'PARKING'],
+    templates: [
+      { id: 'custom', usage: 'custom' },
+      { id: 'light_rooms', usage: 'lighting', pi: 400, ku: 0.9, ks: 1, cosPhi: 0.9, labelKey: 'balDesig_light_rooms' },
+      { id: 'light_stairs', usage: 'lighting', pi: 200, ku: 0.9, ks: 1, cosPhi: 0.9, labelKey: 'balDesig_light_stairs' },
+      { id: 'light_parking', usage: 'lighting', pi: 300, ku: 0.8, ks: 1, cosPhi: 0.9, labelKey: 'balDesig_light_parking' },
+      { id: 'sockets_living', usage: 'sockets', pi: 2500, ku: 0.5, ks: 1, cosPhi: 0.8, labelKey: 'balDesig_sockets_living' },
+      { id: 'sockets_kitchen', usage: 'sockets', pi: 3500, ku: 0.5, ks: 1, cosPhi: 0.8, labelKey: 'balDesig_sockets_kitchen' },
+      { id: 'sockets_bedrooms', usage: 'sockets', pi: 2000, ku: 0.4, ks: 1, cosPhi: 0.8, labelKey: 'balDesig_sockets_bedrooms' },
+      { id: 'sockets_bathroom', usage: 'sockets', pi: 800, ku: 0.5, ks: 1, cosPhi: 0.8, labelKey: 'balDesig_sockets_bathroom' },
+      { id: 'sockets_office', usage: 'sockets', pi: 1500, ku: 0.6, ks: 1, cosPhi: 0.8, labelKey: 'balDesig_sockets_office' },
+      { id: 'sockets_garage', usage: 'sockets', pi: 1200, ku: 0.5, ks: 1, cosPhi: 0.8, labelKey: 'balDesig_sockets_garage' },
+      { id: 'hvac_ventilation', usage: 'motors', pi: 800, ku: 1, ks: 0.9, cosPhi: 0.75, labelKey: 'balDesig_hvac_ventilation' },
+      { id: 'motor_pump', usage: 'motors', pi: 2200, ku: 1, ks: 0.8, cosPhi: 0.75, labelKey: 'balDesig_motor_pump' },
+      { id: 'motor_lift', usage: 'motors', pi: 8000, ku: 1, ks: 0.7, cosPhi: 0.75, labelKey: 'balDesig_motor_lift' },
+      { id: 'heating_electric', usage: 'heating', pi: 6000, ku: 1, ks: 1, cosPhi: 1, labelKey: 'balDesig_heating_electric' },
+      { id: 'water_heater', usage: 'heating', pi: 2400, ku: 1, ks: 1, cosPhi: 1, labelKey: 'balDesig_water_heater' },
+      { id: 'cooker', usage: 'heating', pi: 7000, ku: 0.8, ks: 1, cosPhi: 1, labelKey: 'balDesig_cooker' },
+      { id: 'oven', usage: 'heating', pi: 3000, ku: 0.7, ks: 1, cosPhi: 1, labelKey: 'balDesig_oven' },
+      { id: 'dishwasher', usage: 'heating', pi: 2200, ku: 0.7, ks: 1, cosPhi: 0.9, labelKey: 'balDesig_dishwasher' },
+      { id: 'washing_machine', usage: 'motors', pi: 2200, ku: 0.7, ks: 1, cosPhi: 0.75, labelKey: 'balDesig_washing_machine' },
+      { id: 'dryer', usage: 'heating', pi: 2500, ku: 0.7, ks: 1, cosPhi: 1, labelKey: 'balDesig_dryer' },
+      { id: 'welding', usage: 'welding', pi: 5000, ku: 0.7, ks: 0.6, cosPhi: 0.7, labelKey: 'balDesig_welding' },
+      { id: 'ev_charger', usage: 'heating', pi: 7400, ku: 1, ks: 0.9, cosPhi: 0.98, labelKey: 'balDesig_ev_charger' },
+      { id: 'outdoor_light', usage: 'lighting', pi: 500, ku: 0.8, ks: 1, cosPhi: 0.9, labelKey: 'balDesig_outdoor_light' },
+    ],
   };
 
   let catalog = null;
@@ -132,24 +156,46 @@
     });
   }
 
+  function suggestOptionsHtml(items, emptyLabel) {
+    return (
+      `<option value="">${esc(emptyLabel)}</option>` +
+      (items || []).map((v) => `<option value="${esc(v)}">${esc(v)}</option>`).join('')
+    );
+  }
+
+  function schemaSuggestItems() {
+    return ['Q1', 'Q2', 'Q3', 'F1', 'F2', 'F3', 'W1', 'W2', 'W3'];
+  }
+
   function createRowEl(data) {
     const row = document.createElement('div');
     row.className = 'bal-row';
     row.setAttribute('data-balance-row', '');
     const d = data || {};
+    const boards = catalog?.boards || FALLBACK_CATALOG.boards;
+    const locs = catalog?.locations || FALLBACK_CATALOG.locations;
     row.innerHTML = `
       <div class="bal-col-ref bal-field-unit-only"><input type="text" class="bal-ref" readonly tabindex="-1" aria-label="${esc(tr('balColRef'))}"><span class="bal-unit" data-bal-unit="unitRef"></span></div>
-      <div class="bal-col-schema">${withUnit(`<input type="text" class="bal-schema" maxlength="8" placeholder="${esc(tr('phBalanceSchema'))}" value="${esc(d.schemaRef || '')}" list="bal-list-schema">`, 'unitSchema')}</div>
+      <div class="bal-col-schema">
+        <select class="bal-suggest bal-schema-suggest" aria-label="${esc(tr('balSuggestSchema'))}">${suggestOptionsHtml(schemaSuggestItems(), tr('balSuggestPick'))}</select>
+        ${withUnit(`<input type="text" class="bal-schema" maxlength="8" placeholder="${esc(tr('phBalanceSchema'))}" value="${esc(d.schemaRef || '')}" list="bal-list-schema" autocomplete="off">`, 'unitSchema')}
+      </div>
       <div class="bal-col-desig" data-lbl="${esc(tr('balColLabel'))}">
         ${withUnit(`<select class="bal-desig" title="${esc(tr('balColLabel'))}">${desigOptionsHtml()}</select>`, 'unitCatalog')}
-        <input type="text" class="bal-label-custom" maxlength="100" hidden placeholder="${esc(tr('phBalanceLabelCustom'))}" value="${esc(d.label || '')}">
+        <input type="text" class="bal-label-custom" maxlength="100" hidden placeholder="${esc(tr('phBalanceLabelCustom'))}" value="${esc(d.label || '')}" autocomplete="off">
       </div>
-      <div class="bal-col-location">${withUnit(`<input type="text" class="bal-location" maxlength="40" placeholder="${esc(tr('phBalanceLocation'))}" value="${esc(d.location || '')}" list="bal-list-location">`, 'unitText')}</div>
-      <div class="bal-col-board">${withUnit(`<input type="text" class="bal-board" maxlength="16" placeholder="${esc(tr('phBalanceBoard'))}" value="${esc(d.board || '')}" list="bal-list-board">`, 'unitText')}</div>
-      <div class="bal-col-pi" data-lbl="${esc(tr('balColPi'))}">${withUnit(`<input type="number" class="bal-p" min="0" step="1" placeholder="0" title="${esc(tr('balPiTooltip'))}" aria-label="${esc(tr('balColPi'))}" value="${d.p != null ? esc(d.p) : ''}">`, 'unitW')}</div>
-      <div class="bal-col-ku" data-lbl="${esc(tr('balColKuLong'))}">${withUnit(`<input type="number" class="bal-ku" min="0" max="1" step="0.01" title="${esc(tr('balKuTooltip'))}" aria-label="${esc(tr('balColKuLong'))}" value="${d.ku != null ? esc(d.ku) : '1'}">`, 'unitCoef')}</div>
-      <div class="bal-col-ks" data-lbl="${esc(tr('balColKsLong'))}">${withUnit(`<input type="number" class="bal-ks" min="0" max="1" step="0.01" title="${esc(tr('balKsTooltip'))}" aria-label="${esc(tr('balColKsLong'))}" value="${d.ks != null ? esc(d.ks) : '1'}">`, 'unitCoef')}</div>
-      <div class="bal-col-cos" data-lbl="${esc(tr('balColCos'))}">${withUnit(`<input type="number" class="bal-cos" min="0.01" max="1" step="0.01" title="${esc(tr('balCosTooltip'))}" aria-label="${esc(tr('balColCos'))}" value="${d.cosPhi != null && d.cosPhi !== '' ? esc(d.cosPhi) : ''}" placeholder="${esc(tr('balCosPlaceholder'))}">`, 'unitCoef')}</div>
+      <div class="bal-col-location">
+        <select class="bal-suggest bal-location-suggest" aria-label="${esc(tr('balSuggestLocation'))}">${suggestOptionsHtml(locs, tr('balSuggestPick'))}</select>
+        ${withUnit(`<input type="text" class="bal-location" maxlength="40" placeholder="${esc(tr('phBalanceLocation'))}" value="${esc(d.location || '')}" list="bal-list-location" autocomplete="off">`, 'unitText')}
+      </div>
+      <div class="bal-col-board">
+        <select class="bal-suggest bal-board-suggest" aria-label="${esc(tr('balSuggestBoard'))}">${suggestOptionsHtml(boards, tr('balSuggestPick'))}</select>
+        ${withUnit(`<input type="text" class="bal-board" maxlength="16" placeholder="${esc(tr('phBalanceBoard'))}" value="${esc(d.board || '')}" list="bal-list-board" autocomplete="off">`, 'unitText')}
+      </div>
+      <div class="bal-col-pi" data-lbl="${esc(tr('balColPi'))}">${withUnit(`<input type="number" class="bal-p" min="0" step="1" inputmode="decimal" placeholder="0" title="${esc(tr('balPiTooltip'))}" aria-label="${esc(tr('balColPi'))}" value="${d.p != null ? esc(d.p) : ''}">`, 'unitW')}</div>
+      <div class="bal-col-ku" data-lbl="${esc(tr('balColKuLong'))}">${withUnit(`<input type="number" class="bal-ku" min="0" max="1" step="0.01" inputmode="decimal" title="${esc(tr('balKuTooltip'))}" aria-label="${esc(tr('balColKuLong'))}" value="${d.ku != null ? esc(d.ku) : '1'}">`, 'unitCoef')}</div>
+      <div class="bal-col-ks" data-lbl="${esc(tr('balColKsLong'))}">${withUnit(`<input type="number" class="bal-ks" min="0" max="1" step="0.01" inputmode="decimal" title="${esc(tr('balKsTooltip'))}" aria-label="${esc(tr('balColKsLong'))}" value="${d.ks != null ? esc(d.ks) : '1'}">`, 'unitCoef')}</div>
+      <div class="bal-col-cos" data-lbl="${esc(tr('balColCos'))}">${withUnit(`<input type="number" class="bal-cos" min="0.01" max="1" step="0.01" inputmode="decimal" title="${esc(tr('balCosTooltip'))}" aria-label="${esc(tr('balColCos'))}" value="${d.cosPhi != null && d.cosPhi !== '' ? esc(d.cosPhi) : ''}" placeholder="${esc(tr('balCosPlaceholder'))}">`, 'unitCoef')}</div>
       <button type="button" class="bal-row-remove" title="${esc(tr('balRemoveRow'))}" aria-label="${esc(tr('balRemoveRow'))}"><span aria-hidden="true">×</span><span>${esc(tr('balRemoveShort'))}</span></button>`;
     const desigSel = row.querySelector('.bal-desig');
     if (desigSel) desigSel.value = d.templateId || d.desigId || 'custom';
@@ -193,6 +239,21 @@
       renumberRefs();
       updateRemoveButtons();
     });
+    const wireSuggest = (suggestSel, inputSel) => {
+      const sug = row.querySelector(suggestSel);
+      const inp = row.querySelector(inputSel);
+      if (!sug || !inp) return;
+      sug.addEventListener('change', () => {
+        if (sug.value) {
+          inp.value = sug.value;
+          sug.selectedIndex = 0;
+          inp.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+      });
+    };
+    wireSuggest('.bal-schema-suggest', '.bal-schema');
+    wireSuggest('.bal-location-suggest', '.bal-location');
+    wireSuggest('.bal-board-suggest', '.bal-board');
   }
 
   const MOBILE_COL_CLASSES = [
@@ -774,6 +835,8 @@ ${printScript}
   }
 
   function refreshRowSelects() {
+    const boards = catalog?.boards || FALLBACK_CATALOG.boards;
+    const locs = catalog?.locations || FALLBACK_CATALOG.locations;
     host()?.querySelectorAll('[data-balance-row]').forEach((row) => {
       const desig = row.querySelector('.bal-desig');
       const val = desig?.value || 'custom';
@@ -781,6 +844,12 @@ ${printScript}
         desig.innerHTML = desigOptionsHtml();
         desig.value = val;
       }
+      const boardSug = row.querySelector('.bal-board-suggest');
+      if (boardSug) boardSug.innerHTML = suggestOptionsHtml(boards, tr('balSuggestPick'));
+      const locSug = row.querySelector('.bal-location-suggest');
+      if (locSug) locSug.innerHTML = suggestOptionsHtml(locs, tr('balSuggestPick'));
+      const schemaSug = row.querySelector('.bal-schema-suggest');
+      if (schemaSug) schemaSug.innerHTML = suggestOptionsHtml(schemaSuggestItems(), tr('balSuggestPick'));
       syncDesigRow(row);
     });
     rebuildDatalists();

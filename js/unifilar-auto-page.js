@@ -30,11 +30,18 @@
   function rebuildBoardSelect() {
     if (!boardSelect || !sourceReport) return;
     var boards = U.listBoardsFromReport(sourceReport);
-    boardSelect.innerHTML = boards
-      .map(function (b) {
-        return '<option value="' + b.replace(/"/g, '&quot;') + '">' + b + '</option>';
-      })
-      .join('');
+    var allLabel = t('board.all');
+    var opts =
+      '<option value="__ALL__">' +
+      escapeHtml(allLabel) +
+      '</option>' +
+      boards
+        .map(function (b) {
+          return '<option value="' + b.replace(/"/g, '&quot;') + '">' + escapeHtml(b) + '</option>';
+        })
+        .join('');
+    boardSelect.innerHTML = opts;
+    boardSelect.value = '__ALL__';
   }
 
   function escapeHtml(s) {
@@ -100,8 +107,9 @@
   }
 
   function generateFromBoard() {
-    var board = boardSelect ? boardSelect.value : '';
-    var built = U.buildProjectFromReport(sourceReport, board === '—' ? '' : board);
+    var board = boardSelect ? boardSelect.value : '__ALL__';
+    var filter = !board || board === '__ALL__' ? '' : board;
+    var built = U.buildProjectFromReport(sourceReport, filter);
     if (built.error) {
       alert(t('errGenerate'));
       return;
@@ -117,18 +125,16 @@
     if (contentEl) contentEl.hidden = !show;
   }
 
-  function openEditor() {
-    if (!project) return;
-    try {
-      if (U.projectToDrawioXml) {
-        localStorage.setItem(U.STORAGE_DRAWIO, U.projectToDrawioXml(project));
-      }
-    } catch (e) {}
-    window.location.href = 'schemas-plans.html?from=unifilar';
-  }
-
   function printSvg() {
-    if (!project || !U.projectToSvgPro) return;
+    if (!project) return;
+    var P = window.ElectroDzUnifilarProSvg;
+    if (P && P.openPrint) {
+      if (!P.openPrint(project, 'SwissDZ')) {
+        alert('Autorisez les fenêtres popup pour imprimer.');
+      }
+      return;
+    }
+    if (!U.projectToSvgPro) return;
     var w = window.open('', '_blank');
     if (!w) {
       alert('Autorisez les fenêtres popup pour imprimer.');
@@ -148,13 +154,9 @@
     var forceFresh = /[?&]fresh=1/.test(window.location.search || '');
     sourceReport = loadSourceReport();
     project = forceFresh ? null : U.loadProject();
-    if (project && project.circuits && project.circuits.length && !forceFresh) {
-      showContent(true);
-      if (sourceReport) rebuildBoardSelect();
-      renderTable();
-      refreshPreview();
-      return;
-    }
+
+    // Toujours reconstruire depuis le bilan s'il est dispo (évite un schéma
+    // obsolète filtré sur un seul tableau).
     if (sourceReport && sourceReport.r && sourceReport.r.ok) {
       rebuildBoardSelect();
       generateFromBoard();
@@ -164,12 +166,18 @@
       }
       return;
     }
+
+    if (project && project.circuits && project.circuits.length) {
+      showContent(true);
+      renderTable();
+      refreshPreview();
+      return;
+    }
     showContent(false);
   }
 
   document.getElementById('btnUnifRegen')?.addEventListener('click', generateFromBoard);
   boardSelect?.addEventListener('change', generateFromBoard);
-  document.getElementById('btnUnifEditor')?.addEventListener('click', openEditor);
   document.getElementById('btnUnifPrint')?.addEventListener('click', printSvg);
 
   document.getElementById('btnUnifBackCalc')?.addEventListener('click', function () {

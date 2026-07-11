@@ -36,8 +36,8 @@ rep(
 );
 
 rep(
-  't.started=!0,qe.current=!1,w(!0),E(t.kind===`pose`?{kind:`pose`,uid:t.uid}:{kind:`palette`,catalogueId:t.catalogueId})}e.preventDefault();let r=document.elementFromPoint(n.clientX,n.clientY)?.closest?.(`[data-slot-idx]`);r?x({rangee:+r.getAttribute(`data-rangee`),slot:+r.getAttribute(`data-slot-idx`)}):x(null)}',
-  't.started=!0,qe.current=!1,document.documentElement.classList.add(`drag-tableau-actif`),w(!0),E(t.kind===`pose`?{kind:`pose`,uid:t.uid}:{kind:`palette`,catalogueId:t.catalogueId})}e.preventDefault();let r=document.elementFromPoint(n.clientX,n.clientY)?.closest?.(`[data-slot-idx]`);if(r){let e=+r.getAttribute(`data-rangee`),t=+r.getAttribute(`data-slot-idx`),i=ie(),a=touchDrag?.kind===`pose`?touchDrag.uid:void 0,o=t;for(let s=Math.max(0,t-i+1);s<=Math.min(t,13-i);s++)if(ae(e,s,i,a)){o=s;break}survolRef={rangee:e,slot:o},x(survolRef)}else survolRef=null,x(null)}',
+  't.started=!0,qe.current=!1,w(!0),E(t.kind===`pose`?{kind:`pose`,uid:t.uid}:{kind:`palette`,catalogueId:t.catalogueId})}let r=document.elementFromPoint(n.clientX,n.clientY)?.closest?.(`[data-slot-idx]`);r?x({rangee:+r.getAttribute(`data-rangee`),slot:+r.getAttribute(`data-slot-idx`)}):x(null)}',
+  't.started=!0,qe.current=!1,document.documentElement.classList.add(`drag-tableau-actif`),w(!0),E(t.kind===`pose`?{kind:`pose`,uid:t.uid}:{kind:`palette`,catalogueId:t.catalogueId})}let r=document.elementFromPoint(n.clientX,n.clientY)?.closest?.(`[data-slot-idx]`);if(r){let e=+r.getAttribute(`data-rangee`),t=+r.getAttribute(`data-slot-idx`),i=ie(),a=touchDrag?.kind===`pose`?touchDrag.uid:void 0,o=t;for(let s=Math.max(0,t-i+1);s<=Math.min(t,13-i);s++)if(ae(e,s,i,a)){o=s;break}survolRef={rangee:e,slot:o},x(survolRef)}else survolRef=null,x(null)}',
   'touchmove anchor + survolRef'
 );
 
