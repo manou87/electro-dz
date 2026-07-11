@@ -237,8 +237,9 @@
       min-height:min(72vh,620px);
     }
     .quick-item{
-      display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
-      gap:10px;min-height:0;height:100%;padding:14px 10px;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:10px;min-height:0;height:100%;padding:14px 10px 30px;
+      position:relative;
       background:transparent;
       border:1px solid var(--border);border-radius:12px;
       border-top:3px solid var(--quick-accent,var(--accent));
@@ -318,8 +319,9 @@
       display:flex;flex-direction:column;align-items:center;gap:3px;max-width:100%;
     }
     .quick-item .ico-hint{
-      font-size:.6rem;font-weight:700;line-height:1.25;text-align:center;
-      color:#e2e8f0;max-width:10.5rem;opacity:1;
+      position:absolute;bottom:7px;left:6px;right:6px;
+      font-size:.48rem;font-weight:600;line-height:1.2;text-align:center;
+      color:#cbd5e1;max-width:none;opacity:.92;margin:0;
       text-shadow:0 1px 2px rgba(0,0,0,0.8);
     }
     .quick-item--train .ico-hint{color:#ede9fe}
@@ -525,11 +527,11 @@
         grid-template-rows:repeat(5,minmax(0,1fr));
         min-height:min(72vh,560px);gap:10px;
       }
-      .quick-item{padding:12px 8px}
+      .quick-item{padding:12px 8px 26px}
       .quick-item .ico-wrap{width:48px;height:48px}
       .quick-item .ico{width:26px;height:26px}
       .quick-item .ico-label{font-size:.8rem}
-      .quick-item .ico-hint{font-size:.52rem;max-width:9.5rem}
+      .quick-item .ico-hint{font-size:.42rem;bottom:5px;left:4px;right:4px}
       .spotlight-grid,.hub-grid{grid-template-columns:1fr}
       .spot-card .ico-wrap{display:none}
     }
