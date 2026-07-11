@@ -51,11 +51,64 @@
     }
     a{color:inherit;text-decoration:none}
 
+    /* Bandeau ticker info / pub (style chantier) */
+    .site-chrome{
+      position:sticky;top:0;z-index:210;
+    }
+    .edz-ticker{
+      display:flex;align-items:stretch;height:36px;
+      background:#0c1220;
+      border-bottom:1px solid rgba(250,204,21,0.4);
+      overflow:hidden;
+    }
+    .edz-ticker__tag{
+      flex-shrink:0;display:flex;align-items:center;padding:0 12px;
+      background:var(--accent);color:var(--bg);
+      font-size:.65rem;font-weight:900;letter-spacing:.07em;text-transform:uppercase;
+    }
+    .edz-ticker__viewport{
+      flex:1;min-width:0;overflow:hidden;
+      mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+      -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+    }
+    html[dir="rtl"] .edz-ticker__viewport{
+      mask-image:linear-gradient(270deg,transparent,#000 6%,#000 94%,transparent);
+      -webkit-mask-image:linear-gradient(270deg,transparent,#000 6%,#000 94%,transparent);
+    }
+    .edz-ticker__track{
+      display:inline-flex;align-items:center;gap:40px;height:100%;
+      padding-inline:16px;white-space:nowrap;
+      animation:edz-marquee 28s linear infinite;
+    }
+    html[dir="rtl"] .edz-ticker__track{animation-name:edz-marquee-rtl}
+    .edz-ticker:hover .edz-ticker__track{animation-play-state:paused}
+    .edz-ticker__item{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:.78rem;font-weight:650;color:var(--text);
+      text-decoration:none;
+    }
+    .edz-ticker__item:hover{color:var(--accent)}
+    .edz-ticker__item em{
+      font-style:normal;color:var(--accent);font-weight:800;
+    }
+    .edz-ticker__sep{opacity:.35;user-select:none}
+    @keyframes edz-marquee{
+      from{transform:translateX(0)}
+      to{transform:translateX(-50%)}
+    }
+    @keyframes edz-marquee-rtl{
+      from{transform:translateX(0)}
+      to{transform:translateX(50%)}
+    }
+    @media (prefers-reduced-motion:reduce){
+      .edz-ticker__track{animation:none;transform:none}
+    }
+
     .nav{
       display:flex;align-items:center;justify-content:space-between;gap:10px;
       padding:10px 4% 8px;min-height:56px;
       background:rgba(10,15,26,0.94);
-      border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;
+      border-bottom:1px solid var(--border);
       backdrop-filter:blur(14px);
     }
     .brand{
@@ -472,6 +525,34 @@
     <symbol id="ico-tt" viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></symbol>
   </svg>
 
+  <div class="site-chrome">
+  <div class="edz-ticker" role="region" aria-label="Annonces" data-i18n-aria="ticker.aria">
+    <span class="edz-ticker__tag" data-i18n="ticker.tag">معلومة</span>
+    <div class="edz-ticker__viewport">
+      <div class="edz-ticker__track">
+        <a class="edz-ticker__item" href="formations.html#quiz"><span data-i18n="ticker.1">اختبار NFC — 472 سؤالاً مجاناً</span></a>
+        <span class="edz-ticker__sep" aria-hidden="true">·</span>
+        <a class="edz-ticker__item" href="calcul-electrique.html?calc=power_balance"><span data-i18n="ticker.2">موازنة القدرة — احسب Pd</span></a>
+        <span class="edz-ticker__sep" aria-hidden="true">·</span>
+        <a class="edz-ticker__item" href="calcul-electrique.html?calc=cable_section"><span data-i18n="ticker.3">مقطع الكابلات — تحديد سريع</span></a>
+        <span class="edz-ticker__sep" aria-hidden="true">·</span>
+        <a class="edz-ticker__item" href="simulation-swissdz.html"><span data-i18n="ticker.4">محاكي SwissDZ — لوحة ومخطط أحادي</span></a>
+        <span class="edz-ticker__sep" aria-hidden="true">·</span>
+        <a class="edz-ticker__item" href="https://play.google.com/store/apps/details?id=com.electrodz.app" target="_blank" rel="noopener noreferrer"><span data-i18n="ticker.5">تطبيق مجاني — أندرويد وآيفون</span></a>
+        <span class="edz-ticker__sep" aria-hidden="true">·</span>
+        <a class="edz-ticker__item" href="formations.html#quiz"><span data-i18n="ticker.1">اختبار NFC — 472 سؤالاً مجاناً</span></a>
+        <span class="edz-ticker__sep" aria-hidden="true">·</span>
+        <a class="edz-ticker__item" href="calcul-electrique.html?calc=power_balance"><span data-i18n="ticker.2">موازنة القدرة — احسب Pd</span></a>
+        <span class="edz-ticker__sep" aria-hidden="true">·</span>
+        <a class="edz-ticker__item" href="calcul-electrique.html?calc=cable_section"><span data-i18n="ticker.3">مقطع الكابلات — تحديد سريع</span></a>
+        <span class="edz-ticker__sep" aria-hidden="true">·</span>
+        <a class="edz-ticker__item" href="simulation-swissdz.html"><span data-i18n="ticker.4">محاكي SwissDZ — لوحة ومخطط أحادي</span></a>
+        <span class="edz-ticker__sep" aria-hidden="true">·</span>
+        <a class="edz-ticker__item" href="https://play.google.com/store/apps/details?id=com.electrodz.app" target="_blank" rel="noopener noreferrer"><span data-i18n="ticker.5">تطبيق مجاني — أندرويد وآيفون</span></a>
+      </div>
+    </div>
+  </div>
+
   <nav class="nav">
     <a href="index.html" class="brand">
       <img src="assets/app-icon.png" alt="" class="brand-icon" width="52" height="52" decoding="async"/>
@@ -494,6 +575,7 @@
       </div>
     </div>
   </nav>
+  </div>
 
   <div class="wrap launcher-page">
     <section class="hero" aria-label="Introduction">

@@ -247,6 +247,20 @@ html.theme-electric-neon .btn-dl:hover {
   box-shadow: 0 0 28px rgba(250, 204, 21, 0.65);
 }
 
+/* Ticker info / pub */
+html.theme-electric-neon .edz-ticker {
+  background: rgba(4, 8, 16, 0.96);
+  border-bottom-color: rgba(34, 211, 238, 0.4);
+}
+html.theme-electric-neon .edz-ticker__tag {
+  background: var(--neon-yellow, #facc15);
+  color: #030508;
+  box-shadow: 0 0 12px rgba(250, 204, 21, 0.35);
+}
+html.theme-electric-neon .edz-ticker__item:hover {
+  color: var(--neon-cyan, #22d3ee);
+}
+
 /* Lanceur — tuiles néon directes (sans cadre / titre de section) */
 html.theme-electric-neon .quick-access {
   background: transparent;
