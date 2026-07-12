@@ -5,9 +5,10 @@
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Electro DZ — Simulation SwissDz</title>
-    <script src="./assets/index-C-tGRpWY.js"></script>
   </head>
   <body>
     <div id="root"></div>
+    <!-- defer : le script doit s’exécuter après #root (sinon React error #299) -->
+    <script defer src="./assets/index-C-tGRpWY.js"></script>
   </body>
 </html>
