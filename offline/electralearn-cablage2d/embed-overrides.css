@@ -1,0 +1,13 @@
+/* Mode intégré (iframe) : onglets M1/M3 gérés par la page parente */
+.application--embed .navigation {
+  display: none !important;
+}
+
+.application--embed .marque-embed-tagline {
+  display: none !important;
+}
+
+.application--embed .entete {
+  padding: 4px 8px !important;
+  min-height: 0 !important;
+}
