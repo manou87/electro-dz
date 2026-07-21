@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "updated": "2026-07-01",
+  "updated": "2026-07-21",
   "collections": {
     "suisse": {
       "labelFr": "PDF Suisse",
@@ -37,6 +37,12 @@
       "labelAr": "كتب إنجليزية",
       "icon": "🇬🇧",
       "order": 5
+    },
+    "greme": {
+      "labelFr": "Formation électricien (Suisse) — électricité",
+      "labelAr": "تكوين كهربائي (سويسرا) — الكهرباء",
+      "icon": "🇨🇭",
+      "order": 7
     }
   },
   "categories": {
@@ -2662,14 +2668,14 @@
       "category": "formation",
       "titleFr": "Le grand livre de l'électricité",
       "titleAr": "الكتاب الكبير في الكهرباء",
-      "descriptionFr": "Ouvrage de référence — électricité générale, installations et applications.",
-      "descriptionAr": "مرجع شامل في الكهرباء العامة والتركيبات والتطبيقات.",
+      "descriptionFr": "David Fedullo & Thierry Gallauziaux (2008) — ouvrage de référence, installations et applications. PDF en ligne (livre21).",
+      "descriptionAr": "ديفيد فيدوللو وتييري غالوزيو (2008) — مرجع شامل في التركيبات والتطبيقات. PDF عبر الإنترنت (livre21).",
       "lang": [
         "fr"
       ],
       "pages": 677,
-      "year": 0,
-      "pdfUrl": "pdf/francais/grand-livre-electricite/grand-livre-electricite.pdf",
+      "year": 2008,
+      "pdfUrl": "http://livre21.com/LIVREF/F13/F013006.pdf",
       "featured": true,
       "coverImageFr": "assets/covers/grand-livre-electricite-fr.svg",
       "coverImageAr": "assets/covers/grand-livre-electricite-ar.svg",
@@ -2755,6 +2761,630 @@
       "coverImageAr": "assets/covers/paratonnerre-spd-ar.svg",
       "coverPreview": "assets/covers/previews/paratonnerre-spd.png",
       "addedDate": "2026-07-01"
+    },
+    {
+      "id": "blajkine-electrotechnique-generale-1977",
+      "collection": "francais",
+      "category": "formation",
+      "titleFr": "Électrotechnique générale — Blajkine (Mir, 1977)",
+      "titleAr": "الكهروتقنية العامة — بلايكين (مير، 1977)",
+      "descriptionFr": "Blajkine et al. — cours d’électrotechnique générale (éd. Mir, 1977). PDF en ligne (Internet Archive).",
+      "descriptionAr": "بلايكين وآخرون — مقرر الكهروتقنية العامة (دار مير، 1977). PDF عبر الإنترنت (أرشيف الإنترنت).",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 1977,
+      "pdfUrl": "https://archive.org/download/blajkine-et-al-electrotechnique-generale-mir-1977/Blajkine%20et%20al%20-%20Electrotechnique%20ge%CC%81ne%CC%81rale%20-%20Mir%20-%201977.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/blajkine-electrotechnique-generale-1977-fr.svg",
+      "coverImageAr": "assets/covers/blajkine-electrotechnique-generale-1977-ar.svg",
+      "addedDate": "2026-07-21"
+    },
+    {
+      "id": "greme-chap01",
+      "collection": "greme",
+      "category": "formation",
+      "titleFr": "Ch. 1 : Notions fondamentales",
+      "titleAr": "فصل 1 : المفاهيم الأساسية",
+      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 1. Source : electrons.ch",
+      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 1. المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/electrotech/elec_chap1.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/greme-chap01-fr.svg",
+      "coverImageAr": "assets/covers/greme-chap01-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/greme-chap01.png"
+    },
+    {
+      "id": "greme-chap02",
+      "collection": "greme",
+      "category": "formation",
+      "titleFr": "Ch. 2 : Grandeurs fondamentales",
+      "titleAr": "فصل 2 : المقادير الأساسية",
+      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 2. Source : electrons.ch",
+      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 2. المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/electrotech/elec_chap2.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/greme-chap02-fr.svg",
+      "coverImageAr": "assets/covers/greme-chap02-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/greme-chap02.png"
+    },
+    {
+      "id": "greme-chap03",
+      "collection": "greme",
+      "category": "installation",
+      "titleFr": "Ch. 3 : Résistance électrique et couplage",
+      "titleAr": "فصل 3 : المقاومة الكهربائية والربط",
+      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 3. Source : electrons.ch",
+      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 3. المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/electrotech/elec_chap3.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/greme-chap03-fr.svg",
+      "coverImageAr": "assets/covers/greme-chap03-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/greme-chap03.png"
+    },
+    {
+      "id": "greme-chap04",
+      "collection": "greme",
+      "category": "energie",
+      "titleFr": "Ch. 4 : Énergie, puissance, rendement",
+      "titleAr": "فصل 4 : الطاقة والقدرة والمردود",
+      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 4. Source : electrons.ch",
+      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 4. المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/electrotech/elec_chap4.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/greme-chap04-fr.svg",
+      "coverImageAr": "assets/covers/greme-chap04-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/greme-chap04.png"
+    },
+    {
+      "id": "greme-chap05",
+      "collection": "greme",
+      "category": "energie",
+      "titleFr": "Ch. 5 : Effets calorifiques",
+      "titleAr": "فصل 5 : التأثيرات الحرارية",
+      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 5. Source : electrons.ch",
+      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 5. المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/electrotech/elec_chap5.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/greme-chap05-fr.svg",
+      "coverImageAr": "assets/covers/greme-chap05-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/greme-chap05.png"
+    },
+    {
+      "id": "greme-chap06",
+      "collection": "greme",
+      "category": "energie",
+      "titleFr": "Ch. 6 : Source chimique de tension",
+      "titleAr": "فصل 6 : مصدر الجهد الكيميائي",
+      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 6. Source : electrons.ch",
+      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 6. المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/electrotech/elec_chap6.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/greme-chap06-fr.svg",
+      "coverImageAr": "assets/covers/greme-chap06-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/greme-chap06.png"
+    },
+    {
+      "id": "greme-chap07",
+      "collection": "greme",
+      "category": "magnetisme",
+      "titleFr": "Ch. 7 : Magnétisme (Courbe d'aimantation)",
+      "titleAr": "فصل 7 : المغناطيسية (منحنى التمغنط)",
+      "descriptionFr": "Exercices — magnétisme, courbe d'aimantation. Source : electrons.ch",
+      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 7. المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/electrotech/elec_chap7.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/greme-chap07-fr.svg",
+      "coverImageAr": "assets/covers/greme-chap07-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/greme-chap07.png"
+    },
+    {
+      "id": "greme-chap08",
+      "collection": "greme",
+      "category": "formation",
+      "titleFr": "Ch. 8 : Électrostatique",
+      "titleAr": "فصل 8 : الكهروستاتيكية",
+      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 8. Source : electrons.ch",
+      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 8. المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/electrotech/elec_chap8.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/greme-chap08-fr.svg",
+      "coverImageAr": "assets/covers/greme-chap08-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/greme-chap08.png"
+    },
+    {
+      "id": "greme-chap09",
+      "collection": "greme",
+      "category": "formation",
+      "titleFr": "Ch. 9 : Instruments de mesure",
+      "titleAr": "فصل 9 : أجهزة القياس",
+      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 9. Source : electrons.ch",
+      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 9. المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/electrotech/elec_chap9.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/greme-chap09-fr.svg",
+      "coverImageAr": "assets/covers/greme-chap09-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/greme-chap09.png"
+    },
+    {
+      "id": "greme-chap10",
+      "collection": "greme",
+      "category": "monophase",
+      "titleFr": "Ch. 10 : Monophasé",
+      "titleAr": "فصل 10 : أحادي الطور",
+      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 10. Source : electrons.ch",
+      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 10. المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/electrotech/elec_chap10.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/greme-chap10-fr.svg",
+      "coverImageAr": "assets/covers/greme-chap10-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/greme-chap10.png"
+    },
+    {
+      "id": "greme-chap11",
+      "collection": "greme",
+      "category": "triphase",
+      "titleFr": "Ch. 11 : Triphasé",
+      "titleAr": "فصل 11 : ثلاثي الطور",
+      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 11. Source : electrons.ch",
+      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 11. المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/electrotech/elec_chap11.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/greme-chap11-fr.svg",
+      "coverImageAr": "assets/covers/greme-chap11-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/greme-chap11.png"
+    },
+    {
+      "id": "greme-chap12",
+      "collection": "greme",
+      "category": "energie",
+      "titleFr": "Ch. 12 : Moteurs triphasés",
+      "titleAr": "فصل 12 : محركات ثلاثية الطور",
+      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 12. Source : electrons.ch",
+      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 12. المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/electrotech/elec_chap12.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/greme-chap12-fr.svg",
+      "coverImageAr": "assets/covers/greme-chap12-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/greme-chap12.png"
+    },
+    {
+      "id": "greme-chap13",
+      "collection": "greme",
+      "category": "energie",
+      "titleFr": "Ch. 13 : Moteurs DC",
+      "titleAr": "فصل 13 : محركات التيار المستمر",
+      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 13. Source : electrons.ch",
+      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 13. المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/electrotech/elec_chap13.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/greme-chap13-fr.svg",
+      "coverImageAr": "assets/covers/greme-chap13-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/greme-chap13.png"
+    },
+    {
+      "id": "greme-chap14",
+      "collection": "greme",
+      "category": "energie",
+      "titleFr": "Ch. 14 : Transformateurs",
+      "titleAr": "فصل 14 : المحولات",
+      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 14. Source : electrons.ch",
+      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 14. المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/electrotech/elec_chap14.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/greme-chap14-fr.svg",
+      "coverImageAr": "assets/covers/greme-chap14-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/greme-chap14.png"
+    },
+    {
+      "id": "greme-chap15",
+      "collection": "greme",
+      "category": "autres",
+      "titleFr": "Ch. 15 : Lumière",
+      "titleAr": "فصل 15 : الضوء",
+      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 15. Source : electrons.ch",
+      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 15. المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/electrotech/elec_chap15.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/greme-chap15-fr.svg",
+      "coverImageAr": "assets/covers/greme-chap15-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/greme-chap15.png"
+    },
+    {
+      "id": "greme-math-chap01",
+      "collection": "greme",
+      "category": "formation",
+      "titleFr": "Mathématiques — Ch. 1 : Notation, chiffres significatifs",
+      "titleAr": "رياضيات — فصل 1 : الترميز والأرقام المعنوية",
+      "descriptionFr": "Mathématiques (CPNV / ) — chapitre 1. Format DOC. Source : electrons.ch",
+      "descriptionAr": "رياضيات (CPNV / ) — الفصل 1. تنسيق DOC. المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/math/math_chap1.doc",
+      "fileFormat": "doc",
+      "featured": true,
+      "coverImageFr": "assets/covers/greme-math-chap01-fr.svg",
+      "coverImageAr": "assets/covers/greme-math-chap01-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/greme-math-chap01.png"
+    },
+    {
+      "id": "greme-math-chap02",
+      "collection": "greme",
+      "category": "formation",
+      "titleFr": "Mathématiques — Ch. 2 : Pourcents, pourmille",
+      "titleAr": "رياضيات — فصل 2 : النسب والمليم",
+      "descriptionFr": "Mathématiques (CPNV / ) — chapitre 2. Format DOC. Source : electrons.ch",
+      "descriptionAr": "رياضيات (CPNV / ) — الفصل 2. تنسيق DOC. المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/math/math_chap2.doc",
+      "fileFormat": "doc",
+      "featured": true,
+      "coverImageFr": "assets/covers/greme-math-chap02-fr.svg",
+      "coverImageAr": "assets/covers/greme-math-chap02-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/greme-math-chap02.png"
+    },
+    {
+      "id": "greme-math-chap03",
+      "collection": "greme",
+      "category": "formation",
+      "titleFr": "Mathématiques — Ch. 3 : Angles et unités",
+      "titleAr": "رياضيات — فصل 3 : الزوايا والوحدات",
+      "descriptionFr": "Mathématiques (CPNV / ) — chapitre 3. Format DOC. Source : electrons.ch",
+      "descriptionAr": "رياضيات (CPNV / ) — الفصل 3. تنسيق DOC. المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/math/math_chap3.doc",
+      "fileFormat": "doc",
+      "featured": true,
+      "coverImageFr": "assets/covers/greme-math-chap03-fr.svg",
+      "coverImageAr": "assets/covers/greme-math-chap03-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/greme-math-chap03.png"
+    },
+    {
+      "id": "greme-math-chap04",
+      "collection": "greme",
+      "category": "formation",
+      "titleFr": "Mathématiques — Ch. 4 : Erreur relative / absolue",
+      "titleAr": "رياضيات — فصل 4 : الخطأ النسبي / المطلق",
+      "descriptionFr": "Mathématiques (CPNV / ) — chapitre 4. Format DOC. Source : electrons.ch",
+      "descriptionAr": "رياضيات (CPNV / ) — الفصل 4. تنسيق DOC. المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/math/math_chap4.doc",
+      "fileFormat": "doc",
+      "featured": true,
+      "coverImageFr": "assets/covers/greme-math-chap04-fr.svg",
+      "coverImageAr": "assets/covers/greme-math-chap04-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/greme-math-chap04.png"
+    },
+    {
+      "id": "greme-math-chap05",
+      "collection": "greme",
+      "category": "formation",
+      "titleFr": "Mathématiques — Ch. 5 : Transformation de formules",
+      "titleAr": "رياضيات — فصل 5 : تحويل الصيغ",
+      "descriptionFr": "Mathématiques (CPNV / ) — chapitre 5. Format DOC. Source : electrons.ch",
+      "descriptionAr": "رياضيات (CPNV / ) — الفصل 5. تنسيق DOC. المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/math/math_chap5.doc",
+      "fileFormat": "doc",
+      "featured": true,
+      "coverImageFr": "assets/covers/greme-math-chap05-fr.svg",
+      "coverImageAr": "assets/covers/greme-math-chap05-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/greme-math-chap05.png"
+    },
+    {
+      "id": "greme-analo-cours",
+      "collection": "greme",
+      "category": "formation",
+      "titleFr": "Électronique analogique — Ch. 1 : Résistances non-linéaires (cours)",
+      "titleAr": "إلكترونيات تماثلية — فصل 1 : المقاومات غير الخطية (دورة)",
+      "descriptionFr": "Cours CPNV d'électronique analogique (110 p.) — ch.1 résistances non-linéaires, puis semi-conducteurs, diodes, transistor, puissance, ampli op. Source : electrons.ch / Dropbox",
+      "descriptionAr": "دورة CPNV للإلكترونيات التماثلية (110 صفحة) — الفصل 1 المقاومات غير الخطية ثم أشباه الموصلات والثنائيات والترانزستور. المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 110,
+      "year": 2013,
+      "pdfUrl": "pdf/electrons-ch/electronique-analogique-cpnv.pdf",
+      "featured": true,
+      "coverImageFr": "assets/covers/greme-analo-cours-fr.svg",
+      "coverImageAr": "assets/covers/greme-analo-cours-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/greme-analo-cours.png"
+    },
+    {
+      "id": "coel-chap01",
+      "collection": "greme",
+      "category": "installation",
+      "titleFr": "Commande électrique — Ch. 1 : Symboles",
+      "titleAr": "التحكم الكهربائي — فصل 1 : الرموز",
+      "descriptionFr": "Commande électrique (symboles, bornes, schémas). Source : electrons.ch",
+      "descriptionAr": "التحكم الكهربائي (رموز، أطراف، مخططات). المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/coel/coel_chap1.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/coel-chap01-fr.svg",
+      "coverImageAr": "assets/covers/coel-chap01-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/coel-chap01.png"
+    },
+    {
+      "id": "coel-chap02",
+      "collection": "greme",
+      "category": "installation",
+      "titleFr": "Commande électrique — Ch. 2 : Bornes et généralités",
+      "titleAr": "التحكم الكهربائي — فصل 2 : الأطراف والعموميات",
+      "descriptionFr": "Commande électrique (symboles, bornes, schémas). Source : electrons.ch",
+      "descriptionAr": "التحكم الكهربائي (رموز، أطراف، مخططات). المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/coel/coel_chap2.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/coel-chap02-fr.svg",
+      "coverImageAr": "assets/covers/coel-chap02-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/coel-chap02.png"
+    },
+    {
+      "id": "coel-chap03",
+      "collection": "greme",
+      "category": "installation",
+      "titleFr": "Commande électrique — Ch. 3 : Interrupteurs et table de vérité",
+      "titleAr": "التحكم الكهربائي — فصل 3 : المفاتيح وجدول الحقيقة",
+      "descriptionFr": "Commande électrique (symboles, bornes, schémas). Source : electrons.ch",
+      "descriptionAr": "التحكم الكهربائي (رموز، أطراف، مخططات). المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/coel/coel_chap3.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/coel-chap03-fr.svg",
+      "coverImageAr": "assets/covers/coel-chap03-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/coel-chap03.png"
+    },
+    {
+      "id": "coel-chap04",
+      "collection": "greme",
+      "category": "installation",
+      "titleFr": "Commande électrique — Ch. 4 : Chapitre 4",
+      "titleAr": "التحكم الكهربائي — فصل 4 : الفصل 4",
+      "descriptionFr": "Commande électrique (symboles, bornes, schémas). Source : electrons.ch",
+      "descriptionAr": "التحكم الكهربائي (رموز، أطراف، مخططات). المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/coel/coel_chap4.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/coel-chap04-fr.svg",
+      "coverImageAr": "assets/covers/coel-chap04-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/coel-chap04.png"
+    },
+    {
+      "id": "coel-chap05",
+      "collection": "greme",
+      "category": "installation",
+      "titleFr": "Commande électrique — Ch. 5 : Chapitre 5",
+      "titleAr": "التحكم الكهربائي — فصل 5 : الفصل 5",
+      "descriptionFr": "Commande électrique (symboles, bornes, schémas). Source : electrons.ch",
+      "descriptionAr": "التحكم الكهربائي (رموز، أطراف، مخططات). المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/coel/coel_chap5.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/coel-chap05-fr.svg",
+      "coverImageAr": "assets/covers/coel-chap05-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/coel-chap05.png"
+    },
+    {
+      "id": "coel-chap06",
+      "collection": "greme",
+      "category": "installation",
+      "titleFr": "Commande électrique — Ch. 6 : Chapitre 6",
+      "titleAr": "التحكم الكهربائي — فصل 6 : الفصل 6",
+      "descriptionFr": "Commande électrique (symboles, bornes, schémas). Source : electrons.ch",
+      "descriptionAr": "التحكم الكهربائي (رموز، أطراف، مخططات). المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/coel/coel_chap6.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/coel-chap06-fr.svg",
+      "coverImageAr": "assets/covers/coel-chap06-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/coel-chap06.png"
+    },
+    {
+      "id": "coel-chap07",
+      "collection": "greme",
+      "category": "installation",
+      "titleFr": "Commande électrique — Ch. 7 : Chapitre 7",
+      "titleAr": "التحكم الكهربائي — فصل 7 : الفصل 7",
+      "descriptionFr": "Commande électrique (symboles, bornes, schémas). Source : electrons.ch",
+      "descriptionAr": "التحكم الكهربائي (رموز، أطراف، مخططات). المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/coel/coel_chap7.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/coel-chap07-fr.svg",
+      "coverImageAr": "assets/covers/coel-chap07-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/coel-chap07.png"
+    },
+    {
+      "id": "coel-chap09",
+      "collection": "greme",
+      "category": "installation",
+      "titleFr": "Commande électrique — Ch. 9 : Chapitre 9",
+      "titleAr": "التحكم الكهربائي — فصل 9 : الفصل 9",
+      "descriptionFr": "Commande électrique (symboles, bornes, schémas). Source : electrons.ch",
+      "descriptionAr": "التحكم الكهربائي (رموز، أطراف، مخططات). المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/coel/coel_chap9.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/coel-chap09-fr.svg",
+      "coverImageAr": "assets/covers/coel-chap09-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/coel-chap09.png"
+    },
+    {
+      "id": "coel-chap10",
+      "collection": "greme",
+      "category": "installation",
+      "titleFr": "Commande électrique — Ch. 10 : Chapitre 10",
+      "titleAr": "التحكم الكهربائي — فصل 10 : الفصل 10",
+      "descriptionFr": "Commande électrique (symboles, bornes, schémas). Source : electrons.ch",
+      "descriptionAr": "التحكم الكهربائي (رموز، أطراف، مخططات). المصدر: electrons.ch",
+      "lang": [
+        "fr"
+      ],
+      "pages": 0,
+      "year": 0,
+      "pdfUrl": "pdf/electrons-ch/coel/coel_chap10.pdf",
+      "featured": false,
+      "coverImageFr": "assets/covers/coel-chap10-fr.svg",
+      "coverImageAr": "assets/covers/coel-chap10-ar.svg",
+      "addedDate": "2026-07-21",
+      "coverPreview": "assets/covers/previews/coel-chap10.png"
     }
   ]
 }
