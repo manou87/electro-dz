@@ -237,9 +237,26 @@
     }
   }
 
+  function getActiveTsdSpec() {
+    if (getMode() !== 'mfg') {
+      const cat = document.getElementById('tc-mccb-cat')?.value;
+      const ref = document.getElementById('tc-ref-model')?.value;
+      if (cat === 'B' || ref === 'mccb-b') {
+        return {
+          min: 0.001,
+          max: 0.4,
+          step: 0.001,
+          default: 0.2,
+          values: [0.001, 0.005, 0.1, 0.2, 0.3, 0.4],
+        };
+      }
+      return null;
+    }
+    return getActiveTripUnit()?.settings?.tsd || null;
+  }
+
   function stepTsd(delta) {
-    const tu = getActiveTripUnit();
-    const spec = tu?.settings?.tsd;
+    const spec = getActiveTsdSpec();
     if (!spec) return;
     const tsdEl = document.getElementById('tc-tsd');
     const selectEl = document.getElementById('tc-tsd-select');
@@ -335,23 +352,21 @@
     if (tsdStepperBound) return;
     tsdStepperBound = true;
     const fire = () => {
-      const tu = getActiveTripUnit();
-      if (tu?.settings?.tsd) applyTsdInputBounds(document.getElementById('tc-tsd'), tu.settings.tsd);
+      const spec = getActiveTsdSpec();
+      if (spec) applyTsdInputBounds(document.getElementById('tc-tsd'), spec);
       updateProvenancePanel();
       if (onChange) onChange();
     };
     document.getElementById('tc-tsd-dec')?.addEventListener('click', () => { stepTsd(-1); fire(); });
     document.getElementById('tc-tsd-inc')?.addEventListener('click', () => { stepTsd(1); fire(); });
     document.getElementById('tc-tsd-select')?.addEventListener('change', () => {
-      const tu = getActiveTripUnit();
-      const spec = tu?.settings?.tsd;
+      const spec = getActiveTsdSpec();
       const sel = document.getElementById('tc-tsd-select');
       if (spec && sel) setTsdControlValue(parseFloat(sel.value), spec);
       fire();
     });
     document.getElementById('tc-tsd-range')?.addEventListener('input', () => {
-      const tu = getActiveTripUnit();
-      const spec = tu?.settings?.tsd;
+      const spec = getActiveTsdSpec();
       const vals = spec?.values;
       const rangeEl = document.getElementById('tc-tsd-range');
       if (!vals?.length || !rangeEl || spec?.fixed) return;
@@ -490,11 +505,28 @@
     }).join('');
   }
 
+  function getMfgScope() {
+    return document.getElementById('tc-mfg-scope')?.value === 'acb' ? 'acb' : 'catalog';
+  }
+
+  function setMfgScope(scope) {
+    const el = document.getElementById('tc-mfg-scope');
+    if (el) el.value = scope === 'acb' ? 'acb' : 'catalog';
+  }
+
+  function devicesForScope(devices) {
+    const scope = getMfgScope();
+    return (devices || []).filter((d) => {
+      if (scope === 'acb') return d.deviceType === 'acb';
+      return d.deviceType !== 'acb';
+    });
+  }
+
   function getFilteredDevices() {
     if (!catalog) return [];
     const fam = document.getElementById('tc-mfg-family')?.value || 'all';
     const q = (document.getElementById('tc-mfg-filter')?.value || '').trim().toLowerCase();
-    return catalog.devices.filter((d) => {
+    return devicesForScope(catalog.devices).filter((d) => {
       if (fam !== 'all' && d.family !== fam) return false;
       if (q && !(d.label + ' ' + (d.group || '') + ' ' + (d.id || '')).toLowerCase().includes(q)) return false;
       return true;
@@ -505,7 +537,7 @@
     if (!el || !devices) return;
     const fam = document.getElementById('tc-mfg-family')?.value || 'all';
     const q = (document.getElementById('tc-mfg-filter')?.value || '').trim().toLowerCase();
-    let list = devices;
+    let list = devicesForScope(devices);
     if (fam !== 'all') list = list.filter((d) => d.family === fam);
     if (q) list = list.filter((d) => (d.label + ' ' + (d.group || '') + ' ' + d.id).toLowerCase().includes(q));
 
@@ -698,8 +730,14 @@
     const disclaimer = document.getElementById('tc-mfg-disclaimer');
     const note = document.querySelector('#tripcurve .tc-note');
 
+    // Masquer le bloc norme en mode catalogue ; ne pas forcer display:'' sur les
+    // champs déjà [hidden] (ex. retard fusible hors type Fusible).
     document.querySelectorAll('.tc-norm-only').forEach((el) => {
-      el.style.display = mode === 'mfg' ? 'none' : '';
+      if (mode === 'mfg' || mode === 'schneider') {
+        el.style.display = 'none';
+      } else {
+        el.style.removeProperty('display');
+      }
     });
     if (mfgRef) {
       if (mode === 'mfg') mfgRef.classList.remove('tc-mfg-hidden');
@@ -713,7 +751,11 @@
 
     if (mode === 'mfg') {
       const hint = document.getElementById('tc-settings-hint');
-      if (hint) hint.textContent = '';
+      if (hint) hint.textContent = getMfgScope() === 'acb' ? tr('tcKindAcbHint') : '';
+      if (catalog) {
+        refreshMfgFamilyOptions();
+        fillDeviceSelect(document.getElementById('tc-mfg-device'), catalog.devices);
+      }
       syncMfgCascade();
       if (g.ElectroDzTripCurve?.syncGraphThresholdsPanel) g.ElectroDzTripCurve.syncGraphThresholdsPanel();
       if (note && g.ElectroDzCalcI18n) note.textContent = tr('tcNoteMfg');
@@ -726,6 +768,61 @@
       if (g.ElectroDzTripCurve?.syncGraphThresholdsPanel) g.ElectroDzTripCurve.syncGraphThresholdsPanel();
       if (note && g.ElectroDzCalcI18n) note.textContent = tr('tcNote');
     }
+    syncKindCardsUI();
+  }
+
+  function kindFromForm() {
+    const mode = getMode();
+    if (mode === 'mfg' || mode === 'schneider') {
+      return getMfgScope() === 'acb' ? 'acb' : 'mfg';
+    }
+    const ref = document.getElementById('tc-ref-model')?.value || 'mcb';
+    if (ref === 'mccb-a' || ref === 'mccb-b') return 'mccb';
+    if (ref === 'gg' || ref === 'am' || ref === 't') return 'fuse';
+    return 'mcb';
+  }
+
+  function syncKindCardsUI() {
+    const kind = kindFromForm();
+    const ref = document.getElementById('tc-ref-model')?.value || 'mcb';
+    const kindEl = document.getElementById('tc-kind');
+    if (kindEl && kindEl.value !== kind) kindEl.value = kind;
+    const mccbSub = document.getElementById('tc-kind-mccb-sub');
+    const fuseSub = document.getElementById('tc-kind-fuse-sub');
+    if (mccbSub) mccbSub.hidden = kind !== 'mccb';
+    if (fuseSub) fuseSub.hidden = kind !== 'fuse';
+    document.querySelectorAll('#tc-kind-mccb-sub .tc-kind-pill, #tc-kind-fuse-sub .tc-kind-pill').forEach((btn) => {
+      btn.classList.toggle('is-active', btn.dataset.tcRef === ref);
+    });
+  }
+
+  function applyProtectionKind(kind) {
+    const modeEl = document.getElementById('tc-mode');
+    const refEl = document.getElementById('tc-ref-model');
+    if (!modeEl || !refEl) return;
+    if (kind === 'mfg' || kind === 'acb') {
+      modeEl.value = 'mfg';
+      setMfgScope(kind === 'acb' ? 'acb' : 'catalog');
+    } else {
+      modeEl.value = 'norm';
+      setMfgScope('catalog');
+      if (kind === 'mcb') refEl.value = 'mcb';
+      else if (kind === 'mccb') {
+        if (refEl.value !== 'mccb-a' && refEl.value !== 'mccb-b') refEl.value = 'mccb-a';
+      } else if (kind === 'fuse') {
+        if (refEl.value !== 'gg' && refEl.value !== 'am' && refEl.value !== 't') refEl.value = 'gg';
+      }
+    }
+    syncModeUI();
+  }
+
+  function applyProtectionRef(ref) {
+    const modeEl = document.getElementById('tc-mode');
+    const refEl = document.getElementById('tc-ref-model');
+    if (!modeEl || !refEl || !ref) return;
+    modeEl.value = 'norm';
+    refEl.value = ref;
+    syncModeUI();
   }
 
   function initMfgSelectors() {
@@ -735,15 +832,7 @@
     const filterEl = document.getElementById('tc-mfg-filter');
     const countEl = document.getElementById('tc-mfg-count');
 
-    if (famEl && catalog.families) {
-      fillSelect(famEl, catalog.families.map((f) => {
-        const key = 'tcMfgFam_' + getBrandId() + '_' + f.id;
-        let lbl = tr(key);
-        if (lbl === key) lbl = tr('tcMfgFam_' + f.id);
-        if (lbl.startsWith('tcMfgFam_')) lbl = f.label;
-        return { id: f.id, label: lbl };
-      }), 'id', 'label');
-    }
+    refreshMfgFamilyOptions();
 
     const applyFilter = () => {
       fillDeviceSelect(devEl, catalog.devices);
@@ -751,7 +840,7 @@
         const n = getFilteredDevices().filter((d) => d.kind !== 'switch').length;
         countEl.textContent = trTpl('tcMfgCount', {
           n,
-          total: catalog.breakerCount || catalog.devices.filter((d) => d.kind !== 'switch').length,
+          total: devicesForScope(catalog.devices).filter((d) => d.kind !== 'switch').length,
           brand: catalog.brand,
         });
       }
@@ -760,11 +849,35 @@
     filterEl?.addEventListener('input', applyFilter);
     famEl?.addEventListener('change', applyFilter);
 
-    const defaults = { schneider: 'nsx160', abb: 'xt2', hager: 'nbn' };
-    const defId = defaults[getBrandId()] || catalog.devices.find((d) => d.kind !== 'switch')?.id;
-    if (defId && !findDevice(devEl.value)) devEl.value = defId;
+    const scoped = devicesForScope(catalog.devices).filter((d) => d.kind !== 'switch');
+    const defaults = {
+      schneider: getMfgScope() === 'acb' ? 'nw16' : 'nsx160',
+      abb: getMfgScope() === 'acb' ? 'e2' : 'xt2',
+      hager: 'nbn',
+    };
+    const defId = defaults[getBrandId()] || scoped[0]?.id;
+    if (defId && scoped.some((d) => d.id === defId)) devEl.value = defId;
+    else if (scoped[0]) devEl.value = scoped[0].id;
     syncMfgCascade();
     updateMfgDisclaimer();
+  }
+
+  function refreshMfgFamilyOptions() {
+    const famEl = document.getElementById('tc-mfg-family');
+    if (!famEl || !catalog?.families) return;
+    const scoped = devicesForScope(catalog.devices);
+    const used = new Set(scoped.map((d) => d.family));
+    const fams = catalog.families.filter((f) => f.id === 'all' || used.has(f.id));
+    const prev = famEl.value;
+    fillSelect(famEl, fams.map((f) => {
+      const key = 'tcMfgFam_' + getBrandId() + '_' + f.id;
+      let lbl = tr(key);
+      if (lbl === key) lbl = tr('tcMfgFam_' + f.id);
+      if (lbl.startsWith('tcMfgFam_')) lbl = f.label;
+      return { id: f.id, label: lbl };
+    }), 'id', 'label');
+    if (prev && [...famEl.options].some((o) => o.value === prev)) famEl.value = prev;
+    else famEl.value = 'all';
   }
 
   function getActiveProfile() {
@@ -831,7 +944,7 @@
     return {
       brandId: getBrandId(),
       brand: catalog.brand,
-      deviceType: 'mccb',
+      deviceType: dev.deviceType === 'mcb' ? 'mcb' : (dev.deviceType === 'acb' ? 'acb' : 'mccb'),
       deviceId: dev.id,
       deviceLabel: dev.label,
       frameA: dev.frameA,
@@ -849,6 +962,8 @@
       trRefSec: tu.trRefSec || 1,
       longAnchors: tu.longAnchors,
       instTS: tu.instTS,
+      iiMin: s.ii?.min ?? null,
+      iiMax: s.ii?.max ?? null,
       curveSource: tu.curveSource || catalog?.source || '',
       curveSourceId: tu.curveSourceId || null,
       catalogRevision: catalog?.revision || '',
@@ -899,6 +1014,7 @@
     };
     const modeEl = document.getElementById('tc-mode');
     if (modeEl) modeEl.value = 'mfg';
+    setMfgScope(profile.deviceType === 'acb' ? 'acb' : 'catalog');
     syncModeUI();
     const brandEl = document.getElementById('tc-mfg-brand');
     const needReload = profile.brandId && brandEl && brandEl.value !== profile.brandId;
@@ -939,6 +1055,27 @@
     const modeEl = document.getElementById('tc-mode');
     modeEl?.addEventListener('change', () => {
       syncModeUI();
+      if (onChange) onChange();
+    });
+
+    document.getElementById('tc-kind')?.addEventListener('change', () => {
+      const kind = document.getElementById('tc-kind')?.value || 'mcb';
+      applyProtectionKind(kind);
+      g.ElectroDzTripCurve?.markCurveRebuildFromForm?.();
+      if (onChange) onChange();
+    });
+    document.getElementById('tc-kind-mccb-sub')?.addEventListener('click', (e) => {
+      const pill = e.target.closest('[data-tc-ref]');
+      if (!pill) return;
+      applyProtectionRef(pill.dataset.tcRef);
+      g.ElectroDzTripCurve?.markCurveRebuildFromForm?.();
+      if (onChange) onChange();
+    });
+    document.getElementById('tc-kind-fuse-sub')?.addEventListener('click', (e) => {
+      const pill = e.target.closest('[data-tc-ref]');
+      if (!pill) return;
+      applyProtectionRef(pill.dataset.tcRef);
+      g.ElectroDzTripCurve?.markCurveRebuildFromForm?.();
       if (onChange) onChange();
     });
 
@@ -1027,6 +1164,8 @@
     getValidationTools,
     updateProvenancePanel,
     syncModeUI,
+    syncKindCardsUI,
+    applyProtectionKind,
     syncMfgCascade,
     syncMfgSettings,
     bindUI,

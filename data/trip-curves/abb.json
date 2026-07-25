@@ -1326,7 +1326,7 @@
     },
     {
       "id": "emax",
-      "label": "Emax"
+      "label": "Emax (boîtier ouvert)"
     },
     {
       "id": "s200",
@@ -1666,7 +1666,7 @@
       ],
       "icuKA": [],
       "kind": "breaker",
-      "deviceType": "mccb",
+      "deviceType": "acb",
       "tripUnitIds": [
         "tma_emax",
         "ekip_lsig",
@@ -1687,7 +1687,7 @@
       ],
       "icuKA": [],
       "kind": "breaker",
-      "deviceType": "mccb",
+      "deviceType": "acb",
       "tripUnitIds": [
         "tma_emax",
         "ekip_lsig",
@@ -1708,7 +1708,7 @@
       ],
       "icuKA": [],
       "kind": "breaker",
-      "deviceType": "mccb",
+      "deviceType": "acb",
       "tripUnitIds": [
         "tma_emax",
         "ekip_lsig",
@@ -1729,7 +1729,7 @@
       ],
       "icuKA": [],
       "kind": "breaker",
-      "deviceType": "mccb",
+      "deviceType": "acb",
       "tripUnitIds": [
         "tma_emax",
         "ekip_lsig",

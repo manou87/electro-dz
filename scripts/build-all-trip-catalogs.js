@@ -81,7 +81,7 @@ const seDevices = [
       [2000, [1000, 1250, 1600, 2000]], [2500, [1250, 1600, 2000, 2500]], [3200, [1600, 2000, 2500, 3200]],
       [4000, [2000, 2500, 3200, 4000]], [5000, [2500, 3200, 4000, 5000]], [6300, [3200, 4000, 5000, 6300]],
     ];
-    return dev({ group: 'Masterpact NW', family: 'masterpact', id, label: `Masterpact ${id.toUpperCase()}`, frameA: specs[i][0], inRatings: specs[i][1] }, SE_MIC);
+    return dev({ group: 'Masterpact NW', family: 'masterpact', deviceType: 'acb', id, label: `Masterpact ${id.toUpperCase()}`, frameA: specs[i][0], inRatings: specs[i][1] }, SE_MIC);
   }),
   dev({ group: 'Acti9 iC60', family: 'acti9', deviceType: 'mcb', id: 'ic60', label: 'iC60', frameA: 63, inRatings: MOD_IN, tripUnitIds: MCB_IDS }, []),
   dev({ group: 'Acti9 iC60', family: 'acti9', deviceType: 'mcb', id: 'ic60h', label: 'iC60H', frameA: 63, inRatings: MOD_IN, tripUnitIds: MCB_IDS }, []),
@@ -99,7 +99,7 @@ writeCatalog('schneider', {
     { id: 'nsx', label: 'ComPacT NSX / NSXm' },
     { id: 'ns', label: 'ComPacT NS' },
     { id: 'cvs', label: 'ComPacT CVS / EZC' },
-    { id: 'masterpact', label: 'Masterpact' },
+    { id: 'masterpact', label: 'Masterpact (boîtier ouvert)' },
     { id: 'acti9', label: 'Acti9 modulaire' },
   ],
   devices: seDevices,
@@ -152,7 +152,7 @@ const abbDevices = [
     { id: 'e2', label: 'Emax E2', f: 2000, in: [1000, 1250, 1600, 2000] },
     { id: 'e4', label: 'Emax E4', f: 4000, in: [2000, 2500, 3200, 4000] },
     { id: 'e6', label: 'Emax E6', f: 6300, in: [3200, 4000, 5000, 6300] },
-  ].map((r) => dev({ group: 'Emax', family: 'emax', id: r.id, label: r.label, frameA: r.f, inRatings: clampInRatingsToFrame(r.in, r.f) }, ['tma_emax', 'ekip_lsig', 'ekip_h'])),
+  ].map((r) => dev({ group: 'Emax', family: 'emax', deviceType: 'acb', id: r.id, label: r.label, frameA: r.f, inRatings: clampInRatingsToFrame(r.in, r.f) }, ['tma_emax', 'ekip_lsig', 'ekip_h'])),
   dev({ group: 'S200 modulaire', family: 's200', deviceType: 'mcb', id: 's200', label: 'S200', frameA: 63, inRatings: MOD_IN, tripUnitIds: MCB_IDS }, []),
   dev({ group: 'S200 modulaire', family: 's200', deviceType: 'mcb', id: 's200m', label: 'S200M', frameA: 63, inRatings: MOD_IN, tripUnitIds: MCB_IDS }, []),
   dev({ group: 'S200 modulaire', family: 's200', deviceType: 'mcb', id: 'sn201', label: 'SN201 (1P+N)', frameA: 40, inRatings: [6, 10, 13, 16, 20, 25, 32, 40], tripUnitIds: MCB_IDS }, []),
@@ -168,7 +168,7 @@ writeCatalog('abb', {
     { id: 'all', label: 'Toute la gamme' },
     { id: 'tmax_xt', label: 'Tmax XT' },
     { id: 'tmax_t', label: 'Tmax T' },
-    { id: 'emax', label: 'Emax' },
+    { id: 'emax', label: 'Emax (boîtier ouvert)' },
     { id: 's200', label: 'S200 modulaire' },
   ],
   devices: abbDevices,

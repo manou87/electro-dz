@@ -314,6 +314,21 @@
     #tc-ref-mfg.tc-mfg-hidden{display:none}
     #tc-mfg-settings-wrap{display:contents}
     #tc-mfg-settings-wrap.tc-mfg-hidden{display:none!important}
+    .tc-kind-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0}
+    .tc-kind-card{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;padding:12px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:var(--muted);cursor:pointer;font:inherit;line-height:1.25;min-height:72px;transition:border-color .15s,background .15s,color .15s}
+    .tc-kind-card:hover{border-color:rgba(56,189,248,0.45);background:rgba(56,189,248,0.06);color:#e2e8f0}
+    .tc-kind-card.is-active{border-color:var(--primary);background:rgba(250,204,21,0.1);color:#fff;box-shadow:0 0 0 1px rgba(250,204,21,0.25)}
+    .tc-kind-title{font-size:0.88rem;font-weight:800;color:inherit}
+    .tc-kind-sub{font-size:0.72rem;font-weight:500;color:#94a3b8;line-height:1.35}
+    .tc-kind-card.is-active .tc-kind-sub{color:#cbd5e1}
+    .tc-kind-subrow{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0}
+    .tc-kind-subrow[hidden]{display:none!important}
+    .tc-kind-pill{padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:var(--muted);font-size:0.8rem;font-weight:700;cursor:pointer}
+    .tc-kind-pill.is-active{border-color:var(--primary);background:rgba(250,204,21,0.12);color:#fff}
+    @media (max-width:640px){
+      .tc-kind-cards{grid-template-columns:1fr}
+      .tc-kind-card{min-height:0}
+    }
     .tc-custom-catalog{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:8px;padding:8px 0 0;border-top:1px solid rgba(255,255,255,0.08)}
     .tc-custom-catalog label{font-size:0.78rem;font-weight:600;color:#fde68a;margin:0}
     #tc-custom-catalog-status{font-size:0.75rem;color:#86efac;flex:1 1 100%}
@@ -648,21 +663,41 @@
             <p class="tc-pro-panel-title" data-i18n="tcRefBlockTitle"></p>
             <p class="tc-settings-hint" data-i18n="tcRefBlockHint"></p>
             <div class="form-grid">
-              <div class="input-group full"><label data-i18n="tcMode"></label>
-                <select id="tc-mode">
-                  <option value="norm" data-i18n-opt="tcModeNorm"></option>
-                  <option value="mfg" selected data-i18n-opt="tcModeMfg"></option>
+              <div class="input-group full">
+                <label for="tc-kind" data-i18n="tcKindLabel"></label>
+                <select id="tc-kind">
+                  <option value="mcb" selected data-i18n-opt="tcKindOptMcb"></option>
+                  <option value="mfg" data-i18n-opt="tcKindOptMfg"></option>
+                  <option value="acb" data-i18n-opt="tcKindOptAcb"></option>
+                  <option value="mccb" data-i18n-opt="tcKindOptMccb"></option>
+                  <option value="fuse" data-i18n-opt="tcKindOptFuse"></option>
                 </select>
-                <p class="tc-settings-hint" data-i18n="tcModeHint"></p>
-              </div>
-              <div id="tc-ref-iec" class="tc-norm-only input-group full">
-                <label data-i18n="tcRefModel"></label>
-                <select id="tc-ref-model">
-                  <option value="mcb" data-i18n-opt="tcRefMcb"></option>
+                <div id="tc-kind-mccb-sub" class="tc-kind-subrow" hidden>
+                  <button type="button" class="tc-kind-pill is-active" data-tc-ref="mccb-a" data-i18n="tcKindMccbA"></button>
+                  <button type="button" class="tc-kind-pill" data-tc-ref="mccb-b" data-i18n="tcKindMccbB"></button>
+                </div>
+                <div id="tc-kind-fuse-sub" class="tc-kind-subrow" hidden>
+                  <button type="button" class="tc-kind-pill is-active" data-tc-ref="gg" data-i18n="tcKindFuseGg"></button>
+                  <button type="button" class="tc-kind-pill" data-tc-ref="am" data-i18n="tcKindFuseAm"></button>
+                  <button type="button" class="tc-kind-pill" data-tc-ref="t" data-i18n="tcKindFuseT"></button>
+                </div>
+                <p class="tc-settings-hint" data-i18n="tcKindHint"></p>
+                <!-- Selects synchronisés (cachés) — logique existante mode / modèle -->
+                <select id="tc-mode" hidden aria-hidden="true">
+                  <option value="norm" selected data-i18n-opt="tcModeNorm"></option>
+                  <option value="mfg" data-i18n-opt="tcModeMfg"></option>
+                </select>
+                <select id="tc-mfg-scope" hidden aria-hidden="true">
+                  <option value="catalog" selected>catalog</option>
+                  <option value="acb">acb</option>
+                </select>
+                <select id="tc-ref-model" hidden aria-hidden="true">
+                  <option value="mcb" selected data-i18n-opt="tcRefMcb"></option>
                   <option value="mccb-a" data-i18n-opt="tcRefMccbA"></option>
                   <option value="mccb-b" data-i18n-opt="tcRefMccbB"></option>
                   <option value="gg" data-i18n-opt="tcRefGg"></option>
                   <option value="am" data-i18n-opt="tcRefAm"></option>
+                  <option value="t" data-i18n-opt="tcRefT"></option>
                 </select>
               </div>
               <div id="tc-ref-mfg" class="tc-mfg-hidden">
@@ -682,14 +717,14 @@
             </div>
           </div>
           <select id="tc-device" hidden aria-hidden="true">
-            <option value="mcb"></option><option value="mccb"></option><option value="gg"></option><option value="am"></option>
+            <option value="mcb"></option><option value="mccb"></option><option value="gg"></option><option value="am"></option><option value="t"></option>
           </select>
           <select id="tc-mccb-cat" hidden aria-hidden="true"><option value="A"></option><option value="B"></option></select>
           <div class="tc-chars-block">
             <p class="tc-pro-panel-title" data-i18n="tcCharsBlockTitle"></p>
             <p class="tc-settings-hint" data-i18n="tcCharsBlockHint"></p>
             <div class="form-grid">
-              <div class="input-group"><label data-i18n="tcRole"></label>
+              <div class="input-group" id="tc-role-group"><label data-i18n="tcRole"></label>
                 <select id="tc-role"><option value="aval" data-i18n-opt="tcRoleAval"></option><option value="amont" data-i18n-opt="tcRoleAmont"></option><option value="autre" data-i18n-opt="tcRoleNone"></option></select>
               </div>
               <div class="input-group tc-norm-only" id="tc-in-group"><label data-i18n="tcIn"></label><select id="tc-in" class="std-select" data-std="breaker" data-default="16"></select></div>
@@ -884,7 +919,7 @@
   <script src="js/site-config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-client.js"></script>
-  <script src="js/calcul-electrique-i18n.js?v=20260725i"></script>
+  <script src="js/calcul-electrique-i18n.js?v=20260725c"></script>
   <script src="js/visitor-counter.js"></script>
   <script src="js/calc-standards.js"></script>
   <script src="js/cableThermalIEC60364.js"></script>
@@ -894,14 +929,14 @@
   <script src="js/caneco-bt-lib.js"></script>
   <script src="js/caneco-bt-calc.js"></script>
   -->
-  <script src="js/trip-curve-catalog.js"></script>
-  <script src="js/courbes-protection.js?v=20260725i"></script>
+  <script src="js/trip-curve-catalog.js?v=20260725c"></script>
+  <script src="js/courbes-protection.js?v=20260725c"></script>
   <script src="js/hager-glyphs-b64.js?v=20260609"></script>
   <script src="js/iec-symbol-library.js?v=20260609"></script>
   <script src="js/unifilar-pro-svg.js?v=20260618"></script>
   <script src="js/unifilar-drawio-engine.js?v=20260618"></script>
   <script src="js/unifilar-from-balance.js?v=20260617"></script>
   <script src="js/power-balance-pro.js?v=20260711p"></script>
-  <script src="js/calcul-electrique.js?v=20260711h" defer></script>
+  <script src="js/calcul-electrique.js?v=20260725c" defer></script>
 </body>
 </html>

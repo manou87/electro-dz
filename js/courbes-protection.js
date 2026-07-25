@@ -67,6 +67,9 @@
 
   // Bornes du graphe
   const X_MIN = 1, X_MAX = 20000;       // courant (A), échelle log
+  /** Axe X catalogue MCCB : multiples de In (comme planches Hager In[%]). */
+  const X_MULT_MIN = 0.8;
+  const X_MULT_MAX = 100;
   const Y_DATA_CAP = 36000;             // plafond pour le calcul des courbes (s)
   const Y_AXIS_MAX_CAP = 36000;
   /**
@@ -75,7 +78,11 @@
    */
   const Y_AXIS_TICKS = [
     0.001, 0.002, 0.004, 0.01, 0.02, 0.04, 0.1, 0.2, 0.4,
-    1, 2, 4, 10, 20, 40, 100, 200, 400, 1000, 2000, 3600, 6000, 10000, 36000,
+    1, 2, 4, 10, 20, 40, 100, 200, 400, 1000, 2000, 3600, 6000, 10000, 14400, 36000,
+  ];
+  /** Libellés Y façon catalogue MCCB (ms / s / m / h), haut = 4 h. */
+  const Y_AXIS_TICKS_MCCB = [
+    0.005, 0.01, 0.1, 1, 10, 60, 600, 3600, 14400,
   ];
   /** Bas d'axe par défaut (s) — comme la planche officielle qui démarre à 0,004 s. */
   const Y_AXIS_MIN = 0.004;
@@ -83,6 +90,26 @@
   const Y_AXIS_HARD_MIN = 0.001;
   let plotYLo = Y_AXIS_MIN;
   let plotYHi = 3600;
+
+  /** Réf. In (A) pour axes catalogue MCCB, ou null → axes MCB en ampères (inchangés). */
+  function mccbCatalogInRef() {
+    const mccbs = state.filter((p) => isMfgMccb(p));
+    if (!mccbs.length) return null;
+    // Dès qu'un MCB / fusible est présent, on garde les ampères (coordination).
+    if (state.some((p) => !isMfgMccb(p) && !isNormMccbB(p))) return null;
+    const idx = labelCurveIndex();
+    const ref = (idx >= 0 && (isMfgMccb(state[idx]) || isNormMccbB(state[idx])))
+      ? state[idx]
+      : mccbs[0];
+    const th = mfgThresholds(isNormMccbB(ref) ? enrichNormMccb(ref) : ref);
+    return th.irA > 0 ? th.irA : ref.in;
+  }
+
+  function plotXRange() {
+    const inRef = mccbCatalogInRef();
+    if (inRef) return { xLo: inRef * X_MULT_MIN, xHi: inRef * X_MULT_MAX, inRef };
+    return { xLo: X_MIN, xHi: X_MAX, inRef: null };
+  }
 
   // Enveloppe thermique — MODÈLE ANALYTIQUE CONTINU (courbe constructeur).
   //
@@ -128,42 +155,65 @@
   const T_INST_SLOW = 0.01;
   const T_INST_FAST = 0.01;
 
-  // Fusibles CEI 60269 — courbes temps/courant GÉNÉRIQUES (multiple de In → temps
-  // de préarc nominal), interpolées en log-log. Valeurs indicatives, non constructeur.
-  //  gG (usage général) : protège surcharge + court-circuit. Non-fusion ≈ 1,25·In.
-  //  aM (accompagnement moteur) : protège SEULEMENT le court-circuit, démarre ≈ 4·In.
+  // Fusibles — courbes GÉNÉRIQUES (multiple de In → temps de préarc), log-log.
+  //  gG (CEI 60269) : usage général, surcharge + court-circuit. Non-fusion ≈ 1,25·In.
+  //  aM (CEI 60269) : accompagnement moteur, court-circuit. Démarre ≈ 4·In.
+  //  T  (CEI 60127) : time-lag / retardé (marquage « T » ou symbole escargot) —
+  //      tolère les appels de courant (moteurs, transformateurs). Indicatif.
   const FUSE_GG = [[1.25, 1e6], [1.6, 3600], [2, 120], [2.5, 30], [3, 10], [4, 2], [5, 0.7], [6.3, 0.2], [8, 0.06], [10, 0.02], [20, 0.0018], [40, 2.5e-4]];
   const FUSE_AM = [[2.8, 1e6], [4, 3600], [5, 60], [6.3, 10], [8, 1.5], [10, 0.3], [12.5, 0.08], [16, 0.02], [20, 0.007], [40, 7e-4]];
-  const FUSE_TOL_SLOW = 1.35;  // borne lente (fusion + arc, dispersion +)
-  const FUSE_TOL_FAST = 0.7;   // borne rapide (préarc mini, dispersion -)
-  function fuseAnchors(dev) { return dev === 'am' ? FUSE_AM : FUSE_GG; }
-  function isFuse(p) { return p.dev === 'gg' || p.dev === 'am'; }
+  // Time-lag T (IEC 60127-2, feuille type ~0,5–6,3 A) : portes 1,5 / 2,1 / 2,75 / 4 / 10·In —
+  // ancrages ≈ milieux géométriques min–max (indicatif, hors I²t constructeur).
+  const FUSE_T = [[1.5, 1e6], [2.1, 900], [2.75, 4.5], [4, 0.5], [6.3, 0.12], [10, 0.027], [20, 0.005], [40, 0.001]];
+  const FUSE_TOL_SLOW = 1.35;  // borne lente (fusion + arc, dispersion +) — calculs
+  const FUSE_TOL_FAST = 0.7;   // borne rapide (préarc mini) — calculs
+  function fuseAnchors(dev) {
+    if (dev === 'am') return FUSE_AM;
+    if (dev === 't') return FUSE_T;
+    return FUSE_GG;
+  }
+  function isFuse(p) { return p.dev === 'gg' || p.dev === 'am' || p.dev === 't'; }
   function isMccb(p) { return p.dev === 'mccb'; }
   function isMfgMccb(p) { return p.dev === 'mfg_mccb'; }
   function isNormMccbB(p) { return isMccb(p) && p.mccbCat === 'B'; }
 
-  /** MCCB mode IEC Cat. B : courbe long + court retard (enveloppe 60947-2 générique). */
+  /** MCCB mode IEC : enveloppe générique — seuils = réglages utilisateur (essais hors catalogue). */
   function enrichNormMccb(p) {
     if (!isMccb(p)) return p;
-    const ir = p.ir || 1;
-    const im = p.im || 10;
+    const ir = clampNum(p.ir, 0.4, 1, 1);
+    const im = clampNum(p.im, 1.5, 15, 10);
     if (p.mccbCat === 'B') {
-      const isd = IEC_CAT_B.isdMult;
-      const tsd = IEC_CAT_B.tsdSec;
+      const isd = clampNum(p.isd, IEC_CAT_B.isdMin, IEC_CAT_B.isdMax, IEC_CAT_B.isdMult);
+      const tsd = clampNum(p.tsd, 0.001, 0.4, IEC_CAT_B.tsdSec);
+      const ii = clampNum(p.ii != null ? p.ii : im, 1.5, 15, im);
       return {
         ...p,
         ir,
         im,
         isd,
         tsd,
-        ii: im,
+        ii,
         hasShortTime: true,
         longAnchors: THERMAL_SLOW,
         instTS: T_INST_SLOW,
-        normRef: 'IEC 60947-2 Cat. B',
+        normRef: 'IEC 60947-2 Cat. B (réglages utilisateur)',
       };
     }
-    return { ...p, ir, im, mccbCat: 'A', hasShortTime: false, normRef: 'IEC 60947-2 Cat. A' };
+    return {
+      ...p,
+      ir,
+      im,
+      ii: im,
+      mccbCat: 'A',
+      hasShortTime: false,
+      normRef: 'IEC 60947-2 Cat. A (réglages utilisateur)',
+    };
+  }
+
+  function clampNum(v, min, max, fallback) {
+    const n = parseFloat(v);
+    if (!Number.isFinite(n)) return fallback;
+    return Math.min(max, Math.max(min, n));
   }
 
   function isMfgMcb(p) { return p.dev === 'mfg_mcb'; }
@@ -275,11 +325,12 @@
     const startM = th.noTripMult * 1.002;
     const kneeI = p.hasShortTime ? th.isdA : th.iiA;
     const endM = kneeI / th.irA;
-    for (let m = startM; m < endM * 0.998; m *= 1.04) {
-      const t = interpLogLog(scaled, m);
+    // Échantillonnage fin (même densité que le tunnel MCB) — courbe lisse, sans zigzag.
+    for (let m = startM; m < endM * 0.998; m *= 1.006) {
+      const t = interpLogLogDraw(scaled, m, endM);
       long.push({ i: m * th.irA, t: Math.min(t, Y_DATA_CAP * 5) });
     }
-    const tKnee = Math.min(interpLogLog(scaled, endM * 0.998), Y_DATA_CAP * 5);
+    const tKnee = Math.min(interpLogLog(scaled, endM), Y_DATA_CAP * 5);
     if (!long.length || long[long.length - 1].i < kneeI * 0.995) {
       long.push({ i: kneeI, t: tKnee });
     } else {
@@ -323,6 +374,7 @@
   function deviceTag(p) {
     if (p.dev === 'gg') return 'gG';
     if (p.dev === 'am') return 'aM';
+    if (p.dev === 't') return 'T';
     if (p.dev === 'mccb') return p.mccbCat === 'B' ? 'MCCB·B' : 'MCCB·A';
     if (isMfg(p)) return p.deviceLabel || 'NSX';
     return (CURVES[p.curve] || CURVES.C).label;
@@ -361,7 +413,7 @@
     const inA = Math.round(p.in);
     let name = '';
     if (isMfg(p)) name = String(p.deviceLabel || p.deviceId || 'MCCB').trim();
-    else if (isFuse(p)) name = p.dev === 'am' ? 'aM' : 'gG';
+    else if (isFuse(p)) name = p.dev === 'am' ? 'aM' : (p.dev === 't' ? 'T' : 'gG');
     else if (isMccb(p)) name = `MCCB${p.mccbCat === 'B' ? ' B' : ''}`;
     else name = deviceTag(p);
     const curve = isMfgMcb(p) ? ` ${p.curve || 'C'}` : '';
@@ -372,7 +424,10 @@
   function legendChipTitle(p) {
     const c = CURVES[p.curve] || CURVES.C;
     if (isMfg(p)) return mfgLegendDesc(p);
-    if (isFuse(p)) return `${tr(p.dev === 'am' ? 'tcDevAm' : 'tcDevGg')} · ${p.in} A`;
+    if (isFuse(p)) {
+      const key = p.dev === 'am' ? 'tcDevAm' : (p.dev === 't' ? 'tcDevT' : 'tcDevGg');
+      return `${tr(key)} · ${p.in} A`;
+    }
     if (isMccb(p)) {
       return p.mccbCat === 'B'
         ? `MCCB Cat.B · Ir ${Math.round((p.ir || 1) * p.in)} A · Isd ${p.isd || 2}×Ir · Tsd ${fmtTime(p.tsd != null ? p.tsd : 0.2)}`
@@ -530,6 +585,24 @@
   }
 
   /**
+   * Temps pour le DESSIN thermique catalogue uniquement.
+   * Même valeur que interpLogLog aux ancres et au seuil magnétique ;
+   * entre le dernier ancre et le seuil, léger cintrage (plus de corde droite
+   * visible sur le graphe log-log). Les calculs / tooltip restent sur interpLogLog.
+   */
+  function interpLogLogDraw(anchors, x, mMag) {
+    if (!anchors?.length) return Infinity;
+    const last = anchors.length - 1;
+    const mLast = anchors[last][0];
+    if (x <= mLast || !(mMag > mLast)) return interpLogLog(anchors, x);
+    const tLast = anchors[last][1];
+    const tMag = interpLogLog(anchors, mMag); // même extrémité que le calcul
+    const u = (Math.log10(x) - Math.log10(mLast)) / (Math.log10(mMag) - Math.log10(mLast));
+    const ue = u * u * (3 - 2 * u); // smoothstep → courbe sur le graphe log-log
+    return Math.pow(10, Math.log10(tLast) + ue * (Math.log10(tMag) - Math.log10(tLast)));
+  }
+
+  /**
    * Points d'une borne d'enveloppe :
    *  1) zone thermique (interpolée sur les points d'essai CEI),
    *  2) chute verticale au seuil magnétique,
@@ -641,7 +714,9 @@
     return Y_AXIS_MAX_CAP;
   }
 
-  /** Axe temps : bas = 4 ms (planche officielle), haut = temps max utile des courbes affichées. */
+  /** Axe temps : bas = 4 ms ; haut adapté aux courbes affichées.
+   *  MCCB catalogue : plancher haut à 4 h (comme les planches constructeur).
+   *  MCB seuls : inchangé (pas de forçage à 4 h). */
   function computePlotYRange() {
     let yHi = 60;
     let yLo = Y_AXIS_MIN;
@@ -649,7 +724,9 @@
       10,
       Math.log10(X_MIN) + (k / n) * (Math.log10(X_MAX) - Math.log10(X_MIN)),
     );
+    let hasCatalogMccb = false;
     state.forEach((p) => {
+      if (isMfgMccb(p) || isNormMccbB(p)) hasCatalogMccb = true;
       if ((isMfgMccb(p) || isNormMccbB(p)) && p.hasShortTime && p.tsd > 0) {
         yLo = Math.min(yLo, p.tsd * MFG_TOL_FAST);
       }
@@ -669,7 +746,15 @@
         yHi = Math.max(yHi, cableTime(cable, I));
       }
     }
-    yHi = snapYMax(yHi * 1.15);
+    // Planches MCCB (ex. Hager h800) : haut d'axe = 4 h, comme le catalogue.
+    // Sans le ×1.15 qui sautait à 10 h (prochain cran 36000 s).
+    if (hasCatalogMccb) {
+      yLo = Math.min(yLo, 0.005);
+      yHi = Math.max(yHi, 14400);
+      yHi = Math.min(snapYMax(yHi), 14400);
+    } else {
+      yHi = snapYMax(yHi * 1.15);
+    }
     yHi = Math.min(yHi, Y_AXIS_MAX_CAP);
     yHi = Math.max(yHi, 1);
     return { yLo, yHi };
@@ -959,6 +1044,10 @@
    */
   function drawMcbTunnel(ctx, o) {
     const { color: c, fastPts, slowPts, fMagX, sMagX, instY, bottomY, xEnd, inX } = o;
+    // floorFromX : début du palier instantané « vivant » (suit Ii).
+    // Par défaut = fMagX (MCB). Sur MCCB TM, = verticale Ii pour éviter
+    // une horizontale figée sur Lo quand on règle Ii.
+    const floorX = (o.floorFromX != null) ? o.floorFromX : fMagX;
     const slowEnd = slowPts[slowPts.length - 1];
     const fastEnd = fastPts[fastPts.length - 1];
     if (!slowEnd || !fastEnd) return;
@@ -990,17 +1079,27 @@
       ctx.fill();
     }
 
-    // Sous le palier instantané : toujours déclenché (pas de bande vide)
-    fillInstantSkirt(ctx, fMagX, xEnd, instY, bottomY, c);
+    // Sous le palier instantané : à partir de floorX (Ii réglé), pas d'une Lo figée
+    fillInstantSkirt(ctx, floorX, xEnd, instY, bottomY, c);
 
-    // Contours — rouge sur la partie thermique, bleu sur la partie magnétique
+    // Contours — rouge thermique, bleu magnétique
     const cTh = activeDrawTheme.curveThermal;
     const cMag = activeDrawTheme.curveMagnetic;
     strokePolyline(ctx, slowPts, cTh, 2.2);
-    strokeSeg(ctx, sMagX, slowEnd.y, sMagX, instY, cMag, 2.4);
     strokePolyline(ctx, fastPts, cTh, 2);
-    strokeSeg(ctx, fMagX, fastEnd.y, fMagX, instY, cMag, 2.2);
-    if (xEnd > fMagX + 1) strokeSeg(ctx, fMagX, instY, xEnd, instY, cMag, 2.4);
+    // Bande magnétique MCB (Lo≠Hi) : deux verticales. MCCB TM : Lo=Hi=Ii → une seule.
+    if (sMagX > fMagX + 2) {
+      strokeSeg(ctx, sMagX, slowEnd.y, sMagX, instY, cMag, 2.4);
+      strokeSeg(ctx, fMagX, fastEnd.y, fMagX, instY, cMag, 2.2);
+      const closeX = Math.min(Math.max(floorX, fMagX), sMagX);
+      if (closeX > fMagX + 1) strokeSeg(ctx, fMagX, instY, closeX, instY, cMag, 2.2);
+      if (floorX > fMagX + 2 && floorX < sMagX - 2) {
+        strokeSeg(ctx, floorX, Math.min(slowEnd.y, fastEnd.y), floorX, instY, cMag, 2.4);
+      }
+    } else {
+      strokeSeg(ctx, floorX, Math.min(slowEnd.y, fastEnd.y), floorX, instY, cMag, 2.4);
+    }
+    if (xEnd > floorX + 1) strokeSeg(ctx, floorX, instY, xEnd, instY, cMag, 2.4);
 
     if (inX != null) {
       ctx.setLineDash([4, 4]);
@@ -1056,13 +1155,18 @@
     const yRange = computePlotYRange();
     plotYLo = yRange.yLo;
     plotYHi = yRange.yHi;
+    const xRange = plotXRange();
+    const { xLo, xHi, inRef } = xRange;
 
-    const sx = (i) => padL + lerpLog(i, X_MIN, X_MAX) * plotW;
+    const sx = (i) => {
+      const ic = Math.max(xLo, Math.min(xHi, i));
+      return padL + lerpLog(ic, xLo, xHi) * plotW;
+    };
     const sy = (t) => {
       const tc = Math.max(plotYLo, Math.min(plotYHi, t));
       return padT + (1 - lerpLog(tc, plotYLo, plotYHi)) * plotH;
     };
-    geom = { padL, padT, plotW, plotH, plotYLo, plotYHi };
+    geom = { padL, padT, plotW, plotH, plotYLo, plotYHi, xLo, xHi, inRef };
 
     ctx.clearRect(0, 0, W, H);
     ctx.fillStyle = th.bg;
@@ -1079,23 +1183,23 @@
     ctx.lineWidth = 1;
     ctx.font = '10px system-ui,sans-serif';
     ctx.textBaseline = 'middle';
-    drawGridX(ctx, sx, padT, plotH, plotW);
-    drawGridY(ctx, sy, padL, plotW, plotYLo, plotYHi);
+    drawGridX(ctx, sx, padT, plotH, plotW, xRange);
+    drawGridY(ctx, sy, padL, plotW, plotYLo, plotYHi, !!inRef);
 
     // Axes labels
     ctx.fillStyle = th.axisTitle;
     ctx.textAlign = 'center';
     ctx.font = '11px system-ui,sans-serif';
-    ctx.fillText(axisCurrentLabel(), padL + plotW / 2, H - 12);
+    ctx.fillText(axisCurrentLabel(!!inRef), padL + plotW / 2, H - 12);
     ctx.save();
     ctx.translate(14, padT + plotH / 2);
     ctx.rotate(-Math.PI / 2);
-    ctx.fillText(axisTimeLabel(), 0, 0);
+    ctx.fillText(axisTimeLabel(!!inRef), 0, 0);
     ctx.restore();
 
     // Ligne verticale Icc min (repère rouge, bien visible sans être trop épais)
     const iccA = getIccA();
-    if (iccA && iccA >= X_MIN && iccA <= X_MAX) {
+    if (iccA && iccA >= xLo && iccA <= xHi) {
       ctx.setLineDash([]);
       ctx.strokeStyle = th.iccLine;
       ctx.lineWidth = 2.25;
@@ -1106,7 +1210,10 @@
       ctx.fillStyle = th.iccText;
       ctx.textAlign = 'left';
       ctx.font = 'bold 11px system-ui,sans-serif';
-      ctx.fillText(tr('tcIccLine') + ' ' + fmtCurrent(Math.round(iccA)) + ' A', sx(iccA) + 5, sy(plotYLo) - 6);
+      const iccLbl = inRef
+        ? (tr('tcIccLine') + ' ' + fmtCurrent(Math.round(iccA)) + ' A (' + fmtMult(iccA / inRef) + '×In)')
+        : (tr('tcIccLine') + ' ' + fmtCurrent(Math.round(iccA)) + ' A');
+      ctx.fillText(iccLbl, sx(iccA) + 5, sy(plotYLo) - 6);
     }
 
     // Courbes (écrêtées au cadre pour des tracés nets, sans débordement)
@@ -1131,7 +1238,7 @@
       ctx.beginPath();
       let started = false;
       for (let px = 0; px <= plotW; px += 2) {
-        const I = Math.pow(10, Math.log10(X_MIN) + (px / plotW) * (Math.log10(X_MAX) - Math.log10(X_MIN)));
+        const I = Math.pow(10, Math.log10(xLo) + (px / plotW) * (Math.log10(xHi) - Math.log10(xLo)));
         const t = cableTime(cable, I);
         if (t > plotYHi * 1.2 || t < plotYLo / 1.2) { started = false; continue; }
         const X = padL + px, Y = sy(t);
@@ -1141,7 +1248,7 @@
       ctx.setLineDash([]);
       // étiquette de la courbe câble (au point t ≈ 1 s)
       const Ilbl = cable.k * cable.S;  // I tel que t = 1 s
-      if (Ilbl >= X_MIN && Ilbl <= X_MAX && state.length <= 2) {
+      if (Ilbl >= xLo && Ilbl <= xHi && state.length <= 2) {
         ctx.fillStyle = '#e879f9';
         ctx.font = 'bold 9px system-ui,sans-serif';
         ctx.textAlign = 'left';
@@ -1196,14 +1303,26 @@
   // --- Viseur interactif ---------------------------------------------------
   function invX(px) {
     const f = (px - geom.padL) / geom.plotW;
-    return Math.pow(10, Math.log10(X_MIN) + f * (Math.log10(X_MAX) - Math.log10(X_MIN)));
+    const xLo = geom.xLo ?? X_MIN;
+    const xHi = geom.xHi ?? X_MAX;
+    return Math.pow(10, Math.log10(xLo) + f * (Math.log10(xHi) - Math.log10(xLo)));
   }
   function invY(py) {
     const f = 1 - (py - geom.padT) / geom.plotH;
     const { plotYLo: yLo, plotYHi: yHi } = geom;
     return Math.pow(10, Math.log10(yLo) + f * (Math.log10(yHi) - Math.log10(yLo)));
   }
+  function fmtMult(m) {
+    if (!(m > 0) || !isFinite(m)) return '—';
+    if (m >= 100) return String(Math.round(m));
+    if (m >= 10) return String(Math.round(m * 10) / 10);
+    if (m >= 1) return String(Math.round(m * 100) / 100);
+    return m.toFixed(2);
+  }
   function fmtIexact(v) {
+    if (geom?.inRef) {
+      return fmtMult(v / geom.inRef) + '×In';
+    }
     if (v >= 1000) return (v / 1000).toFixed(2) + ' kA';
     if (v >= 100) return Math.round(v) + ' A';
     if (v >= 10) return v.toFixed(1) + ' A';
@@ -1308,23 +1427,74 @@
     return Number.isInteger(h) ? h + ' h' : Math.round(s) + ' s';
   }
 
-  /** Libellé axe Y — échelons de la planche constructeur (4 ms, 10 ms, 20 ms, 40 ms…). */
-  function fmtTimeAxis(v) {
+  /** Libellé axe Y — catalogue MCCB : ms / s / m / h ; sinon échelons MCB. */
+  function fmtTimeAxis(v, catalogStyle) {
+    if (catalogStyle) {
+      if (v < 1) {
+        const ms = v * 1000;
+        return (Number.isInteger(ms) ? ms : +ms.toFixed(1)) + ' ms';
+      }
+      if (v < 60) return (Number.isInteger(v) ? v : +v.toFixed(1)) + ' s';
+      if (v < 3600) {
+        const m = v / 60;
+        return (Number.isInteger(m) ? m : +m.toFixed(1)) + ' m';
+      }
+      const h = v / 3600;
+      return (Number.isInteger(h) ? h : +h.toFixed(1)) + ' h';
+    }
     return fmtTime(v);
   }
 
-  function drawGridX(ctx, sx, padT, plotH, plotW) {
+  function drawGridX(ctx, sx, padT, plotH, plotW, xRange) {
     const th = activeDrawTheme;
-    // multiples étiquetés par décade : graduations riches façon courbe constructeur
-    const labelMults = [1, 2, 3, 4, 5, 6, 8];
+    const { xLo, xHi, inRef } = xRange || { xLo: X_MIN, xHi: X_MAX, inRef: null };
     ctx.font = '9px system-ui,sans-serif';
     ctx.textAlign = 'center';
-    // 1) tracer toutes les lignes de grille
+
+    if (inRef) {
+      // Catalogue MCCB : graduations en ×In (1 · 2 · 5 · 10 · 20 · 50 · 100)
+      const labelMults = [1, 2, 3, 5, 10, 20, 30, 50, 100];
+      const allMults = [];
+      for (let dec = -1; dec <= 2; dec++) {
+        const base = Math.pow(10, dec);
+        for (let m = 1; m < 10; m++) allMults.push(base * m);
+      }
+      allMults.forEach((mult) => {
+        const v = inRef * mult;
+        if (v < xLo || v > xHi) return;
+        const X = sx(v);
+        const labeled = labelMults.includes(mult);
+        ctx.strokeStyle = (mult === 1 || mult === 10 || mult === 100) ? th.gridDecade
+          : labeled ? th.gridLabeled : th.gridMinor;
+        ctx.beginPath();
+        ctx.moveTo(X, padT);
+        ctx.lineTo(X, padT + plotH);
+        ctx.stroke();
+      });
+      let lastRight = -Infinity;
+      for (const mult of labelMults) {
+        const v = inRef * mult;
+        if (v < xLo || v > xHi) continue;
+        const X = sx(v);
+        const major = (mult === 1 || mult === 10 || mult === 100);
+        const txt = major ? String(mult) : String(mult);
+        ctx.font = major ? 'bold 10px system-ui,sans-serif' : '9px system-ui,sans-serif';
+        const halfW = ctx.measureText(txt).width / 2;
+        if (X - halfW < lastRight + 6 && !major) continue;
+        ctx.fillStyle = major ? th.axisXMajor : th.axisXMinor;
+        ctx.fillText(txt, X, padT + plotH + 14);
+        lastRight = X + halfW;
+      }
+      return;
+    }
+
+    // MCB / ampères — inchangé
+    const labelMults = [1, 2, 3, 4, 5, 6, 8];
     for (let dec = 0; dec <= 4; dec++) {
       const base = Math.pow(10, dec);
       for (let m = 1; m < 10; m++) {
         const v = base * m;
-        if (v < X_MIN || v > X_MAX) continue;
+        if (v < xLo || v > xHi) continue;
         const X = sx(v);
         const labeled = labelMults.includes(m);
         ctx.strokeStyle = m === 1 ? th.gridDecade
@@ -1335,13 +1505,12 @@
         ctx.stroke();
       }
     }
-    // 2) étiquettes avec espacement minimal pour éviter le chevauchement (mobile)
     const candidates = [];
     for (let dec = 0; dec <= 4; dec++) {
       const base = Math.pow(10, dec);
       for (const m of labelMults) {
         const v = base * m;
-        if (v < X_MIN || v > X_MAX) continue;
+        if (v < xLo || v > xHi) continue;
         candidates.push({ v, m, X: sx(v) });
       }
     }
@@ -1349,10 +1518,8 @@
     for (const c of candidates) {
       const txt = fmtCurrent(c.v);
       const halfW = ctx.measureText(txt).width / 2;
-      // marge mini de 6px entre deux libellés ; on garde toujours les débuts de décade (m===1)
       if (c.X - halfW < lastRight + 6 && c.m !== 1) continue;
       if (c.X - halfW < lastRight + 6 && c.m === 1) {
-        // décade prioritaire : on l'affiche quand même mais on évite le doublon trop proche
         if (c.X - halfW < lastRight + 2) continue;
       }
       ctx.fillStyle = c.m === 1 ? th.axisXMajor : th.axisXMinor;
@@ -1365,13 +1532,12 @@
   /** Mêmes échelons que les planches constructeur (1 · 2 · 4 par décade). */
   const TIME_LABELS = Y_AXIS_TICKS;
 
-  function drawGridY(ctx, sy, padL, plotW, yLo, yHi) {
+  function drawGridY(ctx, sy, padL, plotW, yLo, yHi, catalogStyle) {
     const th = activeDrawTheme;
     ctx.font = '9px system-ui,sans-serif';
     ctx.textAlign = 'right';
     const decMin = Math.floor(Math.log10(yLo));
     const decMax = Math.ceil(Math.log10(yHi));
-    // lignes mineures (log) discrètes
     for (let dec = decMin; dec <= decMax; dec++) {
       const base = Math.pow(10, dec);
       for (let m = 1; m < 10; m++) {
@@ -1384,8 +1550,8 @@
         ctx.stroke();
       }
     }
-    // lignes + libellés sur les paliers ronds
-    TIME_LABELS.forEach((v) => {
+    const labels = catalogStyle ? Y_AXIS_TICKS_MCCB : TIME_LABELS;
+    labels.forEach((v) => {
       if (v < yLo || v > yHi) return;
       const Y = sy(v);
       ctx.strokeStyle = th.gridTime;
@@ -1394,7 +1560,7 @@
       ctx.lineTo(padL + plotW, Y);
       ctx.stroke();
       ctx.fillStyle = th.axisY;
-      ctx.fillText(fmtTimeAxis(v), padL - 5, Y);
+      ctx.fillText(fmtTimeAxis(v, catalogStyle), padL - 5, Y);
     });
   }
 
@@ -1479,74 +1645,136 @@
     });
   }
 
-  /** Tracé MCCB constructeur — zones L / SD / I synchronisées sur Ir, Isd, Ii. */
+  /**
+   * Tracé MCCB constructeur — DESSIN seulement (mêmes calculs / seuils catalogue) :
+   *   thermique = courbe lisse (polyligne dense sur ancres catalogue),
+   *   magnétique = une verticale au Ii réglé + palier horizontal (style logiciel pro).
+   * Aucune diagonale sur la partie thermique.
+   */
   function drawManufacturer(ctx, p, sx, sy) {
     const d = curveDataManufacturer(p);
     const c = p.color;
     const shortDash = [5, 3];
+    const th = mfgThresholds(p);
     const isdX = sx(d.shortI);
     const iiX = sx(d.instI);
     const xEnd = sx(mfgCurveHighI(p, d));
     const instY = sy(d.instTS);
     const bottomY = sy(plotYLo);
-    const capY = (t) => sy(Math.min(t, plotYHi));
-    /** Palier court distinct de l'instantané (~10–20 ms) ? */
+    const topY = sy(plotYHi);
     const tsdPlateau = d.hasShortTime && d.tsd > d.instTS * 2.5;
-    const tsdY = capY(d.tsd);
-
-    const slowLong = d.long.map((pt) => ({ x: sx(pt.i), y: capY(pt.t * MFG_TOL_SLOW) }));
-    const fastLong = d.long.map((pt) => ({ x: sx(pt.i), y: capY(pt.t * MFG_TOL_FAST) }));
-    if (!slowLong.length) return;
-
-    const slowEnd = slowLong[slowLong.length - 1];
-    const fastEnd = fastLong[fastLong.length - 1];
-
-    ctx.beginPath();
-    smoothSubPath(ctx, slowLong, true);
-    if (d.hasShortTime && tsdPlateau) {
-      ctx.lineTo(isdX, tsdY);
-      ctx.lineTo(iiX, tsdY);
-      ctx.lineTo(iiX, instY);
-    } else if (d.hasShortTime) {
-      ctx.lineTo(isdX, instY);
-      ctx.lineTo(iiX, instY);
-    } else {
-      ctx.lineTo(iiX, instY);
-    }
-    if (fastEnd) {
-      if (d.hasShortTime && tsdPlateau) {
-        ctx.lineTo(iiX, capY(d.tsd * MFG_TOL_FAST));
-        ctx.lineTo(isdX, capY(d.tsd * MFG_TOL_FAST));
-      }
-      ctx.lineTo(fastEnd.x, fastEnd.y);
-    }
-    smoothSubPath(ctx, fastLong.slice().reverse(), false);
-    ctx.closePath();
-    ctx.fillStyle = hexA(c, 0.06);
-    ctx.fill();
-    fillInstantSkirt(ctx, iiX, xEnd, instY, bottomY, c);
-
-    // Contours — rouge sur le long retard (thermique), bleu sur court retard / instantané
+    const tsdY = sy(Math.min(d.tsd, plotYHi));
+    const tsdYFast = sy(Math.min(d.tsd * MFG_TOL_FAST, plotYHi));
     const cTh = activeDrawTheme.curveThermal;
     const cMag = activeDrawTheme.curveMagnetic;
-    strokePts(ctx, slowLong, cTh, 2.2, true);
-    if (d.hasShortTime && tsdPlateau) {
-      strokeSeg(ctx, slowEnd.x, slowEnd.y, isdX, tsdY, cMag, 2.2);
-      strokeSeg(ctx, isdX, tsdY, iiX, tsdY, cMag, 2.2, shortDash);
-      if (tsdY < instY - 1) strokeSeg(ctx, iiX, tsdY, iiX, instY, cMag, 2.4);
-    } else if (d.hasShortTime) {
-      strokeSeg(ctx, slowEnd.x, slowEnd.y, isdX, instY, cMag, 2.2);
-      if (iiX > isdX + 2) strokeSeg(ctx, isdX, instY, iiX, instY, cMag, 2.2, shortDash);
-    } else {
-      strokeSeg(ctx, slowEnd.x, slowEnd.y, iiX, instY, cMag, 2.4);
-    }
-    if (iiX < xEnd - 1) strokeSeg(ctx, iiX, instY, xEnd, instY, cMag, 2.4);
 
-    strokePts(ctx, fastLong, cTh, 1.5, true);
-    if (fastEnd) {
-      const fastJoinY = d.hasShortTime && tsdPlateau ? capY(d.tsd * MFG_TOL_FAST) : instY;
-      strokeSeg(ctx, fastEnd.x, fastEnd.y, isdX, fastJoinY, cMag, 1.6);
+    // ——— TM / Cat.A : thermique jusqu'au Ii réglé, puis 1 verticale + palier ———
+    if (!d.hasShortTime) {
+      const iiHiMult = (p.iiMax != null && p.iiMax > 0) ? p.iiMax : (p.ii || (th.iiA / p.in));
+      const iiLoMult = (p.iiMin != null && p.iiMin > 0) ? p.iiMin : Math.max(2, iiHiMult * 0.7);
+      const loMult = Math.min(iiLoMult, iiHiMult);
+      const hiMult = Math.max(iiLoMult, iiHiMult);
+      const iiSel = (p.ii != null && p.ii > 0)
+        ? Math.min(hiMult, Math.max(loMult, p.ii))
+        : hiMult;
+      const scaled = mfgScaledAnchors(p, p.longAnchors || []);
+      const slowRaw = [];
+      const fastRaw = [];
+      const m0 = th.noTripMult * 1.002;
+      for (let m = m0; m < iiSel; m *= 1.006) {
+        const t = interpLogLogDraw(scaled, m, iiSel);
+        slowRaw.push({ i: m * p.in, t: Math.min(t * MFG_TOL_SLOW, Y_DATA_CAP * 5) });
+        const tF = interpLogLogDraw(scaled, m, iiSel);
+        fastRaw.push({ i: m * p.in, t: Math.min(tF * MFG_TOL_FAST, Y_DATA_CAP * 5) });
+      }
+      const tSlowIi = Math.min(interpLogLog(scaled, iiSel) * MFG_TOL_SLOW, Y_DATA_CAP * 5);
+      const tFastIi = Math.min(interpLogLog(scaled, iiSel) * MFG_TOL_FAST, Y_DATA_CAP * 5);
+      slowRaw.push({ i: iiSel * p.in, t: tSlowIi });
+      fastRaw.push({ i: iiSel * p.in, t: tFastIi });
+
+      const magX = sx(iiSel * p.in);
+      drawMcbTunnel(ctx, {
+        color: c,
+        slowPts: thermalScreenPts(slowRaw, sx, sy),
+        fastPts: thermalScreenPts(fastRaw, sx, sy),
+        sMagX: magX,
+        fMagX: magX,
+        instY,
+        bottomY,
+        topY,
+        xEnd,
+        inX: sx(th.irA),
+      });
+      drawThresholdLabels(ctx, p, sx, sy, d);
+      return;
     }
+
+    // ——— Cat.B / court retard : thermique courbe → verticales Isd / Ii ———
+    const slowPts = thermalScreenPts(
+      d.long.map((pt) => ({ i: pt.i, t: pt.t * MFG_TOL_SLOW })),
+      sx, sy
+    );
+    const fastPts = thermalScreenPts(
+      d.long.map((pt) => ({ i: pt.i, t: pt.t * MFG_TOL_FAST })),
+      sx, sy
+    );
+    if (!slowPts.length) return;
+
+    // Forcer l'extrémité thermique pile sur Isd (évite toute diagonale)
+    const kneeX = isdX;
+    const slowEndY = slowPts[slowPts.length - 1].y;
+    const fastEndY = (fastPts[fastPts.length - 1] || slowPts[slowPts.length - 1]).y;
+    slowPts[slowPts.length - 1] = { x: kneeX, y: slowEndY };
+    if (fastPts.length) fastPts[fastPts.length - 1] = { x: kneeX, y: fastEndY };
+
+    ctx.beginPath();
+    ctx.moveTo(slowPts[0].x, slowPts[0].y);
+    pathPolyline(ctx, slowPts, false);
+    if (tsdPlateau) {
+      ctx.lineTo(kneeX, tsdY);
+      ctx.lineTo(iiX, tsdY);
+      ctx.lineTo(iiX, tsdYFast);
+      ctx.lineTo(kneeX, tsdYFast);
+    } else {
+      ctx.lineTo(kneeX, instY);
+      ctx.lineTo(iiX, instY);
+      ctx.lineTo(kneeX, instY);
+    }
+    ctx.lineTo(fastPts[fastPts.length - 1].x, fastPts[fastPts.length - 1].y);
+    pathPolyline(ctx, fastPts, true);
+    ctx.closePath();
+    ctx.fillStyle = hexA(c, 0.09);
+    ctx.fill();
+    // Palier instantané collé à Ii (bouge avec le réglage), pas ancré sur Isd
+    fillInstantSkirt(ctx, iiX, xEnd, instY, bottomY, c);
+
+    strokePolyline(ctx, slowPts, cTh, 2.2);
+    strokePolyline(ctx, fastPts, cTh, 2);
+
+    // Magnétique / SD : verticales + horizontales liées aux seuils (pas de tige orpheline à Ii)
+    if (tsdPlateau) {
+      strokeSeg(ctx, kneeX, slowEndY, kneeX, tsdY, cMag, 2.4);
+      strokeSeg(ctx, kneeX, tsdY, iiX, tsdY, cMag, 2.2, shortDash);
+      if (tsdY < instY - 1) strokeSeg(ctx, iiX, tsdY, iiX, instY, cMag, 2.4);
+      strokeSeg(ctx, kneeX, fastEndY, kneeX, tsdYFast, cMag, 1.6);
+      strokeSeg(ctx, kneeX, tsdYFast, iiX, tsdYFast, cMag, 1.5, shortDash);
+    } else {
+      // tsd ≈ instantané : chute à Isd, palier jusqu'à Ii, pas de barre verticale libre à Ii
+      strokeSeg(ctx, kneeX, slowEndY, kneeX, instY, cMag, 2.4);
+      strokeSeg(ctx, kneeX, fastEndY, kneeX, instY, cMag, 1.6);
+      if (iiX > kneeX + 2) strokeSeg(ctx, kneeX, instY, iiX, instY, cMag, 2.2, shortDash);
+    }
+    if (xEnd > iiX + 1) strokeSeg(ctx, iiX, instY, xEnd, instY, cMag, 2.4);
+
+    const inX = sx(d.irA);
+    ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = hexA(c, 0.45);
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(inX, bottomY);
+    ctx.lineTo(inX, topY);
+    ctx.stroke();
+    ctx.setLineDash([]);
 
     drawThresholdLabels(ctx, p, sx, sy, d);
   }
@@ -1554,16 +1782,19 @@
   /** Seuils Ir / Isd / Ii — colonne marge droite, une seule courbe à la fois. */
   function drawThresholdLabels(ctx, p, sx, sy, d) {
     const idx = labelCurveIndex();
-    if (idx < 0 || state[idx] !== p || !d.hasShortTime || !geom) return;
+    if (idx < 0 || state[idx] !== p || !geom) return;
     const th = activeDrawTheme;
-    const { padL, padT, plotW, plotH } = geom;
+    const { padL, padT, plotW } = geom;
     const c = p.color;
     const marginX = padL + plotW - 5;
-    const lines = [
-      `Ir ${fmtIexact(d.irA)}`,
-      `Isd ${fmtIexact(d.shortI)} · ${fmtTime(d.tsd)}`,
-      `Ii ${fmtIexact(d.instI)}`,
-    ];
+    const lines = [];
+    lines.push(`Ir ${fmtIexact(d.irA)}`);
+    if (d.hasShortTime) {
+      lines.push(`Isd ${fmtIexact(d.shortI)} · ${fmtTime(d.tsd)}`);
+      lines.push(`Ii ${fmtIexact(d.instI)}`);
+    } else if (p.ii != null) {
+      lines.push(`Ii ${fmtIexact(d.instI)}`);
+    }
     let y = padT + 58;
     const step = 14;
     lines.forEach((text) => {
@@ -1572,28 +1803,16 @@
     });
   }
 
-  /** Tracé d'une protection FUSIBLE (bande préarc lente/rapide, courbe lisse). */
+  /** Tracé fusible — une seule courbe nominale (pas de bande double). */
   function drawFuse(ctx, p, sx, sy) {
     const anchors = fuseAnchors(p.dev);
-    const slow = fuseBoundary(p.in, anchors, FUSE_TOL_SLOW).map((pt) => ({ x: sx(pt.i), y: sy(pt.t) }));
-    const fast = fuseBoundary(p.in, anchors, FUSE_TOL_FAST).map((pt) => ({ x: sx(pt.i), y: sy(pt.t) }));
-    if (!slow.length || !fast.length) return;
-
-    // bande remplie entre borne lente et borne rapide
-    ctx.beginPath();
-    smoothSubPath(ctx, slow, true);
-    smoothSubPath(ctx, fast.slice().reverse(), false);
-    ctx.closePath();
-    ctx.fillStyle = hexA(p.color, 0.12);
-    ctx.fill();
-
-    const c = p.color;
-    strokePts(ctx, slow, c, 2.2, true);
-    strokePts(ctx, fast, c, 1.5, true);
+    const mid = fuseBoundary(p.in, anchors, 1).map((pt) => ({ x: sx(pt.i), y: sy(pt.t) }));
+    if (!mid.length) return;
+    strokePts(ctx, mid, p.color, 2.2, true);
 
     // ligne verticale In
     ctx.setLineDash([4, 4]);
-    ctx.strokeStyle = hexA(c, 0.5);
+    ctx.strokeStyle = hexA(p.color, 0.5);
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(sx(p.in), sy(plotYLo));
@@ -1611,8 +1830,12 @@
     const I = g.ElectroDzCalcI18n;
     return I ? I.t(lang(), key) : key;
   }
-  function axisCurrentLabel() { return tr('tcAxisCurrent'); }
-  function axisTimeLabel() { return tr('tcAxisTime'); }
+  function axisCurrentLabel(catalogStyle) {
+    return catalogStyle ? tr('tcAxisCurrentMult') : tr('tcAxisCurrent');
+  }
+  function axisTimeLabel(catalogStyle) {
+    return catalogStyle ? tr('tcAxisTimeCatalog') : tr('tcAxisTime');
+  }
 
   function trTpl(key, vars) {
     return tr(key).replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? ''));
@@ -2015,7 +2238,7 @@
   function deviceKey(p) {
     if (!p) return '';
     if (isMfg(p)) return `${p.brandId || ''}|${p.deviceId || ''}|${p.tripUnitId || ''}|${p.in}`;
-    if (isMccb(p)) return `norm-mccb|${p.in}|${p.mccbCat || 'A'}|${p.ir}|${p.im}`;
+    if (isMccb(p)) return `norm-mccb|${p.in}|${p.mccbCat || 'A'}|${p.ir}|${p.im}|${p.isd}|${p.tsd}|${p.ii}`;
     return `${p.dev || 'mcb'}|${p.in}|${p.curve}`;
   }
 
@@ -2138,8 +2361,22 @@
       const imEl = document.getElementById('tc-im');
       if (irEl) irEl.value = String(p.ir != null ? p.ir : 1);
       if (imEl) imEl.value = String(p.im != null ? p.im : 10);
+      if (p.mccbCat === 'B') {
+        const isdEl = document.getElementById('tc-isd');
+        const tsdEl = document.getElementById('tc-tsd');
+        const iiEl = document.getElementById('tc-ii');
+        const iiOff = document.getElementById('tc-ii-off');
+        if (isdEl) isdEl.value = String(p.isd != null ? p.isd : 2);
+        if (tsdEl) tsdEl.value = String(p.tsd != null ? p.tsd : 0.2);
+        if (iiOff) iiOff.checked = p.ii == null;
+        if (iiEl) {
+          iiEl.value = String(p.ii != null ? p.ii : (p.im != null ? p.im : 10));
+          iiEl.disabled = !!iiOff?.checked;
+        }
+      }
     }
     syncNormDeviceUI();
+    g.ElectroDzTripCurveCatalog?.syncKindCardsUI?.();
   }
 
   function loadIntoForm(p) {
@@ -2210,8 +2447,19 @@
         const idx = parseInt(btn.dataset.tcRemove, 10);
         if (!Number.isFinite(idx) || idx < 0 || idx >= state.length) return;
         state.splice(idx, 1);
-        if (editIndex === idx) cancelEdit();
-        else if (editIndex > idx) editIndex--;
+        if (previewIndex === idx) previewIndex = -1;
+        else if (previewIndex > idx) previewIndex--;
+        // Ne pas appeler cancelEdit() après splice : il réinjectait le snapshot
+        // sur la courbe suivante et faisait changer la couleur.
+        if (editIndex === idx) {
+          editIndex = -1;
+          editSnapshot = null;
+        } else if (editIndex > idx) {
+          editIndex--;
+        }
+        // Empêche applyLivePreview de recréer un fantôme (nouvelle couleur)
+        formTouched = false;
+        setAddButtonMode();
         refresh();
       });
     });
@@ -2295,12 +2543,23 @@
     if (dev === 'mccb') {
       const cat = document.getElementById('tc-mccb-cat')?.value === 'B' ? 'B' : 'A';
       p.mccbCat = cat;
-      p.ir = 1;
-      p.im = 10;
+      p.ir = clampNum(document.getElementById('tc-ir-norm')?.value, 0.4, 1, 1);
       if (cat === 'B') {
-        p.isd = IEC_CAT_B.isdMult;
-        p.tsd = IEC_CAT_B.tsdSec;
+        p.isd = clampNum(document.getElementById('tc-isd')?.value, IEC_CAT_B.isdMin, IEC_CAT_B.isdMax, IEC_CAT_B.isdMult);
+        p.tsd = clampNum(document.getElementById('tc-tsd')?.value, 0.001, 0.4, IEC_CAT_B.tsdSec);
+        const iiOff = document.getElementById('tc-ii-off')?.checked;
+        if (iiOff) {
+          p.ii = null;
+          p.im = clampNum(document.getElementById('tc-im')?.value, 1.5, 15, 10);
+        } else {
+          p.ii = clampNum(document.getElementById('tc-ii')?.value, 1.5, 15, 10);
+          p.im = p.ii;
+        }
         p.hasShortTime = true;
+      } else {
+        p.im = clampNum(document.getElementById('tc-im')?.value, 1.5, 15, 10);
+        p.ii = p.im;
+        p.hasShortTime = false;
       }
     }
     return p;
@@ -2310,13 +2569,13 @@
     const ref = document.getElementById('tc-ref-model')?.value || 'mcb';
     if (ref === 'mccb-a') return { dev: 'mccb', cat: 'A' };
     if (ref === 'mccb-b') return { dev: 'mccb', cat: 'B' };
-    if (ref === 'gg' || ref === 'am') return { dev: ref, cat: 'A' };
+    if (ref === 'gg' || ref === 'am' || ref === 't') return { dev: ref, cat: 'A' };
     return { dev: 'mcb', cat: 'A' };
   }
 
   function refModelFromDevice(dev, mccbCat) {
     if (dev === 'mccb') return mccbCat === 'B' ? 'mccb-b' : 'mccb-a';
-    if (dev === 'gg' || dev === 'am') return dev;
+    if (dev === 'gg' || dev === 'am' || dev === 't') return dev;
     return 'mcb';
   }
 
@@ -2340,10 +2599,15 @@
       if (el) el.hidden = !on;
     };
     const isMcb = dev === 'mcb';
+    const isMccbA = dev === 'mccb' && cat === 'A';
+    const isMccbB = dev === 'mccb' && cat === 'B';
+    const isFuseDev = dev === 'gg' || dev === 'am' || dev === 't';
+    // Type fusible (gG/aM/T) = pastilles sous « Type de protection », pas ici.
+    show('tc-role-group', !isFuseDev);
     show('tc-in-group', true);
     show('tc-curve-group', isMcb);
-    show('tc-ir-group-norm', false);
-    show('tc-im-group', false);
+    show('tc-ir-group-norm', isMccbA || isMccbB);
+    show('tc-im-group', isMccbA);
     updateNormSettingsHint(dev, cat);
     syncGraphThresholdsPanel();
   }
@@ -2352,15 +2616,75 @@
     const hint = document.getElementById('tc-settings-hint');
     if (!hint) return;
     const parts = [];
-    if (dev === 'mcb') parts.push(tr('tcNormHintMcb'));
-    else if (dev === 'mccb' && cat === 'A') parts.push(tr('tcNormHintMccbA'));
-    else if (dev === 'mccb' && cat === 'B') parts.push(tr('tcNormHintMccbB'));
-    else if (dev === 'gg' || dev === 'am') parts.push(tr('tcNormHintFuse'));
-    if (dev === 'mcb' || dev === 'mccb') parts.push(tr('tcNormNoAdjustHint'));
+    if (dev === 'mcb') {
+      parts.push(tr('tcNormHintMcb'));
+      parts.push(tr('tcNormNoAdjustHint'));
+    } else if (dev === 'mccb' && cat === 'A') {
+      parts.push(tr('tcNormHintMccbA'));
+    } else if (dev === 'mccb' && cat === 'B') {
+      parts.push(tr('tcNormHintMccbB'));
+    } else if (dev === 'gg' || dev === 'am' || dev === 't') {
+      parts.push(tr(dev === 't' ? 'tcNormHintFuseT' : 'tcNormHintFuse'));
+    }
     hint.textContent = parts.filter(Boolean).join(' ');
   }
 
-  /** Panneau sous le graphe : Tsd/Isd constructeur ou lecture seule IEC Cat. B. */
+  function setTuneGroupVisible(id, on) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (on) el.removeAttribute('hidden');
+    else el.setAttribute('hidden', '');
+  }
+
+  /** Panneau Isd/Tsd/Ii pour MCCB Cat. B générique (essais hors catalogue). */
+  function applyNormCatBTuneUI() {
+    const isdEl = document.getElementById('tc-isd');
+    const iiEl = document.getElementById('tc-ii');
+    const iiOff = document.getElementById('tc-ii-off');
+    const tsdEl = document.getElementById('tc-tsd');
+    const selectEl = document.getElementById('tc-tsd-select');
+    const rangeEl = document.getElementById('tc-tsd-range');
+    const hintEl = document.getElementById('tc-tsd-range-hint');
+    setTuneGroupVisible('tc-ir-group', false);
+    setTuneGroupVisible('tc-tr-group', false);
+    setTuneGroupVisible('tc-isd-group', true);
+    setTuneGroupVisible('tc-tsd-group', true);
+    setTuneGroupVisible('tc-ii-group', true);
+    if (isdEl) {
+      isdEl.min = String(IEC_CAT_B.isdMin);
+      isdEl.max = String(IEC_CAT_B.isdMax);
+      isdEl.step = '0.1';
+      if (!isdEl.value) isdEl.value = String(IEC_CAT_B.isdMult);
+    }
+    if (iiEl) {
+      iiEl.min = '1.5';
+      iiEl.max = '15';
+      iiEl.step = '0.5';
+      if (!iiEl.value) iiEl.value = '10';
+      iiEl.disabled = !!(iiOff && iiOff.checked);
+    }
+    if (iiOff) iiOff.style.display = '';
+    const vals = IEC_CAT_B.tsdValues;
+    if (selectEl) {
+      selectEl.hidden = false;
+      selectEl.innerHTML = vals.map((v) => {
+        const lbl = v < 0.01 ? `${Math.round(v * 1000)} ms` : `${String(v).replace('.', ',')} s`;
+        return `<option value="${v}">${lbl}</option>`;
+      }).join('');
+      const cur = parseFloat(tsdEl?.value || String(IEC_CAT_B.tsdSec));
+      const snap = vals.reduce((best, x) => (Math.abs(x - cur) < Math.abs(best - cur) ? x : best), vals[0]);
+      selectEl.value = String(snap);
+      if (tsdEl) tsdEl.value = String(snap);
+    }
+    if (tsdEl) tsdEl.hidden = true;
+    if (rangeEl) rangeEl.hidden = true;
+    if (hintEl) {
+      hintEl.hidden = false;
+      hintEl.textContent = tr('tcNormCatBTuneHint');
+    }
+  }
+
+  /** Panneau sous le graphe : réglages Cat. B générique ou constructeur. */
   function syncGraphThresholdsPanel() {
     const panel = document.getElementById('tc-graph-thresholds');
     const normRo = document.getElementById('tc-graph-norm-readonly');
@@ -2381,20 +2705,16 @@
     } else {
       const { dev, cat } = parseRefModel();
       const isCatB = dev === 'mccb' && cat === 'B';
-      if (normRo) {
-        normRo.hidden = !isCatB;
+      if (normRo) normRo.hidden = true;
+      if (mfgTune) {
         if (isCatB) {
-          const irA = Math.round((parseFloat(document.getElementById('tc-ir-norm')?.value) || 1)
-            * (parseFloat(document.getElementById('tc-in')?.value) || 16));
-          normRo.textContent = trTpl('tcGraphNormCatB', {
-            isd: IEC_CAT_B.isdMult,
-            tsd: fmtTime(IEC_CAT_B.tsdSec),
-            ir: irA,
-            im: document.getElementById('tc-im')?.value || '10',
-          });
+          mfgTune.classList.remove('tc-mfg-hidden');
+          mfgTune.hidden = false;
+          applyNormCatBTuneUI();
+        } else {
+          mfgTune.hidden = true;
         }
       }
-      if (mfgTune) mfgTune.hidden = true;
       panel.hidden = !isCatB;
     }
   }
@@ -2504,7 +2824,7 @@
       const idx = labelCurveIndex();
       if (idx < 0 || idx >= state.length) return;
       const target = state[idx];
-      if (!isMfgMccb(target) && !isNormMccbB(target)) return;
+      if (!isMfgMccb(target) && !isMccb(target)) return;
       Cat.loadProfileIntoForm(target);
     };
     ['tc-isd', 'tc-tsd', 'tc-tsd-select', 'tc-tsd-range', 'tc-ir', 'tc-ii', 'tc-tr', 'tc-tsd-dec', 'tc-tsd-inc'].forEach((id) => {
@@ -2758,19 +3078,9 @@
       }
     });
 
-    if (!state.length) {
-      if (Cat) {
-        Cat.loadCatalog().then((data) => {
-          if (data) loadPilotNsx160();
-          else {
-            add(63, 'C', 'amont');
-            add(16, 'C', 'aval');
-          }
-        });
-      } else {
-        add(63, 'C', 'amont');
-        add(16, 'C', 'aval');
-      }
+    // Graphe vide au départ — l'utilisateur ajoute les protections manuellement.
+    if (Cat) {
+      Cat.loadCatalog().then(() => refresh());
     } else {
       refresh();
     }

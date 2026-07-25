@@ -171,6 +171,25 @@
     return h;
   }
 
+  function fmtCableSectionFactors(r) {
+    const d = r && r.data && r.data.additionalData;
+    if (!d) return '';
+    const mf = Number(d.methodFactor);
+    const tf = Number(d.tempFactor);
+    const gf = Number(d.groupFactor);
+    const total = (Number.isFinite(mf) ? mf : 1) * (Number.isFinite(tf) ? tf : 1) * (Number.isFinite(gf) ? gf : 1);
+    return `<div style="margin-top:12px;padding:12px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);text-align:start;font-size:0.85rem;font-weight:400;color:var(--text);line-height:1.45">
+      <div style="font-weight:700;margin-bottom:6px;color:var(--primary)">${tr('labelInstallMethod') || 'Mode de pose'}</div>
+      <div>${d.method || '—'}</div>
+      <div style="margin-top:10px;font-weight:700;margin-bottom:6px;color:var(--primary)">${tr('cableModalCorrectionFactors') || 'Facteurs de correction'}</div>
+      <div>${tr('labelInstallMethod') || 'Pose'} : × ${(Number.isFinite(mf) ? mf : 1).toFixed(3)}</div>
+      <div>${tr('labelTemp') || 'Température'} : × ${(Number.isFinite(tf) ? tf : 1).toFixed(3)}</div>
+      <div>${tr('labelCircuits') || 'Groupement'} : × ${(Number.isFinite(gf) ? gf : 1).toFixed(3)}</div>
+      <div style="margin-top:6px"><strong>${tr('cableLabelTotalFactor') || 'Coefficient total'} × ${total.toFixed(3)}</strong></div>
+      <div style="margin-top:8px;opacity:0.9">${tr('cableModalAdmissibleCurrent') || 'Iz'} ${d.maxCurrent || '—'} A · ΔU ${d.actualVoltageDrop || '—'}% (max ${d.maxVoltageDrop || '—'}%)</div>
+    </div>`;
+  }
+
   function getActiveDomId() {
     return CALC_TYPES.find((c) => c.id === activeId)?.domId || 'ohm';
   }
@@ -448,6 +467,26 @@
     });
   }
 
+  function initDropPctSelectors() {
+    initCalcChipSelectors();
+  }
+
+  function initCalcChipSelectors() {
+    document.querySelectorAll('.calc-chip-selector, .drop-pct-selector').forEach((wrap) => {
+      const targetId = wrap.dataset.chipTarget || wrap.dataset.dropTarget;
+      if (!targetId) return;
+      const hidden = document.getElementById(targetId);
+      if (!hidden) return;
+      wrap.querySelectorAll('.calc-chip-btn, .drop-pct-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          wrap.querySelectorAll('.calc-chip-btn, .drop-pct-btn').forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+          hidden.value = btn.dataset.chip || btn.dataset.drop || '';
+        });
+      });
+    });
+  }
+
   function performCalculation() {
     const C = window.ElectroDzCalc;
     const lang = getLang();
@@ -491,10 +530,11 @@
         break;
       case 'cable_section':
         r = C.calculateCableSection({
-          current: val('section-i'), length: val('section-l'), voltage: val('section-u'),
+          current: val('section-i'), power: val('section-p'), length: val('section-l'), voltage: val('section-u'),
           cosPhi: val('section-cos') || '0.85', temperature: val('section-temp') || '30',
           circuitCount: val('section-circuits') || '1', conductorType: val('section-conductor') || 'Cu',
-          insulationType: val('section-insulation') || 'PVC', selectedMethod: val('section-method') || 'B1', lang,
+          insulationType: val('section-insulation') || 'PVC', selectedMethod: val('section-method') || 'B1',
+          maxDropPercent: val('section-drop') || '4', lang,
         });
         break;
       case 'selectivity':
@@ -576,6 +616,9 @@
         h = window.ElectroDzPowerBalancePro.formatResultHtml(r);
       } else {
         h = fmtSimple(r);
+        if (activeId === 'cable_section') {
+          h += fmtCableSectionFactors(r);
+        }
         if (r.data.additionalData?.ibA) {
           h += `<br>${tr('balanceIbApprox')} <strong>${r.data.additionalData.ibA} ${tr('unitA')}</strong>`;
         }
@@ -644,6 +687,7 @@
     });
 
     initVoltageSelectors();
+    initDropPctSelectors();
     setOhmSub('voltage');
     setPowerSub('power');
     setBrkSub('normative');
@@ -658,11 +702,6 @@
 
     document.getElementById('sel-open-trip-curves')?.addEventListener('click', () => {
       activateCalc('trip_curve');
-      const run = () => {
-        if (window.ElectroDzTripCurve?.loadPilotNsx160) window.ElectroDzTripCurve.loadPilotNsx160();
-      };
-      if (window.ElectroDzTripCurveCatalog?.getCatalog()) run();
-      else window.ElectroDzTripCurveCatalog?.loadCatalog().then(run);
     });
   });
 })();
