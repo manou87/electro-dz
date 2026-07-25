@@ -2233,21 +2233,13 @@
     if (editIndex >= 0 && editSnapshot) state[editIndex] = editSnapshot;
     editIndex = -1;
     editSnapshot = null;
-    clearPreview();
     formTouched = false;
     setAddButtonMode();
     refresh();
   }
 
+  /** Plus de courbe fantôme : rien n’est retiré du graphe sauf via ×. */
   function clearPreview() {
-    if (previewIndex < 0 || previewIndex >= state.length) {
-      previewIndex = -1;
-      return;
-    }
-    if (state[previewIndex]._preview) {
-      state.splice(previewIndex, 1);
-      if (editIndex > previewIndex) editIndex--;
-    }
     previewIndex = -1;
   }
 
@@ -2274,63 +2266,19 @@
     rebuildCurveFromForm = true;
   }
 
-  /** Met à jour state depuis le formulaire avant chaque tracé (courbe qui bouge en direct). */
+  /**
+   * Aperçu live : uniquement en mode édition (pastille cliquée).
+   * Sinon le graphe ne bouge qu’avec « Ajouter » ou « × » — les anciennes courbes restent.
+   */
   function applyLivePreview() {
-    const p = makeDeviceFromForm(null, { preview: true });
-    if (editIndex >= 0 && editIndex < state.length) {
-      clearPreview();
-      if (!p) return;
-      const r = p.role;
-      if (r === 'amont' || r === 'aval') {
-        state.forEach((x, j) => { if (j !== editIndex && x.role === r) x.role = 'autre'; });
-      }
-      p.color = state[editIndex].color;
-      p.colorIdx = state[editIndex].colorIdx;
-      state[editIndex] = p;
-      rebuildCurveFromForm = false;
-      return;
-    }
-    // Changer de type / appareil dans le formulaire NE remplace PAS une courbe
-    // déjà posée : on ajoute un aperçu à côté pour pouvoir comparer.
     rebuildCurveFromForm = false;
-    const tuneIdx = labelCurveIndex();
-    const tuneTarget = tuneIdx >= 0 && tuneIdx < state.length ? state[tuneIdx] : null;
-    if (editIndex < 0 && formTouched && tuneTarget && p
-      && deviceKey(p) === deviceKey(tuneTarget)) {
-      clearPreview();
-      const at = state.indexOf(tuneTarget);
-      if (at >= 0) {
-        const merged = mergeThresholdFields(tuneTarget, p);
-        merged.color = tuneTarget.color;
-        merged.colorIdx = tuneTarget.colorIdx;
-        delete merged._preview;
-        state[at] = merged;
-        return;
-      }
-    }
-    if (editIndex < 0 && !formTouched) return;
-    if (!p) {
-      clearPreview();
-      return;
-    }
-    const r = p.role;
-    if (previewIndex >= 0 && previewIndex < state.length && state[previewIndex]._preview) {
-      if (r === 'amont' || r === 'aval') {
-        state.forEach((x, j) => { if (j !== previewIndex && x.role === r) x.role = 'autre'; });
-      }
-      p.color = state[previewIndex].color;
-      p.colorIdx = state[previewIndex].colorIdx;
-      p._preview = true;
-      state[previewIndex] = p;
-    } else if (state.length < 8) {
-      if (r === 'amont' || r === 'aval') {
-        state.forEach((x) => { if (x.role === r) x.role = 'autre'; });
-      }
-      assignCurveColor(p);
-      p._preview = true;
-      state.push(p);
-      previewIndex = state.length - 1;
-    }
+    if (editIndex < 0 || editIndex >= state.length) return;
+    const p = makeDeviceFromForm(null, { preview: true });
+    if (!p) return;
+    p.color = state[editIndex].color;
+    p.colorIdx = state[editIndex].colorIdx;
+    delete p._preview;
+    state[editIndex] = p;
   }
 
   function scheduleRefresh() {
@@ -2724,15 +2672,13 @@
     }
   }
 
-  function pushDevice(p, skipRoleDedup) {
+  function pushDevice(p) {
     if (!p) return false;
-    clearPreview();
     formTouched = false;
+    previewIndex = -1;
     if (state.length >= 8 && editIndex < 0) return false;
-    const r = p.role;
-    if (!skipRoleDedup && (r === 'amont' || r === 'aval')) {
-      state.forEach((x) => { if (x.role === r) x.role = 'autre'; });
-    }
+    delete p._preview;
+    // Plusieurs courbes amont/aval autorisées pour comparaison — pas de dédup.
     assignCurveColor(p);
     state.push(p);
     refresh();
@@ -2769,11 +2715,9 @@
   function updateDeviceAt(i) {
     const p = makeDeviceFromForm();
     if (!p || i < 0 || i >= state.length) return false;
-    const r = p.role;
-    if (r === 'amont' || r === 'aval') {
-      state.forEach((x, j) => { if (j !== i && x.role === r) x.role = 'autre'; });
-    }
     p.color = state[i].color;
+    p.colorIdx = state[i].colorIdx;
+    delete p._preview;
     state[i] = p;
     refresh();
     return true;
@@ -2789,20 +2733,8 @@
     }
     const p = makeDeviceFromForm();
     if (!p) return;
-    if (previewIndex >= 0) {
-      const idx = previewIndex;
-      clearPreview();
-      formTouched = false;
-      const r = p.role;
-      if (r === 'amont' || r === 'aval') {
-        state.forEach((x) => { if (x.role === r) x.role = 'autre'; });
-      }
-      assignCurveColor(p);
-      state.push(p);
-      refresh();
-      return;
-    }
     if (state.length >= 8) return;
+    // Toujours ajouter : les courbes déjà posées restent jusqu’au ×.
     pushDevice(p);
   }
 
