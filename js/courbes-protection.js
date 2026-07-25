@@ -2528,7 +2528,7 @@
   function makeDeviceFromForm(roleOverride, opts) {
     const Cat = g.ElectroDzTripCurveCatalog;
     const mode = Cat ? Cat.getMode() : 'norm';
-    const role = roleOverride || document.getElementById('tc-role')?.value || 'autre';
+    const role = roleOverride || 'autre';
 
     if (mode === 'mfg' || mode === 'schneider') {
       const hint = document.getElementById('tc-settings-hint');
@@ -2621,8 +2621,6 @@
     const isMccbA = dev === 'mccb' && cat === 'A';
     const isMccbB = dev === 'mccb' && cat === 'B';
     const isFuseDev = dev === 'gg' || dev === 'am' || dev === 't';
-    // Type fusible (gG/aM/T) = pastilles sous « Type de protection », pas ici.
-    show('tc-role-group', !isFuseDev);
     show('tc-in-group', true);
     show('tc-curve-group', isMcb);
     show('tc-ir-group-norm', isMccbA || isMccbB);
@@ -2849,10 +2847,6 @@
       const el = document.getElementById(id);
       el?.addEventListener('input', scheduleRefresh);
       el?.addEventListener('change', scheduleRefresh);
-    });
-    document.getElementById('tc-role')?.addEventListener('change', () => {
-      markCurveRebuildFromForm();
-      scheduleRefresh();
     });
     document.getElementById('tc-ii-off')?.addEventListener('change', scheduleRefresh);
   }
