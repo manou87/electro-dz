@@ -41,7 +41,12 @@
   }
 
   function curveColorName(p, idx) {
-    const ci = p.colorIdx != null ? p.colorIdx : idx;
+    let ci = p.colorIdx;
+    if (ci == null && p.color) {
+      const found = CURVE_COLORS.findIndex((c) => c.hex === p.color);
+      if (found >= 0) ci = found;
+    }
+    if (ci == null) ci = idx;
     const entry = curveColorEntry(ci);
     const t = tr(entry.key);
     if (t && t !== entry.key) return t;
@@ -249,6 +254,19 @@
     return scaleAnchorsByTr(anchors, p.tr, p.trRefSec || 1);
   }
 
+  /**
+   * Ancres pour le DESSIN : plafonne l'asymptote initiale (ex. 1e6 s @ 1,05·Ir)
+   * qui tord la spline log-log et donne une bande thermique « cassée ».
+   */
+  function mfgDrawAnchors(p) {
+    const raw = mfgScaledAnchors(p, p.longAnchors || []);
+    if (!raw.length) return raw;
+    return raw.map(([m, t], i) => {
+      if (i === 0 && t > 2e4) return [m, 2e4];
+      return [m, t];
+    });
+  }
+
   function mfgThresholds(p) {
     const irA = p.fixedIr ? p.in : (p.ir || 1) * p.in;
     let isdA = p.hasShortTime && p.isd != null ? p.isd * irA : irA * 6;
@@ -320,13 +338,12 @@
   /** Points de tracé : long (courbe), palier court (Tsd), palier instantané. */
   function curveDataManufacturer(p) {
     const th = mfgThresholds(p);
-    const scaled = mfgScaledAnchors(p, p.longAnchors || []);
+    const scaled = mfgDrawAnchors(p);
     const long = [];
     const startM = th.noTripMult * 1.002;
     const kneeI = p.hasShortTime ? th.isdA : th.iiA;
     const endM = kneeI / th.irA;
-    // Échantillonnage fin (même densité que le tunnel MCB) — courbe lisse, sans zigzag.
-    for (let m = startM; m < endM * 0.998; m *= 1.006) {
+    for (let m = startM; m < endM * 0.998; m *= 1.004) {
       const t = interpLogLogDraw(scaled, m, endM);
       long.push({ i: m * th.irA, t: Math.min(t, Y_DATA_CAP * 5) });
     }
@@ -1452,8 +1469,8 @@
     ctx.textAlign = 'center';
 
     if (inRef) {
-      // Catalogue MCCB : graduations en ×In (1 · 2 · 5 · 10 · 20 · 50 · 100)
-      const labelMults = [1, 2, 3, 5, 10, 20, 30, 50, 100];
+      // Catalogue MCCB seul : graduations en ×In (1 · 2 · 5 · 10 · 20 · 50 · 100)
+      const labelMults = [1, 2, 5, 10, 20, 50, 100];
       const allMults = [];
       for (let dec = -1; dec <= 2; dec++) {
         const base = Math.pow(10, dec);
@@ -1461,7 +1478,7 @@
       }
       allMults.forEach((mult) => {
         const v = inRef * mult;
-        if (v < xLo || v > xHi) return;
+        if (v < xLo * 0.98 || v > xHi * 1.02) return;
         const X = sx(v);
         const labeled = labelMults.includes(mult);
         ctx.strokeStyle = (mult === 1 || mult === 10 || mult === 100) ? th.gridDecade
@@ -1474,13 +1491,14 @@
       let lastRight = -Infinity;
       for (const mult of labelMults) {
         const v = inRef * mult;
-        if (v < xLo || v > xHi) continue;
+        if (v < xLo * 0.98 || v > xHi * 1.02) continue;
         const X = sx(v);
         const major = (mult === 1 || mult === 10 || mult === 100);
-        const txt = major ? String(mult) : String(mult);
+        const txt = String(mult);
         ctx.font = major ? 'bold 10px system-ui,sans-serif' : '9px system-ui,sans-serif';
         const halfW = ctx.measureText(txt).width / 2;
-        if (X - halfW < lastRight + 6 && !major) continue;
+        // Ne jamais masquer 1 / 10 / 100 (repères catalogue)
+        if (!major && X - halfW < lastRight + 4) continue;
         ctx.fillStyle = major ? th.axisXMajor : th.axisXMinor;
         ctx.fillText(txt, X, padT + plotH + 14);
         lastRight = X + halfW;
@@ -1488,8 +1506,8 @@
       return;
     }
 
-    // MCB / ampères — inchangé
-    const labelMults = [1, 2, 3, 4, 5, 6, 8];
+    // Ampères (MCB, fusible, ou comparaison mixte) — grille 1·2·5, décades toujours visibles
+    const labelMults = [1, 2, 5];
     for (let dec = 0; dec <= 4; dec++) {
       const base = Math.pow(10, dec);
       for (let m = 1; m < 10; m++) {
@@ -1511,18 +1529,20 @@
       for (const m of labelMults) {
         const v = base * m;
         if (v < xLo || v > xHi) continue;
-        candidates.push({ v, m, X: sx(v) });
+        candidates.push({ v, m, X: sx(v), major: m === 1 });
       }
     }
     let lastRight = -Infinity;
     for (const c of candidates) {
       const txt = fmtCurrent(c.v);
       const halfW = ctx.measureText(txt).width / 2;
-      if (c.X - halfW < lastRight + 6 && c.m !== 1) continue;
-      if (c.X - halfW < lastRight + 6 && c.m === 1) {
-        if (c.X - halfW < lastRight + 2) continue;
+      // Décades (1, 10, 100, 1k…) toujours affichées — Ir / In lisibles
+      if (!c.major && c.X - halfW < lastRight + 5) continue;
+      if (c.major && c.X - halfW < lastRight + 1) {
+        // léger recul du libellé précédent trop proche
       }
-      ctx.fillStyle = c.m === 1 ? th.axisXMajor : th.axisXMinor;
+      ctx.fillStyle = c.major ? th.axisXMajor : th.axisXMinor;
+      ctx.font = c.major ? 'bold 10px system-ui,sans-serif' : '9px system-ui,sans-serif';
       ctx.fillText(txt, c.X, padT + plotH + 12);
       lastRight = c.X + halfW;
     }
@@ -1668,37 +1688,33 @@
     const cTh = activeDrawTheme.curveThermal;
     const cMag = activeDrawTheme.curveMagnetic;
 
-    // ——— TM / Cat.A : thermique jusqu'au Ii réglé, puis 1 verticale + palier ———
+    // ——— TM / Cat.A : thermique jusqu'au Ii réglé (×Ir), puis 1 verticale + palier ———
     if (!d.hasShortTime) {
-      const iiHiMult = (p.iiMax != null && p.iiMax > 0) ? p.iiMax : (p.ii || (th.iiA / p.in));
-      const iiLoMult = (p.iiMin != null && p.iiMin > 0) ? p.iiMin : Math.max(2, iiHiMult * 0.7);
-      const loMult = Math.min(iiLoMult, iiHiMult);
-      const hiMult = Math.max(iiLoMult, iiHiMult);
-      const iiSel = (p.ii != null && p.ii > 0)
-        ? Math.min(hiMult, Math.max(loMult, p.ii))
-        : hiMult;
-      const scaled = mfgScaledAnchors(p, p.longAnchors || []);
+      const scaled = mfgDrawAnchors(p);
       const slowRaw = [];
       const fastRaw = [];
       const m0 = th.noTripMult * 1.002;
-      for (let m = m0; m < iiSel; m *= 1.006) {
-        const t = interpLogLogDraw(scaled, m, iiSel);
-        slowRaw.push({ i: m * p.in, t: Math.min(t * MFG_TOL_SLOW, Y_DATA_CAP * 5) });
-        const tF = interpLogLogDraw(scaled, m, iiSel);
-        fastRaw.push({ i: m * p.in, t: Math.min(tF * MFG_TOL_FAST, Y_DATA_CAP * 5) });
+      // m = I/Ir ; fin pile sur Ii (A) pour une chute verticale nette
+      const mEnd = Math.max(m0 * 1.01, th.iiA / th.irA);
+      for (let m = m0; m < mEnd * 0.998; m *= 1.004) {
+        const t = interpLogLogDraw(scaled, m, mEnd);
+        const I = m * th.irA;
+        slowRaw.push({ i: I, t: Math.min(t * MFG_TOL_SLOW, Y_DATA_CAP * 5) });
+        fastRaw.push({ i: I, t: Math.min(t * MFG_TOL_FAST, Y_DATA_CAP * 5) });
       }
-      const tSlowIi = Math.min(interpLogLog(scaled, iiSel) * MFG_TOL_SLOW, Y_DATA_CAP * 5);
-      const tFastIi = Math.min(interpLogLog(scaled, iiSel) * MFG_TOL_FAST, Y_DATA_CAP * 5);
-      slowRaw.push({ i: iiSel * p.in, t: tSlowIi });
-      fastRaw.push({ i: iiSel * p.in, t: tFastIi });
+      const tSlowIi = Math.min(interpLogLog(scaled, mEnd) * MFG_TOL_SLOW, Y_DATA_CAP * 5);
+      const tFastIi = Math.min(interpLogLog(scaled, mEnd) * MFG_TOL_FAST, Y_DATA_CAP * 5);
+      slowRaw.push({ i: th.iiA, t: tSlowIi });
+      fastRaw.push({ i: th.iiA, t: tFastIi });
 
-      const magX = sx(iiSel * p.in);
+      const magX = sx(th.iiA);
       drawMcbTunnel(ctx, {
         color: c,
         slowPts: thermalScreenPts(slowRaw, sx, sy),
         fastPts: thermalScreenPts(fastRaw, sx, sy),
         sMagX: magX,
         fMagX: magX,
+        floorFromX: magX,
         instY,
         bottomY,
         topY,
@@ -2269,27 +2285,14 @@
         state.forEach((x, j) => { if (j !== editIndex && x.role === r) x.role = 'autre'; });
       }
       p.color = state[editIndex].color;
+      p.colorIdx = state[editIndex].colorIdx;
       state[editIndex] = p;
       rebuildCurveFromForm = false;
       return;
     }
-    if (rebuildCurveFromForm && p) {
-      rebuildCurveFromForm = false;
-      const r = p.role;
-      if (r === 'amont' || r === 'aval') {
-        const target = state.find((x) => x.role === r && !x._preview);
-        if (target) {
-          // clearPreview() peut retirer une entrée : on repère la cible par référence
-          clearPreview();
-          const at = state.indexOf(target);
-          if (at >= 0) {
-            p.color = target.color;
-            state[at] = p;
-            return;
-          }
-        }
-      }
-    }
+    // Changer de type / appareil dans le formulaire NE remplace PAS une courbe
+    // déjà posée : on ajoute un aperçu à côté pour pouvoir comparer.
+    rebuildCurveFromForm = false;
     const tuneIdx = labelCurveIndex();
     const tuneTarget = tuneIdx >= 0 && tuneIdx < state.length ? state[tuneIdx] : null;
     if (editIndex < 0 && formTouched && tuneTarget && p
@@ -2299,6 +2302,7 @@
       if (at >= 0) {
         const merged = mergeThresholdFields(tuneTarget, p);
         merged.color = tuneTarget.color;
+        merged.colorIdx = tuneTarget.colorIdx;
         delete merged._preview;
         state[at] = merged;
         return;
@@ -2315,6 +2319,7 @@
         state.forEach((x, j) => { if (j !== previewIndex && x.role === r) x.role = 'autre'; });
       }
       p.color = state[previewIndex].color;
+      p.colorIdx = state[previewIndex].colorIdx;
       p._preview = true;
       state[previewIndex] = p;
     } else if (state.length < 8) {
