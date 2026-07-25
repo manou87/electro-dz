@@ -899,30 +899,61 @@
 
   /** Libellé court sur le graphe (évite les textes longs qui se chevauchent). */
   function shortCanvasLabel(p) {
-    const role = p.role === 'amont' ? ' ↑' : p.role === 'aval' ? ' ↓' : '';
     const compact = state.length > 2;
     if (isMfg(p)) {
+      const ref = String(p.deviceLabel || 'NSX').replace(/\s+/g, '');
+      if (compact) return ref;
       const irA = Math.round(mfgEffectiveIn(p));
-      if (compact) return `${irA}A${role}`;
-      const ref = String(p.deviceLabel || 'NSX').replace(/\s+/g, ' ');
-      return `${ref} ${irA}A${role}`;
+      return /A\s*$/i.test(ref) ? ref : `${ref} ${irA}A`;
     }
     if (isMccb(p)) {
       const irA = Math.round((p.ir || 1) * p.in);
-      if (compact) return `${irA}A${role}`;
-      const cat = p.mccbCat === 'B' ? '·B' : '·A';
-      return `MCCB${cat} ${irA}A${role}`;
+      return compact ? `${irA}A` : `MCCB ${irA}A`;
     }
-    if (isFuse(p)) return compact ? `${p.in}A${role}` : `${deviceTag(p)} ${p.in}A${role}`;
-    return compact ? `${p.in}A${role}` : `${deviceTag(p)} ${p.in}A${role}`;
+    if (isFuse(p)) return `${deviceTag(p)}${Math.round(p.in)}`;
+    // MCB : C16, D32…
+    return `${p.curve || 'C'}${Math.round(p.in)}`;
+  }
+
+  /** Bande magnétique (A) pour placer l’étiquette à l’intérieur, hors zone thermique. */
+  function magLabelBand(p) {
+    if (isFuse(p)) {
+      const mid = p.in * 8;
+      return { iLo: p.in * 5, iHi: p.in * 12, iMid: mid };
+    }
+    if (isMfgMccb(p) || isNormMccbB(p)) {
+      const e = isNormMccbB(p) ? enrichNormMccb(p) : p;
+      const th = mfgThresholds(e);
+      if (e.hasShortTime && th.isdA < th.iiA) {
+        return { iLo: th.isdA, iHi: th.iiA, iMid: Math.sqrt(th.isdA * th.iiA) };
+      }
+      // TM : étiquette juste à gauche de Ii (chute verticale)
+      const span = Math.max(th.iiA * 0.12, th.irA * 0.5);
+      return { iLo: th.iiA - span, iHi: th.iiA, iMid: th.iiA - span * 0.35 };
+    }
+    if (isMfgMcb(p) && Array.isArray(p.magMult) && p.magMult.length >= 2) {
+      const lo = p.magMult[0] * p.in;
+      const hi = p.magMult[1] * p.in;
+      return { iLo: lo, iHi: hi, iMid: Math.sqrt(lo * hi) };
+    }
+    if (isMccb(p)) {
+      const g = geomOf(p);
+      const lo = g.base * g.magFast;
+      const hi = g.base * g.magSlow;
+      return { iLo: lo, iHi: hi, iMid: Math.sqrt(lo * hi) };
+    }
+    const g = geomOf(p);
+    const lo = g.base * g.magFast;
+    const hi = g.base * g.magSlow;
+    return { iLo: lo, iHi: hi, iMid: Math.sqrt(lo * hi) };
   }
 
   /** Pastille texte (fond lisible sur la courbe). */
-  function drawLabelPill(ctx, text, cx, cy, color, th, align) {
-    const font = 'bold 8px system-ui,sans-serif';
+  function drawLabelPill(ctx, text, cx, cy, color, th, align, fontPx) {
+    const font = `bold ${fontPx || 8}px system-ui,sans-serif`;
     ctx.font = font;
-    const padX = 4;
-    const h = 11;
+    const padX = Math.max(3, (fontPx || 8) * 0.45);
+    const h = Math.max(10, (fontPx || 8) + 3);
     const w = ctx.measureText(text).width + padX * 2;
     let x = cx;
     if (align === 'right') x = cx - w;
@@ -940,69 +971,72 @@
     ctx.fillText(text, x + w / 2, cy);
   }
 
-  /** Étiquettes en tête de courbe : pastille + empilement si les In sont proches. */
-  function drawCurveTopLabels(ctx, sx, padL, padT, plotW) {
+  /**
+   * Étiquettes dans la zone MAGNÉTIQUE (pas en tête) :
+   * nom appareil (C16, NSX100…) — taille adaptée à la largeur de la bande.
+   * Laisse la zone thermique libre pour lire les détails.
+   */
+  function drawCurveTopLabels(ctx, sx, sy, padL, padT, plotW, plotH) {
     const visible = state.filter(shouldDrawTopLabel);
     if (!visible.length) return;
     const th = activeDrawTheme;
-    const topY = padT + 2;
-    const font = 'bold 9px system-ui,sans-serif';
-    const rowH = 14;
-    const maxRows = 3;
-    const padEdge = 8;
-    const minGap = 10;
+    const padEdge = 6;
+    const xMin = padL + padEdge;
+    const xMax = padL + plotW - padEdge;
+    // Hauteur typique du palier / chute magnétique (échelle log)
+    const tMag = Math.max(plotYLo * 2, Math.min(0.2, Math.sqrt(plotYLo * 1)));
 
-    ctx.font = font;
     const items = visible.map((p) => {
       const idx = state.indexOf(p);
-      const anchorI = (isMfgMccb(p) || isMccb(p)) ? mfgEffectiveIn(enrichNormMccb(p)) : p.in;
-      const text = `#${idx + 1} ${curveColorName(p, idx)}`;
-      const w = ctx.measureText(text).width + 14;
-      return { p, idx, text, anchorX: sx(anchorI), w };
-    }).sort((a, b) => a.anchorX - b.anchorX);
+      const text = shortCanvasLabel(p);
+      const band = magLabelBand(p);
+      let xLo = sx(band.iLo);
+      let xHi = sx(band.iHi);
+      if (xHi < xLo) { const tmp = xLo; xLo = xHi; xHi = tmp; }
+      const bandPx = Math.max(8, xHi - xLo);
+      // Police proportionnelle à la bande magnétique (étroite = petit texte)
+      const fontPx = Math.max(7, Math.min(12, bandPx * 0.42));
+      ctx.font = `bold ${fontPx}px system-ui,sans-serif`;
+      const w = ctx.measureText(text).width + Math.max(6, fontPx * 0.9);
+      let x = sx(band.iMid);
+      // Centrer dans la bande si la pastille tient, sinon coller au milieu disponible
+      if (w < bandPx - 2) {
+        x = (xLo + xHi) / 2;
+      } else {
+        x = Math.min(xHi - 2, Math.max(xLo + 2, x));
+      }
+      x = Math.max(xMin + w / 2, Math.min(xMax - w / 2, x));
+      let tLabel = tMag;
+      if (isMfgMccb(p) || isNormMccbB(p)) {
+        const e = isNormMccbB(p) ? enrichNormMccb(p) : p;
+        tLabel = Math.max(e.instTS || 0.02, plotYLo * 1.5) * 3;
+      } else if (!isFuse(p)) {
+        tLabel = Math.max(T_INST_SLOW * 4, 0.04);
+      } else {
+        tLabel = 0.05;
+      }
+      tLabel = Math.max(plotYLo * 1.2, Math.min(plotYHi * 0.35, tLabel));
+      const y = sy(tLabel);
+      // Décalage vertical si chevauchement
+      return { p, idx, text, x, y, w, fontPx, bandPx };
+    }).sort((a, b) => a.x - b.x);
 
     const placed = [];
     items.forEach((it) => {
-      let row = 0;
-      for (; row < maxRows; row++) {
-        const conflict = placed.some(
-          (o) => o.row === row && Math.abs(it.anchorX - o.anchorX) < (it.w + o.w) / 2 + minGap,
-        );
-        if (!conflict) break;
+      let y = it.y;
+      let guard = 0;
+      while (guard++ < 6) {
+        const hit = placed.some((o) => Math.abs(o.x - it.x) < (o.w + it.w) / 2 + 4
+          && Math.abs(o.y - y) < 14);
+        if (!hit) break;
+        y -= 13;
       }
-      row = Math.min(row, maxRows - 1);
-      const half = it.w / 2;
-      let x = it.anchorX;
-      if (x - half < padL + padEdge) x = padL + padEdge + half;
-      if (x + half > padL + plotW - padEdge) x = padL + plotW - padEdge - half;
-      const y = topY + 6 + row * rowH;
-      placed.push({ ...it, x, y, row });
+      y = Math.max(padT + 10, Math.min(padT + plotH - 10, y));
+      placed.push({ ...it, y });
     });
 
     placed.forEach((it) => {
-      const half = it.w / 2;
-      const h = 12;
-      ctx.fillStyle = th.badgeBg;
-      ctx.strokeStyle = it.p.color;
-      ctx.lineWidth = 1;
-      roundRect(ctx, it.x - half, it.y - h / 2, it.w, h, 4);
-      ctx.fill();
-      ctx.stroke();
-      ctx.fillStyle = it.p.color;
-      ctx.font = font;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(it.text, it.x, it.y);
-      if (it.row > 0) {
-        ctx.strokeStyle = hexA(it.p.color, 0.45);
-        ctx.lineWidth = 0.75;
-        ctx.setLineDash([2, 2]);
-        ctx.beginPath();
-        ctx.moveTo(it.anchorX, topY + 4);
-        ctx.lineTo(it.x, it.y - h / 2 - 1);
-        ctx.stroke();
-        ctx.setLineDash([]);
-      }
+      drawLabelPill(ctx, it.text, it.x, it.y, it.p.color, th, 'center', it.fontPx);
     });
     ctx.textBaseline = 'middle';
   }
@@ -1344,7 +1378,7 @@
     ctx.restore();
 
     drawTripZoneLegend(ctx, padL, padT);
-    drawCurveTopLabels(ctx, sx, padL, padT, plotW);
+    drawCurveTopLabels(ctx, sx, sy, padL, padT, plotW, plotH);
 
     // Cadre
     ctx.strokeStyle = th.frame;
