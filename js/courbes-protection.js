@@ -69,30 +69,62 @@
   const X_MIN = 1, X_MAX = 20000;       // courant (A), échelle log
   const Y_DATA_CAP = 36000;             // plafond pour le calcul des courbes (s)
   const Y_AXIS_MAX_CAP = 36000;
-  /** Paliers d'échelle temps pour l'axe Y (s). */
-  const Y_AXIS_TICKS = [0.001, 0.005, 0.01, 0.1, 1, 10, 100, 1000, 3600, 10000, 36000];
-  /** Plancher axe temps (s) — 1 ms affiché « 0 ms » ; paliers 5 ms et 10 ms visibles dans le graphe. */
-  const Y_AXIS_MIN = 0.001;
-  let plotYLo = 0.001;
+  /**
+   * Échelons de temps des planches constructeur : progression 1 · 2 · 4 par
+   * décade (0,004 · 0,01 · 0,02 · 0,04 · 0,1 · 0,2 · 0,4 · 1 · 2 · 4 …).
+   */
+  const Y_AXIS_TICKS = [
+    0.001, 0.002, 0.004, 0.01, 0.02, 0.04, 0.1, 0.2, 0.4,
+    1, 2, 4, 10, 20, 40, 100, 200, 400, 1000, 2000, 3600, 6000, 10000, 36000,
+  ];
+  /** Bas d'axe par défaut (s) — comme la planche officielle qui démarre à 0,004 s. */
+  const Y_AXIS_MIN = 0.004;
+  /** Plancher absolu : l'axe ne descend plus bas, même avec un tsd très court. */
+  const Y_AXIS_HARD_MIN = 0.001;
+  let plotYLo = Y_AXIS_MIN;
   let plotYHi = 3600;
 
-  // Enveloppe thermique calée sur les POINTS D'ESSAI de la CEI 60898-1
-  // (multiple de In → temps), interpolée en log-log. Points clés :
-  //   1,13·In : ne déclenche pas (courant conventionnel de non-déclenchement)
-  //   1,45·In : déclenche dans le temps conventionnel (≤ 1 h pour In ≤ 63 A)
-  //   2,55·In : déclenche entre 1 s et 60 s (essai normatif, In ≤ 32 A)
-  // Borne LENTE (droite) = limite haute ; borne RAPIDE (gauche) = limite basse.
-  // Asymptote verticale à 1,13·In : EN DESSOUS, le disjoncteur NE COUPE JAMAIS
-  // (courant conventionnel de non-déclenchement, CEI 60898).
+  // Enveloppe thermique — MODÈLE ANALYTIQUE CONTINU (courbe constructeur).
+  //
+  // t(m) = K · m^b / (m² − 1,13²)^a       avec m = I / In
+  //
+  // Asymptote verticale à 1,13·In (courant conventionnel de non-déclenchement,
+  // CEI 60898-1) et pente qui s'aplatit régulièrement : la courbe est lisse par
+  // construction, sans point anguleux ni zigzag (contrairement à une table de
+  // points interpolée). Les constantes sont calées sur les points d'essai :
+  //
+  //   borne LENTE (droite, temps max) : 1,45·In → 3600 s (temps conventionnel 1 h)
+  //                                     2,55·In → 60 s (essai CEI, In ≤ 32 A)
+  //                                     10·In   → 2 s (raccord seuil magnétique)
+  //   borne RAPIDE (gauche, temps min): 1,45·In → 400 s
+  //                                     2,55·In → 8 s
+  //                                     5·In    → 1,5 s (raccord seuil magnétique)
   const I_NO_TRIP = 1.13;
-  const THERMAL_SLOW = [[I_NO_TRIP, 1e6], [1.45, 3600], [2.0, 300], [2.55, 60], [4, 12]];
-  const THERMAL_FAST = [[I_NO_TRIP, 1e6], [1.45, 400], [2.0, 20], [2.55, 1], [4, 0.3]];
+  const THERMAL_MODEL = {
+    slow: { k: 133.30, a: 4.26074, b: 6.67388 },
+    fast: { k: 11.611, a: 4.34794, b: 7.28268 },
+  };
 
-  // Zone de déclenchement instantané (magnétique) — quelques millisecondes.
-  // Au-delà du seuil magnétique, le temps de coupure est ~constant jusqu'au
-  // pouvoir de coupure : c'est le « plancher » horizontal du tunnel.
-  // Temps de coupure instantané UNIQUE (~10 ms) : une seule ligne horizontale
-  // au plancher (déclenchement magnétique + temps d'arc), comme les courbes pro.
+  function thermalModelTime(model, m) {
+    const f = m * m - I_NO_TRIP * I_NO_TRIP;
+    if (f <= 0) return Infinity;
+    return (model.k * Math.pow(m, model.b)) / Math.pow(f, model.a);
+  }
+
+  /** Table dense issue du modèle : interpolation = courbe analytique (aucun angle). */
+  function buildThermalAnchors(model) {
+    const pts = [];
+    for (let m = I_NO_TRIP * 1.0004; m <= 45; m *= 1.02) {
+      pts.push([m, Math.min(thermalModelTime(model, m), 1e6)]);
+    }
+    return pts;
+  }
+
+  const THERMAL_SLOW = buildThermalAnchors(THERMAL_MODEL.slow);
+  const THERMAL_FAST = buildThermalAnchors(THERMAL_MODEL.fast);
+
+  // Plancher instantané (magnétique + temps d'arc) : 10 ms, comme les planches
+  // constructeur où les seuils 5·In et 10·In retombent sur le palier 0,01 s.
   const T_INST_SLOW = 0.01;
   const T_INST_FAST = 0.01;
 
@@ -178,7 +210,7 @@
       isdA,
       iiA,
       tsd: p.tsd != null && p.tsd > 0 ? p.tsd : (p.hasShortTime ? 0.2 : 0),
-      instTS: p.instTS || 0.02,
+      instTS: p.instTS || T_INST_SLOW,
       noTripMult: 1.05,
     };
   }
@@ -385,8 +417,8 @@
       axisY: '#cbd5e1',
       axisTitle: '#94a3b8',
       frame: 'rgba(255,255,255,0.18)',
-      iccLine: '#ffffff',
-      iccText: '#ffffff',
+      iccLine: '#ef4444',
+      iccText: '#f87171',
       deviceLabel: null,
       badgeBg: 'rgba(2,6,18,0.85)',
       badgeText: '#e2e8f0',
@@ -395,6 +427,10 @@
       zoneMag: { fill: 'rgba(248,113,113,0.10)', border: 'rgba(248,113,113,0.45)', text: '#fecaca' },
       legendBg: 'rgba(2,6,18,0.88)',
       legendTitle: '#e2e8f0',
+      curveThermal: '#ef4444',
+      curveMagnetic: '#60a5fa',
+      legendThermal: '#ef4444',
+      legendMagnetic: '#60a5fa',
       pointerCross: 'rgba(255,255,255,0.55)',
       pointerBubbleBg: 'rgba(2,6,18,0.94)',
       pointerBubbleStroke: 'rgba(255,255,255,0.28)',
@@ -418,8 +454,8 @@
       axisY: '#334155',
       axisTitle: '#1e293b',
       frame: 'rgba(15,23,42,0.25)',
-      iccLine: '#0f172a',
-      iccText: '#0f172a',
+      iccLine: '#dc2626',
+      iccText: '#b91c1c',
       deviceLabel: null,
       badgeBg: 'rgba(255,255,255,0.95)',
       badgeText: '#0f172a',
@@ -428,6 +464,10 @@
       zoneMag: { fill: 'rgba(239,68,68,0.15)', border: '#dc2626', text: '#991b1b' },
       legendBg: 'rgba(255,255,255,0.96)',
       legendTitle: '#0f172a',
+      curveThermal: '#dc2626',
+      curveMagnetic: '#2563eb',
+      legendThermal: '#dc2626',
+      legendMagnetic: '#2563eb',
       pointerCross: 'rgba(15,23,42,0.4)',
       pointerBubbleBg: '#ffffff',
       pointerBubbleStroke: 'rgba(15,23,42,0.35)',
@@ -503,10 +543,13 @@
    */
   function boundary(inA, magMult, anchors, tInst) {
     const thermal = [];
-    // démarre juste au-dessus de 1,13·In (asymptote de non-déclenchement)
-    for (let m = I_NO_TRIP * 1.005; m < magMult; m *= 1.04) {
+    // Échantillonnage fin : la polyligne suit exactement la courbe analytique.
+    // Démarre juste au-dessus de 1,13·In (asymptote de non-déclenchement).
+    for (let m = I_NO_TRIP * 1.004; m < magMult; m *= 1.008) {
       thermal.push({ i: m * inA, t: Math.min(interpLogLog(anchors, m), Y_DATA_CAP * 5) });
     }
+    // Dernier point EXACTEMENT au seuil magnétique : la chute est ensuite
+    // verticale (pas de raccord en biais ni de trou).
     thermal.push({ i: magMult * inA, t: Math.min(interpLogLog(anchors, magMult), Y_DATA_CAP * 5) });
     return { thermal, magI: magMult * inA, tInst };
   }
@@ -598,7 +641,7 @@
     return Y_AXIS_MAX_CAP;
   }
 
-  /** Axe temps : bas = 1 ms (libellé 0 ms), haut = temps max utile des courbes affichées. */
+  /** Axe temps : bas = 4 ms (planche officielle), haut = temps max utile des courbes affichées. */
   function computePlotYRange() {
     let yHi = 60;
     let yLo = Y_AXIS_MIN;
@@ -618,7 +661,7 @@
         if (isFinite(b.tf)) yLo = Math.min(yLo, b.tf);
       }
     });
-    yLo = Math.max(Y_AXIS_MIN, yLo);
+    yLo = Math.max(Y_AXIS_HARD_MIN, Math.min(Y_AXIS_MIN, yLo));
     const cable = getCable();
     if (cable) {
       for (let k = 0; k <= 24; k++) {
@@ -800,12 +843,11 @@
     if (!state.length) return;
     const th = activeDrawTheme;
     const showShort = state.some((p) => (isMfgMccb(p) || isNormMccbB(p)) && p.hasShortTime);
-    const sample = th.legendTitle;
     const items = [
-      { label: tr('tcZoneThermal'), color: sample, dash: [] },
-      { label: tr('tcZoneMagnetic'), color: sample, dash: [] },
+      { label: tr('tcZoneThermal'), color: th.legendThermal, dash: [] },
+      { label: tr('tcZoneMagnetic'), color: th.legendMagnetic, dash: [] },
     ];
-    if (showShort) items.splice(1, 0, { label: tr('tcZoneShortTime'), color: sample, dash: [5, 3] });
+    if (showShort) items.splice(1, 0, { label: tr('tcZoneShortTime'), color: th.legendMagnetic, dash: [5, 3] });
 
     const padX = 5;
     const padY = 3;
@@ -858,59 +900,136 @@
     ctx.fillText(note, bx + padX, by + padY + rowH + items.length * rowH + 1);
   }
 
-  /** Courant max (A) pour le palier instantané MCB — bord du graphe ou Icc si plus bas. */
-  function mcbCurveHighI() {
+  /**
+   * Courant max (A) pour le palier instantané MCB.
+   * Ne jamais tronquer avant le seuil magnétique haut (ex. 10×In courbe C) :
+   * un Icc bas (ex. 80 A sur C16) masquait sinon la verticale à 160 A.
+   */
+  function mcbCurveHighI(p) {
+    const inA = Number(p?.in) > 0 ? Number(p.in) : 16;
+    const curveKey = p?.curve || 'C';
+    const mag = (Array.isArray(p?.magMult) && p.magMult.length >= 2)
+      ? p.magMult
+      : (CURVES[curveKey] || CURVES.C).mag;
+    const floor = mag[1] * inA * 1.08;
     const icc = getIccA();
-    if (icc && icc >= X_MIN) return Math.min(X_MAX, icc);
+    if (icc && icc > floor) return Math.min(X_MAX, icc);
     return X_MAX;
+  }
+
+  /**
+   * Convertit une borne { i, t } en points écran, en ne gardant que la partie
+   * visible : évite le long segment horizontal collé au bord haut du graphe.
+   */
+  function thermalScreenPts(pts, sx, sy) {
+    const out = [];
+    for (let i = 0; i < pts.length; i++) {
+      const above = pts[i].t > plotYHi;
+      if (above && !(i + 1 < pts.length && pts[i + 1].t <= plotYHi)) continue;
+      out.push({ x: sx(pts[i].i), y: sy(pts[i].t) });
+    }
+    return out;
+  }
+
+  /** Polyligne dense = courbe analytique (aucun lissage Bézier, donc aucun zigzag). */
+  function pathPolyline(ctx, pts, reverse) {
+    if (reverse) {
+      for (let i = pts.length - 1; i >= 0; i--) ctx.lineTo(pts[i].x, pts[i].y);
+    } else {
+      for (let i = 0; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+    }
+  }
+
+  function strokePolyline(ctx, pts, color, width) {
+    if (!pts || pts.length < 2) return;
+    prepCurveStroke(ctx);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    ctx.beginPath();
+    ctx.moveTo(pts[0].x, pts[0].y);
+    for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+    ctx.stroke();
+  }
+
+  /**
+   * Tracé MCB façon planche constructeur :
+   *   thermique lisse → chute VERTICALE au seuil bas (ex. 5·In) pour la borne
+   *   rapide et au seuil haut (ex. 10·In) pour la borne lente → palier
+   *   instantané horizontal. Le remplissage est d'un seul tenant (aucun vide).
+   */
+  function drawMcbTunnel(ctx, o) {
+    const { color: c, fastPts, slowPts, fMagX, sMagX, instY, bottomY, xEnd, inX } = o;
+    const slowEnd = slowPts[slowPts.length - 1];
+    const fastEnd = fastPts[fastPts.length - 1];
+    if (!slowEnd || !fastEnd) return;
+
+    // Enveloppe complète : thermique lent → verticale haute → palier →
+    // verticale basse → thermique rapide (retour)
+    ctx.beginPath();
+    ctx.moveTo(slowPts[0].x, slowPts[0].y);
+    pathPolyline(ctx, slowPts, false);
+    ctx.lineTo(sMagX, instY);
+    ctx.lineTo(fMagX, instY);
+    ctx.lineTo(fMagX, fastEnd.y);
+    pathPolyline(ctx, fastPts, true);
+    ctx.closePath();
+    ctx.fillStyle = hexA(c, 0.09);
+    ctx.fill();
+
+    // Zone magnétique (entre les deux seuils) — le « C » plein des planches
+    if (sMagX > fMagX + 1) {
+      const inBand = slowPts.filter((pt) => pt.x >= fMagX - 0.5);
+      ctx.beginPath();
+      ctx.moveTo(fMagX, instY);
+      ctx.lineTo(sMagX, instY);
+      ctx.lineTo(sMagX, slowEnd.y);
+      if (inBand.length) pathPolyline(ctx, inBand, true);
+      ctx.lineTo(fMagX, fastEnd.y);
+      ctx.closePath();
+      ctx.fillStyle = hexA(c, 0.16);
+      ctx.fill();
+    }
+
+    // Sous le palier instantané : toujours déclenché (pas de bande vide)
+    fillInstantSkirt(ctx, fMagX, xEnd, instY, bottomY, c);
+
+    // Contours — rouge sur la partie thermique, bleu sur la partie magnétique
+    const cTh = activeDrawTheme.curveThermal;
+    const cMag = activeDrawTheme.curveMagnetic;
+    strokePolyline(ctx, slowPts, cTh, 2.2);
+    strokeSeg(ctx, sMagX, slowEnd.y, sMagX, instY, cMag, 2.4);
+    strokePolyline(ctx, fastPts, cTh, 2);
+    strokeSeg(ctx, fMagX, fastEnd.y, fMagX, instY, cMag, 2.2);
+    if (xEnd > fMagX + 1) strokeSeg(ctx, fMagX, instY, xEnd, instY, cMag, 2.4);
+
+    if (inX != null) {
+      ctx.setLineDash([4, 4]);
+      ctx.strokeStyle = hexA(c, 0.45);
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(inX, bottomY);
+      ctx.lineTo(inX, o.topY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
   }
 
   /** Disjoncteur norme / MCB catalogue — tunnel thermique + bande magnétique IEC 60898. */
   function drawNormBreakerZoned(ctx, p, sx, sy) {
-    const c = p.color;
     const curveP = isMfgMcb(p) ? { in: p.in, curve: p.curve || 'C', dev: 'mcb' } : p;
     const d = curveData(curveP);
-    const slowTh = d.slow.thermal.map((pt) => ({ x: sx(pt.i), y: sy(pt.t) }));
-    const fastTh = d.fast.thermal.map((pt) => ({ x: sx(pt.i), y: sy(pt.t) }));
-    const sMagX = sx(d.slow.magI);
-    const fMagX = sx(d.fast.magI);
-    const xEnd = sx(mcbCurveHighI());
-    const instY = sy(d.slow.tInst);
-    const bottomY = sy(plotYLo);
-    const slowEnd = slowTh[slowTh.length - 1];
-    const fastEnd = fastTh[fastTh.length - 1];
-
-    ctx.beginPath();
-    smoothSubPath(ctx, slowTh, true);
-    if (slowEnd) ctx.lineTo(sMagX, slowEnd.y);
-    ctx.lineTo(sMagX, instY);
-    ctx.lineTo(xEnd, instY);
-    ctx.lineTo(fMagX, instY);
-    if (fastEnd) ctx.lineTo(fMagX, fastEnd.y);
-    smoothSubPath(ctx, fastTh.slice().reverse(), false);
-    ctx.closePath();
-    ctx.fillStyle = hexA(p.color, 0.06);
-    ctx.fill();
-    fillInstantSkirt(ctx, sMagX, xEnd, instY, bottomY, c);
-
-    strokePts(ctx, slowTh, c, 2.2, true);
-    if (slowEnd) {
-      strokeSeg(ctx, slowEnd.x, slowEnd.y, sMagX, instY, c, 2.4);
-    }
-    if (xEnd > sMagX + 1) strokeSeg(ctx, sMagX, instY, xEnd, instY, c, 2.4);
-    strokePts(ctx, fastTh, c, 1.5, true);
-    if (fastEnd) {
-      strokeSeg(ctx, fastEnd.x, fastEnd.y, fMagX, instY, c, 1.6);
-    }
-
-    ctx.setLineDash([4, 4]);
-    ctx.strokeStyle = hexA(c, 0.45);
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(sx(p.in), sy(plotYLo));
-    ctx.lineTo(sx(p.in), sy(plotYHi));
-    ctx.stroke();
-    ctx.setLineDash([]);
+    drawMcbTunnel(ctx, {
+      color: p.color,
+      slowPts: thermalScreenPts(d.slow.thermal, sx, sy),
+      fastPts: thermalScreenPts(d.fast.thermal, sx, sy),
+      sMagX: sx(d.slow.magI),
+      fMagX: sx(d.fast.magI),
+      instY: sy(d.slow.tInst),
+      bottomY: sy(plotYLo),
+      topY: sy(plotYHi),
+      xEnd: sx(mcbCurveHighI(curveP)),
+      inX: sx(p.in),
+    });
   }
 
   function draw(canvas, opts) {
@@ -974,21 +1093,20 @@
     ctx.fillText(axisTimeLabel(), 0, 0);
     ctx.restore();
 
-    // Ligne verticale Icc (courant de court-circuit sur place)
+    // Ligne verticale Icc min (repère rouge, bien visible sans être trop épais)
     const iccA = getIccA();
     if (iccA && iccA >= X_MIN && iccA <= X_MAX) {
-      ctx.setLineDash([6, 4]);
+      ctx.setLineDash([]);
       ctx.strokeStyle = th.iccLine;
-      ctx.lineWidth = 1.5;
+      ctx.lineWidth = 2.25;
       ctx.beginPath();
       ctx.moveTo(sx(iccA), sy(plotYLo));
       ctx.lineTo(sx(iccA), sy(plotYHi));
       ctx.stroke();
-      ctx.setLineDash([]);
       ctx.fillStyle = th.iccText;
       ctx.textAlign = 'left';
-      ctx.font = '11px system-ui,sans-serif';
-      ctx.fillText(tr('tcIccLine') + ' ' + fmtCurrent(Math.round(iccA)) + ' A', sx(iccA) + 4, sy(plotYLo) - 6);
+      ctx.font = 'bold 11px system-ui,sans-serif';
+      ctx.fillText(tr('tcIccLine') + ' ' + fmtCurrent(Math.round(iccA)) + ' A', sx(iccA) + 5, sy(plotYLo) - 6);
     }
 
     // Courbes (écrêtées au cadre pour des tracés nets, sans débordement)
@@ -1129,27 +1247,16 @@
     ctx.fillStyle = th.pointerText;
     ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill();
 
-    // bulle : courant pointé + VRAI temps de coupure de chaque disjoncteur à ce courant
-    ctx.font = '11px system-ui,sans-serif';
+    // bulle : lecture exacte des coordonnées du point pointé (courant en X, temps en Y)
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'left';
-    const header = 'À ' + fmtIexact(I) + ' :';
-    const lines = state.map((p, i) => {
-      const { tf, ts } = deviceTripBand(p, I);
-      let verdict;
-      if (!isFinite(tf) && !isFinite(ts)) verdict = tr('tcNoTrip');
-      else if (ts > geom.plotYHi) verdict = '> ' + fmtTexact(geom.plotYHi);
-      else if (Math.abs(tf - ts) / ts < 0.02) verdict = fmtTexact(ts); // bornes confondues
-      else verdict = fmtTexact(tf) + ' – ' + fmtTexact(ts);
-      return { txt: `#${i + 1} ${curveColorName(p, i)} · ${deviceLabel(p)} : ${verdict}`, color: p.color, trips: isFinite(ts) };
-    });
+    const lines = ['I = ' + fmtIexact(I), 't = ' + fmtTexact(t)];
 
-    const rowH = 15;
-    const bh = 12 + rowH + lines.length * rowH;
-    ctx.font = 'bold 11px system-ui,sans-serif';
-    let maxW = ctx.measureText(header).width;
-    ctx.font = '11px system-ui,sans-serif';
-    lines.forEach((l) => { maxW = Math.max(maxW, ctx.measureText(l.txt).width + 14); });
+    const rowH = 16;
+    const bh = 10 + lines.length * rowH;
+    ctx.font = 'bold 12px system-ui,sans-serif';
+    let maxW = 0;
+    lines.forEach((l) => { maxW = Math.max(maxW, ctx.measureText(l).width); });
     const bw = maxW + 18;
     let bx = x + 12, by = y - bh - 10;
     if (bx + bw > padL + plotW) bx = x - bw - 12;
@@ -1164,15 +1271,9 @@
     ctx.strokeRect(bx, by, bw, bh);
 
     ctx.fillStyle = th.pointerText;
-    ctx.font = 'bold 11px system-ui,sans-serif';
-    ctx.fillText(header, bx + 9, by + 13);
-    ctx.font = '11px system-ui,sans-serif';
+    ctx.font = 'bold 12px system-ui,sans-serif';
     lines.forEach((l, i) => {
-      const ly = by + 13 + (i + 1) * rowH;
-      ctx.fillStyle = l.color;
-      ctx.beginPath(); ctx.arc(bx + 13, ly, 4, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = l.trips ? th.pointerText : th.pointerMuted;
-      ctx.fillText(l.txt, bx + 22, ly);
+      ctx.fillText(l, bx + 9, by + 13 + i * rowH);
     });
   }
 
@@ -1194,16 +1295,21 @@
 
   function fmtTime(s) {
     if (s <= 0) return '0 ms';
-    if (s < 0.01) return (s * 1000).toFixed(s < 0.001 ? 2 : 1).replace(/\.?0+$/, '') + ' ms';
+    if (s < 0.01) return +(s * 1000).toFixed(1) + ' ms';
     if (s < 1) return Math.round(s * 1000) + ' ms';
-    if (s < 60) return (Number.isInteger(s) ? s : s.toFixed(1)) + ' s';
-    if (s < 3600) return (s / 60) + ' min';
-    return (s / 3600) + ' h';
+    if (s < 60) return (Number.isInteger(s) ? s : +s.toFixed(1)) + ' s';
+    // Minutes / heures seulement quand le compte est rond, sinon secondes
+    // (échelons constructeur 100, 200, 400, 1000, 2000 s…).
+    if (s < 3600) {
+      const min = s / 60;
+      return Number.isInteger(min) ? min + ' min' : Math.round(s) + ' s';
+    }
+    const h = s / 3600;
+    return Number.isInteger(h) ? h + ' h' : Math.round(s) + ' s';
   }
 
-  /** Libellé axe Y — 1 ms affiché « 0 ms » (convention courbes pro, échelle log). */
+  /** Libellé axe Y — échelons de la planche constructeur (4 ms, 10 ms, 20 ms, 40 ms…). */
   function fmtTimeAxis(v) {
-    if (v === 0.001) return '0 ms';
     return fmtTime(v);
   }
 
@@ -1256,10 +1362,8 @@
   }
 
   // Paliers de temps étiquetés : de 1 ms à 10 h
-  const TIME_LABELS = [
-    0.001, 0.005, 0.01, 0.05, 0.1, 0.5,
-    1, 2, 5, 10, 30, 60, 120, 300, 600, 1800, 3600, 7200, 18000, 36000,
-  ];
+  /** Mêmes échelons que les planches constructeur (1 · 2 · 4 par décade). */
+  const TIME_LABELS = Y_AXIS_TICKS;
 
   function drawGridY(ctx, sy, padL, plotW, yLo, yHi) {
     const th = activeDrawTheme;
@@ -1341,56 +1445,38 @@
     return `rgba(${r},${gg},${b},${a})`;
   }
 
-  /** MCB constructeur — thermique IEC 60898 + bande magnétique B/C/D/K/Z. */
+  /** MCB constructeur — thermique catalogue + bande magnétique B/C/D/K/Z (même tracé que la norme). */
   function drawMfgMcb(ctx, p, sx, sy) {
-    const c = p.color;
     const mag = p.magMult || (CURVES[p.curve] || CURVES.C).mag;
     const anchors = p.longAnchors || THERMAL_SLOW;
     const inA = p.in;
-    const slowPts = [];
-    const fastPts = [];
-    for (let m = 1.13; m < mag[0] * 0.98; m *= 1.06) {
-      const tS = interpLogLog(anchors, m);
-      const tF = tS * 0.35;
-      slowPts.push({ x: sx(m * inA), y: sy(Math.min(tS * MFG_TOL_SLOW, plotYHi)) });
-      fastPts.push({ x: sx(m * inA), y: sy(Math.min(tF * MFG_TOL_FAST, plotYHi)) });
+    const magLo = mag[0];
+    const magHi = mag[1];
+    const slowRaw = [];
+    const fastRaw = [];
+    for (let m = I_NO_TRIP * 1.004; m < magHi; m *= 1.008) {
+      const tS = interpLogLog(anchors, m) * MFG_TOL_SLOW;
+      slowRaw.push({ i: m * inA, t: Math.min(tS, Y_DATA_CAP * 5) });
+      if (m < magLo) {
+        const tF = interpLogLog(anchors, m) * 0.35 * MFG_TOL_FAST;
+        fastRaw.push({ i: m * inA, t: Math.min(tF, Y_DATA_CAP * 5) });
+      }
     }
-    const sMagX = sx(mag[0] * inA);
-    const fMagX = sx(mag[1] * inA);
-    const xEnd = sx(mcbCurveHighI());
-    const instY = sy(p.instTS || T_INST_SLOW);
-    const bottomY = sy(plotYLo);
-    if (!slowPts.length) return;
-    const slowEnd = slowPts[slowPts.length - 1];
-    const fastEnd = fastPts[fastPts.length - 1];
+    slowRaw.push({ i: magHi * inA, t: Math.min(interpLogLog(anchors, magHi) * MFG_TOL_SLOW, Y_DATA_CAP * 5) });
+    fastRaw.push({ i: magLo * inA, t: Math.min(interpLogLog(anchors, magLo) * 0.35 * MFG_TOL_FAST, Y_DATA_CAP * 5) });
 
-    ctx.beginPath();
-    smoothSubPath(ctx, slowPts, true);
-    ctx.lineTo(sMagX, slowEnd.y);
-    ctx.lineTo(sMagX, instY);
-    ctx.lineTo(xEnd, instY);
-    ctx.lineTo(fMagX, instY);
-    if (fastEnd) ctx.lineTo(fMagX, fastEnd.y);
-    smoothSubPath(ctx, fastPts.slice().reverse(), false);
-    ctx.closePath();
-    ctx.fillStyle = hexA(p.color, 0.06);
-    ctx.fill();
-    fillInstantSkirt(ctx, sMagX, xEnd, instY, bottomY, c);
-
-    strokePts(ctx, slowPts, c, 2.2, true);
-    strokeSeg(ctx, slowEnd.x, slowEnd.y, sMagX, instY, c, 2.4);
-    if (xEnd > sMagX + 1) strokeSeg(ctx, sMagX, instY, xEnd, instY, c, 2.4);
-    strokePts(ctx, fastPts, c, 1.5, true);
-    if (fastEnd) strokeSeg(ctx, fastEnd.x, fastEnd.y, fMagX, instY, c, 1.6);
-
-    ctx.setLineDash([4, 4]);
-    ctx.strokeStyle = hexA(c, 0.45);
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(sx(inA), sy(plotYLo));
-    ctx.lineTo(sx(inA), sy(plotYHi));
-    ctx.stroke();
-    ctx.setLineDash([]);
+    drawMcbTunnel(ctx, {
+      color: p.color,
+      slowPts: thermalScreenPts(slowRaw, sx, sy),
+      fastPts: thermalScreenPts(fastRaw, sx, sy),
+      sMagX: sx(magHi * inA),
+      fMagX: sx(magLo * inA),
+      instY: sy(p.instTS || T_INST_SLOW),
+      bottomY: sy(plotYLo),
+      topY: sy(plotYHi),
+      xEnd: sx(mcbCurveHighI(p)),
+      inX: sx(inA),
+    });
   }
 
   /** Tracé MCCB constructeur — zones L / SD / I synchronisées sur Ir, Isd, Ii. */
@@ -1440,23 +1526,26 @@
     ctx.fill();
     fillInstantSkirt(ctx, iiX, xEnd, instY, bottomY, c);
 
-    strokePts(ctx, slowLong, c, 2.2, true);
+    // Contours — rouge sur le long retard (thermique), bleu sur court retard / instantané
+    const cTh = activeDrawTheme.curveThermal;
+    const cMag = activeDrawTheme.curveMagnetic;
+    strokePts(ctx, slowLong, cTh, 2.2, true);
     if (d.hasShortTime && tsdPlateau) {
-      strokeSeg(ctx, slowEnd.x, slowEnd.y, isdX, tsdY, c, 2.2);
-      strokeSeg(ctx, isdX, tsdY, iiX, tsdY, c, 2.2, shortDash);
-      if (tsdY < instY - 1) strokeSeg(ctx, iiX, tsdY, iiX, instY, c, 2.4);
+      strokeSeg(ctx, slowEnd.x, slowEnd.y, isdX, tsdY, cMag, 2.2);
+      strokeSeg(ctx, isdX, tsdY, iiX, tsdY, cMag, 2.2, shortDash);
+      if (tsdY < instY - 1) strokeSeg(ctx, iiX, tsdY, iiX, instY, cMag, 2.4);
     } else if (d.hasShortTime) {
-      strokeSeg(ctx, slowEnd.x, slowEnd.y, isdX, instY, c, 2.2);
-      if (iiX > isdX + 2) strokeSeg(ctx, isdX, instY, iiX, instY, c, 2.2, shortDash);
+      strokeSeg(ctx, slowEnd.x, slowEnd.y, isdX, instY, cMag, 2.2);
+      if (iiX > isdX + 2) strokeSeg(ctx, isdX, instY, iiX, instY, cMag, 2.2, shortDash);
     } else {
-      strokeSeg(ctx, slowEnd.x, slowEnd.y, iiX, instY, c, 2.4);
+      strokeSeg(ctx, slowEnd.x, slowEnd.y, iiX, instY, cMag, 2.4);
     }
-    if (iiX < xEnd - 1) strokeSeg(ctx, iiX, instY, xEnd, instY, c, 2.4);
+    if (iiX < xEnd - 1) strokeSeg(ctx, iiX, instY, xEnd, instY, cMag, 2.4);
 
-    strokePts(ctx, fastLong, c, 1.5, true);
+    strokePts(ctx, fastLong, cTh, 1.5, true);
     if (fastEnd) {
       const fastJoinY = d.hasShortTime && tsdPlateau ? capY(d.tsd * MFG_TOL_FAST) : instY;
-      strokeSeg(ctx, fastEnd.x, fastEnd.y, isdX, fastJoinY, c, 1.6);
+      strokeSeg(ctx, fastEnd.x, fastEnd.y, isdX, fastJoinY, cMag, 1.6);
     }
 
     drawThresholdLabels(ctx, p, sx, sy, d);
@@ -1965,24 +2054,32 @@
       rebuildCurveFromForm = false;
       const r = p.role;
       if (r === 'amont' || r === 'aval') {
-        const idx = state.findIndex((x) => x.role === r && !x._preview);
-        if (idx >= 0) {
+        const target = state.find((x) => x.role === r && !x._preview);
+        if (target) {
+          // clearPreview() peut retirer une entrée : on repère la cible par référence
           clearPreview();
-          p.color = state[idx].color;
-          state[idx] = p;
-          return;
+          const at = state.indexOf(target);
+          if (at >= 0) {
+            p.color = target.color;
+            state[at] = p;
+            return;
+          }
         }
       }
     }
     const tuneIdx = labelCurveIndex();
-    if (editIndex < 0 && formTouched && tuneIdx >= 0 && tuneIdx < state.length && p
-      && deviceKey(p) === deviceKey(state[tuneIdx])) {
+    const tuneTarget = tuneIdx >= 0 && tuneIdx < state.length ? state[tuneIdx] : null;
+    if (editIndex < 0 && formTouched && tuneTarget && p
+      && deviceKey(p) === deviceKey(tuneTarget)) {
       clearPreview();
-      const merged = mergeThresholdFields(state[tuneIdx], p);
-      merged.color = state[tuneIdx].color;
-      delete merged._preview;
-      state[tuneIdx] = merged;
-      return;
+      const at = state.indexOf(tuneTarget);
+      if (at >= 0) {
+        const merged = mergeThresholdFields(tuneTarget, p);
+        merged.color = tuneTarget.color;
+        delete merged._preview;
+        state[at] = merged;
+        return;
+      }
     }
     if (editIndex < 0 && !formTouched) return;
     if (!p) {
@@ -2088,23 +2185,30 @@
       const prevCls = p._preview ? ' tc-chip-preview' : '';
       const colName = curveColorName(p, i);
       const title = `${roleLbl ? roleLbl + ' — ' : ''}#${i + 1} ${colName} — ${legendChipTitle(p)} · ${tr('tcEditHint')}`;
-      return `<button type="button" class="tc-chip-btn${roleCls}${editCls}${prevCls}" style="--tc-chip:${p.color}" data-tc-edit="${i}" title="${escapeAttr(title)}" aria-pressed="${i === editIndex ? 'true' : 'false'}">
-        <span class="tc-dot" style="background:${p.color}" aria-hidden="true">${i + 1}</span>
-        <span class="tc-chip-lbl">${escapeAttr(legendChipShort(p, i))}</span>
-        <span class="tc-chip-remove" data-tc-remove="${i}" role="presentation" aria-hidden="true">×</span>
-      </button>`;
+      const removeLbl = tr('tcRemoveCurve');
+      return `<div class="tc-chip${roleCls}${editCls}${prevCls}" style="--tc-chip:${p.color}">
+        <button type="button" class="tc-chip-btn" data-tc-edit="${i}" title="${escapeAttr(title)}" aria-pressed="${i === editIndex ? 'true' : 'false'}">
+          <span class="tc-dot" style="background:${p.color}" aria-hidden="true">${i + 1}</span>
+          <span class="tc-chip-lbl">${escapeAttr(legendChipShort(p, i))}</span>
+        </button>
+        <button type="button" class="tc-chip-remove" data-tc-remove="${i}" title="${escapeAttr(removeLbl)}" aria-label="${escapeAttr(removeLbl)}">×</button>
+      </div>`;
     }).join('');
     box.querySelectorAll('.tc-chip-btn[data-tc-edit]').forEach((chip) => {
-      chip.addEventListener('click', (e) => {
-        if (e.target.closest('[data-tc-remove]')) return;
+      chip.addEventListener('click', () => {
         startEdit(parseInt(chip.dataset.tcEdit, 10));
       });
     });
-    box.querySelectorAll('[data-tc-remove]').forEach((btn) => {
+    box.querySelectorAll('.tc-chip-remove[data-tc-remove]').forEach((btn) => {
+      // Empêche le bouton d'édition voisin de prendre le focus / le geste
+      btn.addEventListener('pointerdown', (e) => {
+        e.stopPropagation();
+      });
       btn.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
         const idx = parseInt(btn.dataset.tcRemove, 10);
+        if (!Number.isFinite(idx) || idx < 0 || idx >= state.length) return;
         state.splice(idx, 1);
         if (editIndex === idx) cancelEdit();
         else if (editIndex > idx) editIndex--;
