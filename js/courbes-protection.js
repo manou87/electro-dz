@@ -255,16 +255,83 @@
   }
 
   /**
-   * Ancres pour le DESSIN : plafonne l'asymptote initiale (ex. 1e6 s @ 1,05·Ir)
-   * qui tord la spline log-log et donne une bande thermique « cassée ».
+   * Densifie les ancres catalogue (souvent 5–7 points) en courbe ANALYTIQUE continue
+   * t = K / (m^n − m₀^n) — même principe que le MCB : aucune corde / zigzag visible.
+   * Uniquement pour le DESSIN ; calculs / tooltip restent sur les ancres catalogue.
    */
-  function mfgDrawAnchors(p) {
-    const raw = mfgScaledAnchors(p, p.longAnchors || []);
-    if (!raw.length) return raw;
-    return raw.map(([m, t], i) => {
-      if (i === 0 && t > 2e4) return [m, 2e4];
-      return [m, t];
-    });
+  function densifyMfgThermalForDraw(anchors, mEnd) {
+    if (!anchors?.length) return anchors || [];
+    if (anchors.length >= 36) return anchors;
+    const mAsymp = anchors[0][0];
+    const fitPts = [];
+    for (let i = 0; i < anchors.length; i++) {
+      const m = anchors[i][0];
+      const t = anchors[i][1];
+      if (!(m > mAsymp * 1.05 && t < 5e4 && t > 0.05 && Number.isFinite(t))) continue;
+      // Ignore le palier plat avant le magnétique (ex. 7,2·Ir et 10·Ir à 0,7 s)
+      if (fitPts.length && m > 6
+        && Math.abs(t - fitPts[fitPts.length - 1][1]) / Math.max(t, 1e-9) < 0.08) {
+        break;
+      }
+      fitPts.push([m, t]);
+    }
+    if (fitPts.length < 2) {
+      const out = [];
+      const mHi = Math.max(mEnd || anchors[anchors.length - 1][0], anchors[anchors.length - 1][0]);
+      for (let m = mAsymp * 1.002; m < mHi; m *= 1.012) {
+        out.push([m, Math.min(interpLogLog(anchors, m), 1e6)]);
+      }
+      out.push([mHi, Math.min(interpLogLog(anchors, mHi), 1e6)]);
+      return out;
+    }
+    const m0 = mAsymp;
+    let bestN = 2;
+    let bestK = 1;
+    let bestErr = Infinity;
+    for (let n = 1.2; n <= 5.0001; n += 0.05) {
+      let logSum = 0;
+      let count = 0;
+      for (let i = 0; i < fitPts.length; i++) {
+        const m = fitPts[i][0];
+        const t = fitPts[i][1];
+        const den = Math.pow(m, n) - Math.pow(m0, n);
+        if (den <= 0) continue;
+        logSum += Math.log(t * den);
+        count++;
+      }
+      if (count < 2) continue;
+      const K = Math.exp(logSum / count);
+      let err = 0;
+      for (let i = 0; i < fitPts.length; i++) {
+        const m = fitPts[i][0];
+        const t = fitPts[i][1];
+        const den = Math.pow(m, n) - Math.pow(m0, n);
+        if (den <= 0) continue;
+        err += (Math.log(K / den) - Math.log(t)) ** 2;
+      }
+      if (err < bestErr) {
+        bestErr = err;
+        bestN = n;
+        bestK = K;
+      }
+    }
+    const timeAt = (m) => {
+      const den = Math.pow(m, bestN) - Math.pow(m0, bestN);
+      if (den <= 0) return 1e6;
+      return Math.min(Math.max(bestK / den, 1e-4), 1e6);
+    };
+    const out = [];
+    const mHi = Math.max(mEnd || fitPts[fitPts.length - 1][0], fitPts[fitPts.length - 1][0]);
+    for (let m = m0 * 1.002; m < mHi * 0.999; m *= 1.012) {
+      out.push([m, timeAt(m)]);
+    }
+    out.push([mHi, timeAt(mHi)]);
+    return out;
+  }
+
+  /** Ancres lisses pour le tracé MCCB constructeur (pas pour les calculs). */
+  function mfgDrawAnchors(p, mEnd) {
+    return densifyMfgThermalForDraw(mfgScaledAnchors(p, p.longAnchors || []), mEnd);
   }
 
   function mfgThresholds(p) {
@@ -338,13 +405,13 @@
   /** Points de tracé : long (courbe), palier court (Tsd), palier instantané. */
   function curveDataManufacturer(p) {
     const th = mfgThresholds(p);
-    const scaled = mfgDrawAnchors(p);
-    const long = [];
     const startM = th.noTripMult * 1.002;
     const kneeI = p.hasShortTime ? th.isdA : th.iiA;
     const endM = kneeI / th.irA;
-    for (let m = startM; m < endM * 0.998; m *= 1.004) {
-      const t = interpLogLogDraw(scaled, m, endM);
+    const scaled = mfgDrawAnchors(p, endM);
+    const long = [];
+    for (let m = startM; m < endM * 0.998; m *= 1.008) {
+      const t = interpLogLog(scaled, m);
       long.push({ i: m * th.irA, t: Math.min(t, Y_DATA_CAP * 5) });
     }
     const tKnee = Math.min(interpLogLog(scaled, endM), Y_DATA_CAP * 5);
@@ -1688,16 +1755,15 @@
     const cTh = activeDrawTheme.curveThermal;
     const cMag = activeDrawTheme.curveMagnetic;
 
-    // ——— TM / Cat.A : thermique jusqu'au Ii réglé (×Ir), puis 1 verticale + palier ———
+    // ——— TM / Cat.A : thermique lisse (modèle continu) jusqu'au Ii, puis verticale ———
     if (!d.hasShortTime) {
-      const scaled = mfgDrawAnchors(p);
+      const m0 = th.noTripMult * 1.002;
+      const mEnd = Math.max(m0 * 1.01, th.iiA / th.irA);
+      const scaled = mfgDrawAnchors(p, mEnd);
       const slowRaw = [];
       const fastRaw = [];
-      const m0 = th.noTripMult * 1.002;
-      // m = I/Ir ; fin pile sur Ii (A) pour une chute verticale nette
-      const mEnd = Math.max(m0 * 1.01, th.iiA / th.irA);
-      for (let m = m0; m < mEnd * 0.998; m *= 1.004) {
-        const t = interpLogLogDraw(scaled, m, mEnd);
+      for (let m = m0; m < mEnd * 0.998; m *= 1.008) {
+        const t = interpLogLog(scaled, m);
         const I = m * th.irA;
         slowRaw.push({ i: I, t: Math.min(t * MFG_TOL_SLOW, Y_DATA_CAP * 5) });
         fastRaw.push({ i: I, t: Math.min(t * MFG_TOL_FAST, Y_DATA_CAP * 5) });
