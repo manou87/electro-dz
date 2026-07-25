@@ -322,7 +322,8 @@
     };
     const out = [];
     const mHi = Math.max(mEnd || fitPts[fitPts.length - 1][0], fitPts[fitPts.length - 1][0]);
-    for (let m = m0 * 1.002; m < mHi * 0.999; m *= 1.012) {
+    // Très près de l'asymptote pour que t dépasse le haut du graphe (4 h), comme un MCB
+    for (let m = m0 * 1.00015; m < mHi * 0.999; m *= (m < m0 * 1.03 ? 1.003 : 1.012)) {
       out.push([m, timeAt(m)]);
     }
     out.push([mHi, timeAt(mHi)]);
@@ -405,14 +406,19 @@
   /** Points de tracé : long (courbe), palier court (Tsd), palier instantané. */
   function curveDataManufacturer(p) {
     const th = mfgThresholds(p);
-    const startM = th.noTripMult * 1.002;
+    // Proche de 1,05·Ir pour viser le haut du graphe (asymptote), comme un MCB
+    const startM = th.noTripMult * 1.0002;
     const kneeI = p.hasShortTime ? th.isdA : th.iiA;
     const endM = kneeI / th.irA;
     const scaled = mfgDrawAnchors(p, endM);
     const long = [];
-    for (let m = startM; m < endM * 0.998; m *= 1.008) {
+    for (let m = startM; m < endM * 0.998; m *= (m < th.noTripMult * 1.05 ? 1.004 : 1.008)) {
       const t = interpLogLog(scaled, m);
-      long.push({ i: m * th.irA, t: Math.min(t, Y_DATA_CAP * 5) });
+      long.push({ i: m * th.irA, t: Math.min(Math.max(t, plotYHi * 1.2), Y_DATA_CAP * 5) });
+    }
+    // Garantir un 1er point au-dessus du haut d'axe
+    if (long.length && long[0].t < plotYHi * 1.05) {
+      long.unshift({ i: long[0].i, t: plotYHi * 1.5 });
     }
     const tKnee = Math.min(interpLogLog(scaled, endM), Y_DATA_CAP * 5);
     if (!long.length || long[long.length - 1].i < kneeI * 0.995) {
@@ -1131,6 +1137,14 @@
       if (above && !(i + 1 < pts.length && pts[i + 1].t <= plotYHi)) continue;
       out.push({ x: sx(pts[i].i), y: sy(pts[i].t) });
     }
+    // Comme le MCB : si le 1er point utile est sous le haut du graphe (ex. MCCB
+    // à ~1,05·Ir avec t < 4 h), prolonger verticalement jusqu'au bord haut.
+    if (out.length) {
+      const topY = sy(plotYHi);
+      if (out[0].y > topY + 0.75) {
+        out.unshift({ x: out[0].x, y: topY });
+      }
+    }
     return out;
   }
 
@@ -1791,16 +1805,21 @@
 
     // ——— TM / Cat.A : thermique lisse (modèle continu) jusqu'au Ii, puis verticale ———
     if (!d.hasShortTime) {
-      const m0 = th.noTripMult * 1.002;
+      const m0 = th.noTripMult * 1.0002;
       const mEnd = Math.max(m0 * 1.01, th.iiA / th.irA);
       const scaled = mfgDrawAnchors(p, mEnd);
       const slowRaw = [];
       const fastRaw = [];
-      for (let m = m0; m < mEnd * 0.998; m *= 1.008) {
+      for (let m = m0; m < mEnd * 0.998; m *= (m < th.noTripMult * 1.05 ? 1.004 : 1.008)) {
         const t = interpLogLog(scaled, m);
         const I = m * th.irA;
-        slowRaw.push({ i: I, t: Math.min(t * MFG_TOL_SLOW, Y_DATA_CAP * 5) });
-        fastRaw.push({ i: I, t: Math.min(t * MFG_TOL_FAST, Y_DATA_CAP * 5) });
+        const tClip = Math.max(t, plotYHi * 1.2);
+        slowRaw.push({ i: I, t: Math.min(tClip * MFG_TOL_SLOW, Y_DATA_CAP * 5) });
+        fastRaw.push({ i: I, t: Math.min(tClip * MFG_TOL_FAST, Y_DATA_CAP * 5) });
+      }
+      if (slowRaw.length && slowRaw[0].t < plotYHi * 1.05) {
+        slowRaw.unshift({ i: slowRaw[0].i, t: plotYHi * 1.5 });
+        fastRaw.unshift({ i: fastRaw[0].i, t: plotYHi * 1.5 });
       }
       const tSlowIi = Math.min(interpLogLog(scaled, mEnd) * MFG_TOL_SLOW, Y_DATA_CAP * 5);
       const tFastIi = Math.min(interpLogLog(scaled, mEnd) * MFG_TOL_FAST, Y_DATA_CAP * 5);
