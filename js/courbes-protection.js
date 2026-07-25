@@ -2657,6 +2657,7 @@
     const isFuseDev = dev === 'gg' || dev === 'am' || dev === 't';
     show('tc-in-group', true);
     show('tc-curve-group', isMcb);
+    // MCB : In + courbe B/C/D seulement — jamais Ir / Im
     show('tc-ir-group-norm', isMccbA || isMccbB);
     show('tc-im-group', isMccbA);
     updateNormSettingsHint(dev, cat);

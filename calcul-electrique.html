@@ -333,6 +333,8 @@
     .tc-custom-catalog label{font-size:0.78rem;font-weight:600;color:#fde68a;margin:0}
     #tc-custom-catalog-status{font-size:0.75rem;color:#86efac;flex:1 1 100%}
     #tc-tr-group[hidden],#tc-ir-group[hidden],#tc-isd-group[hidden],#tc-tsd-group[hidden],#tc-ii-group[hidden]{display:none!important}
+    /* Caractéristiques : .input-group{display:flex} sinon écrase [hidden] (Ir/Im visibles sur MCB) */
+    #tripcurve .tc-chars-block .input-group[hidden]{display:none!important}
     #tripcurve > .form-grid{gap:10px 12px}
     #tripcurve > .form-grid > .input-group{gap:3px}
     #tripcurve > .form-grid > .input-group .sub-type-btn{padding:7px 10px;font-size:0.84rem}
@@ -916,7 +918,7 @@
   <script src="js/site-config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-client.js"></script>
-  <script src="js/calcul-electrique-i18n.js?v=20260725h"></script>
+  <script src="js/calcul-electrique-i18n.js?v=20260725i"></script>
   <script src="js/visitor-counter.js"></script>
   <script src="js/calc-standards.js"></script>
   <script src="js/cableThermalIEC60364.js"></script>
@@ -926,14 +928,14 @@
   <script src="js/caneco-bt-lib.js"></script>
   <script src="js/caneco-bt-calc.js"></script>
   -->
-  <script src="js/trip-curve-catalog.js?v=20260725h"></script>
-  <script src="js/courbes-protection.js?v=20260725h"></script>
+  <script src="js/trip-curve-catalog.js?v=20260725i"></script>
+  <script src="js/courbes-protection.js?v=20260725i"></script>
   <script src="js/hager-glyphs-b64.js?v=20260609"></script>
   <script src="js/iec-symbol-library.js?v=20260609"></script>
   <script src="js/unifilar-pro-svg.js?v=20260618"></script>
   <script src="js/unifilar-drawio-engine.js?v=20260618"></script>
   <script src="js/unifilar-from-balance.js?v=20260617"></script>
   <script src="js/power-balance-pro.js?v=20260711p"></script>
-  <script src="js/calcul-electrique.js?v=20260725h" defer></script>
+  <script src="js/calcul-electrique.js?v=20260725i" defer></script>
 </body>
 </html>
