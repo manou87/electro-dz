@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "swissdz.oibt.v1",
+  "id": "scn_03_rcd_lent",
+  "title": "DDR trop lent",
+  "description": "Le disjoncteur différentiel déclenche au-delà du temps maximal autorisé.",
+  "difficulty": "intermediaire",
+  "pedagogicalFault": "Temps de déclenchement RCD > 300 ms — appareil à remplacer / vérifier.",
+  "linkedQuizIds": ["nfc-rcd-temps-01", "nfc-protection-differentielle-03"],
+  "elements": [
+    { "id": "t1", "type": "tableau", "x": 100, "y": 100, "label": "TD", "departureId": "DDR1" },
+    { "id": "p1", "type": "prise", "x": 240, "y": 90, "label": "PC SDB", "circuitId": "C1" },
+    { "id": "p2", "type": "prise", "x": 300, "y": 190, "label": "PC Chambre", "circuitId": "C2" },
+    { "id": "l1", "type": "lampe", "x": 200, "y": 210, "label": "Éclairage SDB", "circuitId": "C3" },
+    { "id": "l2", "type": "lampe", "x": 340, "y": 100, "label": "Couloir", "circuitId": "C4" }
+  ],
+  "measurements": [
+    {
+      "id": "meas_rcd_t1",
+      "elementId": "t1",
+      "function": "RCD",
+      "value": 30,
+      "secondaryValue": 420,
+      "unit": "mA / ms",
+      "limitMax": 300,
+      "note": "Courant de test 30 mA OK, temps 420 ms NON conforme"
+    },
+    {
+      "id": "meas_rpe_p1",
+      "elementId": "p1",
+      "function": "RPE",
+      "value": 0.28,
+      "unit": "Ω",
+      "limitMax": 1.0
+    },
+    {
+      "id": "meas_riso_p1",
+      "elementId": "p1",
+      "function": "Riso",
+      "value": 45.0,
+      "unit": "MΩ",
+      "limitMin": 1.0
+    },
+    {
+      "id": "meas_u_p1",
+      "elementId": "p1",
+      "function": "U",
+      "value": 231.0,
+      "unit": "V",
+      "limitMin": 207,
+      "limitMax": 253
+    },
+    {
+      "id": "meas_seq_t1",
+      "elementId": "t1",
+      "function": "SEQ",
+      "value": 1.0,
+      "unit": "",
+      "note": "Ordre des phases correct L1-L2-L3"
+    }
+  ]
+}

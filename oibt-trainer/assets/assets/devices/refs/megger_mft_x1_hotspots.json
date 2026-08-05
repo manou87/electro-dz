@@ -1,0 +1,41 @@
+{
+  "device": "megger_mft_x1",
+  "hotspots": {
+    "lcd": {
+      "left": 0.33,
+      "top": 0.22,
+      "width": 0.36,
+      "height": 0.58,
+      "id": "lcd",
+      "cx": 0.51,
+      "cy": 0.51
+    },
+    "dial": {
+      "left": 0.04,
+      "top": 0.18,
+      "width": 0.26,
+      "height": 0.68,
+      "id": "dial",
+      "cx": 0.17,
+      "cy": 0.52
+    },
+    "test": {
+      "left": 0.72,
+      "top": 0.22,
+      "width": 0.24,
+      "height": 0.58,
+      "id": "test",
+      "cx": 0.84,
+      "cy": 0.51
+    },
+    "power": {
+      "left": 0.12,
+      "top": 0.55,
+      "width": 0.1,
+      "height": 0.12,
+      "id": "power",
+      "cx": 0.17,
+      "cy": 0.61
+    }
+  }
+}

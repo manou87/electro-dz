@@ -1,0 +1,121 @@
+{
+  "hotspots": {
+    "lcd": {
+      "id": "lcd",
+      "left": 0.3301,
+      "top": 0.2457,
+      "width": 0.3196,
+      "height": 0.4513,
+      "cx": 0.4899,
+      "cy": 0.47135
+    },
+    "dial": {
+      "id": "dial",
+      "left": 0.7208,
+      "top": 0.3479,
+      "width": 0.167,
+      "height": 0.3114,
+      "cx": 0.8043,
+      "cy": 0.5036
+    },
+    "test": {
+      "id": "test",
+      "left": 0.0783,
+      "top": 0.3796,
+      "width": 0.1174,
+      "height": 0.219,
+      "cx": 0.137,
+      "cy": 0.4891
+    },
+    "brand": {
+      "id": "brand",
+      "left": 0.3575,
+      "top": 0.1496,
+      "width": 0.1011,
+      "height": 0.0365
+    },
+    "f1": {
+      "id": "f1",
+      "left": 0.2335,
+      "top": 0.295,
+      "width": 0.039,
+      "height": 0.056,
+      "cx": 0.253,
+      "cy": 0.323
+    },
+    "f2": {
+      "id": "f2",
+      "left": 0.2335,
+      "top": 0.4021,
+      "width": 0.039,
+      "height": 0.056,
+      "cx": 0.253,
+      "cy": 0.4301
+    },
+    "f3": {
+      "id": "f3",
+      "left": 0.2335,
+      "top": 0.5091,
+      "width": 0.039,
+      "height": 0.056,
+      "cx": 0.253,
+      "cy": 0.5371
+    },
+    "f4": {
+      "id": "f4",
+      "left": 0.2335,
+      "top": 0.6101,
+      "width": 0.039,
+      "height": 0.056,
+      "cx": 0.253,
+      "cy": 0.6381
+    },
+    "power": {
+      "id": "power",
+      "left": 0.4729,
+      "top": 0.747,
+      "width": 0.0365,
+      "height": 0.0681,
+      "cx": 0.4912,
+      "cy": 0.781
+    },
+    "memory": {
+      "id": "memory",
+      "left": 0.3242,
+      "top": 0.747,
+      "width": 0.0992,
+      "height": 0.0681,
+      "cx": 0.3738,
+      "cy": 0.781
+    },
+    "backlight": {
+      "id": "backlight",
+      "left": 0.559,
+      "top": 0.747,
+      "width": 0.0992,
+      "height": 0.0681,
+      "cx": 0.6086,
+      "cy": 0.781
+    },
+    "fc": {
+      "id": "fc",
+      "left": 0.4808,
+      "top": 0.8467,
+      "width": 0.0209,
+      "height": 0.0389,
+      "cx": 0.4912,
+      "cy": 0.8662
+    }
+  },
+  "tests_passed": true,
+  "proof": {
+    "white_move": 0,
+    "label_white_in_knob": 0,
+    "label_diff": 0.0,
+    "no_black_brand": true
+  },
+  "image": {
+    "w": 1533,
+    "h": 822
+  }
+}

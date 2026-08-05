@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "swissdz.oibt.v1",
+  "id": "scn_01_conforme",
+  "title": "Appartement conforme",
+  "description": "Installation résidentielle sans défaut — toutes les mesures restent dans les limites NIBT.",
+  "difficulty": "debutant",
+  "pedagogicalFault": null,
+  "linkedQuizIds": ["nfc-continuité-01", "nfc-isolement-01"],
+  "elements": [
+    { "id": "t1", "type": "tableau", "x": 80, "y": 120, "label": "TGBT", "departureId": "Q1" },
+    { "id": "p1", "type": "prise", "x": 220, "y": 100, "label": "PC Salon", "circuitId": "C1" },
+    { "id": "p2", "type": "prise", "x": 320, "y": 180, "label": "PC Cuisine", "circuitId": "C2" },
+    { "id": "l1", "type": "lampe", "x": 220, "y": 220, "label": "Éclairage", "circuitId": "C3" },
+    { "id": "m1", "type": "mesure", "x": 220, "y": 100, "label": "M1" },
+    { "id": "m2", "type": "mesure", "x": 80, "y": 120, "label": "M2" }
+  ],
+  "measurements": [
+    {
+      "id": "meas_rpe_p1",
+      "elementId": "p1",
+      "function": "RPE",
+      "value": 0.32,
+      "unit": "Ω",
+      "limitMax": 1.0,
+      "note": "Continuité PE correcte"
+    },
+    {
+      "id": "meas_riso_p1",
+      "elementId": "p1",
+      "function": "Riso",
+      "value": 85.0,
+      "unit": "MΩ",
+      "limitMin": 1.0
+    },
+    {
+      "id": "meas_zs_p1",
+      "elementId": "p1",
+      "function": "Zs",
+      "value": 0.48,
+      "unit": "Ω",
+      "limitMax": 1.44
+    },
+    {
+      "id": "meas_rcd_t1",
+      "elementId": "t1",
+      "function": "RCD",
+      "value": 30,
+      "secondaryValue": 18,
+      "unit": "mA / ms",
+      "limitMax": 300,
+      "note": "DDR 30 mA type A — déclenchement rapide"
+    },
+    {
+      "id": "meas_u_p1",
+      "elementId": "p1",
+      "function": "U",
+      "value": 229.5,
+      "unit": "V",
+      "limitMin": 207,
+      "limitMax": 253
+    }
+  ]
+}

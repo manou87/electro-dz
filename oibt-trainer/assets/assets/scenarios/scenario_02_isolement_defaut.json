@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "swissdz.oibt.v1",
+  "id": "scn_02_isolement",
+  "title": "Défaut d'isolement cuisine",
+  "description": "Humidité sur une prise cuisine : Riso trop bas. Les autres points restent conformes.",
+  "difficulty": "intermediaire",
+  "pedagogicalFault": "Isolation dégradée sur circuit cuisine (humidité / câble endommagé).",
+  "linkedQuizIds": ["nfc-isolement-defaut-02", "nfc-mesure-riso-01"],
+  "elements": [
+    { "id": "t1", "type": "tableau", "x": 60, "y": 140, "label": "Tableau", "departureId": "QFcuisine" },
+    { "id": "p1", "type": "prise", "x": 200, "y": 80, "label": "PC Salon", "circuitId": "C1" },
+    { "id": "p2", "type": "prise", "x": 280, "y": 200, "label": "PC Cuisine", "circuitId": "C2" },
+    { "id": "l1", "type": "lampe", "x": 180, "y": 240, "label": "Plafonnier", "circuitId": "C3" },
+    { "id": "p3", "type": "prise", "x": 340, "y": 120, "label": "PC Lave-vaisselle", "circuitId": "C2" }
+  ],
+  "measurements": [
+    {
+      "id": "meas_riso_p2",
+      "elementId": "p2",
+      "function": "Riso",
+      "value": 0.18,
+      "unit": "MΩ",
+      "limitMin": 1.0,
+      "note": "Valeur sous le seuil NIBT — défaut pédagogique"
+    },
+    {
+      "id": "meas_rpe_p2",
+      "elementId": "p2",
+      "function": "RPE",
+      "value": 0.41,
+      "unit": "Ω",
+      "limitMax": 1.0
+    },
+    {
+      "id": "meas_riso_p1",
+      "elementId": "p1",
+      "function": "Riso",
+      "value": 120.0,
+      "unit": "MΩ",
+      "limitMin": 1.0
+    },
+    {
+      "id": "meas_zs_p2",
+      "elementId": "p2",
+      "function": "Zs",
+      "value": 0.62,
+      "unit": "Ω",
+      "limitMax": 1.44
+    },
+    {
+      "id": "meas_re_t1",
+      "elementId": "t1",
+      "function": "RE",
+      "value": 8.4,
+      "unit": "Ω",
+      "limitMax": 20
+    }
+  ]
+}

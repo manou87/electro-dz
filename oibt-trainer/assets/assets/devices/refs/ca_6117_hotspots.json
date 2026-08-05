@@ -1,0 +1,143 @@
+{
+  "device": "ca_6117",
+  "source": "docs/refs/competitors/CA6117_CONTROLS.md",
+  "hotspots": {
+    "lcd": {
+      "left": 0.2961,
+      "top": 0.3160,
+      "width": 0.4160,
+      "height": 0.4479,
+      "id": "lcd",
+      "cx": 0.5041,
+      "cy": 0.53995,
+      "note": "Verre LCD actif + marge AA (header bleu → footer BOUCLE) — fill opaque OFF"
+    },
+    "test": {
+      "left": 0.045,
+      "top": 0.265,
+      "width": 0.115,
+      "height": 0.175,
+      "id": "test",
+      "cx": 0.1025,
+      "cy": 0.3525
+    },
+    "f1": {
+      "left": 0.188,
+      "top": 0.215,
+      "width": 0.055,
+      "height": 0.075,
+      "id": "f1",
+      "cx": 0.2155,
+      "cy": 0.2525
+    },
+    "f2": {
+      "left": 0.188,
+      "top": 0.318,
+      "width": 0.055,
+      "height": 0.075,
+      "id": "f2",
+      "cx": 0.2155,
+      "cy": 0.3555
+    },
+    "f3": {
+      "left": 0.188,
+      "top": 0.422,
+      "width": 0.055,
+      "height": 0.075,
+      "id": "f3",
+      "cx": 0.2155,
+      "cy": 0.4595
+    },
+    "f4": {
+      "left": 0.188,
+      "top": 0.525,
+      "width": 0.055,
+      "height": 0.075,
+      "id": "f4",
+      "cx": 0.2155,
+      "cy": 0.5625
+    },
+    "help": {
+      "left": 0.055,
+      "top": 0.575,
+      "width": 0.085,
+      "height": 0.095,
+      "id": "help",
+      "cx": 0.0975,
+      "cy": 0.6225
+    },
+    "dial": {
+      "left": 0.7,
+      "top": 0.255,
+      "width": 0.185,
+      "height": 0.275,
+      "id": "dial",
+      "cx": 0.7925,
+      "cy": 0.3925
+    },
+    "power": {
+      "left": 0.805,
+      "top": 0.195,
+      "width": 0.075,
+      "height": 0.06,
+      "id": "power",
+      "cx": 0.8425,
+      "cy": 0.225,
+      "note": "Cran OFF du commutateur (pas de touche Power dédiée)"
+    },
+    "nav_up": {
+      "left": 0.772,
+      "top": 0.575,
+      "width": 0.07,
+      "height": 0.055,
+      "id": "nav_up",
+      "cx": 0.807,
+      "cy": 0.6025
+    },
+    "nav_left": {
+      "left": 0.72,
+      "top": 0.625,
+      "width": 0.06,
+      "height": 0.065,
+      "id": "nav_left",
+      "cx": 0.75,
+      "cy": 0.6575
+    },
+    "ok": {
+      "left": 0.775,
+      "top": 0.625,
+      "width": 0.065,
+      "height": 0.065,
+      "id": "ok",
+      "cx": 0.8075,
+      "cy": 0.6575
+    },
+    "nav_right": {
+      "left": 0.835,
+      "top": 0.625,
+      "width": 0.06,
+      "height": 0.065,
+      "id": "nav_right",
+      "cx": 0.865,
+      "cy": 0.6575
+    },
+    "nav_down": {
+      "left": 0.772,
+      "top": 0.685,
+      "width": 0.07,
+      "height": 0.055,
+      "id": "nav_down",
+      "cx": 0.807,
+      "cy": 0.7125
+    },
+    "brightness": {
+      "left": 0.78,
+      "top": 0.77,
+      "width": 0.08,
+      "height": 0.09,
+      "id": "brightness",
+      "cx": 0.82,
+      "cy": 0.815
+    }
+  }
+}

@@ -1,0 +1,84 @@
+  static const lcd = FlukeHotspot(
+    id: 'lcd',
+    left: 0.3301,
+    top: 0.2457,
+    width: 0.3196,
+    height: 0.4513,
+  );
+  static const dial = FlukeHotspot(
+    id: 'dial',
+    left: 0.7025,
+    top: 0.3625,
+    width: 0.1566,
+    height: 0.292,
+  );
+  static const test = FlukeHotspot(
+    id: 'test',
+    left: 0.0783,
+    top: 0.3796,
+    width: 0.1174,
+    height: 0.219,
+  );
+  static const f1 = FlukeHotspot(
+    id: 'f1',
+    left: 0.2374,
+    top: 0.3533,
+    width: 0.0339,
+    height: 0.0633,
+  );
+  static const f2 = FlukeHotspot(
+    id: 'f2',
+    left: 0.2374,
+    top: 0.4227,
+    width: 0.0339,
+    height: 0.0633,
+  );
+  static const f3 = FlukeHotspot(
+    id: 'f3',
+    left: 0.2374,
+    top: 0.4908,
+    width: 0.0339,
+    height: 0.0633,
+  );
+  static const f4 = FlukeHotspot(
+    id: 'f4',
+    left: 0.2374,
+    top: 0.5601,
+    width: 0.0339,
+    height: 0.0633,
+  );
+  static const memory = FlukeHotspot(
+    id: 'memory',
+    left: 0.3242,
+    top: 0.747,
+    width: 0.0992,
+    height: 0.0681,
+  );
+  static const power = FlukeHotspot(
+    id: 'power',
+    left: 0.4729,
+    top: 0.747,
+    width: 0.0365,
+    height: 0.0681,
+  );
+  static const backlight = FlukeHotspot(
+    id: 'backlight',
+    left: 0.559,
+    top: 0.747,
+    width: 0.0992,
+    height: 0.0681,
+  );
+  static const flukeConnect = FlukeHotspot(
+    id: 'fc',
+    left: 0.4808,
+    top: 0.8467,
+    width: 0.0209,
+    height: 0.0389,
+  );
+  static const brand = FlukeHotspot(
+    id: 'brand',
+    left: 0.3594,
+    top: 0.0876,
+    width: 0.2805,
+    height: 0.0803,
+  );
