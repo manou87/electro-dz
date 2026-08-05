@@ -270,6 +270,10 @@
     .quick-item--sim .ico{stroke:#f87171}
     .ico-wrap--sim{background:rgba(227,6,19,0.12)!important;border-color:rgba(227,6,19,0.38)!important}
     .ico-wrap--sim .ico{stroke:#f87171!important}
+    .quick-item--oibt{--quick-accent:#38bdf8}
+    .quick-item--oibt .ico-wrap{background:rgba(56,189,248,0.12);border-color:rgba(56,189,248,0.4)}
+    .quick-item--oibt .ico{stroke:#38bdf8}
+    .quick-item--oibt .ico-hint{color:#bae6fd}
     .quick-item--job{--quick-accent:#34d399}
     .quick-item--quote{--quick-accent:#fb923c}
     .quick-item--social{--quick-accent:#c084fc}
@@ -554,6 +558,11 @@
     <symbol id="ico-simulator" viewBox="0 0 24 24">
       <path d="M13 2 5 14h6l-1 8 8-12h-6l1-8z"/>
     </symbol>
+    <symbol id="ico-meter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4" y="3" width="16" height="18" rx="2"/>
+      <rect x="7" y="6" width="10" height="5" rx="1"/>
+      <path d="M8 15h2M12 15h2M16 15h.01M8 18h8"/>
+    </symbol>
     <symbol id="ico-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
     <symbol id="ico-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></symbol>
     <symbol id="ico-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></symbol>
@@ -673,6 +682,13 @@
           <span class="quick-labels">
             <span class="ico-label" data-i18n="quick.swissdz">Simulateur SwissDZ</span>
             <span class="ico-hint" data-i18n="quick.swissdz.hint">Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel</span>
+          </span>
+        </a>
+        <a class="quick-item quick-item--oibt" href="oibt-trainer/#/trainer">
+          <span class="ico-wrap"><svg class="ico"><use href="#ico-meter"/></svg></span>
+          <span class="quick-labels">
+            <span class="ico-label" data-i18n="quick.oibt">Simulateur OIBT</span>
+            <span class="ico-hint" data-i18n="quick.oibt.hint">Fluke 1664FC — mesures, câblage & scénarios de contrôle</span>
           </span>
         </a>
         <a class="quick-item quick-item--pdf" href="bibliotheque.html">

@@ -30,6 +30,9 @@
       "quick.swissdz": "Simulateur SwissDZ",
       "quick.swissdz.hint":
         "Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel",
+      "quick.oibt": "Simulateur OIBT",
+      "quick.oibt.hint":
+        "Fluke 1664FC — mesures, câblage & scénarios de contrôle",
       "quick.job": "Emploi · bientôt",
       "quick.quote": "Devis",
       "quick.social": "Réseaux",
@@ -140,6 +143,9 @@
       "quick.swissdz": "محاكي SwissDZ",
       "quick.swissdz.hint":
         "أول محاكي للكهربائيين في الجزائر — لوحة، ورشة ومخطط أحادي الطور احترافي",
+      "quick.oibt": "محاكي OIBT",
+      "quick.oibt.hint":
+        "Fluke 1664FC — قياسات، توصيل وسيناريوهات مراقبة",
       "quick.job": "عمل · قريباً",
       "quick.quote": "عروض أسعار",
       "quick.social": "شبكات",
