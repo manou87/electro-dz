@@ -33,6 +33,13 @@
 
   <title>SwissDZ · OIBT Trainer</title>
   <link rel="manifest" href="manifest.json">
+  <!-- Pinch navigateur souvent bloqué par CanvasKit ; zoom in-app via InteractiveViewer.
+       touch-action: none laisse Flutter recevoir le multi-touch pour le pinch in-app. -->
+  <style>
+    flutter-view, flt-glass-pane, flt-scene-host {
+      touch-action: none;
+    }
+  </style>
 </head>
 <body>
   <script>
