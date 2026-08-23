@@ -70,6 +70,8 @@
     if (!document.hidden) tryLockLandscape();
   });
 </script>
-  <script src="flutter_bootstrap.js" async></script>
+  <!-- ?v= force le navigateur à recharger le bootstrap (puis main.dart.js)
+       même si un vieux http.server a mis le JS en cache heuristique. -->
+  <script src="flutter_bootstrap.js?v=white-screen-fix-20260823-0150" async></script>
 </body>
 </html>

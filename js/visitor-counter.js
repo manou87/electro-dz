@@ -175,6 +175,7 @@
       .edz-visitor-panel[hidden]{display:none!important}
       .edz-visitor-panel__head{
         display:flex;align-items:center;justify-content:space-between;gap:8px;
+        flex:0 0 auto;
         padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.08);
         font-size:.78rem;font-weight:700;color:#facc15;
       }
@@ -183,8 +184,18 @@
         font-size:1.1rem;line-height:1;padding:4px 6px;border-radius:6px;
       }
       .edz-visitor-panel__close:hover{color:#facc15}
+      /* Corps scrollable : min-height:0 obligatoire en flex column sinon overflow:auto ne s'active pas */
+      .edz-visitor-panel__body{
+        flex:1 1 auto;
+        min-height:0;
+        overflow-x:hidden;
+        overflow-y:auto;
+        -webkit-overflow-scrolling:touch;
+        overscroll-behavior:contain;
+        touch-action:pan-y;
+      }
       .edz-visitor-panel__list{
-        margin:0;padding:8px 0;list-style:none;overflow-y:auto;
+        margin:0;padding:8px 0;list-style:none;
         font-size:.82rem;color:#e2e8f0;
       }
       .edz-visitor-panel__row{
@@ -259,7 +270,7 @@
       '<span data-edz-panel-title></span>' +
       '<button type="button" class="edz-visitor-panel__close" data-edz-panel-close aria-label="Fermer">×</button>' +
       '</div>' +
-      '<div data-edz-panel-body class="edz-visitor-panel__empty"></div>';
+      '<div data-edz-panel-body class="edz-visitor-panel__body"></div>';
     document.body.appendChild(panel);
 
     panel.querySelector('[data-edz-panel-close]').addEventListener('click', closePanel);
