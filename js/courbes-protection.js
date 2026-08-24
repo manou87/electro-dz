@@ -727,7 +727,7 @@
     const thermal = [];
     // Échantillonnage fin : la polyligne suit exactement la courbe analytique.
     // Démarre juste au-dessus de 1,13·In (asymptote de non-déclenchement).
-    for (let m = I_NO_TRIP * 1.004; m < magMult; m *= 1.008) {
+    for (let m = I_NO_TRIP * 1.004; m < magMult; m *= 1.004) {
       thermal.push({ i: m * inA, t: Math.min(interpLogLog(anchors, m), Y_DATA_CAP * 5) });
     }
     // Dernier point EXACTEMENT au seuil magnétique : la chute est ensuite
@@ -1137,9 +1137,23 @@
   function thermalScreenPts(pts, sx, sy) {
     const out = [];
     for (let i = 0; i < pts.length; i++) {
-      const above = pts[i].t > plotYHi;
-      if (above && !(i + 1 < pts.length && pts[i + 1].t <= plotYHi)) continue;
-      out.push({ x: sx(pts[i].i), y: sy(pts[i].t) });
+      const t = pts[i].t;
+      if (t > plotYHi) {
+        if (i + 1 < pts.length && pts[i + 1].t <= plotYHi) {
+          const t0 = pts[i].t;
+          const t1 = pts[i + 1].t;
+          const i0 = pts[i].i;
+          const i1 = pts[i + 1].i;
+          const lt = Math.log(t0);
+          const lt1 = Math.log(t1);
+          const lhi = Math.log(plotYHi);
+          const frac = (lhi - lt) / (lt1 - lt);
+          const li = Math.log(i0) + frac * (Math.log(i1) - Math.log(i0));
+          out.push({ x: sx(Math.exp(li)), y: sy(plotYHi) });
+        }
+        continue;
+      }
+      out.push({ x: sx(pts[i].i), y: sy(t) });
     }
     return out;
   }
@@ -1183,12 +1197,11 @@
     // Enveloppe complète : thermique lent → verticale haute → palier →
     // verticale basse → thermique rapide (retour)
     ctx.beginPath();
-    ctx.moveTo(slowPts[0].x, slowPts[0].y);
-    pathPolyline(ctx, slowPts, false);
+    smoothSubPath(ctx, slowPts, true);
     ctx.lineTo(sMagX, instY);
     ctx.lineTo(fMagX, instY);
     ctx.lineTo(fMagX, fastEnd.y);
-    pathPolyline(ctx, fastPts, true);
+    smoothSubPath(ctx, fastPts.slice().reverse(), false);
     ctx.closePath();
     ctx.fillStyle = hexA(c, 0.09);
     ctx.fill();
@@ -1200,7 +1213,7 @@
       ctx.moveTo(fMagX, instY);
       ctx.lineTo(sMagX, instY);
       ctx.lineTo(sMagX, slowEnd.y);
-      if (inBand.length) pathPolyline(ctx, inBand, true);
+      if (inBand.length) smoothSubPath(ctx, inBand.slice().reverse(), false);
       ctx.lineTo(fMagX, fastEnd.y);
       ctx.closePath();
       ctx.fillStyle = hexA(c, 0.16);
@@ -1213,8 +1226,8 @@
     // Contours — rouge thermique, bleu magnétique
     const cTh = activeDrawTheme.curveThermal;
     const cMag = activeDrawTheme.curveMagnetic;
-    strokePolyline(ctx, slowPts, cTh, 2.2);
-    strokePolyline(ctx, fastPts, cTh, 2);
+    strokePts(ctx, slowPts, cTh, 2.2, true);
+    strokePts(ctx, fastPts, cTh, 2, true);
     // Bande magnétique MCB (Lo≠Hi) : deux verticales. MCCB TM : Lo=Hi=Ii → une seule.
     if (sMagX > fMagX + 2) {
       strokeSeg(ctx, sMagX, slowEnd.y, sMagX, instY, cMag, 2.4);
@@ -1751,7 +1764,7 @@
     const magHi = mag[1];
     const slowRaw = [];
     const fastRaw = [];
-    for (let m = I_NO_TRIP * 1.004; m < magHi; m *= 1.008) {
+    for (let m = I_NO_TRIP * 1.004; m < magHi; m *= 1.004) {
       const tS = interpLogLog(anchors, m) * MFG_TOL_SLOW;
       slowRaw.push({ i: m * inA, t: Math.min(tS, Y_DATA_CAP * 5) });
       if (m < magLo) {
@@ -1854,8 +1867,7 @@
     if (fastPts.length) fastPts[fastPts.length - 1] = { x: kneeX, y: fastEndY };
 
     ctx.beginPath();
-    ctx.moveTo(slowPts[0].x, slowPts[0].y);
-    pathPolyline(ctx, slowPts, false);
+    smoothSubPath(ctx, slowPts, true);
     if (tsdPlateau) {
       ctx.lineTo(kneeX, tsdY);
       ctx.lineTo(iiX, tsdY);
@@ -1867,15 +1879,15 @@
       ctx.lineTo(kneeX, instY);
     }
     ctx.lineTo(fastPts[fastPts.length - 1].x, fastPts[fastPts.length - 1].y);
-    pathPolyline(ctx, fastPts, true);
+    smoothSubPath(ctx, fastPts.slice().reverse(), false);
     ctx.closePath();
     ctx.fillStyle = hexA(c, 0.09);
     ctx.fill();
     // Palier instantané collé à Ii (bouge avec le réglage), pas ancré sur Isd
     fillInstantSkirt(ctx, iiX, xEnd, instY, bottomY, c);
 
-    strokePolyline(ctx, slowPts, cTh, 2.2);
-    strokePolyline(ctx, fastPts, cTh, 2);
+    strokePts(ctx, slowPts, cTh, 2.2, true);
+    strokePts(ctx, fastPts, cTh, 2, true);
 
     // Magnétique / SD : verticales + horizontales liées aux seuils (pas de tige orpheline à Ii)
     if (tsdPlateau) {
