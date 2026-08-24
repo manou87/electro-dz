@@ -84,7 +84,7 @@ def build_balance() -> Image.Image:
 
 def build_curve() -> Image.Image:
     img, draw = canvas()
-    header(draw, "Courbes de protection t(I)", (45, 212, 191))
+    header(draw, "Courbe de déclenchement t(I)", (45, 212, 191))
     ox, oy = 90, H - 70
     draw.line([(ox, 80), (ox, oy), (W - 40, oy)], fill=MUTED, width=2)
     draw.text((ox - 30, 70), "I", fill=MUTED, font=load_font(16))

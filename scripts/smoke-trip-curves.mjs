@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Smoke test navigateur — courbes de protection (nécessite serveur http://127.0.0.1:8765).
+ * Smoke test navigateur — courbe de déclenchement (nécessite serveur http://127.0.0.1:8765).
  * node scripts/smoke-trip-curves.mjs
  */
 import { chromium } from 'playwright';

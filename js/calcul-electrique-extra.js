@@ -382,7 +382,7 @@
     };
   }
 
-  /** Ik₁ / Ik₂ / Ik₃ max & min (c_max / c_min) — mode pro courbes de protection. */
+  /** Ik₁ / Ik₂ / Ik₃ max & min (c_max / c_min) — mode pro courbe de déclenchement. */
   function calculateProIccFaults(opts) {
     const t = getT(opts.lang);
     const ik1InRaw = String(opts.icc1Ka ?? '').replace(',', '.').trim();

@@ -1,4 +1,4 @@
-# Méthodologie — Courbes de protection ElectroDZ
+# Méthodologie — Courbe de déclenchement ElectroDZ
 
 ## Positionnement professionnel
 
