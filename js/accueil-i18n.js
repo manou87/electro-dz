@@ -33,6 +33,9 @@
       "quick.oibt": "Simulateur OIBT",
       "quick.oibt.hint":
         "Fluke 1664FC — mesures, câblage & scénarios de contrôle",
+      "quick.cosphi": "SwissDZ Cos φ",
+      "quick.cosphi.hint":
+        "Batterie de compensation BT — mesurer, corriger, contrôler le facteur de puissance",
       "quick.job": "Emploi · bientôt",
       "quick.quote": "Devis",
       "quick.social": "Réseaux",
@@ -146,6 +149,9 @@
       "quick.oibt": "محاكي OIBT",
       "quick.oibt.hint":
         "Fluke 1664FC — قياسات، توصيل وسيناريوهات مراقبة",
+      "quick.cosphi": "SwissDZ Cos φ",
+      "quick.cosphi.hint":
+        "بطارية تعويض الجهد المنخفض — قياس وتصحيح ومراقبة معامل القدرة",
       "quick.job": "عمل · قريباً",
       "quick.quote": "عروض أسعار",
       "quick.social": "شبكات",
