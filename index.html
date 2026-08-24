@@ -14,6 +14,7 @@
   <link rel="alternate" hreflang="x-default" href="https://electro-dz.com/"/>
   <link rel="icon" href="assets/app-icon.png" type="image/png"/>
   <link rel="stylesheet" href="css/theme-liquid-glass.css" id="lg-theme-css" disabled/>
+  <link rel="stylesheet" href="css/section-cards.css"/>
   <title>Electro DZ | La grande plateforme algérienne de l'électricité — l'expérience suisse</title>
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="Electro DZ"/>
@@ -222,63 +223,8 @@
     }
     .btn-dl--apple:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 6px 16px rgba(0,0,0,0.3)}
 
-    /* Accès rapide — lanceur principal (occupe l'écran) */
-    .quick-access{
-      flex:1;display:flex;flex-direction:column;
-      margin:0 0 10px;padding:4px 0 6px;
-      min-height:0;
-    }
-    .quick-access h2{display:none}
-    .quick-grid{
-      flex:1;display:grid;
-      grid-template-columns:repeat(3,1fr);
-      grid-template-rows:repeat(3,minmax(0,1fr));
-      gap:12px;
-      min-height:min(72vh,620px);
-    }
-    .quick-item{
-      display:flex;flex-direction:column;align-items:center;justify-content:center;
-      gap:10px;min-height:0;height:100%;padding:14px 10px 30px;
-      position:relative;
-      background:transparent;
-      border:1px solid var(--border);border-radius:12px;
-      border-top:3px solid var(--quick-accent,var(--accent));
-      transition:transform .2s,border-color .2s,box-shadow .2s,background .2s;
-    }
-    .quick-item:hover{
-      transform:translateY(-3px);
-      border-color:rgba(250,204,21,0.45);
-      box-shadow:0 8px 24px rgba(0,0,0,0.2);
-      background:transparent;
-    }
-    .quick-item--calc{--quick-accent:#facc15}
-    .quick-item--balance{--quick-accent:#34d399}
-    .quick-item--balance .ico-wrap{background:rgba(52,211,153,0.12);border-color:rgba(52,211,153,0.4)}
-    .quick-item--balance .ico{stroke:#34d399}
-    .quick-item--curve{--quick-accent:#2dd4bf}
-    .quick-item--curve .ico-wrap{background:rgba(45,212,191,0.12);border-color:rgba(45,212,191,0.4)}
-    .quick-item--curve .ico{stroke:#2dd4bf}
-    .quick-item--cable{--quick-accent:#a78bfa}
-    .quick-item--cable .ico-wrap{background:rgba(167,139,250,0.12);border-color:rgba(167,139,250,0.4)}
-    .quick-item--cable .ico{stroke:#a78bfa}
-    .quick-item--schema{--quick-accent:#4ade80}
-    .quick-item--pdf{--quick-accent:#f87171}
-    .quick-item--docs{--quick-accent:#60a5fa}
-    .quick-item--train{--quick-accent:#a78bfa}
-    .quick-item--sim{--quick-accent:#e30613}
-    .quick-item--sim .ico-wrap{background:rgba(227,6,19,0.12);border-color:rgba(227,6,19,0.38)}
-    .quick-item--sim .ico{stroke:#f87171}
-    .ico-wrap--sim{background:rgba(227,6,19,0.12)!important;border-color:rgba(227,6,19,0.38)!important}
-    .ico-wrap--sim .ico{stroke:#f87171!important}
-    .quick-item--oibt{--quick-accent:#38bdf8}
-    .quick-item--oibt .ico-wrap{background:rgba(56,189,248,0.12);border-color:rgba(56,189,248,0.4)}
-    .quick-item--oibt .ico{stroke:#38bdf8}
-    .quick-item--oibt .ico-hint{color:#bae6fd}
-    .quick-item--job{--quick-accent:#34d399}
-    .quick-item--quote{--quick-accent:#fb923c}
-    .quick-item--social{--quick-accent:#c084fc}
-    .quick-item--help{--quick-accent:#38bdf8}
-    /* Icônes SVG — taille site web (compact) */
+    /* Accès rapide — voir css/section-cards.css */
+    /* Icônes SVG — réseaux sociaux & sections secondaires */
     .ico-wrap{
       width:34px;height:34px;border-radius:8px;flex-shrink:0;
       display:flex;align-items:center;justify-content:center;
@@ -302,34 +248,6 @@
     .ico-wrap--yt{background:rgba(239,68,68,0.12);border-color:rgba(239,68,68,0.35)}
     .ico-wrap--fb .ico{stroke:#60a5fa}
     .ico-wrap--fb{background:rgba(59,130,246,0.12);border-color:rgba(59,130,246,0.35)}
-    .quick-item .ico-wrap{
-      flex-shrink:0;
-      width:52px;height:52px;border-radius:13px;
-      background:rgba(255,255,255,0.1);
-      border:1.5px solid var(--quick-accent,var(--accent));
-    }
-    .quick-item .ico{
-      width:28px;height:28px;
-      stroke:var(--quick-accent,var(--accent));
-      stroke-width:2.4;
-      filter:drop-shadow(0 1px 2px rgba(0,0,0,0.65));
-    }
-    .quick-item .ico-label{
-      font-size:.9rem;font-weight:800;text-align:center;color:#fff;
-      line-height:1.2;max-width:100%;word-break:break-word;
-      text-shadow:0 1px 3px rgba(0,0,0,0.85),0 0 10px rgba(0,0,0,0.45);
-    }
-    .quick-item .quick-labels{
-      display:flex;flex-direction:column;align-items:center;gap:3px;max-width:100%;
-    }
-    .quick-item .ico-hint{
-      position:absolute;bottom:7px;left:6px;right:6px;
-      font-size:.48rem;font-weight:600;line-height:1.2;text-align:center;
-      color:#cbd5e1;max-width:none;opacity:.92;margin:0;
-      text-shadow:0 1px 2px rgba(0,0,0,0.8);
-    }
-    .quick-item--train .ico-hint{color:#ede9fe}
-    .quick-item--schema .ico-hint{color:#bbf7d0}
 
     /* Rubriques secondaires — repliées par défaut */
     .accueil-more{
@@ -507,7 +425,6 @@
     @media(max-width:900px){
       .spotlight-grid,.hub-grid{grid-template-columns:repeat(2,1fr)}
       .social-grid{grid-template-columns:repeat(2,1fr)}
-      .quick-grid{grid-template-columns:repeat(4,1fr);min-height:min(62vh,480px)}
     }
     @media(max-width:768px){
       .hero{flex-direction:column;align-items:stretch;gap:8px}
@@ -526,16 +443,6 @@
       .en-hero-inner .btn-dl{width:42px;height:42px;flex-shrink:0}
     }
     @media(max-width:520px){
-      .quick-grid{
-        grid-template-columns:repeat(2,1fr);
-        grid-template-rows:repeat(5,minmax(0,1fr));
-        min-height:min(72vh,560px);gap:10px;
-      }
-      .quick-item{padding:12px 8px 26px}
-      .quick-item .ico-wrap{width:48px;height:48px}
-      .quick-item .ico{width:26px;height:26px}
-      .quick-item .ico-label{font-size:.8rem}
-      .quick-item .ico-hint{font-size:.42rem;bottom:5px;left:4px;right:4px}
       .spotlight-grid,.hub-grid{grid-template-columns:1fr}
       .spot-card .ico-wrap{display:none}
     }
@@ -662,63 +569,48 @@
     <section class="quick-access" id="outils" aria-label="Outils">
       <div class="quick-grid">
         <a class="quick-item quick-item--calc" href="calcul-electrique.html">
-          <span class="ico-wrap"><svg class="ico"><use href="#ico-calc"/></svg></span>
+          <span class="quick-preview"><img src="assets/section-previews/calc.jpg" alt="" loading="lazy" width="960" height="540"/></span>
           <span class="ico-label" data-i18n="quick.calc">Calculs</span>
         </a>
         <a class="quick-item quick-item--balance" href="calcul-electrique.html?calc=power_balance">
-          <span class="ico-wrap"><svg class="ico"><use href="#ico-balance"/></svg></span>
+          <span class="quick-preview"><img src="assets/section-previews/balance.jpg" alt="" loading="lazy" width="960" height="540"/></span>
           <span class="ico-label" data-i18n="quick.balance">Bilan de puissance</span>
         </a>
         <a class="quick-item quick-item--curve" href="calcul-electrique.html?calc=trip_curve">
-          <span class="ico-wrap"><svg class="ico"><use href="#ico-curve"/></svg></span>
+          <span class="quick-preview"><img src="assets/section-previews/curve.jpg" alt="" loading="lazy" width="960" height="540"/></span>
           <span class="ico-label" data-i18n="quick.curve">Courbes de protection</span>
         </a>
         <a class="quick-item quick-item--cable" href="calcul-electrique.html?calc=cable_section">
-          <span class="ico-wrap"><svg class="ico"><use href="#ico-cable"/></svg></span>
+          <span class="quick-preview"><img src="assets/section-previews/cable.jpg" alt="" loading="lazy" width="960" height="540"/></span>
           <span class="ico-label" data-i18n="quick.cable">Section de câbles</span>
         </a>
-        <a class="quick-item quick-item--sim" href="simulation-swissdz.html">
-          <span class="ico-wrap"><svg class="ico"><use href="#ico-simulator"/></svg></span>
-          <span class="quick-labels">
-            <span class="ico-label" data-i18n="quick.swissdz">Simulateur SwissDZ</span>
-            <span class="ico-hint" data-i18n="quick.swissdz.hint">Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel</span>
-          </span>
+        <a class="quick-item quick-item--sim" href="simulation-swissdz.html" data-i18n-aria="quick.swissdz.hint" aria-label="Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel">
+          <span class="quick-preview"><img src="assets/section-previews/swissdz.jpg" alt="" loading="lazy" width="960" height="540"/></span>
+          <span class="ico-label" data-i18n="quick.swissdz">Simulateur SwissDZ</span>
         </a>
-        <a class="quick-item quick-item--oibt" href="oibt-trainer/#/trainer">
-          <span class="ico-wrap"><svg class="ico"><use href="#ico-meter"/></svg></span>
-          <span class="quick-labels">
-            <span class="ico-label" data-i18n="quick.oibt">Simulateur OIBT</span>
-            <span class="ico-hint" data-i18n="quick.oibt.hint">Fluke 1664FC — mesures, câblage & scénarios de contrôle</span>
-          </span>
+        <a class="quick-item quick-item--oibt" href="oibt-trainer/#/trainer" data-i18n-aria="quick.oibt.hint" aria-label="Fluke 1664FC — mesures, câblage & scénarios de contrôle">
+          <span class="quick-preview"><img src="assets/section-previews/oibt.jpg" alt="" loading="lazy" width="960" height="540"/></span>
+          <span class="ico-label" data-i18n="quick.oibt">Simulateur OIBT</span>
         </a>
-        <a class="quick-item quick-item--sim" href="swissdz-cos-phi.html">
-          <span class="ico-wrap"><svg class="ico"><use href="#ico-simulator"/></svg></span>
-          <span class="quick-labels">
-            <span class="ico-label" data-i18n="quick.cosphi">SwissDZ Cos φ</span>
-            <span class="ico-hint" data-i18n="quick.cosphi.hint">Batterie de compensation BT — mesurer, corriger, contrôler le facteur de puissance</span>
-          </span>
+        <a class="quick-item quick-item--sim" href="swissdz-cos-phi.html" data-i18n-aria="quick.cosphi.hint" aria-label="Batterie de compensation BT — mesurer, corriger, contrôler le facteur de puissance">
+          <span class="quick-preview"><img src="assets/section-previews/cosphi.jpg" alt="" loading="lazy" width="960" height="540"/></span>
+          <span class="ico-label" data-i18n="quick.cosphi">SwissDZ Cos φ</span>
         </a>
         <a class="quick-item quick-item--pdf" href="bibliotheque.html">
-          <span class="ico-wrap ico-wrap--pdf"><svg class="ico"><use href="#ico-pdf"/></svg></span>
+          <span class="quick-preview"><img src="assets/section-previews/pdf.jpg" alt="" loading="lazy" width="960" height="540"/></span>
           <span class="ico-label" data-i18n="quick.pdf">Documentation PDF</span>
         </a>
         <a class="quick-item quick-item--quote" href="devis.html">
-          <span class="ico-wrap"><svg class="ico"><use href="#ico-clipboard"/></svg></span>
+          <span class="quick-preview"><img src="assets/section-previews/quote.jpg" alt="" loading="lazy" width="960" height="540"/></span>
           <span class="ico-label" data-i18n="quick.quote">Devis</span>
         </a>
-        <a class="quick-item quick-item--schema" href="schemas-plans.html">
-          <span class="ico-wrap"><svg class="ico"><use href="#ico-schema"/></svg></span>
-          <span class="quick-labels">
-            <span class="ico-label" data-i18n="quick.plans">Schémas et plans</span>
-            <span class="ico-hint" data-i18n="quick.plans.hint">Unifilaire, symboles IEC, export & impression</span>
-          </span>
+        <a class="quick-item quick-item--schema" href="schemas-plans.html" data-i18n-aria="quick.plans.hint" aria-label="Unifilaire, symboles IEC, export & impression">
+          <span class="quick-preview"><img src="assets/section-previews/schemas.jpg" alt="" loading="lazy" width="960" height="540"/></span>
+          <span class="ico-label" data-i18n="quick.plans">Schémas et plans</span>
         </a>
-        <a class="quick-item quick-item--train" href="formations.html#quiz">
-          <span class="ico-wrap"><svg class="ico"><use href="#ico-school"/></svg></span>
-          <span class="quick-labels">
-            <span class="ico-label" data-i18n="quick.training">Formations</span>
-            <span class="ico-hint" data-i18n="quick.training.hint">472 questions pour maîtriser la norme NF C 15-100, pas à pas</span>
-          </span>
+        <a class="quick-item quick-item--train" href="formations.html#quiz" data-i18n-aria="quick.training.hint" aria-label="472 questions pour maîtriser la norme NF C 15-100, pas à pas">
+          <span class="quick-preview"><img src="assets/section-previews/training.jpg" alt="" loading="lazy" width="960" height="540"/></span>
+          <span class="ico-label" data-i18n="quick.training">Formations</span>
         </a>
       </div>
     </section>

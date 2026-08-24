@@ -22,8 +22,8 @@
       "quick.schema": "Schémas",
       "quick.pdf": "Documentation PDF",
       "quick.docs": "Documentation",
-      "quick.plans": "Simulation professionnelle",
-      "quick.plans.hint": "Circuits interactifs, schémas & essais AC/DC",
+      "quick.plans": "Schémas et plans",
+      "quick.plans.hint": "Unifilaire, symboles IEC, export & impression",
       "quick.training": "Formations",
       "quick.training.hint":
         "472 questions pour maîtriser la norme NF C 15-100, pas à pas",
@@ -138,8 +138,8 @@
       "quick.cable": "مقطع الكابلات",
       "quick.pdf": "وثائق PDF",
       "quick.docs": "وثائق",
-      "quick.plans": "محاكاة احترافية",
-      "quick.plans.hint": "دوائر تفاعلية، مخططات وتجارب التيار",
+      "quick.plans": "مخططات ورسوم",
+      "quick.plans.hint": "أحادي الطور، رموز IEC، تصدير وطباعة",
       "quick.training": "تكوين",
       "quick.training.hint":
         "472 سؤالاً لإتقان معيار NF C 15-100 خطوة بخطوة",

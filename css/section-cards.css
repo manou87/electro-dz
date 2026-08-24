@@ -1,0 +1,135 @@
+/* Section cards — vignettes 16:9 (accueil #outils) */
+
+.quick-access {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 10px;
+  padding: 4px 0 6px;
+  min-height: 0;
+}
+
+.quick-access h2 {
+  display: none;
+}
+
+.quick-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  align-content: start;
+}
+
+.quick-item {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  min-height: 0;
+  padding: 0 0 12px;
+  position: relative;
+  overflow: hidden;
+  background: rgba(20, 28, 44, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  border-top: 4px solid var(--quick-accent, var(--accent, #facc15));
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.quick-item:hover {
+  transform: translateY(-4px);
+  border-color: rgba(250, 204, 21, 0.35);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.38);
+}
+
+.quick-item--calc { --quick-accent: #facc15; }
+.quick-item--balance { --quick-accent: #34d399; }
+.quick-item--curve { --quick-accent: #2dd4bf; }
+.quick-item--cable { --quick-accent: #a78bfa; }
+.quick-item--schema { --quick-accent: #4ade80; }
+.quick-item--pdf { --quick-accent: #f87171; }
+.quick-item--train { --quick-accent: #a78bfa; }
+.quick-item--sim { --quick-accent: #e30613; }
+.quick-item--oibt { --quick-accent: #38bdf8; }
+.quick-item--quote { --quick-accent: #fb923c; }
+
+.quick-preview {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  padding: 8px 8px 0;
+  flex-shrink: 0;
+}
+
+.quick-preview img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.quick-item .ico-label {
+  display: block;
+  padding: 10px 10px 2px;
+  font-size: 0.88rem;
+  font-weight: 800;
+  text-align: center;
+  color: #fff;
+  line-height: 1.25;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+}
+
+/* Legacy hints hidden — titre seul comme mockup validé */
+.quick-item .ico-hint,
+.quick-item .quick-labels .ico-hint {
+  display: none;
+}
+
+.quick-item .quick-labels {
+  display: contents;
+}
+
+@media (max-width: 1100px) {
+  .quick-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .quick-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .quick-item .ico-label {
+    font-size: 0.82rem;
+    padding: 8px 8px 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .quick-grid {
+    gap: 10px;
+  }
+
+  .quick-preview {
+    padding: 6px 6px 0;
+  }
+
+  .quick-preview img {
+    border-radius: 10px;
+  }
+
+  .quick-item {
+    border-radius: 14px;
+    padding-bottom: 10px;
+  }
+
+  .quick-item .ico-label {
+    font-size: 0.76rem;
+  }
+}
