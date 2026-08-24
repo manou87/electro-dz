@@ -653,6 +653,8 @@ html.theme-electric-neon .type-card {
 html.theme-electric-neon .picker-mode-btn,
 html.theme-electric-neon .sub-type-btn,
 html.theme-electric-neon .voltage-btn,
+html.theme-electric-neon .drop-pct-btn,
+html.theme-electric-neon .calc-chip-btn,
 html.theme-electric-neon .focus-expand {
   background: rgba(6, 10, 18, 0.85) !important;
   color: var(--muted) !important;
@@ -750,6 +752,8 @@ html.theme-electric-neon .sub-type-btn.active,
 html.theme-electric-neon .type-chip.active,
 html.theme-electric-neon .focus-chip.active,
 html.theme-electric-neon .voltage-btn.active,
+html.theme-electric-neon .drop-pct-btn.active,
+html.theme-electric-neon .calc-chip-btn.active,
 html.theme-electric-neon .btn-calc,
 html.theme-electric-neon .btn-primary {
   box-shadow: 0 0 16px rgba(250, 204, 21, 0.35);
@@ -863,6 +867,8 @@ html.theme-electric-neon .sub-type-btn.active,
 html.theme-electric-neon .type-chip.active,
 html.theme-electric-neon .focus-chip.active,
 html.theme-electric-neon .voltage-btn.active,
+html.theme-electric-neon .drop-pct-btn.active,
+html.theme-electric-neon .calc-chip-btn.active,
 html.theme-electric-neon .lang-btn.active,
 html.theme-electric-neon .ec-btn--primary,
 html.theme-electric-neon .btn-primary,

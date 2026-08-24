@@ -13,6 +13,11 @@
     800, 1000, 1250, 1600, 2000, 2500,
   ];
 
+  /** Calibres MCB modulaires (CEI 60898-1) — max 125 A (ex. Acti9 NG125, Hager NBN160). */
+  const MCB_BREAKER_A = [
+    1, 2, 3, 4, 6, 10, 13, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125,
+  ];
+
   /** Calibres Tableau 10 NF / Ib câble (+ TGBT industriel jusqu'à 2500 A) */
   const IB_A = [
     10, 13, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630,
@@ -30,6 +35,7 @@
   g.ElectroDzCalcStandards = {
     SECTIONS_MM2,
     BREAKER_A,
+    MCB_BREAKER_A,
     IB_A,
     DDR_MA,
     TRANSFO_KVA,
@@ -101,6 +107,13 @@
     document.querySelectorAll('select[data-std="breaker"]').forEach((el) => {
       const def = el.dataset.default || '16';
       fillSelect(el, S.BREAKER_A, { format: fmtA, defaultValue: def });
+    });
+
+    document.querySelectorAll('select[data-std="mcb"]').forEach((el) => {
+      const def = el.dataset.default || '16';
+      const cur = el.value;
+      const pick = (cur && S.MCB_BREAKER_A.some((v) => String(v) === cur)) ? cur : def;
+      fillSelect(el, S.MCB_BREAKER_A, { format: fmtA, defaultValue: pick });
     });
 
     document.querySelectorAll('select[data-std="ddr-ma"]').forEach((el) => {

@@ -8,6 +8,32 @@ const LB={fr:{invalidValues:'Veuillez entrer des valeurs numériques valides',co
 function getT(l){const k=l==='ar'?'ar':'fr';return {...LB[k],...(I18N[k]||I18N.fr)};}
 function cableTextTpl(tpl,vars){return tpl.replace(/\{(\w+)\}/g,(_,k)=>String(vars[k]??''));}
 
+/** Réactance linéique typique câbles BT — ≈ 0,08 Ω/km */
+const CABLE_X_OHM_PER_M = 0.08 / 1000;
+function parseCosPhiInput(raw) {
+  if (raw == null || String(raw).trim() === '') return null;
+  const n = parseFloat(String(raw).trim().replace(',', '.'));
+  if (!Number.isFinite(n) || n <= 0 || n > 1) return null;
+  return n;
+}
+function cableVoltageDropVolts(b, currentA, lengthM, sectionMm2, cosPhi, kappa) {
+  const c = Math.min(1, Math.max(0, cosPhi));
+  const sinPhi = Math.sqrt(Math.max(0, 1 - c * c));
+  const r = 1 / (kappa * sectionMm2);
+  return b * currentA * lengthM * (r * c + CABLE_X_OHM_PER_M * sinPhi);
+}
+function estimateSectionForMaxDrop(b, currentA, lengthM, deltaUmaxV, cosPhi, kappa) {
+  const solve = (c) => {
+    const cosP = Math.min(1, Math.max(1e-6, c));
+    const sinP = Math.sqrt(Math.max(0, 1 - cosP * cosP));
+    const reactive = b * currentA * lengthM * CABLE_X_OHM_PER_M * sinP;
+    const room = deltaUmaxV - reactive;
+    if (room <= 1e-9) return Number.POSITIVE_INFINITY;
+    return (b * currentA * lengthM * cosP) / (kappa * room);
+  };
+  return Math.max(solve(cosPhi), solve(1));
+}
+
 const normalizedSections = [1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240, 300, 400, 500, 630, 800, 1000];
 // Calibres de disjoncteurs normalisés IEC 60364-5-52
 const normalizedBreakerCalibers = [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000, 2500];
@@ -102,7 +128,17 @@ const maxVoltageDrops = {
     power: 5, // Force motrice 5%
     mixed: 4 // Installation mixte 4%
 };
-const installationMethods = [{ id: 'A1' }, { id: 'A2' }, { id: 'B1' }, { id: 'B2' }, { id: 'C' }, { id: 'D1' }, { id: 'D2' }, { id: 'E' }, { id: 'F' }, { id: 'G' }];
+const installationMethods = [
+  { id: 'A1', factor: 0.7 }, { id: 'A2', factor: 0.7 }, { id: 'B1', factor: 1.0 },
+  { id: 'B2', factor: 0.9 }, { id: 'C', factor: 1.0 }, { id: 'D1', factor: 0.8 },
+  { id: 'D2', factor: 1.0 }, { id: 'E', factor: 0.85 }, { id: 'F', factor: 0.75 }, { id: 'G', factor: 0.8 },
+];
+function resolveInstallMethod(t, id) {
+  const meta = installationMethods.find((m) => m.id === id) || installationMethods.find((m) => m.id === 'B1');
+  const name = (t && t[`installMethod_${id}_name`]) || id || 'B1';
+  const factor = meta && Number.isFinite(meta.factor) ? meta.factor : 1;
+  return { id: id || 'B1', name, factor };
+}
 function calculatePower(opts) {
     const lang = opts.lang || 'ar';
     const current = String(opts.current ?? '');
@@ -191,6 +227,7 @@ function calculateCableSection(opts) {
     const lang = opts.lang || 'ar';
     const t = getT(lang);
     const current = String(opts.current ?? '');
+    const power = String(opts.power ?? '');
     const length = String(opts.length ?? '');
     const voltage = String(opts.voltage ?? '230');
     const cosPhi = String(opts.cosPhi ?? '0.85');
@@ -199,40 +236,48 @@ function calculateCableSection(opts) {
     const conductorType = opts.conductorType || 'Cu';
     const insulationType = opts.insulationType || 'PVC';
     const selectedMethod = opts.selectedMethod || 'B1';
-    if (!current || !length) {
+    const maxDropOpt = String(opts.maxDropPercent ?? opts.maxVoltageDropPercent ?? '4');
+    if (!length) {
         return { error: true, message: t.calcAlertCurrentLength };
     }
-    const I = parseFloat(current);
-    const isTriphase = voltage === '400'; // Utiliser l'état voltage existant
+    const isTriphase = voltage === '400';
     const U = isTriphase ? 400 : 230;
-    const L = parseFloat(length);
-    const cosPhiValue = parseFloat(cosPhi) || 0.85; // Valeur par défaut
-    const temp = parseFloat(temperature) || 20; // Température par défaut
+    const L = parseFloat(String(length).replace(',', '.'));
+    const cosPhiValue = parseCosPhiInput(cosPhi);
+    const temp = parseFloat(String(temperature).replace(',', '.')) || 20;
     const requestedCircuits = parseInt(circuitCount, 10);
     const circuits = Number.isFinite(requestedCircuits)
         ? Math.min(IEC_GROUPING_MAX_CIRCUITS, Math.max(IEC_GROUPING_MIN_CIRCUITS, requestedCircuits))
         : IEC_GROUPING_MIN_CIRCUITS;
-    if (String(circuits) !== circuitCount) {
-        setCircuitCount(String(circuits));
+    if (cosPhiValue == null) {
+        return { error: true, message: t.calcAlertCosPhiRange || t.invalidValues };
     }
-    // Calcul de la puissance à partir de l'intensité et de la tension
-    // P = U * I * cosPhi * (sqrt(3) en triphasé, 1 en monophasé)
-    const P = isTriphase
-        ? U * I * cosPhiValue * Math.sqrt(3)
-        : U * I * cosPhiValue;
-    // Conductivité (κ) selon le matériau (56 pour Cuivre, 37 pour Aluminium)
+    const Pinput = parseFloat(String(power || '').replace(',', '.'));
+    const hasPower = Number.isFinite(Pinput) && Pinput > 0;
+    let I = parseFloat(String(current || '').replace(',', '.'));
+    if (hasPower) {
+        I = isTriphase
+            ? Pinput / (U * cosPhiValue * Math.sqrt(3))
+            : Pinput / (U * cosPhiValue);
+    } else if (!current || !Number.isFinite(I) || I <= 0) {
+        return { error: true, message: t.calcAlertCurrentLength };
+    }
+    const P = hasPower
+        ? Pinput
+        : isTriphase
+            ? U * I * cosPhiValue * Math.sqrt(3)
+            : U * I * cosPhiValue;
     const kappa = conductorType === 'Cu' ? 56 : 37;
-    if (isNaN(I) || isNaN(U) || isNaN(L) || isNaN(cosPhiValue) || isNaN(temp) || isNaN(circuits)) {
+    if (isNaN(I) || isNaN(U) || isNaN(L) || isNaN(temp) || isNaN(circuits)) {
         return { error: true, message: t.invalidValues };
     }
-    // Chute de tension maximale
-    const maxDropPercent = maxVoltageDrops['mixed']; // Utiliser 'mixed' par défaut (4%)
+    const parsedDrop = parseInt(maxDropOpt.replace(',', '.'), 10);
+    const maxDropPercent = Number.isFinite(parsedDrop)
+        ? Math.min(10, Math.max(1, parsedDrop))
+        : maxVoltageDrops['mixed'];
     const deltaU = U * (maxDropPercent / 100);
-    // Calcul de la section NORMALE (sans coefficients correctifs) via chute de tension
-    // Formule Monophasé (230V): S = (2 × L × I × cosφ) / (κ × ΔU)
-    // Formule Triphasé (400V): S = (√3 × L × I × cosφ) / (κ × ΔU)
     const b = isTriphase ? Math.sqrt(3) : 2;
-    const S1 = (b * L * I * cosPhiValue) / (kappa * deltaU);
+    const S1 = estimateSectionForMaxDrop(b, I, L, deltaU, cosPhiValue, kappa);
     // Facteurs IEC 60364-5-52 : k1 (température) + k4 (groupement) — Fig. G12 / G16
     const tempFactor = getTemperatureFactor(temp, insulationType);
     const k4Iec = groupingFactorK4Iec60364(selectedMethod, circuits);
@@ -279,7 +324,7 @@ function calculateCableSection(opts) {
             });
             continue;
         }
-        const testVoltageDrop = (b * L * I * cosPhiValue) / (kappa * section);
+        const testVoltageDrop = cableVoltageDropVolts(b, I, L, section, cosPhiValue, kappa);
         const testVoltageDropPercent = (testVoltageDrop / U) * 100;
         if (testVoltageDropPercent > maxDropPercent) {
             const tsDrop = computeThermalSizing(I, section, selectedMethod, circuits, conductorType === 'Cu' ? 'Cu' : 'Al', insulationType, temp);
@@ -320,7 +365,7 @@ function calculateCableSection(opts) {
                 const iPerCable = I / nbCables;
                 const parTs = computeThermalSizing(iPerCable, parSection, selectedMethod, circuits, conductorType === 'Cu' ? 'Cu' : 'Al', insulationType, temp);
                 const parTotalCurrent = parTs.effectiveIz * nbCables;
-                const parVoltageDrop = (b * L * I * cosPhiValue) / (kappa * totalParSection);
+                const parVoltageDrop = cableVoltageDropVolts(b, I, L, totalParSection, cosPhiValue, kappa);
                 const parVoltageDropPercent = (parVoltageDrop / U) * 100;
                 // Vérifier que les câbles en parallèle peuvent supporter l'intensité réelle et respectent la chute de tension
                 if (parTotalCurrent >= I && parVoltageDropPercent <= maxDropPercent) {
@@ -357,7 +402,7 @@ function calculateCableSection(opts) {
             // Aucune alternative trouvée - l'intensité est trop élevée même pour les barres maximales
             // Utiliser la section maximale de câble (240mm²) comme référence mais indiquer qu'il faut consulter un spécialiste
             const correctedCurrent = computeThermalSizing(I, 240, selectedMethod, circuits, conductorType === 'Cu' ? 'Cu' : 'Al', insulationType, temp).effectiveIz;
-            const actualVoltageDrop = (b * L * I * cosPhiValue) / (kappa * 240);
+            const actualVoltageDrop = cableVoltageDropVolts(b, I, L, 240, cosPhiValue, kappa);
             finalVoltageDropPercent = (actualVoltageDrop / U) * 100;
             finalRecommendedSection = 240; // Section maximale pour câbles normalisés
             finalMaxCurrent = correctedCurrent;
@@ -376,7 +421,7 @@ function calculateCableSection(opts) {
     else {
         // Section <= 240mm² conforme
         const correctedCurrent = computeThermalSizing(I, recommendedSection, selectedMethod, circuits, conductorType === 'Cu' ? 'Cu' : 'Al', insulationType, temp).effectiveIz;
-        const actualVoltageDrop = (b * L * I * cosPhiValue) / (kappa * recommendedSection);
+        const actualVoltageDrop = cableVoltageDropVolts(b, I, L, recommendedSection, cosPhiValue, kappa);
         finalVoltageDropPercent = (actualVoltageDrop / U) * 100;
         const isCurrentOk = I <= correctedCurrent;
         const isVoltageDropOk = finalVoltageDropPercent <= maxDropPercent;
@@ -409,24 +454,26 @@ function calculateCableSection(opts) {
     else {
         interpretation = `${cableTextTpl(t.cableInterpOkSection, { mm: String(finalRecommendedSection) })}\n${t.cableInterpAdmissible} ${maxCurrent.toFixed(1)} A\n• ${t.cableInterpVoltageDrop} ${actualVoltageDropPercent.toFixed(2)}% (max: ${maxDropPercent}%)\n${t.cableInterpFactorsApplied}`;
     }
-    const cableMethodName = installationMethods.find(m => m.id === selectedMethod)?.name || 'B1';
+    const installResolved = resolveInstallMethod(t, selectedMethod);
+    const cableMethodName = installResolved.name;
+    const methodFactor = installResolved.factor;
     const cableInsCaption = insulationType === 'PVC' ? t.cableCaptionTempPvc : t.cableCaptionTemp90;
     const cableCalculationDetail = [
-        `${t.calcIntensityLabel} ${I.toFixed(2)} A`,
+        `${t.calcIntensityLabel} ${I.toFixed(2)} A${hasPower ? ` (P = ${P.toFixed(0)} W)` : ''}`,
         `${t.cableInputCableLength}: ${L} m`,
         `${t.conductorType}: ${conductorType === 'Cu' ? t.copper : t.aluminum}`,
         `${t.cableCalcConductivity}: ${kappa}`,
-        `${t.cosPhi}: ${cosPhiValue}`,
+        `${t.cosPhi}: ${cosPhiValue.toFixed(2)}`,
         `${t.cableCalcMaxDeltaU}: ${deltaU.toFixed(2)} V`,
         '',
         t.cableCalcFormulasTitle,
-        `${t.cableCalcLineDrop} (${b.toFixed(3)} × ${L} × ${I} × ${cosPhiValue}) / (${kappa} × ${deltaU.toFixed(2)}) = ${S1.toFixed(2)} mm²`,
+        `ΔU = b×I×L×(r·cosφ + x·sinφ) → S₁ ≥ ${S1.toFixed(2)} mm² (plancher cosφ=1)`,
         `${t.cableCalcLineThermal} = ${requiredCurrent.toFixed(2)} ${t.cableCalcIzCorrected} / ${jadm.toFixed(1)} = ${S2.toFixed(2)} mm² (informatif)`,
         `${t.cableCalcSfin} = ${useAlternatives && alternatives.length > 0 ? alternatives[0].sections : `${finalRecommendedSection} mm²`} (${t.calcSectionNormalizedLabel || 'section normalisée'})`,
         '',
         t.cableCalcIecTitle,
         `${t.cableCalcInsulationLine} ${insulationType} (${cableInsCaption})`,
-        `${t.cableCalcInstallLine} ${cableMethodName} (J_adm = ${jadm.toFixed(1)})`,
+        `${t.cableCalcInstallLine} ${selectedMethod} — ${cableMethodName} (facteur pose ×${methodFactor.toFixed(3)}, J_adm = ${jadm.toFixed(1)}, Iz = ${maxCurrent.toFixed(1)} A)`,
         `${t.cableCalcTempLine} ${temp}°C (×${tempFactor.toFixed(3)})`,
         `${t.cableCalcGroupLine} ${circuits} ${t.cableCalcCircuitsUnit} (k4 CEI 60364-5-52 ×${k4Iec.toFixed(3)})`,
         `${t.cableCalcIzRequiredLine} Ib / (k1·k4) = ${requiredCurrent.toFixed(2)} A`,
@@ -437,7 +484,7 @@ function calculateCableSection(opts) {
     ].join('\n');
     return { ok: true, data: {
             type: 'cable_section',
-            formula: isTriphase ? 'S = (√3 × L × I × cosφ) / (κ × ΔU)' : 'S = (2 × L × I × cosφ) / (κ × ΔU)',
+            formula: `ΔU = b × I × L × (r·cosφ + x·sinφ) ≤ ${maxDropPercent} %`,
             calculation: cableCalculationDetail,
             result: `${useAlternatives && alternatives.length > 0 ? alternatives[0].sections : `${finalRecommendedSection}mm²`}`,
             additionalData: {
@@ -458,9 +505,10 @@ function calculateCableSection(opts) {
                 actualVoltageDrop: actualVoltageDropPercent.toFixed(2),
                 maxVoltageDrop: maxDropPercent,
                 conductorType: conductorType === 'Cu' ? t.copper : t.aluminum,
-                method: installationMethods.find(m => m.id === selectedMethod)?.name || 'B1',
+                method: `${selectedMethod} — ${cableMethodName}`,
+                methodId: selectedMethod,
                 isConform: isConform,
-                methodFactor: 1,
+                methodFactor: methodFactor,
                 tempFactor: tempFactor,
                 groupFactor: k4Iec,
                 insulationType: insulationType,

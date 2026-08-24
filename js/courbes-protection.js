@@ -256,7 +256,7 @@
 
   /**
    * Densifie les ancres catalogue (souvent 5–7 points) en courbe ANALYTIQUE continue
-   * t = K / (m^n − m₀^n) — même principe que le MCB : aucune corde / zigzag visible.
+   * t = K · m^b / (m² − m₀²)^a  — même famille que le MCB CEI (asymptote + vraie courbure).
    * Uniquement pour le DESSIN ; calculs / tooltip restent sur les ancres catalogue.
    */
   function densifyMfgThermalForDraw(anchors, mEnd) {
@@ -275,55 +275,78 @@
       }
       fitPts.push([m, t]);
     }
+
+    const startMultFor = (timeAt) => {
+      const tNeed = 14400 * 1.05;
+      let m = mAsymp * 1.002;
+      for (let k = 0; k < 28; k++) {
+        if (timeAt(m) >= tNeed) return m;
+        m = mAsymp + (m - mAsymp) * 0.5;
+        if (m <= mAsymp * 1.00002) break;
+      }
+      return Math.max(m, mAsymp * 1.00005);
+    };
+
+    const stepNear = (m) => (m < mAsymp * 1.02 ? 1.0007 : m < mAsymp * 1.08 ? 1.002 : m < mAsymp * 1.4 ? 1.006 : 1.012);
+
     if (fitPts.length < 2) {
       const out = [];
       const mHi = Math.max(mEnd || anchors[anchors.length - 1][0], anchors[anchors.length - 1][0]);
-      for (let m = mAsymp * 1.002; m < mHi; m *= 1.012) {
-        out.push([m, Math.min(interpLogLog(anchors, m), 1e6)]);
+      const tAt = (m) => Math.min(interpLogLog(anchors, m), 1e6);
+      for (let m = startMultFor(tAt); m < mHi; m *= stepNear(m)) {
+        out.push([m, tAt(m)]);
       }
-      out.push([mHi, Math.min(interpLogLog(anchors, mHi), 1e6)]);
+      out.push([mHi, tAt(mHi)]);
       return out;
     }
+
     const m0 = mAsymp;
-    let bestN = 2;
+    // Calage type MCB : a ≥ 3 → courbure près de Ir (évite la diagonale log-log).
+    let bestA = 3.5;
+    let bestB = 4;
     let bestK = 1;
     let bestErr = Infinity;
-    for (let n = 1.2; n <= 5.0001; n += 0.05) {
-      let logSum = 0;
-      let count = 0;
-      for (let i = 0; i < fitPts.length; i++) {
-        const m = fitPts[i][0];
-        const t = fitPts[i][1];
-        const den = Math.pow(m, n) - Math.pow(m0, n);
-        if (den <= 0) continue;
-        logSum += Math.log(t * den);
-        count++;
-      }
-      if (count < 2) continue;
-      const K = Math.exp(logSum / count);
-      let err = 0;
-      for (let i = 0; i < fitPts.length; i++) {
-        const m = fitPts[i][0];
-        const t = fitPts[i][1];
-        const den = Math.pow(m, n) - Math.pow(m0, n);
-        if (den <= 0) continue;
-        err += (Math.log(K / den) - Math.log(t)) ** 2;
-      }
-      if (err < bestErr) {
-        bestErr = err;
-        bestN = n;
-        bestK = K;
+    for (let a = 3.0; a <= 5.2001; a += 0.1) {
+      for (let b = 0; b <= 9.0001; b += 0.25) {
+        let logSum = 0;
+        let count = 0;
+        for (let i = 0; i < fitPts.length; i++) {
+          const m = fitPts[i][0];
+          const t = fitPts[i][1];
+          const f = m * m - m0 * m0;
+          if (f <= 0) continue;
+          logSum += Math.log(t * Math.pow(f, a) / Math.pow(m, b));
+          count++;
+        }
+        if (count < 2) continue;
+        const K = Math.exp(logSum / count);
+        let err = 0;
+        for (let i = 0; i < fitPts.length; i++) {
+          const m = fitPts[i][0];
+          const t = fitPts[i][1];
+          const f = m * m - m0 * m0;
+          if (f <= 0) continue;
+          const pred = K * Math.pow(m, b) / Math.pow(f, a);
+          err += (Math.log(pred) - Math.log(t)) ** 2;
+        }
+        if (err < bestErr) {
+          bestErr = err;
+          bestA = a;
+          bestB = b;
+          bestK = K;
+        }
       }
     }
+
     const timeAt = (m) => {
-      const den = Math.pow(m, bestN) - Math.pow(m0, bestN);
-      if (den <= 0) return 1e6;
-      return Math.min(Math.max(bestK / den, 1e-4), 1e6);
+      const f = m * m - m0 * m0;
+      if (f <= 0) return 1e6;
+      return Math.min(Math.max(bestK * Math.pow(m, bestB) / Math.pow(f, bestA), 1e-4), 1e6);
     };
+
     const out = [];
     const mHi = Math.max(mEnd || fitPts[fitPts.length - 1][0], fitPts[fitPts.length - 1][0]);
-    // Très près de l'asymptote pour que t dépasse le haut du graphe (4 h), comme un MCB
-    for (let m = m0 * 1.00015; m < mHi * 0.999; m *= (m < m0 * 1.03 ? 1.003 : 1.012)) {
+    for (let m = startMultFor(timeAt); m < mHi * 0.999; m *= stepNear(m)) {
       out.push([m, timeAt(m)]);
     }
     out.push([mHi, timeAt(mHi)]);
@@ -406,19 +429,15 @@
   /** Points de tracé : long (courbe), palier court (Tsd), palier instantané. */
   function curveDataManufacturer(p) {
     const th = mfgThresholds(p);
-    // Proche de 1,05·Ir pour viser le haut du graphe (asymptote), comme un MCB
-    const startM = th.noTripMult * 1.0002;
     const kneeI = p.hasShortTime ? th.isdA : th.iiA;
     const endM = kneeI / th.irA;
     const scaled = mfgDrawAnchors(p, endM);
+    // Suivre la densification : démarrer au 1er multiple (t ≥ 4 h), pas trop loin de l'asymptote
+    const startM = scaled.length ? scaled[0][0] : th.noTripMult * 1.0004;
     const long = [];
-    for (let m = startM; m < endM * 0.998; m *= (m < th.noTripMult * 1.05 ? 1.004 : 1.008)) {
+    for (let m = startM; m < endM * 0.998; m *= (m < th.noTripMult * 1.01 ? 1.0008 : m < th.noTripMult * 1.03 ? 1.0025 : 1.008)) {
       const t = interpLogLog(scaled, m);
-      long.push({ i: m * th.irA, t: Math.min(Math.max(t, plotYHi * 1.2), Y_DATA_CAP * 5) });
-    }
-    // Garantir un 1er point au-dessus du haut d'axe
-    if (long.length && long[0].t < plotYHi * 1.05) {
-      long.unshift({ i: long[0].i, t: plotYHi * 1.5 });
+      long.push({ i: m * th.irA, t: Math.min(t, Y_DATA_CAP * 5) });
     }
     const tKnee = Math.min(interpLogLog(scaled, endM), Y_DATA_CAP * 5);
     if (!long.length || long[long.length - 1].i < kneeI * 0.995) {
@@ -532,7 +551,7 @@
   let previewIndex = -1; // courbe fantôme (nouvelle protection, formulaire touché)
   let editSnapshot = null;
   let formTouched = false;
-  /** Référence / In / organe / position : reconstruire la courbe amont ou aval sur le graphe. */
+  /** Référence / In / organe : reconstruire la courbe sur le graphe. */
   let rebuildCurveFromForm = false;
   let refreshPending = false;
   let geom = null;       // géométrie du tracé (pour le viseur)
@@ -891,67 +910,68 @@
   function labelCurveIndex() {
     if (editIndex >= 0 && state[editIndex]) return editIndex;
     if (state.length === 1) return 0;
-    const avalIdx = state.findIndex((p) => p.role === 'aval' && (isMfgMccb(p) || isNormMccbB(p)));
-    if (avalIdx >= 0) return avalIdx;
     return state.findIndex((p) => isMfgMccb(p) || isNormMccbB(p));
   }
 
-  /** Pastilles en tête : au plus 2 si plusieurs courbes (amont/aval ou courbe en édition). */
-  function shouldDrawTopLabel(p) {
-    if (state.length <= 2) return true;
-    if (editIndex >= 0) return state[editIndex] === p;
-    return p.role === 'amont' || p.role === 'aval';
-  }
-
-  /** Libellé court sur le graphe (évite les textes longs qui se chevauchent). */
+  /** Libellé court sur le graphe (identité appareil toujours lisible). */
   function shortCanvasLabel(p) {
-    const compact = state.length > 2;
     if (isMfg(p)) {
-      const ref = String(p.deviceLabel || 'NSX').replace(/\s+/g, '');
-      if (compact) return ref;
+      const ref = String(p.deviceLabel || p.deviceId || 'NSX').replace(/\s+/g, '');
       const irA = Math.round(mfgEffectiveIn(p));
-      return /A\s*$/i.test(ref) ? ref : `${ref} ${irA}A`;
+      if (/A\s*$/i.test(ref) || /\d$/.test(ref)) return ref;
+      return state.length > 2 ? `${ref}${irA}` : `${ref} ${irA}A`;
     }
     if (isMccb(p)) {
       const irA = Math.round((p.ir || 1) * p.in);
-      return compact ? `${irA}A` : `MCCB ${irA}A`;
+      return state.length > 2 ? `MCCB${irA}` : `MCCB ${irA}A`;
     }
     if (isFuse(p)) return `${deviceTag(p)}${Math.round(p.in)}`;
     // MCB : C16, D32…
     return `${p.curve || 'C'}${Math.round(p.in)}`;
   }
 
-  /** Bande magnétique (A) pour placer l’étiquette à l’intérieur, hors zone thermique. */
-  function magLabelBand(p) {
+  /**
+   * Point d’ancrage du nom sur la courbe (thermique), pas loin sur le magnétique.
+   * Renvoie { i, t } en ampères / secondes.
+   */
+  function curveLabelAnchor(p) {
     if (isFuse(p)) {
-      const mid = p.in * 8;
-      return { iLo: p.in * 5, iHi: p.in * 12, iMid: mid };
+      const anchors = fuseAnchors(p.dev);
+      const m = Math.min(4, Math.max(2, anchors[Math.min(2, anchors.length - 1)][0]));
+      return { i: m * p.in, t: Math.max(0.05, interpLogLog(anchors, m)) };
     }
     if (isMfgMccb(p) || isNormMccbB(p)) {
       const e = isNormMccbB(p) ? enrichNormMccb(p) : p;
       const th = mfgThresholds(e);
-      if (e.hasShortTime && th.isdA < th.iiA) {
-        return { iLo: th.isdA, iHi: th.iiA, iMid: Math.sqrt(th.isdA * th.iiA) };
-      }
-      // TM : étiquette juste à gauche de Ii (chute verticale)
-      const span = Math.max(th.iiA * 0.12, th.irA * 0.5);
-      return { iLo: th.iiA - span, iHi: th.iiA, iMid: th.iiA - span * 0.35 };
+      const kneeM = Math.max(1.5, (e.hasShortTime ? th.isdA : th.iiA) / th.irA);
+      // Milieu de la branche thermique (≈ 2·Ir), là où la courbe est bien visible
+      const m = Math.min(Math.max(Math.sqrt(1.25 * Math.min(kneeM, 6)), 1.45), kneeM * 0.55);
+      const I = m * th.irA;
+      const scaled = mfgDrawAnchors(e, kneeM);
+      let t = interpLogLog(scaled, m);
+      if (!(t > 0) || !Number.isFinite(t)) t = mfgLongTimeAt(e, I);
+      if (!(t > 0) || !Number.isFinite(t)) t = 1;
+      return { i: I, t };
     }
     if (isMfgMcb(p) && Array.isArray(p.magMult) && p.magMult.length >= 2) {
-      const lo = p.magMult[0] * p.in;
-      const hi = p.magMult[1] * p.in;
-      return { iLo: lo, iHi: hi, iMid: Math.sqrt(lo * hi) };
+      const anchors = p.longAnchors || THERMAL_SLOW;
+      const mMag = p.magMult[0];
+      const m = Math.sqrt(I_NO_TRIP * 1.05 * mMag);
+      return { i: m * p.in, t: Math.max(0.05, interpLogLog(anchors, m) * MFG_TOL_SLOW) };
     }
     if (isMccb(p)) {
       const g = geomOf(p);
-      const lo = g.base * g.magFast;
-      const hi = g.base * g.magSlow;
-      return { iLo: lo, iHi: hi, iMid: Math.sqrt(lo * hi) };
+      const m = Math.sqrt(1.3 * Math.min(g.magFast, 6));
+      const I = m * g.base;
+      const t = boundaryTimeAt(g.base, I, THERMAL_SLOW, g.magSlow, T_INST_SLOW);
+      return { i: I, t: Math.max(0.05, Number.isFinite(t) ? t : 1) };
     }
+    // MCB norme : sur le thermique avant la chute magnétique
     const g = geomOf(p);
-    const lo = g.base * g.magFast;
-    const hi = g.base * g.magSlow;
-    return { iLo: lo, iHi: hi, iMid: Math.sqrt(lo * hi) };
+    const m = Math.sqrt(I_NO_TRIP * 1.05 * g.magFast);
+    const I = m * g.base;
+    const t = boundaryTimeAt(g.base, I, THERMAL_SLOW, g.magSlow, T_INST_SLOW);
+    return { i: I, t: Math.max(0.05, Number.isFinite(t) ? t : 1) };
   }
 
   /** Pastille texte (fond lisible sur la courbe). */
@@ -978,67 +998,51 @@
   }
 
   /**
-   * Étiquettes dans la zone MAGNÉTIQUE (pas en tête) :
-   * nom appareil (C16, NSX100…) — taille adaptée à la largeur de la bande.
-   * Laisse la zone thermique libre pour lire les détails.
+   * Étiquettes collées à la branche thermique de chaque courbe.
    */
   function drawCurveTopLabels(ctx, sx, sy, padL, padT, plotW, plotH) {
-    const visible = state.filter(shouldDrawTopLabel);
-    if (!visible.length) return;
+    if (!state.length) return;
     const th = activeDrawTheme;
     const padEdge = 6;
     const xMin = padL + padEdge;
     const xMax = padL + plotW - padEdge;
-    // Hauteur typique du palier / chute magnétique (échelle log)
-    const tMag = Math.max(plotYLo * 2, Math.min(0.2, Math.sqrt(plotYLo * 1)));
+    const yMin = padT + 12;
+    const yMax = padT + plotH - 12;
 
-    const items = visible.map((p) => {
-      const idx = state.indexOf(p);
+    const items = state.map((p, idx) => {
       const text = shortCanvasLabel(p);
-      const band = magLabelBand(p);
-      let xLo = sx(band.iLo);
-      let xHi = sx(band.iHi);
-      if (xHi < xLo) { const tmp = xLo; xLo = xHi; xHi = tmp; }
-      const bandPx = Math.max(8, xHi - xLo);
-      // Police proportionnelle à la bande magnétique (étroite = petit texte)
-      const fontPx = Math.max(7, Math.min(12, bandPx * 0.42));
+      const anchor = curveLabelAnchor(p);
+      const fontPx = state.length > 2 ? 9 : 10;
       ctx.font = `bold ${fontPx}px system-ui,sans-serif`;
       const w = ctx.measureText(text).width + Math.max(6, fontPx * 0.9);
-      let x = sx(band.iMid);
-      // Centrer dans la bande si la pastille tient, sinon coller au milieu disponible
-      if (w < bandPx - 2) {
-        x = (xLo + xHi) / 2;
-      } else {
-        x = Math.min(xHi - 2, Math.max(xLo + 2, x));
-      }
+      let x = sx(anchor.i);
+      let y = sy(anchor.t);
+      // Légèrement au-dessus / à droite de la courbe pour ne pas la masquer
+      x += Math.min(18, w * 0.15);
+      y -= 10 + idx * 2;
       x = Math.max(xMin + w / 2, Math.min(xMax - w / 2, x));
-      let tLabel = tMag;
-      if (isMfgMccb(p) || isNormMccbB(p)) {
-        const e = isNormMccbB(p) ? enrichNormMccb(p) : p;
-        tLabel = Math.max(e.instTS || 0.02, plotYLo * 1.5) * 3;
-      } else if (!isFuse(p)) {
-        tLabel = Math.max(T_INST_SLOW * 4, 0.04);
-      } else {
-        tLabel = 0.05;
-      }
-      tLabel = Math.max(plotYLo * 1.2, Math.min(plotYHi * 0.35, tLabel));
-      const y = sy(tLabel);
-      // Décalage vertical si chevauchement
-      return { p, idx, text, x, y, w, fontPx, bandPx };
-    }).sort((a, b) => a.x - b.x);
+      y = Math.max(yMin, Math.min(yMax, y));
+      return { p, idx, text, x, y, w, fontPx };
+    }).sort((a, b) => a.x - b.x || a.idx - b.idx);
 
     const placed = [];
     items.forEach((it) => {
       let y = it.y;
+      let x = it.x;
       let guard = 0;
-      while (guard++ < 6) {
-        const hit = placed.some((o) => Math.abs(o.x - it.x) < (o.w + it.w) / 2 + 4
-          && Math.abs(o.y - y) < 14);
+      while (guard++ < 10) {
+        const hit = placed.some((o) => Math.abs(o.x - x) < (o.w + it.w) / 2 + 6
+          && Math.abs(o.y - y) < 15);
         if (!hit) break;
-        y -= 13;
+        y -= 14;
+        if (y < yMin + 4) {
+          y = it.y + 14;
+          x += 12;
+        }
       }
-      y = Math.max(padT + 10, Math.min(padT + plotH - 10, y));
-      placed.push({ ...it, y });
+      x = Math.max(xMin + it.w / 2, Math.min(xMax - it.w / 2, x));
+      y = Math.max(yMin, Math.min(yMax, y));
+      placed.push({ ...it, x, y });
     });
 
     placed.forEach((it) => {
@@ -1136,14 +1140,6 @@
       const above = pts[i].t > plotYHi;
       if (above && !(i + 1 < pts.length && pts[i + 1].t <= plotYHi)) continue;
       out.push({ x: sx(pts[i].i), y: sy(pts[i].t) });
-    }
-    // Comme le MCB : si le 1er point utile est sous le haut du graphe (ex. MCCB
-    // à ~1,05·Ir avec t < 4 h), prolonger verticalement jusqu'au bord haut.
-    if (out.length) {
-      const topY = sy(plotYHi);
-      if (out[0].y > topY + 0.75) {
-        out.unshift({ x: out[0].x, y: topY });
-      }
     }
     return out;
   }
@@ -1805,21 +1801,16 @@
 
     // ——— TM / Cat.A : thermique lisse (modèle continu) jusqu'au Ii, puis verticale ———
     if (!d.hasShortTime) {
-      const m0 = th.noTripMult * 1.0002;
-      const mEnd = Math.max(m0 * 1.01, th.iiA / th.irA);
+      const mEnd = Math.max(th.noTripMult * 1.01, th.iiA / th.irA);
       const scaled = mfgDrawAnchors(p, mEnd);
+      const m0 = scaled.length ? scaled[0][0] : th.noTripMult * 1.0004;
       const slowRaw = [];
       const fastRaw = [];
-      for (let m = m0; m < mEnd * 0.998; m *= (m < th.noTripMult * 1.05 ? 1.004 : 1.008)) {
+      for (let m = m0; m < mEnd * 0.998; m *= (m < th.noTripMult * 1.01 ? 1.0008 : m < th.noTripMult * 1.03 ? 1.0025 : 1.008)) {
         const t = interpLogLog(scaled, m);
         const I = m * th.irA;
-        const tClip = Math.max(t, plotYHi * 1.2);
-        slowRaw.push({ i: I, t: Math.min(tClip * MFG_TOL_SLOW, Y_DATA_CAP * 5) });
-        fastRaw.push({ i: I, t: Math.min(tClip * MFG_TOL_FAST, Y_DATA_CAP * 5) });
-      }
-      if (slowRaw.length && slowRaw[0].t < plotYHi * 1.05) {
-        slowRaw.unshift({ i: slowRaw[0].i, t: plotYHi * 1.5 });
-        fastRaw.unshift({ i: fastRaw[0].i, t: plotYHi * 1.5 });
+        slowRaw.push({ i: I, t: Math.min(t * MFG_TOL_SLOW, Y_DATA_CAP * 5) });
+        fastRaw.push({ i: I, t: Math.min(t * MFG_TOL_FAST, Y_DATA_CAP * 5) });
       }
       const tSlowIi = Math.min(interpLogLog(scaled, mEnd) * MFG_TOL_SLOW, Y_DATA_CAP * 5);
       const tFastIi = Math.min(interpLogLog(scaled, mEnd) * MFG_TOL_FAST, Y_DATA_CAP * 5);
@@ -2147,14 +2138,10 @@
     box.className = 'tc-verdict';
     if (state.length < 2) { box.innerHTML = ''; return; }
 
-    // Rôles explicites prioritaires ; sinon repli sur le calibre (plus gros = amont)
-    let up = state.find((p) => p.role === 'amont');
-    let down = state.find((p) => p.role === 'aval');
-    if (!up || !down) {
-      const sorted = [...state].sort((a, b) => b.in - a.in);
-      up = up || sorted[0];
-      down = down || sorted[sorted.length - 1];
-    }
+    // Plus gros calibre = amont, plus petit = aval (comparaison)
+    const sorted = [...state].sort((a, b) => b.in - a.in);
+    let up = sorted[0];
+    let down = sorted[sorted.length - 1];
     if (!up || !down || up === down || up.in === down.in) { box.innerHTML = ''; selStatus = ''; return; }
     // cohérence : l'amont doit avoir un calibre ≥ aval
     if (up.in < down.in) { const tmp = up; up = down; down = tmp; }
@@ -2257,7 +2244,7 @@
             + `${tr('canecoLineZs').replace('{z}', fmtOhmBrief(loop.zsOhm))} · `
             + `${tr('canecoLineIa').replace('{i}', fmtABrief(loop.iaA))}`,
         });
-        const ref = state.find((p) => p.role === 'aval') || [...state].sort((a, b) => a.in - b.in)[0];
+        const ref = [...state].sort((a, b) => a.in - b.in)[0];
         const inA = ref?.in || parseFloat(document.getElementById('tc-in')?.value);
         const curve = ref?.curve || 'C';
         const extra = g.ElectroDzCalcExtra;
@@ -2297,9 +2284,8 @@
     if (!cable) {
       lines.push({ cls: 'info', html: tr('tcCableInfo') });
     } else {
-      // disjoncteur de référence : l'aval explicite, sinon le plus petit calibre
-      const ref = state.find((p) => p.role === 'aval')
-        || [...state].sort((a, b) => a.in - b.in)[0];
+      // disjoncteur de référence : le plus petit calibre
+      const ref = [...state].sort((a, b) => a.in - b.in)[0];
       const matLbl = tr(cable.mat === 'al' ? 'tcMatAl' : 'tcMatCu');
       if (!ref) {
         lines.push({ cls: 'info', html: tr('tcCableInfo') });
@@ -2392,7 +2378,7 @@
   function applyLivePreview() {
     rebuildCurveFromForm = false;
     if (editIndex < 0 || editIndex >= state.length) return;
-    const p = makeDeviceFromForm(null, { preview: true });
+    const p = makeDeviceFromForm({ preview: true });
     if (!p) return;
     p.color = state[editIndex].color;
     p.colorIdx = state[editIndex].colorIdx;
@@ -2414,8 +2400,6 @@
     const modeEl = document.getElementById('tc-mode');
     if (modeEl) modeEl.value = 'norm';
     g.ElectroDzTripCurveCatalog?.syncModeUI?.();
-    const roleEl = document.getElementById('tc-role');
-    if (roleEl) roleEl.value = p.role || 'autre';
     let dev = p.dev || 'mcb';
     if (dev === 'mfg_mcb') dev = 'mcb';
     if (dev === 'mfg_mccb') dev = 'mccb';
@@ -2454,10 +2438,7 @@
   function loadIntoForm(p) {
     const Cat = g.ElectroDzTripCurveCatalog;
     if (isMfg(p) && Cat?.loadProfileIntoForm) {
-      return Cat.loadProfileIntoForm(p).then(() => {
-        const roleEl = document.getElementById('tc-role');
-        if (roleEl) roleEl.value = p.role || 'autre';
-      });
+      return Cat.loadProfileIntoForm(p);
     }
     loadNormIntoForm(p);
     return Promise.resolve();
@@ -2488,14 +2469,12 @@
     }
     if (hint) hint.hidden = false;
     box.innerHTML = state.map((p, i) => {
-      const roleCls = p.role === 'amont' ? ' tc-role-amont' : p.role === 'aval' ? ' tc-role-aval' : '';
-      const roleLbl = p.role === 'amont' ? tr('tcRoleAmont') : p.role === 'aval' ? tr('tcRoleAval') : '';
       const editCls = i === editIndex ? ' tc-chip-edit' : '';
       const prevCls = p._preview ? ' tc-chip-preview' : '';
       const colName = curveColorName(p, i);
-      const title = `${roleLbl ? roleLbl + ' — ' : ''}#${i + 1} ${colName} — ${legendChipTitle(p)} · ${tr('tcEditHint')}`;
+      const title = `#${i + 1} ${colName} — ${legendChipTitle(p)} · ${tr('tcEditHint')}`;
       const removeLbl = tr('tcRemoveCurve');
-      return `<div class="tc-chip${roleCls}${editCls}${prevCls}" style="--tc-chip:${p.color}">
+      return `<div class="tc-chip${editCls}${prevCls}" style="--tc-chip:${p.color}">
         <button type="button" class="tc-chip-btn" data-tc-edit="${i}" title="${escapeAttr(title)}" aria-pressed="${i === editIndex ? 'true' : 'false'}">
           <span class="tc-dot" style="background:${p.color}" aria-hidden="true">${i + 1}</span>
           <span class="tc-chip-lbl">${escapeAttr(legendChipShort(p, i))}</span>
@@ -2549,7 +2528,7 @@
       if (tsdEl) tsdEl.textContent = '';
       if (iiEl) iiEl.textContent = '';
     };
-    const p = makeDeviceFromForm(null, { preview: true });
+    const p = makeDeviceFromForm({ preview: true });
     if (!p || p.dev === 'mfg_mcb') { clear(); return; }
     const irA = Math.round((p.fixedIr ? 1 : (p.ir || 1)) * p.in);
     if (irEl && !p.fixedIr) irEl.textContent = trTpl('tcLiveIr', { ir: p.ir || 1, irA });
@@ -2578,10 +2557,9 @@
     draw(document.getElementById('tc-canvas'));
   }
 
-  function makeDeviceFromForm(roleOverride, opts) {
+  function makeDeviceFromForm(opts) {
     const Cat = g.ElectroDzTripCurveCatalog;
     const mode = Cat ? Cat.getMode() : 'norm';
-    const role = roleOverride || 'autre';
 
     if (mode === 'mfg' || mode === 'schneider') {
       const hint = document.getElementById('tc-settings-hint');
@@ -2589,7 +2567,7 @@
       const profile = Cat.getActiveProfile();
       if (!profile) return null;
       const devType = profile.deviceType === 'mcb' ? 'mfg_mcb' : 'mfg_mccb';
-      const p = { in: profile.in, curve: profile.curve || 'C', role, dev: devType, color: '' };
+      const p = { in: profile.in, curve: profile.curve || 'C', dev: devType, color: '' };
       Object.assign(p, profile, { dev: devType });
       if (devType === 'mfg_mcb') {
         p.curve = profile.curve || 'C';
@@ -2608,7 +2586,7 @@
     const dev = dEl?.value || 'mcb';
     if (isNaN(inA) || inA <= 0) return null;
     const p = {
-      in: inA, curve, role, dev, color: '',
+      in: inA, curve, dev, color: '',
       supportsTr: false,
       tr: null,
     };
@@ -2796,16 +2774,15 @@
     previewIndex = -1;
     if (state.length >= 8 && editIndex < 0) return false;
     delete p._preview;
-    // Plusieurs courbes amont/aval autorisées pour comparaison — pas de dédup.
+    // Plusieurs courbes autorisées pour comparaison — pas de dédup.
     assignCurveColor(p);
     state.push(p);
     refresh();
     return true;
   }
 
-  function add(inA, curve, role, dev, opts) {
-    const r = role || 'autre';
-    const p = { in: inA, curve, role: r, dev: dev || 'mcb', color: '' };
+  function add(inA, curve, _role, dev, opts) {
+    const p = { in: inA, curve, dev: dev || 'mcb', color: '' };
     if (dev === 'mccb') {
       p.mccbCat = (opts && opts.mccbCat) || 'A';
       p.ir = (opts && opts.ir) || 1;
@@ -2824,8 +2801,8 @@
     return pushDevice(p);
   }
 
-  function addMfg(role) {
-    const p = makeDeviceFromForm(role);
+  function addMfg() {
+    const p = makeDeviceFromForm();
     if (!p) return;
     pushDevice(p);
   }
@@ -2930,8 +2907,7 @@
   }
   /** Ouvre une fenêtre imprimable (image + verdicts) → l'utilisateur enregistre en PDF. */
   function formatStudyLine(p, idx) {
-    const role = p.role === 'amont' ? tr('tcRoleAmont') : p.role === 'aval' ? tr('tcRoleAval') : tr('tcRoleNone');
-    let line = `${idx + 1}. [${role}] `;
+    let line = `${idx + 1}. `;
     if (isMfg(p)) {
       line += `${p.brand || ''} ${p.deviceLabel || ''} · ${p.tripUnitLabel || ''} · In ${p.in} A`;
       if (isMfgMccb(p)) {
@@ -3137,7 +3113,7 @@
     }
   }
 
-  /** Exemple pro : NSX160 Micrologic 2.3 (amont) + NSX100 Micrologic 2.3 (aval) — DOCA0141. */
+  /** Exemple pro : NSX160 Micrologic 2.3 + NSX100 Micrologic 2.3 — DOCA0141. */
   function loadPilotNsx160() {
     const Cat = g.ElectroDzTripCurveCatalog;
     const run = () => {
@@ -3152,7 +3128,6 @@
       const brandEl = document.getElementById('tc-mfg-brand');
       if (brandEl) brandEl.value = 'schneider';
       Cat?.reloadCatalog(() => {
-        const roleEl = document.getElementById('tc-role');
         if (devEl) devEl.value = 'nsx160';
         Cat?.syncMfgCascade();
         if (inEl) inEl.value = '160';
@@ -3169,21 +3144,19 @@
         if (iiOff) iiOff.checked = false;
         const iccEl = document.getElementById('tc-icc');
         if (iccEl) iccEl.value = '6000';
-        if (roleEl) roleEl.value = 'amont';
-        addMfg('amont');
+        addMfg();
         if (devEl) devEl.value = 'nsx100';
         Cat?.syncMfgCascade();
         const dev100 = Cat?.findDevice?.('nsx100');
-        const inAval = dev100?.inRatings?.length
+        const inDown = dev100?.inRatings?.length
           ? String(dev100.inRatings[dev100.inRatings.length - 1])
           : '63';
-        if (inEl) inEl.value = inAval;
+        if (inEl) inEl.value = inDown;
         if (tuEl) tuEl.value = 'micrologic_2_3';
         Cat?.syncMfgCascade();
         document.getElementById('tc-ir').value = '0.8';
         document.getElementById('tc-isd').value = '2';
-        if (roleEl) roleEl.value = 'aval';
-        addMfg('aval');
+        addMfg();
         refresh();
       });
     };

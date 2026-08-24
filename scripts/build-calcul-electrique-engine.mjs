@@ -66,18 +66,21 @@ const LANG_BASE = extractLangKeys(LANG_KEYS);
 const i18nFr = extractObj('calculatorExtraFr');
 const i18nAr = extractObj('calculatorExtraAr');
 
-const helpers = slice(72, 168); // cableTextTpl through estimateIkFromLineLoop
-const ddrMeta = slice(303, 341);
-const getCompatible = slice(525, 538);
-const copperConst = slice(365, 370);
-const transformerBlock = slice(494, 516);
+const helpers = [
+  slice(148, 225), // LINE_RHO, cosφ, ΔU R+X, estimateIk
+  slice(317, 323), // cableTextTpl
+].join('\n');
+const ddrMeta = slice(362, 414); // DDR_SELECTIVITY_META + buildDdrSelectivityMatrix
+const getCompatible = slice(583, 596); // getCompatibleTypes
+const copperConst = slice(424, 428); // COPPER_CONSTANTS
+const transformerBlock = slice(555, 575); // transformerData
 
 const constBlock = [
-  slice(357, 362),
-  slice(394, 471),
-  slice(471, 488),
-  slice(489, 494),
-  slice(518, 524),
+  slice(415, 419), // normalizedSections + breakers
+  slice(433, 445), // baseCurrents Cu/Al
+  slice(452, 545), // temp factors + getTemperatureFactor + grouping + IEC_GROUPING
+  slice(548, 554), // conductorResistivity
+  slice(577, 581), // maxVoltageDrops
 ].join('\n');
 
 const fns = [
@@ -127,6 +130,7 @@ function portCableSection(body) {
   const lang = opts.lang || 'ar';
   const t = getT(lang);
   const current = String(opts.current ?? '');
+  const power = String(opts.power ?? '');
   const length = String(opts.length ?? '');
   const voltage = String(opts.voltage ?? '230');
   const cosPhi = String(opts.cosPhi ?? '0.85');
