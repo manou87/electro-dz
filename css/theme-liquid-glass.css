@@ -209,7 +209,7 @@ html.theme-liquid-glass .quick-access {
   background: transparent;
   border: none;
   border-radius: 0;
-  padding: 4px 0 6px;
+  padding: 2px 0 4px;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   box-shadow: none;
@@ -224,7 +224,7 @@ html.theme-liquid-glass .quick-item {
   border: 1px solid var(--lg-glass-border);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  border-radius: 16px;
+  border-radius: 10px;
   box-shadow: none;
 }
 

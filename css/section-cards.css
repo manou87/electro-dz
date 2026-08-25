@@ -1,11 +1,12 @@
-/* Section cards — vignettes 16:9 (accueil #outils) */
+/* Section cards — vignettes 16:9 compactes (accueil #outils)
+   Mode dense : toutes les cartes visibles d’un coup pour revue / correction. */
 
 .quick-access {
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin: 0 0 10px;
-  padding: 4px 0 6px;
+  margin: 0 0 6px;
+  padding: 2px 0 4px;
   min-height: 0;
 }
 
@@ -16,8 +17,8 @@
 .quick-grid {
   flex: 1;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
   align-content: start;
 }
 
@@ -27,21 +28,21 @@
   align-items: stretch;
   gap: 0;
   min-height: 0;
-  padding: 0 0 12px;
+  padding: 0 0 6px;
   position: relative;
   overflow: hidden;
   background: rgba(20, 28, 44, 0.95);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  border-top: 4px solid var(--quick-accent, var(--accent, #facc15));
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
-  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  border-radius: 10px;
+  border-top: 3px solid var(--quick-accent, var(--accent, #facc15));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
 }
 
 .quick-item:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
   border-color: rgba(250, 204, 21, 0.35);
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.38);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.32);
 }
 
 .quick-item--calc { --quick-accent: #facc15; }
@@ -59,7 +60,7 @@
   display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
-  padding: 8px 8px 0;
+  padding: 4px 4px 0;
   flex-shrink: 0;
 }
 
@@ -68,18 +69,18 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 6px;
   background: rgba(0, 0, 0, 0.25);
 }
 
 .quick-item .ico-label {
   display: block;
-  padding: 10px 10px 2px;
-  font-size: 0.88rem;
+  padding: 5px 6px 0;
+  font-size: 0.72rem;
   font-weight: 800;
   text-align: center;
   color: #fff;
-  line-height: 1.25;
+  line-height: 1.2;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
 }
 
@@ -93,43 +94,51 @@
   display: contents;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
   .quick-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (max-width: 960px) {
+  .quick-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 7px;
   }
 }
 
 @media (max-width: 768px) {
   .quick-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
   }
 
   .quick-item .ico-label {
-    font-size: 0.82rem;
-    padding: 8px 8px 0;
+    font-size: 0.68rem;
+    padding: 4px 4px 0;
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 480px) {
   .quick-grid {
-    gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
   }
 
   .quick-preview {
-    padding: 6px 6px 0;
+    padding: 3px 3px 0;
   }
 
   .quick-preview img {
-    border-radius: 10px;
+    border-radius: 5px;
   }
 
   .quick-item {
-    border-radius: 14px;
-    padding-bottom: 10px;
+    border-radius: 8px;
+    padding-bottom: 5px;
   }
 
   .quick-item .ico-label {
-    font-size: 0.76rem;
+    font-size: 0.64rem;
   }
 }
