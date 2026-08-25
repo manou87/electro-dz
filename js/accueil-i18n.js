@@ -24,7 +24,7 @@
       "quick.docs": "Documentation",
       "quick.plans": "Schémas et plans",
       "quick.plans.hint": "Unifilaire, symboles IEC, export & impression",
-      "quick.training": "Formations",
+      "quick.training": "Quiz NF C 15-100",
       "quick.training.hint":
         "472 questions pour maîtriser la norme NF C 15-100, pas à pas",
       "quick.swissdz": "Atelier électrique SwissDZ",
@@ -140,7 +140,7 @@
       "quick.docs": "وثائق",
       "quick.plans": "مخططات ورسوم",
       "quick.plans.hint": "أحادي الطور، رموز IEC، تصدير وطباعة",
-      "quick.training": "تكوين",
+      "quick.training": "اختبار NF C 15-100",
       "quick.training.hint":
         "472 سؤالاً لإتقان معيار NF C 15-100 خطوة بخطوة",
       "quick.swissdz": "ورشة الكهرباء SwissDZ",
