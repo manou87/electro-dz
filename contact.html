@@ -11,40 +11,51 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/site-brand.css" />
   <link rel="icon" href="assets/app-icon.png" type="image/png" />
+  <style>
+    .page-lang-switch{display:flex;gap:6px;margin-inline-start:auto;align-items:center}
+    .page-lang-switch .lang-btn{background:none;border:1px solid rgba(255,255,255,0.35);color:#cbd5e1;padding:4px 10px;border-radius:6px;cursor:pointer;font-weight:700;font-size:.85rem}
+    .page-lang-switch .lang-btn.active{background:#facc15;color:#0f172a;border-color:#facc15}
+    .header-inner{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+  </style>
 </head>
-<body>
+<body data-shell-page="contact">
 
 <header class="site-header">
   <div class="header-inner">
     <a class="logo" href="index.html"><img src="assets/app-icon.png" alt="" class="logo-img" width="40" height="40" decoding="async"/> <span class="logo-text">Swiss<strong>DZ</strong></span></a>
+    <div class="page-lang-switch">
+      <button type="button" class="lang-btn" data-lang="fr" aria-label="Français">FR</button>
+      <button type="button" class="lang-btn" data-lang="ar" aria-label="العربية">AR</button>
+      <button type="button" class="lang-btn" data-lang="en" aria-label="English">EN</button>
+    </div>
     <nav class="main-nav" id="main-nav">
-      <a href="formations.html">Formations</a>
-      <a href="documentation.html">Documentation</a>
-      <a href="calcul-electrique.html">Calculs</a>
-      <a href="emploi.html">Emploi</a>
-      <a href="contact.html" class="active">Contact</a>
-      <a href="support.html">Support</a>
+      <a href="index-fr.html" data-edz-home="1" class="edz-home-link" data-i18n="nav.home">Accueil</a>
+      <a href="formations.html" data-i18n="nav.train">Formations</a>
+      <a href="documentation.html" data-i18n="nav.docs">Documentation</a>
+      <a href="calcul-electrique.html" data-i18n="nav.calc">Calculs</a>
+      <a href="emploi.html" data-i18n="nav.job">Emploi</a>
+      <a href="contact.html" class="active" data-i18n="nav.contact">Contact</a>
+      <a href="support.html" data-i18n="nav.support">Support</a>
     </nav>
     <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </header>
 
 <section class="page-hero">
-  <h1>&#128172; Contactez-nous</h1>
-  <p>Nous sommes disponibles pour vous aider. Rejoignez-nous sur nos reseaux sociaux ou appelez-nous directement.</p>
+  <h1 data-i18n="contact.hero">Contactez-nous</h1>
+  <p data-i18n="contact.heroSub">Nous sommes disponibles pour vous aider. Rejoignez-nous sur nos reseaux sociaux ou appelez-nous directement.</p>
 </section>
 
 <div class="page-content">
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;">
 
-    <!-- COORDONNEES -->
     <div>
-      <h2 style="margin-bottom:24px;font-size:1.3rem;">&#128205; Nos coordonnees</h2>
+      <h2 style="margin-bottom:24px;font-size:1.3rem;" data-i18n="contact.coords">Nos coordonnees</h2>
       <div class="contact-info">
         <div class="contact-item">
           <span class="icon">&#128222;</span>
           <div>
-            <strong>Telephone / WhatsApp</strong><br>
+            <strong data-i18n="contact.phone">Telephone / WhatsApp</strong><br>
             <a href="tel:+213555429960">+213 555 429 960</a>
           </div>
         </div>
@@ -66,56 +77,55 @@
           <span class="icon">&#128172;</span>
           <div>
             <strong>Facebook</strong><br>
-            <a href="https://www.facebook.com/share/1TXqM56Ncd/" target="_blank">Page SwissDZ</a>
+            <a href="https://www.facebook.com/share/1TXqM56Ncd/" target="_blank" data-i18n="contact.fbPage">Page SwissDZ</a>
           </div>
         </div>
         <div class="contact-item">
           <span class="icon">&#9654;</span>
           <div>
             <strong>Google Play</strong><br>
-            <a href="https://play.google.com/store/apps/details?id=com.electrodz.app" target="_blank">Telecharger l'app</a>
+            <a href="https://play.google.com/store/apps/details?id=com.electrodz.app" target="_blank" data-i18n="contact.dlApp">Telecharger l'app</a>
           </div>
         </div>
         <div class="contact-item">
           <span class="icon">&#63743;</span>
           <div>
             <strong>App Store</strong><br>
-            <a href="https://apps.apple.com/ch/app/electrodz/id6752301246?l=fr-FR" target="_blank">Telecharger l'app</a>
+            <a href="https://apps.apple.com/ch/app/electrodz/id6752301246?l=fr-FR" target="_blank" data-i18n="contact.dlApp">Telecharger l'app</a>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- FORMULAIRE -->
     <div>
-      <h2 style="margin-bottom:24px;font-size:1.3rem;">&#9993; Envoyer un message</h2>
+      <h2 style="margin-bottom:24px;font-size:1.3rem;" data-i18n="contact.formTitle">Envoyer un message</h2>
       <form>
         <div class="form-group">
-          <label>Nom complet</label>
-          <input type="text" placeholder="Votre nom" />
+          <label data-i18n="contact.name">Nom complet</label>
+          <input type="text" data-i18n-placeholder="contact.namePh" placeholder="Votre nom" />
         </div>
         <div class="form-group">
-          <label>Email</label>
-          <input type="email" placeholder="votre@email.com" />
+          <label data-i18n="contact.email">Email</label>
+          <input type="email" data-i18n-placeholder="contact.emailPh" placeholder="votre@email.com" />
         </div>
         <div class="form-group">
-          <label>Telephone</label>
+          <label data-i18n="contact.phoneLabel">Telephone</label>
           <input type="tel" placeholder="+213 XXX XXX XXX" />
         </div>
         <div class="form-group">
-          <label>Sujet</label>
+          <label data-i18n="contact.subject">Sujet</label>
           <select>
-            <option>Question sur l'application</option>
-            <option>Signaler un probleme</option>
-            <option>Partenariat</option>
-            <option>Autre</option>
+            <option data-i18n="contact.optApp">Question sur l'application</option>
+            <option data-i18n="contact.optBug">Signaler un probleme</option>
+            <option data-i18n="contact.optPartner">Partenariat</option>
+            <option data-i18n="contact.optOther">Autre</option>
           </select>
         </div>
         <div class="form-group">
-          <label>Message</label>
-          <textarea rows="5" placeholder="Votre message..."></textarea>
+          <label data-i18n="contact.message">Message</label>
+          <textarea rows="5" data-i18n-placeholder="contact.messagePh" placeholder="Votre message..."></textarea>
         </div>
-        <button type="submit" class="btn-primary">Envoyer le message</button>
+        <button type="submit" class="btn-primary" data-i18n="contact.send">Envoyer le message</button>
       </form>
     </div>
   </div>
@@ -128,7 +138,7 @@
         <svg width="28" height="28" viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="8" fill="#F5C518"/><polygon points="20,4 10,20 18,20 16,32 26,16 18,16" fill="#0d1b2a"/></svg>
         <span>Swiss<strong>DZ</strong></span>
       </div>
-      <p>L'outil numerique des electriciens algeriens. 100% gratuit.</p>
+      <p data-i18n="footer.tagline">L'outil numerique des electriciens algeriens. 100% gratuit.</p>
       <div class="footer-social">
         <a href="https://www.tiktok.com/@elektrodzch" target="_blank">TikTok</a>
         <a href="https://youtube.com/@elektro-dz-suisse" target="_blank">YouTube</a>
@@ -136,21 +146,21 @@
       </div>
     </div>
     <div class="footer-col">
-      <h4>Navigation</h4>
-      <a href="formations.html">Formations</a>
-      <a href="documentation.html">Documentation</a>
-      <a href="calcul-electrique.html">Calculs</a>
-      <a href="emploi.html">Emploi</a>
+      <h4 data-i18n="footer.nav">Navigation</h4>
+      <a href="formations.html" data-i18n="nav.train">Formations</a>
+      <a href="documentation.html" data-i18n="nav.docs">Documentation</a>
+      <a href="calcul-electrique.html" data-i18n="nav.calc">Calculs</a>
+      <a href="emploi.html" data-i18n="nav.job">Emploi</a>
     </div>
     <div class="footer-col">
-      <h4>Support</h4>
-      <a href="contact.html">Contact</a>
-      <a href="support.html">Support</a>
-      <a href="privacy.html">Confidentialite</a>
+      <h4 data-i18n="footer.support">Support</h4>
+      <a href="contact.html" data-i18n="nav.contact">Contact</a>
+      <a href="support.html" data-i18n="nav.support">Support</a>
+      <a href="privacy.html" data-i18n="nav.privacy">Confidentialite</a>
       <a href="tel:+213555429960">+213 555 429 960</a>
     </div>
     <div class="footer-col">
-      <h4>Telecharger</h4>
+      <h4 data-i18n="footer.download">Telecharger</h4>
       <a href="https://play.google.com/store/apps/details?id=com.electrodz.app" target="_blank" class="btn-store google sm">Google Play</a>
       <a href="https://apps.apple.com/ch/app/electrodz/id6752301246?l=fr-FR" target="_blank" class="btn-store apple sm">App Store</a>
     </div>
@@ -161,5 +171,6 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script src="js/shell-pages-i18n.js"></script>
 </body>
 </html>

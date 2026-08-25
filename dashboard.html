@@ -10,11 +10,14 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh}
-nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.07);position:sticky;top:0;z-index:100}
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.07);position:sticky;top:0;z-index:100;gap:12px;flex-wrap:wrap}
 .logo{color:#facc15;font-weight:800;font-size:1.05rem;text-decoration:none;display:inline-flex;align-items:center;gap:10px}
-.nav-r{display:flex;align-items:center;gap:12px}
+.nav-r{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .nav-u{color:#94a3b8;font-size:.82rem}
 .btn-out{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.28);color:#fca5a5;font-size:.78rem;font-weight:600;padding:6px 14px;border-radius:8px;cursor:pointer;transition:all .2s}
+.lang-switch{display:flex;gap:6px}
+.lang-btn{background:none;border:1px solid rgba(255,255,255,.35);color:#cbd5e1;padding:4px 10px;border-radius:6px;cursor:pointer;font-weight:700;font-size:.85rem}
+.lang-btn.active{background:#facc15;color:#0f172a;border-color:#facc15}
 .hero{background:linear-gradient(135deg,#0f172a,#1e293b,#162216);padding:40px 28px 32px;border-bottom:1px solid rgba(255,255,255,.07)}
 .inner{max-width:920px;margin:0 auto}
 .badge{display:inline-flex;align-items:center;gap:7px;background:rgba(250,204,21,.09);border:1px solid rgba(250,204,21,.22);color:#facc15;font-size:.73rem;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;padding:4px 12px;border-radius:50px;margin-bottom:14px}
@@ -52,39 +55,47 @@ h1 span{color:#facc15}
 footer{text-align:center;padding:20px;color:#334155;font-size:.75rem;border-top:1px solid rgba(255,255,255,.05)}
 </style>
 </head>
-<body>
+<body data-auth-page="dashboard">
 <nav>
-    <a href="index.html" class="logo"><img src="assets/app-icon.png" alt="" class="logo-img" width="36" height="36" decoding="async"/> SwissDZ</a>  <div class="nav-r">
+  <a href="index-fr.html" class="logo"><img src="assets/app-icon.png" alt="" class="logo-img" width="36" height="36" decoding="async"/> SwissDZ</a>
+  <div class="nav-r">
+    <a href="index-fr.html" data-edz-home="1" class="edz-home-link" data-i18n="nav.home">Accueil</a>
+    <div class="lang-switch">
+      <button type="button" class="lang-btn" data-lang="fr" aria-label="Français">FR</button>
+      <button type="button" class="lang-btn" data-lang="ar" aria-label="العربية">AR</button>
+      <button type="button" class="lang-btn" data-lang="en" aria-label="English">EN</button>
+    </div>
     <span class="nav-u" id="user"></span>
-    <button class="btn-out" id="out">Deconnexion</button>
+    <button class="btn-out" id="out" data-i18n="dash.logout">Deconnexion</button>
   </div>
 </nav>
 <div class="hero">
   <div class="inner">
-    <div class="badge">&#128100; Espace membre</div>
-    <h1>Bienvenue <span id="name"></span></h1>
-    <p class="sub">Telechargez vos videos et documents exclusifs — <a href="bibliotheque.html?favorites=1" style="color:#facc15;font-weight:600">Mes favoris PDF ★</a> · <a href="bibliotheque.html" style="color:#94a3b8">Bibliothèque</a></p>
+    <div class="badge">&#128100; <span data-i18n="dash.badge">Espace membre</span></div>
+    <h1><span data-i18n="dash.welcome">Bienvenue</span> <span id="name"></span></h1>
+    <p class="sub"><span data-i18n="dash.subBefore">Telechargez vos videos et documents exclusifs —</span> <a href="bibliotheque.html?favorites=1" style="color:#facc15;font-weight:600" data-i18n="dash.favLink">Mes favoris PDF ★</a> · <a href="bibliotheque.html" style="color:#94a3b8" data-i18n="dash.libLink">Bibliothèque</a></p>
     <div class="stats">
-      <div class="stat"><span class="stat-i">&#127916;</span><div><div class="stat-v" id="vid">0</div><div class="stat-l">Videos</div></div></div>
-      <div class="stat"><span class="stat-i">&#128196;</span><div><div class="stat-v" id="doc">0</div><div class="stat-l">Documents</div></div></div>
-      <div class="stat"><span class="stat-i">&#128230;</span><div><div class="stat-v" id="tot">0</div><div class="stat-l">Total</div></div></div>
+      <div class="stat"><span class="stat-i">&#127916;</span><div><div class="stat-v" id="vid">0</div><div class="stat-l" data-i18n="dash.statVideos">Videos</div></div></div>
+      <div class="stat"><span class="stat-i">&#128196;</span><div><div class="stat-v" id="doc">0</div><div class="stat-l" data-i18n="dash.statDocs">Documents</div></div></div>
+      <div class="stat"><span class="stat-i">&#128230;</span><div><div class="stat-v" id="tot">0</div><div class="stat-l" data-i18n="dash.statTotal">Total</div></div></div>
     </div>
   </div>
 </div>
 <div class="content">
-  <div class="msg i" id="msg">&#128640; Chargement des fichiers...</div>
-  <div class="sec-lab"><span>Contenus disponibles</span></div>
+  <div class="msg i" id="msg" data-i18n="dash.loading">&#128640; Chargement des fichiers...</div>
+  <div class="sec-lab"><span data-i18n="dash.section">Contenus disponibles</span></div>
   <div class="search">
     <span class="search-i">&#128269;</span>
-    <input type="text" id="srch" placeholder="Rechercher un fichier..."/>
+    <input type="text" id="srch" data-i18n-placeholder="dash.searchPh" placeholder="Rechercher un fichier..."/>
   </div>
   <div class="grid" id="grid"></div>
 </div>
-<footer>&copy; 2026 SwissDZ - <a href="privacy.html" style="color:#475569;text-decoration:none">Confidentialite</a></footer>
+<footer>&copy; 2026 SwissDZ - <a href="privacy.html" style="color:#475569;text-decoration:none" data-i18n="dash.privacy">Confidentialite</a></footer>
 <script src="js/site-config.js"></script>
 <script src="js/oauth-return.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-client.js"></script>
+<script src="js/auth-pages-i18n.js"></script>
 <script src="js/auth-dashboard.js"></script>
 </body>
 </html>

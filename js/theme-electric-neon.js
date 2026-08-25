@@ -6,6 +6,28 @@
 (function () {
   'use strict';
 
+  /* Accueil / Home — chargé même si le thème néon est désactivé */
+  (function loadHomeNav() {
+    if (window.__EDZ_HOME_NAV_SRC__) return;
+    window.__EDZ_HOME_NAV_SRC__ = true;
+    var homeSrc = 'js/site-home-nav.js';
+    var scripts = document.getElementsByTagName('script');
+    var i;
+    for (i = scripts.length - 1; i >= 0; i--) {
+      var src = scripts[i].getAttribute('src');
+      if (src && src.indexOf('theme-electric-neon') !== -1) {
+        homeSrc = src.replace(/theme-electric-neon[^/]*\.js(?:\?.*)?$/, 'site-home-nav.js');
+        break;
+      }
+    }
+    var s = document.createElement('script');
+    s.src = homeSrc;
+    s.async = false;
+    var cur = document.currentScript;
+    if (cur && cur.parentNode) cur.parentNode.insertBefore(s, cur.nextSibling);
+    else (document.head || document.documentElement).appendChild(s);
+  })();
+
   var NEON_ENABLED = true;
   var STORAGE_KEY = 'edz-neon-preview';
   var params = new URLSearchParams(window.location.search);

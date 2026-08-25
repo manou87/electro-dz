@@ -244,8 +244,16 @@
     const nav = mount.querySelector("[data-ec-nav-main]");
     (h.nav || []).forEach(function (item) {
       const a = document.createElement("a");
-      a.href = item.href;
+      var href = item.href;
+      if (item.id === "home") {
+        href = lang === "fr" ? "index-fr.html" : "index.html";
+      }
+      a.href = href;
       a.textContent = t(item.labelFr, item.labelAr);
+      if (item.id === "home") {
+        a.setAttribute("data-edz-home", "1");
+        a.className = "edz-home-link";
+      }
       nav.appendChild(a);
     });
 
