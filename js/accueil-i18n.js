@@ -32,7 +32,10 @@
         "Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel",
       "quick.oibt": "Simulateur OIBT",
       "quick.oibt.hint":
-        "Fluke 1664FC — mesures, câblage & scénarios de contrôle",
+        "Contrôle périodique OIBT — tableau, prises & Fluke",
+      "quick.fluke": "Fluke 1664 FC",
+      "quick.fluke.hint":
+        "Appareil de mesure Fluke 1664 FC — câblage et mesures",
       "quick.cosphi": "SwissDZ Cos φ",
       "quick.cosphi.hint":
         "Batterie de compensation BT — mesurer, corriger, contrôler le facteur de puissance",
@@ -148,7 +151,10 @@
         "أول محاكي للكهربائيين في الجزائر — لوحة، ورشة ومخطط أحادي الطور احترافي",
       "quick.oibt": "محاكي OIBT",
       "quick.oibt.hint":
-        "Fluke 1664FC — قياسات، توصيل وسيناريوهات مراقبة",
+        "مراقبة دورية OIBT — لوحة ومقابس وFluke",
+      "quick.fluke": "Fluke 1664 FC",
+      "quick.fluke.hint":
+        "جهاز القياس Fluke 1664 FC — توصيل وقياسات",
       "quick.cosphi": "SwissDZ Cos φ",
       "quick.cosphi.hint":
         "بطارية تعويض الجهد المنخفض — قياس وتصحيح ومراقبة معامل القدرة",
@@ -265,7 +271,10 @@
         "First simulator for electricians in Algeria — panel, workshop & professional single-line diagram",
       "quick.oibt": "OIBT simulator",
       "quick.oibt.hint":
-        "Fluke 1664FC — measurements, wiring & inspection scenarios",
+        "OIBT periodic inspection — panel, outlets & Fluke",
+      "quick.fluke": "Fluke 1664 FC",
+      "quick.fluke.hint":
+        "Fluke 1664 FC meter — wiring and measurements",
       "quick.cosphi": "SwissDZ Cos φ",
       "quick.cosphi.hint":
         "LV power-factor correction bank — measure, correct, verify",
