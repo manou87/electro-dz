@@ -147,11 +147,19 @@
         methods.forEach((code) => {
           const o = document.createElement('option');
           o.value = code;
-          o.textContent = t[`installMethod_${code}_name`] || code;
+          const name = t[`installMethod_${code}_name`] || code;
+          o.textContent = `${code} — ${name}`;
           el.appendChild(o);
         });
         if ([...el.options].some((o) => o.value === cur)) el.value = cur;
       });
+      const hint = document.getElementById('section-method-hint');
+      if (hint) {
+        const code = document.getElementById('section-method')?.value || 'B1';
+        const name = t[`installMethod_${code}_name`] || code;
+        const desc = t[`installMethod_${code}_desc`] || '';
+        hint.textContent = desc ? `${code} — ${name} : ${desc}` : `${code} — ${name}`;
+      }
     }
   }
 

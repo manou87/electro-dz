@@ -90,10 +90,18 @@
     label{font-size:0.85rem;color:var(--muted);font-weight:600}
     input,select{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);padding:12px 14px;border-radius:8px;color:#fff;font-size:1rem;outline:none;width:100%}
     input:focus,select:focus{border-color:var(--primary)}
-    .voltage-selector{display:flex;gap:10px}
-    .voltage-btn{flex:1;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:var(--muted);cursor:pointer;text-align:center}
-    .voltage-btn.active{background:rgba(250,204,21,0.15);border-color:var(--primary);color:var(--primary)}
+    .voltage-selector,.drop-pct-selector,.calc-chip-selector{display:flex;flex-wrap:wrap;gap:8px}
+    .voltage-btn,.drop-pct-btn,.calc-chip-btn{flex:1;min-width:52px;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:var(--muted);cursor:pointer;text-align:center;font-weight:700}
+    .voltage-btn.active,.drop-pct-btn.active,.calc-chip-btn.active{background:rgba(250,204,21,0.15);border-color:var(--primary);color:var(--primary)}
     .voltage-btn small{display:block;font-size:0.7rem;margin-top:2px;opacity:0.8}
+    .method-hint,.cable-field-hint{font-size:0.78rem;color:var(--muted);line-height:1.4;margin:0}
+    .cable-result-hero{margin:0 0 12px;padding:14px;border-radius:12px;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.35);text-align:start}
+    .cable-result-hero .cable-result-label{font-size:0.8rem;font-weight:700;color:#6ee7b7;margin-bottom:6px}
+    .cable-result-hero .cable-result-value{font-size:1.6rem;font-weight:800;color:var(--primary);line-height:1.2}
+    .cable-result-cause{margin-top:12px;padding:12px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);text-align:start;font-size:0.85rem;font-weight:400;color:var(--text);line-height:1.45}
+    .cable-result-cause .cause-title{font-weight:700;color:var(--primary);margin-bottom:8px}
+    .cable-result-cause .cause-reject{color:#fbbf24;margin:4px 0}
+    .cable-result-cause .cause-ok{color:#34d399;font-weight:600;margin-top:6px}
     .bal-pro-meta{margin-bottom:16px;padding:14px;border-radius:12px;border:1px solid rgba(5,150,105,0.25);background:rgba(5,150,105,0.06)}
     .bal-pro-meta .bal-pro-meta-title{font-size:0.8rem;font-weight:800;color:#6ee7b7;margin-bottom:10px;letter-spacing:0.02em}
     .bal-table-wrap{margin-top:12px;border:1px solid rgba(255,255,255,0.1);border-radius:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
@@ -523,24 +531,36 @@
       </div>
 
       <div id="section" class="calc-section" data-calc="cable_section">
+        <p class="cable-field-hint" data-i18n="cableSectionIecHint" style="margin:0 0 12px"></p>
         <div class="form-grid">
-          <div class="input-group"><label data-i18n="labelCurrentIb"></label><select id="section-i" class="std-select" data-std="ib" data-default="32"></select></div>
-          <div class="input-group"><label data-i18n="labelLength"></label><input type="number" id="section-l" data-i18n-placeholder="phLength"></div>
           <div class="input-group full"><label data-i18n="labelVoltage"></label>
             <div class="voltage-selector" data-voltage-target="section-u">
-              <button type="button" class="voltage-btn active" data-v="230">230V</button>
-              <button type="button" class="voltage-btn" data-v="400">400V</button>
+              <button type="button" class="voltage-btn active" data-v="230">230V<small data-i18n="voltageMono"></small></button>
+              <button type="button" class="voltage-btn" data-v="400">400V<small data-i18n="voltageTri"></small></button>
             </div>
             <input type="hidden" id="section-u" value="230">
           </div>
-          <div class="input-group"><label data-i18n="labelCosPhi"></label><input type="number" id="section-cos" value="0.85" step="0.01"></div>
-          <div class="input-group"><label data-i18n="labelTemp"></label><input type="number" id="section-temp" value="30"></div>
-          <div class="input-group"><label data-i18n="labelCircuits"></label><input type="number" id="section-circuits" value="1" min="1"></div>
-          <div class="input-group"><label data-i18n="labelConductor"></label><select id="section-conductor" data-i18n-select="conductor"><option value="Cu" data-i18n-opt="conductorCu"></option><option value="Al" data-i18n-opt="conductorAl"></option></select></div>
-          <div class="input-group"><label data-i18n="labelInsulation"></label><select id="section-insulation"><option value="PVC">PVC</option><option value="XLPE">XLPE</option><option value="PR">PR</option><option value="EPR">EPR</option></select></div>
-          <div class="input-group"><label data-i18n="labelInstallMethod"></label>
-            <select id="section-method"><option value="B1" selected>B1</option><option value="A1">A1</option><option value="A2">A2</option><option value="B2">B2</option><option value="C">C</option><option value="D1">D1</option><option value="D2">D2</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select>
+          <div class="input-group"><label data-i18n="labelCurrentIb"></label><select id="section-i" class="std-select" data-std="ib" data-default="32"></select></div>
+          <div class="input-group"><label data-i18n="labelPowerOptional"></label><input type="number" id="section-p" min="0" step="1" data-i18n-placeholder="phPowerCable"></div>
+          <div class="input-group"><label data-i18n="labelLength"></label><input type="number" id="section-l" data-i18n-placeholder="phLength"></div>
+          <div class="input-group"><label data-i18n="labelCosPhi"></label><input type="number" id="section-cos" value="0.85" step="0.01" min="0.1" max="1"></div>
+          <div class="input-group full"><label data-i18n="labelMaxVoltageDrop"></label>
+            <div class="drop-pct-selector" data-drop-target="section-drop">
+              <button type="button" class="drop-pct-btn" data-drop="3">3%</button>
+              <button type="button" class="drop-pct-btn active" data-drop="4">4%</button>
+              <button type="button" class="drop-pct-btn" data-drop="5">5%</button>
+              <button type="button" class="drop-pct-btn" data-drop="6">6%</button>
+            </div>
+            <input type="hidden" id="section-drop" value="4">
           </div>
+          <div class="input-group"><label data-i18n="labelConductor"></label><select id="section-conductor" data-i18n-select="conductor"><option value="Cu" data-i18n-opt="conductorCu"></option><option value="Al" data-i18n-opt="conductorAl"></option></select></div>
+          <div class="input-group"><label data-i18n="labelInsulation"></label><select id="section-insulation"><option value="PVC">PVC (70°C)</option><option value="PR">PR (90°C)</option><option value="EPR">EPR (90°C)</option><option value="XLPE">XLPE (90°C)</option></select></div>
+          <div class="input-group full"><label data-i18n="labelInstallMethod"></label>
+            <select id="section-method"><option value="B1" selected>B1</option><option value="A1">A1</option><option value="A2">A2</option><option value="B2">B2</option><option value="C">C</option><option value="D1">D1</option><option value="D2">D2</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select>
+            <p id="section-method-hint" class="method-hint" aria-live="polite"></p>
+          </div>
+          <div class="input-group"><label data-i18n="labelTemp"></label><input type="number" id="section-temp" value="30" min="10" max="60" step="5"></div>
+          <div class="input-group"><label data-i18n="labelCircuits"></label><input type="number" id="section-circuits" value="1" min="1" max="20"><p class="cable-field-hint" data-i18n="cableGroupingHint"></p></div>
         </div>
       </div>
 

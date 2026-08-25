@@ -171,6 +171,13 @@
     return h;
   }
 
+  function fmtCableTpl(tpl, vars) {
+    if (!tpl) return '';
+    return String(tpl).replace(/\{(\w+)\}/g, (_, k) =>
+      vars[k] != null ? String(vars[k]) : ''
+    );
+  }
+
   function fmtCableSectionFactors(r) {
     const d = r && r.data && r.data.additionalData;
     if (!d) return '';
@@ -178,7 +185,56 @@
     const tf = Number(d.tempFactor);
     const gf = Number(d.groupFactor);
     const total = (Number.isFinite(mf) ? mf : 1) * (Number.isFinite(tf) ? tf : 1) * (Number.isFinite(gf) ? gf : 1);
-    return `<div style="margin-top:12px;padding:12px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);text-align:start;font-size:0.85rem;font-weight:400;color:var(--text);line-height:1.45">
+    const heroLabel = d.useAlternatives
+      ? (tr('cableModalParallelBundle') || 'Groupement de câbles')
+      : (tr('cableModalNormNext') || 'Section normalisée');
+    let html = `<div class="cable-result-hero">
+      <div class="cable-result-label">${tr('cableModalRecommendedTitle') || 'Section recommandée'}</div>
+      <div class="cable-result-value">${d.normalizedSection || r.data.result || '—'}</div>
+      <div style="margin-top:6px;font-size:0.8rem;opacity:0.85">${heroLabel}</div>
+      ${d.isConform === false ? `<div style="margin-top:8px;color:#f87171;font-weight:700">${tr('cableModalNonConform') || ''}</div>` : ''}
+    </div>`;
+
+    const dc = d.dimensioningCause;
+    if (dc && !d.useAlternatives) {
+      const dominantLine =
+        dc.dominant === 'S1'
+          ? fmtCableTpl(tr('cableDimDominantVoltage'), { s1: dc.s1, s2: dc.s2 })
+          : dc.dominant === 'S2'
+            ? fmtCableTpl(tr('cableDimDominantThermal'), { s1: dc.s1, s2: dc.s2 })
+            : fmtCableTpl(tr('cableDimDominantTie'), { s: dc.sTie });
+      const rejects = Array.isArray(dc.rejected)
+        ? dc.rejected
+            .map((rej) =>
+              rej.reason === 'thermal'
+                ? fmtCableTpl(tr('cableDimRejectedThermal'), {
+                    mm: String(rej.mm),
+                    iz: Number(rej.izTable).toFixed(0),
+                    req: Number(rej.izReq).toFixed(1),
+                  })
+                : fmtCableTpl(tr('cableDimRejectedDrop'), {
+                    mm: String(rej.mm),
+                    du: Number(rej.du ?? 0).toFixed(2),
+                    max: dc.maxDropStr,
+                  })
+            )
+            .map((line) => `<div class="cause-reject">${line}</div>`)
+            .join('')
+        : '';
+      html += `<div class="cable-result-cause">
+        <div class="cause-title">${tr('cableDimCauseTitle') || 'Cause du dimensionnement'}</div>
+        <div>${dominantLine}</div>
+        <div style="margin-top:6px">${fmtCableTpl(tr('cableDimIzRequired'), { req: dc.requiredCurrent })}</div>
+        <div style="margin-top:4px">${fmtCableTpl(tr('cableDimMinCommercial'), { min: String(dc.minCommercial) })}</div>
+        ${rejects}
+        <div class="cause-ok">${fmtCableTpl(tr('cableDimChosen'), {
+          mm: String(dc.chosenMm),
+          min: String(dc.minCommercial),
+        })}</div>
+      </div>`;
+    }
+
+    html += `<div style="margin-top:12px;padding:12px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);text-align:start;font-size:0.85rem;font-weight:400;color:var(--text);line-height:1.45">
       <div style="font-weight:700;margin-bottom:6px;color:var(--primary)">${tr('labelInstallMethod') || 'Mode de pose'}</div>
       <div>${d.method || '—'}</div>
       <div style="margin-top:10px;font-weight:700;margin-bottom:6px;color:var(--primary)">${tr('cableModalCorrectionFactors') || 'Facteurs de correction'}</div>
@@ -188,6 +244,38 @@
       <div style="margin-top:6px"><strong>${tr('cableLabelTotalFactor') || 'Coefficient total'} × ${total.toFixed(3)}</strong></div>
       <div style="margin-top:8px;opacity:0.9">${tr('cableModalAdmissibleCurrent') || 'Iz'} ${d.maxCurrent || '—'} A · ΔU ${d.actualVoltageDrop || '—'}% (max ${d.maxVoltageDrop || '—'}%)</div>
     </div>`;
+    return html;
+  }
+
+  function updateSectionMethodHint() {
+    const sel = document.getElementById('section-method');
+    const hint = document.getElementById('section-method-hint');
+    if (!sel || !hint) return;
+    const code = sel.value || 'B1';
+    const core = window.ElectroDzCalcCore;
+    const lang = getLang();
+    const t = core?._getT?.(lang) || {};
+    const name = t[`installMethod_${code}_name`] || code;
+    const desc = t[`installMethod_${code}_desc`] || '';
+    hint.textContent = desc ? `${code} — ${name} : ${desc}` : `${code} — ${name}`;
+  }
+
+  function initCableSectionFormUx() {
+    const ib = document.getElementById('section-i');
+    const p = document.getElementById('section-p');
+    if (ib && p) {
+      ib.addEventListener('change', () => {
+        if (ib.value) p.value = '';
+      });
+      p.addEventListener('input', () => {
+        if (String(p.value || '').trim()) {
+          /* P prioritaire : le moteur recalcule I = P/(U·cosφ) */
+        }
+      });
+    }
+    const method = document.getElementById('section-method');
+    method?.addEventListener('change', updateSectionMethodHint);
+    updateSectionMethodHint();
   }
 
   function getActiveDomId() {
@@ -614,11 +702,19 @@
       let h;
       if (activeId === 'power_balance' && window.ElectroDzPowerBalancePro?.formatResultHtml) {
         h = window.ElectroDzPowerBalancePro.formatResultHtml(r);
+      } else if (activeId === 'cable_section') {
+        const d = r.data || {};
+        h = '';
+        if (d.formula) h += `<div style="margin-bottom:8px;font-size:0.9rem;opacity:0.9">${d.formula}</div>`;
+        h += fmtCableSectionFactors(r);
+        if (d.interpretation) {
+          h += `<pre style="margin-top:12px;text-align:start;white-space:pre-wrap;font-size:0.85rem;font-weight:400;color:var(--text)">${d.interpretation}</pre>`;
+        }
+        if (d.calculation) {
+          h += `<pre style="margin-top:12px;text-align:start;white-space:pre-wrap;font-size:0.8rem;font-weight:400;color:var(--text);opacity:0.92">${d.calculation}</pre>`;
+        }
       } else {
         h = fmtSimple(r);
-        if (activeId === 'cable_section') {
-          h += fmtCableSectionFactors(r);
-        }
         if (r.data.additionalData?.ibA) {
           h += `<br>${tr('balanceIbApprox')} <strong>${r.data.additionalData.ibA} ${tr('unitA')}</strong>`;
         }
@@ -688,6 +784,7 @@
 
     initVoltageSelectors();
     initDropPctSelectors();
+    initCableSectionFormUx();
     setOhmSub('voltage');
     setPowerSub('power');
     setBrkSub('normative');
