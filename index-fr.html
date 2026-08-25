@@ -15,6 +15,7 @@
   <link rel="icon" href="assets/app-icon.png" type="image/png"/>
   <link rel="stylesheet" href="css/theme-liquid-glass.css" id="lg-theme-css" disabled/>
   <link rel="stylesheet" href="css/section-cards.css"/>
+  <link rel="stylesheet" href="css/section-hover.css"/>
 <title>Electro DZ | La grande plateforme algérienne de l'électricité — l'expérience suisse</title>
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="Electro DZ"/>
@@ -469,6 +470,8 @@
       <rect x="7" y="6" width="10" height="5" rx="1"/>
       <path d="M8 15h2M12 15h2M16 15h.01M8 18h8"/>
     </symbol>
+    <symbol id="ico-oibt" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h4M7 12h10M7 16h6"/><circle cx="17" cy="8" r="1.5"/></symbol>
+    <symbol id="ico-cos" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M8 14c1.5-2 4.5-2 6 0M9 10h6"/></symbol>
     <symbol id="ico-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
     <symbol id="ico-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></symbol>
     <symbol id="ico-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></symbol>
@@ -566,54 +569,54 @@
       </div>
     </section>
 
-    <section class="quick-access" id="outils" aria-label="Outils">
+    <section class="quick-access quick-access--icons" id="outils" aria-label="Outils">
       <div class="quick-grid">
-        <a class="quick-item quick-item--sim" href="simulation-swissdz.html" aria-label="Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel">
-          <span class="quick-preview"><img src="assets/section-previews/swissdz.jpg" alt="" loading="lazy" width="960" height="540"/></span>
+        <a class="quick-item quick-item--sim" href="simulation-swissdz.html" data-preview="assets/section-previews/swissdz.jpg" aria-label="Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel">
+          <span class="ico-wrap"><svg class="ico"><use href="#ico-simulator"/></svg></span>
           <span class="ico-label">Atelier électrique SwissDZ</span>
         </a>
-        <a class="quick-item quick-item--oibt" href="oibt-trainer/#/trainer" aria-label="Contrôle périodique OIBT — tableau, prises & Fluke">
-          <span class="quick-preview"><img src="assets/section-previews/oibt.jpg" alt="" loading="lazy" width="960" height="540"/></span>
+        <a class="quick-item quick-item--oibt" href="oibt-trainer/#/trainer" data-preview="assets/section-previews/oibt.jpg" aria-label="Contrôle périodique OIBT — tableau, prises & Fluke">
+          <span class="ico-wrap"><svg class="ico"><use href="#ico-oibt"/></svg></span>
           <span class="ico-label">Simulateur OIBT</span>
         </a>
-        <a class="quick-item quick-item--fluke" href="oibt-trainer/#/meter" aria-label="Appareil de mesure Fluke 1664 FC — câblage et mesures">
-          <span class="quick-preview"><img src="assets/section-previews/fluke.jpg" alt="" loading="lazy" width="960" height="540"/></span>
+        <a class="quick-item quick-item--fluke" href="oibt-trainer/#/meter" data-preview="assets/section-previews/fluke.jpg" aria-label="Appareil de mesure Fluke 1664 FC — câblage et mesures">
+          <span class="ico-wrap"><svg class="ico"><use href="#ico-meter"/></svg></span>
           <span class="ico-label">Fluke 1664 FC</span>
         </a>
-        <a class="quick-item quick-item--sim" href="swissdz-cos-phi.html" aria-label="Batterie de compensation BT — mesurer, corriger, contrôler le facteur de puissance">
-          <span class="quick-preview"><img src="assets/section-previews/cosphi.jpg" alt="" loading="lazy" width="960" height="540"/></span>
+        <a class="quick-item quick-item--cos" href="swissdz-cos-phi.html" data-preview="assets/section-previews/cosphi.jpg" aria-label="Batterie de compensation BT — mesurer, corriger, contrôler le facteur de puissance">
+          <span class="ico-wrap"><svg class="ico"><use href="#ico-cos"/></svg></span>
           <span class="ico-label">SwissDZ Cos φ</span>
         </a>
-        <a class="quick-item quick-item--curve" href="calcul-electrique.html?calc=trip_curve">
-          <span class="quick-preview"><img src="assets/section-previews/curve.jpg" alt="" loading="lazy" width="960" height="540"/></span>
+        <a class="quick-item quick-item--curve" href="calcul-electrique.html?calc=trip_curve" data-preview="assets/section-previews/curve.jpg">
+          <span class="ico-wrap"><svg class="ico"><use href="#ico-curve"/></svg></span>
           <span class="ico-label" data-i18n="quick.curve">Courbe de déclenchement</span>
         </a>
-        <a class="quick-item quick-item--cable" href="calcul-electrique.html?calc=cable_section">
-          <span class="quick-preview"><img src="assets/section-previews/cable.jpg" alt="" loading="lazy" width="960" height="540"/></span>
+        <a class="quick-item quick-item--cable" href="calcul-electrique.html?calc=cable_section" data-preview="assets/section-previews/cable.jpg">
+          <span class="ico-wrap"><svg class="ico"><use href="#ico-cable"/></svg></span>
           <span class="ico-label" data-i18n="quick.cable">Section de câbles</span>
         </a>
-        <a class="quick-item quick-item--calc" href="calcul-electrique.html">
-          <span class="quick-preview"><img src="assets/section-previews/calc.jpg" alt="" loading="lazy" width="960" height="540"/></span>
+        <a class="quick-item quick-item--calc" href="calcul-electrique.html" data-preview="assets/section-previews/calc.jpg">
+          <span class="ico-wrap"><svg class="ico"><use href="#ico-calc"/></svg></span>
           <span class="ico-label" data-i18n="quick.calc">Calculs</span>
         </a>
-        <a class="quick-item quick-item--pdf" href="bibliotheque.html">
-          <span class="quick-preview"><img src="assets/section-previews/pdf.jpg" alt="" loading="lazy" width="960" height="540"/></span>
+        <a class="quick-item quick-item--pdf" href="bibliotheque.html" data-preview="assets/section-previews/pdf.jpg">
+          <span class="ico-wrap"><svg class="ico"><use href="#ico-pdf"/></svg></span>
           <span class="ico-label">Documentation PDF</span>
         </a>
-        <a class="quick-item quick-item--quote" href="devis.html">
-          <span class="quick-preview"><img src="assets/section-previews/quote.jpg" alt="" loading="lazy" width="960" height="540"/></span>
+        <a class="quick-item quick-item--quote" href="devis.html" data-preview="assets/section-previews/quote.jpg">
+          <span class="ico-wrap"><svg class="ico"><use href="#ico-clipboard"/></svg></span>
           <span class="ico-label">Devis</span>
         </a>
-        <a class="quick-item quick-item--balance" href="calcul-electrique.html?calc=power_balance">
-          <span class="quick-preview"><img src="assets/section-previews/balance.jpg" alt="" loading="lazy" width="960" height="540"/></span>
+        <a class="quick-item quick-item--balance" href="calcul-electrique.html?calc=power_balance" data-preview="assets/section-previews/balance.jpg">
+          <span class="ico-wrap"><svg class="ico"><use href="#ico-balance"/></svg></span>
           <span class="ico-label" data-i18n="quick.balance">Bilan de puissance</span>
         </a>
-        <a class="quick-item quick-item--schema" href="schemas-plans.html" aria-label="Unifilaire, symboles IEC, export & impression">
-          <span class="quick-preview"><img src="assets/section-previews/schemas.jpg" alt="" loading="lazy" width="960" height="540"/></span>
+        <a class="quick-item quick-item--schema" href="schemas-plans.html" data-preview="assets/section-previews/schemas.jpg" aria-label="Unifilaire, symboles IEC, export & impression">
+          <span class="ico-wrap"><svg class="ico"><use href="#ico-schema"/></svg></span>
           <span class="ico-label">Schémas et plans</span>
         </a>
-        <a class="quick-item quick-item--train" href="formations.html#quiz" aria-label="472 questions pour maîtriser la norme NF C 15-100, pas à pas">
-          <span class="quick-preview"><img src="assets/section-previews/training.jpg" alt="" loading="lazy" width="960" height="540"/></span>
+        <a class="quick-item quick-item--train" href="formations.html#quiz" data-preview="assets/section-previews/training.jpg" aria-label="472 questions pour maîtriser la norme NF C 15-100, pas à pas">
+          <span class="ico-wrap"><svg class="ico"><use href="#ico-school"/></svg></span>
           <span class="ico-label">Quiz NF C 15-100</span>
         </a>
       </div>
@@ -664,6 +667,7 @@
   <script src="js/visitor-counter.js"></script>
   <script src="js/seo-global.js"></script>
   <script src="js/accueil-i18n.js"></script>
+  <script src="js/section-hover-preview.js" defer></script>
   <script src="js/theme-liquid-glass-preview.js" defer></script>
 </body>
 </html>

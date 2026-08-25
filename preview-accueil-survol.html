@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="robots" content="noindex,nofollow"/>
+  <title>APERÇU — Tuiles icônes + survol | SwissDZ</title>
+  <style>
+    :root{
+      --bg:#0a0f1a;--border:rgba(255,255,255,0.1);--accent:#facc15;
+      --text:#f1f5f9;--muted:#94a3b8;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);
+      line-height:1.5;min-height:100vh;
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -20%,rgba(250,204,21,0.1),transparent);
+    }
+    a{color:inherit;text-decoration:none}
+
+    .preview-banner{
+      position:sticky;top:0;z-index:300;
+      background:linear-gradient(90deg,#14532d,#166534,#14532d);
+      color:#fff;text-align:center;padding:8px 12px;font-size:.72rem;font-weight:700;
+    }
+    .preview-banner span{font-weight:500;opacity:.92}
+
+    .wrap{max-width:1140px;margin:0 auto;padding:12px 5% 48px}
+    .note{
+      margin:0 0 14px;padding:10px 14px;border-radius:10px;
+      border:1px solid rgba(250,204,21,0.35);background:rgba(250,204,21,0.07);
+      font-size:.78rem;color:var(--muted);line-height:1.45;
+    }
+    .note b{color:var(--accent)}
+    .note code{font-size:.72rem;background:rgba(0,0,0,0.35);padding:1px 5px;border-radius:4px}
+
+    .quick-access h2{
+      font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;
+      color:var(--accent);margin-bottom:10px;font-weight:800;
+    }
+    .quick-grid{
+      display:grid;grid-template-columns:repeat(5,1fr);gap:8px;
+    }
+    .quick-item{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:8px;min-height:96px;padding:12px 8px;position:relative;
+      background:rgba(20,28,44,0.95);
+      border:1px solid var(--border);border-radius:10px;
+      border-top:3px solid var(--quick-accent,var(--accent));
+      box-shadow:0 4px 12px rgba(0,0,0,0.22);
+      transition:transform .15s,border-color .15s,box-shadow .15s;
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .quick-item:hover,.quick-item.is-peek-active{
+      transform:translateY(-2px);
+      border-color:rgba(250,204,21,0.4);
+      box-shadow:0 8px 20px rgba(0,0,0,0.35);
+    }
+    .quick-item--calc{--quick-accent:#facc15}
+    .quick-item--balance{--quick-accent:#34d399}
+    .quick-item--curve{--quick-accent:#2dd4bf}
+    .quick-item--cable{--quick-accent:#a78bfa}
+    .quick-item--schema{--quick-accent:#4ade80}
+    .quick-item--pdf{--quick-accent:#f87171}
+    .quick-item--train{--quick-accent:#a78bfa}
+    .quick-item--sim{--quick-accent:#e30613}
+    .quick-item--oibt{--quick-accent:#38bdf8}
+    .quick-item--fluke{--quick-accent:#f97316}
+    .quick-item--quote{--quick-accent:#fb923c}
+    .quick-item--cos{--quick-accent:#eab308}
+
+    .ico-wrap{
+      width:48px;height:48px;border-radius:12px;flex-shrink:0;
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(250,204,21,0.1);border:1px solid rgba(250,204,21,0.32);
+    }
+    .quick-item--sim .ico-wrap{background:rgba(227,6,19,0.12);border-color:rgba(227,6,19,0.38)}
+    .quick-item--oibt .ico-wrap{background:rgba(56,189,248,0.12);border-color:rgba(56,189,248,0.38)}
+    .quick-item--fluke .ico-wrap{background:rgba(249,115,22,0.12);border-color:rgba(249,115,22,0.38)}
+    .quick-item--pdf .ico-wrap{background:rgba(239,68,68,0.12);border-color:rgba(239,68,68,0.35)}
+    .quick-item--balance .ico-wrap{background:rgba(52,211,153,0.12);border-color:rgba(52,211,153,0.4)}
+    .quick-item--curve .ico-wrap,.quick-item--cos .ico-wrap{background:rgba(45,212,191,0.12);border-color:rgba(45,212,191,0.4)}
+    .quick-item--cable .ico-wrap{background:rgba(167,139,250,0.12);border-color:rgba(167,139,250,0.4)}
+
+    .ico{width:26px;height:26px;stroke:var(--quick-accent,var(--accent));fill:none;
+      stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .ico-label{
+      font-size:.72rem;font-weight:800;text-align:center;line-height:1.2;
+      color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.8);
+    }
+
+    /* Bulle aperçu — flottante, discrète */
+    .section-peek{
+      position:fixed;z-index:500;pointer-events:none;
+      width:min(300px,calc(100vw - 24px));
+      opacity:0;visibility:hidden;
+      transform:translateY(6px) scale(0.97);
+      transition:opacity .18s ease,transform .18s ease,visibility .18s;
+      filter:drop-shadow(0 12px 28px rgba(0,0,0,0.55));
+    }
+    .section-peek.is-visible{
+      opacity:1;visibility:visible;transform:translateY(0) scale(1);
+    }
+    .section-peek__frame{
+      border-radius:10px;overflow:hidden;
+      border:1px solid rgba(255,255,255,0.14);
+      background:rgba(8,12,22,0.88);
+      backdrop-filter:blur(10px);
+    }
+    .section-peek__frame img{
+      display:block;width:100%;aspect-ratio:16/9;object-fit:cover;
+      background:rgba(0,0,0,0.35);
+    }
+    .section-peek__label{
+      display:block;padding:6px 10px;font-size:.68rem;font-weight:800;
+      color:var(--accent);text-align:center;
+      border-top:1px solid rgba(255,255,255,0.08);
+    }
+
+    @media(max-width:1100px){.quick-grid{grid-template-columns:repeat(4,1fr)}}
+    @media(max-width:768px){
+      .quick-grid{grid-template-columns:repeat(3,1fr);gap:6px}
+      .quick-item{min-height:88px;padding:10px 6px}
+      .ico-wrap{width:42px;height:42px}
+      .ico{width:22px;height:22px}
+    }
+    @media(max-width:480px){
+      .quick-grid{grid-template-columns:repeat(3,1fr);gap:5px}
+      .quick-item{min-height:82px;padding:8px 4px}
+      .ico-wrap{width:38px;height:38px}
+      .ico{width:20px;height:20px}
+      .ico-label{font-size:.62rem}
+    }
+    @media(hover:none){
+      .note .desk-only{display:none}
+    }
+    @media(hover:hover){
+      .note .touch-only{display:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-banner">
+    APERÇU LOCAL — Tuiles icônes + aperçu au survol
+    <span> · Pas encore publié sur electro-dz.com</span>
+  </div>
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="ico-calc" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h2M12 10h2M8 14h2M12 14h2M8 18h8"/></symbol>
+    <symbol id="ico-balance" viewBox="0 0 24 24"><path d="M4 20h16M6 20V10h3v10M11 20V6h3v14M16 20v-7h3v7"/><path d="M3 4h6l2 4H5zM13 4h6l2 4h-6z"/></symbol>
+    <symbol id="ico-curve" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M5 16c3-1 4-8 7-8s3 6 6 5 3-5 3-5"/></symbol>
+    <symbol id="ico-cable" viewBox="0 0 24 24"><path d="M4 8h6M14 8h6M4 16h6M14 16h6"/><rect x="9" y="5" width="6" height="6" rx="1"/><rect x="9" y="13" width="6" height="6" rx="1"/></symbol>
+    <symbol id="ico-pdf" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></symbol>
+    <symbol id="ico-clipboard" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 12h6M9 16h6"/></symbol>
+    <symbol id="ico-schema" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 8h8M8 12h5M8 16h8M16 8v8"/></symbol>
+    <symbol id="ico-school" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-6 10 6-10 6z"/><path d="M6 12v5c0 1 2 3 6 3s6-2 6-3v-5"/></symbol>
+    <symbol id="ico-simulator" viewBox="0 0 24 24"><path d="M13 2 5 14h6l-1 8 8-12h-6l1-8z"/></symbol>
+    <symbol id="ico-meter" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><rect x="7" y="6" width="10" height="5" rx="1"/><path d="M8 15h2M12 15h2M16 15h.01M8 18h8"/></symbol>
+    <symbol id="ico-oibt" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h4M7 12h10M7 16h6"/><circle cx="17" cy="8" r="1.5"/></symbol>
+    <symbol id="ico-cos" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M8 14c1.5-2 4.5-2 6 0M9 10h6"/></symbol>
+  </svg>
+
+  <div class="wrap">
+    <p class="note">
+      <b>Ancien affichage</b> (icône + titre) + <b>aperçu discret</b> sans ouvrir la page.<br/>
+      <span class="desk-only">Ordinateur : passe la souris sur une tuile.</span>
+      <span class="touch-only">Téléphone : <b>appui long</b> (~0,5 s) sur une tuile — relâche pour fermer. Clic court = ouvre la section.</span>
+    </p>
+
+    <section class="quick-access" id="outils" aria-label="Outils">
+      <h2>Accès rapide — avec aperçu</h2>
+      <div class="quick-grid" id="quick-grid"></div>
+    </section>
+  </div>
+
+  <div class="section-peek" id="section-peek" aria-hidden="true">
+    <div class="section-peek__frame">
+      <img id="section-peek-img" src="" alt=""/>
+      <span class="section-peek__label" id="section-peek-label"></span>
+    </div>
+  </div>
+
+  <script>
+    const TILES = [
+      { cls:'quick-item--sim', ico:'ico-simulator', label:'Atelier électrique SwissDZ', href:'simulation-swissdz.html', preview:'assets/section-previews/swissdz.jpg' },
+      { cls:'quick-item--oibt', ico:'ico-oibt', label:'Simulateur OIBT', href:'oibt-trainer/#/trainer', preview:'assets/section-previews/oibt.jpg' },
+      { cls:'quick-item--fluke', ico:'ico-meter', label:'Fluke 1664 FC', href:'oibt-trainer/#/meter', preview:'assets/section-previews/fluke.jpg' },
+      { cls:'quick-item--cos', ico:'ico-cos', label:'SwissDZ Cos φ', href:'swissdz-cos-phi.html', preview:'assets/section-previews/cosphi.jpg' },
+      { cls:'quick-item--curve', ico:'ico-curve', label:'Courbe de déclenchement', href:'calcul-electrique.html?calc=trip_curve', preview:'assets/section-previews/curve.jpg' },
+      { cls:'quick-item--cable', ico:'ico-cable', label:'Section de câbles', href:'calcul-electrique.html?calc=cable_section', preview:'assets/section-previews/cable.jpg' },
+      { cls:'quick-item--calc', ico:'ico-calc', label:'Calculs', href:'calcul-electrique.html', preview:'assets/section-previews/calc.jpg' },
+      { cls:'quick-item--pdf', ico:'ico-pdf', label:'Documentation PDF', href:'bibliotheque.html', preview:'assets/section-previews/pdf.jpg', pdf:true },
+      { cls:'quick-item--quote', ico:'ico-clipboard', label:'Devis', href:'devis.html', preview:'assets/section-previews/quote.jpg' },
+      { cls:'quick-item--balance', ico:'ico-balance', label:'Bilan de puissance', href:'calcul-electrique.html?calc=power_balance', preview:'assets/section-previews/balance.jpg' },
+      { cls:'quick-item--schema', ico:'ico-schema', label:'Schémas et plans', href:'schemas-plans.html', preview:'assets/section-previews/schemas.jpg' },
+      { cls:'quick-item--train', ico:'ico-school', label:'Quiz NF C 15-100', href:'formations.html#quiz', preview:'assets/section-previews/training.jpg' },
+    ];
+
+    const grid = document.getElementById('quick-grid');
+    grid.innerHTML = TILES.map((t) => {
+      const wrap = t.pdf ? 'ico-wrap ico-wrap--pdf' : 'ico-wrap';
+      return `<a class="quick-item ${t.cls}" href="${t.href}"
+        data-preview="${t.preview}" data-label="${t.label.replace(/"/g,'&quot;')}">
+        <span class="${wrap}"><svg class="ico"><use href="#${t.ico}"/></svg></span>
+        <span class="ico-label">${t.label}</span>
+      </a>`;
+    }).join('');
+
+    const peek = document.getElementById('section-peek');
+    const peekImg = document.getElementById('section-peek-img');
+    const peekLabel = document.getElementById('section-peek-label');
+    const items = grid.querySelectorAll('.quick-item');
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    let activeItem = null;
+    let longPressTimer = null;
+    let longPressTriggered = false;
+    let suppressClick = false;
+
+    function positionPeek(anchor) {
+      const rect = anchor.getBoundingClientRect();
+      const pw = peek.offsetWidth || 300;
+      const ph = peek.offsetHeight || 200;
+      const margin = 10;
+      let left = rect.right + margin;
+      let top = rect.top + (rect.height - ph) / 2;
+
+      if (left + pw > window.innerWidth - margin) {
+        left = rect.left - pw - margin;
+      }
+      if (left < margin) {
+        left = Math.max(margin, rect.left + (rect.width - pw) / 2);
+        top = rect.bottom + margin;
+      }
+      if (top + ph > window.innerHeight - margin) {
+        top = window.innerHeight - ph - margin;
+      }
+      if (top < margin) top = margin;
+
+      peek.style.left = `${left}px`;
+      peek.style.top = `${top}px`;
+    }
+
+    function showPeek(item) {
+      const src = item.dataset.preview;
+      const label = item.dataset.label;
+      if (!src) return;
+      activeItem = item;
+      item.classList.add('is-peek-active');
+      peekImg.src = src;
+      peekImg.alt = label;
+      peekLabel.textContent = label;
+      peek.classList.add('is-visible');
+      peek.setAttribute('aria-hidden', 'false');
+      requestAnimationFrame(() => positionPeek(item));
+    }
+
+    function hidePeek() {
+      if (activeItem) activeItem.classList.remove('is-peek-active');
+      activeItem = null;
+      peek.classList.remove('is-visible');
+      peek.setAttribute('aria-hidden', 'true');
+    }
+
+    function clearLongPress() {
+      if (longPressTimer) {
+        clearTimeout(longPressTimer);
+        longPressTimer = null;
+      }
+    }
+
+    items.forEach((item) => {
+      if (canHover) {
+        item.addEventListener('mouseenter', () => showPeek(item));
+        item.addEventListener('mouseleave', hidePeek);
+        item.addEventListener('focus', () => showPeek(item));
+        item.addEventListener('blur', hidePeek);
+      } else {
+        item.addEventListener('touchstart', (e) => {
+          longPressTriggered = false;
+          suppressClick = false;
+          clearLongPress();
+          longPressTimer = setTimeout(() => {
+            longPressTriggered = true;
+            suppressClick = true;
+            showPeek(item);
+          }, 480);
+        }, { passive: true });
+
+        item.addEventListener('touchmove', () => {
+          clearLongPress();
+          if (longPressTriggered) hidePeek();
+        }, { passive: true });
+
+        item.addEventListener('touchend', () => {
+          clearLongPress();
+          if (longPressTriggered) {
+            setTimeout(hidePeek, 120);
+          }
+        });
+
+        item.addEventListener('touchcancel', () => {
+          clearLongPress();
+          hidePeek();
+        });
+
+        item.addEventListener('click', (e) => {
+          if (suppressClick) {
+            e.preventDefault();
+            suppressClick = false;
+          }
+        });
+      }
+    });
+
+    window.addEventListener('scroll', hidePeek, { passive: true });
+    window.addEventListener('resize', () => {
+      if (activeItem) positionPeek(activeItem);
+    });
+  </script>
+</body>
+</html>

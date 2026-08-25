@@ -1,0 +1,193 @@
+/* Accueil #outils — tuiles icônes + aperçu au survol (photos en data-preview) */
+
+.quick-access--icons .quick-grid {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.quick-access--icons .quick-item {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 96px;
+  padding: 12px 8px;
+}
+
+.quick-access--icons .quick-preview {
+  display: none !important;
+}
+
+.quick-access--icons .ico-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(250, 204, 21, 0.1);
+  border: 1px solid rgba(250, 204, 21, 0.32);
+}
+
+.quick-access--icons .ico {
+  width: 26px;
+  height: 26px;
+  stroke: var(--quick-accent, var(--accent, #facc15));
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.quick-access--icons .quick-item--sim .ico-wrap {
+  background: rgba(227, 6, 19, 0.12);
+  border-color: rgba(227, 6, 19, 0.38);
+}
+
+.quick-access--icons .quick-item--oibt .ico-wrap {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.38);
+}
+
+.quick-access--icons .quick-item--fluke .ico-wrap {
+  background: rgba(249, 115, 22, 0.12);
+  border-color: rgba(249, 115, 22, 0.38);
+}
+
+.quick-access--icons .quick-item--cos {
+  --quick-accent: #eab308;
+}
+
+.quick-access--icons .quick-item--cos .ico-wrap {
+  background: rgba(234, 179, 8, 0.12);
+  border-color: rgba(234, 179, 8, 0.38);
+}
+
+.quick-access--icons .quick-item--pdf .ico-wrap {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+.quick-access--icons .quick-item--balance .ico-wrap {
+  background: rgba(52, 211, 153, 0.12);
+  border-color: rgba(52, 211, 153, 0.4);
+}
+
+.quick-access--icons .quick-item--curve .ico-wrap {
+  background: rgba(45, 212, 191, 0.12);
+  border-color: rgba(45, 212, 191, 0.4);
+}
+
+.quick-access--icons .quick-item--cable .ico-wrap {
+  background: rgba(167, 139, 250, 0.12);
+  border-color: rgba(167, 139, 250, 0.4);
+}
+
+.quick-access--icons .ico-label {
+  padding: 0 4px;
+  font-size: 0.72rem;
+}
+
+.quick-access--icons .quick-item.is-peek-active {
+  transform: translateY(-2px);
+  border-color: rgba(250, 204, 21, 0.45);
+}
+
+/* Bulle aperçu flottante */
+.section-peek {
+  position: fixed;
+  z-index: 900;
+  pointer-events: none;
+  width: min(300px, calc(100vw - 24px));
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px) scale(0.97);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.55));
+}
+
+.section-peek.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.section-peek__frame {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(34, 211, 238, 0.35);
+  background: rgba(8, 12, 22, 0.92);
+  backdrop-filter: blur(10px);
+}
+
+.section-peek__frame img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.section-peek__label {
+  display: block;
+  padding: 6px 10px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--accent, #facc15);
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 1100px) {
+  .quick-access--icons .quick-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .quick-access--icons .quick-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .quick-access--icons .quick-item {
+    min-height: 88px;
+    padding: 10px 6px;
+  }
+
+  .quick-access--icons .ico-wrap {
+    width: 42px;
+    height: 42px;
+  }
+
+  .quick-access--icons .ico {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .quick-access--icons .quick-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+  }
+
+  .quick-access--icons .quick-item {
+    min-height: 82px;
+    padding: 8px 4px;
+  }
+
+  .quick-access--icons .ico-wrap {
+    width: 38px;
+    height: 38px;
+  }
+
+  .quick-access--icons .ico {
+    width: 20px;
+    height: 20px;
+  }
+
+  .quick-access--icons .ico-label {
+    font-size: 0.62rem;
+  }
+}
