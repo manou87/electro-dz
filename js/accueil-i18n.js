@@ -27,7 +27,7 @@
       "quick.training": "Formations",
       "quick.training.hint":
         "472 questions pour maîtriser la norme NF C 15-100, pas à pas",
-      "quick.swissdz": "Simulateur SwissDZ",
+      "quick.swissdz": "Tableau & Atelier",
       "quick.swissdz.hint":
         "Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel",
       "quick.oibt": "Simulateur OIBT",
@@ -82,7 +82,7 @@
       "tools.schema.title": "Simulation professionnelle",
       "tools.schema.desc": "Simulateur intégré — circuits prêts à l'emploi, schémas et mesures",
       "tools.schema.link": "Ouvrir la simulation →",
-      "tools.swissdz.title": "Simulateur SwissDZ",
+      "tools.swissdz.title": "Tableau & Atelier",
       "tools.swissdz.desc":
         "Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel",
       "tools.swissdz.link": "Lancer la simulation →",
@@ -143,7 +143,7 @@
       "quick.training": "تكوين",
       "quick.training.hint":
         "472 سؤالاً لإتقان معيار NF C 15-100 خطوة بخطوة",
-      "quick.swissdz": "محاكي SwissDZ",
+      "quick.swissdz": "لوحة وورشة",
       "quick.swissdz.hint":
         "أول محاكي للكهربائيين في الجزائر — لوحة، ورشة ومخطط أحادي الطور احترافي",
       "quick.oibt": "محاكي OIBT",
@@ -198,7 +198,7 @@
       "tools.schema.title": "محاكاة احترافية",
       "tools.schema.desc": "محاكي مدمج — دوائر جاهزة، مخططات وقياسات",
       "tools.schema.link": "فتح المحاكاة ←",
-      "tools.swissdz.title": "محاكي SwissDZ",
+      "tools.swissdz.title": "لوحة وورشة",
       "tools.swissdz.desc":
         "أول محاكي للكهربائيين في الجزائر — لوحة، ورشة ومخطط أحادي الطور احترافي",
       "tools.swissdz.link": "تشغيل المحاكاة ←",
