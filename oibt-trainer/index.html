@@ -54,21 +54,8 @@
     caches.keys().then((keys) => keys.forEach((k) => caches.delete(k)));
   }
 
-  // Landscape lock (Android Chrome, souvent en fullscreen uniquement).
-  // iOS Safari : API absente → overlay Flutter invite à tourner.
-  function tryLockLandscape() {
-    try {
-      var o = screen.orientation || screen.mozOrientation || screen.msOrientation;
-      if (o && typeof o.lock === 'function') {
-        o.lock('landscape').catch(function () {});
-      }
-    } catch (_) {}
-  }
-  tryLockLandscape();
-  document.addEventListener('fullscreenchange', tryLockLandscape);
-  document.addEventListener('visibilitychange', function () {
-    if (!document.hidden) tryLockLandscape();
-  });
+  // Pas de lock paysage forcé : Fluke `#/meter` doit marcher en portrait
+  // (Expo Go / mobile). L’utilisateur peut tourner s’il préfère.
 </script>
   <!-- ?v= force le navigateur à recharger le bootstrap (puis main.dart.js)
        même si un vieux http.server a mis le JS en cache heuristique. -->
