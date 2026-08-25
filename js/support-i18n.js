@@ -85,16 +85,60 @@
         "واتساب وفيسبوك: غالباً في نفس اليوم. البريد: خلال 48 ساعة عمل. للإلحاح في الورشة، استخدم واتساب مع وصف واضح للمشكلة.",
       "footer.copy": "© 2026 SwissDZ — electro-dz.com",
     },
+    en: {
+      "meta.title": "Support — SwissDZ",
+      "meta.desc":
+        "App and website help: WhatsApp, Facebook Electro DZ, e-mail, FAQ.",
+      "nav.home": "Home",
+      "nav.train": "Training",
+      "nav.docs": "Documentation",
+      "nav.calc": "Calculations",
+      "nav.job": "Jobs",
+      "nav.contact": "Contact",
+      "nav.support": "Support",
+      "hero.title": "Support & help",
+      "hero.sub":
+        "Mobile app, electro-dz.com, calculations and PDF library — we usually reply within 48 business hours.",
+      "quick.title": "Quick contact",
+      "quick.wa.desc": "Direct message — ideal for a short question or a screenshot.",
+      "quick.fb.desc":
+        "Official community page: training announcements, jobs and news.",
+      "quick.mail.desc": "For detailed follow-up (bug, account, partnership).",
+      "site.title": "Website help",
+      "site.calc": "Online electrical calculation (cable sizing, voltage drop, etc.)",
+      "site.lib": "PDF library and favourites (optional member account)",
+      "site.doc": "Technical documentation (PDF, Excel, GeoGebra)",
+      "site.devis": "Quotes and projects (sign-in required)",
+      "app.title": "SwissDZ mobile app",
+      "app.install":
+        "Android: Google Play · iPhone: App Store — search for “SwissDZ” or “Electro DZ”.",
+      "app.crash":
+        "If the app closes: force-quit it, restart the phone, update Android/iOS, then reinstall from the store.",
+      "app.pdf":
+        "Quote PDFs: use the system share sheet. Include phone model and app version if the issue persists.",
+      "privacy.title": "Data & privacy",
+      "privacy.p": "See the",
+      "privacy.link": "privacy policy",
+      "privacy.after": "for which data is processed.",
+      "delay.title": "Response times",
+      "delay.p":
+        "WhatsApp and Facebook: often the same day. E-mail: within 48 business hours. For job-site urgency, prefer WhatsApp with a clear problem description.",
+      "footer.copy": "© 2026 SwissDZ — electro-dz.com",
+    },
   };
 
   var lang = "ar";
+
+  function normalizeLang(next) {
+    return next === "fr" || next === "ar" || next === "en" ? next : "ar";
+  }
 
   function t(key) {
     return (T[lang] && T[lang][key]) || T.fr[key] || key;
   }
 
   function applyLang(next) {
-    lang = next === "fr" ? "fr" : "ar";
+    lang = normalizeLang(next);
     var root = document.documentElement;
     root.lang = lang;
     root.dir = lang === "ar" ? "rtl" : "ltr";
@@ -126,6 +170,5 @@
   try {
     saved = localStorage.getItem(STORAGE) || "ar";
   } catch (e) {}
-  if (saved !== "fr" && saved !== "ar") saved = "ar";
-  applyLang(saved);
+  applyLang(normalizeLang(saved));
 })();

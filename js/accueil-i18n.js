@@ -233,15 +233,140 @@
       "stats.total": "إجمالي الزيارات",
       "arrow": "←",
     },
+    en: {
+      "meta.title": "Electro DZ | Algeria's major electrical platform — Swiss expertise",
+      "meta.description": "Electro DZ — Algeria's major electrical platform, backed by Swiss expertise: pro calculations, NIBT/NFC PDFs, IEC diagrams, training and quotes. 100% free.",
+      "logo.sub": "Algeria's major electrical platform — Swiss expertise",
+      "nav.login": "Sign in",
+      "nav.join": "Join",
+      "hero.title": "SwissDZ",
+      "hero.tagline": "The reference for electricians in Algeria",
+      "hero.sub": "Calculations, standards, diagrams, training and quotes — the full toolkit. Swiss quality, Algerian accessibility. 100% free.",
+      "hero.androidLabel": "Get it on Google Play",
+      "hero.appleLabel": "Download on the App Store",
+      "hero.appLine": "Free app — Android & iPhone",
+      "ticker.aria": "Daily updates",
+      "ticker.tag": "Daily updates",
+      "quick.title": "Quick access",
+      "quick.calc": "Calculations",
+      "quick.balance": "Power balance",
+      "quick.curve": "Trip curve",
+      "quick.cable": "Cable sizing",
+      "quick.schema": "Diagrams",
+      "quick.pdf": "PDF library",
+      "quick.docs": "Documentation",
+      "quick.plans": "Diagrams & plans",
+      "quick.plans.hint": "Single-line, IEC symbols, export & print",
+      "quick.training": "Quiz NF C 15-100",
+      "quick.training.hint":
+        "472 questions to master NF C 15-100, step by step",
+      "quick.swissdz": "SwissDZ electrical workshop",
+      "quick.swissdz.hint":
+        "First simulator for electricians in Algeria — panel, workshop & professional single-line diagram",
+      "quick.oibt": "OIBT simulator",
+      "quick.oibt.hint":
+        "Fluke 1664FC — measurements, wiring & inspection scenarios",
+      "quick.cosphi": "SwissDZ Cos φ",
+      "quick.cosphi.hint":
+        "LV power-factor correction bank — measure, correct, verify",
+      "quick.job": "Jobs · coming soon",
+      "quick.quote": "Quotes",
+      "quick.social": "Social",
+      "quick.support": "Support",
+      "more.toggle": "More sections",
+      "spot.label": "Most requested",
+      "spot.calc.tag": "Pro tool",
+      "spot.calc.title": "Electrical calculations",
+      "spot.calc.desc": "Cable sizing, voltage drop, power factor, short-circuit — CH and DZ standards",
+      "spot.pdf.tag": "Free PDFs",
+      "spot.pdf.title": "Technical library",
+      "spot.pdf.desc": "Standards, manuals and references to read online",
+      "spot.job.tag": "Career",
+      "spot.job.title": "Job offers",
+      "spot.job.desc": "Great news coming soon in Algeria — offers and partners in preparation",
+      "docs.title": "PDF documentation",
+      "docs.sub": "Standards, manuals and references to browse online",
+      "docs.lib.title": "PDF documentation",
+      "docs.lib.desc": "Books and standards (NIBT, NFC…) sorted by topic",
+      "docs.lib.link": "Browse the library →",
+      "docs.doc.title": "Documentation",
+      "docs.doc.pill": "PDF + GeoGebra",
+      "docs.doc.desc": "Single-phase, three-phase, magnetism, energy",
+      "docs.doc.link": "View modules →",
+      "docs.train.title": "A Swiss learning method in Algeria",
+      "docs.train.desc": "Large NF C 15-100 questionnaire — 472 questions, free",
+      "docs.train.link": "Start the questionnaire →",
+      "pill.quiz": "Quiz",
+      "pill.trainLater": "Coming later",
+      "pill.soon": "Soon",
+      "pill.pdf": "PDF",
+      "pill.free": "Free",
+      "tools.title": "Professional tools",
+      "tools.sub": "Calculate, simulate and manage your jobs",
+      "tools.calc.title": "Online calculations",
+      "tools.calc.desc": "Ohm's law, power, cable cross-section, voltage drop",
+      "tools.calc.link": "Run a calculation →",
+      "pill.member": "Member",
+      "tools.member.title": "Member area",
+      "tools.member.desc": "Google or e-mail — PDF favourites",
+      "tools.member.link": "Sign in →",
+      "pill.calc": "Calc",
+      "pill.schema": "Simulation",
+      "tools.schema.title": "Professional simulation",
+      "tools.schema.desc": "Built-in simulator — ready circuits, diagrams and measurements",
+      "tools.schema.link": "Open simulation →",
+      "tools.swissdz.title": "SwissDZ electrical workshop",
+      "tools.swissdz.desc":
+        "First simulator for electricians in Algeria — panel, workshop & professional single-line diagram",
+      "tools.swissdz.link": "Launch simulation →",
+      "tools.quote.title": "Quotes & projects",
+      "tools.quote.desc": "Full catalogue, local save and PDF print",
+      "tools.quote.link": "Open quotes →",
+      "pill.app": "App",
+      "tools.sim.title": "Interactive circuits",
+      "tools.sim.desc": "Test your wiring before the job site",
+      "tools.sim.link": "In the app →",
+      "pill.sim": "Simulator",
+      "job.title": "Jobs & pro network",
+      "job.sub": "Great employment news coming soon for Algeria",
+      "job.offers.title": "Job offers",
+      "job.offers.desc": "Local listings and partner companies — announcement imminent",
+      "job.offers.link": "View offers →",
+      "pill.job": "Offers",
+      "job.contact.title": "Write to us",
+      "job.contact.desc": "Questions, partnerships, reports",
+      "job.contact.link": "Contact page →",
+      "pill.contact": "Contact",
+      "job.help.title": "Support & help",
+      "job.help.desc": "WhatsApp, Facebook Electro DZ, app & site FAQ — reply within 48 h",
+      "job.help.link": "Open support →",
+      "pill.help": "Help",
+      "social.title": "Our SwissDZ community",
+      "social.sub": "Follow us — tutorials, site tips and news",
+      "social.fb": "Electro DZ",
+      "footer": "© 2026 SwissDZ — electro-dz.com",
+      "footer.signature": "من طرف أخوكم عثمان كهربائي جزائري في سويسرا لا تنسونا من صالح دعائكم",
+      "stats.today": "Visitors today",
+      "stats.total": "Total visits",
+      "arrow": "→",
+    },
   };
 
-  var defaultLang = document.documentElement.getAttribute("data-default-lang") || "ar";
-  if (defaultLang !== "fr" && defaultLang !== "ar") defaultLang = "ar";
+  function normalizeLang(lang, fallback) {
+    if (lang === "fr" || lang === "ar" || lang === "en") return lang;
+    return fallback || "ar";
+  }
+
+  var defaultLang = normalizeLang(
+    document.documentElement.getAttribute("data-default-lang") || "ar",
+    "ar"
+  );
 
   function applyLang(lang) {
+    lang = normalizeLang(lang, defaultLang);
     if (!T[lang]) lang = defaultLang;
     var root = document.documentElement;
-    root.lang = lang === "ar" ? "ar" : "fr";
+    root.lang = lang;
     root.dir = lang === "ar" ? "rtl" : "ltr";
     document.title = T[lang]["meta.title"];
 
@@ -287,7 +412,7 @@
   try {
     saved = localStorage.getItem("electrodz-site-lang") || defaultLang;
   } catch (e) {}
-  if (saved !== "fr" && saved !== "ar") saved = defaultLang;
+  saved = normalizeLang(saved, defaultLang);
   applyLang(saved);
 
   window.ElectroDzAccueilI18n = { applyLang: applyLang, t: function (lang, key) {

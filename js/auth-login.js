@@ -9,6 +9,8 @@
   }
 
   const sb = window.ElectroDzAuth.getClient();
+  const t = (key) =>
+    (window.ElectroDzAuthI18n && window.ElectroDzAuthI18n.t(key)) || key;
 
   function postLoginUrl() {
     const r = new URLSearchParams(location.search).get('redirect');
@@ -34,7 +36,10 @@
 
   const urlError = new URLSearchParams(location.search).get('error');
   if (urlError) {
-    showMsg('<strong>Connexion Google</strong><br>' + decodeURIComponent(urlError), 'e');
+    showMsg(
+      '<strong>' + t('login.errGoogleTitle') + '</strong><br>' + decodeURIComponent(urlError),
+      'e'
+    );
   }
 
   document.getElementById('form')?.addEventListener('submit', async (e) => {
@@ -45,16 +50,16 @@
     if (!email || !password) return;
 
     if (btn) {
-      btn.textContent = 'Connexion…';
+      btn.textContent = t('login.submitting');
       btn.disabled = true;
     }
 
     const { error } = await sb.auth.signInWithPassword({ email, password });
 
     if (error) {
-      showMsg('Email ou mot de passe incorrect.', 'e');
+      showMsg(t('login.errCreds'), 'e');
       if (btn) {
-        btn.textContent = 'Se connecter';
+        btn.textContent = t('login.submit');
         btn.disabled = false;
       }
       return;
@@ -75,11 +80,7 @@
       }
       await window.ElectroDzAuth.signInWithGoogle();
     } catch (err) {
-      showMsg(
-        err?.message ||
-          'Connexion Google indisponible. Vérifiez que Google est activé dans Supabase.',
-        'e'
-      );
+      showMsg(err?.message || t('login.errGoogle'), 'e');
       if (btn) {
         btn.disabled = false;
         btn.style.opacity = '';

@@ -61,16 +61,48 @@
       "cta.note": "مجاني · هاتف وحاسوب",
       "footer.copy": "© 2026 SwissDZ — electro-dz.com",
     },
+    en: {
+      "meta.title": "Swiss learning method — SwissDZ",
+      "meta.desc":
+        "Learn NF C 15-100 with the large interactive questionnaire — 472 questions, free online.",
+      "nav.home": "Home",
+      "nav.train": "Training",
+      "nav.docs": "Documentation",
+      "nav.lib": "PDF library",
+      "nav.calc": "Calculations",
+      "nav.job": "Jobs",
+      "nav.contact": "Contact",
+      "nav.support": "Support",
+      "hero.badge": "100% free · Online",
+      "hero.title": "A Swiss learning method in Algeria",
+      "hero.sub":
+        "The large interactive questionnaire on NF C 15-100 (2015) — revise before the exam, inspection or on the job site.",
+      "section.quiz.hook":
+        "472 questions to master NF C 15-100, step by step",
+      "section.quiz.lead":
+        "MCQ, true/false, instant explanations and links to the official text — no sign-up · optional leaderboard with a nickname.",
+      "section.quiz.perk1": "6 modules · 472 questions · 27 visuals (diagrams)",
+      "section.quiz.perk2": "Progress at your own pace — score at the end of each module",
+      "section.quiz.perk3": "Top 50 leaderboard: enter with a nickname after each module",
+      "cta.quiz": "Start the questionnaire →",
+      "cta.leaderboard": "View leaderboard →",
+      "cta.note": "Free · mobile and desktop",
+      "footer.copy": "© 2026 SwissDZ — electro-dz.com",
+    },
   };
 
   var lang = "ar";
+
+  function normalizeLang(next) {
+    return next === "fr" || next === "ar" || next === "en" ? next : "ar";
+  }
 
   function t(key) {
     return (T[lang] && T[lang][key]) || T.fr[key] || key;
   }
 
   function applyLang(next) {
-    lang = next === "fr" ? "fr" : "ar";
+    lang = normalizeLang(next);
     var root = document.documentElement;
     root.lang = lang;
     root.dir = lang === "ar" ? "rtl" : "ltr";
@@ -106,6 +138,5 @@
   try {
     saved = localStorage.getItem(STORAGE) || "ar";
   } catch (e) {}
-  if (saved !== "fr" && saved !== "ar") saved = "ar";
-  applyLang(saved);
+  applyLang(normalizeLang(saved));
 })();

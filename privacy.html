@@ -9,52 +9,62 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/site-brand.css" />
   <link rel="icon" href="assets/app-icon.png" type="image/png" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231e40af'/%3E%3Cpath fill='white' d='M18 6L8 18h6l-2 8 12-14h-7l1-8z'/%3E%3C/svg%3E" />
   <link rel="canonical" href="https://electro-dz.com/privacy.html" />
+  <style>
+    .page-lang-switch{display:flex;gap:6px;align-items:center}
+    .page-lang-switch .lang-btn{background:none;border:1px solid rgba(255,255,255,0.35);color:#cbd5e1;padding:4px 10px;border-radius:6px;cursor:pointer;font-weight:700;font-size:.85rem}
+    .page-lang-switch .lang-btn.active{background:#facc15;color:#0f172a;border-color:#facc15}
+    .header-inner{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+  </style>
 </head>
-<body>
+<body data-shell-page="privacy">
   <header class="site-header">
     <div class="header-inner">
       <a class="logo" href="index.html"><img src="assets/app-icon.png" alt="" class="logo-img" width="40" height="40" decoding="async"/> SwissDZ</a>
+      <div class="page-lang-switch">
+        <button type="button" class="lang-btn" data-lang="fr" aria-label="Français">FR</button>
+        <button type="button" class="lang-btn" data-lang="ar" aria-label="العربية">AR</button>
+        <button type="button" class="lang-btn" data-lang="en" aria-label="English">EN</button>
+      </div>
       <nav class="nav-main">
-        <a href="index.html">Accueil</a>
-        <a href="formations.html">Formations</a>
-        <a href="documentation.html">Documentation</a>
-        <a href="calcul-electrique.html">Calcul électrique</a>
-        <a href="emploi.html">Emploi</a>
-        <a href="contact.html">Contact</a>
-        <a class="btn btn-primary" href="index.html#app">L’app</a>
+        <a href="index.html" data-i18n="nav.home">Accueil</a>
+        <a href="formations.html" data-i18n="nav.train">Formations</a>
+        <a href="documentation.html" data-i18n="nav.docs">Documentation</a>
+        <a href="calcul-electrique.html" data-i18n="nav.calcLong">Calcul électrique</a>
+        <a href="emploi.html" data-i18n="nav.job">Emploi</a>
+        <a href="contact.html" data-i18n="nav.contact">Contact</a>
+        <a class="btn btn-primary" href="index.html#app" data-i18n="nav.app">L’app</a>
       </nav>
     </div>
   </header>
 
   <header class="page-hero">
-    <h1>Politique de confidentialité</h1>
-    <p>Dernière mise à jour : 2026 — SwissDZ (site electro-dz.com et application mobile).</p>
+    <h1 data-i18n="privacy.hero">Politique de confidentialité</h1>
+    <p data-i18n="privacy.heroSub">Dernière mise à jour : 2026 — SwissDZ (site electro-dz.com et application mobile).</p>
   </header>
 
   <section>
     <div class="section-inner">
       <div class="content-block prose" style="max-width: 46rem;">
-        <h2>1. Responsable du traitement</h2>
-        <p>Les informations relatives à l’éditeur du site et de l’application SwissDZ sont communiquées sur la page <a href="contact.html">Contact</a>. Pour toute question sur vos données : <a href="mailto:contact@electro-dz.com?subject=Confidentialit%C3%A9">contact@electro-dz.com</a>.</p>
+        <h2 data-i18n="privacy.h1">1. Responsable du traitement</h2>
+        <p data-i18n="privacy.p1">Les informations relatives à l’éditeur du site et de l’application SwissDZ sont communiquées sur la page Contact. Pour toute question sur vos données : contact@electro-dz.com.</p>
 
-        <h2>2. Données collectées via le site web</h2>
-        <p>Le site <strong>electro-dz.com</strong> peut utiliser des cookies ou outils d’analyse d’audience (par exemple si vous activez un bandeau cookies ou un service tiers comme Google Analytics). Les finalités sont : mesurer la fréquentation, améliorer le contenu et l’expérience utilisateur. Vous pouvez configurer votre navigateur pour refuser certains cookies.</p>
-        <p>Si vous nous écrivez par e-mail, nous conservons les éléments nécessaires à la gestion de votre demande (expéditeur, objet, message).</p>
+        <h2 data-i18n="privacy.h2">2. Données collectées via le site web</h2>
+        <p data-i18n="privacy.p2a">Le site electro-dz.com peut utiliser des cookies ou outils d’analyse d’audience.</p>
+        <p data-i18n="privacy.p2b">Si vous nous écrivez par e-mail, nous conservons les éléments nécessaires à la gestion de votre demande.</p>
 
-        <h2>3. Application mobile</h2>
-        <p>L’application SwissDZ peut accéder à certaines fonctions du téléphone (appareil photo, galerie photos, etc.) <strong>uniquement si vous l’autorisez</strong>, et dans le but décrit dans les textes du système (par exemple ajouter des photos à un projet). Les données restent en principe sur l’appareil sauf si une fonction de synchronisation cloud est proposée et activée par l’utilisateur.</p>
-        <p>Les mises à jour de l’app peuvent être distribuées via les stores (Google, Apple) qui appliquent leurs propres conditions.</p>
+        <h2 data-i18n="privacy.h3">3. Application mobile</h2>
+        <p data-i18n="privacy.p3a">L’application SwissDZ peut accéder à certaines fonctions du téléphone uniquement si vous l’autorisez.</p>
+        <p data-i18n="privacy.p3b">Les mises à jour de l’app peuvent être distribuées via les stores (Google, Apple).</p>
 
-        <h2>4. Durée de conservation</h2>
-        <p>Les messages de contact sont conservés le temps nécessaire au traitement de la demande, puis archivés ou supprimés selon les obligations légales applicables.</p>
+        <h2 data-i18n="privacy.h4">4. Durée de conservation</h2>
+        <p data-i18n="privacy.p4">Les messages de contact sont conservés le temps nécessaire au traitement de la demande.</p>
 
-        <h2>5. Vos droits</h2>
-        <p>Selon le droit applicable (notamment le RGPD pour les utilisateurs concernés), vous pouvez disposer d’un droit d’accès, de rectification, d’effacement, de limitation, d’opposition et de portabilité. Adressez votre demande à <a href="mailto:contact@electro-dz.com">contact@electro-dz.com</a> en justifiant de votre identité si nécessaire.</p>
+        <h2 data-i18n="privacy.h5">5. Vos droits</h2>
+        <p data-i18n="privacy.p5">Selon le droit applicable (notamment le RGPD), vous pouvez disposer de droits d’accès, rectification, effacement, etc. Adressez votre demande à contact@electro-dz.com.</p>
 
-        <h2>6. Modifications</h2>
-        <p>Cette politique peut être mise à jour. La date en tête de page indique la dernière révision significative.</p>
+        <h2 data-i18n="privacy.h6">6. Modifications</h2>
+        <p data-i18n="privacy.p6">Cette politique peut être mise à jour. La date en tête de page indique la dernière révision significative.</p>
       </div>
     </div>
   </section>
@@ -64,13 +74,14 @@
       <div>
         <h4>SwissDZ</h4>
         <ul>
-          <li><a href="index.html">Accueil</a></li>
-          <li><a href="support.html">Support</a></li>
+          <li><a href="index.html" data-i18n="nav.home">Accueil</a></li>
+          <li><a href="support.html" data-i18n="nav.support">Support</a></li>
         </ul>
       </div>
     </div>
     <p class="copyright">© 2026 SwissDZ — <a href="https://electro-dz.com/">electro-dz.com</a></p>
   </footer>
   <script src="js/main.js" defer></script>
+  <script src="js/shell-pages-i18n.js" defer></script>
 </body>
 </html>

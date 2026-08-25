@@ -44,16 +44,17 @@
       <span style="font-weight:800;font-size:1.1rem">SwissDZ</span>
     </a>
     <ul class="nav-links">
-      <li><a href="index.html" data-i18n-fr="Accueil" data-i18n-ar="الرئيسية">الرئيسية</a></li>
-      <li><a href="calcul-electrique.html" data-i18n-fr="Calculs" data-i18n-ar="الحسابات">الحسابات</a></li>
-      <li><a href="bibliotheque.html" class="active" data-i18n-fr="Bibliothèque" data-i18n-ar="مكتبة PDF">مكتبة PDF</a></li>
-      <li><a href="login.html" data-nav-login data-i18n-fr="Connexion" data-i18n-ar="دخول">دخول</a></li>
-      <li hidden><a href="dashboard.html" data-nav-dashboard data-i18n-fr="Mon espace" data-i18n-ar="مساحتي">مساحتي</a></li>
-      <li hidden><a href="bibliotheque.html?favorites=1" data-nav-favorites data-i18n-fr="Mes favoris" data-i18n-ar="مفضلتي">مفضلتي</a></li>
+      <li><a href="index.html" data-i18n-fr="Accueil" data-i18n-ar="الرئيسية" data-i18n-en="Home">الرئيسية</a></li>
+      <li><a href="calcul-electrique.html" data-i18n-fr="Calculs" data-i18n-ar="الحسابات" data-i18n-en="Calculations">الحسابات</a></li>
+      <li><a href="bibliotheque.html" class="active" data-i18n-fr="Bibliothèque" data-i18n-ar="مكتبة PDF" data-i18n-en="Library">مكتبة PDF</a></li>
+      <li><a href="login.html" data-nav-login data-i18n-fr="Connexion" data-i18n-ar="دخول" data-i18n-en="Sign in">دخول</a></li>
+      <li hidden><a href="dashboard.html" data-nav-dashboard data-i18n-fr="Mon espace" data-i18n-ar="مساحتي" data-i18n-en="My space">مساحتي</a></li>
+      <li hidden><a href="bibliotheque.html?favorites=1" data-nav-favorites data-i18n-fr="Mes favoris" data-i18n-ar="مفضلتي" data-i18n-en="My favourites">مفضلتي</a></li>
     </ul>
     <div class="nav-right">
       <button type="button" class="lang-btn" data-lang-fr>FR</button>
       <button type="button" class="lang-btn active" data-lang-ar>AR</button>
+      <button type="button" class="lang-btn" data-lang-en>EN</button>
     </div>
   </nav>
 
@@ -61,8 +62,8 @@
     <header class="library-hero-row" style="margin-bottom:1.5rem">
       
       <div>
-        <h1 style="font-size:2rem;color:#facc15;margin-bottom:0.5rem" data-i18n-fr="Bibliothèque PDF" data-i18n-ar="مكتبة الكتب PDF">مكتبة الكتب PDF</h1>
-        <p style="color:#94a3b8" data-i18n-fr="Mémentos et guides pour électriciens." data-i18n-ar="مذكرات وأدلة ونشرات تقنية للكهربائيين.">مذكرات وأدلة ونشرات تقنية للكهربائيين.</p>
+        <h1 style="font-size:2rem;color:#facc15;margin-bottom:0.5rem" data-i18n-fr="Bibliothèque PDF" data-i18n-ar="مكتبة الكتب PDF" data-i18n-en="PDF library">مكتبة الكتب PDF</h1>
+        <p style="color:#94a3b8" data-i18n-fr="Mémentos et guides pour électriciens." data-i18n-ar="مذكرات وأدلة ونشرات تقنية للكهربائيين." data-i18n-en="Handbooks and guides for electricians.">مذكرات وأدلة ونشرات تقنية للكهربائيين.</p>
         <p class="catalog-updated" data-catalog-updated style="color:#64748b;font-size:0.85rem;margin-top:0.5rem"></p>
         <p class="library-pdf-stats" data-library-pdf-stats hidden aria-label="Statistiques PDF"></p>
       </div>
@@ -70,34 +71,34 @@
 
     <div class="library-toolbar">
       <label class="library-search-wrap" style="flex:1">
-        <input type="search" class="library-search" data-books-search data-placeholder-fr="Rechercher…" data-placeholder-ar="بحث عن كتاب…" placeholder="بحث عن كتاب…" />
+        <input type="search" class="library-search" data-books-search data-placeholder-fr="Rechercher…" data-placeholder-ar="بحث عن كتاب…" data-placeholder-en="Search…" placeholder="بحث عن كتاب…" />
       </label>
       <label class="library-sort-wrap">
-        <span class="library-sort-label" data-i18n-fr="Trier" data-i18n-ar="ترتيب">ترتيب</span>
+        <span class="library-sort-label" data-i18n-fr="Trier" data-i18n-ar="ترتيب" data-i18n-en="Sort">ترتيب</span>
         <select class="library-sort" data-books-sort aria-label="Trier les ouvrages"></select>
       </label>
       <p class="library-count" data-books-count></p>
     </div>
 
     <section class="library-collections-panel" aria-label="Collections PDF">
-      <h2 class="library-collections-panel__title" data-i18n-fr="Collections" data-i18n-ar="المجموعات">المجموعات</h2>
+      <h2 class="library-collections-panel__title" data-i18n-fr="Collections" data-i18n-ar="المجموعات" data-i18n-en="Collections">المجموعات</h2>
       <div class="book-collections-scroll"><div class="book-collections" data-books-collections></div></div>
     </section>
     <section class="library-filters-panel" aria-label="Filtres">
-      <h2 class="library-filters-panel__title" data-i18n-fr="Thèmes" data-i18n-ar="المواضيع">المواضيع</h2>
+      <h2 class="library-filters-panel__title" data-i18n-fr="Thèmes" data-i18n-ar="المواضيع" data-i18n-en="Topics">المواضيع</h2>
       <div class="book-filters-scroll"><div class="book-filters" data-books-filters></div></div>
     </section>
 
     <div class="library-knx-gift" data-knx-gift hidden aria-live="polite"></div>
 
     <section class="library-featured" data-books-featured hidden>
-      <h2 class="section-title" style="color:#fff;margin:1.5rem 0 1rem" data-i18n-fr="À la une" data-i18n-ar="مميز">مميز</h2>
+      <h2 class="section-title" style="color:#fff;margin:1.5rem 0 1rem" data-i18n-fr="À la une" data-i18n-ar="مميز" data-i18n-en="Featured">مميز</h2>
       <div class="book-grid book-grid--featured" data-featured-grid></div>
     </section>
 
-    <h2 class="section-title" style="color:#fff;margin:1.5rem 0 1rem" data-books-section-title data-i18n-fr="Tous les ouvrages" data-i18n-ar="كل الكتب">كل الكتب</h2>
+    <h2 class="section-title" style="color:#fff;margin:1.5rem 0 1rem" data-books-section-title data-i18n-fr="Tous les ouvrages" data-i18n-ar="كل الكتب" data-i18n-en="All titles">كل الكتب</h2>
     <div class="library-books-root" data-books-grid></div>
-    <p class="library-empty" data-books-empty hidden style="text-align:center;padding:2rem;color:#94a3b8" data-i18n-fr="Aucun ouvrage trouvé." data-i18n-ar="لا يوجد كتاب.">لا يوجد كتاب.</p>
+    <p class="library-empty" data-books-empty hidden style="text-align:center;padding:2rem;color:#94a3b8" data-i18n-fr="Aucun ouvrage trouvé." data-i18n-ar="لا يوجد كتاب." data-i18n-en="No titles found.">لا يوجد كتاب.</p>
   </main>
 
   <footer style="text-align:center;padding:40px;border-top:1px solid rgba(255,255,255,0.07);margin-top:40px">

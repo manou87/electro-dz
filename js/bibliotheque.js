@@ -6,11 +6,11 @@
   const STORAGE_SORT = "electrodz-library-sort";
 
   const SORT_OPTIONS = [
-    { value: "default", labelFr: "Ordre du catalogue", labelAr: "الترتيب الافتراضي" },
-    { value: "date-desc", labelFr: "Plus récent d'abord", labelAr: "الأحدث أولاً" },
-    { value: "date-asc", labelFr: "Plus ancien d'abord", labelAr: "الأقدم أولاً" },
-    { value: "title-asc", labelFr: "A → Z", labelAr: "أ → ي" },
-    { value: "title-desc", labelFr: "Z → A", labelAr: "ي → أ" },
+    { value: "default", labelFr: "Ordre du catalogue", labelAr: "الترتيب الافتراضي", labelEn: "Catalogue order" },
+    { value: "date-desc", labelFr: "Plus récent d'abord", labelAr: "الأحدث أولاً", labelEn: "Newest first" },
+    { value: "date-asc", labelFr: "Plus ancien d'abord", labelAr: "الأقدم أولاً", labelEn: "Oldest first" },
+    { value: "title-asc", labelFr: "A → Z", labelAr: "أ → ي", labelEn: "A → Z" },
+    { value: "title-desc", labelFr: "Z → A", labelAr: "ي → أ", labelEn: "Z → A" },
   ];
 
   const els = {
@@ -26,6 +26,7 @@
     knxGift: document.querySelector("[data-knx-gift]"),
     langFr: document.querySelector("[data-lang-fr]"),
     langAr: document.querySelector("[data-lang-ar]"),
+    langEn: document.querySelector("[data-lang-en]"),
     updated: document.querySelector("[data-catalog-updated]"),
   };
 
@@ -33,6 +34,7 @@
 
   let catalog = null;
   let lang = localStorage.getItem(STORAGE_LANG) || "ar";
+  if (lang !== "fr" && lang !== "ar" && lang !== "en") lang = "ar";
   let collection = "all";
   let category = "all";
   let query = "";
@@ -55,8 +57,14 @@
     autres: "#475569",
   };
 
-  function t(fr, ar) {
-    return lang === "ar" ? ar : fr;
+  function t(fr, ar, en) {
+    if (lang === "ar") return ar;
+    if (lang === "en") return en != null && en !== "" ? en : fr;
+    return fr;
+  }
+
+  function normalizeLang(next) {
+    return next === "fr" || next === "ar" || next === "en" ? next : "ar";
   }
 
   function escapeHtml(s) {
@@ -95,12 +103,12 @@
   }
 
   function downloadLabel(format) {
-    if (format === "pdf") return t("Télécharger PDF", "تنزيل PDF");
-    if (format === "docx") return t("Télécharger Word", "تنزيل Word");
-    if (format === "doc") return t("Télécharger DOC", "تنزيل DOC");
-    if (format === "zip") return t("Télécharger ZIP", "تنزيل ZIP");
-    if (format === "pptx") return t("Télécharger PowerPoint", "تنزيل PowerPoint");
-    return t("Télécharger", "تنزيل");
+    if (format === "pdf") return t("Télécharger PDF", "تنزيل PDF", "Download PDF");
+    if (format === "docx") return t("Télécharger Word", "تنزيل Word", "Download Word");
+    if (format === "doc") return t("Télécharger DOC", "تنزيل DOC", "Download DOC");
+    if (format === "zip") return t("Télécharger ZIP", "تنزيل ZIP", "Download ZIP");
+    if (format === "pptx") return t("Télécharger PowerPoint", "تنزيل PowerPoint", "Download PowerPoint");
+    return t("Télécharger", "تنزيل", "Download");
   }
 
   function hasBookFile(book) {
@@ -179,7 +187,7 @@
   }
 
   function setLang(next) {
-    lang = next === "ar" ? "ar" : "fr";
+    lang = normalizeLang(next);
     localStorage.setItem(STORAGE_LANG, lang);
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
@@ -191,19 +199,25 @@
       els.langAr.classList.toggle("active", lang === "ar");
       els.langAr.setAttribute("aria-pressed", lang === "ar" ? "true" : "false");
     }
+    if (els.langEn) {
+      els.langEn.classList.toggle("active", lang === "en");
+      els.langEn.setAttribute("aria-pressed", lang === "en" ? "true" : "false");
+    }
     document.querySelectorAll("[data-i18n-fr]").forEach(function (node) {
       const fr = node.getAttribute("data-i18n-fr");
       const ar = node.getAttribute("data-i18n-ar");
-      if (fr && ar) node.textContent = t(fr, ar);
+      const en = node.getAttribute("data-i18n-en") || fr;
+      if (fr && ar) node.textContent = t(fr, ar, en);
     });
     if (els.search) {
       els.search.placeholder = t(
         els.search.getAttribute("data-placeholder-fr") || "",
-        els.search.getAttribute("data-placeholder-ar") || ""
+        els.search.getAttribute("data-placeholder-ar") || "",
+        els.search.getAttribute("data-placeholder-en") || els.search.getAttribute("data-placeholder-fr") || ""
       );
     }
     if (els.empty) {
-      els.empty.textContent = t("Aucun ouvrage trouvé.", "لا يوجد كتاب.");
+      els.empty.textContent = t("Aucun ouvrage trouvé.", "لا يوجد كتاب.", "No titles found.");
     }
     render();
   }
@@ -255,7 +269,7 @@
   function compareTitles(a, b) {
     const ta = bookTitleKey(a);
     const tb = bookTitleKey(b);
-    const cmp = ta.localeCompare(tb, lang === "ar" ? "ar" : "fr", { sensitivity: "base" });
+    const cmp = ta.localeCompare(tb, lang === "ar" ? "ar" : lang === "en" ? "en" : "fr", { sensitivity: "base" });
     if (cmp !== 0) return cmp;
     return String(a.id || "").localeCompare(String(b.id || ""));
   }
@@ -322,7 +336,7 @@
     const v = Number(n);
     if (!Number.isFinite(v) || v <= 0) return "0";
     try {
-      return new Intl.NumberFormat(lang === "ar" ? "ar-DZ" : "fr-CH").format(v);
+      return new Intl.NumberFormat(lang === "ar" ? "ar-DZ" : lang === "en" ? "en-GB" : "fr-CH").format(v);
     } catch (_e) {
       return String(v);
     }
@@ -396,7 +410,7 @@
         coverDiv.setAttribute("tabindex", "0");
         coverDiv.setAttribute(
           "aria-label",
-          (isPdf ? t("Lire le PDF", "قراءة PDF") : t("Télécharger", "تنزيل")) +
+          (isPdf ? t("Lire le PDF", "قراءة PDF", "Read PDF") : t("Télécharger", "تنزيل", "Download")) +
             " — " +
             title
         );
@@ -445,7 +459,7 @@
     if (locked) {
       const lockBadge = document.createElement("span");
       lockBadge.className = "book-lock-badge";
-      lockBadge.textContent = t("🔒 Accès protégé", "🔒 وصول محمي");
+      lockBadge.textContent = t("🔒 Accès protégé", "🔒 وصول محمي", "🔒 Protected access");
       body.appendChild(lockBadge);
     }
 
@@ -498,7 +512,7 @@
       "btn-fav" + (favoriteIds.has(book.id) ? " btn-fav--on" : "");
     favBtn.setAttribute(
       "aria-label",
-      t("Ajouter aux favoris", "إضافة إلى المفضلة")
+      t("Ajouter aux favoris", "إضافة إلى المفضلة", "Add to favourites")
     );
     favBtn.textContent = favoriteIds.has(book.id) ? "★" : "☆";
     favBtn.addEventListener("click", function (e) {
@@ -513,8 +527,8 @@
       read.className = "btn btn-primary btn-sm";
       read.href = pdfViewerHref(book);
       read.textContent = locked
-        ? t("Mot de passe", "كلمة المرور")
-        : t("Lire le PDF", "قراءة PDF");
+        ? t("Mot de passe", "كلمة المرور", "Password")
+        : t("Lire le PDF", "قراءة PDF", "Read PDF");
       read.addEventListener("click", function (e) {
         if (!isBookLocked(book)) return;
         e.preventDefault();
@@ -528,7 +542,7 @@
       dl.className = "btn btn-download btn-sm";
       dl.href = locked ? "#" : resolveAssetUrl(bookFileUrl(book));
       if (!locked) dl.setAttribute("download", "");
-      dl.textContent = t("Télécharger PDF", "تنزيل PDF");
+      dl.textContent = t("Télécharger PDF", "تنزيل PDF", "Download PDF");
       dl.addEventListener("click", function (e) {
         if (isBookLocked(book)) {
           e.preventDefault();
@@ -547,7 +561,7 @@
         quiz.style.borderColor = "rgba(56,189,248,0.5)";
         quiz.style.color = "#7dd3fc";
         quiz.href = book.quizUrl;
-        quiz.textContent = t("Quiz", "اختبار");
+        quiz.textContent = t("Quiz", "اختبار", "Quiz");
         actions.appendChild(quiz);
       }
     } else if (hasFile) {
@@ -564,7 +578,7 @@
     } else {
       const soon = document.createElement("span");
       soon.className = "book-soon";
-      soon.textContent = t("PDF bientôt disponible", "PDF قريبًا");
+      soon.textContent = t("PDF bientôt disponible", "PDF قريبًا", "PDF coming soon");
       actions.appendChild(soon);
     }
     body.appendChild(actions);
@@ -671,7 +685,7 @@
       }
       const count = document.createElement("span");
       count.className = "library-collection-heading__count";
-      count.textContent = list.length + " " + t("ouvrage(s)", "كتاب");
+      count.textContent = list.length + " " + t("ouvrage(s)", "كتاب", "title(s)");
       heading.appendChild(labelWrap);
       heading.appendChild(count);
 
@@ -692,7 +706,7 @@
       section.className = "library-group";
       const heading = document.createElement("h2");
       heading.className = "library-collection-heading";
-      heading.textContent = t("Autres", "أخرى") + " · " + orphan.length;
+      heading.textContent = t("Autres", "أخرى", "Other") + " · " + orphan.length;
       const grid = document.createElement("div");
       grid.className = "book-grid book-grid--section";
       orphan.forEach(function (book) {
@@ -717,7 +731,7 @@
     SORT_OPTIONS.forEach(function (opt) {
       const o = document.createElement("option");
       o.value = opt.value;
-      o.textContent = t(opt.labelFr, opt.labelAr);
+      o.textContent = t(opt.labelFr, opt.labelAr, opt.labelEn);
       els.sort.appendChild(o);
     });
     els.sort.value = SORT_OPTIONS.some(function (o) {
@@ -745,7 +759,7 @@
       const count = document.createElement("span");
       count.className = "book-collection__count";
       const n = countBooksForCollection(key);
-      count.textContent = n + " " + t("PDF", "PDF");
+      count.textContent = n + " " + t("PDF", "PDF", "PDF");
       btn.appendChild(label);
       btn.appendChild(count);
       btn.addEventListener("click", function () {
@@ -761,7 +775,7 @@
       });
       els.collections.appendChild(btn);
     }
-    makeCol("all", t("Toutes", "الكل"));
+    makeCol("all", t("Toutes", "الكل", "All"));
     sortedCollectionKeys().forEach(function (key) {
       const icon = catalog.collections[key].icon || "";
       makeCol(key, icon + " " + collectionLabel(key));
@@ -784,9 +798,9 @@
       els.filters.appendChild(btn);
     }
 
-    makeFilter("all", t("Toutes", "الكل"));
+    makeFilter("all", t("Toutes", "الكل", "All"));
     if (sessionLoggedIn) {
-      const favLabel = t("★ Mes favoris", "★ مفضلتي");
+      const favLabel = t("★ Mes favoris", "★ مفضلتي", "★ My favourites");
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className =
@@ -816,7 +830,8 @@
             confirm(
               t(
                 "Connectez-vous (e-mail ou Google) pour enregistrer vos favoris.",
-                "سجّل الدخول (بريد أو Google) لحفظ المفضلة."
+                "سجّل الدخول (بريد أو Google) لحفظ المفضلة.",
+                "Sign in (e-mail or Google) to save your favourites."
               )
             )
           ) {
@@ -832,7 +847,7 @@
         if (favoritesOnly) render();
       })
       .catch(function () {
-        alert(t("Impossible d'enregistrer le favori.", "تعذر حفظ المفضلة."));
+        alert(t("Impossible d'enregistrer le favori.", "تعذر حفظ المفضلة.", "Could not save favourite."));
       });
   }
 
@@ -899,7 +914,7 @@
     if (shouldGroupByCollection(filtered)) {
       if (sectionTitle) {
         sectionTitle.classList.remove("library-knx-section-head");
-        sectionTitle.textContent = t("Par collection", "حسب المجموعة");
+        sectionTitle.textContent = t("Par collection", "حسب المجموعة", "By collection");
       }
       renderGroupedByCollection(els.grid, filtered);
     } else {
@@ -912,14 +927,14 @@
           sectionTitle.classList.remove("library-knx-section-head");
           sectionTitle.textContent =
             sortBy === "date-desc"
-              ? t("Triés par date (récent)", "مرتبة حسب التاريخ (الأحدث)")
+              ? t("Triés par date (récent)", "مرتبة حسب التاريخ (الأحدث)", "Sorted by date (newest)")
               : sortBy === "date-asc"
-                ? t("Triés par date (ancien)", "مرتبة حسب التاريخ (الأقدم)")
+                ? t("Triés par date (ancien)", "مرتبة حسب التاريخ (الأقدم)", "Sorted by date (oldest)")
                 : sortBy === "title-asc"
-                  ? t("Triés A → Z", "مرتبة أ → ي")
+                  ? t("Triés A → Z", "مرتبة أ → ي", "Sorted A → Z")
                   : sortBy === "title-desc"
-                    ? t("Triés Z → A", "مرتبة ي → أ")
-                    : t("Tous les ouvrages", "كل الكتب");
+                    ? t("Triés Z → A", "مرتبة ي → أ", "Sorted Z → A")
+                    : t("Tous les ouvrages", "كل الكتب", "All titles");
         }
       }
       renderGrid(els.grid, all);
@@ -957,7 +972,7 @@
       .catch(function () {
         els.grid.innerHTML =
           '<p class="book-error">' +
-          t("Impossible de charger le catalogue.", "تعذر تحميل المكتبة.") +
+          t("Impossible de charger le catalogue.", "تعذر تحميل المكتبة.", "Could not load the catalogue.") +
           "</p>";
       });
   }
@@ -984,6 +999,7 @@
 
   if (els.langFr) els.langFr.addEventListener("click", function () { setLang("fr"); });
   if (els.langAr) els.langAr.addEventListener("click", function () { setLang("ar"); });
+  if (els.langEn) els.langEn.addEventListener("click", function () { setLang("en"); });
 
   function maybeRefreshStatsFromSession() {
     if (!catalog) return;

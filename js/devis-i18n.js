@@ -158,16 +158,97 @@
     labelEmail: 'البريد',
   };
 
+  const en = {
+    pageTitle: 'Quotes | SwissDZ',
+    metaDescription: 'Create and print electrical quotes — full catalogue like the app',
+    brandTagline: 'Swiss precision, Algerian passion',
+    navHome: 'Home',
+    navFormations: 'Training',
+    navDocs: 'Documentation',
+    navCalc: 'Calculations',
+    navDevis: 'Quotes',
+    heroTitle: 'Professional quotes',
+    heroSub: 'Electrical + building trades catalogue — local save, PDF print',
+    savedCount: 'saved quotes',
+    btnNew: '+ New quote',
+    btnCompany: 'My company',
+    btnBack: '← List',
+    btnSave: 'Save',
+    btnPrint: 'Print / PDF',
+    btnDelete: 'Delete',
+    emptyList: 'No quotes yet. Create your first quote.',
+    clientName: 'Client name *',
+    clientPhone: 'Phone',
+    clientAddress: 'Address',
+    itemsTitle: 'Quote line items',
+    total: 'Total',
+    searchPlaceholder: 'Search an item…',
+    catAll: 'All',
+    qty: 'Qty',
+    unitPrice: 'Unit price (DZD)',
+    lineTotal: 'Line total',
+    addCustom: '+ Custom line',
+    customDesc: 'Custom description',
+    catalogTitle: 'Catalogue',
+    catalogCategories: 'Categories',
+    catalogColArticle: 'Item',
+    catalogColAdd: 'Add',
+    articlesShown: 'items shown',
+    catalogExpandHint: 'Tap a category to show items (same as the app).',
+    companyTitle: 'Company details',
+    companyName: 'Company name',
+    companyServices: 'Services',
+    companyPhone: 'Phone',
+    companyEmail: 'E-mail',
+    companyLogo: 'Logo on the quote',
+    companyLogoHint: 'Round photo on the installer signature line (112 px).',
+    companyLogoChoose: 'Choose a photo',
+    companyLogoRemove: 'Remove logo',
+    companyLogoShow: 'Show logo on the printed quote',
+    btnClose: 'Close',
+    btnSaveCompany: 'Save',
+    errClient: 'Please enter the client name',
+    errItems: 'Add at least one item',
+    savedOk: 'Quote saved',
+    confirmDelete: 'Delete this quote?',
+    footerCopy: '© 2026 SwissDZ — All rights reserved',
+    printValidity: 'VALIDITY: 30 days',
+    printCompany: 'COMPANY DETAILS',
+    printClient: 'CLIENT DETAILS',
+    printDetail: 'SCOPE OF WORK',
+    printColNo: 'No.',
+    printColDesc: 'Description',
+    printColQty: 'Qty',
+    printColUnit: 'Unit price',
+    printColTotal: 'Total',
+    printTotal: 'TOTAL',
+    printSigInstaller: 'Installer signature',
+    printSigClient: 'Client signature',
+    printFooterApp: 'Quote created with the SwissDZ app',
+    devisNo: 'QUOTE No.',
+    date: 'Date',
+    labelName: 'Name',
+    labelPhone: 'Phone',
+    labelAddress: 'Address',
+    labelCompany: 'Company',
+    labelServices: 'Services',
+    labelEmail: 'E-mail',
+  };
+
+  function normalizeLang(lang) {
+    return lang === 'fr' || lang === 'ar' || lang === 'en' ? lang : 'ar';
+  }
+
   function t(lang, key) {
-    const pack = lang === 'fr' ? fr : ar;
+    const pack = lang === 'fr' ? fr : lang === 'en' ? en : ar;
     return pack[key] != null ? pack[key] : key;
   }
 
   function catLabel(lang, categoryFr) {
-    if (lang === 'fr') return categoryFr;
+    if (lang === 'fr' || lang === 'en') return categoryFr;
     const map = g.DEVIS_CAT_AR || {};
     return map[categoryFr] || categoryFr;
   }
 
-  g.ElectroDzDevisI18n = { fr, ar, t, catLabel };
+  g.ElectroDzDevisI18n = { fr, ar, en, t, catLabel, normalizeLang };
 })(typeof window !== 'undefined' ? window : globalThis);

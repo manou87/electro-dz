@@ -9,69 +9,79 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/site-brand.css" />
   <link rel="icon" href="assets/app-icon.png" type="image/png" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231e40af'/%3E%3Cpath fill='white' d='M18 6L8 18h6l-2 8 12-14h-7l1-8z'/%3E%3C/svg%3E" />
   <link rel="canonical" href="https://electro-dz.com/emploi.html" />
+  <style>
+    .page-lang-switch{display:flex;gap:6px;align-items:center}
+    .page-lang-switch .lang-btn{background:none;border:1px solid rgba(255,255,255,0.35);color:#cbd5e1;padding:4px 10px;border-radius:6px;cursor:pointer;font-weight:700;font-size:.85rem}
+    .page-lang-switch .lang-btn.active{background:#facc15;color:#0f172a;border-color:#facc15}
+    .header-inner{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+  </style>
 </head>
-<body>
+<body data-shell-page="emploi">
   <header class="site-header">
     <div class="header-inner">
       <a class="logo" href="index.html"><img src="assets/app-icon.png" alt="" class="logo-img" width="40" height="40" decoding="async"/> SwissDZ</a>
+      <div class="page-lang-switch">
+        <button type="button" class="lang-btn" data-lang="fr" aria-label="Français">FR</button>
+        <button type="button" class="lang-btn" data-lang="ar" aria-label="العربية">AR</button>
+        <button type="button" class="lang-btn" data-lang="en" aria-label="English">EN</button>
+      </div>
       <nav class="nav-main">
-        <a href="index.html">Accueil</a>
-        <a href="formations.html">Formations</a>
-        <a href="documentation.html">Documentation</a>
-        <a href="calcul-electrique.html">Calcul électrique</a>
-        <a href="emploi.html" aria-current="page">Emploi</a>
-        <a href="contact.html">Contact</a>
-        <a class="btn btn-primary" href="index.html#app">L’app</a>
+        <a href="index.html" data-i18n="nav.home">Accueil</a>
+        <a href="formations.html" data-i18n="nav.train">Formations</a>
+        <a href="documentation.html" data-i18n="nav.docs">Documentation</a>
+        <a href="calcul-electrique.html" data-i18n="nav.calcLong">Calcul électrique</a>
+        <a href="emploi.html" aria-current="page" data-i18n="nav.job">Emploi</a>
+        <a href="contact.html" data-i18n="nav.contact">Contact</a>
+        <a class="btn btn-primary" href="index.html#app" data-i18n="nav.app">L’app</a>
       </nav>
     </div>
   </header>
 
   <header class="page-hero">
-    <h1>Emploi &amp; entreprises</h1>
-    <p><strong>Bientôt de super nouvelles en Algérie</strong> — offres d’emploi, entreprises partenaires et candidatures pour électriciens, monteurs et techniciens. Restez connectés sur la page Facebook <strong>Electro DZ</strong> et sur <a href="https://wa.me/213555429960" target="_blank" rel="noopener noreferrer">WhatsApp</a> pour les premières annonces.</p>
+    <h1 data-i18n="emploi.hero">Emploi &amp; entreprises</h1>
+    <p data-i18n="emploi.heroSub"><strong>Bientôt de super nouvelles en Algérie</strong> — offres d’emploi, entreprises partenaires et candidatures pour électriciens, monteurs et techniciens.</p>
   </header>
 
   <section>
     <div class="section-inner">
       <div class="content-block prose" style="max-width: 46rem; margin: 0 auto 2rem;">
-        <h2>Pour les entreprises</h2>
-        <p>Vous cherchez des <strong>électriciens</strong>, des <strong>monteurs</strong>, des <strong>techniciens de maintenance</strong> ou des <strong>apprentis</strong> ? Publiez votre besoin en nous indiquant le poste, la zone, le type de contrat et un moyen de contact. Nous diffusons les offres validées sur cette page et pouvons les relayer sur nos réseaux.</p>
+        <h2 data-i18n="emploi.companies">Pour les entreprises</h2>
+        <p data-i18n="emploi.companiesP">Vous cherchez des électriciens, des monteurs, des techniciens de maintenance ou des apprentis ?</p>
 
-        <h2>Pour les candidats</h2>
-        <p>Vous êtes autonome sur le terrain, à l’aise avec la lecture de plans et les règles de sécurité ? Envoyez-nous une brève présentation, votre zone géographique et le type de mission recherché. Nous pourrons vous mettre en relation avec des entreprises partenaires lorsque le profil correspond.</p>
+        <h2 data-i18n="emploi.candidates">Pour les candidats</h2>
+        <p data-i18n="emploi.candidatesP">Vous êtes autonome sur le terrain, à l’aise avec la lecture de plans et les règles de sécurité ?</p>
       </div>
 
       <div class="table-wrap" style="max-width: var(--max); margin: 0 auto;">
         <table>
           <thead>
             <tr>
-              <th>Type de besoin</th>
-              <th>Zone</th>
-              <th>Statut</th>
+              <th data-i18n="emploi.colType">Type de besoin</th>
+              <th data-i18n="emploi.colZone">Zone</th>
+              <th data-i18n="emploi.colStatus">Statut</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Électricien installation (bâtiment)</td>
-              <td>À préciser</td>
-              <td><span class="status-soon">Annonces à venir</span></td>
+              <td data-i18n="emploi.row1">Électricien installation (bâtiment)</td>
+              <td data-i18n="emploi.tba">À préciser</td>
+              <td><span class="status-soon" data-i18n="emploi.soon1">Annonces à venir</span></td>
             </tr>
             <tr>
-              <td>Technicien maintenance industrielle</td>
-              <td>À préciser</td>
-              <td><span class="status-soon">Annonces à venir</span></td>
+              <td data-i18n="emploi.row2">Technicien maintenance industrielle</td>
+              <td data-i18n="emploi.tba">À préciser</td>
+              <td><span class="status-soon" data-i18n="emploi.soon1">Annonces à venir</span></td>
             </tr>
             <tr>
-              <td>Alternance / apprentissage</td>
+              <td data-i18n="emploi.row3">Alternance / apprentissage</td>
               <td>Algérie</td>
-              <td><span class="status-soon">Bientôt — annonces imminentes</span></td>
+              <td><span class="status-soon" data-i18n="emploi.soon2">Bientôt — annonces imminentes</span></td>
             </tr>
             <tr>
-              <td>Entreprise partenaire (visibilité sur le site)</td>
+              <td data-i18n="emploi.row4">Entreprise partenaire (visibilité sur le site)</td>
               <td>—</td>
-              <td><span class="status-soon">Contact</span></td>
+              <td><span class="status-soon" data-i18n="emploi.contact">Contact</span></td>
             </tr>
           </tbody>
         </table>
@@ -79,9 +89,9 @@
 
       <div class="content-block" style="margin-top: 2rem; max-width: 46rem;">
         <div class="cta-box">
-          <h3>Publier une offre ou se porter candidat</h3>
-          <p style="color: var(--text-muted); margin: 0 0 1rem;">Utilisez la page <a href="contact.html">Contact</a> en indiquant <strong>Emploi</strong> dans l’objet du message, et joignez les informations utiles (sans données sensibles non sollicitées ; pas de pièces d’identité par e-mail non sécurisé).</p>
-          <a class="btn btn-primary" href="contact.html">Nous écrire</a>
+          <h3 data-i18n="emploi.ctaTitle">Publier une offre ou se porter candidat</h3>
+          <p style="color: var(--text-muted); margin: 0 0 1rem;" data-i18n="emploi.ctaP">Utilisez la page Contact en indiquant Emploi dans l’objet du message.</p>
+          <a class="btn btn-primary" href="contact.html" data-i18n="emploi.ctaBtn">Nous écrire</a>
         </div>
       </div>
     </div>
@@ -92,20 +102,21 @@
       <div>
         <h4>SwissDZ</h4>
         <ul>
-          <li><a href="index.html">Accueil</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="index.html" data-i18n="nav.home">Accueil</a></li>
+          <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
         </ul>
       </div>
       <div>
-        <h4>Légal</h4>
+        <h4 data-i18n="footer.legal">Légal</h4>
         <ul>
-          <li><a href="support.html">Support</a></li>
-          <li><a href="privacy.html">Confidentialité</a></li>
+          <li><a href="support.html" data-i18n="nav.support">Support</a></li>
+          <li><a href="privacy.html" data-i18n="nav.privacy">Confidentialité</a></li>
         </ul>
       </div>
     </div>
     <p class="copyright">© 2026 SwissDZ — <a href="https://electro-dz.com/">electro-dz.com</a></p>
   </footer>
   <script src="js/main.js" defer></script>
+  <script src="js/shell-pages-i18n.js" defer></script>
 </body>
 </html>

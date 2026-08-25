@@ -10,6 +10,8 @@
 
   const sb = window.ElectroDzAuth.getClient();
   const redirectTo = window.ElectroDzAuth.oauthCallbackUrl();
+  const t = (key) =>
+    (window.ElectroDzAuthI18n && window.ElectroDzAuthI18n.t(key)) || key;
 
   sb.auth.getSession().then(({ data: { session } }) => {
     if (session) location.href = window.ElectroDzAuth.redirectAfterAuth();
@@ -45,16 +47,16 @@
     const pwd2 = document.getElementById('pwd2')?.value;
 
     if (pwd !== pwd2) {
-      showMsg('Les mots de passe ne correspondent pas.', 'e');
+      showMsg(t('register.errMatch'), 'e');
       return;
     }
     if (!pwd || pwd.length < 8) {
-      showMsg('Minimum 8 caractères requis.', 'e');
+      showMsg(t('register.errLen'), 'e');
       return;
     }
 
     if (btn) {
-      btn.textContent = 'Création…';
+      btn.textContent = t('register.submitting');
       btn.disabled = true;
     }
 
@@ -70,14 +72,14 @@
     if (error) {
       showMsg(error.message, 'e');
       if (btn) {
-        btn.textContent = 'Créer mon compte gratuitement';
+        btn.textContent = t('register.submit');
         btn.disabled = false;
       }
       return;
     }
 
-    showMsg('Compte créé ! Vérifiez votre e-mail pour confirmer.', 's');
-    if (btn) btn.textContent = 'Compte créé !';
+    showMsg(t('register.createdMsg'), 's');
+    if (btn) btn.textContent = t('register.created');
   });
 
   document.getElementById('gBtn')?.addEventListener('click', async () => {
@@ -89,7 +91,7 @@
     try {
       await window.ElectroDzAuth.signInWithGoogle();
     } catch (err) {
-      showMsg(err?.message || 'Connexion Google indisponible.', 'e');
+      showMsg(err?.message || t('register.errGoogle'), 'e');
       if (btn) {
         btn.disabled = false;
         btn.style.opacity = '';

@@ -3,6 +3,8 @@
 
   const sb = window.ElectroDzAuth.getClient();
   let files = [];
+  const t = (key) =>
+    (window.ElectroDzAuthI18n && window.ElectroDzAuthI18n.t(key)) || key;
 
   const msgEl = document.getElementById('msg');
   const showMsg = (html, type) => {
@@ -32,7 +34,7 @@
         </div>
       </div>
       <div class="file-act">
-        <button type="button" class="file-btn" data-dl="${safeName}">&#8595; Télécharger</button>
+        <button type="button" class="file-btn" data-dl="${safeName}">&#8595; ${t('dash.download')}</button>
       </div>
     </div>`;
       })
@@ -50,7 +52,7 @@
       .download(name)
       .then(({ data, error }) => {
         if (error) {
-          showMsg('Erreur : ' + error.message, 'e');
+          showMsg(t('dash.err') + error.message, 'e');
           return;
         }
         const url = URL.createObjectURL(data);
@@ -85,21 +87,21 @@
     if (nameEl) nameEl.textContent = displayName;
     if (userEl) userEl.textContent = session.user.email || '';
 
-    showMsg('Chargement…', 'i');
+    showMsg(t('dash.loadingShort'), 'i');
 
     const { data, error } = await sb.storage.from('media').list();
     if (error) {
-      showMsg('Erreur de chargement : ' + error.message, 'e');
+      showMsg(t('dash.errLoad') + error.message, 'e');
       return;
     }
     if (!data || data.length === 0) {
-      showMsg('Aucun fichier disponible pour le moment.', 'i');
+      showMsg(t('dash.empty'), 'i');
       return;
     }
 
     files = data.filter((f) => f.name !== '.emptyFolderPlaceholder');
     if (files.length === 0) {
-      showMsg('Aucun fichier disponible.', 'i');
+      showMsg(t('dash.emptyShort'), 'i');
       return;
     }
 

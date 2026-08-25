@@ -20,18 +20,26 @@
 
   function getLang() {
     try {
-      return localStorage.getItem('electrodz-site-lang') === 'fr' ? 'fr' : 'ar';
-    } catch (_) {
-      return 'ar';
-    }
+      const s = localStorage.getItem('electrodz-site-lang');
+      if (s === 'fr' || s === 'ar' || s === 'en') return s;
+    } catch (_) { /* ignore */ }
+    return 'ar';
   }
 
   function setLang(lang) {
+    const next = window.ElectroDzDevisI18n?.normalizeLang
+      ? window.ElectroDzDevisI18n.normalizeLang(lang)
+      : lang === 'fr' || lang === 'en'
+        ? lang
+        : 'ar';
     try {
-      localStorage.setItem('electrodz-site-lang', lang);
+      localStorage.setItem('electrodz-site-lang', next);
     } catch (_) { /* ignore */ }
-    const btn = document.getElementById('lang-toggle');
-    if (btn) btn.textContent = lang === 'fr' ? 'AR' : 'FR';
+    document.querySelectorAll('.lang-btn[data-lang]').forEach((btn) => {
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === next);
+    });
+    const legacy = document.getElementById('lang-toggle');
+    if (legacy) legacy.textContent = next === 'fr' ? 'AR' : next === 'en' ? 'FR' : 'EN';
     applyI18n();
     renderList();
     renderCatalog();
@@ -52,8 +60,8 @@
 
   function applyI18n() {
     const lang = getLang();
-    document.documentElement.lang = lang === 'fr' ? 'fr' : 'ar';
-    document.documentElement.dir = lang === 'fr' ? 'ltr' : 'rtl';
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
     document.title = tr('pageTitle');
     const meta = document.querySelector('meta[name="description"]');
     if (meta) meta.setAttribute('content', tr('metaDescription'));
@@ -525,7 +533,9 @@
       subtotal: totals.subtotal,
       tva: totals.tva,
       total: totals.total,
-      date: now.toLocaleDateString(getLang() === 'fr' ? 'fr-FR' : 'ar-DZ'),
+      date: now.toLocaleDateString(
+        getLang() === 'fr' ? 'fr-FR' : getLang() === 'en' ? 'en-GB' : 'ar-DZ'
+      ),
       devisNumber: autoNum,
     };
 
@@ -671,9 +681,16 @@ ${clientSignaturePrintHtml(co)}
     renderList();
     showView('list');
 
-    document.getElementById('lang-toggle').addEventListener('click', () => {
-      setLang(getLang() === 'fr' ? 'ar' : 'fr');
+    document.querySelectorAll('.lang-btn[data-lang]').forEach((btn) => {
+      btn.addEventListener('click', () => setLang(btn.getAttribute('data-lang')));
     });
+    const legacyToggle = document.getElementById('lang-toggle');
+    if (legacyToggle) {
+      legacyToggle.addEventListener('click', () => {
+        const cur = getLang();
+        setLang(cur === 'fr' ? 'ar' : cur === 'ar' ? 'en' : 'fr');
+      });
+    }
     document.getElementById('btn-new').addEventListener('click', openNew);
     document.getElementById('btn-back').addEventListener('click', () => {
       showView('list');
@@ -738,8 +755,9 @@ ${clientSignaturePrintHtml(co)}
       });
     }
 
-    const langBtn = document.getElementById('lang-toggle');
-    if (langBtn) langBtn.textContent = getLang() === 'fr' ? 'AR' : 'FR';
+    document.querySelectorAll('.lang-btn[data-lang]').forEach((btn) => {
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === getLang());
+    });
   }
 
   if (document.readyState === 'loading') {

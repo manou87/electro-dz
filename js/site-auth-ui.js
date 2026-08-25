@@ -16,6 +16,10 @@
       link: 'ملفي →',
       desc: 'متصل — مفضلة PDF ووسائط',
     },
+    en: {
+      link: 'My profile →',
+      desc: 'Signed in — PDF favourites and media',
+    },
   };
 
   let currentUser = null;
@@ -45,10 +49,12 @@
 
   function getLang() {
     try {
-      if (localStorage.getItem('electrodz-site-lang') === 'fr') return 'fr';
+      const s = localStorage.getItem('electrodz-site-lang');
+      if (s === 'fr' || s === 'ar' || s === 'en') return s;
     } catch (_) { /* ignore */ }
     const l = (document.documentElement.lang || 'ar').toLowerCase();
-    return l === 'fr' ? 'fr' : 'ar';
+    if (l === 'fr' || l === 'en') return l;
+    return 'ar';
   }
 
   function displayName(user) {
@@ -56,7 +62,7 @@
     const fromMeta = meta.full_name || meta.name;
     if (fromMeta && String(fromMeta).trim()) return String(fromMeta).trim();
     if (user?.email) return user.email.split('@')[0];
-    return getLang() === 'fr' ? 'Membre' : 'عضو';
+    return getLang() === 'ar' ? 'عضو' : getLang() === 'en' ? 'Member' : 'Membre';
   }
 
   function applyLoggedIn(user) {

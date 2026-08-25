@@ -137,9 +137,79 @@
       "res.nrj.1": "مخطط الطاقة سويسرا (مصحح)",
       "res.nrj.2": "إحصائيات OFEN الرسمية",
     },
+    en: {
+      "meta.title": "Documentation — SwissDZ",
+      "meta.desc":
+        "Technical documentation for electricians: single-phase, three-phase, magnetism, energy.",
+      "nav.home": "Home",
+      "nav.train": "Training",
+      "nav.docs": "Documentation",
+      "nav.lib": "Library",
+      "nav.calc": "Calculations",
+      "nav.job": "Jobs",
+      "nav.contact": "Contact",
+      "nav.support": "Support",
+      "hero.badge": "4 modules · PDF, Excel & GeoGebra",
+      "hero.title": "Electrotechnical documentation",
+      "hero.sub":
+        "Resources by topic to revise, calculate and visualise on site or in training.",
+      "jump.label": "Jump to module",
+      "jump.mono": "Single-phase",
+      "jump.tri": "Three-phase",
+      "jump.mag": "Magnetism",
+      "jump.nrj": "Energy",
+      "mono.title": "Single-phase",
+      "mono.meta": "6 sheets · 5 GeoGebra simulations",
+      "tri.title": "Three-phase",
+      "tri.meta": "2 sheets · 2 simulations",
+      "mag.title": "Magnetism",
+      "mag.meta": "5 resources",
+      "nrj.title": "Energy",
+      "nrj.meta": "2 official resources",
+      "tag.pdf": "PDF",
+      "tag.xls": "Excel",
+      "tag.img": "Image",
+      "tag.web": "Web",
+      "tools.label": "GeoGebra apps (online)",
+      "attr.before": "Resources hosted on",
+      "attr.lib": "the site library",
+      "attr.and": " · Credits ",
+      "attr.credit": "Electrons.ch",
+      "footer.tagline": "The digital toolkit for Algerian electricians. 100% free.",
+      "footer.nav": "Navigation",
+      "footer.support": "Support",
+      "footer.privacy": "Privacy",
+      "footer.copy": "© 2026 SwissDZ. All rights reserved.",
+      "res.mono.1": "AC phasors (80 formulae)",
+      "res.mono.2": "Phasors — 2-per-page version",
+      "res.mono.3": "Complex phasors",
+      "res.mono.4": "Passive high-pass / low-pass filters",
+      "res.mono.5": "Series RLC circuit",
+      "res.mono.6": "Power-factor (cos φ) correction",
+      "geo.mono.1": "Sine / Cosine",
+      "geo.mono.2": "Sine U/I",
+      "geo.mono.3": "Series RL",
+      "geo.mono.4": "Series RC",
+      "geo.mono.5": "Series RLC",
+      "res.tri.1": "Three-phase cos φ correction",
+      "res.tri.2": "Common designations",
+      "geo.tri.1": "Three-phase phasors",
+      "geo.tri.2": "Unbalanced star",
+      "res.mag.1": "Laplace force / Faraday’s law",
+      "res.mag.2": "Skin effect",
+      "res.mag.3": "Synchronous / asynchronous motors",
+      "res.mag.4": "B/H curves",
+      "res.mag.5": "Magnetic / electrical quantities",
+      "res.nrj.1": "Swiss energy diagram (corrected)",
+      "res.nrj.2": "Official SFOE (OFEN) statistics",
+    },
   };
 
   var lang = "ar";
+
+  function normalizeLang(next) {
+    return next === "fr" || next === "ar" || next === "en" ? next : "ar";
+  }
 
   function t(key) {
     return (T[lang] && T[lang][key]) || (T.fr[key] || key);
@@ -152,7 +222,7 @@
   };
 
   function applyLang(next) {
-    lang = next === "fr" ? "fr" : "ar";
+    lang = normalizeLang(next);
     var root = document.documentElement;
     root.lang = lang;
     root.dir = lang === "ar" ? "rtl" : "ltr";
@@ -195,6 +265,5 @@
   try {
     saved = localStorage.getItem(STORAGE) || "ar";
   } catch (e) {}
-  if (saved !== "fr" && saved !== "ar") saved = "ar";
-  applyLang(saved);
+  applyLang(normalizeLang(saved));
 })();
