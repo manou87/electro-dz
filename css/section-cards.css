@@ -95,6 +95,27 @@
   display: contents;
 }
 
+@media (min-width: 1024px) {
+  .quick-access {
+    padding: 8px 0 10px;
+    margin-bottom: 10px;
+  }
+
+  .quick-grid {
+    gap: 14px;
+  }
+
+  .quick-item {
+    padding-bottom: 10px;
+    border-radius: 12px;
+  }
+
+  .quick-item .ico-label {
+    font-size: 0.82rem;
+    padding: 8px 8px 0;
+  }
+}
+
 @media (max-width: 1200px) {
   .quick-grid {
     grid-template-columns: repeat(5, 1fr);

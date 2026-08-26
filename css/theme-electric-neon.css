@@ -18,7 +18,15 @@ html.theme-electric-neon body {
   color: #e2e8f0;
   position: relative;
   overflow-x: hidden;
-  isolation: isolate;
+}
+
+/* Grille + circuits — derrière le contenu, DEVANT le fond du body */
+html.theme-electric-neon .en-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0 !important;
+  pointer-events: none;
+  overflow: hidden;
 }
 
 html[dir="ltr"].theme-electric-neon .brand-name,
@@ -27,14 +35,15 @@ html[dir="ltr"].theme-electric-neon .hero-sub {
   font-family: 'Orbitron', 'Segoe UI', sans-serif;
 }
 
-/* Grille + circuits — toujours DERRIÈRE le contenu */
+html.theme-electric-neon body > *:not(.en-bg) {
+  position: relative;
+  z-index: 1;
+}
 
-html.theme-electric-neon .en-bg {
-  position: fixed;
-  inset: 0;
-  z-index: -1 !important;
-  pointer-events: none;
-  overflow: hidden;
+html.theme-electric-neon .site-chrome {
+  position: sticky !important;
+  top: 0;
+  z-index: 210 !important;
 }
 
 html.theme-electric-neon main,
@@ -52,10 +61,11 @@ html.theme-electric-neon .en-grid {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(34, 211, 238, 0.14) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(34, 211, 238, 0.14) 1px, transparent 1px);
+    linear-gradient(rgba(34, 211, 238, 0.22) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.22) 1px, transparent 1px);
   background-size: 40px 40px;
   mask-image: radial-gradient(ellipse 95% 85% at 50% 40%, #000 10%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 95% 85% at 50% 40%, #000 10%, transparent 80%);
 }
 
 html.theme-electric-neon .en-glow-orb {
@@ -95,7 +105,7 @@ html.theme-electric-neon .en-circuit {
   inset: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.28;
+  opacity: 0.55;
 }
 
 html.theme-electric-neon .en-circuit path.en-flow {

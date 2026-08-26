@@ -10,6 +10,9 @@
 
   var STORAGE = "electrodz-site-lang";
   var STYLE_ID = "edz-home-nav-css";
+  var LANG_PIN_STYLE_ID = "edz-lang-pin-css";
+  var LANG_GROUP_SEL =
+    ".lang-group,.lang-switch,.page-lang-switch,.docs-lang-switch,.schemas-lang-switch,.sim-lang,.edz-lang-pin";
 
   function isHomePage() {
     var base = (location.pathname || "").split("/").pop() || "";
@@ -79,6 +82,98 @@
       "@media(max-width:480px){.edz-home-link{font-size:.75rem;padding:4px 9px}}" +
       "li[data-edz-home-dup]{display:none!important}";
     (document.head || document.documentElement).appendChild(style);
+  }
+
+  function injectLangPinCss() {
+    if (document.getElementById(LANG_PIN_STYLE_ID)) return;
+    var style = document.createElement("style");
+    style.id = LANG_PIN_STYLE_ID;
+    /* Propriétés physiques (right/left) — jamais inset-inline, pour ne pas inverser en RTL */
+    style.textContent =
+      ".edz-lang-pin-host{padding-right:var(--edz-lang-pin-w,148px)!important}" +
+      ".edz-lang-pin-host-rel{position:relative}" +
+      ".lang-group,.lang-switch,.page-lang-switch,.docs-lang-switch,.schemas-lang-switch,.sim-lang,.edz-lang-pin{" +
+      "position:absolute!important;" +
+      "top:50%!important;" +
+      "right:12px!important;" +
+      "left:auto!important;" +
+      "bottom:auto!important;" +
+      "margin:0!important;" +
+      "transform:translateY(-50%);" +
+      "display:inline-flex!important;" +
+      "align-items:center!important;" +
+      "flex-direction:row!important;" +
+      "direction:ltr!important;" +
+      "unicode-bidi:isolate;" +
+      "z-index:40;" +
+      "flex-shrink:0" +
+      "}";
+    (document.head || document.documentElement).appendChild(style);
+  }
+
+  function pinLangEl(el) {
+    if (!el) return;
+    el.setAttribute("dir", "ltr");
+    el.classList.add("edz-lang-pin");
+    var host =
+      el.closest(
+        "nav, .nav, .header-inner, .sim-topbar, .schemas-topbar-inner, .ec-header, .reader-header, .site-header, header"
+      ) || el.parentElement;
+    if (!host) return;
+    host.classList.add("edz-lang-pin-host");
+    try {
+      var pos = window.getComputedStyle(host).position;
+      if (pos === "static") host.classList.add("edz-lang-pin-host-rel");
+    } catch (e) {
+      host.classList.add("edz-lang-pin-host-rel");
+    }
+    var w = Math.ceil(el.getBoundingClientRect().width);
+    if (w > 40) {
+      host.style.setProperty("--edz-lang-pin-w", w + 16 + "px");
+    }
+  }
+
+  function wrapLooseLangButtons() {
+    var btns = Array.prototype.slice.call(
+      document.querySelectorAll(".lang-btn, button.lang-switcher, #lang-toggle")
+    );
+    var i = 0;
+    while (i < btns.length) {
+      var btn = btns[i];
+      if (btn.closest(LANG_GROUP_SEL)) {
+        i += 1;
+        continue;
+      }
+      var run = [btn];
+      var node = btn.nextElementSibling;
+      while (
+        node &&
+        (node.classList.contains("lang-btn") ||
+          node.classList.contains("lang-switcher") ||
+          node.id === "lang-toggle")
+      ) {
+        run.push(node);
+        node = node.nextElementSibling;
+      }
+      var wrap = document.createElement("div");
+      wrap.className = "edz-lang-pin";
+      wrap.setAttribute("role", "group");
+      wrap.setAttribute("aria-label", "Langue");
+      btn.parentNode.insertBefore(wrap, btn);
+      run.forEach(function (b) {
+        wrap.appendChild(b);
+      });
+      pinLangEl(wrap);
+      i += run.length;
+    }
+  }
+
+  function pinLangSwitcher() {
+    injectLangPinCss();
+    document.querySelectorAll(LANG_GROUP_SEL).forEach(function (el) {
+      pinLangEl(el);
+    });
+    wrapLooseLangButtons();
   }
 
   function isBrandLink(a) {
@@ -222,6 +317,7 @@
   }
 
   function ensure() {
+    pinLangSwitcher();
     if (isHomePage()) return;
     injectCss();
     var lang = getLang();
@@ -329,10 +425,13 @@
     if (e.key === STORAGE) ensure();
   });
 
+  injectLangPinCss();
+
   window.ElectroDzHomeNav = {
     refresh: ensure,
     homeHref: homeHref,
     homeLabel: homeLabel,
     getLang: getLang,
+    pinLangSwitcher: pinLangSwitcher,
   };
 })();

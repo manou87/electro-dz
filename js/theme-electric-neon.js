@@ -85,7 +85,9 @@
     style.id = 'en-critical-css';
     style.textContent =
       'html.theme-electric-neon,html.theme-electric-neon body{background:#030508!important;background-image:none!important;color:#e2e8f0}' +
-      'html.theme-electric-neon .en-bg{position:fixed;inset:0;z-index:-1!important;pointer-events:none}' +
+      'html.theme-electric-neon .en-bg{position:fixed;inset:0;z-index:0!important;pointer-events:none}' +
+      'html.theme-electric-neon body>*:not(.en-bg){position:relative;z-index:1}' +
+      'html.theme-electric-neon .site-chrome{position:sticky!important;top:0;z-index:210!important}' +
       'html.theme-electric-neon .nav,html.theme-electric-neon .site-header{background:rgba(8,12,22,.92)!important}';
     document.head.appendChild(style);
   }

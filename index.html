@@ -108,7 +108,8 @@
 
     .nav{
       display:flex;align-items:center;justify-content:space-between;gap:10px;
-      padding:10px 4% 8px;min-height:56px;
+      padding:10px 4% 8px;padding-right:max(4%,148px);min-height:56px;
+      position:relative;
       background:rgba(10,15,26,0.94);
       border-bottom:1px solid var(--border);
       backdrop-filter:blur(14px);
@@ -136,9 +137,10 @@
       display:flex;flex-direction:column;align-items:flex-end;gap:6px;
       flex-shrink:0;
     }
-    html[dir="rtl"] .nav-toolbar{align-items:flex-start}
     .nav-toolbar-row{display:flex;align-items:center;gap:6px;flex-wrap:nowrap}
     .lang-group{
+      position:absolute;top:50%;right:12px;left:auto;
+      transform:translateY(-50%);direction:ltr;z-index:5;
       display:inline-flex;align-items:center;
       padding:2px;border-radius:999px;
       background:rgba(255,255,255,0.05);border:1px solid var(--border);
@@ -531,14 +533,12 @@
         <span class="brand-tagline" data-i18n="logo.sub">المنصة الجزائرية الكبرى في الكهرباء — بخبرة سويسرية</span>
       </div>
     </a>
+    <div class="lang-group" dir="ltr" role="group" aria-label="Langue">
+      <button type="button" class="lang-btn" data-lang="fr" aria-label="Français">FR</button>
+      <button type="button" class="lang-btn active" data-lang="ar" aria-label="العربية">AR</button>
+      <button type="button" class="lang-btn" data-lang="en" aria-label="English">EN</button>
+    </div>
     <div class="nav-toolbar">
-      <div class="nav-toolbar-row">
-        <div class="lang-group" role="group" aria-label="Langue">
-          <button type="button" class="lang-btn" data-lang="fr" aria-label="Français">FR</button>
-          <button type="button" class="lang-btn active" data-lang="ar" aria-label="العربية">AR</button>
-          <button type="button" class="lang-btn" data-lang="en" aria-label="English">EN</button>
-        </div>
-      </div>
       <div class="nav-toolbar-row nav-auth">
         <a href="login.html" class="nav-extra" data-nav-login data-i18n="nav.login">Connexion</a>
         <a href="register.html" class="nav-extra nav-extra--cta" data-nav-register data-i18n="nav.join">Rejoindre</a>

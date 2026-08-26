@@ -93,6 +93,79 @@
   border-color: rgba(250, 204, 21, 0.45);
 }
 
+/* Desktop PC — tuiles plus grandes ; mobile (≤768) inchangé */
+@media (min-width: 1024px) {
+  .wrap.launcher-page {
+    max-width: 1280px;
+  }
+
+  .quick-access--icons {
+    padding: 8px 0 12px;
+    margin-bottom: 10px;
+  }
+
+  .quick-access--icons .quick-grid {
+    gap: 14px;
+  }
+
+  .quick-access--icons .quick-item {
+    gap: 12px;
+    min-height: 140px;
+    padding: 22px 14px 18px;
+    border-radius: 14px;
+  }
+
+  .quick-access--icons .ico-wrap {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+  }
+
+  .quick-access--icons .ico {
+    width: 34px;
+    height: 34px;
+  }
+
+  .quick-access--icons .ico-label {
+    font-size: 0.86rem;
+    padding: 0 6px;
+  }
+
+  .section-peek {
+    width: min(340px, calc(100vw - 24px));
+  }
+}
+
+@media (min-width: 1280px) {
+  .wrap.launcher-page {
+    max-width: 1360px;
+  }
+
+  .quick-access--icons .quick-grid {
+    gap: 16px;
+  }
+
+  .quick-access--icons .quick-item {
+    min-height: 152px;
+    padding: 24px 16px 20px;
+  }
+
+  .quick-access--icons .ico-wrap {
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+  }
+
+  .quick-access--icons .ico {
+    width: 38px;
+    height: 38px;
+  }
+
+  .quick-access--icons .ico-label {
+    font-size: 0.9rem;
+  }
+}
+
 /* Bulle aperçu flottante */
 .section-peek {
   position: fixed;
