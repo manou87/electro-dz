@@ -49,11 +49,36 @@
       'disclaimer':
         'قيم In إرشادية. تحقق من القواطع والـ DDR والكابلات في الموقع قبل ملف الزبون.',
     },
+    en: {
+      'meta.title': 'Single-line diagram Electro DZ',
+      'page.title': 'Single-line diagram Electro DZ',
+      'page.lead':
+        'All power-balance loads on a printable diagram (white background, black text, labels clear of the wires).',
+      'symbols.note':
+        'B/W A4 landscape print + detailed load table for the client file.',
+      'btn.regen': 'Regenerate',
+      'btn.print': '🖨 Print',
+      'btn.calc': 'Back to balance',
+      'board': 'Board',
+      'board.all': 'All boards (all loads)',
+      'col.ref': 'Ref.',
+      'col.label': 'Designation',
+      'col.pd': 'Pd',
+      'col.ib': 'Ib calc.',
+      'col.in': 'In (A)',
+      'empty.title': 'No power balance loaded',
+      'empty.lead': 'First run a power balance, then open “Single-line diagram Electro DZ”.',
+      'empty.link': 'Go to calculations',
+      'errGenerate': 'Could not generate: check balance rows (Pi > 0).',
+      'disclaimer':
+        'In ratings are indicative. Verify breakers, RCDs and cables on site before the client file.',
+    },
   };
 
   var lang = 'fr';
   try {
-    lang = localStorage.getItem('electrodz-site-lang') === 'ar' ? 'ar' : 'fr';
+    var saved = localStorage.getItem('electrodz-site-lang');
+    if (saved === 'ar' || saved === 'en' || saved === 'fr') lang = saved;
   } catch (e) {}
 
   function t(key) {
@@ -67,8 +92,30 @@
     document.querySelectorAll('[data-i18n]').forEach(function (el) {
       el.textContent = t(el.getAttribute('data-i18n'));
     });
+    document.querySelectorAll('.lang-btn').forEach(function (btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
   }
 
+  function setLang(next) {
+    if (next !== 'fr' && next !== 'ar' && next !== 'en') return;
+    lang = next;
+    try {
+      localStorage.setItem('electrodz-site-lang', lang);
+    } catch (e) {}
+    apply();
+    window.UnifilarAutoI18n = { t: t, lang: lang, setLang: setLang };
+    document.dispatchEvent(
+      new CustomEvent('electrodz-lang-changed', { detail: { lang: lang } })
+    );
+  }
+
+  document.querySelectorAll('.lang-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      setLang(btn.getAttribute('data-lang'));
+    });
+  });
+
   apply();
-  window.UnifilarAutoI18n = { t: t, lang: lang };
+  window.UnifilarAutoI18n = { t: t, lang: lang, setLang: setLang };
 })();

@@ -19,42 +19,45 @@
     back: {
       fr: fromPage.indexOf("documentation") !== -1 ? "← Doc" : "← Biblio",
       ar: fromPage.indexOf("documentation") !== -1 ? "← وثائق" : "← مكتبة",
+      en: fromPage.indexOf("documentation") !== -1 ? "← Docs" : "← Library",
     },
-    download: { fr: "Télécharger", ar: "تنزيل" },
-    fav: { fr: "Favoris", ar: "مفضلة" },
-    histBack: { fr: "Page précédente (historique)", ar: "صفحة سابقة (سجل)" },
-    histFwd: { fr: "Page suivante (historique)", ar: "صفحة تالية (سجل)" },
-    zoomOut: { fr: "Zoom arrière", ar: "تصغير" },
-    zoomIn: { fr: "Zoom avant", ar: "تكبير" },
-    pagePrev: { fr: "Page précédente", ar: "الصفحة السابقة" },
-    pageNext: { fr: "Page suivante", ar: "الصفحة التالية" },
-    pagePrevShort: { fr: "Préc.", ar: "سابق" },
-    pageNextShort: { fr: "Suiv.", ar: "تالي" },
+    download: { fr: "Télécharger", ar: "تنزيل", en: "Download" },
+    fav: { fr: "Favoris", ar: "مفضلة", en: "Favourites" },
+    histBack: { fr: "Page précédente (historique)", ar: "صفحة سابقة (سجل)", en: "Previous page (history)" },
+    histFwd: { fr: "Page suivante (historique)", ar: "صفحة تالية (سجل)", en: "Next page (history)" },
+    zoomOut: { fr: "Zoom arrière", ar: "تصغير", en: "Zoom out" },
+    zoomIn: { fr: "Zoom avant", ar: "تكبير", en: "Zoom in" },
+    pagePrev: { fr: "Page précédente", ar: "الصفحة السابقة", en: "Previous page" },
+    pageNext: { fr: "Page suivante", ar: "الصفحة التالية", en: "Next page" },
+    pagePrevShort: { fr: "Préc.", ar: "سابق", en: "Prev." },
+    pageNextShort: { fr: "Suiv.", ar: "تالي", en: "Next" },
     swipeHint: {
       fr: "Glissez le doigt ↑ ↓ sur la page pour changer de page",
       ar: "مرّر إصبعك ↑ ↓ على الصفحة لتغيير الصفحة",
+      en: "Swipe ↑ ↓ on the page to change pages",
     },
-    thumbsTitle: { fr: "Pages", ar: "صفحات" },
-    toggleThumbs: { fr: "Afficher les miniatures", ar: "عرض المصغرات" },
-    openExternal: { fr: "Ouvrir le PDF", ar: "فتح PDF" },
-    loading: { fr: "Chargement…", ar: "جاري التحميل…" },
-    loadingPage: { fr: "Page", ar: "صفحة" },
+    thumbsTitle: { fr: "Pages", ar: "صفحات", en: "Pages" },
+    toggleThumbs: { fr: "Afficher les miniatures", ar: "عرض المصغرات", en: "Show thumbnails" },
+    openExternal: { fr: "Ouvrir le PDF", ar: "فتح PDF", en: "Open PDF" },
+    loading: { fr: "Chargement…", ar: "جاري التحميل…", en: "Loading…" },
+    loadingPage: { fr: "Page", ar: "صفحة", en: "Page" },
     error: {
       fr: "Ce PDF ne peut pas s’afficher ici. Appuyez sur « Ouvrir le PDF ».",
       ar: "تعذر العرض هنا. اضغط « فتح PDF ».",
+      en: "This PDF cannot be displayed here. Tap “Open PDF”.",
     },
-    goto: { fr: "Page", ar: "صفحة" },
-    toolHand: { fr: "Main", ar: "يد" },
-    toolPen: { fr: "Stylo", ar: "قلم" },
-    toolHighlight: { fr: "Surligneur", ar: "تمييز" },
-    toolEraser: { fr: "Gomme", ar: "ممحاة" },
-    fitWidth: { fr: "Largeur", ar: "عرض" },
-    fitPage: { fr: "Page", ar: "صفحة" },
-    resetZoom: { fr: "Réinitialiser le zoom (100 %)", ar: "إعادة التكبير (100٪)" },
-    fullscreen: { fr: "Plein écran", ar: "ملء الشاشة" },
-    exitFullscreen: { fr: "Quitter le plein écran", ar: "إنهاء ملء الشاشة" },
-    rotate: { fr: "Rotation", ar: "دوران" },
-    clearInk: { fr: "Effacer annotations", ar: "مسح التعليقات" },
+    goto: { fr: "Page", ar: "صفحة", en: "Page" },
+    toolHand: { fr: "Main", ar: "يد", en: "Hand" },
+    toolPen: { fr: "Stylo", ar: "قلم", en: "Pen" },
+    toolHighlight: { fr: "Surligneur", ar: "تمييز", en: "Highlighter" },
+    toolEraser: { fr: "Gomme", ar: "ممحاة", en: "Eraser" },
+    fitWidth: { fr: "Largeur", ar: "عرض", en: "Width" },
+    fitPage: { fr: "Page", ar: "صفحة", en: "Page" },
+    resetZoom: { fr: "Réinitialiser le zoom (100 %)", ar: "إعادة التكبير (100٪)", en: "Reset zoom (100%)" },
+    fullscreen: { fr: "Plein écran", ar: "ملء الشاشة", en: "Fullscreen" },
+    exitFullscreen: { fr: "Quitter le plein écran", ar: "إنهاء ملء الشاشة", en: "Exit fullscreen" },
+    rotate: { fr: "Rotation", ar: "دوران", en: "Rotate" },
+    clearInk: { fr: "Effacer annotations", ar: "مسح التعليقات", en: "Clear annotations" },
   };
 
   const els = {
@@ -112,6 +115,7 @@
   };
 
   let lang = localStorage.getItem(STORAGE_LANG) || "ar";
+  if (lang !== "fr" && lang !== "ar" && lang !== "en") lang = "ar";
   let pdfDoc = null;
   let totalPages = 0;
   let currentPage = 1;
@@ -391,7 +395,9 @@
   function t(key) {
     const entry = I18N[key];
     if (!entry) return key;
-    return lang === "ar" ? entry.ar : entry.fr;
+    if (lang === "ar") return entry.ar;
+    if (lang === "en") return entry.en || entry.fr;
+    return entry.fr;
   }
 
   function applyI18n() {
@@ -417,7 +423,7 @@
   }
 
   function setLang(next) {
-    lang = next === "ar" ? "ar" : "fr";
+    lang = next === "ar" || next === "en" || next === "fr" ? next : "fr";
     localStorage.setItem(STORAGE_LANG, lang);
     applyI18n();
   }
@@ -1546,7 +1552,7 @@
     if (bookId && lock && lock.isProtected(bookId) && !lock.isUnlocked(bookId)) {
       if (els.download) els.download.hidden = true;
       if (els.openFallback) els.openFallback.hidden = true;
-      showLoading(lang === "ar" ? "وصول محمي…" : "Accès protégé…");
+      showLoading(lang === "ar" ? "وصول محمي…" : lang === "en" ? "Protected access…" : "Accès protégé…");
       lock.promptUnlock(bookId).then(function (ok) {
         if (!ok) {
           showError();

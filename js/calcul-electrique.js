@@ -40,18 +40,24 @@
 
   function getLang() {
     try {
-      return localStorage.getItem('electrodz-site-lang') === 'fr' ? 'fr' : 'ar';
-    } catch (_) {
-      return 'ar';
-    }
+      const s = localStorage.getItem('electrodz-site-lang');
+      if (s === 'fr' || s === 'ar' || s === 'en') return s;
+    } catch (_) { /* ignore */ }
+    return 'ar';
   }
 
   function setLang(lang) {
+    const next = lang === 'fr' || lang === 'en' || lang === 'ar' ? lang : 'ar';
     try {
-      localStorage.setItem('electrodz-site-lang', lang);
+      localStorage.setItem('electrodz-site-lang', next);
     } catch (_) { /* ignore */ }
-    const btn = document.getElementById('lang-toggle');
-    if (btn) btn.textContent = lang === 'fr' ? 'AR' : 'FR';
+    document.querySelectorAll('.lang-btn[data-lang]').forEach((btn) => {
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === next);
+    });
+    const legacy = document.getElementById('lang-toggle');
+    if (legacy) {
+      legacy.textContent = next === 'fr' ? 'AR' : next === 'en' ? 'FR' : 'EN';
+    }
     const box = document.getElementById('calc-global-result');
     if (box) {
       delete box.dataset.hasResult;
@@ -90,8 +96,15 @@
 
   function applyI18n() {
     const lang = getLang();
-    document.documentElement.lang = lang === 'fr' ? 'fr' : 'ar';
-    document.documentElement.dir = lang === 'fr' ? 'ltr' : 'rtl';
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.querySelectorAll('.lang-btn[data-lang]').forEach((btn) => {
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
+    const legacy = document.getElementById('lang-toggle');
+    if (legacy) {
+      legacy.textContent = lang === 'fr' ? 'AR' : lang === 'en' ? 'FR' : 'EN';
+    }
     document.title = tr('pageTitle');
     const meta = document.querySelector('meta[name="description"]');
     if (meta) meta.setAttribute('content', tr('metaDescription'));
@@ -525,7 +538,8 @@
       const root = document.getElementById(rootId);
       if (!root) return;
       root.innerHTML = lib.PRESETS.map((p) => {
-        const lbl = lang === 'fr' ? p.labelFr : p.labelAr;
+        const lbl =
+          lang === 'ar' ? p.labelAr : lang === 'en' ? (p.labelEn || p.labelFr) : p.labelFr;
         return `<button type="button" class="sub-type-btn" data-preset="${p.id}">${lbl}</button>`;
       }).join('');
       root.querySelectorAll('[data-preset]').forEach((btn) => {
@@ -731,7 +745,13 @@
     }
 
     const btn = document.getElementById('lang-toggle');
-    if (btn) btn.textContent = getLang() === 'fr' ? 'AR' : 'FR';
+    if (btn) {
+      const L = getLang();
+      btn.textContent = L === 'fr' ? 'AR' : L === 'en' ? 'FR' : 'EN';
+    }
+    document.querySelectorAll('.lang-btn[data-lang]').forEach((b) => {
+      b.classList.toggle('active', b.getAttribute('data-lang') === getLang());
+    });
 
     try {
       const saved = localStorage.getItem('electrodz-calc-picker');
@@ -791,7 +811,12 @@
 
     document.getElementById('btn-calculate')?.addEventListener('click', performCalculation);
     document.getElementById('lang-toggle')?.addEventListener('click', () => {
-      setLang(getLang() === 'fr' ? 'ar' : 'fr');
+      const order = ['ar', 'fr', 'en'];
+      const i = order.indexOf(getLang());
+      setLang(order[(i + 1) % order.length]);
+    });
+    document.querySelectorAll('.lang-btn[data-lang]').forEach((btn) => {
+      btn.addEventListener('click', () => setLang(btn.getAttribute('data-lang')));
     });
 
     initCanecoPresets();

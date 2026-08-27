@@ -216,6 +216,9 @@
     .calc-help-gloss li{display:grid;grid-template-columns:2.6em 1fr;gap:8px;align-items:start}
     .calc-help-gloss strong{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-weight:700;color:var(--primary);font-size:0.82rem}
     .lang-switcher{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;font-weight:600}
+    .lang-switch{display:inline-flex;gap:4px;align-items:center}
+    .lang-btn{background:none;border:1px solid rgba(255,255,255,0.25);color:#cbd5e1;padding:6px 10px;border-radius:6px;cursor:pointer;font-weight:700;font-size:0.82rem}
+    .lang-btn.active{background:#facc15;color:#0f172a;border-color:#facc15}
     [data-ohm-group],[data-power-group],[data-brk-group]{display:none}
     [data-ohm-group].show,[data-power-group].show,[data-brk-group].show{display:contents}
     select.std-select{font-weight:600}
@@ -401,7 +404,11 @@
       <li><a href="documentation.html" data-i18n="navDocs"></a></li>
       <li><a href="calcul-electrique.html" class="active" data-i18n="navCalc"></a></li>
     </ul>
-    <button class="lang-switcher" type="button" id="lang-toggle">FR</button>
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" class="lang-btn" data-lang="fr">FR</button>
+      <button type="button" class="lang-btn" data-lang="ar">AR</button>
+      <button type="button" class="lang-btn" data-lang="en">EN</button>
+    </div>
   </nav>
 
   <header class="hero">

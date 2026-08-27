@@ -18,11 +18,11 @@
 
   /** Exemples de départs (PVC Cu) — pré-remplissage rapide. */
   const PRESETS = [
-    { id: 'prise_2_5', labelFr: 'Départ prises 2,5 mm² PVC', labelAr: 'مخرج 2,5 مم² PVC', S: 2.5, L: 20, mat: 'cu', ins: 'pvc', inA: 16, curve: 'C', u0: 230 },
-    { id: 'eclairage_1_5', labelFr: 'Éclairage 1,5 mm² PVC', labelAr: 'إضاءة 1,5 مم² PVC', S: 1.5, L: 25, mat: 'cu', ins: 'pvc', inA: 10, curve: 'C', u0: 230 },
-    { id: 'depart_6', labelFr: 'Départ 6 mm² PVC', labelAr: 'مخرج 6 مم² PVC', S: 6, L: 35, mat: 'cu', ins: 'pvc', inA: 32, curve: 'C', u0: 230 },
-    { id: 'depart_16', labelFr: 'Départ 16 mm² PVC', labelAr: 'مخرج 16 مم² PVC', S: 16, L: 45, mat: 'cu', ins: 'pvc', inA: 63, curve: 'C', u0: 230 },
-    { id: 'gros_25_pr', labelFr: 'Ligne 25 mm² PR/XLPE', labelAr: 'خط 25 مم² PR/XLPE', S: 25, L: 60, mat: 'cu', ins: 'pr', inA: 80, curve: 'C', u0: 230 },
+    { id: 'prise_2_5', labelFr: 'Départ prises 2,5 mm² PVC', labelAr: 'مخرج 2,5 مم² PVC', labelEn: 'Socket circuit 2.5 mm² PVC', S: 2.5, L: 20, mat: 'cu', ins: 'pvc', inA: 16, curve: 'C', u0: 230 },
+    { id: 'eclairage_1_5', labelFr: 'Éclairage 1,5 mm² PVC', labelAr: 'إضاءة 1,5 مم² PVC', labelEn: 'Lighting 1.5 mm² PVC', S: 1.5, L: 25, mat: 'cu', ins: 'pvc', inA: 10, curve: 'C', u0: 230 },
+    { id: 'depart_6', labelFr: 'Départ 6 mm² PVC', labelAr: 'مخرج 6 مم² PVC', labelEn: 'Circuit 6 mm² PVC', S: 6, L: 35, mat: 'cu', ins: 'pvc', inA: 32, curve: 'C', u0: 230 },
+    { id: 'depart_16', labelFr: 'Départ 16 mm² PVC', labelAr: 'مخرج 16 مم² PVC', labelEn: 'Circuit 16 mm² PVC', S: 16, L: 45, mat: 'cu', ins: 'pvc', inA: 63, curve: 'C', u0: 230 },
+    { id: 'gros_25_pr', labelFr: 'Ligne 25 mm² PR/XLPE', labelAr: 'خط 25 مم² PR/XLPE', labelEn: 'Feeder 25 mm² PR/XLPE', S: 25, L: 60, mat: 'cu', ins: 'pr', inA: 80, curve: 'C', u0: 230 },
   ];
 
   function normMat(m) {

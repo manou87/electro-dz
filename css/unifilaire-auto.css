@@ -28,6 +28,30 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  align-items: center;
+}
+
+.unif-auto-actions .lang-switch {
+  display: inline-flex;
+  gap: 4px;
+  margin-inline-end: 4px;
+}
+
+.unif-auto-actions .lang-btn {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #cbd5e1;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.78rem;
+}
+
+.unif-auto-actions .lang-btn.active {
+  background: #facc15;
+  color: #0f172a;
+  border-color: #facc15;
 }
 
 .unif-auto-actions .btn {

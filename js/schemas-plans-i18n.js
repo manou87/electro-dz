@@ -1,5 +1,5 @@
 /**
- * Simulation professionnelle (circuitjs) — FR / AR
+ * Simulation professionnelle (circuitjs) — FR / AR / EN
  */
 (function () {
   var STORAGE = "electrodz-site-lang";
@@ -35,16 +35,35 @@
       "error.retry": "إعادة المحاولة",
       "error.browser": "فتح في المتصفح",
     },
+    en: {
+      "meta.title": "Professional simulation — SwissDZ",
+      "meta.desc":
+        "Built-in professional simulator: interactive electrical circuits, diagrams, AC/DC tests — as in the Electro DZ app.",
+      "brand": "SwissDZ",
+      "page.title": "Professional simulation",
+      "loading": "Loading the simulator…",
+      "footer":
+        "Built-in circuit simulator — as in the Electro DZ app.",
+      "error.title": "Could not load the simulator",
+      "error.msg":
+        "Possible causes: weak internet connection or a temporary outage. Retry or open in the browser.",
+      "error.retry": "Retry",
+      "error.browser": "Open in browser",
+    },
   };
 
   var lang = "fr";
+
+  function normalize(next) {
+    return next === "ar" || next === "en" || next === "fr" ? next : "fr";
+  }
 
   function t(key) {
     return (T[lang] && T[lang][key]) || T.fr[key] || key;
   }
 
   function applyLang(next) {
-    lang = next === "ar" ? "ar" : "fr";
+    lang = normalize(next);
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
     document.title = t("meta.title");
@@ -59,6 +78,16 @@
       } else {
         el.textContent = t(key);
       }
+    });
+
+    document.querySelectorAll("[data-i18n-href-fr]").forEach(function (el) {
+      var href =
+        lang === "ar"
+          ? el.getAttribute("data-i18n-href-ar")
+          : lang === "en"
+            ? el.getAttribute("data-i18n-href-en") || el.getAttribute("data-i18n-href-fr")
+            : el.getAttribute("data-i18n-href-fr");
+      if (href) el.setAttribute("href", href);
     });
 
     document.querySelectorAll(".lang-btn").forEach(function (btn) {
@@ -84,7 +113,6 @@
   try {
     saved = localStorage.getItem(STORAGE) || "fr";
   } catch (e) {}
-  if (saved !== "fr" && saved !== "ar") saved = "fr";
   applyLang(saved);
 
   window.SchemasPlansI18n = { t: t, getLang: function () { return lang; } };
