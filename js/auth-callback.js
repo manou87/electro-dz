@@ -1,5 +1,5 @@
 /**
- * Retour OAuth (Google) — échange le code PKCE puis redirige vers le dashboard.
+ * Retour OAuth (Google / Facebook) — échange le code PKCE puis redirige vers le dashboard.
  */
 (function () {
   'use strict';
@@ -29,7 +29,7 @@
       }
       setTimeout(() => {
         location.replace(
-          'login.html?error=' + encodeURIComponent(message || 'Connexion Google impossible')
+          'login.html?error=' + encodeURIComponent(message || 'Connexion impossible')
         );
       }, 4000);
     }
@@ -85,7 +85,7 @@
       const session = await waitForSession(sb, 3000);
       if (!session) {
         fail(
-          'Session introuvable après Google. Vérifiez Redirect URLs : https://electro-dz.com/auth-callback.html'
+          'Session introuvable après connexion. Vérifiez Redirect URLs : https://electro-dz.com/auth-callback.html'
         );
         return;
       }

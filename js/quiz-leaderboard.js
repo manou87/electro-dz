@@ -73,7 +73,25 @@
       outdated: "نسخة قديمة من الاختبار — أعد تحميل الصفحة.",
       config: "التصنيف غير متاح (إعداد الخادم).",
     };
-    const dict = lang === "ar" ? ar : fr;
+    const en = {
+      pseudo_invalid: "Invalid nickname (3–12 characters: letters, digits, _ - .)",
+      pseudo_taken:
+        "This nickname is already taken. Choose another base name (3–12 characters).",
+      pseudo_unavailable: "Could not generate a unique nickname. Try a different name.",
+      module_invalid: "Unknown module.",
+      score_invalid: "Invalid score.",
+      duration_invalid: "Invalid duration — try again.",
+      not_better: "Score already saved: you must beat your record.",
+      network_reserve:
+        "Could not confirm the nickname. Check your connection then reload (Cmd+Shift+R).",
+      network_score:
+        "Could not submit the score. Check your connection and try again.",
+      network: "Could not reach the server. Try again.",
+      outdated:
+        "Outdated quiz version — reload the page with Cmd+Shift+R (or Ctrl+F5).",
+      config: "Leaderboard unavailable (server configuration).",
+    };
+    const dict = lang === "ar" ? ar : lang === "en" ? en : fr;
     return dict[code] || dict.network;
   }
 

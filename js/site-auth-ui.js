@@ -62,6 +62,7 @@
     const fromMeta = meta.full_name || meta.name;
     if (fromMeta && String(fromMeta).trim()) return String(fromMeta).trim();
     if (user?.email) return user.email.split('@')[0];
+    if (user?.phone) return user.phone;
     return getLang() === 'ar' ? 'عضو' : getLang() === 'en' ? 'Member' : 'Membre';
   }
 
@@ -79,7 +80,7 @@
     document.querySelectorAll('[data-nav-dashboard]').forEach((el) => {
       setNavVisible(el, true);
       if (el.tagName === 'A') el.href = dash;
-      el.title = user?.email || '';
+      el.title = user?.email || user?.phone || '';
     });
     document.querySelectorAll('[data-nav-user-name]').forEach((el) => {
       el.textContent = name;

@@ -11,15 +11,54 @@
     document.documentElement.getAttribute("data-default-lang") || "fr";
 
   let catalog = null;
-  let lang = localStorage.getItem(STORAGE_LANG_EC) || htmlDefaultLang;
+  let lang = (function () {
+    try {
+      var s = localStorage.getItem("electrodz-site-lang") || localStorage.getItem(STORAGE_LANG_EC) || htmlDefaultLang;
+      if (s === "fr" || s === "ar" || s === "en") return s;
+    } catch (_e) {}
+    return htmlDefaultLang === "ar" ? "ar" : "fr";
+  })();
 
-  function t(fr, ar) {
-    return lang === "ar" && ar ? ar : fr;
+  const EN_UI = {
+    pce: "pc",
+    produits: "products",
+    Connexion: "Sign in",
+    Inscription: "Sign up",
+    "🇩🇿 Algérie": "🇩🇿 Algeria",
+    "Voir tout le catalogue →": "View full catalogue →",
+    "Catalogue professionnel": "Professional catalogue",
+    Assortiment: "Assortment",
+    Nouveauté: "New",
+    "Action — Promotions": "Offers — promotions",
+    "Découvrir nos services": "Our services",
+    "Nos fournisseurs": "Our suppliers",
+    "Nos publications": "Our publications",
+    "Voir les distributeurs": "View distributors",
+    Accueil: "Home",
+    "Assortiment complet": "Full assortment",
+    "Résultats pour « ": "Results for “",
+    "produits dans cette famille": "products in this family",
+    Produits: "Products",
+    "Réf.": "Ref.",
+    "Ajouter à la liste": "Add to list",
+    "Où acheter en Algérie": "Where to buy in Algeria",
+    "Ajouté à la liste.": "Added to the list.",
+    "Aucun résultat.": "No results.",
+  };
+
+  function t(fr, ar, en) {
+    if (lang === "ar" && ar) return ar;
+    if (lang === "en") {
+      if (en != null && en !== "") return en;
+      if (Object.prototype.hasOwnProperty.call(EN_UI, fr)) return EN_UI[fr];
+      return fr;
+    }
+    return fr;
   }
 
   function unitLabel(unit) {
     if (unit === "m") return t("m", "م");
-    if (unit === "pce") return t("pce", "قطعة");
+    if (unit === "pce") return t("pce", "قطعة", "pc");
     return unit || "—";
   }
 
@@ -56,7 +95,7 @@
     if (!Number.isFinite(n)) return "—";
     try {
       return (
-        new Intl.NumberFormat(lang === "ar" ? "ar-DZ" : "fr-CH", {
+        new Intl.NumberFormat(lang === "ar" ? "ar-DZ" : lang === "en" ? "en-CH" : "fr-CH", {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         }).format(n) +
@@ -69,9 +108,9 @@
   }
 
   function stockLabel(stock) {
-    if (stock === "low") return t("Stock faible", "مخزون منخفض");
-    if (stock === "on_order") return t("Sur commande", "حسب الطلب");
-    return t("En stock", "متوفر");
+    if (stock === "low") return t("Stock faible", "مخزون منخفض", "Low stock");
+    if (stock === "on_order") return t("Sur commande", "حسب الطلب", "To order");
+    return t("En stock", "متوفر", "In stock");
   }
 
   function getCart() {
@@ -108,8 +147,11 @@
   }
 
   function setLang(next) {
-    lang = next === "ar" ? "ar" : "fr";
-    localStorage.setItem(STORAGE_LANG_EC, lang);
+    lang = next === "ar" || next === "en" || next === "fr" ? next : "fr";
+    try {
+      localStorage.setItem(STORAGE_LANG_EC, lang);
+      localStorage.setItem("electrodz-site-lang", lang);
+    } catch (_e) {}
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
     document.querySelectorAll("[data-lang-fr]").forEach(function (b) {
@@ -117,6 +159,9 @@
     });
     document.querySelectorAll("[data-lang-ar]").forEach(function (b) {
       b.classList.toggle("active", lang === "ar");
+    });
+    document.querySelectorAll("[data-lang-en]").forEach(function (b) {
+      b.classList.toggle("active", lang === "en");
     });
     applyPageMeta();
     renderPage();
@@ -223,14 +268,14 @@
       t(h.searchPlaceholderFr, h.searchPlaceholderAr) +
       '" />' +
       '<button type="submit" class="ec-btn ec-btn--primary">' +
-      t("Rechercher", "بحث") +
+      t("Rechercher", "بحث", "Search") +
       "</button></form>" +
       '<div class="ec-header-actions">' +
       '<a href="commerce.html" class="ec-btn">' +
       t("🇩🇿 Algérie", "🇩🇿 الجزائر") +
       "</a>" +
       '<button type="button" class="ec-btn ec-btn--cart" data-ec-cart-toggle>🛒 ' +
-      t("Liste", "قائمة") +
+      t("Liste", "قائمة", "List") +
       ' <span class="ec-cart-badge" data-ec-cart-count hidden>0</span></button>' +
       '<button type="button" class="lang-btn' +
       (lang === "fr" ? " active" : "") +
@@ -238,6 +283,9 @@
       '<button type="button" class="lang-btn' +
       (lang === "ar" ? " active" : "") +
       '" data-lang-ar>AR</button>' +
+      '<button type="button" class="lang-btn' +
+      (lang === "en" ? " active" : "") +
+      '" data-lang-en>EN</button>' +
       "</div></header>" +
       '<nav class="ec-nav-main" data-ec-nav-main></nav>';
 
@@ -246,7 +294,7 @@
       const a = document.createElement("a");
       var href = item.href;
       if (item.id === "home") {
-        href = lang === "fr" ? "index-fr.html" : "index.html";
+      href = lang === "fr" ? "index-fr.html" : "index.html";
       }
       a.href = href;
       a.textContent = t(item.labelFr, item.labelAr);
@@ -270,7 +318,7 @@
       cartBtn.addEventListener("click", function () {
         const items = getCart();
         if (!items.length) {
-          alert(t("Votre liste est vide.", "قائمتك فارغة."));
+          alert(t("Votre liste est vide.", "قائمتك فارغة.", "Your list is empty."));
           return;
         }
         const lines = items
@@ -279,7 +327,7 @@
             return p ? p.sku + " × " + it.qty : it.id;
           })
           .join("\n");
-        alert(t("Liste de courses (démo):\n\n", "قائمة (تجريبي):\n\n") + lines);
+        alert(t("Liste de courses (démo):\n\n", "قائمة (تجريبي):\n\n", "Shopping list (demo):\n\n") + lines);
       });
     }
 
@@ -291,6 +339,11 @@
     mount.querySelectorAll("[data-lang-ar]").forEach(function (b) {
       b.addEventListener("click", function () {
         setLang("ar");
+      });
+    });
+    mount.querySelectorAll("[data-lang-en]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        setLang("en");
       });
     });
 
@@ -883,7 +936,7 @@
       })
       .then(function (data) {
         catalog = data;
-        if (!localStorage.getItem(STORAGE_LANG_EC) && data.defaultLang) {
+        if (!localStorage.getItem(STORAGE_LANG_EC) && !localStorage.getItem("electrodz-site-lang") && data.defaultLang) {
           lang = data.defaultLang === "ar" ? "ar" : htmlDefaultLang;
         }
         document.documentElement.lang = lang;
@@ -898,7 +951,8 @@
             '<p class="ec-empty">' +
             t(
               "Impossible de charger data/electro-centrale.json (serveur local requis).",
-              "تعذّر تحميل data/electro-centrale.json (يلزم خادم محلي)."
+              "تعذّر تحميل data/electro-centrale.json (يلزم خادم محلي).",
+              "Could not load data/electro-centrale.json (local server required)."
             ) +
             "</p>";
       });

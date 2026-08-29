@@ -17,16 +17,19 @@ html.theme-electric-neon body {
   background-image: none !important;
   color: #e2e8f0;
   position: relative;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
-/* Grille + circuits — derrière le contenu, DEVANT le fond du body */
+/* Grille + circuits — calque isolé (évite de repeindre tout le site chaque frame) */
 html.theme-electric-neon .en-bg {
   position: fixed;
   inset: 0;
   z-index: 0 !important;
   pointer-events: none;
   overflow: hidden;
+  isolation: isolate;
+  contain: paint;
+  transform: translateZ(0);
 }
 
 html[dir="ltr"].theme-electric-neon .brand-name,
@@ -35,9 +38,22 @@ html[dir="ltr"].theme-electric-neon .hero-sub {
   font-family: 'Orbitron', 'Segoe UI', sans-serif;
 }
 
-html.theme-electric-neon body > *:not(.en-bg) {
+html.theme-electric-neon body > *:not(.en-bg):not(.section-peek) {
   position: relative;
   z-index: 1;
+}
+
+/* La bulle photo est sur <html>, hors du body (overflow / stacking néon).
+   Pas de inset:auto — laisser left/top au JS. */
+html.theme-electric-neon .section-peek,
+html.theme-electric-neon > .section-peek {
+  position: fixed !important;
+  z-index: 2147483646 !important;
+  transform: none !important;
+  filter: none !important;
+  pointer-events: none !important;
+  right: auto !important;
+  bottom: auto !important;
 }
 
 html.theme-electric-neon .site-chrome {
@@ -71,32 +87,45 @@ html.theme-electric-neon .en-grid {
 html.theme-electric-neon .en-glow-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(48px);
-  opacity: 0.28;
+  /* Pas de filter:blur — trop lourd (orbes ~viewport). Halo via dégradé + opacity. */
+  opacity: 0.55;
   contain: strict;
+  pointer-events: none;
 }
 
 html.theme-electric-neon .en-glow-orb--y {
-  width: 40vmax;
-  height: 40vmax;
-  top: -10%;
-  left: 10%;
-  background: var(--neon-yellow);
-  animation: en-pulse-orb 4s ease-in-out infinite;
+  width: 50vmax;
+  height: 50vmax;
+  top: -16%;
+  left: 6%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(250, 204, 21, 0.55) 0%,
+    rgba(250, 204, 21, 0.16) 34%,
+    rgba(250, 204, 21, 0.04) 58%,
+    transparent 72%
+  );
+  animation: en-pulse-orb 7s ease-in-out infinite;
 }
 
 html.theme-electric-neon .en-glow-orb--c {
-  width: 35vmax;
-  height: 35vmax;
-  bottom: 5%;
-  right: -5%;
-  background: var(--neon-cyan);
-  animation: en-pulse-orb 5s ease-in-out infinite 1s;
+  width: 46vmax;
+  height: 46vmax;
+  bottom: 0;
+  right: -8%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(34, 211, 238, 0.5) 0%,
+    rgba(34, 211, 238, 0.14) 36%,
+    rgba(34, 211, 238, 0.04) 58%,
+    transparent 72%
+  );
+  animation: en-pulse-orb 9s ease-in-out infinite 1.2s;
 }
 
 @keyframes en-pulse-orb {
-  0%, 100% { opacity: 0.25; transform: scale(1); }
-  50% { opacity: 0.45; transform: scale(1.08); }
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.72; }
 }
 
 /* Circuit SVG animé */
@@ -111,17 +140,16 @@ html.theme-electric-neon .en-circuit {
 html.theme-electric-neon .en-circuit path.en-flow {
   fill: none;
   stroke: var(--neon-cyan);
-  stroke-width: 2;
+  stroke-width: 1.75;
   stroke-linecap: round;
-  filter: drop-shadow(0 0 6px var(--neon-cyan));
-  stroke-dasharray: 12 8;
-  animation: en-dash 3s linear infinite;
+  stroke-dasharray: 14 10;
+  animation: en-dash 4s linear infinite;
+  will-change: stroke-dashoffset;
 }
 
 html.theme-electric-neon .en-circuit path.en-flow--2 {
   stroke: var(--neon-yellow);
-  filter: drop-shadow(0 0 8px var(--neon-yellow));
-  animation-duration: 4.5s;
+  animation-duration: 5.5s;
   animation-direction: reverse;
 }
 
@@ -142,6 +170,9 @@ html.theme-electric-neon .nav {
   border-bottom: 2px solid transparent !important;
   border-image: linear-gradient(90deg, var(--neon-cyan), var(--neon-yellow), var(--neon-cyan)) 1 !important;
   box-shadow: 0 0 24px rgba(34, 211, 238, 0.15) !important;
+  /* backdrop-filter sur sticky + fond animé = freeze GPU */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 html.theme-electric-neon .brand-icon {
@@ -162,15 +193,16 @@ html.theme-electric-neon .lang-btn.active {
 
 /* Hero néon */
 html.theme-electric-neon .en-hero-frame {
+  display: block;
   margin: 10px 0 16px;
   padding: 2px;
   border-radius: 16px;
   background: linear-gradient(135deg, var(--neon-cyan), var(--neon-yellow), var(--neon-magenta), var(--neon-cyan));
   background-size: 300% 300%;
-  animation: en-border-shift 6s ease infinite;
+  animation: en-border-shift 8s ease infinite;
   box-shadow:
-    0 0 30px rgba(34, 211, 238, 0.25),
-    0 0 60px rgba(250, 204, 21, 0.12);
+    0 0 16px rgba(34, 211, 238, 0.22),
+    0 0 28px rgba(250, 204, 21, 0.1);
 }
 
 @keyframes en-border-shift {
@@ -347,8 +379,7 @@ html.theme-electric-neon .quick-item {
   border-radius: 10px;
   position: relative;
   transition: transform 0.15s, box-shadow 0.2s, border-color 0.2s;
-  animation: en-card-pulse 3s ease-in-out infinite;
-  animation-delay: calc(var(--en-i, 0) * 0.15s);
+  box-shadow: 0 0 10px var(--en-glow, rgba(34, 211, 238, 0.2));
 }
 
 html.theme-electric-neon .quick-item:nth-child(4n+1) {
@@ -367,18 +398,12 @@ html.theme-electric-neon .quick-item:nth-child(4n) {
   --en-glow: rgba(74, 222, 128, 0.28);
 }
 
-@keyframes en-card-pulse {
-  0%, 100% { box-shadow: 0 0 8px var(--en-glow, rgba(34, 211, 238, 0.2)); }
-  50% { box-shadow: 0 0 18px var(--en-glow, rgba(34, 211, 238, 0.35)); }
-}
-
 html.theme-electric-neon .quick-item:hover {
   transform: translateY(-2px) scale(1.01);
   border-color: var(--neon-yellow);
   box-shadow:
     0 0 16px rgba(250, 204, 21, 0.4),
     0 0 28px rgba(34, 211, 238, 0.18);
-  animation: none;
 }
 
 html.theme-electric-neon .quick-item .quick-preview img {
@@ -393,7 +418,8 @@ html.theme-electric-neon .quick-item .ico-label {
 }
 
 html.theme-electric-neon .ico {
-  filter: drop-shadow(0 0 4px currentColor);
+  /* drop-shadow CSS filter re-peint tous les SVG ; halo déjà via stroke / .ico-wrap */
+  filter: none;
 }
 
 /* Sections secondaires */
@@ -528,6 +554,8 @@ html.theme-electric-neon .site-header {
   border-bottom: 2px solid transparent;
   border-image: linear-gradient(90deg, var(--neon-cyan), var(--neon-yellow), var(--neon-cyan)) 1;
   box-shadow: 0 0 24px rgba(34, 211, 238, 0.15);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 html.theme-electric-neon .logo-text .accent,
@@ -583,8 +611,7 @@ html.theme-electric-neon .type-card,
 html.theme-electric-neon .book-card-inner,
 html.theme-electric-neon .book-card,
 html.theme-electric-neon .feature-card {
-  animation: en-card-pulse 3s ease-in-out infinite;
-  animation-delay: calc(var(--en-i, 0) * 0.12s);
+  box-shadow: 0 0 10px rgba(34, 211, 238, 0.12);
 }
 
 html.theme-electric-neon .type-card:hover,
@@ -594,7 +621,6 @@ html.theme-electric-neon .book-card:hover,
 html.theme-electric-neon .feature-card:hover {
   border-color: var(--neon-yellow) !important;
   box-shadow: 0 0 18px rgba(250, 204, 21, 0.25) !important;
-  animation: none;
 }
 
 /* Lecteur PDF */
@@ -1017,6 +1043,15 @@ html.theme-electric-neon .en-preview-badge {
   z-index: 200 !important;
 }
 
+html.en-anim-paused .en-glow-orb,
+html.en-anim-paused .en-circuit path,
+html.en-anim-paused .en-hero-frame,
+html.en-anim-paused .edz-ticker__track,
+html.en-anim-paused .en-preview-badge {
+  animation-play-state: paused !important;
+  will-change: auto !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html.theme-electric-neon .en-glow-orb,
   html.theme-electric-neon .en-circuit path,
@@ -1025,7 +1060,9 @@ html.theme-electric-neon .en-preview-badge {
   html.theme-electric-neon .type-card,
   html.theme-electric-neon .book-card,
   html.theme-electric-neon .feature-card,
-  html.theme-electric-neon .en-preview-badge {
-    animation: none;
+  html.theme-electric-neon .en-preview-badge,
+  html.theme-electric-neon .edz-ticker__track {
+    animation: none !important;
+    will-change: auto !important;
   }
 }

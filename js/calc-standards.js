@@ -43,10 +43,17 @@
     BREAKER_CURVES,
   };
 
+  function siteLang() {
+    try {
+      const s = localStorage.getItem('electrodz-site-lang');
+      if (s === 'fr' || s === 'ar' || s === 'en') return s;
+    } catch (_) { /* ignore */ }
+    return 'ar';
+  }
+
   function i18n(key) {
-    const lang = (typeof localStorage !== 'undefined' && localStorage.getItem('electrodz-site-lang') === 'fr') ? 'fr' : 'ar';
     const i = g.ElectroDzCalcI18n;
-    return i ? i.t(lang, key) : key;
+    return i ? i.t(siteLang(), key) : key;
   }
 
   function fmtSection(v) {
@@ -138,7 +145,7 @@
 
     const core = g.ElectroDzCalcCore;
     if (core?._getT) {
-      const lang = (typeof localStorage !== 'undefined' && localStorage.getItem('electrodz-site-lang') === 'fr') ? 'fr' : 'ar';
+      const lang = siteLang();
       const t = core._getT(lang);
       const methods = ['A1', 'A2', 'B1', 'B2', 'C', 'D1', 'D2', 'E', 'F', 'G'];
       document.querySelectorAll('select#section-method').forEach((el) => {

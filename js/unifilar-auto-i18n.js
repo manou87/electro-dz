@@ -23,6 +23,20 @@
       'errGenerate': 'Impossible de générer : vérifiez les lignes du bilan (Pi > 0).',
       'disclaimer':
         'Calibres In indicatifs. Vérifiez calibres, DDR et câbles sur site avant dossier client.',
+      'svg.mainSwitch': 'Coupure générale',
+      'svg.outgoings': 'Départs',
+      'svg.rcdGroup': 'IDR 30 mA',
+      'svg.loads': 'charge(s)',
+      'svg.aria': 'Schéma unifilaire Electro DZ',
+      'svg.titlePrefix': 'Schéma unifilaire Electro DZ — ',
+      'svg.dbFallback': 'TABLEAU',
+      'print.detail': 'Détail des charges (bilan de puissance)',
+      'print.col.room': 'Local',
+      'print.col.rcd': 'DDR',
+      'print.ref': 'Réf.',
+      'print.client': 'Client',
+      'print.disclaimer':
+        'Document indicatif généré depuis le bilan de puissance Electro DZ. Vérifier calibres, DDR et sections sur site.',
     },
     ar: {
       'meta.title': 'مخطط أحادي Electro DZ',
@@ -48,6 +62,20 @@
       'errGenerate': 'تعذّر التوليد: تحقق من سطور الموازنة (Pi > 0).',
       'disclaimer':
         'قيم In إرشادية. تحقق من القواطع والـ DDR والكابلات في الموقع قبل ملف الزبون.',
+      'svg.mainSwitch': 'قاطع عام',
+      'svg.outgoings': 'دوائر خارجة',
+      'svg.rcdGroup': 'IDR 30 mA',
+      'svg.loads': 'حمل(أحمال)',
+      'svg.aria': 'مخطط أحادي Electro DZ',
+      'svg.titlePrefix': 'مخطط أحادي Electro DZ — ',
+      'svg.dbFallback': 'لوحة',
+      'print.detail': 'تفصيل الأحمال (موازنة القدرة)',
+      'print.col.room': 'المحل',
+      'print.col.rcd': 'DDR',
+      'print.ref': 'مرجع',
+      'print.client': 'الزبون',
+      'print.disclaimer':
+        'وثيقة إرشادية مولَّدة من موازنة القدرة Electro DZ. تحقق من القواطع والـ DDR والمقاطع في الموقع.',
     },
     en: {
       'meta.title': 'Single-line diagram Electro DZ',
@@ -56,10 +84,11 @@
         'All power-balance loads on a printable diagram (white background, black text, labels clear of the wires).',
       'symbols.note':
         'B/W A4 landscape print + detailed load table for the client file.',
+      'preview.loading': 'Loading preview…',
       'btn.regen': 'Regenerate',
       'btn.print': '🖨 Print',
       'btn.calc': 'Back to balance',
-      'board': 'Board',
+      'board': 'Distribution board',
       'board.all': 'All boards (all loads)',
       'col.ref': 'Ref.',
       'col.label': 'Designation',
@@ -71,7 +100,21 @@
       'empty.link': 'Go to calculations',
       'errGenerate': 'Could not generate: check balance rows (Pi > 0).',
       'disclaimer':
-        'In ratings are indicative. Verify breakers, RCDs and cables on site before the client file.',
+        'In ratings are indicative. Verify circuit-breakers, RCDs and cables on site before the client file.',
+      'svg.mainSwitch': 'Main incoming device',
+      'svg.outgoings': 'Outgoing circuits',
+      'svg.rcdGroup': 'RCCB 30 mA',
+      'svg.loads': 'load(s)',
+      'svg.aria': 'Single-line diagram Electro DZ',
+      'svg.titlePrefix': 'Single-line diagram Electro DZ — ',
+      'svg.dbFallback': 'DB',
+      'print.detail': 'Load schedule (power balance)',
+      'print.col.room': 'Location',
+      'print.col.rcd': 'RCD',
+      'print.ref': 'Ref.',
+      'print.client': 'Client',
+      'print.disclaimer':
+        'Indicative document generated from the Electro DZ power balance. Verify ratings, RCDs and conductor sizes on site.',
     },
   };
 

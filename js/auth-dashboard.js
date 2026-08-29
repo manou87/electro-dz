@@ -80,12 +80,16 @@
     }
 
     const displayName = (
-      session.user.user_metadata?.full_name || session.user.email || ''
+      session.user.user_metadata?.full_name ||
+      session.user.user_metadata?.name ||
+      session.user.email ||
+      session.user.phone ||
+      ''
     ).split('@')[0];
     const nameEl = document.getElementById('name');
     const userEl = document.getElementById('user');
     if (nameEl) nameEl.textContent = displayName;
-    if (userEl) userEl.textContent = session.user.email || '';
+    if (userEl) userEl.textContent = session.user.email || session.user.phone || '';
 
     showMsg(t('dash.loadingShort'), 'i');
 

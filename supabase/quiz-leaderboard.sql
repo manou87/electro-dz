@@ -201,6 +201,11 @@ create table if not exists public.quiz_pseudo_registry (
   created_at timestamptz not null default now()
 );
 
+alter table public.quiz_pseudo_registry enable row level security;
+
+-- Pas de policy directe : écriture/lecture via reserve_quiz_pseudo (security definer).
+revoke all on table public.quiz_pseudo_registry from anon, authenticated;
+
 insert into public.quiz_pseudo_registry (pseudo_norm, pseudo)
 select distinct b.pseudo_norm, b.pseudo
 from public.quiz_leaderboard_bests b

@@ -52,15 +52,24 @@
   </div>
 
   <script src="js/schemas-plans-i18n.js" defer></script>
-  <script src="js/falstad-circuit.js?v=20260624b" defer></script>
+  <script src="js/falstad-circuit.js?v=20260828en" defer></script>
   <script>
     (function () {
       var STORAGE = "electrodz-site-lang";
       function syncHomeLinks() {
         var lang = "fr";
-        try { lang = localStorage.getItem(STORAGE) || "fr"; } catch (e) {}
+        try {
+          lang = localStorage.getItem(STORAGE) || "fr";
+          if (lang !== "fr" && lang !== "ar" && lang !== "en") lang = "fr";
+        } catch (e) {}
         document.querySelectorAll("[data-i18n-href-fr]").forEach(function (a) {
-          a.href = lang === "ar" ? a.getAttribute("data-i18n-href-ar") : a.getAttribute("data-i18n-href-fr");
+          var href =
+            lang === "ar"
+              ? a.getAttribute("data-i18n-href-ar")
+              : lang === "en"
+                ? a.getAttribute("data-i18n-href-en") || a.getAttribute("data-i18n-href-fr")
+                : a.getAttribute("data-i18n-href-fr");
+          if (href) a.href = href;
         });
       }
       syncHomeLinks();

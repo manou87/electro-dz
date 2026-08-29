@@ -20,6 +20,7 @@
     <div class="sim-lang">
       <button type="button" class="lang-btn active" data-lang="fr" aria-label="Français">FR</button>
       <button type="button" class="lang-btn" data-lang="ar" aria-label="العربية">AR</button>
+      <button type="button" class="lang-btn" data-lang="en" aria-label="English">EN</button>
     </div>
   </header>
 
@@ -44,7 +45,6 @@
       <p class="sim-loading" id="simLoading" data-i18n="loading">Chargement du simulateur…</p>
       <iframe
         id="simFrame"
-        src="simulation-swissdz/index.html?embed=1&m=1"
         title="Simulateur SwissDZ — tableau, atelier & unifilaire professionnel"
         allow="fullscreen"
         loading="eager"
@@ -79,18 +79,37 @@
           "mod.ar": "ورشة",
           "mod.ar.desc": "تمديدات افتراضية · سيناريوهات احترافية ومبتدئة",
         },
+        en: {
+          "meta.title": "SwissDZ simulator — panel, workshop & professional single-line | Electro DZ",
+          "meta.desc": "SwissDZ simulator — electrical panel, virtual workshop & professional single-line diagram.",
+          loading: "Loading the simulator…",
+          footer: "SwissDZ · NFC 15-100 · IEC 60364. Any live installation must be verified by a qualified professional.",
+          "mod.tableau": "Panel",
+          "mod.tableau.desc": "Drag your circuit-breakers · single-line in one click",
+          "mod.ar": "Workshop",
+          "mod.ar.desc": "Virtual wiring · pro & beginner scenarios",
+        },
       };
 
-      var lang = localStorage.getItem(STORAGE) === "fr" ? "fr" : "ar";
-      if (document.documentElement.lang === "fr") lang = "fr";
+      function normalizeLang(next) {
+        return next === "fr" || next === "ar" || next === "en" ? next : "ar";
+      }
+      var lang = "ar";
+      try {
+        lang = normalizeLang(localStorage.getItem(STORAGE) || "");
+      } catch (e) {}
+      if (lang !== "fr" && lang !== "ar" && lang !== "en") {
+        var hl = (document.documentElement.lang || "").toLowerCase();
+        lang = hl === "fr" ? "fr" : hl === "en" ? "en" : "ar";
+      }
 
       function t(k) {
         return (T[lang] && T[lang][k]) || T.fr[k] || k;
       }
 
       function applyLang(next) {
-        lang = next === "fr" ? "fr" : "ar";
-        localStorage.setItem(STORAGE, lang);
+        lang = normalizeLang(next);
+        try { localStorage.setItem(STORAGE, lang); } catch (e) {}
         document.documentElement.lang = lang;
         document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
         document.title = t("meta.title");
@@ -104,6 +123,12 @@
         document.querySelectorAll(".sim-lang .lang-btn").forEach(function (btn) {
           btn.classList.toggle("active", btn.getAttribute("data-lang") === lang);
         });
+        if (frame) {
+          var want = simUrl(activeMod);
+          if (frame.getAttribute("src") !== want) {
+            loadModule(activeMod, true);
+          }
+        }
       }
 
       document.querySelectorAll(".sim-lang .lang-btn").forEach(function (btn) {
@@ -116,6 +141,10 @@
       var loading = document.getElementById("simLoading");
       var activeMod = "1";
       var frameReady = false;
+
+      function simUrl(mod) {
+        return "simulation-swissdz/index.html?embed=1&m=" + mod + "&lang=" + lang;
+      }
 
       function prefetchAtelier() {
         fetch("simulation-swissdz/evc-lib/manifest.json", { cache: "force-cache" })
@@ -134,8 +163,8 @@
         setTimeout(prefetchAtelier, 1500);
       }
 
-      function loadModule(mod) {
-        if (activeMod === mod && frameReady) return;
+      function loadModule(mod, force) {
+        if (activeMod === mod && frameReady && !force) return;
         activeMod = mod;
         document.querySelectorAll(".sim-mod-btn").forEach(function (btn) {
           btn.classList.toggle("active", btn.getAttribute("data-mod") === mod);
@@ -143,7 +172,7 @@
         frameReady = false;
         if (loading) loading.hidden = false;
         if (frame) {
-          frame.src = "simulation-swissdz/index.html?embed=1&m=" + mod;
+          frame.src = simUrl(mod);
         }
       }
 

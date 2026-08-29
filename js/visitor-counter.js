@@ -20,6 +20,7 @@
   const LABELS = {
     fr: { today: "Visiteurs aujourd'hui", total: 'Visites totales' },
     ar: { today: 'زوار اليوم', total: 'إجمالي الزيارات' },
+    en: { today: 'Visitors today', total: 'Total visits' },
   };
 
   const PANEL_UI = {
@@ -39,22 +40,34 @@
       close: 'إغلاق',
       loading: 'جاري التحميل…',
     },
+    en: {
+      titleToday: 'Visitors today by country',
+      titleTotal: 'Total visits by country',
+      empty: 'No country data yet.',
+      unknown: 'Unknown country',
+      close: 'Close',
+      loading: 'Loading…',
+    },
   };
 
   const PDF_LABELS = {
     fr: { views: 'Lectures PDF', downloads: 'Téléchargements PDF' },
     ar: { views: 'قراءات PDF', downloads: 'تنزيلات PDF' },
+    en: { views: 'PDF views', downloads: 'PDF downloads' },
   };
 
   let countryNamesFr;
   let countryNamesAr;
+  let countryNamesEn;
 
   function getLang() {
     try {
-      if (localStorage.getItem('electrodz-site-lang') === 'fr') return 'fr';
+      const s = localStorage.getItem('electrodz-site-lang');
+      if (s === 'fr' || s === 'ar' || s === 'en') return s;
     } catch (_) { /* ignore */ }
     const l = (document.documentElement.lang || 'ar').toLowerCase();
-    return l === 'fr' ? 'fr' : 'ar';
+    if (l === 'fr' || l === 'en') return l;
+    return 'ar';
   }
 
   function panelUi(lang) {
@@ -65,7 +78,9 @@
     const v = Number(n);
     if (!Number.isFinite(v)) return '—';
     try {
-      return new Intl.NumberFormat(lang === 'ar' ? 'ar-DZ' : 'fr-CH').format(v);
+      return new Intl.NumberFormat(
+        lang === 'ar' ? 'ar-DZ' : lang === 'en' ? 'en-GB' : 'fr-CH'
+      ).format(v);
     } catch (_) {
       return String(v);
     }
@@ -77,8 +92,10 @@
       if (!countryNamesFr) {
         countryNamesFr = new Intl.DisplayNames(['fr'], { type: 'region' });
         countryNamesAr = new Intl.DisplayNames(['ar'], { type: 'region' });
+        countryNamesEn = new Intl.DisplayNames(['en'], { type: 'region' });
       }
-      const name = (lang === 'ar' ? countryNamesAr : countryNamesFr).of(code);
+      const names = lang === 'ar' ? countryNamesAr : lang === 'en' ? countryNamesEn : countryNamesFr;
+      const name = names.of(code);
       return name || code;
     } catch (_) {
       return code;
@@ -388,6 +405,35 @@
     host.innerHTML = pdfStatsHtml(lang);
   }
 
+  function refreshLangUi() {
+    const lang = getLang();
+    const bar = document.getElementById('edz-visitor-bar');
+    if (bar) {
+      const today = bar.querySelector('[data-edz-visitors-today]');
+      const total = bar.querySelector('[data-edz-visitors-total]');
+      const todayVal = today ? today.textContent : '…';
+      const totalVal = total ? total.textContent : '…';
+      bar.innerHTML = visitorBarHtml(lang);
+      const tEl = bar.querySelector('[data-edz-visitors-today]');
+      const totEl = bar.querySelector('[data-edz-visitors-total]');
+      if (tEl) tEl.textContent = todayVal;
+      if (totEl) totEl.textContent = totalVal;
+      bindBarClicks(bar);
+    }
+    const pdfHost = document.querySelector('[data-library-pdf-stats]');
+    if (pdfHost && pdfHost.querySelector('[data-edz-pdf-views]')) {
+      const views = pdfHost.querySelector('[data-edz-pdf-views]');
+      const dl = pdfHost.querySelector('[data-edz-pdf-downloads]');
+      const viewsVal = views ? views.textContent : '…';
+      const dlVal = dl ? dl.textContent : '…';
+      pdfHost.innerHTML = pdfStatsHtml(lang);
+      const vEl = pdfHost.querySelector('[data-edz-pdf-views]');
+      const dEl = pdfHost.querySelector('[data-edz-pdf-downloads]');
+      if (vEl) vEl.textContent = viewsVal;
+      if (dEl) dEl.textContent = dlVal;
+    }
+  }
+
   function updateDOM(stats) {
     const lang = getLang();
     const todayVal =
@@ -571,4 +617,6 @@
   } else {
     run();
   }
+
+  document.addEventListener('electrodz-lang-changed', refreshLangUi);
 })();

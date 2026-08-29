@@ -8,7 +8,7 @@
   const Extra = () => g.ElectroDzCalcExtra;
 
   function getT(lang) {
-    const k = lang === 'ar' ? 'ar' : 'fr';
+    const k = lang === 'ar' ? 'ar' : lang === 'en' ? 'en' : 'fr';
     const ui = g.ElectroDzCalcI18n ? g.ElectroDzCalcI18n[k] : {};
     return ui;
   }

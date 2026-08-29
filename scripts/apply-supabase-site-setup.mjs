@@ -8,6 +8,7 @@
  *   2. Fichier website/.supabase-access-token (une ligne) OU
  *      export SUPABASE_ACCESS_TOKEN=sbp_...
  *   3. (Optionnel Google) GOOGLE_CLIENT_ID + GOOGLE_CLIENT_SECRET
+ *      (Optionnel Facebook) FACEBOOK_CLIENT_ID + FACEBOOK_CLIENT_SECRET
  *
  * Usage : node scripts/apply-supabase-site-setup.mjs
  */
@@ -101,6 +102,17 @@ async function patchAuthConfig() {
   } else {
     console.log('→ Google OAuth : ignoré (GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET non définis)');
     console.log('  Activez Google dans le dashboard ou relancez avec ces variables.');
+  }
+
+  const fbId = process.env.FACEBOOK_CLIENT_ID?.trim();
+  const fbSecret = process.env.FACEBOOK_CLIENT_SECRET?.trim();
+  if (fbId && fbSecret) {
+    body.external_facebook_enabled = true;
+    body.external_facebook_client_id = fbId;
+    body.external_facebook_secret = fbSecret;
+    console.log('→ Facebook OAuth : activation demandée');
+  } else {
+    console.log('→ Facebook OAuth : ignoré (FACEBOOK_CLIENT_ID / FACEBOOK_CLIENT_SECRET non définis)');
   }
 
   console.log('→ Auth URLs (site + redirects)');

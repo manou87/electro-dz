@@ -54,6 +54,20 @@
     caches.keys().then((keys) => keys.forEach((k) => caches.delete(k)));
   }
 
+  (function syncSiteLang() {
+    var lang = 'fr';
+    try {
+      var q = new URLSearchParams(location.search).get('lang');
+      if (q === 'en' || q === 'ar' || q === 'fr') lang = q;
+      else {
+        var s = localStorage.getItem('electrodz-site-lang');
+        if (s === 'en' || s === 'ar' || s === 'fr') lang = s;
+      }
+    } catch (_) {}
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  })();
+
   // Paysage forcé seulement pour l’atelier OIBT (`#/trainer`).
   // Fluke `#/meter` : pas de lock (portrait OK).
   function tryLockLandscapeForTrainer() {

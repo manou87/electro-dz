@@ -4,20 +4,119 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="js/theme-electric-neon.js"></script>
-  <meta name="description" content="SwissDZ Cos φ — simulateur de batterie de compensation BT. Français / العربية." />
+  <meta name="description" content="SwissDZ Cos φ — simulateur de batterie de compensation BT. Français / English / العربية." />
   <title>SwissDZ Cos φ | Electro DZ</title>
   <link rel="icon" href="assets/app-icon.png" type="image/png" />
+  <link rel="stylesheet" href="css/simulation-swissdz.css?v=20260829tall" />
   <link rel="canonical" href="https://electro-dz.com/swissdz-cos-phi.html" />
-  <style>
-    html, body { margin: 0; height: 100%; background: #050505; }
-    iframe { display: block; width: 100%; height: 100%; border: 0; }
-  </style>
 </head>
-<body>
-  <iframe
-    src="swissdz-cos-phi/index.html"
-    title="SwissDZ Cos φ"
-    allow="fullscreen"
-  ></iframe>
+<body class="sim-page sim-page--cos-phi">
+  <header class="sim-topbar">
+    <a href="index-fr.html" class="sim-brand" data-i18n-href-fr="index-fr.html" data-i18n-href-ar="index.html">
+      <img src="assets/app-icon.png" alt="" width="32" height="32" decoding="async" />
+      <span>Swiss<span class="accent">DZ</span></span>
+    </a>
+    <div class="sim-lang">
+      <button type="button" class="lang-btn active" data-lang="fr" aria-label="Français">FR</button>
+      <button type="button" class="lang-btn" data-lang="en" aria-label="English">EN</button>
+      <button type="button" class="lang-btn" data-lang="ar" aria-label="العربية">AR</button>
+    </div>
+  </header>
+
+  <div class="sim-workspace">
+    <div class="sim-frame-wrap">
+      <p class="sim-loading" id="simLoading" data-i18n="loading">Chargement du simulateur…</p>
+      <iframe
+        id="simFrame"
+        title="SwissDZ Cos φ"
+        allow="fullscreen"
+        loading="eager"
+      ></iframe>
+    </div>
+    <p class="sim-footer-note" data-i18n="footer">
+      Outil pédagogique — compensation BT (IEC 60831). Toute installation réelle doit être vérifiée par un professionnel habilité.
+    </p>
+  </div>
+
+  <script>
+    (function () {
+      var STORAGE = "electrodz-site-lang";
+      var T = {
+        fr: {
+          "meta.title": "SwissDZ Cos φ — compensation BT | Electro DZ",
+          "meta.desc": "SwissDZ Cos φ — simulateur de batterie de compensation BT. Français / English / العربية.",
+          loading: "Chargement du simulateur…",
+          footer: "SwissDZ Cos φ · IEC 60831. Toute installation réelle doit être vérifiée par un professionnel habilité.",
+        },
+        ar: {
+          "meta.title": "SwissDZ Cos φ — تعويض معامل القدرة | Electro DZ",
+          "meta.desc": "SwissDZ Cos φ — محاكي بطارية تعويض معامل القدرة للجهد المنخفض. Français / English / العربية.",
+          loading: "جاري تحميل المحاكي…",
+          footer: "SwissDZ Cos φ · IEC 60831. أي تركيب حقيقي يجب أن يتحقق منه مختص مؤهل.",
+        },
+        en: {
+          "meta.title": "SwissDZ Cos φ — LV power-factor correction | Electro DZ",
+          "meta.desc": "SwissDZ Cos φ — LV PFC capacitor-bank simulator. Français / English / العربية.",
+          loading: "Loading the simulator…",
+          footer: "SwissDZ Cos φ · IEC 60831. Any live installation must be verified by a qualified professional.",
+        },
+      };
+
+      function normalizeLang(next) {
+        return next === "fr" || next === "ar" || next === "en" ? next : "fr";
+      }
+      var lang = "fr";
+      try {
+        lang = normalizeLang(localStorage.getItem(STORAGE) || "");
+      } catch (e) {}
+
+      function t(k) {
+        return (T[lang] && T[lang][k]) || T.fr[k] || k;
+      }
+
+      function frameSrc() {
+        return "swissdz-cos-phi/index.html?lang=" + lang;
+      }
+
+      function applyLang(next) {
+        lang = normalizeLang(next);
+        try { localStorage.setItem(STORAGE, lang); } catch (e) {}
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+        document.title = t("meta.title");
+        var meta = document.querySelector('meta[name="description"]');
+        if (meta) meta.setAttribute("content", t("meta.desc"));
+        document.querySelectorAll("[data-i18n]").forEach(function (el) {
+          el.textContent = t(el.getAttribute("data-i18n"));
+        });
+        var brand = document.querySelector(".sim-brand");
+        if (brand) brand.setAttribute("href", lang === "fr" ? "index-fr.html" : "index.html");
+        document.querySelectorAll(".sim-lang .lang-btn").forEach(function (btn) {
+          btn.classList.toggle("active", btn.getAttribute("data-lang") === lang);
+        });
+        var frame = document.getElementById("simFrame");
+        if (frame && frame.getAttribute("src") !== frameSrc()) {
+          if (loading) loading.hidden = false;
+          frame.src = frameSrc();
+        }
+      }
+
+      document.querySelectorAll(".sim-lang .lang-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          applyLang(btn.getAttribute("data-lang"));
+        });
+      });
+
+      var frame = document.getElementById("simFrame");
+      var loading = document.getElementById("simLoading");
+      if (frame && loading) {
+        frame.addEventListener("load", function () {
+          loading.hidden = true;
+        });
+      }
+
+      applyLang(lang);
+    })();
+  </script>
 </body>
 </html>

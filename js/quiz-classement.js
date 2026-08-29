@@ -38,10 +38,31 @@
       howtoPlay: "ابدأ الاختبار ←",
       back: "← الاختبار",
     },
+    en: {
+      title: "Quiz NF C 15-100 leaderboard",
+      sub: "Top 50 — free nickname · optional Google sign-in (✓ badge)",
+      disclaimer:
+        "Each score submitted with a nickname appears here. Best score is kept per module.",
+      howtoTitle: "How do I appear on the leaderboard?",
+      howto1: "1. Choose your nickname on the quiz page (before playing).",
+      howto2: "2. Play a module through to the end (75 questions).",
+      howto3: "3. Click “Save my score to the leaderboard”.",
+      howtoPlay: "Play the quiz →",
+      back: "← Quiz",
+    },
   };
 
-  function t(fr, ar) {
-    return lang === "ar" && ar ? ar : fr;
+  function t(fr, ar, en) {
+    if (lang === "ar" && ar) return ar;
+    if (lang === "en") return en != null && en !== "" ? en : fr;
+    return fr;
+  }
+
+  function langOfBtn(btn) {
+    if (btn.hasAttribute("data-lang-en")) return "en";
+    if (btn.hasAttribute("data-lang-fr")) return "fr";
+    if (btn.hasAttribute("data-lang-ar")) return "ar";
+    return btn.getAttribute("data-lang") || "fr";
   }
 
   function tKey(key) {
@@ -63,17 +84,18 @@
   }
 
   function applyLang(l) {
-    lang = l;
-    localStorage.setItem(STORAGE_LANG, l);
-    document.documentElement.lang = l;
-    document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
+    lang = l === "fr" || l === "ar" || l === "en" ? l : "fr";
+    localStorage.setItem(STORAGE_LANG, lang);
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
     document.title =
       lang === "ar"
         ? "تصنيف الاختبار NF C 15-100 — SwissDZ"
-        : "Classement Quiz NF C 15-100 — SwissDZ";
+        : lang === "en"
+          ? "Quiz NF C 15-100 leaderboard — SwissDZ"
+          : "Classement Quiz NF C 15-100 — SwissDZ";
     document.querySelectorAll(".lang-btn").forEach(function (b) {
-      const isFr = b.hasAttribute("data-lang-fr");
-      b.classList.toggle("active", (l === "fr" && isFr) || (l === "ar" && !isFr));
+      b.classList.toggle("active", langOfBtn(b) === lang);
     });
     document.querySelectorAll("[data-i18n-clb]").forEach(function (el) {
       const key = el.getAttribute("data-i18n-clb");
@@ -110,7 +132,7 @@
       '<button type="button" class="quiz-lb-filter' +
       (currentFilter === "global" ? " quiz-lb-filter--active" : "") +
       '" data-filter="global">' +
-      escapeHtml(t("Global", "الإجمالي")) +
+      escapeHtml(t("Global", "الإجمالي", "Overall")) +
       "</button>";
     plan.modules.forEach(function (m) {
       const active = currentFilter === m.slug ? " quiz-lb-filter--active" : "";
@@ -136,15 +158,15 @@
   function renderTable(rows) {
     const isGlobal = currentFilter === "global";
     const scoreLabel = isGlobal
-      ? t("Points totaux", "مجموع النقاط")
-      : t("Score module", "نتيجة الوحدة");
+      ? t("Points totaux", "مجموع النقاط", "Total points")
+      : t("Score module", "نتيجة الوحدة", "Module score");
 
     let html =
       '<div class="quiz-lb-table-wrap"><table class="quiz-lb-table"><thead><tr>' +
       "<th>" +
-      escapeHtml(t("Rang", "الترتيب")) +
+      escapeHtml(t("Rang", "الترتيب", "Rank")) +
       "</th><th>" +
-      escapeHtml(t("Pseudo", "الاسم")) +
+      escapeHtml(t("Pseudo", "الاسم", "Nickname")) +
       "</th><th>" +
       escapeHtml(scoreLabel) +
       "</th><th>" +
@@ -152,7 +174,7 @@
       "</th>";
     if (isGlobal) {
       html +=
-        "<th>" + escapeHtml(t("Modules", "الوحدات")) + "</th>";
+        "<th>" + escapeHtml(t("Modules", "الوحدات", "Modules")) + "</th>";
     }
     html += "</tr></thead><tbody>";
 
@@ -164,7 +186,8 @@
         escapeHtml(
           t(
             "Aucun score pour l’instant. Jouez un module, puis entrez votre nom à la fin et cliquez « Enregistrer mon score ».",
-            "لا نتائج بعد. العب وحدة ثم أدخل اسمك في النهاية واضغط «تسجيل نتيجتي»."
+            "لا نتائج بعد. العب وحدة ثم أدخل اسمك في النهاية واضغط «تسجيل نتيجتي».",
+            "No scores yet. Play a module, then enter your name at the end and click “Save my score”."
           )
         ) +
         "</td></tr>";
@@ -177,7 +200,7 @@
           escapeHtml(row.pseudo) +
           (row.verified
             ? ' <span class="quiz-lb-verified" title="' +
-              escapeHtml(t("Compte vérifié", "حساب موثّق")) +
+              escapeHtml(t("Compte vérifié", "حساب موثّق", "Verified account")) +
               '">✓</span>'
             : "") +
           "</td>";
@@ -203,7 +226,7 @@
   function renderLoading() {
     root.innerHTML =
       '<p class="quiz-lb-status">' +
-      escapeHtml(t("Chargement du classement…", "جاري تحميل التصنيف…")) +
+      escapeHtml(t("Chargement du classement…", "جاري تحميل التصنيف…", "Loading the leaderboard…")) +
       "</p>";
   }
 
@@ -212,9 +235,10 @@
       code === "config"
         ? t(
             "Classement indisponible — exécutez quiz-leaderboard.sql dans Supabase.",
-            "التصنيف غير متاح — نفّذ quiz-leaderboard.sql في Supabase."
+            "التصنيف غير متاح — نفّذ quiz-leaderboard.sql في Supabase.",
+            "Leaderboard unavailable — run quiz-leaderboard.sql in Supabase."
           )
-        : t("Impossible de charger le classement.", "تعذّر تحميل التصنيف.");
+        : t("Impossible de charger le classement.", "تعذّر تحميل التصنيف.", "Could not load the leaderboard.");
     root.innerHTML = '<p class="quiz-lb-status quiz-lb-status--err">' + escapeHtml(msg) + "</p>";
   }
 
@@ -235,7 +259,7 @@
 
   document.querySelectorAll(".lang-btn").forEach(function (btn) {
     btn.addEventListener("click", function () {
-      applyLang(btn.hasAttribute("data-lang-fr") ? "fr" : "ar");
+      applyLang(langOfBtn(btn));
       renderFilters();
       loadBoard();
     });

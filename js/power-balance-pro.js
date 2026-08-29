@@ -45,10 +45,17 @@
 
   function getLang() {
     try {
-      return localStorage.getItem('electrodz-site-lang') === 'fr' ? 'fr' : 'ar';
-    } catch (_) {
-      return 'ar';
-    }
+      const s = localStorage.getItem('electrodz-site-lang');
+      if (s === 'fr' || s === 'ar' || s === 'en') return s;
+    } catch (_) { /* ignore */ }
+    return 'ar';
+  }
+
+  function localeTag() {
+    const l = getLang();
+    if (l === 'ar') return 'ar-DZ';
+    if (l === 'en') return 'en-GB';
+    return 'fr-CH';
   }
 
   function tr(key) {
@@ -408,7 +415,7 @@
     const ad = r.data.additionalData;
     const rows = ad.detailRows || [];
     const headCells = reportHeaderCells();
-    const locale = rtl ? 'ar-DZ' : 'fr-CH';
+    const locale = localeTag();
     const dateStr = new Date().toLocaleString(locale, { dateStyle: 'medium', timeStyle: 'short' });
 
     let tableRows = rows
@@ -467,11 +474,10 @@ ${reportGroupsHtml(tr('balByLocation'), ad.byLocation)}
 
   function buildReportLines(r, meta) {
     const ad = r.data.additionalData;
-    const lang = getLang();
     const lines = [
       tr('balExportTitle'),
       '—'.repeat(52),
-      new Date().toLocaleString(lang === 'fr' ? 'fr-CH' : 'ar-DZ'),
+      new Date().toLocaleString(localeTag()),
       '',
     ];
     if (meta.ref) lines.push(`${tr('balProRef')}: ${meta.ref}`);
@@ -541,7 +547,7 @@ ${reportGroupsHtml(tr('balByLocation'), ad.byLocation)}
       ? `<script>window.addEventListener('load',function(){setTimeout(function(){window.print();},350);});<\/script>`
       : '';
     return `<!DOCTYPE html>
-<html dir="${rtl ? 'rtl' : 'ltr'}" lang="${rtl ? 'ar' : 'fr'}">
+<html dir="${rtl ? 'rtl' : 'ltr'}" lang="${getLang()}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -667,7 +673,7 @@ ${printScript}
   function defaultSaveName() {
     const m = getMeta();
     const base = m.ref || m.client || m.site || tr('balSaveDefaultName');
-    const d = new Date().toLocaleDateString(getLang() === 'ar' ? 'ar-DZ' : 'fr-CH');
+    const d = new Date().toLocaleDateString(localeTag());
     return `${base} — ${d}`;
   }
 
@@ -682,7 +688,7 @@ ${printScript}
         .map((item) => {
           const label = item.name || item.id;
           const date = item.savedAt
-            ? new Date(item.savedAt).toLocaleString(getLang() === 'ar' ? 'ar-DZ' : 'fr-CH', {
+            ? new Date(item.savedAt).toLocaleString(localeTag(), {
                 dateStyle: 'short',
                 timeStyle: 'short',
               })

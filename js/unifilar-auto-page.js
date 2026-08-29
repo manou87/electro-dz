@@ -179,6 +179,13 @@
   document.getElementById('btnUnifRegen')?.addEventListener('click', generateFromBoard);
   boardSelect?.addEventListener('change', generateFromBoard);
   document.getElementById('btnUnifPrint')?.addEventListener('click', printSvg);
+  document.addEventListener('electrodz-lang-changed', function () {
+    if (sourceReport) rebuildBoardSelect();
+    if (project) {
+      renderTable();
+      refreshPreview();
+    }
+  });
 
   document.getElementById('btnUnifBackCalc')?.addEventListener('click', function () {
     window.location.href = 'calcul-electrique.html#balance';

@@ -409,6 +409,10 @@
     try {
       localStorage.setItem("electrodz-site-lang", lang);
     } catch (e) {}
+
+    document.dispatchEvent(
+      new CustomEvent("electrodz-lang-changed", { detail: { lang: lang } })
+    );
   }
 
   document.querySelectorAll(".lang-btn").forEach(function (btn) {

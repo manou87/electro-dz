@@ -16,9 +16,12 @@
   try {
     lang = localStorage.getItem(STORAGE) || "ar";
   } catch (e) {}
+  if (lang !== "fr" && lang !== "ar" && lang !== "en") lang = "ar";
 
-  function t(fr, ar) {
-    return lang === "ar" ? ar : fr;
+  function t(fr, ar, en) {
+    if (lang === "ar") return ar;
+    if (lang === "en") return en != null && en !== "" ? en : fr;
+    return fr;
   }
 
   function escapeHtml(s) {
@@ -79,8 +82,18 @@
   }
 
   function renderBookCard(book) {
-    var title = lang === "ar" ? book.titleAr || book.titleFr : book.titleFr;
-    var desc = lang === "ar" ? book.descriptionAr || book.descriptionFr : book.descriptionFr;
+    var title =
+      lang === "ar"
+        ? book.titleAr || book.titleFr
+        : lang === "en"
+          ? book.titleEn || book.titleFr
+          : book.titleFr;
+    var desc =
+      lang === "ar"
+        ? book.descriptionAr || book.descriptionFr
+        : lang === "en"
+          ? book.descriptionEn || book.descriptionFr
+          : book.descriptionFr;
     var locked = isBookLocked(book);
     var cover = bookCoverSrc(book);
 
@@ -96,7 +109,7 @@
     coverDiv.style.cursor = "pointer";
     coverDiv.setAttribute("role", "button");
     coverDiv.setAttribute("tabindex", "0");
-    coverDiv.setAttribute("aria-label", t("Lire le PDF", "قراءة PDF") + " — " + title);
+    coverDiv.setAttribute("aria-label", t("Lire le PDF", "قراءة PDF", "Read the PDF") + " — " + title);
 
     if (cover) {
       var img = document.createElement("img");
@@ -131,13 +144,13 @@
 
     var catSpan = document.createElement("span");
     catSpan.className = "book-category";
-    catSpan.textContent = t("Formation PDF", "تكوين PDF");
+    catSpan.textContent = t("Formation PDF", "تكوين PDF", "Training PDF");
     body.appendChild(catSpan);
 
     if (locked) {
       var lockBadge = document.createElement("span");
       lockBadge.className = "book-lock-badge";
-      lockBadge.textContent = t("🔒 Accès protégé", "🔒 وصول محمي");
+      lockBadge.textContent = t("🔒 Accès protégé", "🔒 وصول محمي", "🔒 Protected access");
       body.appendChild(lockBadge);
     }
 
@@ -160,8 +173,8 @@
     read.type = "button";
     read.className = "btn btn-primary btn-sm";
     read.textContent = locked
-      ? t("Mot de passe", "كلمة المرور")
-      : t("Lire le PDF", "قراءة PDF");
+      ? t("Mot de passe", "كلمة المرور", "Password")
+      : t("Lire le PDF", "قراءة PDF", "Read the PDF");
     read.addEventListener("click", onOpen);
     actions.appendChild(read);
 
@@ -183,7 +196,8 @@
     if (countEl) {
       countEl.textContent = t(
         books.length + " support" + (books.length > 1 ? "s" : "") + " PDF",
-        books.length + " دعم PDF"
+        books.length + " دعم PDF",
+        books.length + " PDF resource" + (books.length > 1 ? "s" : "")
       );
     }
     books.forEach(function (book) {
@@ -211,14 +225,15 @@
           emptyBooks.hidden = false;
           emptyBooks.textContent = t(
             "Impossible de charger le catalogue.",
-            "تعذّر تحميل القائمة."
+            "تعذّر تحميل القائمة.",
+            "Could not load the catalogue."
           );
         }
       });
   }
 
   document.addEventListener("electrodz-lang-changed", function (ev) {
-    if (ev.detail && (ev.detail.lang === "fr" || ev.detail.lang === "ar")) {
+    if (ev.detail && (ev.detail.lang === "fr" || ev.detail.lang === "ar" || ev.detail.lang === "en")) {
       lang = ev.detail.lang;
       if (lastBooks.length) renderBooks(lastBooks);
       else load();

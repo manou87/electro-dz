@@ -24,6 +24,18 @@ body:has(.auth-page) {
   order: -3;
 }
 
+.auth-social-stack {
+  order: -3;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.auth-social-stack .auth-hint-google,
+.auth-social-stack .auth-google-first {
+  order: unset;
+}
+
 .auth-sep-first {
   order: -2;
   margin: 14px 0;
@@ -50,6 +62,113 @@ body:has(.auth-page) {
   color: #94a3b8;
   margin: 0 0 10px;
   order: -4;
+}
+
+.auth-social-stack .auth-hint-google {
+  margin: 0 0 4px;
+}
+
+.btn-g.auth-facebook:hover {
+  border-color: rgba(24, 119, 242, 0.5);
+  background: rgba(24, 119, 242, 0.1);
+}
+
+.btn-g.auth-phone-toggle:hover {
+  border-color: rgba(250, 204, 21, 0.4);
+}
+
+.auth-phone-panel {
+  background: rgba(250, 204, 21, 0.05);
+  border: 1px solid rgba(250, 204, 21, 0.18);
+  border-radius: 12px;
+  padding: 14px 12px 12px;
+}
+
+.auth-phone-panel[hidden] {
+  display: none;
+}
+
+.auth-phone-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.auth-phone-row select,
+.auth-phone-row input,
+.auth-phone-panel input {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: #f1f5f9;
+  font-size: 0.91rem;
+  padding: 12px 12px;
+  outline: none;
+}
+
+.auth-phone-row select {
+  width: 118px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.auth-phone-row input {
+  flex: 1;
+  min-width: 0;
+}
+
+.auth-phone-row select:focus,
+.auth-phone-panel input:focus {
+  border-color: #facc15;
+  box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.1);
+}
+
+.auth-phone-panel .btn {
+  margin-top: 0;
+}
+
+.auth-phone-panel .btn-phone-send {
+  background: rgba(250, 204, 21, 0.18);
+  color: #facc15;
+  border: 1px solid rgba(250, 204, 21, 0.35);
+}
+
+.auth-phone-panel .btn-phone-send:hover:not(:disabled) {
+  background: rgba(250, 204, 21, 0.28);
+  color: #0f172a;
+}
+
+.auth-otp-wrap {
+  margin-top: 12px;
+}
+
+.auth-otp-wrap[hidden] {
+  display: none;
+}
+
+.auth-otp-wrap label {
+  display: block;
+  color: #94a3b8;
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.auth-otp-wrap input {
+  width: 100%;
+  letter-spacing: 0.28em;
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.auth-phone-hint {
+  color: #64748b;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  margin-top: 10px;
 }
 
 @media (min-width: 480px) {

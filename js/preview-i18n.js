@@ -178,29 +178,30 @@
     }
   };
 
-  function applyLang(lang) {
-    if (!T[lang]) lang = 'fr';
+  function applyLang(requested) {
+    if (requested !== 'fr' && requested !== 'ar' && requested !== 'en') requested = 'fr';
+    var dictLang = T[requested] ? requested : 'fr';
     var root = document.documentElement;
-    root.lang = lang === 'ar' ? 'ar' : 'fr';
-    root.dir = lang === 'ar' ? 'rtl' : 'ltr';
-    document.title = T[lang]['meta.title'];
+    root.lang = requested === 'ar' ? 'ar' : requested;
+    root.dir = requested === 'ar' ? 'rtl' : 'ltr';
+    document.title = T[dictLang]['meta.title'];
 
     document.querySelectorAll('[data-i18n]').forEach(function (el) {
       var key = el.getAttribute('data-i18n');
-      if (T[lang][key] !== undefined) el.textContent = T[lang][key];
+      if (T[dictLang][key] !== undefined) el.textContent = T[dictLang][key];
     });
 
     document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
       var key = el.getAttribute('data-i18n-aria');
-      if (T[lang][key] !== undefined) el.setAttribute('aria-label', T[lang][key]);
+      if (T[dictLang][key] !== undefined) el.setAttribute('aria-label', T[dictLang][key]);
     });
 
     document.querySelectorAll('.lang-btn').forEach(function (btn) {
-      var active = btn.getAttribute('data-lang') === lang;
+      var active = btn.getAttribute('data-lang') === requested;
       btn.classList.toggle('active', active);
     });
 
-    try { localStorage.setItem('electrodz-site-lang', lang); } catch (e) {}
+    try { localStorage.setItem('electrodz-site-lang', requested); } catch (e) {}
   }
 
   document.querySelectorAll('.lang-btn').forEach(function (btn) {
@@ -211,6 +212,6 @@
 
   var saved = 'fr';
   try { saved = localStorage.getItem('electrodz-site-lang') || 'fr'; } catch (e) {}
-  if (saved !== 'fr' && saved !== 'ar') saved = 'fr';
+  if (saved !== 'fr' && saved !== 'ar' && saved !== 'en') saved = 'fr';
   applyLang(saved);
 })();

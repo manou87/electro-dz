@@ -11,6 +11,7 @@
   if (!root) return;
 
   let lang = localStorage.getItem("electrodz-site-lang") || "fr";
+  if (lang !== "fr" && lang !== "ar" && lang !== "en") lang = "fr";
   let moduleData = null;
   let qIndex = 0;
   let score = 0;
@@ -18,8 +19,47 @@
   let questionDisplay = null;
   let lastChosen = null;
 
-  function t(fr, ar) {
-    return lang === "ar" && ar ? ar : fr;
+  const EN_UI = {
+    "Agrandir l'image": "Enlarge the image",
+    Fermer: "Close",
+    "Source normative": "Normative source",
+    "Document en ligne (réponse)": "Online document (answer)",
+    "Bonne réponse : ": "Correct answer: ",
+    "Page PDF : p. ": "PDF page: p. ",
+    "Ouvrir le PDF": "Open the PDF",
+    "Commencer la démo": "Start the demo",
+    "Galerie des figures": "Figure gallery",
+    "Quiz complet": "Full quiz",
+    "Démo terminée !": "Demo complete!",
+    Recommencer: "Restart",
+    Galerie: "Gallery",
+    "Bonne réponse !": "Correct!",
+    "Pas tout à fait — voir l'explication.": "Not quite — see the explanation.",
+    "Voir le score →": "View score →",
+    "Question suivante →": "Next question →",
+    "Question ": "Question ",
+    Démo: "Demo",
+    "Score : ": "Score: ",
+    "← Galerie des figures": "← Figure gallery",
+    "Serveur local requis": "Local server required",
+    "Erreur de chargement": "Load error",
+  };
+
+  function t(fr, ar, en) {
+    if (lang === "ar" && ar) return ar;
+    if (lang === "en") {
+      if (en != null && en !== "") return en;
+      if (Object.prototype.hasOwnProperty.call(EN_UI, fr)) return EN_UI[fr];
+      return fr;
+    }
+    return fr;
+  }
+
+  function langOfBtn(btn) {
+    if (btn.hasAttribute("data-lang-en")) return "en";
+    if (btn.hasAttribute("data-lang-fr")) return "fr";
+    if (btn.hasAttribute("data-lang-ar")) return "ar";
+    return btn.getAttribute("data-lang") || "fr";
   }
 
   function escapeHtml(s) {
@@ -351,19 +391,19 @@
   }
 
   function applyLang(l) {
+    if (l !== "fr" && l !== "ar" && l !== "en") l = "fr";
     lang = l;
     localStorage.setItem("electrodz-site-lang", l);
     document.documentElement.lang = l;
     document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
     document.querySelectorAll(".lang-btn").forEach(function (b) {
-      const isFr = b.hasAttribute("data-lang-fr");
-      b.classList.toggle("active", (l === "fr" && isFr) || (l === "ar" && !isFr));
+      b.classList.toggle("active", langOfBtn(b) === l);
     });
   }
 
   document.querySelectorAll(".lang-btn").forEach(function (btn) {
     btn.addEventListener("click", function () {
-      applyLang(btn.hasAttribute("data-lang-fr") ? "fr" : "ar");
+      applyLang(langOfBtn(btn));
       if (moduleData) {
         if (qIndex > 0 || answered) renderQuestion();
         else renderIntro();

@@ -73,7 +73,7 @@
       var src = scripts[i].getAttribute('src');
       if (!src) continue;
       if (src.indexOf('theme-electric-neon') !== -1) {
-        return src.replace(/js\/theme-electric-neon[^/]*\.js(?:\?.*)?$/, 'css/theme-electric-neon.css');
+        return src.replace(/js\/theme-electric-neon[^/]*\.js/, 'css/theme-electric-neon.css');
       }
     }
     return 'css/theme-electric-neon.css';
@@ -86,7 +86,9 @@
     style.textContent =
       'html.theme-electric-neon,html.theme-electric-neon body{background:#030508!important;background-image:none!important;color:#e2e8f0}' +
       'html.theme-electric-neon .en-bg{position:fixed;inset:0;z-index:0!important;pointer-events:none}' +
-      'html.theme-electric-neon body>*:not(.en-bg){position:relative;z-index:1}' +
+      'html.theme-electric-neon,html.theme-electric-neon body{overflow-x:clip!important}' +
+      'html.theme-electric-neon body>*:not(.en-bg):not(.section-peek){position:relative;z-index:1}' +
+      'html.theme-electric-neon .section-peek,html>.section-peek{position:fixed!important;z-index:2147483646!important;pointer-events:none!important;transform:none!important;filter:none!important;right:auto!important;bottom:auto!important}' +
       'html.theme-electric-neon .site-chrome{position:sticky!important;top:0;z-index:210!important}' +
       'html.theme-electric-neon .nav,html.theme-electric-neon .site-header{background:rgba(8,12,22,.92)!important}';
     document.head.appendChild(style);
@@ -154,6 +156,12 @@
 
   enableStylesheet();
 
+  function syncMotionPause() {
+    document.documentElement.classList.toggle('en-anim-paused', !!document.hidden);
+  }
+  document.addEventListener('visibilitychange', syncMotionPause);
+  syncMotionPause();
+
   function scheduleIdle(fn) {
     if (typeof window.requestIdleCallback === 'function') {
       window.requestIdleCallback(fn, { timeout: 800 });
@@ -163,7 +171,7 @@
   }
 
   function injectBackground() {
-    if (document.querySelector('.en-bg')) return;
+    if (!document.body || document.querySelector('.en-bg')) return;
     var bg = document.createElement('div');
     bg.className = 'en-bg';
     bg.setAttribute('aria-hidden', 'true');
@@ -187,30 +195,30 @@
       return;
     }
     hero.dataset.enDone = '1';
-
-    var frame = document.createElement('div');
-    frame.className = 'en-hero-frame';
-
+    /* Envelopper sur place — garder .hero pour i18n / autres scripts (pas de replaceWith). */
+    hero.classList.add('en-hero-frame');
     var inner = document.createElement('div');
     inner.className = 'en-hero-inner';
     while (hero.firstChild) inner.appendChild(hero.firstChild);
-
-    frame.appendChild(inner);
-    hero.replaceWith(frame);
+    hero.appendChild(inner);
   }
 
-  function markAnimatedCards() {
-    document.querySelectorAll('.quick-item, .type-card, .book-card-inner, .devis-card').forEach(function (el, i) {
-      el.style.setProperty('--en-i', String(i % 12));
-    });
+  function markCardAccents() {
+    var nodes = document.querySelectorAll('.quick-item, .type-card, .book-card-inner, .devis-card');
+    var i;
+    for (i = 0; i < nodes.length; i++) {
+      nodes[i].style.setProperty('--en-i', String(i % 12));
+    }
   }
 
   function initDecorations() {
     if (!document.body) return;
+    try { injectBackground(); } catch (e) { /* ignore */ }
     scheduleIdle(function () {
-      injectBackground();
-      wrapHero(document.querySelector('.hero'));
-      markAnimatedCards();
+      try {
+        wrapHero(document.querySelector('.hero'));
+        markCardAccents();
+      } catch (e) { /* ignore */ }
     });
   }
 

@@ -33,9 +33,9 @@
 
   function getT(lang) {
     const core = g.ElectroDzCalcCore;
-    const k = lang === 'ar' ? 'ar' : 'fr';
+    const k = lang === 'ar' ? 'ar' : lang === 'en' ? 'en' : 'fr';
     const base = core && core._getT ? core._getT(k) : {};
-    const ui = g.ElectroDzCalcI18n ? (k === 'ar' ? g.ElectroDzCalcI18n.ar : g.ElectroDzCalcI18n.fr) : {};
+    const ui = g.ElectroDzCalcI18n && g.ElectroDzCalcI18n[k] ? g.ElectroDzCalcI18n[k] : {};
     const extra = {
       fr: {
         totalSelectivity: 'Sélectivité totale', partialSelectivity: 'Sélectivité partielle',
@@ -50,6 +50,13 @@
         iccInterpretationHigh: 'Icc مرتفع', iccInterpretationNormal: 'Icc طبيعي',
         iccAlertInvalidValues: 'قيم غير صالحة',
         iccAlertIk1Required: 'أدخل Icc₁ / Ik₁ عند القاطع (kA).',
+      },
+      en: {
+        totalSelectivity: 'Total discrimination', partialSelectivity: 'Partial discrimination',
+        nullSelectivity: 'Non-selective', breakerSelectivity: 'Circuit-breaker discrimination',
+        iccInterpretationHigh: 'High Icc', iccInterpretationNormal: 'Normal Icc',
+        iccAlertInvalidValues: 'Invalid values',
+        iccAlertIk1Required: 'Enter Icc₁ / Ik₁ at the circuit-breaker (kA).',
       },
     };
     return { ...extra[k], ...ui, ...base };

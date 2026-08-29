@@ -21,6 +21,10 @@ AUTOMATIQUE (recommandé)
        export GOOGLE_CLIENT_ID=...
        export GOOGLE_CLIENT_SECRET=...
        node scripts/apply-supabase-site-setup.mjs
+  4. (Optionnel Facebook) :
+       export FACEBOOK_CLIENT_ID=...
+       export FACEBOOK_CLIENT_SECRET=...
+       node scripts/apply-supabase-site-setup.mjs
 
 --------------------------------------------------------------------------------
 ÉTAPE 1 — SQL (OBLIGATOIRE pour 👁 vues / ↓ téléchargements PDF)
@@ -94,9 +98,78 @@ AUTOMATIQUE (recommandé)
   Les visiteurs non connectés ne peuvent pas télécharger (policy site-setup.sql)
 
 --------------------------------------------------------------------------------
-ÉTAPE 5 — Test sur le site
+ÉTAPE 6 — Facebook (OAuth, même compte Supabase que Google / e-mail)
 --------------------------------------------------------------------------------
-  1. https://electro-dz.com/login.html → Continuer avec Google
+  Lien providers :
+    https://supabase.com/dashboard/project/wxiqqcnzcxswdqzubxyt/auth/providers
+
+  1. Meta for Developers → https://developers.facebook.com/apps
+     Créer une app (type « Authentification et connexion utilisateur » / Consumer)
+     Facebook Login → Paramètres :
+       Valid OAuth Redirect URIs (UNE ligne, identique à Google) :
+         https://wxiqqcnzcxswdqzubxyt.supabase.co/auth/v1/callback
+     Ajouter le produit Facebook Login si besoin.
+     Copier App ID + App Secret (Paramètres → Général).
+     Mettre l’app « En ligne » (Live) pour electro-dz.com (sinon seulement testeurs Meta).
+
+  2. Supabase → Authentication → Providers → Facebook
+     Activer « Enable Sign in with Facebook »
+     Coller App ID et App Secret
+     Enregistrer (Save)
+
+  3. (Optionnel, script) :
+       export FACEBOOK_CLIENT_ID=...
+       export FACEBOOK_CLIENT_SECRET=...
+       node scripts/apply-supabase-site-setup.mjs
+
+  Sans App ID/Secret, le bouton du site affiche une erreur explicite
+  (« provider is not enabled ») — aucun secret n’est stocké dans le JS client.
+
+  Liaison des données : le user Facebook reçoit un UID Supabase. Favoris PDF,
+  dashboard et RLS (auth.uid()) fonctionnent comme Google / e-mail.
+  Si le même e-mail existe déjà (Google), activez le linking d’identités :
+  Authentication → Settings (ou Providers) → Automatic linking / Manual linking.
+
+--------------------------------------------------------------------------------
+ÉTAPE 7 — Téléphone / SMS (Phone Auth)
+--------------------------------------------------------------------------------
+  Coût : chaque SMS est facturé par le fournisseur (Twilio, MessageBird, Vonage…).
+  Format obligatoire : E.164, ex. +213555123456 (le site convertit 0555… → +213).
+
+  1. Dashboard → Authentication → Providers → Phone → Enable
+  2. Brancher un fournisseur SMS (Twilio recommandé) : Account SID, Auth Token,
+     numéro expéditeur.
+  3. Pour tester SANS payer de SMS : Phone → « Test phone numbers »
+     Ajouter un numéro + un code OTP fixe (ex. +213555000000 / 123456).
+  4. Bot protection / captcha : si « captcha verification failed »,
+     ajoutez un numéro de test OU configurez hCaptcha. Sans clé site hCaptcha
+     dans le projet, le flux SMS réel en prod exige cette config côté dashboard.
+  5. Domaines autorisés : electro-dz.com, www.electro-dz.com, localhost
+     (Authentication → URL Configuration — déjà listés en étape 2).
+
+  Le site : register.html / login.html → « Continuer avec le téléphone »
+  → envoi OTP → saisie du code → session Supabase (même UID / mêmes données).
+
+--------------------------------------------------------------------------------
+ÉTAPE 8 — TikTok : PAS branché (pas un provider natif)
+--------------------------------------------------------------------------------
+  TikTok n’existe pas dans Authentication → Providers (contrairement à Google,
+  Facebook, Apple, etc.). Brancher TikTok exigerait :
+    a) TikTok Login Kit (app développeur TikTok, redirect URI, Client Key/Secret)
+    b) un backend qui échange le code OAuth TikTok puis crée un Custom Token
+       (supabase.auth.admin.generateLink / JWT custom via service_role)
+  Ce site est statique (pas de backend dédié). Aucun bouton TikTok n’est affiché
+  pour éviter une option morte. Les comptes TikTok @elektrodzch restent des
+  liens sociaux (accueil / contact), pas une connexion.
+
+  Quand un backend existera : Custom Access Token + auth.uid() pour retrouver
+  les mêmes favoris / fichiers membres.
+
+--------------------------------------------------------------------------------
+ÉTAPE 9 — Test sur le site
+--------------------------------------------------------------------------------
+  1. https://electro-dz.com/login.html → Continuer avec Google (déjà en prod)
+     Facebook / téléphone : après étapes 6–7
   2. Retour sur auth-callback.html → dashboard.html
   3. Barre en bas : chiffres visiteurs (pas de tiret — si SQL OK)
 

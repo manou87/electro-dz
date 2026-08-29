@@ -14,21 +14,56 @@
     updated: document.querySelector("[data-commerce-updated]"),
     langFr: document.querySelector("[data-lang-fr]"),
     langAr: document.querySelector("[data-lang-ar]"),
+    langEn: document.querySelector("[data-lang-en]"),
   };
 
   if (!els.stores) return;
 
   let catalog = null;
   let lang = localStorage.getItem(STORAGE_LANG) || "fr";
+  if (lang !== "fr" && lang !== "ar" && lang !== "en") lang = "fr";
   let city = "all";
   let query = "";
 
-  function t(fr, ar) {
-    return lang === "ar" ? ar : fr;
+  const EN_UI = {
+    "Contact magasin": "Contact the shop",
+    "Stock faible": "Low stock",
+    "Sur commande": "To order",
+    Rupture: "Out of stock",
+    "En stock": "In stock",
+    "Sur demande": "On request",
+    "Toutes les villes": "All cities",
+    Produit: "Product",
+    Catégorie: "Category",
+    Marque: "Brand",
+    Unité: "Unit",
+    Prix: "Price",
+    Stock: "Stock",
+    "Exemple / démo": "Example / demo",
+    Carte: "Map",
+    "E-mail": "E-mail",
+    Appeler: "Call",
+    "Voir l'inventaire": "View inventory",
+    articles: "items",
+    "Masquer l'inventaire": "Hide inventory",
+    "Aucun article listé.": "No items listed.",
+    "magasin(s)": "shop(s)",
+    "au total (fichier)": "in file (total)",
+    "Impossible de charger les magasins.": "Could not load shops.",
+  };
+
+  function t(fr, ar, en) {
+    if (lang === "ar") return ar;
+    if (lang === "en") {
+      if (en != null && en !== "") return en;
+      if (Object.prototype.hasOwnProperty.call(EN_UI, fr)) return EN_UI[fr];
+      return fr;
+    }
+    return fr;
   }
 
   function setLang(next) {
-    lang = next === "ar" ? "ar" : "fr";
+    lang = next === "ar" || next === "en" || next === "fr" ? next : "fr";
     localStorage.setItem(STORAGE_LANG, lang);
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
@@ -40,15 +75,23 @@
       els.langAr.classList.toggle("active", lang === "ar");
       els.langAr.setAttribute("aria-pressed", lang === "ar" ? "true" : "false");
     }
+    if (els.langEn) {
+      els.langEn.classList.toggle("active", lang === "en");
+      els.langEn.setAttribute("aria-pressed", lang === "en" ? "true" : "false");
+    }
     document.querySelectorAll("[data-i18n-fr]").forEach(function (node) {
       const fr = node.getAttribute("data-i18n-fr");
       const ar = node.getAttribute("data-i18n-ar");
-      if (fr && ar) node.textContent = t(fr, ar);
+      const en = node.getAttribute("data-i18n-en") || fr;
+      if (fr && ar) node.textContent = t(fr, ar, en);
     });
     if (els.search) {
       els.search.placeholder = t(
         els.search.getAttribute("data-placeholder-fr") || "",
-        els.search.getAttribute("data-placeholder-ar") || ""
+        els.search.getAttribute("data-placeholder-ar") || "",
+        els.search.getAttribute("data-placeholder-en") ||
+          els.search.getAttribute("data-placeholder-fr") ||
+          ""
       );
     }
     render();
@@ -89,7 +132,7 @@
     if (!Number.isFinite(n)) return "—";
     try {
       return (
-        new Intl.NumberFormat(lang === "ar" ? "ar-DZ" : "fr-DZ").format(n) +
+        new Intl.NumberFormat(lang === "ar" ? "ar-DZ" : lang === "en" ? "en-DZ" : "fr-DZ").format(n) +
         " " +
         (item.currency || "DZD")
       );
@@ -415,7 +458,8 @@
         if (els.updated && data.updated) {
           els.updated.textContent = t(
             "Données brouillon — " + data.updated,
-            "مسودة بيانات — " + data.updated
+            "مسودة بيانات — " + data.updated,
+            "Draft data — " + data.updated
           );
         }
         setLang(lang);
@@ -439,6 +483,9 @@
   });
   if (els.langAr) els.langAr.addEventListener("click", function () {
     setLang("ar");
+  });
+  if (els.langEn) els.langEn.addEventListener("click", function () {
+    setLang("en");
   });
 
   load();

@@ -14,6 +14,7 @@
         "d5c86339a450038ca96787f78db4edbcef8f6774f0d4518998926bf55c11e9f5",
       labelFr: "FET 1, 2 et 3",
       labelAr: "FET 1 و 2 و 3",
+      labelEn: "FET 1, 2 and 3",
     },
     {
       key: "ae-prof",
@@ -22,6 +23,7 @@
         "071a51aa208c43df5218ec197b713668cbc859d73dd94fa78107c6ed496a7a09",
       labelFr: "AE professionnel",
       labelAr: "التكوين المهني AE",
+      labelEn: "AE professional",
     },
   ];
 
@@ -88,14 +90,17 @@
 
   function getLang() {
     try {
-      return localStorage.getItem("electrodz-site-lang") === "fr" ? "fr" : "ar";
-    } catch (_) {
-      return "ar";
-    }
+      const s = localStorage.getItem("electrodz-site-lang");
+      if (s === "fr" || s === "ar" || s === "en") return s;
+    } catch (_) { /* ignore */ }
+    return "ar";
   }
 
-  function t(fr, ar) {
-    return getLang() === "ar" ? ar : fr;
+  function t(fr, ar, en) {
+    const l = getLang();
+    if (l === "ar") return ar;
+    if (l === "en") return en != null && en !== "" ? en : fr;
+    return fr;
   }
 
   let modalEl = null;
@@ -149,16 +154,16 @@
     const btnCancel = modalEl.querySelector(".lib-lock-cancel");
     const btnSubmit = modalEl.querySelector(".lib-lock-submit");
 
-    title.textContent = "🔒 " + t("Accès protégé", "وصول محمي");
+    title.textContent = "🔒 " + t("Accès protégé", "وصول محمي", "Protected access");
     hint.textContent =
-      t("Document réservé : ", "وثيقة محجوزة: ") +
-      t(group.labelFr, group.labelAr);
-    label.textContent = t("Mot de passe", "كلمة المرور");
+      t("Document réservé : ", "وثيقة محجوزة: ", "Restricted document: ") +
+      t(group.labelFr, group.labelAr, group.labelEn || group.labelFr);
+    label.textContent = t("Mot de passe", "كلمة المرور", "Password");
     input.value = "";
     err.hidden = true;
     err.textContent = "";
-    btnCancel.textContent = t("Annuler", "إلغاء");
-    btnSubmit.textContent = t("Déverrouiller", "فتح");
+    btnCancel.textContent = t("Annuler", "إلغاء", "Cancel");
+    btnSubmit.textContent = t("Déverrouiller", "فتح", "Unlock");
 
     modalEl.hidden = false;
     input.focus();
@@ -173,7 +178,7 @@
             unlockGroup(group.key);
             closeModal(true);
           } else {
-            err.textContent = t("Mot de passe incorrect.", "كلمة المرور غير صحيحة.");
+            err.textContent = t("Mot de passe incorrect.", "كلمة المرور غير صحيحة.", "Incorrect password.");
             err.hidden = false;
             input.select();
           }

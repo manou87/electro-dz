@@ -145,6 +145,9 @@
     if (window.ElectroDzPowerBalancePro?.onLangChange) {
       window.ElectroDzPowerBalancePro.onLangChange();
     }
+    if (window.ElectroDzTripCurveCatalog?.syncModeUI) {
+      window.ElectroDzTripCurveCatalog.syncModeUI();
+    }
   }
 
   function mergeCalc() {

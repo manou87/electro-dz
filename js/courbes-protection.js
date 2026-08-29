@@ -50,7 +50,10 @@
     const entry = curveColorEntry(ci);
     const t = tr(entry.key);
     if (t && t !== entry.key) return t;
-    return lang() === 'fr' ? entry.fr : entry.ar;
+    const L = lang();
+    if (L === 'fr') return entry.fr;
+    if (L === 'en') return entry.en || entry.fr;
+    return entry.ar;
   }
 
   /** Courant max tracé à droite de Ii (Icu saisi, Icc, ou borne graphe). */
@@ -1961,8 +1964,11 @@
 
   // --- i18n helpers ---------------------------------------------------------
   function lang() {
-    try { return localStorage.getItem('electrodz-site-lang') === 'fr' ? 'fr' : 'ar'; }
-    catch (_) { return 'ar'; }
+    try {
+      const s = localStorage.getItem('electrodz-site-lang');
+      if (s === 'fr' || s === 'ar' || s === 'en') return s;
+    } catch (_) { /* ignore */ }
+    return 'ar';
   }
   function tr(key) {
     const I = g.ElectroDzCalcI18n;

@@ -38,12 +38,35 @@
   }
 
   function lang() {
-    try { return localStorage.getItem('electrodz-site-lang') === 'fr' ? 'fr' : 'ar'; }
-    catch (_) { return 'ar'; }
+    try {
+      const s = localStorage.getItem('electrodz-site-lang');
+      if (s === 'fr' || s === 'ar' || s === 'en') return s;
+    } catch (_) { /* ignore */ }
+    return 'ar';
   }
   function tr(key) {
     const I = g.ElectroDzCalcI18n;
     return I ? I.t(lang(), key) : key;
+  }
+  function familyLabel(f) {
+    const key = 'tcMfgFam_' + getBrandId() + '_' + f.id;
+    let lbl = tr(key);
+    if (lbl === key) lbl = tr('tcMfgFam_' + f.id);
+    if (lbl.startsWith('tcMfgFam_')) lbl = f.label;
+    return lbl;
+  }
+  function tripUnitLabel(t) {
+    const raw = t?.label || '';
+    const m = /^Courbe\s+(\S+)$/i.exec(raw.trim());
+    if (m) return tr('tcCurveWord') + ' ' + m[1];
+    return raw;
+  }
+  function brandLabel(b) {
+    const map = { schneider: 'tcBrandSchneider', abb: 'tcBrandAbb', hager: 'tcBrandHager' };
+    const key = map[b.id];
+    if (!key) return b.label;
+    const lbl = tr(key);
+    return !lbl || lbl === key ? b.label : lbl;
   }
   function trTpl(key, vars) {
     return tr(key).replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? ''));
@@ -384,10 +407,14 @@
     const bid = brandId || getBrandId();
     const b = proValidation?.brands?.[bid];
     if (!b?.tools?.length) return [];
-    const ar = lang() === 'ar';
+    const L = lang();
     return b.tools.map((t) => ({
       id: t.id,
-      title: ar ? (t.titleAr || t.titleFr) : (t.titleFr || t.title),
+      title: L === 'ar'
+        ? (t.titleAr || t.titleFr)
+        : L === 'en'
+          ? (t.titleEn || t.titleFr || t.title)
+          : (t.titleFr || t.title),
       url: t.url,
     }));
   }
@@ -535,6 +562,7 @@
 
   function fillDeviceSelect(el, devices) {
     if (!el || !devices) return;
+    const prev = el.value;
     const fam = document.getElementById('tc-mfg-family')?.value || 'all';
     const q = (document.getElementById('tc-mfg-filter')?.value || '').trim().toLowerCase();
     let list = devicesForScope(devices);
@@ -557,7 +585,8 @@
       html += '</optgroup>';
     });
     el.innerHTML = html || `<option value="">${tr('tcMfgNoMatch')}</option>`;
-    if (list.length && !list.find((d) => d.id === el.value)) {
+    if (prev && list.some((d) => d.id === prev)) el.value = prev;
+    else if (list.length && !list.find((d) => d.id === el.value)) {
       el.value = list.find((d) => d.kind !== 'switch')?.id || list[0].id;
     }
   }
@@ -637,7 +666,7 @@
       hint.textContent = '';
     }
     const prevTu = tuEl?.value;
-    fillSelect(tuEl, dev.tripUnits.map((t) => ({ id: t.id, label: t.label })), 'id', 'label');
+    fillSelect(tuEl, dev.tripUnits.map((t) => ({ id: t.id, label: tripUnitLabel(t) })), 'id', 'label');
     if (prevTu && dev.tripUnits.some((t) => t.id === prevTu)) tuEl.value = prevTu;
     syncMfgSettings();
     updateProvenancePanel();
@@ -753,6 +782,7 @@
       const hint = document.getElementById('tc-settings-hint');
       if (hint) hint.textContent = getMfgScope() === 'acb' ? tr('tcKindAcbHint') : '';
       if (catalog) {
+        refreshMfgBrandOptions();
         refreshMfgFamilyOptions();
         fillDeviceSelect(document.getElementById('tc-mfg-device'), catalog.devices);
       }
@@ -862,6 +892,14 @@
     updateMfgDisclaimer();
   }
 
+  function refreshMfgBrandOptions() {
+    const brandEl = document.getElementById('tc-mfg-brand');
+    if (!brandEl || !index?.brands) return;
+    const prev = brandEl.value;
+    fillSelect(brandEl, index.brands.map((b) => ({ id: b.id, label: brandLabel(b) })), 'id', 'label');
+    if (prev && [...brandEl.options].some((o) => o.value === prev)) brandEl.value = prev;
+  }
+
   function refreshMfgFamilyOptions() {
     const famEl = document.getElementById('tc-mfg-family');
     if (!famEl || !catalog?.families) return;
@@ -869,13 +907,7 @@
     const used = new Set(scoped.map((d) => d.family));
     const fams = catalog.families.filter((f) => f.id === 'all' || used.has(f.id));
     const prev = famEl.value;
-    fillSelect(famEl, fams.map((f) => {
-      const key = 'tcMfgFam_' + getBrandId() + '_' + f.id;
-      let lbl = tr(key);
-      if (lbl === key) lbl = tr('tcMfgFam_' + f.id);
-      if (lbl.startsWith('tcMfgFam_')) lbl = f.label;
-      return { id: f.id, label: lbl };
-    }), 'id', 'label');
+    fillSelect(famEl, fams.map((f) => ({ id: f.id, label: familyLabel(f) })), 'id', 'label');
     if (prev && [...famEl.options].some((o) => o.value === prev)) famEl.value = prev;
     else famEl.value = 'all';
   }
@@ -1141,7 +1173,7 @@
     });
 
     if (brandEl && index?.brands) {
-      fillSelect(brandEl, index.brands.map((b) => ({ id: b.id, label: b.label })), 'id', 'label');
+      fillSelect(brandEl, index.brands.map((b) => ({ id: b.id, label: brandLabel(b) })), 'id', 'label');
     }
 
     return loadProMeta().then(() => loadCatalog(getBrandId())).then((data) => {

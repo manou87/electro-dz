@@ -940,7 +940,7 @@
       renderGrid(els.grid, all);
     }
 
-    if (els.count) els.count.textContent = t(all.length + " ouvrage(s)", all.length + " كتاب");
+    if (els.count) els.count.textContent = t(all.length + " ouvrage(s)", all.length + " كتاب", all.length + " title(s)");
     if (els.empty) els.empty.hidden = all.length > 0;
     if (els.sort) els.sort.value = sortBy;
   }
@@ -961,7 +961,8 @@
         if (els.updated && data.updated) {
           els.updated.textContent = t(
             "Catalogue mis à jour le " + data.updated,
-            "آخر تحديث: " + data.updated
+            "آخر تحديث: " + data.updated,
+            "Catalogue updated " + data.updated
           );
         }
         return loadSideData();

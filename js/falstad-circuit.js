@@ -65,11 +65,25 @@
     return "https://pfalstad.github.io/circuitjs1/circuitjs.html";
   }
 
-  var FALSTAD_LANG = "fr";
+  function siteLang() {
+    if (window.SchemasPlansI18n && typeof window.SchemasPlansI18n.getLang === "function") {
+      return window.SchemasPlansI18n.getLang();
+    }
+    try {
+      var s = localStorage.getItem("electrodz-site-lang");
+      if (s === "fr" || s === "ar" || s === "en") return s;
+    } catch (e) {}
+    return "fr";
+  }
+
+  /** circuitjs: `en` = built-in English; `fr` uses locale_fr.txt. No Arabic pack. */
+  function falstadLang() {
+    return siteLang() === "en" ? "en" : "fr";
+  }
 
   function withLang(url) {
     var sep = url.indexOf("?") >= 0 ? "&" : "?";
-    return url + sep + "lang=" + FALSTAD_LANG + "&_v=" + Date.now();
+    return url + sep + "lang=" + falstadLang() + "&_v=" + Date.now();
   }
 
   function loadFrame() {
@@ -129,6 +143,8 @@
         if (key) el.textContent = t(key);
       });
     }
+    urlIndex = 0;
+    loadFrame();
   });
 
   loadFrame();

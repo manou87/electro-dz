@@ -6,6 +6,25 @@
 (function (g) {
   'use strict';
 
+  function t(key) {
+    if (g.UnifilarAutoI18n && typeof g.UnifilarAutoI18n.t === 'function') {
+      return g.UnifilarAutoI18n.t(key);
+    }
+    return key;
+  }
+
+  function currentLang() {
+    if (g.UnifilarAutoI18n && g.UnifilarAutoI18n.lang) return g.UnifilarAutoI18n.lang;
+    return 'fr';
+  }
+
+  function dateLocale() {
+    var lang = currentLang();
+    if (lang === 'ar') return 'ar';
+    if (lang === 'en') return 'en-GB';
+    return 'fr-FR';
+  }
+
   var Ve = 1.25;
   /* Bandeau titre : aucune ligne / symbole dans cette zone */
   var HEADER_H = 52;
@@ -260,13 +279,13 @@
     });
     var groups = [];
     if (plain.length) {
-      groups.push({ titre: 'Départs', couleur: theme.groupColors[0], circuits: plain, withHead: false });
+      groups.push({ titre: t('svg.outgoings'), couleur: theme.groupColors[0], circuits: plain, withHead: false });
     }
     if (withRcd.length) {
-      groups.push({ titre: 'IDR 30 mA', couleur: theme.groupColors[1], circuits: withRcd, withHead: true });
+      groups.push({ titre: t('svg.rcdGroup'), couleur: theme.groupColors[1], circuits: withRcd, withHead: true });
     }
     if (!groups.length) {
-      groups.push({ titre: 'Départs', couleur: theme.groupColors[0], circuits: circuits.slice(), withHead: false });
+      groups.push({ titre: t('svg.outgoings'), couleur: theme.groupColors[0], circuits: circuits.slice(), withHead: false });
     }
     return groups;
   }
@@ -369,12 +388,12 @@
     var idrCy = busY + 44;
     var idrBusY = busY + 96;
     var parts = [];
-    var title = (project && project.board) || 'TABLEAU';
+    var title = (project && project.board) || t('svg.dbFallback');
     if (project && project.meta && project.meta.ref) title = project.meta.ref + ' — ' + title;
 
     /* —— En-tête texte (écran) ; en feuille d’impression le titre est hors SVG —— */
     if (!forPrintSheet) {
-      parts.push(txt(16, 18, 'Schéma unifilaire Electro DZ — ' + title, { size: 7.5, weight: 700 }));
+      parts.push(txt(16, 18, t('svg.titlePrefix') + title, { size: 7.5, weight: 700 }));
       parts.push(
         txt(
           16,
@@ -385,7 +404,8 @@
             (Math.round((supply.ibA || 0) * 10) / 10) +
             ' A · ' +
             circuits.length +
-            ' charge(s)',
+            ' ' +
+            t('svg.loads'),
           { size: 5.5, fill: theme.muted }
         )
       );
@@ -396,7 +416,7 @@
     parts.push(vLine(trunkX, headerH + 6, agcpCy - HALF_AGCP));
     var agcp = symbolProtection('disjoncteur', trunkX, agcpCy, HALF_AGCP);
     parts.push(agcp.svg);
-    parts.push(txt(trunkX + LABEL_DX, agcpCy - 6, 'Coupure générale', { size: 5.5 }));
+    parts.push(txt(trunkX + LABEL_DX, agcpCy - 6, t('svg.mainSwitch'), { size: 5.5 }));
     parts.push(txt(trunkX + LABEL_DX, agcpCy + 6, 'C ' + (mp.inA || 32) + ' A', { size: 5, fill: theme.muted }));
     parts.push(vLine(trunkX, agcp.bottom, busY));
 
@@ -486,7 +506,9 @@
       pageW +
       ' ' +
       pageH +
-      '" width="100%" role="img" aria-label="Schéma unifilaire Electro DZ">' +
+      '" width="100%" role="img" aria-label="' +
+      t('svg.aria') +
+      '">' +
       '<rect class="unif-bg" width="100%" height="100%" fill="' +
       theme.bg +
       '"/>' +
@@ -519,9 +541,19 @@
       })
       .join('');
     return (
-      '<h2>Détail des charges (bilan de puissance)</h2>' +
+      '<h2>' +
+      t('print.detail') +
+      '</h2>' +
       '<table><thead><tr>' +
-      '<th>Repère</th><th>Désignation</th><th>Local</th><th>Pd</th><th>Ib</th><th>In</th><th>DDR</th>' +
+      '<th>' +
+      t('col.ref') +
+      '</th><th>' +
+      t('col.label') +
+      '</th><th>' +
+      t('print.col.room') +
+      '</th><th>Pd</th><th>Ib</th><th>In</th><th>' +
+      t('print.col.rcd') +
+      '</th>' +
       '</tr></thead><tbody>' +
       rows +
       '</tbody></table>'
@@ -534,7 +566,11 @@
     var supply = (project && project.supply) || {};
     var meta = (project && project.meta) || {};
     return (
-      '<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Schéma unifilaire Electro DZ</title><style>' +
+      '<!doctype html><html lang="' +
+      currentLang() +
+      '"><head><meta charset="utf-8"><title>' +
+      t('svg.aria') +
+      '</title><style>' +
       'html,body{margin:0;padding:0;background:#fff!important;color:#000!important}' +
       'body{margin:16px 20px;font-family:Arial,Helvetica,sans-serif;font-weight:normal}' +
       'h1{font-size:16px;margin:0 0 4px;font-weight:700;color:#000}' +
@@ -553,24 +589,27 @@
       '@page{size:A4 landscape;margin:10mm}' +
       '@media print{body{margin:0}svg{border-color:#000}}' +
       '</style></head><body>' +
-      '<h1>Schéma unifilaire Electro DZ — ' +
-      esc(project.board || 'Tableau') +
+      '<h1>' +
+      t('svg.titlePrefix') +
+      esc(project.board || t('print.boardFallback') || t('board')) +
       '</h1>' +
       '<p class="cartouche">' +
       esc(name) +
-      (meta.ref ? ' · Réf. ' + esc(meta.ref) : '') +
+      (meta.ref ? ' · ' + t('print.ref') + ' ' + esc(meta.ref) : '') +
       (meta.site ? ' · ' + esc(meta.site) : '') +
-      (meta.client ? ' · Client ' + esc(meta.client) : '') +
+      (meta.client ? ' · ' + t('print.client') + ' ' + esc(meta.client) : '') +
       ' · Pd ' +
       esc(String(supply.pTotalKw || '—')) +
       ' kW · Ib ' +
       esc(String(Math.round((supply.ibA || 0) * 10) / 10)) +
       ' A · NFC 15-100 / IEC 60364 · ' +
-      new Date().toLocaleDateString('fr-FR') +
+      new Date().toLocaleDateString(dateLocale()) +
       '</p>' +
       svg +
       detailsTableHtml(project) +
-      '<p class="cartouche" style="margin-top:12px;font-size:9px">Document indicatif généré depuis le bilan de puissance Electro DZ. Vérifier calibres, DDR et sections sur site.</p>' +
+      '<p class="cartouche" style="margin-top:12px;font-size:9px">' +
+      t('print.disclaimer') +
+      '</p>' +
       '</body></html>'
     );
   }

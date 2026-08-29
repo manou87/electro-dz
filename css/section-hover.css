@@ -93,6 +93,46 @@
   border-color: rgba(250, 204, 21, 0.45);
 }
 
+/* Photo de la tuile — recouvre l’icône au survol (CSS pur, sans JS) */
+.quick-item[data-preview],
+[data-preview] {
+  position: relative;
+}
+
+.quick-item[data-preview]::after,
+[data-preview]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  background-image: var(--peek-img);
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  transition: opacity 0.1s ease;
+}
+
+.quick-item[data-preview]:hover::after,
+.quick-item[data-preview]:focus::after,
+.quick-item[data-preview]:focus-visible::after,
+.quick-item[data-preview].is-peek-active::after,
+[data-preview]:hover::after,
+[data-preview]:focus::after,
+[data-preview].is-peek-active::after {
+  opacity: 1;
+}
+
+.quick-item[data-preview]:hover .ico-wrap,
+.quick-item[data-preview]:focus .ico-wrap,
+.quick-item[data-preview].is-peek-active .ico-wrap,
+.quick-item[data-preview]:hover .ico-label,
+.quick-item[data-preview]:focus .ico-label,
+.quick-item[data-preview].is-peek-active .ico-label {
+  opacity: 0;
+}
+
 /* Desktop PC — tuiles plus grandes ; mobile (≤768) inchangé */
 @media (min-width: 1024px) {
   .wrap.launcher-page {
@@ -132,7 +172,7 @@
   }
 
   .section-peek {
-    width: min(340px, calc(100vw - 24px));
+    width: min(480px, calc(100vw - 24px));
   }
 }
 
@@ -166,23 +206,30 @@
   }
 }
 
-/* Bulle aperçu flottante */
+/* Bulle aperçu — enfant de <html>, jamais coincée sous le footer / le body néon.
+   Pas de shorthand inset: il écraserait left/top posés par le JS. */
+html > .section-peek,
+html body > .section-peek,
 .section-peek {
-  position: fixed;
-  z-index: 900;
-  pointer-events: none;
-  width: min(300px, calc(100vw - 24px));
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(6px) scale(0.97);
-  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
-  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.55));
+  position: fixed !important;
+  z-index: 2147483646 !important;
+  pointer-events: none !important;
+  transform: none !important;
+  filter: none !important;
+  right: auto !important;
+  bottom: auto !important;
+  display: none;
+  width: min(480px, calc(100vw - 24px));
+  max-height: calc(100vh - 24px);
+  opacity: 1;
+  visibility: visible;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.72), 0 0 0 2px rgba(34, 211, 238, 0.45);
 }
 
 .section-peek.is-visible {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0) scale(1);
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .section-peek__frame {
@@ -196,8 +243,8 @@
 .section-peek__frame img {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
+  aspect-ratio: 3 / 2; /* assets lab-previews 1536×1024 */
+  object-fit: contain;
   background: rgba(0, 0, 0, 0.35);
 }
 

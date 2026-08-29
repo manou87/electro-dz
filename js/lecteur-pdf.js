@@ -1517,7 +1517,9 @@
             confirm(
               lang === "ar"
                 ? "سجّل الدخول لحفظ المفضلة."
-                : "Connectez-vous pour enregistrer ce PDF."
+                : lang === "en"
+                  ? "Sign in to save this PDF to favourites."
+                  : "Connectez-vous pour enregistrer ce PDF."
             )
           ) {
             location.href = window.ElectroDzFavorites.loginUrl();

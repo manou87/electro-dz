@@ -297,3 +297,18 @@ html.theme-electric-neon .sim-lang .lang-btn.active {
     display: none;
   }
 }
+
+/* Cos φ : plus de hauteur d’afficheur (pas de barre modules) — chrome seul */
+.sim-page--cos-phi .sim-frame-wrap {
+  min-height: calc(100dvh - 88px);
+}
+
+.sim-page--cos-phi .sim-footer-note {
+  padding: 4px 4% 6px;
+}
+
+@media (max-width: 640px) {
+  .sim-page--cos-phi .sim-frame-wrap {
+    min-height: calc(100dvh - 72px);
+  }
+}

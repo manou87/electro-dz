@@ -23,7 +23,7 @@
   </style>
 </head>
 <body>
-  <p class="commerce-draft-banner" data-i18n-fr="⚠️ BROUILLON — page non publiée sur le site. Réservée à la préparation des fiches magasins." data-i18n-ar="⚠️ مسودة — الصفحة غير منشورة على الموقع. للتحضير فقط.">
+  <p class="commerce-draft-banner" data-i18n-fr="⚠️ BROUILLON — page non publiée sur le site. Réservée à la préparation des fiches magasins." data-i18n-ar="⚠️ مسودة — الصفحة غير منشورة على الموقع. للتحضير فقط." data-i18n-en="⚠️ DRAFT — page not published on the site. Shop sheets preparation only.">
     ⚠️ BROUILLON — page non publiée sur le site. Réservée à la préparation des fiches magasins.
   </p>
 
@@ -33,20 +33,21 @@
       <span>SwissDZ</span>
     </a>
     <ul class="nav-links">
-      <li><a href="index.html" data-i18n-fr="Accueil" data-i18n-ar="الرئيسية">Accueil</a></li>
-      <li><a href="bibliotheque.html" data-i18n-fr="Bibliothèque" data-i18n-ar="مكتبة PDF">Bibliothèque</a></li>
-      <li><strong style="color:#facc15" data-i18n-fr="Commerce (brouillon)" data-i18n-ar="تجارة (مسودة)">Commerce (brouillon)</strong></li>
+      <li><a href="index.html" data-i18n-fr="Accueil" data-i18n-ar="الرئيسية" data-i18n-en="Home">Accueil</a></li>
+      <li><a href="bibliotheque.html" data-i18n-fr="Bibliothèque" data-i18n-ar="مكتبة PDF" data-i18n-en="Library">Bibliothèque</a></li>
+      <li><strong style="color:#facc15" data-i18n-fr="Commerce (brouillon)" data-i18n-ar="تجارة (مسودة)" data-i18n-en="Trade (draft)">Commerce (brouillon)</strong></li>
     </ul>
     <div>
       <button type="button" class="lang-btn active" data-lang-fr>FR</button>
       <button type="button" class="lang-btn" data-lang-ar>AR</button>
+      <button type="button" class="lang-btn" data-lang-en>EN</button>
     </div>
   </nav>
 
   <main class="commerce-page">
     <header class="commerce-hero">
-      <h1 data-i18n-fr="Matériel électrique — magasins" data-i18n-ar="مواد كهربائية — متاجر">Matériel électrique — magasins</h1>
-      <p data-i18n-fr="Annuaire des magasins : adresse, contact et inventaire avec prix indicatifs (à confirmer sur place)." data-i18n-ar="دليل المتاجر: العنوان، الاتصال والمخزون مع أسعار إرشادية (يُؤكد في المتجر).">
+      <h1 data-i18n-fr="Matériel électrique — magasins" data-i18n-ar="مواد كهربائية — متاجر" data-i18n-en="Electrical equipment — shops">Matériel électrique — magasins</h1>
+      <p data-i18n-fr="Annuaire des magasins : adresse, contact et inventaire avec prix indicatifs (à confirmer sur place)." data-i18n-ar="دليل المتاجر: العنوان، الاتصال والمخزون مع أسعار إرشادية (يُؤكد في المتجر)." data-i18n-en="Shop directory: address, contact and inventory with indicative prices (confirm on site).">
         Annuaire des magasins : adresse, contact et inventaire avec prix indicatifs (à confirmer sur place).
       </p>
       <p class="commerce-disclaimer" data-commerce-disclaimer></p>
@@ -54,17 +55,17 @@
     </header>
 
     <div class="commerce-toolbar">
-      <input type="search" class="commerce-search" data-commerce-search data-placeholder-fr="Rechercher magasin ou produit…" data-placeholder-ar="بحث متجر أو منتج…" placeholder="Rechercher magasin ou produit…" />
+      <input type="search" class="commerce-search" data-commerce-search data-placeholder-fr="Rechercher magasin ou produit…" data-placeholder-ar="بحث متجر أو منتج…" data-placeholder-en="Search shop or product…" placeholder="Rechercher magasin ou produit…" />
       <p class="commerce-count" data-commerce-count></p>
     </div>
 
     <div class="commerce-cities" data-commerce-cities></div>
 
     <div class="commerce-stores" data-commerce-stores></div>
-    <p class="commerce-empty" data-commerce-empty hidden data-i18n-fr="Aucun magasin trouvé." data-i18n-ar="لا يوجد متجر.">Aucun magasin trouvé.</p>
+    <p class="commerce-empty" data-commerce-empty hidden data-i18n-fr="Aucun magasin trouvé." data-i18n-ar="لا يوجد متجر." data-i18n-en="No shop found.">Aucun magasin trouvé.</p>
 
     <aside class="commerce-add-note">
-      <p data-i18n-fr="Pour ajouter un vrai magasin : éditez le fichier" data-i18n-ar="لإضافة متجر حقيقي: عدّل الملف">
+      <p data-i18n-fr="Pour ajouter un vrai magasin : éditez le fichier" data-i18n-ar="لإضافة متجر حقيقي: عدّل الملف" data-i18n-en="To add a real shop: edit the file">
         Pour ajouter un vrai magasin : éditez le fichier
         <code>data/commerce.json</code>
         (voir <code>DRAFT-COMMERCE.md</code>). Les exemples « démo » sont fictifs.

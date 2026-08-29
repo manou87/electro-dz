@@ -27,7 +27,7 @@
 
   const SUPABASE_SITE_URL = 'https://electro-dz.com';
 
-  /** Google Cloud → URI de redirection OAuth */
+  /** Google Cloud / Meta → URI de redirection OAuth (identique Facebook) */
   const GOOGLE_OAUTH_REDIRECT_URI =
     'https://wxiqqcnzcxswdqzubxyt.supabase.co/auth/v1/callback';
 
@@ -60,6 +60,7 @@
           'd5c86339a450038ca96787f78db4edbcef8f6774f0d4518998926bf55c11e9f5',
         labelFr: 'FET 1, 2 et 3',
         labelAr: 'FET 1 و 2 و 3',
+        labelEn: 'FET 1, 2 and 3',
       },
       {
         key: 'ae-prof',
@@ -68,6 +69,7 @@
           '071a51aa208c43df5218ec197b713668cbc859d73dd94fa78107c6ed496a7a09',
         labelFr: 'AE professionnel',
         labelAr: 'التكوين المهني AE',
+        labelEn: 'AE professional',
       },
     ],
   };

@@ -12,6 +12,7 @@
   if (!page || !root) return;
 
   let lang = localStorage.getItem(STORAGE_LANG) || "fr";
+  if (lang !== "fr" && lang !== "ar" && lang !== "en") lang = "fr";
   let plan = null;
   let moduleData = null;
   let qIndex = 0;
@@ -27,8 +28,115 @@
   const params = new URLSearchParams(location.search);
   const moduleSlug = params.get("module");
 
-  function t(fr, ar) {
-    return lang === "ar" && ar ? ar : fr;
+  const EN_UI = {
+    "Source normative": "Normative source",
+    "Document en ligne (réponse)": "Online document (answer)",
+    "Bonne réponse : ": "Correct answer: ",
+    "Paragraphe : ": "Clause: ",
+    "Page PDF : ": "PDF page: ",
+    "Référence : ": "Reference: ",
+    "Ouvrir le PDF à la page ": "Open the PDF at page ",
+    "Lien direct PDF": "Direct PDF link",
+    "Bibliothèque PDF": "PDF library",
+    "Agrandir l'image": "Enlarge the image",
+    "Schéma NF C 15-100": "NF C 15-100 diagram",
+    Fermer: "Close",
+    "Sujet de la question": "Question topic",
+    "Puis la norme ajoute :": "The standard then adds:",
+    "(extrait NF C 15-100 — français)": "(NF C 15-100 excerpt — French)",
+    "Quiz NF C 15-100 (2015)": "Quiz NF C 15-100 (2015)",
+    Disponible: "Available",
+    Bientôt: "Coming soon",
+    "🏆 Voir le classement": "🏆 View leaderboard",
+    "Norme PDF": "Standard PDF",
+    "Vous pouvez maintenant choisir un module.": "You can now choose a module.",
+    "Surnom accepté !": "Nickname accepted!",
+    "Modifier mon surnom": "Change my nickname",
+    "Étape 2 — Choisissez un module": "Step 2 — Choose a module",
+    "Envoyer au classement": "Submit to the leaderboard",
+    "Votre surnom de participant": "Your participant nickname",
+    "📋 Classement": "📋 Leaderboard",
+    "Nom / pseudo (3–12 caractères)": "Name / nickname (3–12 characters)",
+    "Ex. Karim_DZ": "e.g. Karim_DZ",
+    "Valider mon surnom": "Confirm my nickname",
+    "Enregistrer mon score au classement": "Save my score to the leaderboard",
+    "Surnom validé ✓": "Nickname confirmed ✓",
+    "Vérification en cours…": "Checking…",
+    "Vérification…": "Checking…",
+    "Vérification du surnom…": "Checking nickname…",
+    "Commencer le module": "Start the module",
+    "✕ Quitter le quiz": "✕ Leave the quiz",
+    "Préparation du quiz…": "Preparing the quiz…",
+    "C'est parti ! ✓": "Let’s go! ✓",
+    "Erreur — réessayez.": "Error — try again.",
+    "Voir le classement →": "View leaderboard →",
+    "Enregistrement au classement": "Leaderboard entry",
+    "💾 Enregistrer vos points": "💾 Save your points",
+    "Surnom : ": "Nickname: ",
+    "Enregistrer au classement": "Save to leaderboard",
+    Quitter: "Leave",
+    "Quiz en cours": "Quiz in progress",
+    "Envoi en cours…": "Sending…",
+    "Score enregistré ✓": "Score saved ✓",
+    "Module terminé !": "Module complete!",
+    "Points récoltés": "Points earned",
+    "Autres modules": "Other modules",
+    Classement: "Leaderboard",
+    Bibliothèque: "Library",
+    "Palier ": "Stage ",
+    "Question ": "Question ",
+    "Score : ": "Score: ",
+    "Voir les points récoltés →": "View points earned →",
+    "Question suivante →": "Next question →",
+    "Palier suivant →": "Next stage →",
+    "✓ Bonne réponse": "✓ Correct",
+    "✗ Mauvaise réponse": "✗ Incorrect",
+    "Piège : ": "Pitfall: ",
+    "Ouvrez ce lien :": "Open this link:",
+    "Selon la norme NF C 15-100, cette affirmation est-elle correcte ?":
+      "According to NF C 15-100, is this statement correct?",
+    "Cette deuxième phrase est-elle conforme au texte de la norme NF C 15-100 ?":
+      "Is this second sentence consistent with the NF C 15-100 text?",
+    "Dans la norme, la phrase précédente dit :": "In the standard, the previous sentence states:",
+    "Image du schéma indisponible — rechargez la page ou ouvrez le quiz via le site (pas en fichier local).":
+      "Diagram image unavailable — reload the page or open the quiz via the site (not as a local file).",
+    "Lettres latines, chiffres, _ - . · si le nom est pris, un code est ajouté (ex. -7F2)":
+      "Latin letters, digits, _ - . · if the name is taken, a code is appended (e.g. -7F2)",
+    "Saisissez un surnom puis cliquez « Valider ». Pas de compte Google nécessaire.":
+      "Enter a nickname then click “Confirm”. No Google account required.",
+    "Confirmez votre surnom pour apparaître au classement à la fin du module.":
+      "Confirm your nickname to appear on the leaderboard at the end of the module.",
+    "Cliquez le bouton jaune pour envoyer votre score au classement.":
+      "Click the yellow button to submit your score to the leaderboard.",
+    "Cliquez sur M01, M02… pour commencer le quiz avec votre surnom.":
+      "Click M01, M02… to start the quiz with your nickname.",
+    "Validez d’abord votre surnom avec le bouton « Valider mon surnom ».":
+      "First confirm your nickname with the “Confirm my nickname” button.",
+    "Vérifiez votre connexion ou réessayez plus tard.":
+      "Check your connection or try again later.",
+    "Ouvrez le quiz via le serveur local": "Open the quiz via the local server",
+    "Impossible de charger le quiz": "Could not load the quiz",
+    "Vous avez ouvert le fichier HTML directement (double-clic). Le quiz doit passer par un serveur web.":
+      "You opened the HTML file directly (double-click). The quiz must be served over HTTP.",
+    "Ou lancez dans le Terminal : cd website && ./scripts/serve-local.sh":
+      "Or run in Terminal: cd website && ./scripts/serve-local.sh",
+  };
+
+  function t(fr, ar, en) {
+    if (lang === "ar" && ar) return ar;
+    if (lang === "en") {
+      if (en != null && en !== "") return en;
+      if (Object.prototype.hasOwnProperty.call(EN_UI, fr)) return EN_UI[fr];
+      return fr;
+    }
+    return fr;
+  }
+
+  function langOfBtn(btn) {
+    if (btn.hasAttribute("data-lang-en")) return "en";
+    if (btn.hasAttribute("data-lang-fr")) return "fr";
+    if (btn.hasAttribute("data-lang-ar")) return "ar";
+    return btn.getAttribute("data-lang") || "fr";
   }
 
   function escapeHtml(s) {
@@ -84,10 +192,12 @@
       const swapLabels = Math.random() < 0.5;
       const labelsFr = swapLabels ? ["Faux", "Vrai"] : ["Vrai", "Faux"];
       const labelsAr = swapLabels ? ["خطأ", "صحيح"] : ["صحيح", "خطأ"];
+      const labelsEn = swapLabels ? ["False", "True"] : ["True", "False"];
       return {
         type: "truefalse",
         labelsFr: labelsFr,
         labelsAr: labelsAr,
+        labelsEn: labelsEn,
         choiceToBool: function (btnIndex) {
           if (swapLabels) return btnIndex === 1;
           return btnIndex === 0;
@@ -113,7 +223,7 @@
   function correctAnswerText(q) {
     if (q.type === "truefalse") {
       const ok = q.correctAnswer === true;
-      return lang === "ar" ? (ok ? "صحيح" : "خطأ") : ok ? "Vrai" : "Faux";
+      return lang === "ar" ? (ok ? "صحيح" : "خطأ") : lang === "en" ? (ok ? "True" : "False") : ok ? "Vrai" : "Faux";
     }
     const opts = lang === "ar" && q.optionsAr ? q.optionsAr : q.optionsFr;
     if (opts && q.correctAnswer >= 0 && q.correctAnswer < opts.length) {
@@ -372,7 +482,10 @@
         "Selon la norme NF C 15-100, concernant " +
           subject +
           ", cette affirmation est-elle correcte ?",
-        "حسب معيار NF C 15-100، بخصوص " + subject + "، هل العبارة التالية صحيحة؟"
+        "حسب معيار NF C 15-100، بخصوص " + subject + "، هل العبارة التالية صحيحة؟",
+        "According to NF C 15-100, regarding " +
+          subject +
+          ", is this statement correct?"
       );
     } else if (preamble) {
       intro = t(
@@ -485,7 +598,10 @@
             " questions · 5 paliers (dont 27 visuelles sur schéma)",
           "مراجعة حسب الوحدات — " +
             planTotalQuestions() +
-            " سؤالاً · 5 مراحل (منها 27 بصور مخططات)"
+            " سؤالاً · 5 مراحل (منها 27 بصور مخططات)",
+          "Revision by modules — " +
+            planTotalQuestions() +
+            " questions · 5 stages (including 27 diagram visuals)"
         )
       ) +
       "</p></div>";
@@ -578,7 +694,8 @@
       result.suffixAdded && result.raw
         ? t(
             "Code ajouté car « " + result.raw + " » était déjà pris.",
-            "أُضيف رمز لأن « " + result.raw + " » مستخدم."
+            "أُضيف رمز لأن « " + result.raw + " » مستخدم.",
+            "A code was added because “" + result.raw + "” was already taken."
           )
         : t("Vous pouvez maintenant choisir un module.", "يمكنك الآن اختيار وحدة.");
 
@@ -751,7 +868,14 @@
       outdated: "نسخة قديمة — أعد تحميل الصفحة.",
       config: "التصنيف غير متاح.",
     };
-    const dict = lang === "ar" ? ar : fr;
+    const en = {
+      pseudo_invalid: "Invalid nickname (3–12 characters: letters, digits, _ - .)",
+      network_reserve:
+        "Could not confirm the nickname. Check your connection then reload (Cmd+Shift+R).",
+      outdated: "Outdated version — reload the page (Cmd+Shift+R).",
+      config: "Leaderboard unavailable (server configuration).",
+    };
+    const dict = lang === "ar" ? ar : lang === "en" ? en : fr;
     return dict[code] || dict.network_reserve;
   }
 
@@ -1065,7 +1189,8 @@
       escapeHtml(
         t(
           meta.id + " — " + modQs + " questions · 5 paliers",
-          meta.id + " — " + modQs + " سؤالاً · 5 مراحل"
+          meta.id + " — " + modQs + " سؤالاً · 5 مراحل",
+          meta.id + " — " + modQs + " questions · 5 stages"
         )
       ) +
       "</p></div>" +
@@ -1543,7 +1668,11 @@
 
     if (questionDisplay.type === "truefalse") {
       const labels =
-        lang === "ar" ? questionDisplay.labelsAr : questionDisplay.labelsFr;
+        lang === "ar"
+          ? questionDisplay.labelsAr
+          : lang === "en"
+            ? questionDisplay.labelsEn
+            : questionDisplay.labelsFr;
       [0, 1].forEach(function (i) {
         html +=
           '<button type="button" class="quiz-opt" data-opt="' +
@@ -1699,19 +1828,19 @@
   }
 
   function applyLang(l) {
+    if (l !== "fr" && l !== "ar" && l !== "en") l = "fr";
     lang = l;
     localStorage.setItem(STORAGE_LANG, l);
     document.documentElement.lang = l;
     document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
     document.querySelectorAll(".lang-btn").forEach(function (b) {
-      const isFr = b.hasAttribute("data-lang-fr");
-      b.classList.toggle("active", (l === "fr" && isFr) || (l === "ar" && !isFr));
+      b.classList.toggle("active", langOfBtn(b) === l);
     });
   }
 
   document.querySelectorAll(".lang-btn").forEach(function (btn) {
     btn.addEventListener("click", function () {
-      applyLang(btn.hasAttribute("data-lang-fr") ? "fr" : "ar");
+      applyLang(langOfBtn(btn));
       rerenderCurrentView();
     });
   });

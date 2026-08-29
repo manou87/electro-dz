@@ -1,5 +1,5 @@
 /**
- * Favoris PDF — compte connecté (Google ou e-mail), stockés dans Supabase.
+ * Favoris PDF — compte connecté (Google, Facebook, téléphone ou e-mail), stockés dans Supabase.
  */
 (function (g) {
   'use strict';

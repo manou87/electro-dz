@@ -275,3 +275,4 @@ create policy "Site membres lisent media"
 
 -- ========== 4. Classement quiz NF C 15-100 ==========
 -- Exécuter aussi : supabase/quiz-leaderboard.sql (table + RPC submit/get)
+-- Inclut RLS sur quiz_pseudo_registry (voir aussi fix-rls-quiz-pseudo-registry.sql)
