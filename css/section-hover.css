@@ -150,12 +150,12 @@
   transform: translateY(-2px);
 }
 
-/* Autres [data-preview] (ex. carte YouTube) — aperçu au survol uniquement */
-[data-preview]:not(.quick-item) {
+/* Autres [data-preview] — aperçu au survol (sauf YouTube social = permanent) */
+[data-preview]:not(.quick-item):not(.social-card--yt) {
   position: relative;
 }
 
-[data-preview]:not(.quick-item)::after {
+[data-preview]:not(.quick-item):not(.social-card--yt)::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -169,11 +169,53 @@
   transition: opacity 0.12s ease;
 }
 
-[data-preview]:not(.quick-item):hover::after,
-[data-preview]:not(.quick-item):focus::after,
-[data-preview]:not(.quick-item):focus-visible::after,
-[data-preview]:not(.quick-item).is-peek-active::after {
+[data-preview]:not(.quick-item):not(.social-card--yt):hover::after,
+[data-preview]:not(.quick-item):not(.social-card--yt):focus::after,
+[data-preview]:not(.quick-item):not(.social-card--yt):focus-visible::after,
+[data-preview]:not(.quick-item):not(.social-card--yt).is-peek-active::after {
   opacity: 1;
+}
+
+/* Carte YouTube — vignette toujours visible */
+.social-card--yt[data-preview] {
+  position: relative;
+  overflow: hidden;
+}
+
+.social-card--yt[data-preview]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background-image: var(--peek-img);
+  background-size: cover;
+  background-position: center;
+  opacity: 1;
+}
+
+.social-card--yt[data-preview]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(
+    to top,
+    rgba(4, 8, 18, 0.92) 0%,
+    rgba(4, 8, 18, 0.55) 45%,
+    rgba(4, 8, 18, 0.25) 100%
+  );
+  opacity: 1;
+}
+
+.social-card--yt[data-preview] .ico-wrap,
+.social-card--yt[data-preview] strong,
+.social-card--yt[data-preview] span {
+  position: relative;
+  z-index: 2;
 }
 
 /* Desktop PC — tuiles plus grandes ; mobile (≤768) inchangé */

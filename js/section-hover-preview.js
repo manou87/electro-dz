@@ -55,14 +55,24 @@
       '}' +
       '.quick-item[data-preview] .ico-wrap{display:none}' +
       '.quick-item[data-preview] .ico-label{position:relative;z-index:2}' +
-      /* Autres cartes (YouTube…) : survol uniquement */
-      '[data-preview]:not(.quick-item)::after{' +
+      /* Autres cartes (hors YouTube social) : survol uniquement */
+      '[data-preview]:not(.quick-item):not(.social-card--yt)::after{' +
         'content:"";position:absolute;inset:0;z-index:6;' +
         'background-image:var(--peek-img);background-size:cover;background-position:center;' +
         'opacity:0;pointer-events:none;border-radius:inherit' +
       '}' +
-      '[data-preview]:not(.quick-item):hover::after,' +
-      '[data-preview]:not(.quick-item).is-peek-active::after{opacity:1!important}' +
+      '[data-preview]:not(.quick-item):not(.social-card--yt):hover::after,' +
+      '[data-preview]:not(.quick-item):not(.social-card--yt).is-peek-active::after{opacity:1!important}' +
+      /* YouTube social : vignette permanente */
+      '.social-card--yt[data-preview]::before{' +
+        'content:"";position:absolute;inset:0;z-index:0;pointer-events:none;border-radius:inherit;' +
+        'background-image:var(--peek-img);background-size:cover;background-position:center;opacity:1' +
+      '}' +
+      '.social-card--yt[data-preview]::after{' +
+        'content:"";position:absolute;inset:0;z-index:1;pointer-events:none;border-radius:inherit;' +
+        'background:linear-gradient(to top,rgba(4,8,18,.92) 0%,rgba(4,8,18,.55) 45%,rgba(4,8,18,.25) 100%);opacity:1!important' +
+      '}' +
+      '.social-card--yt[data-preview] .ico-wrap,.social-card--yt[data-preview] strong,.social-card--yt[data-preview] span{position:relative;z-index:2}' +
       'html>.section-peek,#' + PEEK_ID + '{' +
         'position:fixed!important;z-index:' + Z + '!important;' +
         'pointer-events:none!important;transform:none!important;filter:none!important;' +

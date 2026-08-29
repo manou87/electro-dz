@@ -15,7 +15,7 @@
   <link rel="icon" href="assets/app-icon.png" type="image/png"/>
   <link rel="stylesheet" href="css/theme-liquid-glass.css" id="lg-theme-css" disabled/>
   <link rel="stylesheet" href="css/section-cards.css"/>
-  <link rel="stylesheet" href="css/section-hover.css?v=tile1"/>
+  <link rel="stylesheet" href="css/section-hover.css?v=yt2"/>
 <title>Electro DZ | La grande plateforme algérienne de l'électricité — l'expérience suisse</title>
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="Electro DZ"/>
@@ -399,12 +399,26 @@
     .social-card--tt:hover{border-color:#fff;box-shadow:0 8px 24px rgba(255,255,255,0.15)}
     .social-card--yt:hover{border-color:#ff0000;box-shadow:0 8px 24px rgba(255,0,0,0.25)}
     .social-card--fb:hover{border-color:#1877f2;box-shadow:0 8px 24px rgba(24,119,242,0.25)}
-    .social-card[data-preview]:hover strong,
-    .social-card[data-preview]:hover span:not(.ico-wrap),
-    .social-card[data-preview].is-peek-active strong,
-    .social-card[data-preview].is-peek-active span:not(.ico-wrap),
-    .social-card[data-preview]:hover .ico-wrap,
-    .social-card[data-preview].is-peek-active .ico-wrap{opacity:0}
+    /* YouTube : vignette toujours visible (comme les tuiles outils) */
+    .social-card--yt[data-preview]{
+      position:relative;overflow:hidden;min-height:96px;
+      justify-content:flex-end;padding:10px 8px 12px;
+    }
+    .social-card--yt[data-preview]::before{
+      content:"";position:absolute;inset:0;z-index:0;pointer-events:none;border-radius:inherit;
+      background-image:var(--peek-img);background-size:cover;background-position:center;
+      opacity:1;
+    }
+    .social-card--yt[data-preview]::after{
+      content:"";position:absolute;inset:0;z-index:1;pointer-events:none;border-radius:inherit;
+      background:linear-gradient(to top,rgba(4,8,18,.92) 0%,rgba(4,8,18,.55) 45%,rgba(4,8,18,.25) 100%);
+    }
+    .social-card--yt[data-preview] .ico-wrap,
+    .social-card--yt[data-preview] strong,
+    .social-card--yt[data-preview] span{position:relative;z-index:2}
+    .social-card--yt[data-preview] .ico-wrap{
+      background:rgba(255,0,0,.55);border-color:rgba(255,255,255,.35);
+    }
 
     .yt-clips{
       display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;
@@ -669,7 +683,7 @@
           <strong>TikTok</strong>
           <span>@elektrodzch</span>
         </a>
-        <a class="social-card social-card--yt" href="https://www.youtube.com/@Elektro-dz-suisse" target="_blank" rel="noopener noreferrer" data-preview="https://i.ytimg.com/vi/oeECd-p0gAg/hqdefault.jpg" style="--peek-img:url(https://i.ytimg.com/vi/oeECd-p0gAg/hqdefault.jpg)">
+        <a class="social-card social-card--yt" href="https://www.youtube.com/@Elektro-dz-suisse" target="_blank" rel="noopener noreferrer" data-preview="assets/section-previews/youtube-peek.jpg" style="--peek-img:url(/assets/section-previews/youtube-peek.jpg)">
           <span class="ico-wrap ico-wrap--yt"><svg class="ico ico--fill"><use href="#ico-play"/></svg></span>
           <strong>YouTube</strong>
           <span>@Elektro-dz-suisse</span>
@@ -710,7 +724,7 @@
   <script src="js/visitor-counter.js?v=en1"></script>
   <script src="js/seo-global.js"></script>
   <script src="js/accueil-i18n.js"></script>
-  <script src="js/section-hover-preview.js?v=tile1" defer></script>
+  <script src="js/section-hover-preview.js?v=yt2" defer></script>
   <script src="js/theme-liquid-glass-preview.js" defer></script>
 </body>
 </html>
