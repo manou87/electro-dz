@@ -1,15 +1,29 @@
 /**
- * Sélecteur d’accent unifié (visiteurs).
- * — Bouton palette à côté des langues → 6 pastilles
- * — ?test=1…6 applique encore (deep link), sans barre debug
- * — Choix persisté dans localStorage
+ * Sélecteur d’accent (visiteurs).
+ * — Première pastille « Multi » = accents arc-en-ciel par tuile (look d’origine)
+ * — Pastilles 1–6 = accent unifié sur tout le site
+ * — ?test=1…6 ou ?test=multi (deep link)
+ * — Choix persisté dans localStorage ; défaut = multi
  */
 (function () {
   'use strict';
 
   var STORAGE_KEY = 'edz-site-accent';
+  var DEFAULT_ID = 'multi';
+  var MULTI_SWATCH =
+    'conic-gradient(from 210deg,#facc15,#34d399,#2dd4bf,#38bdf8,#a78bfa,#f87171,#f97316,#facc15)';
+
+  /* Ordre d’affichage (Object.keys mettrait 1–6 avant « multi ») */
+  var ORDER = ['multi', '1', '2', '3', '4', '5', '6'];
 
   var TESTS = {
+    multi: {
+      name: 'Multi',
+      hex: '#facc15',
+      soft: '#facc15',
+      multi: true,
+      swatch: MULTI_SWATCH
+    },
     '1': { name: 'Blanc', hex: '#f1f5f9', soft: '#ffffff' },
     '2': { name: 'Gris', hex: '#cbd5e1', soft: '#e2e8f0' },
     '3': { name: 'Cyan', hex: '#22d3ee', soft: '#22d3ee' },
@@ -41,16 +55,27 @@
     if (!t) return;
     var root = document.documentElement;
     var accent = t.hex;
+
     root.style.setProperty('--accent', accent);
-    root.style.setProperty('--quick-accent', accent);
     root.style.setProperty('--accent-glow', rgba(accent, 0.4));
     root.style.setProperty('--en-glow', rgba(accent, 0.22));
     root.style.setProperty('--accent-soft', t.soft);
     root.style.setProperty('--neon-yellow', accent);
-    root.style.setProperty('--neon-cyan', accent);
-    root.style.setProperty('--neon-magenta', accent);
+    root.style.setProperty('--neon-cyan', t.multi ? '#22d3ee' : accent);
+    root.style.setProperty('--neon-magenta', t.multi ? '#e879f9' : accent);
     root.style.setProperty('--primary', accent);
-    root.setAttribute('data-accent-test', id);
+
+    if (t.multi) {
+      root.style.removeProperty('--quick-accent');
+      root.setAttribute('data-accent', 'multi');
+      root.setAttribute('data-accent-test', 'multi');
+      root.removeAttribute('data-accent-unified');
+    } else {
+      root.style.setProperty('--quick-accent', accent);
+      root.setAttribute('data-accent', id);
+      root.setAttribute('data-accent-test', id);
+      root.setAttribute('data-accent-unified', '');
+    }
   }
 
   function saveAccent(id) {
@@ -80,34 +105,45 @@
       btn.setAttribute('aria-selected', on ? 'true' : 'false');
     });
     var trigger = document.getElementById('edz-accent-picker-btn');
-    if (trigger && TESTS[activeId]) {
-      trigger.style.setProperty('--picker-dot', TESTS[activeId].hex);
+    if (!trigger || !TESTS[activeId]) return;
+    var t = TESTS[activeId];
+    if (t.multi) {
+      trigger.style.setProperty('--picker-dot', 'transparent');
+      trigger.classList.add('is-multi');
+    } else {
+      trigger.style.setProperty('--picker-dot', t.hex);
+      trigger.classList.remove('is-multi');
     }
   }
 
   function injectStyles() {
     if (document.getElementById('edz-accent-test-css')) return;
     var css = [
-      'html[data-accent-test] .quick-item{',
+      /* Mode unifié uniquement : force --quick-accent sur les tuiles */
+      'html[data-accent-unified] .quick-item{',
       '  --quick-accent:var(--accent)!important;',
       '  --en-glow:var(--accent-glow);',
       '  border-color:color-mix(in srgb,var(--accent) 40%,transparent);',
       '  box-shadow:0 4px 12px rgba(0,0,0,.22),0 0 10px var(--accent-glow);',
       '}',
-      'html[data-accent-test] .quick-item:hover{',
+      'html[data-accent-unified] .quick-item:hover{',
       '  border-color:color-mix(in srgb,var(--accent) 70%,transparent);',
       '  box-shadow:0 8px 18px rgba(0,0,0,.32),0 0 16px var(--accent-glow);',
       '}',
-      'html[data-accent-test] .edz-ticker{',
+      'html[data-accent-unified] .quick-item .ico-label,',
+      'html[data-accent-unified] .quick-item[data-preview] .ico-label{',
+      '  color:var(--quick-accent,#e2e8f0);',
+      '}',
+      'html[data-accent-unified] .edz-ticker{',
       '  border-bottom-color:color-mix(in srgb,var(--accent) 45%,transparent);',
       '}',
-      'html[data-accent-test] .visitor-stats strong{',
+      'html[data-accent-unified] .visitor-stats strong{',
       '  text-shadow:0 0 8px var(--accent-glow);',
       '}',
-      'html[data-accent-test] .btn-dl:hover{',
+      'html[data-accent-unified] .btn-dl:hover{',
       '  box-shadow:0 6px 16px var(--accent-glow);',
       '}',
-      'html[data-accent-test] body{',
+      'html[data-accent-unified] body{',
       '  background-image:',
       '    radial-gradient(ellipse 80% 50% at 50% -20%,color-mix(in srgb,var(--accent) 14%,transparent),transparent),',
       '    radial-gradient(ellipse 60% 40% at 100% 50%,rgba(59,130,246,.06),transparent);',
@@ -147,23 +183,25 @@
       '  background:var(--picker-dot);border:1.5px solid #0a0f1a;',
       '  right:2px;bottom:2px;pointer-events:none;',
       '}',
+      '#edz-accent-picker-btn.is-multi .edz-accent-dot{',
+      '  background:' + MULTI_SWATCH + ';',
+      '}',
       '.edz-accent-menu{',
       '  position:absolute;top:calc(100% + 6px);right:0;left:auto;',
-      '  display:none;grid-template-columns:repeat(3,24px);grid-template-rows:repeat(2,24px);',
-      '  gap:6px;padding:8px;box-sizing:border-box;',
-      '  width:auto;min-width:0;max-width:min(calc(100vw - 16px),104px);',
+      '  display:none;grid-template-columns:repeat(4,22px);',
+      '  gap:5px;padding:7px;box-sizing:border-box;',
+      '  width:auto;min-width:0;max-width:min(calc(100vw - 16px),118px);',
       '  border-radius:12px;background:#0f172a;',
       '  border:1px solid rgba(255,255,255,0.12);',
       '  box-shadow:0 12px 28px rgba(0,0,0,.45);',
       '  z-index:100;direction:ltr;pointer-events:auto;',
       '  overflow:visible;',
       '}',
-      /* Toujours ancré à droite du bouton → s’ouvre vers l’intérieur (évite clip RTL/mobile) */
       'html[dir="rtl"] .edz-accent-menu{right:0;left:auto}',
       '.edz-accent-picker.is-open .edz-accent-menu{display:grid}',
       '.edz-accent-swatch{',
       '  box-sizing:border-box;appearance:none;-webkit-appearance:none;',
-      '  width:24px;height:24px;min-width:24px;min-height:24px;max-width:24px;max-height:24px;',
+      '  width:22px;height:22px;min-width:22px;min-height:22px;max-width:22px;max-height:22px;',
       '  border-radius:50%;padding:0;margin:0;cursor:pointer;flex:none;',
       '  border:2px solid rgba(255,255,255,0.18);',
       '  box-shadow:inset 0 0 0 1px rgba(0,0,0,0.25);',
@@ -179,11 +217,11 @@
       '@media(max-width:640px){',
       '  #edz-accent-picker-btn{width:28px;height:28px;min-width:28px;min-height:28px}',
       '  .edz-accent-menu{',
-      '    grid-template-columns:repeat(3,22px);grid-template-rows:repeat(2,22px);',
-      '    gap:5px;padding:7px;max-width:min(calc(100vw - 12px),96px);',
+      '    grid-template-columns:repeat(4,20px);',
+      '    gap:4px;padding:6px;max-width:min(calc(100vw - 12px),108px);',
       '  }',
       '  .edz-accent-swatch{',
-      '    width:22px;height:22px;min-width:22px;min-height:22px;max-width:22px;max-height:22px;',
+      '    width:20px;height:20px;min-width:20px;min-height:20px;max-width:20px;max-height:20px;',
       '  }',
       '}'
     ].join('');
@@ -235,7 +273,7 @@
     menu.setAttribute('role', 'listbox');
     menu.setAttribute('aria-label', 'Couleurs d’accent');
 
-    Object.keys(TESTS).forEach(function (id) {
+    ORDER.forEach(function (id) {
       var t = TESTS[id];
       var sw = document.createElement('button');
       sw.type = 'button';
@@ -245,7 +283,7 @@
       sw.setAttribute('aria-label', t.name);
       sw.setAttribute('aria-selected', id === activeId ? 'true' : 'false');
       sw.title = t.name;
-      sw.style.background = t.hex;
+      sw.style.background = t.swatch || t.hex;
       sw.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -267,10 +305,8 @@
     picker.appendChild(btn);
     picker.appendChild(menu);
 
-    /* Juste avant le groupe de langues */
     langGroup.parentNode.insertBefore(picker, langGroup);
 
-    /* Regrouper palette + langues dans un seul bloc absolu (évite le pin concurrent) */
     var needsWrap =
       getComputedStyle(langGroup).position === 'absolute' ||
       langGroup.classList.contains('edz-lang-pin') ||
@@ -287,7 +323,6 @@
       langGroup.style.right = 'auto';
       langGroup.style.left = 'auto';
       langGroup.style.transform = 'none';
-      /* Recalculer la réserve de place (Connexion / Rejoindre) */
       if (window.ElectroDzHomeNav && typeof window.ElectroDzHomeNav.pinLangSwitcher === 'function') {
         window.ElectroDzHomeNav.pinLangSwitcher();
       } else {
@@ -306,19 +341,17 @@
       if (e.key === 'Escape') closePicker(picker);
     });
 
-    syncSwatches(activeId || '');
+    syncSwatches(activeId || DEFAULT_ID);
   }
 
   injectStyles();
 
   var fromUrl = urlTestId();
   var fromStore = loadStoredAccent();
-  var activeId = fromUrl || fromStore;
+  var activeId = fromUrl || fromStore || DEFAULT_ID;
 
-  if (activeId) {
-    applyAccent(activeId);
-    if (fromUrl) saveAccent(fromUrl);
-  }
+  applyAccent(activeId);
+  if (fromUrl) saveAccent(fromUrl);
 
   function bootPicker() {
     mountPicker(activeId);

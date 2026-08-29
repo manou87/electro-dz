@@ -4,8 +4,8 @@
  */
 
 html.theme-electric-neon {
-  /* Accent unifié gris soft/medium (essai offline accent4-gray) */
-  --neon-yellow: #cbd5e1;
+  /* Jaune marque (mode Multi) ; pastilles unifiées surchargent via --accent */
+  --neon-yellow: #facc15;
   --neon-cyan: #22d3ee;
   --neon-magenta: #e879f9;
   --neon-bg: #030508;
@@ -374,35 +374,68 @@ html.theme-electric-neon .quick-access h2 {
 }
 
 html.theme-electric-neon .quick-item {
-  /* Cadre + libellés tuiles : suit --accent (unifié, pas d’arc-en-ciel) */
-  --quick-accent: var(--accent, #cbd5e1);
-  --en-glow: var(--accent-glow, rgba(148, 163, 184, 0.22));
   background: rgba(20, 28, 44, 0.92);
-  border: 1px solid color-mix(in srgb, var(--quick-accent) 35%, transparent);
-  border-top: 3px solid var(--quick-accent);
+  border: 1px solid rgba(34, 211, 238, 0.28);
+  border-top: 3px solid var(--quick-accent, var(--neon-yellow, #facc15));
   border-radius: 10px;
   position: relative;
   transition: transform 0.15s, box-shadow 0.2s, border-color 0.2s;
-  box-shadow: 0 0 10px var(--en-glow);
+  box-shadow: 0 0 10px var(--en-glow, rgba(34, 211, 238, 0.2));
+}
+
+html.theme-electric-neon .quick-item:nth-child(4n+1) {
+  --en-glow: rgba(250, 204, 21, 0.35);
+}
+
+html.theme-electric-neon .quick-item:nth-child(4n+2) {
+  --en-glow: rgba(34, 211, 238, 0.35);
+}
+
+html.theme-electric-neon .quick-item:nth-child(4n+3) {
+  --en-glow: rgba(232, 121, 249, 0.3);
+}
+
+html.theme-electric-neon .quick-item:nth-child(4n) {
+  --en-glow: rgba(74, 222, 128, 0.28);
 }
 
 html.theme-electric-neon .quick-item:hover {
   transform: translateY(-2px) scale(1.01);
+  border-color: var(--neon-yellow);
+  box-shadow:
+    0 0 16px rgba(250, 204, 21, 0.4),
+    0 0 28px rgba(34, 211, 238, 0.18);
+}
+
+html.theme-electric-neon .quick-item .quick-preview img {
+  box-shadow: 0 0 14px var(--en-glow, rgba(34, 211, 238, 0.25));
+}
+
+html.theme-electric-neon .quick-item .ico-label {
+  color: #fff;
+  text-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.9),
+    0 0 12px rgba(34, 211, 238, 0.25);
+}
+
+/* Mode unifié (pastilles 1–6) : tuiles suivent --accent */
+html.theme-electric-neon[data-accent-unified] .quick-item {
+  --quick-accent: var(--accent, #cbd5e1);
+  --en-glow: var(--accent-glow, rgba(148, 163, 184, 0.22));
+  border: 1px solid color-mix(in srgb, var(--quick-accent) 35%, transparent);
+  border-top: 3px solid var(--quick-accent);
+  box-shadow: 0 0 10px var(--en-glow);
+}
+
+html.theme-electric-neon[data-accent-unified] .quick-item:hover {
   border-color: color-mix(in srgb, var(--quick-accent) 70%, transparent);
   box-shadow:
     0 0 16px var(--accent-glow, rgba(148, 163, 184, 0.3)),
     0 0 24px color-mix(in srgb, var(--quick-accent) 12%, transparent);
 }
 
-html.theme-electric-neon .quick-item .quick-preview img {
-  box-shadow: 0 0 14px var(--en-glow);
-}
-
-html.theme-electric-neon .quick-item .ico-label {
+html.theme-electric-neon[data-accent-unified] .quick-item .ico-label {
   color: var(--quick-accent, #e2e8f0);
-  text-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.95),
-    0 0 10px rgba(0, 0, 0, 0.55);
 }
 
 html.theme-electric-neon .ico {

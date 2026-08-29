@@ -23,8 +23,6 @@
 }
 
 .quick-item {
-  /* Cadre + titre tuile : suit --accent (tests ?test=N / choix unifié) */
-  --quick-accent: var(--accent, #cbd5e1);
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -34,18 +32,32 @@
   position: relative;
   overflow: hidden;
   background: rgba(20, 28, 44, 0.95);
-  border: 1px solid color-mix(in srgb, var(--quick-accent) 35%, transparent);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
-  border-top: 3px solid var(--quick-accent);
+  border-top: 3px solid var(--quick-accent, var(--accent, #facc15));
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
   transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
 }
 
 .quick-item:hover {
   transform: translateY(-2px);
-  border-color: color-mix(in srgb, var(--quick-accent) 65%, transparent);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.32), 0 0 14px var(--accent-glow, rgba(148, 163, 184, 0.16));
+  border-color: rgba(250, 204, 21, 0.35);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.32);
 }
+
+/* Accents arc-en-ciel d’origine (mode Multi / défaut) */
+.quick-item--calc { --quick-accent: #facc15; }
+.quick-item--balance { --quick-accent: #34d399; }
+.quick-item--curve { --quick-accent: #2dd4bf; }
+.quick-item--cable { --quick-accent: #a78bfa; }
+.quick-item--schema { --quick-accent: #4ade80; }
+.quick-item--pdf { --quick-accent: #f87171; }
+.quick-item--train { --quick-accent: #a78bfa; }
+.quick-item--sim { --quick-accent: #e30613; }
+.quick-item--oibt { --quick-accent: #38bdf8; }
+.quick-item--fluke { --quick-accent: #f97316; }
+.quick-item--quote { --quick-accent: #fb923c; }
+.quick-item--cos { --quick-accent: #eab308; }
 
 .quick-preview {
   display: block;
@@ -70,11 +82,9 @@
   font-size: 0.72rem;
   font-weight: 800;
   text-align: center;
-  color: var(--quick-accent, #e2e8f0);
+  color: #fff;
   line-height: 1.2;
-  text-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.95),
-    0 0 8px rgba(0, 0, 0, 0.55);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
 }
 
 /* Legacy hints hidden — titre seul comme mockup validé */

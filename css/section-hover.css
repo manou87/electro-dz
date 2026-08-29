@@ -26,18 +26,58 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(148, 163, 184, 0.1);
-  border: 1px solid rgba(148, 163, 184, 0.38);
+  background: rgba(250, 204, 21, 0.1);
+  border: 1px solid rgba(250, 204, 21, 0.32);
 }
 
 .quick-access--icons .ico {
   width: 26px;
   height: 26px;
-  stroke: var(--quick-accent, #cbd5e1);
+  stroke: var(--quick-accent, var(--accent, #facc15));
   fill: none;
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+.quick-access--icons .quick-item--sim .ico-wrap {
+  background: rgba(227, 6, 19, 0.12);
+  border-color: rgba(227, 6, 19, 0.38);
+}
+
+.quick-access--icons .quick-item--oibt .ico-wrap {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.38);
+}
+
+.quick-access--icons .quick-item--fluke .ico-wrap {
+  background: rgba(249, 115, 22, 0.12);
+  border-color: rgba(249, 115, 22, 0.38);
+}
+
+.quick-access--icons .quick-item--cos .ico-wrap {
+  background: rgba(234, 179, 8, 0.12);
+  border-color: rgba(234, 179, 8, 0.38);
+}
+
+.quick-access--icons .quick-item--pdf .ico-wrap {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+.quick-access--icons .quick-item--balance .ico-wrap {
+  background: rgba(52, 211, 153, 0.12);
+  border-color: rgba(52, 211, 153, 0.4);
+}
+
+.quick-access--icons .quick-item--curve .ico-wrap {
+  background: rgba(45, 212, 191, 0.12);
+  border-color: rgba(45, 212, 191, 0.4);
+}
+
+.quick-access--icons .quick-item--cable .ico-wrap {
+  background: rgba(167, 139, 250, 0.12);
+  border-color: rgba(167, 139, 250, 0.4);
 }
 
 .quick-access--icons .ico-label {
@@ -50,7 +90,7 @@
 
 .quick-access--icons .quick-item.is-peek-active {
   transform: translateY(-2px);
-  border-color: rgba(148, 163, 184, 0.65);
+  border-color: rgba(250, 204, 21, 0.45);
 }
 
 /* ——— Photo toujours visible sur les tuiles outils ——— */
@@ -95,7 +135,7 @@
 .quick-item[data-preview] .ico-label {
   position: relative;
   z-index: 2;
-  color: var(--quick-accent, #e2e8f0);
+  color: #fff;
   text-shadow:
     0 1px 3px rgba(0, 0, 0, 0.95),
     0 0 10px rgba(0, 0, 0, 0.55);
