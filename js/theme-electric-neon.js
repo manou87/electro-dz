@@ -16,7 +16,7 @@
     for (i = scripts.length - 1; i >= 0; i--) {
       var src = scripts[i].getAttribute('src');
       if (src && src.indexOf('theme-electric-neon') !== -1) {
-        homeSrc = src.replace(/theme-electric-neon[^/]*\.js(?:\?.*)?$/, 'site-home-nav.js');
+        homeSrc = src.replace(/theme-electric-neon[^/]*\.js/, 'site-home-nav.js');
         break;
       }
     }

@@ -92,7 +92,7 @@
     style.textContent =
       ".edz-lang-pin-host{padding-right:var(--edz-lang-pin-w,148px)!important}" +
       ".edz-lang-pin-host-rel{position:relative}" +
-      ".lang-group,.lang-switch,.page-lang-switch,.docs-lang-switch,.schemas-lang-switch,.sim-lang,.edz-lang-pin{" +
+      ".lang-group,.lang-switch,.page-lang-switch,.docs-lang-switch,.schemas-lang-switch,.sim-lang,.edz-lang-pin,.lang-tools{" +
       "position:absolute!important;" +
       "top:50%!important;" +
       "right:12px!important;" +
@@ -107,6 +107,24 @@
       "unicode-bidi:isolate;" +
       "z-index:40;" +
       "flex-shrink:0" +
+      "}" +
+      /* Palette + langues : un seul bloc absolu ; enfants en flux flex (évite chevauchement) */ +
+      ".lang-tools{gap:6px}" +
+      ".lang-tools .lang-group," +
+      ".lang-tools .lang-switch," +
+      ".lang-tools .page-lang-switch," +
+      ".lang-tools .docs-lang-switch," +
+      ".lang-tools .schemas-lang-switch," +
+      ".lang-tools .sim-lang," +
+      ".lang-tools .edz-lang-pin{" +
+      "position:static!important;" +
+      "top:auto!important;" +
+      "right:auto!important;" +
+      "left:auto!important;" +
+      "bottom:auto!important;" +
+      "transform:none!important;" +
+      "margin:0!important;" +
+      "z-index:auto" +
       "}";
     (document.head || document.documentElement).appendChild(style);
   }
@@ -127,7 +145,10 @@
     } catch (e) {
       host.classList.add("edz-lang-pin-host-rel");
     }
-    var w = Math.ceil(el.getBoundingClientRect().width);
+    var measure = el.classList.contains("lang-tools")
+      ? el
+      : el.closest(".lang-tools") || el;
+    var w = Math.ceil(measure.getBoundingClientRect().width);
     if (w > 40) {
       host.style.setProperty("--edz-lang-pin-w", w + 16 + "px");
     }
@@ -170,7 +191,15 @@
 
   function pinLangSwitcher() {
     injectLangPinCss();
+    document.querySelectorAll(".lang-tools").forEach(function (el) {
+      pinLangEl(el);
+    });
     document.querySelectorAll(LANG_GROUP_SEL).forEach(function (el) {
+      if (el.closest(".lang-tools")) {
+        el.setAttribute("dir", "ltr");
+        el.classList.add("edz-lang-pin");
+        return;
+      }
       pinLangEl(el);
     });
     wrapLooseLangButtons();

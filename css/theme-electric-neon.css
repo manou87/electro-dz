@@ -4,7 +4,8 @@
  */
 
 html.theme-electric-neon {
-  --neon-yellow: #facc15;
+  /* Accent unifié gris soft/medium (essai offline accent4-gray) */
+  --neon-yellow: #cbd5e1;
   --neon-cyan: #22d3ee;
   --neon-magenta: #e879f9;
   --neon-bg: #030508;
@@ -100,9 +101,9 @@ html.theme-electric-neon .en-glow-orb--y {
   left: 6%;
   background: radial-gradient(
     circle at 50% 50%,
-    rgba(250, 204, 21, 0.55) 0%,
-    rgba(250, 204, 21, 0.16) 34%,
-    rgba(250, 204, 21, 0.04) 58%,
+    rgba(148, 163, 184, 0.5) 0%,
+    rgba(148, 163, 184, 0.16) 34%,
+    rgba(148, 163, 184, 0.04) 58%,
     transparent 72%
   );
   animation: en-pulse-orb 7s ease-in-out infinite;
@@ -178,17 +179,17 @@ html.theme-electric-neon .nav {
 html.theme-electric-neon .brand-icon {
   border-color: var(--neon-yellow);
   box-shadow:
-    0 0 12px rgba(250, 204, 21, 0.6),
-    0 0 28px rgba(250, 204, 21, 0.25);
+    0 0 12px rgba(148, 163, 184, 0.5),
+    0 0 28px rgba(148, 163, 184, 0.22);
 }
 
 html.theme-electric-neon .brand-name {
   color: #fff;
-  text-shadow: 0 0 20px rgba(250, 204, 21, 0.5);
+  text-shadow: 0 0 20px rgba(148, 163, 184, 0.42);
 }
 
 html.theme-electric-neon .lang-btn.active {
-  box-shadow: 0 0 14px rgba(250, 204, 21, 0.55);
+  box-shadow: 0 0 14px rgba(148, 163, 184, 0.45);
 }
 
 /* Hero néon */
@@ -202,7 +203,7 @@ html.theme-electric-neon .en-hero-frame {
   animation: en-border-shift 8s ease infinite;
   box-shadow:
     0 0 16px rgba(34, 211, 238, 0.22),
-    0 0 28px rgba(250, 204, 21, 0.1);
+    0 0 28px rgba(148, 163, 184, 0.1);
 }
 
 @keyframes en-border-shift {
@@ -273,7 +274,7 @@ html.theme-electric-neon .hero-surprise {
 
 html.theme-electric-neon .hero-sub {
   color: var(--neon-yellow);
-  text-shadow: 0 0 16px rgba(250, 204, 21, 0.35);
+  text-shadow: 0 0 16px rgba(148, 163, 184, 0.32);
 }
 
 /* Sur la page calcul : titre d’intro = même échelle que les autres libellés
@@ -326,7 +327,7 @@ html.theme-electric-neon body:has(.calc-workspace) #hero-surprise {
 }
 
 html.theme-electric-neon .btn-dl--play {
-  box-shadow: 0 0 20px rgba(250, 204, 21, 0.5);
+  box-shadow: 0 0 20px rgba(148, 163, 184, 0.42);
 }
 
 html.theme-electric-neon .btn-dl--apple {
@@ -335,7 +336,7 @@ html.theme-electric-neon .btn-dl--apple {
 }
 
 html.theme-electric-neon .btn-dl:hover {
-  box-shadow: 0 0 28px rgba(250, 204, 21, 0.65);
+  box-shadow: 0 0 28px rgba(148, 163, 184, 0.55);
 }
 
 /* Ticker info / pub */
@@ -344,9 +345,9 @@ html.theme-electric-neon .edz-ticker {
   border-bottom-color: rgba(34, 211, 238, 0.4);
 }
 html.theme-electric-neon .edz-ticker__tag {
-  background: var(--neon-yellow, #facc15);
+  background: var(--neon-yellow, #e2e8f0);
   color: #030508;
-  box-shadow: 0 0 12px rgba(250, 204, 21, 0.35);
+  box-shadow: 0 0 12px rgba(148, 163, 184, 0.32);
 }
 html.theme-electric-neon .edz-ticker__item:hover {
   color: var(--neon-cyan, #22d3ee);
@@ -356,7 +357,7 @@ html.theme-electric-neon .edz-ticker__ayah:hover {
 }
 html.theme-electric-neon .edz-ticker__ayah-ref,
 html.theme-electric-neon .edz-ticker__sep--verse {
-  color: var(--neon-yellow, #facc15);
+  color: var(--neon-yellow, #e2e8f0);
 }
 
 /* Lanceur — tuiles néon directes (sans cadre / titre de section) */
@@ -373,48 +374,35 @@ html.theme-electric-neon .quick-access h2 {
 }
 
 html.theme-electric-neon .quick-item {
+  /* Cadre + libellés tuiles : suit --accent (unifié, pas d’arc-en-ciel) */
+  --quick-accent: var(--accent, #cbd5e1);
+  --en-glow: var(--accent-glow, rgba(148, 163, 184, 0.22));
   background: rgba(20, 28, 44, 0.92);
-  border: 1px solid rgba(34, 211, 238, 0.28);
-  border-top: 3px solid var(--quick-accent, var(--neon-yellow, #facc15));
+  border: 1px solid color-mix(in srgb, var(--quick-accent) 35%, transparent);
+  border-top: 3px solid var(--quick-accent);
   border-radius: 10px;
   position: relative;
   transition: transform 0.15s, box-shadow 0.2s, border-color 0.2s;
-  box-shadow: 0 0 10px var(--en-glow, rgba(34, 211, 238, 0.2));
-}
-
-html.theme-electric-neon .quick-item:nth-child(4n+1) {
-  --en-glow: rgba(250, 204, 21, 0.35);
-}
-
-html.theme-electric-neon .quick-item:nth-child(4n+2) {
-  --en-glow: rgba(34, 211, 238, 0.35);
-}
-
-html.theme-electric-neon .quick-item:nth-child(4n+3) {
-  --en-glow: rgba(232, 121, 249, 0.3);
-}
-
-html.theme-electric-neon .quick-item:nth-child(4n) {
-  --en-glow: rgba(74, 222, 128, 0.28);
+  box-shadow: 0 0 10px var(--en-glow);
 }
 
 html.theme-electric-neon .quick-item:hover {
   transform: translateY(-2px) scale(1.01);
-  border-color: var(--neon-yellow);
+  border-color: color-mix(in srgb, var(--quick-accent) 70%, transparent);
   box-shadow:
-    0 0 16px rgba(250, 204, 21, 0.4),
-    0 0 28px rgba(34, 211, 238, 0.18);
+    0 0 16px var(--accent-glow, rgba(148, 163, 184, 0.3)),
+    0 0 24px color-mix(in srgb, var(--quick-accent) 12%, transparent);
 }
 
 html.theme-electric-neon .quick-item .quick-preview img {
-  box-shadow: 0 0 14px var(--en-glow, rgba(34, 211, 238, 0.25));
+  box-shadow: 0 0 14px var(--en-glow);
 }
 
 html.theme-electric-neon .quick-item .ico-label {
-  color: #fff;
+  color: var(--quick-accent, #e2e8f0);
   text-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.9),
-    0 0 12px rgba(34, 211, 238, 0.25);
+    0 1px 3px rgba(0, 0, 0, 0.95),
+    0 0 10px rgba(0, 0, 0, 0.55);
 }
 
 html.theme-electric-neon .ico {
@@ -438,7 +426,7 @@ html.theme-electric-neon .social-band {
 
 html.theme-electric-neon .social-band h2 {
   color: #fff;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 0 10px rgba(250, 204, 21, 0.25);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 0 10px rgba(148, 163, 184, 0.22);
 }
 
 html.theme-electric-neon .social-band .social-sub {
@@ -460,7 +448,7 @@ html.theme-electric-neon .social-card span {
 }
 
 html.theme-electric-neon .social-card .ico-wrap {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(148, 163, 184, 0.1);
   box-shadow: 0 0 10px rgba(34, 211, 238, 0.25);
 }
 
@@ -473,7 +461,7 @@ html.theme-electric-neon .hub-card:hover {
 html.theme-electric-neon .hub-block-head h2,
 html.theme-electric-neon .spotlight-label {
   color: var(--neon-yellow);
-  text-shadow: 0 0 10px rgba(250, 204, 21, 0.4);
+  text-shadow: 0 0 10px rgba(148, 163, 184, 0.35);
 }
 
 html.theme-electric-neon .footer {
@@ -562,7 +550,7 @@ html.theme-electric-neon .logo-text .accent,
 html.theme-electric-neon .main-nav a.active,
 html.theme-electric-neon .accent {
   color: var(--neon-yellow);
-  text-shadow: 0 0 12px rgba(250, 204, 21, 0.4);
+  text-shadow: 0 0 12px rgba(148, 163, 184, 0.35);
 }
 
 html.theme-electric-neon .main-nav a:hover {
@@ -572,12 +560,12 @@ html.theme-electric-neon .main-nav a:hover {
 html.theme-electric-neon .nav-btn {
   background: var(--neon-yellow);
   color: var(--neon-bg);
-  box-shadow: 0 0 14px rgba(250, 204, 21, 0.4);
+  box-shadow: 0 0 14px rgba(148, 163, 184, 0.35);
 }
 
 html.theme-electric-neon .logo-img {
   border-color: var(--neon-yellow);
-  box-shadow: 0 0 12px rgba(250, 204, 21, 0.5);
+  box-shadow: 0 0 12px rgba(148, 163, 184, 0.42);
 }
 
 /* Calcul, bibliothèque, documentation */
@@ -620,7 +608,7 @@ html.theme-electric-neon .book-card-inner:hover,
 html.theme-electric-neon .book-card:hover,
 html.theme-electric-neon .feature-card:hover {
   border-color: var(--neon-yellow) !important;
-  box-shadow: 0 0 18px rgba(250, 204, 21, 0.25) !important;
+  box-shadow: 0 0 18px rgba(148, 163, 184, 0.22) !important;
 }
 
 /* Lecteur PDF */
@@ -641,7 +629,7 @@ html.theme-electric-neon .btn-primary {
 
 html.theme-electric-neon .btn.tool-active,
 html.theme-electric-neon .lang-btn.active {
-  box-shadow: 0 0 12px rgba(250, 204, 21, 0.4);
+  box-shadow: 0 0 12px rgba(148, 163, 184, 0.35);
 }
 
 html.theme-electric-neon .calc-workspace-title,
@@ -685,7 +673,7 @@ html.theme-electric-neon .types-section-label {
 /* Bibliothèque PDF */
 html.theme-electric-neon .library-hero-row h1 {
   color: var(--neon-yellow) !important;
-  text-shadow: 0 0 16px rgba(250, 204, 21, 0.35);
+  text-shadow: 0 0 16px rgba(148, 163, 184, 0.32);
 }
 
 html.theme-electric-neon .library-hero-row p,
@@ -719,7 +707,7 @@ html.theme-electric-neon .book-filter--active {
   background: var(--neon-yellow) !important;
   color: var(--neon-bg) !important;
   border-color: var(--neon-yellow) !important;
-  box-shadow: 0 0 16px rgba(250, 204, 21, 0.4) !important;
+  box-shadow: 0 0 16px rgba(148, 163, 184, 0.35) !important;
 }
 
 html.theme-electric-neon .library-sort,
@@ -750,7 +738,7 @@ html.theme-electric-neon .book-btn--primary {
 html.theme-electric-neon .book-btn--primary {
   background: var(--neon-yellow) !important;
   color: var(--neon-bg) !important;
-  box-shadow: 0 0 14px rgba(250, 204, 21, 0.35) !important;
+  box-shadow: 0 0 14px rgba(148, 163, 184, 0.32) !important;
 }
 
 html.theme-electric-neon .library-knx-gift__inner {
@@ -773,7 +761,7 @@ html.theme-electric-neon .drop-pct-btn.active,
 html.theme-electric-neon .calc-chip-btn.active,
 html.theme-electric-neon .btn-calc,
 html.theme-electric-neon .btn-primary {
-  box-shadow: 0 0 16px rgba(250, 204, 21, 0.35);
+  box-shadow: 0 0 16px rgba(148, 163, 184, 0.32);
 }
 
 html.theme-electric-neon input,
@@ -801,7 +789,7 @@ html.theme-electric-neon .hero-badge {
 html.theme-electric-neon .nav-links a:hover,
 html.theme-electric-neon .nav-links a.active {
   color: var(--neon-yellow);
-  text-shadow: 0 0 8px rgba(250, 204, 21, 0.35);
+  text-shadow: 0 0 8px rgba(148, 163, 184, 0.32);
 }
 
 html.theme-electric-neon .result-box,
@@ -842,13 +830,13 @@ html.theme-electric-neon .edz-visitor-stat {
   color: #e2e8f0 !important;
 }
 html.theme-electric-neon .edz-visitor-stat:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.06) !important;
+  background: rgba(148, 163, 184, 0.06) !important;
   border: none !important;
   box-shadow: none !important;
 }
 html.theme-electric-neon .edz-visitor-bar {
   background: var(--neon-bg) !important;
-  border-top-color: rgba(250, 204, 21, 0.22) !important;
+  border-top-color: rgba(148, 163, 184, 0.2) !important;
   color: #e2e8f0 !important;
 }
 html.theme-electric-neon .edz-visitor-bar strong {
@@ -893,7 +881,7 @@ html.theme-electric-neon .btn-calc {
   background: var(--neon-yellow) !important;
   color: var(--neon-bg) !important;
   border-color: var(--neon-yellow) !important;
-  box-shadow: 0 0 18px rgba(250, 204, 21, 0.45) !important;
+  box-shadow: 0 0 18px rgba(148, 163, 184, 0.38) !important;
 }
 
 /* Titres & panneaux */
@@ -918,14 +906,14 @@ html.theme-electric-neon .cat-block {
 
 html.theme-electric-neon .devis-card:hover {
   border-color: var(--neon-yellow) !important;
-  box-shadow: 0 0 14px rgba(250, 204, 21, 0.22) !important;
+  box-shadow: 0 0 14px rgba(148, 163, 184, 0.2) !important;
 }
 
 html.theme-electric-neon .panel h2,
 html.theme-electric-neon .modal h3,
 html.theme-electric-neon .hero h1 {
   color: var(--neon-yellow) !important;
-  text-shadow: 0 0 12px rgba(250, 204, 21, 0.3);
+  text-shadow: 0 0 12px rgba(148, 163, 184, 0.28);
 }
 
 html.theme-electric-neon .modal {
@@ -948,7 +936,7 @@ html.theme-electric-neon .cat-chip.active {
   background: var(--neon-yellow) !important;
   color: var(--neon-bg) !important;
   border-color: var(--neon-yellow) !important;
-  box-shadow: 0 0 14px rgba(250, 204, 21, 0.35) !important;
+  box-shadow: 0 0 14px rgba(148, 163, 184, 0.32) !important;
 }
 
 html.theme-electric-neon .btn--ghost {
@@ -973,7 +961,7 @@ html.theme-electric-neon .catalog-search {
 html.theme-electric-neon .catalog-add-btn {
   background: var(--neon-yellow) !important;
   color: var(--neon-bg) !important;
-  box-shadow: 0 0 12px rgba(250, 204, 21, 0.35) !important;
+  box-shadow: 0 0 12px rgba(148, 163, 184, 0.32) !important;
 }
 
 html.theme-electric-neon .items-table th {
@@ -1023,7 +1011,7 @@ html.theme-electric-neon .ec-cat-card:hover,
 html.theme-electric-neon .ec-hero-card:hover,
 html.theme-electric-neon .ec-product-card:hover {
   border-color: var(--neon-yellow) !important;
-  box-shadow: 0 0 16px rgba(250, 204, 21, 0.22) !important;
+  box-shadow: 0 0 16px rgba(148, 163, 184, 0.2) !important;
 }
 
 html.theme-electric-neon .ec-search {
