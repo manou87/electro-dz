@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="js/theme-electric-neon.js"></script>
+  <meta name="description" content="OIBT periodic inspection trainer — panel, outlets & Fluke 1664 FC | Electro DZ" />
+  <title>OIBT trainer | Electro DZ</title>
+  <link rel="icon" href="assets/app-icon.png" type="image/png" />
+  <link rel="stylesheet" href="css/simulation-swissdz.css?v=20260828en" />
+  <link rel="canonical" href="https://electro-dz.com/oibt-trainer.html" />
+</head>
+<body class="sim-page">
+  <header class="sim-topbar">
+    <a href="index-fr.html" class="sim-brand" data-i18n-href-fr="index-fr.html" data-i18n-href-ar="index.html">
+      <img src="assets/app-icon.png" alt="" width="32" height="32" decoding="async" />
+      <span>Swiss<span class="accent">DZ</span></span>
+    </a>
+    <div class="sim-lang">
+      <button type="button" class="lang-btn active" data-lang="fr" aria-label="Français">FR</button>
+      <button type="button" class="lang-btn" data-lang="en" aria-label="English">EN</button>
+      <button type="button" class="lang-btn" data-lang="ar" aria-label="العربية">AR</button>
+    </div>
+  </header>
+
+  <div class="sim-workspace">
+    <div class="sim-frame-wrap">
+      <p class="sim-loading" id="simLoading" data-i18n="loading">Chargement du simulateur…</p>
+      <iframe
+        id="simFrame"
+        title="OIBT trainer"
+        allow="fullscreen"
+        loading="eager"
+      ></iframe>
+    </div>
+    <p class="sim-footer-note" data-i18n="footer">
+      Outil pédagogique OIBT / NIV. Toute installation réelle doit être vérifiée par un inspecteur habilité.
+    </p>
+  </div>
+
+  <script>
+    (function () {
+      var STORAGE = "electrodz-site-lang";
+      var T = {
+        fr: {
+          "meta.title": "Simulateur OIBT — contrôle périodique | Electro DZ",
+          "meta.desc": "Contrôle périodique OIBT — tableau, prises et Fluke 1664 FC.",
+          loading: "Chargement du simulateur…",
+          footer: "Outil pédagogique OIBT / NIV. Toute installation réelle doit être vérifiée par un inspecteur habilité.",
+        },
+        ar: {
+          "meta.title": "محاكي OIBT — فحص دوري | Electro DZ",
+          "meta.desc": "الفحص الدوري OIBT — لوحة، مقابس وجهاز Fluke 1664 FC.",
+          loading: "جاري تحميل المحاكي…",
+          footer: "أداة تعليمية OIBT / NIV. أي تركيب حقيقي يجب أن يتحقق منه مفتش مؤهل.",
+        },
+        en: {
+          "meta.title": "OIBT trainer — periodic inspection | Electro DZ",
+          "meta.desc": "OIBT periodic inspection — distribution board, outlets and Fluke 1664 FC.",
+          loading: "Loading the trainer…",
+          footer: "Training tool — OIBT / NIV. Any live installation must be verified by a qualified inspector.",
+        },
+      };
+
+      function normalizeLang(next) {
+        return next === "fr" || next === "ar" || next === "en" ? next : "fr";
+      }
+      var lang = "fr";
+      try {
+        lang = normalizeLang(localStorage.getItem(STORAGE) || "");
+      } catch (e) {}
+
+      function t(k) {
+        return (T[lang] && T[lang][k]) || T.fr[k] || k;
+      }
+
+      function routeHash() {
+        var h = (location.hash || "").toLowerCase();
+        if (h.indexOf("meter") !== -1) return "#/meter";
+        return "#/trainer";
+      }
+
+      function frameSrc() {
+        return "oibt-trainer/index.html?lang=" + lang + routeHash();
+      }
+
+      var frame = document.getElementById("simFrame");
+      var loading = document.getElementById("simLoading");
+
+      function applyLang(next) {
+        lang = normalizeLang(next);
+        try { localStorage.setItem(STORAGE, lang); } catch (e) {}
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+        document.title = t("meta.title");
+        var meta = document.querySelector('meta[name="description"]');
+        if (meta) meta.setAttribute("content", t("meta.desc"));
+        document.querySelectorAll("[data-i18n]").forEach(function (el) {
+          el.textContent = t(el.getAttribute("data-i18n"));
+        });
+        var brand = document.querySelector(".sim-brand");
+        if (brand) brand.setAttribute("href", lang === "fr" ? "index-fr.html" : "index.html");
+        document.querySelectorAll(".sim-lang .lang-btn").forEach(function (btn) {
+          btn.classList.toggle("active", btn.getAttribute("data-lang") === lang);
+        });
+        if (frame) {
+          if (loading) loading.hidden = false;
+          frame.src = frameSrc();
+        }
+      }
+
+      document.querySelectorAll(".sim-lang .lang-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          applyLang(btn.getAttribute("data-lang"));
+        });
+      });
+
+      window.addEventListener("hashchange", function () {
+        if (frame) {
+          if (loading) loading.hidden = false;
+          frame.src = frameSrc();
+        }
+      });
+
+      if (frame && loading) {
+        frame.addEventListener("load", function () {
+          loading.hidden = true;
+        });
+      }
+
+      applyLang(lang);
+    })();
+  </script>
+</body>
+</html>
