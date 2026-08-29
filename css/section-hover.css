@@ -1,4 +1,4 @@
-/* Accueil #outils — tuiles icônes + aperçu au survol (photos en data-preview) */
+/* Accueil #outils — tuiles avec photo toujours visible (mobile-friendly) */
 
 .quick-access--icons .quick-grid {
   grid-template-columns: repeat(5, 1fr);
@@ -6,11 +6,12 @@
 
 .quick-access--icons .quick-item {
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 96px;
-  padding: 12px 8px;
+  align-items: stretch;
+  justify-content: flex-end;
+  gap: 0;
+  min-height: 112px;
+  padding: 0 0 10px;
+  overflow: hidden;
 }
 
 .quick-access--icons .quick-preview {
@@ -84,8 +85,11 @@
 }
 
 .quick-access--icons .ico-label {
-  padding: 0 4px;
+  padding: 0 8px;
   font-size: 0.72rem;
+  font-weight: 800;
+  text-align: center;
+  line-height: 1.25;
 }
 
 .quick-access--icons .quick-item.is-peek-active {
@@ -93,14 +97,65 @@
   border-color: rgba(250, 204, 21, 0.45);
 }
 
-/* Photo de la tuile — recouvre l’icône au survol (CSS pur, sans JS) */
-.quick-item[data-preview],
-[data-preview] {
+/* ——— Photo toujours visible sur les tuiles outils ——— */
+.quick-item[data-preview] {
   position: relative;
 }
 
-.quick-item[data-preview]::after,
-[data-preview]::after {
+.quick-item[data-preview]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: var(--peek-img);
+  background-size: cover;
+  background-position: center;
+  opacity: 1;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Scrim bas → haut : libellé lisible sans noyer l’image */
+.quick-item[data-preview]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(
+    to top,
+    rgba(4, 8, 18, 0.94) 0%,
+    rgba(4, 8, 18, 0.72) 28%,
+    rgba(4, 8, 18, 0.28) 52%,
+    rgba(4, 8, 18, 0.12) 100%
+  );
+}
+
+.quick-item[data-preview] .ico-wrap {
+  display: none;
+}
+
+.quick-item[data-preview] .ico-label {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  text-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.95),
+    0 0 10px rgba(0, 0, 0, 0.55);
+}
+
+.quick-item[data-preview]:hover,
+.quick-item[data-preview]:focus-visible {
+  transform: translateY(-2px);
+}
+
+/* Autres [data-preview] (ex. carte YouTube) — aperçu au survol uniquement */
+[data-preview]:not(.quick-item) {
+  position: relative;
+}
+
+[data-preview]:not(.quick-item)::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -111,26 +166,14 @@
   opacity: 0;
   pointer-events: none;
   border-radius: inherit;
-  transition: opacity 0.1s ease;
+  transition: opacity 0.12s ease;
 }
 
-.quick-item[data-preview]:hover::after,
-.quick-item[data-preview]:focus::after,
-.quick-item[data-preview]:focus-visible::after,
-.quick-item[data-preview].is-peek-active::after,
-[data-preview]:hover::after,
-[data-preview]:focus::after,
-[data-preview].is-peek-active::after {
+[data-preview]:not(.quick-item):hover::after,
+[data-preview]:not(.quick-item):focus::after,
+[data-preview]:not(.quick-item):focus-visible::after,
+[data-preview]:not(.quick-item).is-peek-active::after {
   opacity: 1;
-}
-
-.quick-item[data-preview]:hover .ico-wrap,
-.quick-item[data-preview]:focus .ico-wrap,
-.quick-item[data-preview].is-peek-active .ico-wrap,
-.quick-item[data-preview]:hover .ico-label,
-.quick-item[data-preview]:focus .ico-label,
-.quick-item[data-preview].is-peek-active .ico-label {
-  opacity: 0;
 }
 
 /* Desktop PC — tuiles plus grandes ; mobile (≤768) inchangé */
@@ -149,9 +192,8 @@
   }
 
   .quick-access--icons .quick-item {
-    gap: 12px;
-    min-height: 140px;
-    padding: 22px 14px 18px;
+    min-height: 148px;
+    padding: 0 0 14px;
     border-radius: 14px;
   }
 
@@ -168,7 +210,7 @@
 
   .quick-access--icons .ico-label {
     font-size: 0.86rem;
-    padding: 0 6px;
+    padding: 0 10px;
   }
 
   .section-peek {
@@ -186,8 +228,8 @@
   }
 
   .quick-access--icons .quick-item {
-    min-height: 152px;
-    padding: 24px 16px 20px;
+    min-height: 160px;
+    padding: 0 0 16px;
   }
 
   .quick-access--icons .ico-wrap {
@@ -206,7 +248,7 @@
   }
 }
 
-/* Bulle aperçu — enfant de <html>, jamais coincée sous le footer / le body néon.
+/* Bulle aperçu — desktop fin pointer uniquement (désactivée côté JS sur tactile).
    Pas de shorthand inset: il écraserait left/top posés par le JS. */
 html > .section-peek,
 html body > .section-peek,
@@ -271,8 +313,8 @@ html body > .section-peek,
   }
 
   .quick-access--icons .quick-item {
-    min-height: 88px;
-    padding: 10px 6px;
+    min-height: 100px;
+    padding: 0 0 8px;
   }
 
   .quick-access--icons .ico-wrap {
@@ -284,6 +326,17 @@ html body > .section-peek,
     width: 22px;
     height: 22px;
   }
+
+  .quick-access--icons .ico-label {
+    font-size: 0.64rem;
+    padding: 0 4px;
+  }
+
+  /* Pas de bulle flottante sur petit écran — photo déjà sur la tuile */
+  .section-peek,
+  .section-peek.is-visible {
+    display: none !important;
+  }
 }
 
 @media (max-width: 480px) {
@@ -293,21 +346,19 @@ html body > .section-peek,
   }
 
   .quick-access--icons .quick-item {
-    min-height: 82px;
-    padding: 8px 4px;
-  }
-
-  .quick-access--icons .ico-wrap {
-    width: 38px;
-    height: 38px;
-  }
-
-  .quick-access--icons .ico {
-    width: 20px;
-    height: 20px;
+    min-height: 92px;
+    padding: 0 0 6px;
   }
 
   .quick-access--icons .ico-label {
-    font-size: 0.62rem;
+    font-size: 0.6rem;
+  }
+}
+
+/* Tactile / pas de hover précis — image seule, pas de bulle */
+@media (hover: none), (pointer: coarse) {
+  .section-peek,
+  .section-peek.is-visible {
+    display: none !important;
   }
 }

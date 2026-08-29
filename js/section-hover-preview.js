@@ -1,7 +1,8 @@
 /**
- * Aperçu photo au survol — toute carte [data-preview] (accueil + autres pages).
- * 1) CSS :hover recouvre la tuile (marche même si le JS est tardif)
- * 2) Bulle fixe géante, collée à <html> (échappe overflow/transform du body néon)
+ * Aperçu photo des sections :
+ * 1) Tuiles .quick-item — photo toujours visible via --peek-img (CSS)
+ * 2) Autres [data-preview] — survol / focus (CSS)
+ * 3) Bulle fixe géante — desktop fin pointer uniquement (évite le jank tactile)
  *
  * Important : les url() de --peek-img doivent être absolues. Une url relative
  * est résolue contre la feuille CSS (/css/…), pas contre la page → 404.
@@ -27,19 +28,41 @@
     return href ? 'url("' + href.replace(/"/g, '\\"') + '")' : 'none';
   }
 
+  /** Bulle flottante : uniquement souris / trackpad (pas tactile). */
+  function peekBubbleAllowed() {
+    try {
+      if (window.matchMedia('(hover: none)').matches) return false;
+      if (window.matchMedia('(pointer: coarse)').matches) return false;
+      if (window.matchMedia('(max-width: 768px)').matches) return false;
+    } catch (err) { /* ignore */ }
+    return true;
+  }
+
   function injectRuntimeCss() {
     if (document.getElementById(STYLE_ID)) return;
     var s = document.createElement('style');
     s.id = STYLE_ID;
     s.textContent =
-      '[data-preview]::after{' +
+      /* Tuiles outils : photo permanente + scrim (renforce section-hover.css) */
+      '.quick-item[data-preview]::after{' +
+        'content:"";position:absolute;inset:0;z-index:0;' +
+        'background-image:var(--peek-img);background-size:cover;background-position:center;' +
+        'opacity:1!important;pointer-events:none;border-radius:inherit' +
+      '}' +
+      '.quick-item[data-preview]::before{' +
+        'content:"";position:absolute;inset:0;z-index:1;pointer-events:none;border-radius:inherit;' +
+        'background:linear-gradient(to top,rgba(4,8,18,.94) 0%,rgba(4,8,18,.72) 28%,rgba(4,8,18,.28) 52%,rgba(4,8,18,.12) 100%)' +
+      '}' +
+      '.quick-item[data-preview] .ico-wrap{display:none}' +
+      '.quick-item[data-preview] .ico-label{position:relative;z-index:2}' +
+      /* Autres cartes (YouTube…) : survol uniquement */
+      '[data-preview]:not(.quick-item)::after{' +
         'content:"";position:absolute;inset:0;z-index:6;' +
         'background-image:var(--peek-img);background-size:cover;background-position:center;' +
         'opacity:0;pointer-events:none;border-radius:inherit' +
       '}' +
-      '[data-preview]:hover::after,[data-preview].is-peek-active::after{opacity:1!important}' +
-      '[data-preview]:hover .ico-wrap,[data-preview].is-peek-active .ico-wrap,' +
-      '[data-preview]:hover .ico-label,[data-preview].is-peek-active .ico-label{opacity:0}' +
+      '[data-preview]:not(.quick-item):hover::after,' +
+      '[data-preview]:not(.quick-item).is-peek-active::after{opacity:1!important}' +
       'html>.section-peek,#' + PEEK_ID + '{' +
         'position:fixed!important;z-index:' + Z + '!important;' +
         'pointer-events:none!important;transform:none!important;filter:none!important;' +
@@ -125,9 +148,6 @@
     window.__EDZ_PEEK_LISTENERS__ = true;
 
     var activeItem = null;
-    var longPressTimer = null;
-    var longPressTriggered = false;
-    var suppressClick = false;
 
     function positionAt(anchor) {
       var pw = peek.offsetWidth || 480;
@@ -157,6 +177,9 @@
     }
 
     function showPeek(item) {
+      if (!peekBubbleAllowed()) return;
+      /* Sur les tuiles outils la photo est déjà visible — bulle inutile / redondante */
+      if (item.classList && item.classList.contains('quick-item')) return;
       var src = item.getAttribute('data-preview');
       if (!src) return;
       var href = absUrl(src);
@@ -191,6 +214,7 @@
     }
 
     function onOver(e) {
+      if (!peekBubbleAllowed()) return;
       var item = itemFrom(e.target);
       if (!item) return;
       if (e.pointerType === 'touch') return;
@@ -208,57 +232,15 @@
     document.addEventListener('pointerout', onOut, true);
     document.addEventListener('mouseout', onOut, true);
 
-    document.addEventListener(
-      'touchstart',
-      function (e) {
-        var item = itemFrom(e.target);
-        if (!item) return;
-        longPressTriggered = false;
-        suppressClick = false;
-        if (longPressTimer) clearTimeout(longPressTimer);
-        longPressTimer = setTimeout(function () {
-          longPressTriggered = true;
-          suppressClick = true;
-          showPeek(item);
-        }, 480);
-      },
-      { passive: true, capture: true }
-    );
-
-    document.addEventListener(
-      'touchend',
-      function () {
-        if (longPressTimer) clearTimeout(longPressTimer);
-        longPressTimer = null;
-        if (longPressTriggered) setTimeout(hidePeek, 160);
-      },
-      { passive: true, capture: true }
-    );
-
-    document.addEventListener(
-      'touchcancel',
-      function () {
-        if (longPressTimer) clearTimeout(longPressTimer);
-        hidePeek();
-      },
-      { passive: true, capture: true }
-    );
-
-    document.addEventListener(
-      'click',
-      function (e) {
-        if (!suppressClick) return;
-        var item = itemFrom(e.target);
-        if (!item) return;
-        e.preventDefault();
-        suppressClick = false;
-      },
-      true
-    );
+    /* Plus de long-press tactile : photo déjà sur la tuile, évite jank / faux clics */
 
     window.addEventListener(
       'resize',
       function () {
+        if (!peekBubbleAllowed()) {
+          hidePeek();
+          return;
+        }
         if (activeItem) positionAt(activeItem);
       },
       { passive: true }
@@ -268,7 +250,7 @@
 
     try {
       var want = new URLSearchParams(window.location.search).get('peek');
-      if (want) {
+      if (want && peekBubbleAllowed()) {
         var target =
           document.querySelector('[data-preview*="' + want + '"]') ||
           document.querySelector('[data-preview]');
