@@ -77,12 +77,18 @@
           'puis URI de redirection : https://wxiqqcnzcxswdqzubxyt.supabase.co/auth/v1/callback'
         );
       }
+      if (provider === 'phone') {
+        return (
+          'La connexion par SMS n’est pas activée. Dashboard → Authentication → Providers → Phone → ' +
+          'activer + brancher un fournisseur SMS (Twilio, etc.) ou un numéro de test.'
+        );
+      }
       return (
         'Google n’est pas activé dans Supabase. Ouvrez le dashboard → Authentication → ' +
         'Providers → Google → activer + renseigner Client ID et Secret (Google Cloud).'
       );
     }
-    if (/unsupported phone|phone provider|sms provider/i.test(msg)) {
+    if (/unsupported phone|phone provider|sms provider|phone.*not.*enabled/i.test(msg)) {
       return (
         'La connexion par SMS n’est pas activée. Dashboard → Authentication → Providers → Phone → ' +
         'activer + brancher un fournisseur SMS (Twilio, etc.) ou un numéro de test.'
@@ -186,6 +192,7 @@
   }
 
   async function sendPhoneOtp(phoneE164) {
+    await assertProviderEnabled('phone');
     const sb = getClient();
     const { error } = await sb.auth.signInWithOtp({
       phone: phoneE164,

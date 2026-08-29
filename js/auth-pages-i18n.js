@@ -69,8 +69,8 @@
       'auth.phoneVerify': 'Valider le code',
       'auth.phoneVerifying': 'Vérification…',
       'auth.phoneHint':
-        'Un code SMS sera envoyé. Indicatif Algérie (+213) par défaut.',
-      'auth.smsSent': 'Code envoyé. Saisissez le SMS reçu.',
+        'Cliquez sur « Envoyer le code SMS » : un champ Code SMS apparaît juste en dessous pour coller le code reçu. Indicatif Algérie (+213) par défaut.',
+      'auth.smsSent': 'Code envoyé. Saisissez-le dans le champ « Code SMS » ci-dessous, puis Valider.',
       'auth.errFacebook':
         'Facebook indisponible. Activez le provider Facebook dans Supabase (App ID + Secret Meta).',
       'auth.errPhone':
@@ -160,8 +160,8 @@
       'auth.phoneVerify': 'تأكيد الرمز',
       'auth.phoneVerifying': 'جاري التحقق…',
       'auth.phoneHint':
-        'سيتم إرسال رمز SMS. رمز الجزائر (+213) افتراضيًا.',
-      'auth.smsSent': 'تم إرسال الرمز. أدخل رمز SMS.',
+        'اضغط «إرسال رمز SMS» فيظهر حقل الرمز أسفل الزر مباشرة. رمز الجزائر (+213) افتراضيًا.',
+      'auth.smsSent': 'تم إرسال الرمز. أدخله في حقل «رمز SMS» أدناه ثم أكّد.',
       'auth.errFacebook':
         'فيسبوك غير متاح. فعّل مزوّد Facebook في Supabase (App ID و Secret من Meta).',
       'auth.errPhone':
@@ -251,8 +251,8 @@
       'auth.phoneVerify': 'Verify code',
       'auth.phoneVerifying': 'Verifying…',
       'auth.phoneHint':
-        'An SMS code will be sent. Algeria country code (+213) by default.',
-      'auth.smsSent': 'Code sent. Enter the SMS you received.',
+        'Tap “Send SMS code”: an SMS code field appears right below to paste the code. Algeria (+213) by default.',
+      'auth.smsSent': 'Code sent. Enter it in the “SMS code” field below, then Verify.',
       'auth.errFacebook':
         'Facebook unavailable. Enable the Facebook provider in Supabase (Meta App ID + Secret).',
       'auth.errPhone':

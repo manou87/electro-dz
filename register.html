@@ -103,12 +103,12 @@ footer{text-align:center;padding:20px;color:#334155;font-size:.75rem;border-top:
         <input type="tel" id="phoneNum" inputmode="tel" autocomplete="tel" data-i18n-placeholder="auth.phonePh" placeholder="0555 12 34 56"/>
       </div>
       <button type="button" class="btn btn-phone-send" id="phoneSend" data-i18n="auth.phoneSend">Envoyer le code SMS</button>
-      <div class="auth-otp-wrap" id="otpWrap" hidden>
-        <label data-i18n="auth.phoneOtp">Code SMS</label>
+      <div class="auth-otp-wrap" id="otpWrap" hidden aria-hidden="true">
+        <label for="phoneOtp" data-i18n="auth.phoneOtp">Code SMS</label>
         <input type="text" id="phoneOtp" inputmode="numeric" autocomplete="one-time-code" maxlength="8" data-i18n-placeholder="auth.phoneOtpPh" placeholder="123456"/>
         <button type="button" class="btn" id="phoneVerify" data-i18n="auth.phoneVerify">Valider le code</button>
       </div>
-      <p class="auth-phone-hint" data-i18n="auth.phoneHint">Un code SMS sera envoyé. Indicatif Algérie (+213) par défaut.</p>
+      <p class="auth-phone-hint" data-i18n="auth.phoneHint">Cliquez sur « Envoyer le code SMS » : un champ Code SMS apparaît juste en dessous pour coller le code reçu. Indicatif Algérie (+213) par défaut.</p>
     </div>
     </div>
     <div class="sep auth-sep-first"><span data-i18n="register.orEmail">ou avec e-mail</span></div>

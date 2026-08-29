@@ -64,6 +64,18 @@
 
   let pendingPhone = '';
 
+  function revealOtpField() {
+    if (!otpWrap) return;
+    otpWrap.removeAttribute('hidden');
+    otpWrap.classList.add('is-visible');
+    otpWrap.setAttribute('aria-hidden', 'false');
+    otpWrap.style.display = 'block';
+    try {
+      otpWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch (_) {}
+    phoneOtp?.focus();
+  }
+
   phoneToggle?.addEventListener('click', () => {
     if (!phonePanel) return;
     const open = phonePanel.hasAttribute('hidden');
@@ -87,9 +99,8 @@
     try {
       await window.ElectroDzAuth.sendPhoneOtp(e164);
       pendingPhone = e164;
-      if (otpWrap) otpWrap.removeAttribute('hidden');
+      revealOtpField();
       showMsg(t('auth.smsSent'), 's');
-      phoneOtp?.focus();
     } catch (err) {
       showMsg(err?.message || t('auth.errPhone'), 'e');
     } finally {
