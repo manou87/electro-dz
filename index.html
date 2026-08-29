@@ -400,6 +400,12 @@
     .social-card--tt:hover{border-color:#fff;box-shadow:0 8px 24px rgba(255,255,255,0.15)}
     .social-card--yt:hover{border-color:#ff0000;box-shadow:0 8px 24px rgba(255,0,0,0.25)}
     .social-card--fb:hover{border-color:#1877f2;box-shadow:0 8px 24px rgba(24,119,242,0.25)}
+    .social-card[data-preview]:hover strong,
+    .social-card[data-preview]:hover span:not(.ico-wrap),
+    .social-card[data-preview].is-peek-active strong,
+    .social-card[data-preview].is-peek-active span:not(.ico-wrap),
+    .social-card[data-preview]:hover .ico-wrap,
+    .social-card[data-preview].is-peek-active .ico-wrap{opacity:0}
 
     .yt-clips{
       display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;
@@ -664,7 +670,7 @@
           <strong>TikTok</strong>
           <span>@elektrodzch</span>
         </a>
-        <a class="social-card social-card--yt" href="https://www.youtube.com/@Elektro-dz-suisse" target="_blank" rel="noopener noreferrer">
+        <a class="social-card social-card--yt" href="https://www.youtube.com/@Elektro-dz-suisse" target="_blank" rel="noopener noreferrer" data-preview="https://i.ytimg.com/vi/oeECd-p0gAg/hqdefault.jpg" style="--peek-img:url(https://i.ytimg.com/vi/oeECd-p0gAg/hqdefault.jpg)">
           <span class="ico-wrap ico-wrap--yt"><svg class="ico ico--fill"><use href="#ico-play"/></svg></span>
           <strong>YouTube</strong>
           <span>@Elektro-dz-suisse</span>
@@ -705,7 +711,7 @@
   <script src="js/visitor-counter.js?v=en1"></script>
   <script src="js/seo-global.js"></script>
   <script src="js/accueil-i18n.js"></script>
-  <script src="js/section-hover-preview.js?v=peek5" defer></script>
+  <script src="js/section-hover-preview.js?v=peek6" defer></script>
   <script src="js/theme-liquid-glass-preview.js" defer></script>
 </body>
 </html>
