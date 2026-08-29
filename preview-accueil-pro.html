@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="robots" content="noindex,nofollow"/>
+  <title>Prévisualisation locale — Accueil Pro (A / B / C)</title>
+  <style>
+    :root{
+      --bg:#0a0f1a;--surface:rgba(255,255,255,0.05);--border:rgba(255,255,255,0.1);
+      --accent:#facc15;--text:#f1f5f9;--muted:#94a3b8;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);
+      min-height:100vh;line-height:1.5;
+      background-image:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(250,204,21,0.1),transparent);
+    }
+    a{color:inherit;text-decoration:none}
+    .banner{
+      position:sticky;top:0;z-index:50;
+      background:#1a1520;border-bottom:2px solid var(--accent);
+      padding:10px 4%;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;
+    }
+    .banner strong{color:var(--accent);font-size:.85rem}
+    .banner span{color:var(--muted);font-size:.75rem}
+    .tabs{display:flex;gap:6px;flex-wrap:wrap}
+    .tab{
+      border:1px solid var(--border);background:var(--surface);color:var(--text);
+      padding:7px 12px;border-radius:8px;font-weight:700;font-size:.78rem;cursor:pointer;
+    }
+    .tab.active{background:var(--accent);color:#0a0f1a;border-color:var(--accent)}
+    .wrap{max-width:1140px;margin:0 auto;padding:16px 5% 40px}
+    .scene{display:none}
+    .scene.active{display:block}
+    .scene-note{
+      margin:0 0 14px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;
+      background:rgba(255,255,255,0.03);font-size:.8rem;color:var(--muted);
+    }
+    .scene-note b{color:var(--accent)}
+
+    /* —— Base tuiles (commun) —— */
+    .quick-access{margin:0 0 18px;padding:10px 0}
+    .quick-access > h2,.band-title{
+      font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;
+      color:var(--accent);margin-bottom:10px;font-weight:800;
+    }
+    .quick-item{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:10px;min-height:100px;padding:14px 10px;
+      background:linear-gradient(165deg,rgba(255,255,255,0.07),rgba(255,255,255,0.02));
+      border:1px solid var(--border);border-radius:12px;
+      border-top:3px solid var(--quick-accent,var(--accent));
+      transition:transform .2s,border-color .2s;
+    }
+    .quick-item:hover{transform:translateY(-3px);border-color:rgba(250,204,21,0.45)}
+    .ico-wrap{
+      width:52px;height:52px;border-radius:13px;
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(250,204,21,0.1);border:1px solid rgba(250,204,21,0.35);
+    }
+    .ico{width:28px;height:28px;stroke:var(--accent);fill:none;stroke-width:2;
+      stroke-linecap:round;stroke-linejoin:round}
+    .ico-label{font-size:.84rem;font-weight:800;text-align:center;line-height:1.2}
+    .ico-hint{font-size:.58rem;font-weight:600;color:#c4b5fd;text-align:center;max-width:10.5rem}
+    .quick-labels{display:flex;flex-direction:column;align-items:center;gap:3px}
+
+    .qi-calc{--quick-accent:#facc15}
+    .qi-balance{--quick-accent:#34d399}
+    .qi-balance .ico-wrap{background:rgba(52,211,153,0.12);border-color:rgba(52,211,153,0.4)}
+    .qi-balance .ico{stroke:#34d399}
+    .qi-curve{--quick-accent:#2dd4bf}
+    .qi-curve .ico-wrap{background:rgba(45,212,191,0.12);border-color:rgba(45,212,191,0.4)}
+    .qi-curve .ico{stroke:#2dd4bf}
+    .qi-cable{--quick-accent:#a78bfa}
+    .qi-cable .ico-wrap{background:rgba(167,139,250,0.12);border-color:rgba(167,139,250,0.4)}
+    .qi-cable .ico{stroke:#a78bfa}
+    .qi-sim{--quick-accent:#e30613}
+    .qi-sim .ico-wrap{background:rgba(227,6,19,0.12);border-color:rgba(227,6,19,0.38)}
+    .qi-sim .ico{stroke:#f87171}
+    .qi-pdf{--quick-accent:#f87171}
+    .qi-pdf .ico-wrap{background:rgba(239,68,68,0.12);border-color:rgba(239,68,68,0.35)}
+    .qi-pdf .ico{stroke:#f87171}
+    .qi-quote{--quick-accent:#fb923c}
+    .qi-schema{--quick-accent:#4ade80}
+    .qi-schema .ico-hint{color:#86efac}
+    .qi-train{--quick-accent:#a78bfa}
+
+    /* A — grille 3×3 */
+    .grid-a{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+      min-height:min(58vh,480px);
+    }
+
+    /* B — console métier */
+    .pro-band{
+      margin-bottom:16px;padding:12px;border-radius:14px;
+      border:1px solid rgba(52,211,153,0.28);
+      background:rgba(52,211,153,0.06);
+    }
+    .pro-band .band-title{margin-bottom:10px}
+    .grid-pro{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .grid-pro .quick-item{
+      min-height:110px;
+      background:linear-gradient(165deg,rgba(255,255,255,0.09),rgba(255,255,255,0.03));
+      border-top-width:4px;
+    }
+    .grid-rest{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+      min-height:min(40vh,320px);
+    }
+
+    /* C — rail technique */
+    .grid-c{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .rail{
+      flex-direction:row;justify-content:flex-start;gap:12px;
+      min-height:72px;padding:12px 14px;text-align:start;
+    }
+    .rail .code{
+      font-family:ui-monospace,monospace;font-size:.65rem;font-weight:800;
+      color:var(--quick-accent);min-width:2.4rem;letter-spacing:.04em;
+    }
+    .rail .ico-wrap{width:40px;height:40px;border-radius:10px}
+    .rail .ico{width:22px;height:22px}
+    .rail .quick-labels{align-items:flex-start}
+    .rail .ico-label{text-align:start;font-size:.8rem}
+    .rail .ico-hint{text-align:start;max-width:14rem}
+
+    .fake-hero{
+      display:flex;justify-content:space-between;align-items:center;gap:12px;
+      margin-bottom:8px;padding-bottom:10px;border-bottom:1px solid var(--border);
+    }
+    .fake-hero p{font-size:.8rem;color:var(--accent);font-weight:600;max-width:36rem}
+    .fake-social{
+      margin-top:22px;padding-top:14px;border-top:1px solid var(--border);
+    }
+    .fake-social h3{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:8px}
+    .social-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+    .social-chip{
+      padding:10px;border:1px solid var(--border);border-radius:10px;
+      background:rgba(255,255,255,0.03);font-size:.75rem;text-align:center;
+    }
+    .social-chip strong{display:block;margin-bottom:2px}
+    .social-chip span{color:var(--muted);font-size:.68rem}
+
+    @media(max-width:720px){
+      .grid-a,.grid-pro,.grid-rest,.grid-c,.social-row{grid-template-columns:repeat(2,1fr)}
+      .fake-hero{flex-direction:column;align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+  <div class="banner">
+    <div>
+      <strong>LOCAL UNIQUEMENT</strong>
+      <span> — rien n’est poussé en ligne. Choisis A, B ou C pour comparer.</span>
+    </div>
+    <div class="tabs" role="tablist">
+      <button type="button" class="tab active" data-scene="a">A · Grille uniforme</button>
+      <button type="button" class="tab" data-scene="b">B · Console métier (reco)</button>
+      <button type="button" class="tab" data-scene="c">C · Rail technique</button>
+    </div>
+  </div>
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="ico-calc" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h2M12 10h2M8 14h2M12 14h2M8 18h8"/></symbol>
+    <symbol id="ico-balance" viewBox="0 0 24 24"><path d="M4 20h16M6 20V10h3v10M11 20V6h3v14M16 20v-7h3v7"/><path d="M3 4h6l2 4H5zM13 4h6l2 4h-6z"/></symbol>
+    <symbol id="ico-curve" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M5 16c3-1 4-8 7-8s3 6 6 5 3-5 3-5"/></symbol>
+    <symbol id="ico-cable" viewBox="0 0 24 24"><path d="M4 8h6M14 8h6M4 16h6M14 16h6"/><rect x="9" y="5" width="6" height="6" rx="1"/><rect x="9" y="13" width="6" height="6" rx="1"/></symbol>
+    <symbol id="ico-simulator" viewBox="0 0 24 24"><path d="M13 2 5 14h6l-1 8 8-12h-6l1-8z"/></symbol>
+    <symbol id="ico-pdf" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></symbol>
+    <symbol id="ico-clipboard" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 12h6M9 16h6"/></symbol>
+    <symbol id="ico-schema" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 8h8M8 12h5M8 16h8M16 8v8"/></symbol>
+    <symbol id="ico-school" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-6 10 6-10 6z"/><path d="M6 12v5c0 1 2 3 6 3s6-2 6-3v-5"/></symbol>
+  </svg>
+
+  <div class="wrap">
+    <div class="fake-hero">
+      <p>Calculs, normes, schémas, formation et devis — tout l’arsenal du métier. 100 % gratuit.</p>
+      <span style="font-size:.75rem;color:var(--muted)">[ Play · App Store ]</span>
+    </div>
+
+    <!-- ========== A ========== -->
+    <section class="scene active" id="scene-a" aria-label="Scénario A">
+      <p class="scene-note"><b>A — Grille uniforme :</b> 9 tuiles égales 3×3 (comme aujourd’hui, peaufiné).</p>
+      <div class="quick-access">
+        <h2>Accès rapide</h2>
+        <div class="grid-a" id="grid-a"></div>
+      </div>
+    </section>
+
+    <!-- ========== B ========== -->
+    <section class="scene" id="scene-b" aria-label="Scénario B">
+      <p class="scene-note"><b>B — Console métier (recommandé) :</b> bande « Calculs Pro » en haut, puis les 6 autres outils.</p>
+      <div class="quick-access">
+        <div class="pro-band">
+          <p class="band-title">Calculs Pro</p>
+          <div class="grid-pro" id="grid-b-pro"></div>
+        </div>
+        <h2>Accès rapide</h2>
+        <div class="grid-rest" id="grid-b-rest"></div>
+      </div>
+    </section>
+
+    <!-- ========== C ========== -->
+    <section class="scene" id="scene-c" aria-label="Scénario C">
+      <p class="scene-note"><b>C — Rail technique :</b> tuiles horizontales style atelier / CAO, avec code court (BAL · CUR · CAB…).</p>
+      <div class="quick-access">
+        <h2>Accès rapide</h2>
+        <div class="grid-c" id="grid-c"></div>
+      </div>
+    </section>
+
+    <div class="fake-social">
+      <h3>Communauté (inchangé dans les 3 scénarios)</h3>
+      <div class="social-row">
+        <div class="social-chip"><strong>WhatsApp</strong><span>+213 …</span></div>
+        <div class="social-chip"><strong>TikTok</strong><span>@elektrodzch</span></div>
+        <div class="social-chip"><strong>YouTube</strong><span>@Elektro-dz-suisse</span></div>
+        <div class="social-chip"><strong>Facebook</strong><span>Electro DZ</span></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const ALL = [
+      { cls: 'qi-calc', ico: 'ico-calc', label: 'Calculs', code: 'CAL' },
+      { cls: 'qi-balance', ico: 'ico-balance', label: 'Bilan de puissance', code: 'BAL' },
+      { cls: 'qi-curve', ico: 'ico-curve', label: 'Courbe de déclenchement', code: 'CUR' },
+      { cls: 'qi-cable', ico: 'ico-cable', label: 'Section de câbles', code: 'CAB' },
+      { cls: 'qi-sim', ico: 'ico-simulator', label: 'Simulateur SwissDZ', hint: 'Tableau · atelier · unifilaire', code: 'SIM' },
+      { cls: 'qi-pdf', ico: 'ico-pdf', label: 'Documentation PDF', code: 'PDF' },
+      { cls: 'qi-quote', ico: 'ico-clipboard', label: 'Devis', code: 'DEV' },
+      { cls: 'qi-schema', ico: 'ico-schema', label: 'Schémas et plans', hint: 'Unifilaire · IEC', code: 'SCH' },
+      { cls: 'qi-train', ico: 'ico-school', label: 'Formations', hint: '472 Q · NFC 15-100', code: 'FOR' },
+    ];
+    const PRO = ALL.slice(1, 4);
+    const REST = [ALL[0], ...ALL.slice(4)];
+
+    function tile(item, { rail = false } = {}) {
+      const hint = item.hint
+        ? `<span class="ico-hint">${item.hint}</span>`
+        : '';
+      const labels = item.hint
+        ? `<span class="quick-labels"><span class="ico-label">${item.label}</span>${hint}</span>`
+        : `<span class="ico-label">${item.label}</span>`;
+      if (rail) {
+        return `<a class="quick-item rail ${item.cls}" href="#" onclick="return false">
+          <span class="code">${item.code}</span>
+          <span class="ico-wrap"><svg class="ico"><use href="#${item.ico}"/></svg></span>
+          ${labels}
+        </a>`;
+      }
+      return `<a class="quick-item ${item.cls}" href="#" onclick="return false">
+        <span class="ico-wrap"><svg class="ico"><use href="#${item.ico}"/></svg></span>
+        ${labels}
+      </a>`;
+    }
+
+    document.getElementById('grid-a').innerHTML = ALL.map((i) => tile(i)).join('');
+    document.getElementById('grid-b-pro').innerHTML = PRO.map((i) => tile(i)).join('');
+    document.getElementById('grid-b-rest').innerHTML = REST.map((i) => tile(i)).join('');
+    document.getElementById('grid-c').innerHTML = ALL.map((i) => tile(i, { rail: true })).join('');
+
+    document.querySelectorAll('.tab').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach((b) => b.classList.remove('active'));
+        document.querySelectorAll('.scene').forEach((s) => s.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('scene-' + btn.dataset.scene).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

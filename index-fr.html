@@ -400,6 +400,31 @@
     .social-card--yt:hover{border-color:#ff0000;box-shadow:0 8px 24px rgba(255,0,0,0.25)}
     .social-card--fb:hover{border-color:#1877f2;box-shadow:0 8px 24px rgba(24,119,242,0.25)}
 
+    .yt-clips{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;
+    }
+    .yt-clip{
+      position:relative;display:block;border-radius:8px;overflow:hidden;
+      aspect-ratio:16/9;border:1px solid var(--border);
+      background:#111;transition:transform .2s,border-color .2s,box-shadow .2s;
+    }
+    .yt-clip img{
+      width:100%;height:100%;object-fit:cover;display:block;
+      filter:brightness(.88);
+    }
+    .yt-clip::after{
+      content:"";position:absolute;inset:0;margin:auto;
+      width:36px;height:36px;border-radius:50%;
+      background:rgba(255,0,0,.88);
+      box-shadow:0 2px 10px rgba(0,0,0,.45);
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:54% 50%;background-size:16px;
+      opacity:.92;pointer-events:none;
+    }
+    .yt-clip:hover{transform:translateY(-3px);border-color:#ff0000;box-shadow:0 8px 20px rgba(255,0,0,.22)}
+    .yt-clip:hover img{filter:brightness(1)}
+    .yt-clip:focus-visible{outline:2px solid #facc15;outline-offset:2px}
+
     .compare-note{
       margin:32px 0;padding:14px 18px;text-align:center;
       background:rgba(59,130,246,0.1);border:1px solid rgba(96,165,250,0.3);
@@ -427,6 +452,7 @@
     @media(max-width:900px){
       .spotlight-grid,.hub-grid{grid-template-columns:repeat(2,1fr)}
       .social-grid{grid-template-columns:repeat(2,1fr)}
+      .yt-clip::after{width:28px;height:28px;background-size:12px}
     }
     @media(max-width:768px){
       .hero{flex-direction:column;align-items:stretch;gap:8px}
@@ -587,35 +613,35 @@
           <span class="ico-wrap"><svg class="ico"><use href="#ico-cos"/></svg></span>
           <span class="ico-label" data-i18n="quick.cosphi">SwissDZ Cos φ</span>
         </a>
-        <a class="quick-item quick-item--curve" href="calcul-electrique.html?calc=trip_curve" data-preview="assets/section-previews/curve.jpg" style="--peek-img:url(/assets/section-previews/curve.jpg)">
+        <a class="quick-item quick-item--curve" href="calcul-electrique.html?calc=trip_curve" data-preview="assets/section-previews/curve-neon.png" style="--peek-img:url(/assets/section-previews/curve-neon.png)">
           <span class="ico-wrap"><svg class="ico"><use href="#ico-curve"/></svg></span>
           <span class="ico-label" data-i18n="quick.curve">Courbe de déclenchement</span>
         </a>
-        <a class="quick-item quick-item--cable" href="calcul-electrique.html?calc=cable_section" data-preview="assets/section-previews/cable.jpg" style="--peek-img:url(/assets/section-previews/cable.jpg)">
+        <a class="quick-item quick-item--cable" href="calcul-electrique.html?calc=cable_section" data-preview="assets/section-previews/cable-neon.png" style="--peek-img:url(/assets/section-previews/cable-neon.png)">
           <span class="ico-wrap"><svg class="ico"><use href="#ico-cable"/></svg></span>
           <span class="ico-label" data-i18n="quick.cable">Section de câbles</span>
         </a>
-        <a class="quick-item quick-item--calc" href="calcul-electrique.html" data-preview="assets/section-previews/calc.jpg" style="--peek-img:url(/assets/section-previews/calc.jpg)">
+        <a class="quick-item quick-item--calc" href="calcul-electrique.html" data-preview="assets/section-previews/calc-neon.png" style="--peek-img:url(/assets/section-previews/calc-neon.png)">
           <span class="ico-wrap"><svg class="ico"><use href="#ico-calc"/></svg></span>
           <span class="ico-label" data-i18n="quick.calc">Calculs</span>
         </a>
-        <a class="quick-item quick-item--pdf" href="bibliotheque.html" data-preview="assets/section-previews/pdf.jpg" style="--peek-img:url(/assets/section-previews/pdf.jpg)">
+        <a class="quick-item quick-item--pdf" href="bibliotheque.html" data-preview="assets/section-previews/pdf-neon.png" style="--peek-img:url(/assets/section-previews/pdf-neon.png)">
           <span class="ico-wrap"><svg class="ico"><use href="#ico-pdf"/></svg></span>
           <span class="ico-label" data-i18n="quick.pdf">Documentation PDF</span>
         </a>
-        <a class="quick-item quick-item--quote" href="devis.html" data-preview="assets/section-previews/quote.jpg" style="--peek-img:url(/assets/section-previews/quote.jpg)">
+        <a class="quick-item quick-item--quote" href="devis.html" data-preview="assets/section-previews/quote-neon.png" style="--peek-img:url(/assets/section-previews/quote-neon.png)">
           <span class="ico-wrap"><svg class="ico"><use href="#ico-clipboard"/></svg></span>
           <span class="ico-label" data-i18n="quick.quote">Devis</span>
         </a>
-        <a class="quick-item quick-item--balance" href="calcul-electrique.html?calc=power_balance" data-preview="assets/section-previews/balance.jpg" style="--peek-img:url(/assets/section-previews/balance.jpg)">
+        <a class="quick-item quick-item--balance" href="calcul-electrique.html?calc=power_balance" data-preview="assets/section-previews/balance-neon.png" style="--peek-img:url(/assets/section-previews/balance-neon.png)">
           <span class="ico-wrap"><svg class="ico"><use href="#ico-balance"/></svg></span>
           <span class="ico-label" data-i18n="quick.balance">Bilan de puissance</span>
         </a>
-        <a class="quick-item quick-item--schema" href="schemas-plans.html" data-preview="assets/section-previews/schemas.jpg" style="--peek-img:url(/assets/section-previews/schemas.jpg)" data-i18n-aria="quick.plans.hint" aria-label="Unifilaire, symboles IEC, export & impression">
+        <a class="quick-item quick-item--schema" href="schemas-plans.html" data-preview="assets/section-previews/schemas-neon.png" style="--peek-img:url(/assets/section-previews/schemas-neon.png)" data-i18n-aria="quick.plans.hint" aria-label="Unifilaire, symboles IEC, export & impression">
           <span class="ico-wrap"><svg class="ico"><use href="#ico-schema"/></svg></span>
           <span class="ico-label" data-i18n="quick.plans">Schémas et plans</span>
         </a>
-        <a class="quick-item quick-item--train" href="formations.html#quiz" data-preview="assets/section-previews/training.jpg" style="--peek-img:url(/assets/section-previews/training.jpg)" data-i18n-aria="quick.training.hint" aria-label="472 questions pour maîtriser la norme NF C 15-100, pas à pas">
+        <a class="quick-item quick-item--train" href="formations.html#quiz" data-preview="assets/section-previews/training-neon.png" style="--peek-img:url(/assets/section-previews/training-neon.png)" data-i18n-aria="quick.training.hint" aria-label="472 questions pour maîtriser la norme NF C 15-100, pas à pas">
           <span class="ico-wrap"><svg class="ico"><use href="#ico-school"/></svg></span>
           <span class="ico-label" data-i18n="quick.training">Quiz NF C 15-100</span>
         </a>
@@ -637,15 +663,26 @@
           <strong>TikTok</strong>
           <span>@elektrodzch</span>
         </a>
-        <a class="social-card social-card--yt" href="https://youtube.com/@electro-dz-suisse" target="_blank" rel="noopener noreferrer">
+        <a class="social-card social-card--yt" href="https://www.youtube.com/@Elektro-dz-suisse" target="_blank" rel="noopener noreferrer">
           <span class="ico-wrap ico-wrap--yt"><svg class="ico ico--fill"><use href="#ico-play"/></svg></span>
           <strong>YouTube</strong>
-          <span>@electro-dz-suisse</span>
+          <span>@Elektro-dz-suisse</span>
         </a>
         <a class="social-card social-card--fb" href="https://www.facebook.com/share/1TXqM56Ncd/" target="_blank" rel="noopener noreferrer">
           <span class="ico-wrap ico-wrap--fb"><svg class="ico"><use href="#ico-fb"/></svg></span>
           <strong>Facebook</strong>
           <span data-i18n="social.fb">Electro DZ</span>
+        </a>
+      </div>
+      <div class="yt-clips" aria-label="YouTube">
+        <a class="yt-clip" href="https://youtu.be/oeECd-p0gAg" target="_blank" rel="noopener noreferrer" aria-label="Vidéo YouTube 1">
+          <img src="https://i.ytimg.com/vi/oeECd-p0gAg/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async"/>
+        </a>
+        <a class="yt-clip" href="https://youtu.be/N2u4N_OF6bs" target="_blank" rel="noopener noreferrer" aria-label="Vidéo YouTube 2">
+          <img src="https://i.ytimg.com/vi/N2u4N_OF6bs/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async"/>
+        </a>
+        <a class="yt-clip" href="https://youtu.be/1Tk4rRiCwJ4" target="_blank" rel="noopener noreferrer" aria-label="Vidéo YouTube 3">
+          <img src="https://i.ytimg.com/vi/1Tk4rRiCwJ4/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async"/>
         </a>
       </div>
     </section>

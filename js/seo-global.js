@@ -19,7 +19,7 @@
     sameAs: [
       "https://www.facebook.com/share/1TXqM56Ncd/",
       "https://www.tiktok.com/@elektrodzch",
-      "https://youtube.com/@electro-dz-suisse",
+      "https://www.youtube.com/@Elektro-dz-suisse",
       "https://play.google.com/store/apps/details?id=com.electrodz.app",
       "https://apps.apple.com/ch/app/electrodz/id6752301246",
     ],
