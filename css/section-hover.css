@@ -96,6 +96,8 @@
 /* ——— Photo toujours visible sur les tuiles outils ——— */
 .quick-item[data-preview] {
   position: relative;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 120px;
 }
 
 .quick-item[data-preview]::after {
@@ -106,9 +108,14 @@
   background-image: var(--peek-img);
   background-size: cover;
   background-position: center;
-  opacity: 1;
+  opacity: 0;
+  transition: opacity 0.18s ease;
   pointer-events: none;
   border-radius: inherit;
+}
+
+.quick-item[data-preview].is-peek-loaded::after {
+  opacity: 1;
 }
 
 /* Scrim bas → haut : libellé lisible sans noyer l’image */
@@ -323,7 +330,8 @@ html body > .section-peek,
 .section-peek__frame img {
   display: block;
   width: 100%;
-  aspect-ratio: 3 / 2; /* assets lab-previews 1536×1024 */
+  height: auto;
+  aspect-ratio: 3 / 2; /* assets section-previews 960×640 */
   object-fit: contain;
   background: rgba(0, 0, 0, 0.35);
 }

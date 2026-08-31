@@ -4,8 +4,8 @@
  * 2) Autres [data-preview] — survol / focus (CSS)
  * 3) Bulle fixe géante — desktop fin pointer uniquement (évite le jank tactile)
  *
- * Important : les url() de --peek-img doivent être absolues. Une url relative
- * est résolue contre la feuille CSS (/css/…), pas contre la page → 404.
+ * Perf mobile : WebP légers + IntersectionObserver (pas de préchargement
+ * de toutes les PNG 2 Mo). Les url() de --peek-img doivent être absolues.
  */
 (function () {
   'use strict';
@@ -13,6 +13,7 @@
   var PEEK_ID = 'section-peek';
   var STYLE_ID = 'edz-peek-runtime-css';
   var Z = '2147483646';
+  var lazyObserver = null;
 
   function absUrl(src) {
     if (!src) return '';
@@ -47,8 +48,9 @@
       '.quick-item[data-preview]::after{' +
         'content:"";position:absolute;inset:0;z-index:0;' +
         'background-image:var(--peek-img);background-size:cover;background-position:center;' +
-        'opacity:1!important;pointer-events:none;border-radius:inherit' +
+        'opacity:0;transition:opacity .18s ease;pointer-events:none;border-radius:inherit' +
       '}' +
+      '.quick-item[data-preview].is-peek-loaded::after{opacity:1!important}' +
       '.quick-item[data-preview]::before{' +
         'content:"";position:absolute;inset:0;z-index:1;pointer-events:none;border-radius:inherit;' +
         'background:linear-gradient(to top,rgba(4,8,18,.94) 0%,rgba(4,8,18,.72) 28%,rgba(4,8,18,.28) 52%,rgba(4,8,18,.12) 100%)' +
@@ -93,7 +95,7 @@
       peek.setAttribute('aria-hidden', 'true');
       peek.innerHTML =
         '<div class="section-peek__frame">' +
-        '<img id="section-peek-img" src="" alt=""/>' +
+        '<img id="section-peek-img" src="" alt="" width="480" height="320" decoding="async" loading="lazy"/>' +
         '<span class="section-peek__label" id="section-peek-label"></span>' +
         '</div>';
     }
@@ -114,20 +116,49 @@
     return peek;
   }
 
+  function applyPeek(el) {
+    if (!el || el.__edzPeekApplied) return;
+    var src = el.getAttribute('data-preview');
+    if (!src) return;
+    el.style.setProperty('--peek-img', cssUrl(src));
+    el.__edzPeekApplied = true;
+    el.classList.add('is-peek-loaded');
+  }
+
+  /**
+   * Charge --peek-img seulement près du viewport (évite 12×2 Mo d’un coup).
+   * Pas de new Image() : le background CSS charge déjà le fichier.
+   */
   function paintVars() {
     var nodes = document.querySelectorAll('[data-preview]');
     var i;
-    var src;
-    var href;
+    var el;
+
+    if (!('IntersectionObserver' in window)) {
+      for (i = 0; i < nodes.length; i++) applyPeek(nodes[i]);
+      return nodes.length;
+    }
+
+    if (!lazyObserver) {
+      lazyObserver = new IntersectionObserver(
+        function (entries) {
+          var j;
+          var entry;
+          for (j = 0; j < entries.length; j++) {
+            entry = entries[j];
+            if (!entry.isIntersecting) continue;
+            applyPeek(entry.target);
+            lazyObserver.unobserve(entry.target);
+          }
+        },
+        { rootMargin: '240px 0px', threshold: 0.01 }
+      );
+    }
+
     for (i = 0; i < nodes.length; i++) {
-      src = nodes[i].getAttribute('data-preview');
-      if (!src) continue;
-      href = absUrl(src);
-      nodes[i].style.setProperty('--peek-img', cssUrl(href));
-      if (!nodes[i].__edzPeekPre) {
-        nodes[i].__edzPeekPre = true;
-        (new Image()).src = href;
-      }
+      el = nodes[i];
+      if (el.__edzPeekApplied) continue;
+      lazyObserver.observe(el);
     }
     return nodes.length;
   }
@@ -192,6 +223,7 @@
       if (item.classList && item.classList.contains('quick-item')) return;
       var src = item.getAttribute('data-preview');
       if (!src) return;
+      applyPeek(item);
       var href = absUrl(src);
       if (activeItem && activeItem !== item) {
         activeItem.classList.remove('is-peek-active');
