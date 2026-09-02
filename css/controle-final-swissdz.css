@@ -60,6 +60,7 @@
   flex: 1;
   max-width: 1280px;
   width: 100%;
+  min-width: 0;
   margin: 0 auto;
   padding: 16px 4% 48px;
 }
@@ -245,15 +246,45 @@
   margin: 0 0 10px;
 }
 
+.pep-table-scroll-hint {
+  margin: -6px 0 8px;
+  font-size: 0.72rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.pep-paper .pep-table-scroll-hint {
+  color: #666;
+}
+
 .pep-table-wrap {
+  max-width: 100%;
   overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(250, 204, 21, 0.55) rgba(255, 255, 255, 0.06);
+}
+
+.pep-table-wrap::-webkit-scrollbar {
+  height: 10px;
+}
+
+.pep-table-wrap::-webkit-scrollbar-thumb {
+  background: rgba(250, 204, 21, 0.55);
+  border-radius: 999px;
+}
+
+.pep-table-wrap::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .pep-table {
-  width: 100%;
-  min-width: 1100px;
+  width: max-content;
+  min-width: 100%;
   border-collapse: collapse;
   font-size: 0.72rem;
 }
@@ -308,11 +339,11 @@
   accent-color: #facc15;
 }
 
-.pep-table .col-num { width: 44px; }
-.pep-table .col-obj { min-width: 120px; }
-.pep-table .col-xs { width: 52px; }
-.pep-table .col-sm { width: 64px; }
-.pep-table .col-chk { width: 36px; text-align: center; vertical-align: middle; }
+.pep-table .col-num { width: 44px; min-width: 44px; }
+.pep-table .col-obj { min-width: 110px; }
+.pep-table .col-xs { width: 52px; min-width: 52px; }
+.pep-table .col-sm { width: 64px; min-width: 64px; }
+.pep-table .col-chk { width: 36px; min-width: 36px; text-align: center; vertical-align: middle; }
 
 .pep-footer-note {
   text-align: center;
@@ -332,6 +363,8 @@
   position: relative;
   z-index: 2;
   isolation: isolate;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .pep-paper .pep-panel {
@@ -393,6 +426,15 @@
   border: 1.5px solid #000;
   border-radius: 0;
   background: #fff;
+  scrollbar-color: #666 #e8e8e8;
+}
+
+.pep-paper .pep-table-wrap::-webkit-scrollbar-thumb {
+  background: #666;
+}
+
+.pep-paper .pep-table-wrap::-webkit-scrollbar-track {
+  background: #e8e8e8;
 }
 
 .pep-paper .pep-table th,
@@ -529,6 +571,10 @@ html.theme-electric-neon .pep-paper .pep-table textarea.pep-cell-input {
 
 .hidden {
   display: none !important;
+}
+
+html.theme-electric-neon body.pep-page {
+  overflow-x: auto;
 }
 
 @media (max-width: 640px) {
