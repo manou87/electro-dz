@@ -1,0 +1,55 @@
+{
+  "page": { "width": 842.04, "height": 594.96 },
+  "templateUrl": "pdf/protocole-ep-2018.pdf",
+  "fontSize": 7,
+  "header": {
+    "verificationInitiale": { "type": "checkbox", "rect": [109.3, 55.9, 130.0, 69.0] },
+    "controleApresReparation": { "type": "checkbox", "rect": [287.5, 55.9, 308.9, 69.0] },
+    "titulaire": { "type": "text", "x": 422, "y": 68, "maxW": 160, "size": 8 },
+    "porteur": { "type": "text", "x": 422, "y": 88, "maxW": 160, "size": 8 },
+    "noAutorisation": { "type": "text", "x": 422, "y": 108, "maxW": 100, "size": 8 },
+    "numeroPage": { "type": "text", "x": 422, "y": 128, "maxW": 60, "size": 8 },
+    "objetPeriode": { "type": "text", "x": 25, "y": 108, "maxW": 360, "size": 8 },
+    "instruments": { "type": "text", "x": 25, "y": 128, "maxW": 360, "size": 8 },
+    "descriptionInstallation": { "type": "text", "x": 70, "y": 175, "maxW": 210, "size": 7, "multiline": true, "lines": 3, "lineHeight": 11 },
+    "resistanceTerre": { "type": "text", "x": 290, "y": 158, "maxW": 70, "size": 7 },
+    "methodeMesure": { "type": "text", "x": 420, "y": 158, "maxW": 200, "size": 7 }
+  },
+  "earthLabels": {
+    "resistanceTerre": { "x": 290, "y": 148, "size": 5.5 },
+    "methodeMesure": { "x": 420, "y": 148, "size": 5.5 }
+  },
+  "footer": {
+    "executeurNom": { "type": "text", "x": 25, "y": 485, "maxW": 250, "size": 8 },
+    "executeurDateSignature": { "type": "text", "x": 25, "y": 555, "maxW": 250, "size": 8 },
+    "organeEntreprise": { "type": "text", "x": 555, "y": 485, "maxW": 270, "size": 8 },
+    "organeDateSignature": { "type": "text", "x": 555, "y": 555, "maxW": 270, "size": 8 }
+  },
+  "logo": { "x": 24, "y": 24, "size": 52 },
+  "rows": {
+    "count": 14,
+    "yCenters": [213.2, 229.2, 245.1, 261.1, 277.0, 293.0, 309.0, 324.9, 340.9, 356.8, 372.8, 388.8, 404.7, 420.7],
+    "columns": {
+      "numero": [24, 68],
+      "objet": [68, 280],
+      "typeCaract": [280, 298],
+      "inMagn": [298, 345],
+      "inTherm": [345, 382],
+      "visuel": [390.8, 411.5],
+      "rpe": [420, 470],
+      "riso": [470, 518],
+      "idiff": [518, 560],
+      "iccLpe": [560, 608],
+      "iccLn": [608, 655],
+      "ddrIn": [644, 670],
+      "idn": [670, 698],
+      "testT": [698, 735],
+      "champOk": [731, 746],
+      "tensionU": [746, 777],
+      "paraphePort": [777, 802],
+      "paraphePortDate": [802, 818],
+      "parapheInsp": [818, 828],
+      "parapheInspDate": [828, 835]
+    }
+  }
+}

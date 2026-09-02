@@ -1,0 +1,539 @@
+.pep-page {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+.pep-topbar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 4%;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.pep-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #facc15;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+.pep-brand .accent {
+  color: #e30613;
+}
+
+.pep-lang {
+  display: flex;
+  gap: 6px;
+}
+
+.pep-lang .lang-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #94a3b8;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.pep-lang .lang-btn.active {
+  background: #facc15;
+  color: #0f172a;
+  border-color: #facc15;
+}
+
+.pep-main {
+  flex: 1;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 16px 4% 48px;
+}
+
+.pep-hero {
+  margin-bottom: 16px;
+}
+
+.pep-hero h1 {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #fff;
+  margin: 0 0 6px;
+}
+
+.pep-hero p {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.pep-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+  align-items: center;
+}
+
+.pep-btn {
+  background: #facc15;
+  color: #0f172a;
+  border: none;
+  padding: 9px 14px;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.pep-btn--ghost {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.pep-btn--pdf {
+  background: rgba(56, 189, 248, 0.15);
+  color: #7dd3fc;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.pep-status {
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.pep-bilingual-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  cursor: pointer;
+  user-select: none;
+}
+
+.pep-bilingual-toggle input {
+  width: 16px;
+  height: 16px;
+  accent-color: #facc15;
+}
+
+.pep-panel {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.pep-panel h2 {
+  font-size: 0.95rem;
+  color: #facc15;
+  margin: 0 0 12px;
+  font-weight: 800;
+}
+
+.pep-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.pep-field label {
+  display: block;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.pep-field input,
+.pep-field textarea,
+.pep-field select {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.88rem;
+  outline: none;
+}
+
+.pep-field input:focus,
+.pep-field textarea:focus {
+  border-color: #facc15;
+}
+
+.pep-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.pep-checks label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.pep-checks input {
+  width: 16px;
+  height: 16px;
+  accent-color: #facc15;
+}
+
+.pep-logo-section {
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.pep-logo-preview {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #facc15;
+  display: none;
+  margin: 0 auto 10px;
+}
+
+.pep-logo-preview.visible {
+  display: block;
+}
+
+.pep-logo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.pep-logo-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.pep-logo-hint {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin: 0 0 10px;
+}
+
+.pep-table-wrap {
+  overflow-x: auto;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+}
+
+.pep-table {
+  width: 100%;
+  min-width: 1100px;
+  border-collapse: collapse;
+  font-size: 0.72rem;
+}
+
+.pep-table th,
+.pep-table td {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 4px;
+  vertical-align: top;
+}
+
+.pep-table th {
+  background: rgba(255, 255, 255, 0.05);
+  color: #94a3b8;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.25;
+}
+
+.pep-table input[type="text"],
+.pep-table input[type="number"],
+.pep-table textarea.pep-cell-input {
+  width: 100%;
+  min-width: 44px;
+  min-height: 1.35em;
+  padding: 4px 5px;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: clamp(0.55rem, 2.2vw, 0.72rem);
+  line-height: 1.25;
+  outline: none;
+  resize: none;
+  overflow: hidden;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  field-sizing: content;
+}
+
+.pep-table textarea.pep-cell-input {
+  display: block;
+}
+
+.pep-table textarea.pep-cell-obj {
+  min-height: 1.6em;
+}
+
+.pep-table input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: #facc15;
+}
+
+.pep-table .col-num { width: 44px; }
+.pep-table .col-obj { min-width: 120px; }
+.pep-table .col-xs { width: 52px; }
+.pep-table .col-sm { width: 64px; }
+.pep-table .col-chk { width: 36px; text-align: center; vertical-align: middle; }
+
+.pep-footer-note {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #64748b;
+  padding: 12px 4%;
+}
+
+/* ── Feuille blanche (protocole EP 2018) ── */
+.pep-paper {
+  background: #fff;
+  color: #1a1a1a;
+  border: 1px solid #999;
+  border-radius: 2px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.28);
+  padding: 20px 18px 24px;
+  position: relative;
+  z-index: 2;
+  isolation: isolate;
+}
+
+.pep-paper .pep-panel {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin-bottom: 18px;
+}
+
+.pep-paper .pep-panel:last-child {
+  margin-bottom: 0;
+}
+
+.pep-paper .pep-panel h2 {
+  color: #000;
+  font-size: 0.88rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  border-bottom: 1.5px solid #000;
+  padding-bottom: 5px;
+  margin-bottom: 12px;
+}
+
+.pep-paper .pep-field label {
+  color: #333;
+  font-weight: 600;
+}
+
+.pep-paper .pep-field input,
+.pep-paper .pep-field textarea,
+.pep-paper .pep-field select {
+  background: #fff;
+  border: 1px solid #888;
+  border-radius: 2px;
+  color: #1a1a1a;
+  box-shadow: none;
+}
+
+.pep-paper .pep-field input:focus,
+.pep-paper .pep-field textarea:focus,
+.pep-paper .pep-field select:focus {
+  border-color: #333;
+  outline: 1px solid #333;
+  box-shadow: none;
+}
+
+.pep-paper .pep-checks label {
+  color: #1a1a1a;
+}
+
+.pep-paper .pep-checks input {
+  accent-color: #333;
+}
+
+.pep-paper .pep-table-wrap {
+  overflow-x: auto;
+  border: 1.5px solid #000;
+  border-radius: 0;
+  background: #fff;
+}
+
+.pep-paper .pep-table th,
+.pep-paper .pep-table td {
+  border: 1px solid #000;
+  background: #fff;
+  padding: 3px 4px;
+  vertical-align: top;
+}
+
+.pep-paper .pep-table th {
+  background: #f0f0f0;
+  color: #000;
+  font-weight: 700;
+}
+
+.pep-paper .pep-table input[type="text"],
+.pep-paper .pep-table input[type="number"],
+.pep-paper .pep-table textarea.pep-cell-input {
+  background: #fff;
+  color: #000;
+  border: 0;
+  border-radius: 0;
+  font-size: clamp(0.5rem, 1.8vw, 0.7rem);
+}
+
+.pep-paper .pep-table input[type="text"]:focus,
+.pep-paper .pep-table input[type="number"]:focus,
+.pep-paper .pep-table textarea.pep-cell-input:focus {
+  outline: 1px solid #333;
+  outline-offset: -1px;
+  box-shadow: none;
+}
+
+.pep-paper .pep-table input[type="checkbox"] {
+  accent-color: #333;
+}
+
+/* Bilingue FR / AR sur la feuille blanche */
+.pep-bilingual .pep-paper .pep-label-fr {
+  display: block;
+  line-height: 1.25;
+}
+
+.pep-bilingual .pep-paper .pep-label-ar {
+  display: block;
+  font-size: 0.72em;
+  color: #444;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-top: 1px;
+}
+
+.pep-bilingual .pep-paper .pep-table th .pep-label-ar {
+  font-size: 0.65em;
+}
+
+.pep-bilingual .pep-paper .pep-panel h2 .pep-label-ar {
+  font-size: 0.7em;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.pep-earth-panel {
+  border: 2px solid #c2410c !important;
+  border-radius: 4px !important;
+  padding: 12px 14px !important;
+  margin-bottom: 16px !important;
+  background: #fff8f3 !important;
+}
+
+.pep-paper .pep-earth-panel {
+  border: 2px solid #000 !important;
+  background: #f9f9f9 !important;
+}
+
+.pep-earth-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 12px;
+  align-items: end;
+}
+
+.pep-field--earth input,
+.pep-field--earth select {
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .pep-earth-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Surcharge thème néon global sur la zone de saisie */
+html.theme-electric-neon .pep-paper {
+  background: #fff !important;
+  color: #1a1a1a !important;
+}
+
+html.theme-electric-neon .pep-paper input,
+html.theme-electric-neon .pep-paper textarea,
+html.theme-electric-neon .pep-paper select {
+  background: #fff !important;
+  border-color: #888 !important;
+  color: #1a1a1a !important;
+  box-shadow: none !important;
+}
+
+html.theme-electric-neon .pep-paper input:focus,
+html.theme-electric-neon .pep-paper textarea:focus,
+html.theme-electric-neon .pep-paper select:focus {
+  border-color: #333 !important;
+  box-shadow: none !important;
+}
+
+html.theme-electric-neon .pep-paper .pep-table th,
+html.theme-electric-neon .pep-paper .pep-table td {
+  background: #fff !important;
+  border-color: #000 !important;
+}
+
+html.theme-electric-neon .pep-paper .pep-table th {
+  background: #f0f0f0 !important;
+  color: #000 !important;
+}
+
+html.theme-electric-neon .pep-paper .pep-table input[type="text"],
+html.theme-electric-neon .pep-paper .pep-table input[type="number"],
+html.theme-electric-neon .pep-paper .pep-table textarea.pep-cell-input {
+  background: #fff !important;
+  color: #000 !important;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 640px) {
+  .pep-status {
+    width: 100%;
+    margin-left: 0;
+  }
+}

@@ -36,6 +36,9 @@
       "quick.fluke": "Fluke 1664 FC",
       "quick.fluke.hint":
         "Appareil de mesure Fluke 1664 FC — câblage et mesures",
+      "quick.controle": "Contrôle final SwissDZ",
+      "quick.controle.hint":
+        "Contrôle final obligatoire — protocole de mesures, rapport et PDF. Outil SwissDZ pour l'Algérie.",
       "quick.cosphi": "SwissDZ Cos φ",
       "quick.cosphi.hint":
         "Batterie de compensation BT — mesurer, corriger, contrôler le facteur de puissance",
@@ -155,6 +158,9 @@
       "quick.fluke": "Fluke 1664 FC",
       "quick.fluke.hint":
         "جهاز القياس Fluke 1664 FC — توصيل وقياسات",
+      "quick.controle": "الفحص النهائي SwissDZ",
+      "quick.controle.hint":
+        "الفحص النهائي الإلزامي — بروتوكول القياسات وتقرير وPDF. أداة SwissDZ للجزائر.",
       "quick.cosphi": "SwissDZ Cos φ",
       "quick.cosphi.hint":
         "بطارية تعويض الجهد المنخفض — قياس وتصحيح ومراقبة معامل القدرة",
@@ -275,6 +281,9 @@
       "quick.fluke": "Fluke 1664 FC",
       "quick.fluke.hint":
         "Fluke 1664 FC meter — wiring and measurements",
+      "quick.controle": "SwissDZ Final Inspection",
+      "quick.controle.hint":
+        "Mandatory final inspection — measurement protocol, report and PDF. SwissDZ tool for Algeria.",
       "quick.cosphi": "SwissDZ Cos φ",
       "quick.cosphi.hint":
         "LV power-factor correction bank — measure, correct, verify",

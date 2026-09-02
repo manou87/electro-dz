@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="js/theme-electric-neon.js"></script>
+  <meta name="description" content="Contrôle final SwissDZ — protocole EP 2018 OIBT : saisie des mesures, logo entreprise et impression professionnelle | Electro DZ" />
+  <title>Contrôle final SwissDZ | Electro DZ</title>
+  <link rel="icon" href="assets/app-icon.png" type="image/png" />
+  <link rel="stylesheet" href="css/controle-final-swissdz.css?v=20260904" />
+  <link rel="canonical" href="https://electro-dz.com/controle-final-swissdz.html" />
+</head>
+<body class="pep-page">
+  <header class="pep-topbar">
+    <a href="index-fr.html" class="pep-brand" data-i18n-href-fr="index-fr.html" data-i18n-href-ar="index.html">
+      <img src="assets/app-icon.png" alt="" width="32" height="32" decoding="async" />
+      <span>Swiss<span class="accent">DZ</span></span>
+    </a>
+    <div class="pep-lang">
+      <button type="button" class="lang-btn active" data-lang="fr" aria-label="Français">FR</button>
+      <button type="button" class="lang-btn" data-lang="en" aria-label="English">EN</button>
+      <button type="button" class="lang-btn" data-lang="ar" aria-label="العربية">AR</button>
+    </div>
+  </header>
+
+  <main class="pep-main">
+    <div class="pep-hero">
+      <h1 data-i18n="title">Contrôle final SwissDZ</h1>
+      <p data-i18n="subtitle">Contrôle final obligatoire des installations électriques — protocole de mesures, rapport professionnel et export PDF. Outil SwissDZ pour électriciens en Algérie.</p>
+    </div>
+
+    <div class="pep-toolbar">
+      <button type="button" class="pep-btn" id="btn-print" data-i18n="btnPrint">Imprimer</button>
+      <button type="button" class="pep-btn pep-btn--pdf" id="btn-pdf" data-i18n="btnPdf">PDF officiel</button>
+      <button type="button" class="pep-btn pep-btn--ghost" id="btn-clear" data-i18n="btnClear">Effacer</button>
+      <label class="pep-bilingual-toggle">
+        <input type="checkbox" id="pep-bilingual" checked />
+        <span data-i18n="bilingualToggle">Bilingue FR / AR (formulaire)</span>
+      </label>
+      <span class="pep-status" id="save-status" aria-live="polite"></span>
+    </div>
+
+    <section class="pep-panel">
+      <h2 data-i18n="logoTitle">Logo entreprise (impression)</h2>
+      <div class="pep-logo-section">
+        <p class="pep-logo-hint" data-i18n="logoHint">Même stockage que la section Devis — logo rond sur l'impression.</p>
+        <img id="pep-logo-preview" class="pep-logo-preview" alt="" width="96" height="96" />
+        <input type="file" id="pep-logo-file" accept="image/*" class="hidden" />
+        <div class="pep-logo-actions">
+          <button type="button" class="pep-btn pep-btn--ghost" id="pep-logo-pick" data-i18n="logoChoose">Choisir un logo</button>
+          <button type="button" class="pep-btn pep-btn--ghost hidden" id="pep-logo-remove" data-i18n="logoRemove">Supprimer</button>
+        </div>
+        <label class="pep-logo-toggle">
+          <input type="checkbox" id="pep-show-logo" />
+          <span data-i18n="logoShow">Afficher le logo à l'impression</span>
+        </label>
+      </div>
+    </section>
+
+    <form id="pep-form" autocomplete="off">
+      <div class="pep-paper">
+      <section class="pep-panel">
+        <h2 data-i18n="headerTitle">En-tête</h2>
+        <div class="pep-checks">
+          <label><input type="checkbox" name="verificationInitiale" /> <span data-i18n="verificationInitiale">Vérification initiale</span></label>
+          <label><input type="checkbox" name="controleApresReparation" /> <span data-i18n="controleApresReparation">Contrôle après réparation</span></label>
+        </div>
+        <div class="pep-grid">
+          <div class="pep-field"><label data-i18n="objetPeriode">Objet / Période</label><input type="text" name="objetPeriode" /></div>
+          <div class="pep-field"><label data-i18n="instruments">Instruments de mesure utilisés</label><input type="text" name="instruments" /></div>
+          <div class="pep-field"><label data-i18n="titulaire">Titulaire (entreprise)</label><input type="text" name="titulaire" /></div>
+          <div class="pep-field"><label data-i18n="porteur">Porteur de l'autorisation</label><input type="text" name="porteur" /></div>
+          <div class="pep-field"><label data-i18n="noAutorisation">N° d'autorisation</label><input type="text" name="noAutorisation" /></div>
+          <div class="pep-field"><label data-i18n="numeroPage">Numéro de page</label><input type="text" name="numeroPage" value="1" /></div>
+        </div>
+        <div class="pep-field" style="margin-top:10px">
+          <label data-i18n="descriptionInstallation">Adresse et description succincte des travaux / de l'installation</label>
+          <textarea name="descriptionInstallation" rows="3"></textarea>
+        </div>
+      </section>
+
+      <section class="pep-panel pep-earth-panel">
+        <h2 data-i18n="earthTitle">Mise à la terre</h2>
+        <div class="pep-earth-grid">
+          <div class="pep-field pep-field--earth">
+            <label data-i18n="resistanceTerre">Résistance de mise à la terre (Ω)</label>
+            <input type="text" name="resistanceTerre" inputmode="decimal" placeholder="ex. 12,5" />
+          </div>
+          <div class="pep-field pep-field--earth">
+            <label data-i18n="methodeMesure">Méthode de mesure</label>
+            <select name="methodeMesure" id="methodeMesure"></select>
+          </div>
+        </div>
+      </section>
+
+      <section class="pep-panel">
+        <h2 data-i18n="measuresTitle">Mesures (14 lignes)</h2>
+        <div class="pep-table-wrap">
+          <table class="pep-table" id="pep-measures-table">
+            <thead>
+              <tr>
+                <th class="col-num" data-i18n="colNum">N°</th>
+                <th class="col-obj" data-i18n="colObj">Objet</th>
+                <th class="col-xs" data-i18n="colType">Type</th>
+                <th class="col-xs" data-i18n="colInMagn">IN magn.</th>
+                <th class="col-xs" data-i18n="colInTherm">IN therm.</th>
+                <th class="col-chk" data-i18n="colVisuel">Visuel</th>
+                <th class="col-sm" data-i18n="colRpe">RPE/RLOW</th>
+                <th class="col-sm" data-i18n="colRiso">Riso</th>
+                <th class="col-sm" data-i18n="colIdiff">Idiff</th>
+                <th class="col-sm" data-i18n="colIccLpe">Icc L-PE</th>
+                <th class="col-sm" data-i18n="colIccLn">Icc L-N</th>
+                <th class="col-xs" data-i18n="colDdrIn">IN DDR</th>
+                <th class="col-xs" data-i18n="colIdn">IΔN</th>
+                <th class="col-xs" data-i18n="colTestT">t [ms]</th>
+                <th class="col-chk" data-i18n="colChamp">Champ</th>
+                <th class="col-xs" data-i18n="colU">U [V]</th>
+                <th class="col-sm" data-i18n="colParaphePort">Port./Date</th>
+                <th class="col-sm" data-i18n="colParapheInsp">Insp./Date</th>
+              </tr>
+            </thead>
+            <tbody id="pep-rows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="pep-panel">
+        <h2 data-i18n="footerTitle">Pied de page</h2>
+        <div class="pep-grid">
+          <div class="pep-field"><label data-i18n="executeurNom">Exécuteur — Nom</label><input type="text" name="executeurNom" /></div>
+          <div class="pep-field"><label data-i18n="executeurDateSignature">Exécuteur — Date / Signature</label><input type="text" name="executeurDateSignature" /></div>
+          <div class="pep-field"><label data-i18n="organeEntreprise">Organe de contrôle — Entreprise / Tampon</label><input type="text" name="organeEntreprise" /></div>
+          <div class="pep-field"><label data-i18n="organeDateSignature">Organe — Date / Signature</label><input type="text" name="organeDateSignature" /></div>
+        </div>
+      </section>
+      </div>
+    </form>
+  </main>
+
+  <p class="pep-footer-note" data-i18n="footer">Contrôle final SwissDZ — outil pédagogique OIBT / NIV. Toute installation réelle doit être vérifiée par un inspecteur habilité.</p>
+
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="js/controle-final-swissdz.js?v=20260904"></script>
+</body>
+</html>
