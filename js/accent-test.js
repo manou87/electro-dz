@@ -1,8 +1,8 @@
 /**
  * Sélecteur d’accent (visiteurs).
  * — Première pastille « Multi » = accents arc-en-ciel par tuile (look d’origine)
- * — Pastilles 1–6 = accent unifié sur tout le site
- * — ?test=1…6 ou ?test=multi (deep link)
+ * — Pastilles 1–7 = accent unifié sur tout le site
+ * — ?test=1…7 ou ?test=multi (deep link)
  * — Choix persisté dans localStorage ; défaut = multi
  */
 (function () {
@@ -11,10 +11,10 @@
   var STORAGE_KEY = 'edz-site-accent';
   var DEFAULT_ID = 'multi';
   var MULTI_SWATCH =
-    'conic-gradient(from 210deg,#facc15,#34d399,#2dd4bf,#38bdf8,#a78bfa,#f87171,#f97316,#facc15)';
+    'conic-gradient(from 210deg,#facc15,#34d399,#2dd4bf,#38bdf8,#a78bfa,#c084fc,#f87171,#f97316,#facc15)';
 
-  /* Ordre d’affichage (Object.keys mettrait 1–6 avant « multi ») */
-  var ORDER = ['multi', '1', '2', '3', '4', '5', '6'];
+  /* Ordre d’affichage (Object.keys mettrait 1–7 avant « multi ») */
+  var ORDER = ['multi', '1', '2', '3', '4', '5', '6', '7'];
 
   var TESTS = {
     multi: {
@@ -29,7 +29,8 @@
     '3': { name: 'Cyan', hex: '#22d3ee', soft: '#22d3ee' },
     '4': { name: 'Ambre', hex: '#fbbf24', soft: '#fbbf24' },
     '5': { name: 'Vert', hex: '#84cc16', soft: '#84cc16' },
-    '6': { name: 'Bleu', hex: '#60a5fa', soft: '#60a5fa' }
+    '6': { name: 'Bleu', hex: '#60a5fa', soft: '#60a5fa' },
+    '7': { name: 'Violet', hex: '#a78bfa', soft: '#c084fc' }
   };
 
   function hexToRgb(hex) {
@@ -63,6 +64,7 @@
     root.style.setProperty('--neon-yellow', accent);
     root.style.setProperty('--neon-cyan', t.multi ? '#22d3ee' : accent);
     root.style.setProperty('--neon-magenta', t.multi ? '#e879f9' : accent);
+    root.style.setProperty('--neon-violet', t.multi ? '#a78bfa' : accent);
     root.style.setProperty('--primary', accent);
 
     if (t.multi) {

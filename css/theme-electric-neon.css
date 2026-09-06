@@ -8,6 +8,7 @@ html.theme-electric-neon {
   --neon-yellow: #facc15;
   --neon-cyan: #22d3ee;
   --neon-magenta: #e879f9;
+  --neon-violet: #a78bfa;
   --neon-bg: #030508;
   --neon-panel: rgba(8, 12, 22, 0.92);
 }
@@ -418,7 +419,7 @@ html.theme-electric-neon .quick-item .ico-label {
     0 0 12px rgba(34, 211, 238, 0.25);
 }
 
-/* Mode unifié (pastilles 1–6) : tuiles suivent --accent */
+/* Mode unifié (pastilles 1–7) : tuiles suivent --accent */
 html.theme-electric-neon[data-accent-unified] .quick-item {
   --quick-accent: var(--accent, #cbd5e1);
   --en-glow: var(--accent-glow, rgba(148, 163, 184, 0.22));
