@@ -250,22 +250,133 @@ html.theme-electric-neon .sim-lang .lang-btn.active {
   text-align: center;
 }
 
-.sim-free-banner {
-  flex-shrink: 0;
-  margin: 0 4% 8px;
-  padding: 10px 14px;
-  border-radius: 10px;
-  border: 1px solid rgba(167, 139, 250, 0.45);
-  background: rgba(167, 139, 250, 0.12);
-  color: #e9d5ff;
-  font-size: 0.85rem;
-  font-weight: 700;
-  line-height: 1.35;
-  text-align: center;
+body.is-oibt-intro .sim-topbar,
+body.is-oibt-intro .sim-workspace {
+  display: none !important;
 }
 
-.sim-free-banner[hidden] {
+.sim-intro {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 4000 !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: #030508;
+  overflow: hidden;
+}
+
+.sim-intro[hidden] {
   display: none !important;
+}
+
+.sim-intro__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  transform: scale(1.04);
+  animation: sim-intro-ken 12s ease-out forwards;
+}
+
+@keyframes sim-intro-ken {
+  from { transform: scale(1.08); }
+  to { transform: scale(1.02); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sim-intro__photo {
+    animation: none;
+    transform: none;
+  }
+}
+
+.sim-intro__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(3, 5, 8, 0.97) 0%, rgba(3, 5, 8, 0.88) 22%, rgba(3, 5, 8, 0.35) 48%, rgba(3, 5, 8, 0.2) 100%);
+  pointer-events: none;
+}
+
+.sim-intro__bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 5%;
+}
+
+.sim-intro__copy {
+  position: absolute;
+  left: 50%;
+  bottom: 6vh;
+  z-index: 2;
+  width: min(720px, calc(100% - 40px));
+  padding: 0 4px 8px;
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+.sim-intro__kicker {
+  margin: 0 0 8px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #facc15;
+}
+
+.sim-intro__title {
+  margin: 0 0 10px;
+  font-size: clamp(1.7rem, 4.2vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: #f8fafc;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
+}
+
+.sim-intro__text {
+  margin: 0 auto 22px;
+  max-width: 34rem;
+  font-size: clamp(0.95rem, 2.1vw, 1.15rem);
+  line-height: 1.45;
+  color: #cbd5e1;
+}
+
+.sim-intro__ok {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  min-width: 200px;
+  min-height: 48px;
+  padding: 12px 28px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #111827;
+  background: #facc15;
+  box-shadow: 0 8px 28px rgba(250, 204, 21, 0.28);
+}
+
+.sim-intro__ok:hover {
+  filter: brightness(1.06);
+}
+
+.sim-intro__ok:focus-visible {
+  outline: 2px solid #facc15;
+  outline-offset: 3px;
+}
+
+html[dir="rtl"] .sim-intro__copy {
+  text-align: center;
 }
 
 @media (max-width: 640px) {
@@ -313,6 +424,14 @@ html.theme-electric-neon .sim-lang .lang-btn.active {
   }
   .sim-footer-note {
     display: none;
+  }
+  .sim-intro__copy {
+    width: calc(100% - 28px);
+    bottom: 4vh;
+  }
+  .sim-intro__ok {
+    width: 100%;
+    max-width: 320px;
   }
 }
 
