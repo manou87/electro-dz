@@ -50,8 +50,13 @@
    * — FET 1–3 : DZSWISS-FET
    * — AE professionnel : DZSWISS-AE
    * Pour changer : SHA-256 du nouveau mot de passe (hex) dans passwordSha256.
+   *
+   * Accès libre temporaire : jusqu’à libraryFreeUntil (inclus, fin de journée locale).
    */
+  const LIBRARY_FREE_UNTIL = '2026-09-16';
+
   const LIBRARY_PROTECTED = {
+    freeUntil: LIBRARY_FREE_UNTIL,
     groups: [
       {
         key: 'fet',
@@ -80,6 +85,7 @@
     resolveSiteBase,
     pageUrl,
     libraryProtected: LIBRARY_PROTECTED,
+    libraryFreeUntil: LIBRARY_FREE_UNTIL,
     supabase: {
       url: SUPABASE_URL,
       anonKey: SUPABASE_ANON_KEY,

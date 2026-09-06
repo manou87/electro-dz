@@ -6,6 +6,8 @@
   "use strict";
 
   const STORAGE_KEY = "electrodz-lib-unlocked";
+  /** Fin d’accès libre (inclus) — aligné sur ElectroDzSite.libraryFreeUntil */
+  const DEFAULT_FREE_UNTIL = "2026-09-16";
   const DEFAULT_GROUPS = [
     {
       key: "fet",
@@ -26,6 +28,45 @@
       labelEn: "AE professional",
     },
   ];
+
+  function freeUntilIso() {
+    const cfg = g.ElectroDzSite;
+    if (cfg && cfg.libraryFreeUntil) return String(cfg.libraryFreeUntil);
+    if (cfg && cfg.libraryProtected && cfg.libraryProtected.freeUntil) {
+      return String(cfg.libraryProtected.freeUntil);
+    }
+    return DEFAULT_FREE_UNTIL;
+  }
+
+  /** Accès libre sans mot de passe jusqu’à la date (fin de journée locale). */
+  function isFreeAccess() {
+    const iso = freeUntilIso();
+    const end = new Date(iso + "T23:59:59");
+    if (isNaN(end.getTime())) return false;
+    return Date.now() <= end.getTime();
+  }
+
+  function freeUntilLabel(lang) {
+    const iso = freeUntilIso();
+    const parts = iso.split("-");
+    if (parts.length !== 3) return iso;
+    const y = parts[0];
+    const m = parts[1];
+    const d = parts[2];
+    const l = lang || getLang();
+    if (l === "ar") return d + "/" + m + "/" + y;
+    if (l === "en") return d + "/" + m + "/" + y;
+    return d + "/" + m + "/" + y;
+  }
+
+  function freeAccessMessage() {
+    const date = freeUntilLabel();
+    return t(
+      "Accès libre — testez sans code jusqu’au " + date,
+      "دخول مجاني — جرّب بدون رمز حتى " + date,
+      "Free access — try without a code until " + date
+    );
+  }
 
   function getGroups() {
     const cfg = g.ElectroDzSite && g.ElectroDzSite.libraryProtected;
@@ -71,10 +112,12 @@
   }
 
   function isProtected(bookId) {
+    if (isFreeAccess()) return false;
     return !!bookToGroup(bookId);
   }
 
   function isUnlocked(bookId) {
+    if (isFreeAccess()) return true;
     const group = bookToGroup(bookId);
     if (!group) return true;
     return loadUnlocked().indexOf(group.key) !== -1;
@@ -212,8 +255,50 @@
   g.ElectroDzLibraryLock = {
     isProtected: isProtected,
     isUnlocked: isUnlocked,
+    isFreeAccess: isFreeAccess,
+    freeUntilIso: freeUntilIso,
+    freeAccessMessage: freeAccessMessage,
     promptUnlock: promptUnlock,
     guardAccess: guardAccess,
     bookToGroup: bookToGroup,
   };
+
+  function mountFreeBanner() {
+    if (!isFreeAccess()) return;
+    try {
+      document.documentElement.setAttribute("data-lib-free", freeUntilIso());
+    } catch (_) { /* ignore */ }
+
+    if (document.getElementById("edz-lib-free-banner")) return;
+    var path = (location.pathname || "").toLowerCase();
+    if (path.indexOf("bibliotheque") < 0 && path.indexOf("lecteur") < 0) return;
+
+    var banner = document.createElement("div");
+    banner.id = "edz-lib-free-banner";
+    banner.setAttribute("role", "status");
+    banner.style.cssText =
+      "margin:0 0 1rem;padding:12px 14px;border-radius:10px;" +
+      "border:1px solid rgba(167,139,250,.45);background:rgba(167,139,250,.12);" +
+      "color:#e9d5ff;font-size:.9rem;font-weight:700;line-height:1.35;" +
+      "box-shadow:0 0 18px rgba(167,139,250,.15)";
+    banner.textContent = freeAccessMessage();
+
+    var host =
+      document.querySelector(".library-hero-row") ||
+      document.querySelector("main.page") ||
+      document.querySelector("main");
+    if (host) {
+      if (host.classList && host.classList.contains("library-hero-row")) {
+        host.parentNode.insertBefore(banner, host.nextSibling);
+      } else {
+        host.insertBefore(banner, host.firstChild);
+      }
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", mountFreeBanner);
+  } else {
+    mountFreeBanner();
+  }
 })(typeof window !== "undefined" ? window : globalThis);
