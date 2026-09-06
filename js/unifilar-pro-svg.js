@@ -368,7 +368,7 @@
         if (dir) base = dir + 'assets/unifilar/legend/symbols/';
       }
     } catch (e) {}
-    return base + file + '.png?v=20260906unify1';
+    return base + file + '.png?v=20260906kindmap1';
   }
 
   /** Kinds avec tampon PNG (hors lampe SVG ○+croix). */
@@ -480,62 +480,152 @@
     return parts.join('');
   }
 
+  /** templateId bilan → kind tampon (source de vérité). */
+  var TEMPLATE_TO_KIND = {
+    light_rooms: 'lampe',
+    light_stairs: 'lampe',
+    light_parking: 'lampe',
+    outdoor_light: 'lampe',
+    sockets_living: 'prise',
+    sockets_kitchen: 'prise',
+    sockets_bedrooms: 'prise',
+    sockets_bathroom: 'prise',
+    sockets_office: 'prise',
+    sockets_garage: 'prise',
+    hvac_ventilation: 'vmc',
+    motor_pump: 'pompe',
+    motor_lift: 'ascenseur',
+    washing_machine: 'lave_linge',
+    heating_electric: 'chauffage',
+    water_heater: 'ecs',
+    cooker: 'cuisiniere',
+    oven: 'four',
+    dishwasher: 'lave_vaisselle',
+    dryer: 'seche_linge',
+    welding: 'souder',
+    ev_charger: 'borne_ve',
+  };
+
+  function hasAny(hay, words) {
+    for (var i = 0; i < words.length; i++) {
+      if (hay.indexOf(words[i]) >= 0) return true;
+    }
+    return false;
+  }
+
+  /**
+   * Kind récepteur depuis templateId / usage / libellé (FR · AR · EN).
+   * Ordre : template exact → mots-clés spécifiques → usage générique.
+   */
   function loadKind(c) {
-    var u = (c.usage || '').toLowerCase();
-    var t = (c.templateId || '').toLowerCase();
-    var label = (c.label || '').toLowerCase();
-    if (u.indexOf('eclair') >= 0 || t.indexOf('light') >= 0 || label.indexOf('éclair') >= 0 || label.indexOf('eclair') >= 0 || label.indexOf('lampe') >= 0) {
+    var u = String(c.usage || '').toLowerCase();
+    var t = String(c.templateId || '').toLowerCase().trim();
+    var label = String(c.label || '').toLowerCase();
+    /* Arabic labels : toLowerCase ne change pas les lettres ; OK pour indexOf. */
+
+    if (t && TEMPLATE_TO_KIND[t]) return TEMPLATE_TO_KIND[t];
+    if (t.indexOf('socket') >= 0) return 'prise';
+    if (t.indexOf('light') >= 0) return 'lampe';
+
+    if (
+      hasAny(label, [
+        'éclair',
+        'eclair',
+        'lampe',
+        'luminaire',
+        'éclairage',
+        'lighting',
+        'light',
+        'lamp',
+        'إضاءة',
+        'اضاءة',
+        'مصباح',
+        'ضوء',
+      ]) ||
+      u === 'lighting' ||
+      u.indexOf('eclair') >= 0
+    ) {
       return 'lampe';
     }
-    if (u.indexOf('prise') >= 0 || t.indexOf('socket') >= 0 || label.indexOf('prise') >= 0) {
+
+    if (
+      hasAny(label, [
+        'prise',
+        'socket',
+        'outlet',
+        'مأخذ',
+        'مآخذ',
+        'ماخذ',
+        'مقبس',
+      ]) ||
+      u === 'sockets' ||
+      u.indexOf('socket') >= 0 ||
+      u.indexOf('prise') >= 0
+    ) {
       return 'prise';
     }
-    /* Spécifiques d’abord (démo villa + templates) */
-    if (t.indexOf('water_heater') >= 0 || label.indexOf('chauffe-eau') >= 0 || label.indexOf('ecs') >= 0 || label.indexOf('ballon') >= 0) {
+
+    if (
+      hasAny(label, ['chauffe-eau', 'chauffe eau', 'ecs', 'ballon', 'water heater', 'سخان']) ||
+      t.indexOf('water_heater') >= 0
+    ) {
       return 'ecs';
     }
-    if (t.indexOf('cooker') >= 0 || label.indexOf('cuisini') >= 0 || label.indexOf('plaque') >= 0) {
+    if (hasAny(label, ['cuisini', 'plaque', 'cooker', 'hob', 'موقد', 'لوحة'])) {
       return 'cuisiniere';
     }
-    if (t.indexOf('oven') >= 0 || (label.indexOf('four') >= 0 && label.indexOf('chauffe') < 0)) {
+    if (
+      (hasAny(label, ['four', 'oven', 'فرن']) && !hasAny(label, ['chauffe', 'سخان'])) ||
+      t === 'oven'
+    ) {
       return 'four';
     }
-    if (t.indexOf('dishwasher') >= 0 || label.indexOf('lave-vaisselle') >= 0 || label.indexOf('lave vaisselle') >= 0) {
+    if (hasAny(label, ['lave-vaisselle', 'lave vaisselle', 'dishwasher', 'صحون'])) {
       return 'lave_vaisselle';
     }
-    if (t.indexOf('washing') >= 0 || label.indexOf('lave-linge') >= 0 || label.indexOf('lave linge') >= 0) {
+    if (hasAny(label, ['lave-linge', 'lave linge', 'washing', 'ملابس', 'غسالة'])) {
+      /* غسالة seule → lave-linge ; « غسالة صحون » déjà capturé plus haut */
+      if (label.indexOf('صحون') >= 0) return 'lave_vaisselle';
       return 'lave_linge';
     }
-    if (t.indexOf('dryer') >= 0 || label.indexOf('sèche-linge') >= 0 || label.indexOf('seche-linge') >= 0 || label.indexOf('seche linge') >= 0) {
+    if (hasAny(label, ['sèche-linge', 'seche-linge', 'seche linge', 'dryer', 'tumble', 'مجفف'])) {
       return 'seche_linge';
     }
-    if (t.indexOf('hvac') >= 0 || t.indexOf('ventil') >= 0 || u.indexOf('vmc') >= 0 || label.indexOf('vmc') >= 0 || label.indexOf('ventilation') >= 0) {
+    if (hasAny(label, ['vmc', 'ventilation', 'mvhr', 'تهوية', 'تهويه'])) {
       return 'vmc';
     }
-    if (t.indexOf('motor_pump') >= 0 || t.indexOf('pump') >= 0 || label.indexOf('pompe') >= 0) {
+    if (hasAny(label, ['pompe', 'pump', 'مضخة'])) {
       return 'pompe';
     }
-    if (t.indexOf('motor_lift') >= 0 || t.indexOf('lift') >= 0 || label.indexOf('ascenseur') >= 0) {
+    if (hasAny(label, ['ascenseur', 'lift', 'elevator', 'مصعد'])) {
       return 'ascenseur';
     }
-    if (t.indexOf('ev_charger') >= 0 || label.indexOf('borne') >= 0 || label.indexOf('ve ') >= 0 || label.indexOf(' véhicule') >= 0) {
+    if (hasAny(label, ['borne', 'véhicule', 'vehicule', 'ev charger', 'ev ', 'شحن', 'سيارة'])) {
       return 'borne_ve';
     }
-    if (t.indexOf('weld') >= 0 || u.indexOf('weld') >= 0 || label.indexOf('soud') >= 0) {
+    if (hasAny(label, ['soud', 'weld', 'لحام']) || u === 'welding' || u.indexOf('weld') >= 0) {
       return 'souder';
     }
     if (
-      t.indexOf('heating_electric') >= 0 ||
-      u.indexOf('radiat') >= 0 ||
-      label.indexOf('radiat') >= 0 ||
-      (u.indexOf('heat') >= 0 && t.indexOf('water') < 0) ||
-      (label.indexOf('chauffage') >= 0 && label.indexOf('chauffe-eau') < 0)
+      hasAny(label, ['radiat', 'chauffage', 'heating', 'تدفئة', 'تدفئه']) &&
+      !hasAny(label, ['chauffe-eau', 'سخان'])
     ) {
       return 'chauffage';
     }
-    if (u.indexOf('moteur') >= 0 || u.indexOf('motor') >= 0 || t.indexOf('motor') >= 0 || label.indexOf('moteur') >= 0 || label.indexOf('volet') >= 0) {
+    if (u === 'heating' || (u.indexOf('heat') >= 0 && t.indexOf('water') < 0)) {
+      return 'chauffage';
+    }
+
+    if (
+      hasAny(label, ['moteur', 'motor', 'volet', 'محرك', 'موتور']) ||
+      u === 'motors' ||
+      u.indexOf('moteur') >= 0 ||
+      u.indexOf('motor') >= 0 ||
+      t.indexOf('motor') >= 0
+    ) {
       return 'moteur';
     }
+
     return 'specialise';
   }
 

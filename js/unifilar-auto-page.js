@@ -212,7 +212,7 @@
   }
 
   function legendOnceHtml() {
-    var bust = '20260906legcompact2';
+    var bust = '20260906kindmap1';
     /* Une seule planche compacte N/B : tous les pictos en petits tampons */
     var items = [
       { file: 'disjoncteur-1p.png', key: 'legend.item.dj' },
@@ -405,7 +405,7 @@
                     base +
                     'assets/unifilar/legend/' +
                     it[0] +
-                    '?v=20260906legcompact2" alt="" style="display:block;width:32px;height:32px;margin:0 auto 2px;object-fit:contain"/>' +
+                    '?v=20260906kindmap1" alt="" style="display:block;width:32px;height:32px;margin:0 auto 2px;object-fit:contain"/>' +
                     '<figcaption style="font-size:8px;font-weight:600;color:#000;line-height:1.15">' +
                     it[1] +
                     '</figcaption></figure>'
