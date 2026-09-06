@@ -250,9 +250,22 @@ html.theme-electric-neon .sim-lang .lang-btn.active {
   text-align: center;
 }
 
-body.is-oibt-intro .sim-topbar,
 body.is-oibt-intro .sim-workspace {
   display: none !important;
+}
+
+body.is-oibt-intro .sim-topbar {
+  position: relative;
+  z-index: 4100;
+}
+
+.sim-page .sim-topbar .sim-lang {
+  position: static !important;
+  top: auto !important;
+  right: auto !important;
+  left: auto !important;
+  bottom: auto !important;
+  transform: none !important;
 }
 
 .sim-intro {
