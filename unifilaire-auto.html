@@ -6,7 +6,7 @@
   <script src="js/theme-electric-neon.js"></script>
   <meta name="description" content="Unifilaire automatique depuis le bilan de puissance — SwissDZ" />
   <title>Unifilaire auto — SwissDZ</title>
-  <link rel="stylesheet" href="css/unifilaire-auto.css?v=20260711o" />
+  <link rel="stylesheet" href="css/unifilaire-auto.css?v=20260906legcompact2" />
   <link rel="icon" href="assets/app-icon.png" type="image/png" />
   <link rel="canonical" href="https://electro-dz.com/unifilaire-auto.html" />
 </head>
@@ -19,6 +19,7 @@
         <button type="button" class="lang-btn" data-lang="ar">AR</button>
         <button type="button" class="lang-btn" data-lang="en">EN</button>
       </div>
+      <button type="button" class="btn btn-primary" id="btnUnifDemo" data-i18n="btn.demo">Démo villa</button>
       <button type="button" class="btn" id="btnUnifRegen" data-i18n="btn.regen">Regénérer</button>
       <button type="button" class="btn" id="btnUnifPrint" data-i18n="btn.print">Imprimer</button>
       <a href="calcul-electrique.html#balance" class="btn" id="btnUnifBackCalc" data-i18n="btn.calc">Retour bilan</a>
@@ -26,10 +27,26 @@
   </header>
 
   <main class="unif-auto-main">
+    <div id="unif-saved-dock" class="unif-saved-bar">
+      <div class="unif-saved-row">
+        <span class="unif-saved-title" data-i18n="saved.titleLocal">📁 Mes unifilaires enregistrés (sur cet appareil)</span>
+        <select id="unif-saved-select" aria-label="Unifilaires enregistrés">
+          <option value="">—</option>
+        </select>
+        <button type="button" class="unif-saved-btn unif-saved-btn--save" id="unif-save-btn" data-i18n="btn.save">Enregistrer</button>
+        <button type="button" class="unif-saved-btn" id="unif-load-btn" data-i18n="btn.load">Charger</button>
+        <button type="button" class="unif-saved-btn" id="unif-delete-save-btn" data-i18n="btn.deleteSave">Supprimer</button>
+      </div>
+      <p class="unif-saved-status" id="unif-saved-status" aria-live="polite"></p>
+    </div>
+
     <div id="unifEmpty" class="unif-auto-card unif-empty" hidden>
       <h1 data-i18n="empty.title">Aucun bilan chargé</h1>
       <p data-i18n="empty.lead">Calculez d’abord un bilan de puissance, puis cliquez « Générer unifilaire ».</p>
-      <p><a href="calcul-electrique.html#balance" data-i18n="empty.link">Aller aux calculs</a></p>
+      <p class="unif-empty-actions">
+        <button type="button" class="btn btn-primary" id="btnUnifDemoEmpty" data-i18n="btn.demo">Démo villa</button>
+        <a href="calcul-electrique.html#balance" data-i18n="empty.link">Aller aux calculs</a>
+      </p>
     </div>
 
     <div id="unifContent" hidden>
@@ -41,6 +58,7 @@
           <label for="unifBoardSelect" data-i18n="board">Tableau</label>
           <select id="unifBoardSelect" aria-label="Tableau"></select>
         </div>
+
         <div class="unif-preview" id="unifPreview"></div>
         <p class="unif-disclaimer" data-i18n="disclaimer"></p>
       </section>
@@ -62,12 +80,17 @@
     </div>
   </main>
 
-  <script src="js/unifilar-auto-i18n.js?v=20260828en"></script>
+  <script src="js/site-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/user-saved-unifilar.js?v=20260831u"></script>
+  <script src="js/unifilar-auto-i18n.js?v=20260906legcompact2"></script>
   <script src="js/hager-glyphs-b64.js?v=20260609"></script>
   <script src="js/iec-symbol-library.js?v=20260609"></script>
-  <script src="js/unifilar-pro-svg.js?v=20260828en"></script>
+  <script src="js/unifilar-pro-svg.js?v=20260906legcompact2"></script>
   <script src="js/unifilar-drawio-engine.js?v=20260618"></script>
   <script src="js/unifilar-from-balance.js?v=20260711n"></script>
-  <script src="js/unifilar-auto-page.js?v=20260828en"></script>
+  <script src="js/unifilar-demo-villa.js?v=20260906"></script>
+  <script src="js/unifilar-auto-page.js?v=20260906legcompact2"></script>
 </body>
 </html>

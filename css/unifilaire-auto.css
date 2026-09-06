@@ -198,3 +198,248 @@
   line-height: 1.45;
   margin-top: 12px;
 }
+
+.unif-saved-bar {
+  margin-bottom: 16px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(5, 150, 105, 0.35);
+  background: rgba(5, 150, 105, 0.08);
+}
+
+.unif-saved-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.unif-saved-title {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #86efac;
+  flex: 1 1 100%;
+}
+
+.unif-saved-row select {
+  flex: 1 1 200px;
+  min-width: 160px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #1e293b;
+  color: #f1f5f9;
+  font-size: 0.85rem;
+}
+
+.unif-saved-btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  color: #e2e8f0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.unif-saved-btn:hover {
+  border-color: rgba(250, 204, 21, 0.45);
+  color: #fde047;
+}
+
+.unif-saved-btn--save {
+  background: #059669;
+  color: #fff;
+  border-color: #059669;
+}
+
+.unif-saved-status {
+  font-size: 0.75rem;
+  color: #86efac;
+  margin-top: 6px;
+  min-height: 1.1em;
+}
+
+.unif-empty-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.unif-empty-actions .btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: 1px solid #facc15;
+  background: #facc15;
+  color: #0f172a;
+  cursor: pointer;
+}
+
+.unif-empty-actions a {
+  color: #fde047;
+  font-weight: 700;
+}
+
+.unif-board-block {
+  margin-bottom: 18px;
+}
+
+.unif-board-title {
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #facc15;
+}
+
+.unif-legend-once-wrap {
+  margin-top: 12px;
+  max-width: 640px;
+}
+
+/* Légende pro : un seul cadre blanc, noir sur blanc, compact */
+.unif-legend-pro {
+  margin-top: 14px;
+  max-width: 640px;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+.unif-legend-pro-sheet {
+  background: #ffffff;
+  border: 1.5px solid #000000;
+  padding: 8px 10px 10px;
+  color: #000000;
+}
+
+.unif-legend-pro-title {
+  margin: 0 0 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #000000;
+  border-bottom: 1px solid #000000;
+  padding-bottom: 4px;
+}
+
+.unif-legend-pro-lead {
+  display: none;
+}
+
+.unif-legend-pro-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px 6px;
+}
+
+.unif-legend-pro-cell {
+  margin: 0;
+  padding: 2px 0 0;
+  background: #ffffff;
+  border: none;
+  text-align: center;
+  min-width: 0;
+}
+
+.unif-legend-pro-cell img {
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin: 0 auto 2px;
+  object-fit: contain;
+  background: #ffffff;
+}
+
+.unif-legend-pro-cell figcaption {
+  margin: 0;
+  padding: 0;
+  font-size: 0.58rem;
+  font-weight: 600;
+  line-height: 1.15;
+  color: #000000;
+  background: #ffffff;
+  border: none;
+  word-break: break-word;
+}
+
+/* anciennes classes fig — neutres si encore présentes */
+.unif-legend-pro-fig,
+.unif-legend-pro-fig--plate,
+.unif-legend-pro-fig--stamp {
+  margin: 0;
+  background: #fff;
+  border: none;
+}
+
+@media (max-width: 720px) {
+  .unif-legend-pro-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.unif-legend-card--top {
+  margin: 0 0 16px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(250, 204, 21, 0.35);
+  background: rgba(250, 204, 21, 0.06);
+}
+
+.unif-legend-card h2 {
+  font-size: 1.05rem;
+  color: #fde047;
+  margin: 0 0 6px;
+}
+
+.unif-legend-lead {
+  color: #94a3b8;
+  font-size: 0.82rem;
+  margin: 0 0 14px;
+  line-height: 1.4;
+}
+
+.unif-legend-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.unif-legend-fig {
+  margin: 0;
+  background: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.unif-legend-fig img {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 280px;
+  background: #fff;
+  object-fit: contain;
+}
+
+.unif-legend-fig figcaption {
+  padding: 8px 10px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #e2e8f0;
+  background: rgba(15, 23, 42, 0.92);
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .unif-legend-grid {
+    max-width: 100%;
+  }
+}
