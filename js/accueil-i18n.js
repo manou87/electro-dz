@@ -152,9 +152,9 @@
       "quick.swissdz": "ورشة الكهرباء SwissDZ",
       "quick.swissdz.hint":
         "أول محاكي للكهربائيين في الجزائر — لوحة، ورشة ومخطط أحادي الطور احترافي",
-      "quick.oibt": "تدريب على المراقبة الكهربائية",
+      "quick.oibt": "مراقبة كهربائية",
       "quick.oibt.hint":
-        "تدريب على مراقبة التركيبات — لوحة، مقابس وجهاز اختبار",
+        "محاكاة مراقبة التركيبات — لوحة، مقابس وجهاز اختبار",
       "quick.fluke": "جهاز متعدد الوظائف",
       "quick.fluke.hint":
         "جهاز اختبار التركيبات متعدد الوظائف — توصيل وقياسات",
@@ -275,9 +275,9 @@
       "quick.swissdz": "SwissDZ electrical workshop",
       "quick.swissdz.hint":
         "First simulator for electricians in Algeria — panel, workshop & professional single-line diagram",
-      "quick.oibt": "Electrical inspection training",
+      "quick.oibt": "Electrical inspection",
       "quick.oibt.hint":
-        "Installation inspection training — panel, outlets and tester",
+        "Installation inspection simulation — panel, outlets and tester",
       "quick.fluke": "Multifunction tester",
       "quick.fluke.hint":
         "Multifunction installation tester — wiring and measurements",
