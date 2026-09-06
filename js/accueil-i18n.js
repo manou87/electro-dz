@@ -32,10 +32,10 @@
         "Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel",
       "quick.oibt": "Simulateur OIBT",
       "quick.oibt.hint":
-        "Contrôle périodique OIBT — tableau, prises & Fluke",
-      "quick.fluke": "Fluke 1664 FC",
+        "Contrôle périodique OIBT — tableau, prises et testeur d'installations",
+      "quick.fluke": "Appareil multifonction",
       "quick.fluke.hint":
-        "Appareil de mesure Fluke 1664 FC — câblage et mesures",
+        "Testeur d'installations multifonction — câblage et mesures",
       "quick.controle": "Contrôle final SwissDZ",
       "quick.controle.hint":
         "Contrôle final obligatoire — protocole de mesures, rapport et PDF. Outil SwissDZ pour l'Algérie.",
@@ -154,10 +154,10 @@
         "أول محاكي للكهربائيين في الجزائر — لوحة، ورشة ومخطط أحادي الطور احترافي",
       "quick.oibt": "محاكي OIBT",
       "quick.oibt.hint":
-        "مراقبة دورية OIBT — لوحة ومقابس وFluke",
-      "quick.fluke": "Fluke 1664 FC",
+        "مراقبة دورية OIBT — لوحة ومقابس وجهاز اختبار التركيبات",
+      "quick.fluke": "جهاز متعدد الوظائف",
       "quick.fluke.hint":
-        "جهاز القياس Fluke 1664 FC — توصيل وقياسات",
+        "جهاز اختبار التركيبات متعدد الوظائف — توصيل وقياسات",
       "quick.controle": "الفحص النهائي SwissDZ",
       "quick.controle.hint":
         "الفحص النهائي الإلزامي — بروتوكول القياسات وتقرير وPDF. أداة SwissDZ للجزائر.",
@@ -277,10 +277,10 @@
         "First simulator for electricians in Algeria — panel, workshop & professional single-line diagram",
       "quick.oibt": "OIBT simulator",
       "quick.oibt.hint":
-        "OIBT periodic inspection — panel, outlets & Fluke",
-      "quick.fluke": "Fluke 1664 FC",
+        "OIBT periodic inspection — panel, outlets and installation tester",
+      "quick.fluke": "Multifunction tester",
       "quick.fluke.hint":
-        "Fluke 1664 FC meter — wiring and measurements",
+        "Multifunction installation tester — wiring and measurements",
       "quick.controle": "SwissDZ Final Inspection",
       "quick.controle.hint":
         "Mandatory final inspection — measurement protocol, report and PDF. SwissDZ tool for Algeria.",
