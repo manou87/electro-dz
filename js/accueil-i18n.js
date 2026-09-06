@@ -30,9 +30,9 @@
       "quick.swissdz": "Atelier électrique SwissDZ",
       "quick.swissdz.hint":
         "Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel",
-      "quick.oibt": "Simulateur OIBT",
+      "quick.oibt": "Contrôle électrique",
       "quick.oibt.hint":
-        "Contrôle périodique OIBT — tableau, prises et testeur d'installations",
+        "Simulation de contrôle d'installations — tableau, prises et testeur",
       "quick.fluke": "Appareil multifonction",
       "quick.fluke.hint":
         "Testeur d'installations multifonction — câblage et mesures",
@@ -152,9 +152,9 @@
       "quick.swissdz": "ورشة الكهرباء SwissDZ",
       "quick.swissdz.hint":
         "أول محاكي للكهربائيين في الجزائر — لوحة، ورشة ومخطط أحادي الطور احترافي",
-      "quick.oibt": "محاكي OIBT",
+      "quick.oibt": "مراقبة كهربائية",
       "quick.oibt.hint":
-        "مراقبة دورية OIBT — لوحة ومقابس وجهاز اختبار التركيبات",
+        "محاكاة مراقبة التركيبات — لوحة، مقابس وجهاز اختبار",
       "quick.fluke": "جهاز متعدد الوظائف",
       "quick.fluke.hint":
         "جهاز اختبار التركيبات متعدد الوظائف — توصيل وقياسات",
@@ -275,9 +275,9 @@
       "quick.swissdz": "SwissDZ electrical workshop",
       "quick.swissdz.hint":
         "First simulator for electricians in Algeria — panel, workshop & professional single-line diagram",
-      "quick.oibt": "OIBT simulator",
+      "quick.oibt": "Electrical inspection",
       "quick.oibt.hint":
-        "OIBT periodic inspection — panel, outlets and installation tester",
+        "Installation inspection simulation — panel, outlets and tester",
       "quick.fluke": "Multifunction tester",
       "quick.fluke.hint":
         "Multifunction installation tester — wiring and measurements",

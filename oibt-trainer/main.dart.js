@@ -83066,7 +83066,7 @@ A.Sz.prototype={
 aA(){this.aP()
 $.Y.k3$.push(new A.anN())},
 L(a){var s=null,r=A.bk(8),q=A.d5(B.L,2)
-return A.BD(s,s,A.dq(s,A.aet(!0,A.dE(new A.bd(B.k1,A.dY(A.b([A.dq(s,A.aF("SwissDZ",s,s,s,A.kL().$3$color$fontSize$fontWeight(B.he,18,B.aE),s,s),B.m,s,s,new A.b7(B.j,s,q,r,s,s,B.E),s,s,s,B.nT,s,s,s),B.Ao,A.aF("Retour \xe0 Electro DZ",s,s,s,A.kL().$3$color$fontSize$fontWeight(B.L,20,B.af),s,s),B.fI,A.aF("Redirection vers l\u2019accueil\u2026",s,s,s,A.df().$2$color$fontSize(B.dg,13),B.bl,s),B.ly,A.awW(B.Ib,B.Yo,A.aVJ(),A.aBw(B.L,B.he,s,s,s,s)),B.An,A.ks(!1,A.aF("Simulateur OIBT",s,s,s,A.df().$1$color(B.bx),s,s),s,s,s,s,s,s,new A.anL(a),s,s),A.ks(!1,A.aF("Appareil multifonction",s,s,s,A.df().$1$color(B.bx),s,s),s,s,s,s,s,s,new A.anM(a),s,s)],t.p),B.I,B.v,B.aX),s),s,s),!0),B.m,s,s,B.C4,s,s,s,s,s,s,s))}}
+return A.BD(s,s,A.dq(s,A.aet(!0,A.dE(new A.bd(B.k1,A.dY(A.b([A.dq(s,A.aF("SwissDZ",s,s,s,A.kL().$3$color$fontSize$fontWeight(B.he,18,B.aE),s,s),B.m,s,s,new A.b7(B.j,s,q,r,s,s,B.E),s,s,s,B.nT,s,s,s),B.Ao,A.aF("Retour \xe0 Electro DZ",s,s,s,A.kL().$3$color$fontSize$fontWeight(B.L,20,B.af),s,s),B.fI,A.aF("Redirection vers l\u2019accueil\u2026",s,s,s,A.df().$2$color$fontSize(B.dg,13),B.bl,s),B.ly,A.awW(B.Ib,B.Yo,A.aVJ(),A.aBw(B.L,B.he,s,s,s,s)),B.An,A.ks(!1,A.aF("Contrôle électrique",s,s,s,A.df().$1$color(B.bx),s,s),s,s,s,s,s,s,new A.anL(a),s,s),A.ks(!1,A.aF("Appareil multifonction",s,s,s,A.df().$1$color(B.bx),s,s),s,s,s,s,s,s,new A.anM(a),s,s)],t.p),B.I,B.v,B.aX),s),s,s),!0),B.m,s,s,B.C4,s,s,s,s,s,s,s))}}
 A.anN.prototype={
 $1(a){A.av6()},
 $S:5}
