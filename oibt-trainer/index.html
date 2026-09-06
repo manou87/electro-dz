@@ -54,20 +54,6 @@
     caches.keys().then((keys) => keys.forEach((k) => caches.delete(k)));
   }
 
-  (function syncSiteLang() {
-    var lang = 'fr';
-    try {
-      var q = new URLSearchParams(location.search).get('lang');
-      if (q === 'en' || q === 'ar' || q === 'fr') lang = q;
-      else {
-        var s = localStorage.getItem('electrodz-site-lang');
-        if (s === 'en' || s === 'ar' || s === 'fr') lang = s;
-      }
-    } catch (_) {}
-    document.documentElement.lang = lang;
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-  })();
-
   // Paysage forcé seulement pour l’atelier OIBT (`#/trainer`).
   // Fluke `#/meter` : pas de lock (portrait OK).
   function tryLockLandscapeForTrainer() {
@@ -92,6 +78,6 @@
 </script>
   <!-- ?v= force le navigateur à recharger le bootstrap (puis main.dart.js)
        même si un vieux http.server a mis le JS en cache heuristique. -->
-  <script src="flutter_bootstrap.js?v=lcd-riso-hold-20260829" async></script>
+  <script src="flutter_bootstrap.js?v=white-screen-fix-20260823-0150" async></script>
 </body>
 </html>

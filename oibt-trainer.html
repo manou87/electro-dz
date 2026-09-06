@@ -7,7 +7,7 @@
   <meta name="description" content="OIBT periodic inspection trainer — panel, outlets & Fluke 1664 FC | Electro DZ" />
   <title>OIBT trainer | Electro DZ</title>
   <link rel="icon" href="assets/app-icon.png" type="image/png" />
-  <link rel="stylesheet" href="css/simulation-swissdz.css?v=20260828en" />
+  <link rel="stylesheet" href="css/simulation-swissdz.css?v=oibt16" />
   <link rel="canonical" href="https://electro-dz.com/oibt-trainer.html" />
 </head>
 <body class="sim-page">
@@ -24,6 +24,7 @@
   </header>
 
   <div class="sim-workspace">
+    <p class="sim-free-banner" id="oibtFreeBanner" hidden></p>
     <div class="sim-frame-wrap">
       <p class="sim-loading" id="simLoading" data-i18n="loading">Chargement du simulateur…</p>
       <iframe
@@ -47,18 +48,21 @@
           "meta.desc": "Contrôle périodique OIBT — tableau, prises et Fluke 1664 FC.",
           loading: "Chargement du simulateur…",
           footer: "Outil pédagogique OIBT / NIV. Toute installation réelle doit être vérifiée par un inspecteur habilité.",
+          free: "Accès libre — testez sans code jusqu’au 16/09/2026",
         },
         ar: {
           "meta.title": "محاكي OIBT — فحص دوري | Electro DZ",
           "meta.desc": "الفحص الدوري OIBT — لوحة، مقابس وجهاز Fluke 1664 FC.",
           loading: "جاري تحميل المحاكي…",
           footer: "أداة تعليمية OIBT / NIV. أي تركيب حقيقي يجب أن يتحقق منه مفتش مؤهل.",
+          free: "دخول مجاني — جرّب بدون رمز حتى 16/09/2026",
         },
         en: {
           "meta.title": "OIBT trainer — periodic inspection | Electro DZ",
           "meta.desc": "OIBT periodic inspection — distribution board, outlets and Fluke 1664 FC.",
           loading: "Loading the trainer…",
           footer: "Training tool — OIBT / NIV. Any live installation must be verified by a qualified inspector.",
+          free: "Free access — try without a code until 16/09/2026",
         },
       };
 
@@ -98,6 +102,13 @@
         document.querySelectorAll("[data-i18n]").forEach(function (el) {
           el.textContent = t(el.getAttribute("data-i18n"));
         });
+        var freeBanner = document.getElementById("oibtFreeBanner");
+        if (freeBanner) {
+          var freeUntil = new Date("2026-09-16T23:59:59");
+          var showFree = !isNaN(freeUntil.getTime()) && Date.now() <= freeUntil.getTime();
+          freeBanner.hidden = !showFree;
+          if (showFree) freeBanner.textContent = t("free");
+        }
         var brand = document.querySelector(".sim-brand");
         if (brand) brand.setAttribute("href", lang === "fr" ? "index-fr.html" : "index.html");
         document.querySelectorAll(".sim-lang .lang-btn").forEach(function (btn) {

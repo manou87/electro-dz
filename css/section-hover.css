@@ -367,7 +367,7 @@ html body > .section-peek,
   display: none !important;
 }
 
-html[data-lib-free] .quick-item[data-preview] .edz-free-badge {
+html[data-oibt-free] .quick-item--oibt .edz-free-badge {
   position: absolute;
   left: 6px;
   right: 6px;

@@ -250,6 +250,24 @@ html.theme-electric-neon .sim-lang .lang-btn.active {
   text-align: center;
 }
 
+.sim-free-banner {
+  flex-shrink: 0;
+  margin: 0 4% 8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(167, 139, 250, 0.45);
+  background: rgba(167, 139, 250, 0.12);
+  color: #e9d5ff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.sim-free-banner[hidden] {
+  display: none !important;
+}
+
 @media (max-width: 640px) {
   .sim-topbar {
     flex-wrap: wrap;
