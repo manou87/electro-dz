@@ -43,16 +43,26 @@
 </head>
 <body>
   <script>
-  // Évite un vieux service worker Flutter qui sert un ancien main.dart.js
-  // (hard-refresh insuffisant pour le Labo / iframe).
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then((regs) => {
-      regs.forEach((r) => r.unregister());
-    });
-  }
-  if (window.caches) {
-    caches.keys().then((keys) => keys.forEach((k) => caches.delete(k)));
-  }
+  // Évite un vieux service worker seulement après une MAJ du trainer.
+  // Le vider à CHAQUE visite forçait ~9 Mo de re-téléchargement (main.dart.js + CanvasKit).
+  (function () {
+    var BUILD = "2026-09-06-oibt16";
+    var KEY = "oibt-trainer-sw-bust";
+    var needBust = false;
+    try { needBust = localStorage.getItem(KEY) !== BUILD; } catch (_) { needBust = true; }
+    if (!needBust) return;
+    try { localStorage.setItem(KEY, BUILD); } catch (_) {}
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function (regs) {
+        regs.forEach(function (r) { r.unregister(); });
+      });
+    }
+    if (window.caches) {
+      caches.keys().then(function (keys) {
+        keys.forEach(function (k) { caches.delete(k); });
+      });
+    }
+  })();
 
   // Paysage forcé seulement pour l’atelier OIBT (`#/trainer`).
   // Fluke `#/meter` : pas de lock (portrait OK).

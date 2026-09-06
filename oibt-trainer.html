@@ -7,7 +7,9 @@
   <meta name="description" content="OIBT periodic inspection trainer — panel, outlets & Fluke 1664 FC | Electro DZ" />
   <title>OIBT trainer | Electro DZ</title>
   <link rel="icon" href="assets/app-icon.png" type="image/png" />
-  <link rel="stylesheet" href="css/simulation-swissdz.css?v=oibt-slide5" />
+  <link rel="preload" href="oibt-trainer/flutter_bootstrap.js?v=white-screen-fix-20260823-0150" as="script">
+  <link rel="preload" href="oibt-trainer/main.dart.js" as="script">
+  <link rel="stylesheet" href="css/simulation-swissdz.css?v=oibt-fast1" />
   <link rel="canonical" href="https://electro-dz.com/oibt-trainer.html" />
 </head>
 <body class="sim-page">
@@ -177,6 +179,8 @@
         intro.hidden = false;
         intro.removeAttribute("aria-hidden");
         intro.removeAttribute("inert");
+        /* Précharge Flutter derrière la slide (sinon ça ne part qu’après Continuer). */
+        loadFrame();
       }
 
       function applyLang(next) {

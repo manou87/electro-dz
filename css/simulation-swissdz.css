@@ -251,7 +251,9 @@ html.theme-electric-neon .sim-lang .lang-btn.active {
 }
 
 body.is-oibt-intro .sim-workspace {
-  display: none !important;
+  /* Laisser l’iframe charger sous la slide (display:none bloque Flutter). */
+  visibility: hidden;
+  pointer-events: none;
 }
 
 body.is-oibt-intro .sim-topbar {
