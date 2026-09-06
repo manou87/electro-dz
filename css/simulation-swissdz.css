@@ -256,18 +256,18 @@ body.is-oibt-intro .sim-workspace {
 }
 
 .sim-intro {
+  display: none !important;
   position: fixed !important;
   inset: 0 !important;
   z-index: 4000 !important;
-  display: flex;
   flex-direction: column;
   justify-content: flex-end;
   background: #030508;
   overflow: hidden;
 }
 
-.sim-intro[hidden] {
-  display: none !important;
+body.is-oibt-intro .sim-intro {
+  display: flex !important;
 }
 
 .sim-intro__photo {

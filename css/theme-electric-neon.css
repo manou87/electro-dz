@@ -40,7 +40,7 @@ html[dir="ltr"].theme-electric-neon .hero-sub {
   font-family: 'Orbitron', 'Segoe UI', sans-serif;
 }
 
-html.theme-electric-neon body > *:not(.en-bg):not(.section-peek) {
+html.theme-electric-neon body > *:not(.en-bg):not(.section-peek):not(.sim-intro) {
   position: relative;
   z-index: 1;
 }

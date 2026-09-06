@@ -7,7 +7,7 @@
   <meta name="description" content="OIBT periodic inspection trainer — panel, outlets & Fluke 1664 FC | Electro DZ" />
   <title>OIBT trainer | Electro DZ</title>
   <link rel="icon" href="assets/app-icon.png" type="image/png" />
-  <link rel="stylesheet" href="css/simulation-swissdz.css?v=oibt-slide3" />
+  <link rel="stylesheet" href="css/simulation-swissdz.css?v=oibt-slide4" />
   <link rel="canonical" href="https://electro-dz.com/oibt-trainer.html" />
 </head>
 <body class="sim-page">
@@ -71,6 +71,7 @@
   <script>
     (function () {
       var STORAGE = "electrodz-site-lang";
+      var INTRO_DONE_KEY = "edz-oibt-intro-done";
       var FREE_UNTIL = (window.ElectroDzSite && window.ElectroDzSite.oibtFreeUntil) || "2026-09-16";
       var T = {
         fr: {
@@ -126,8 +127,23 @@
         return (location.hash || "").toLowerCase().indexOf("meter") !== -1;
       }
 
+      function introAlreadyDone() {
+        try {
+          return sessionStorage.getItem(INTRO_DONE_KEY) === "1";
+        } catch (e) {
+          return false;
+        }
+      }
+
+      function markIntroDone() {
+        try {
+          sessionStorage.setItem(INTRO_DONE_KEY, "1");
+        } catch (e) {}
+      }
+
       function shouldShowIntro() {
-        return isFreeUntil() && !isMeterRoute();
+        if (!isFreeUntil() || isMeterRoute() || introAlreadyDone()) return false;
+        return true;
       }
 
       function routeHash() {
@@ -153,15 +169,25 @@
         frame.src = frameSrc();
       }
 
-      function showSimulator() {
+      function hideIntroWritings() {
         document.body.classList.remove("is-oibt-intro");
-        if (intro) intro.hidden = true;
+        if (!intro) return;
+        intro.hidden = true;
+        intro.setAttribute("aria-hidden", "true");
+        intro.setAttribute("inert", "");
+      }
+
+      function showSimulator() {
+        hideIntroWritings();
         loadFrame();
       }
 
       function showIntro() {
         document.body.classList.add("is-oibt-intro");
-        if (intro) intro.hidden = false;
+        if (!intro) return;
+        intro.hidden = false;
+        intro.removeAttribute("aria-hidden");
+        intro.removeAttribute("inert");
       }
 
       function applyLang(next) {
@@ -210,6 +236,7 @@
 
       if (introOk) {
         introOk.addEventListener("click", function () {
+          markIntroDone();
           showSimulator();
         });
       }
