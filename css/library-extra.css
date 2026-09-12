@@ -664,6 +664,40 @@ html[dir="rtl"] .library-sort {
   padding: 2rem;
 }
 
+.library-load-more {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.75rem 0 0.5rem;
+}
+
+.library-load-more__btn {
+  background: rgba(250, 204, 21, 0.12);
+  border: 1px solid rgba(250, 204, 21, 0.45);
+  color: #facc15;
+  font-weight: 700;
+  padding: 0.65rem 1.25rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.library-load-more__btn:hover {
+  background: rgba(250, 204, 21, 0.22);
+}
+
+.library-load-more__hint {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.library-load-more__sentinel {
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
