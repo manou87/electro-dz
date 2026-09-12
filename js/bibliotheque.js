@@ -38,12 +38,16 @@
   let collection = "all";
   let category = "all";
   const COLLECTIONS_ENABLED = false;
+  /** Sur « Toutes », n'afficher que les mises en avant (+ message pour choisir un thème). */
+  const ALL_VIEW_FEATURED_ONLY = true;
   let query = "";
   let sortBy = localStorage.getItem(STORAGE_SORT) || "default";
   let favoritesOnly = new URLSearchParams(location.search).get("favorites") === "1";
   let favoriteIds = new Set();
   let pdfStatsMap = {};
   let sessionLoggedIn = false;
+  let arabeArchiveLoaded = false;
+  let arabeArchiveLoading = null;
 
   const COVER_COLORS = {
     normes: "#1e40af",
@@ -55,7 +59,7 @@
     domotique: "#4f46e5",
     securite: "#b45309",
     bac: "#c2410c",
-    kutub: "#0369a1",
+    arabe: "#0369a1",
     autres: "#334155",
   };
 
@@ -177,13 +181,6 @@
     }
   }
 
-  function defaultPreviewPath(book) {
-    if (!book.id) return "";
-    const url = (book.pdfUrl || "").trim();
-    if (!url || url === "#") return "";
-    return "assets/covers/previews/" + book.id + ".png";
-  }
-
   function svgCoverSrc(book) {
     if (lang === "ar" && book.coverImageAr) return book.coverImageAr;
     if (book.coverImageFr) return book.coverImageFr;
@@ -191,18 +188,70 @@
     return book.coverImage || "";
   }
 
-  /** Vignette (PNG 1re page) en priorité, puis couverture SVG */
+  /** Vignette uniquement si coverPreview est déclaré dans le JSON (pas de guess → pas de 404). */
   function bookCoverSrc(book) {
     if (book.coverPreview) return book.coverPreview;
-    if (isPdfBook(book)) {
-      const preview = defaultPreviewPath(book);
-      if (preview) return preview;
-    }
     return svgCoverSrc(book);
   }
 
   function usesPdfPreview(book) {
-    return !!(book.coverPreview || (isPdfBook(book) && defaultPreviewPath(book)));
+    return !!book.coverPreview;
+  }
+
+  function isArabeBook(book) {
+    return book.collection === "arabe" || book.category === "arabe";
+  }
+
+  function matchesCategory(book, catKey) {
+    if (catKey === "all") return true;
+    if (catKey === "arabe") return isArabeBook(book);
+    return book.category === catKey;
+  }
+
+  function needsArabeArchive() {
+    if (category === "arabe") return true;
+    if (collection === "arabe") return true;
+    if (favoritesOnly) return true;
+    if (query && query.trim().length >= 2) return true;
+    return false;
+  }
+
+  function mergeArchiveBooks(books) {
+    if (!catalog || !Array.isArray(catalog.books) || !Array.isArray(books) || !books.length) return;
+    const seen = new Set(catalog.books.map(function (b) { return b.id; }));
+    const baseIndex = catalog.books.length;
+    books.forEach(function (book, i) {
+      if (!book || !book.id || seen.has(book.id)) return;
+      book.collection = book.collection || "arabe";
+      book.category = book.category || "arabe";
+      book._catalogIndex = baseIndex + i;
+      catalog.books.push(book);
+      seen.add(book.id);
+    });
+  }
+
+  function ensureArabeArchiveLoaded() {
+    if (arabeArchiveLoaded) return Promise.resolve();
+    if (arabeArchiveLoading) return arabeArchiveLoading;
+    const meta = catalog && catalog.lazyArchives && catalog.lazyArchives.arabe;
+    const url = (meta && meta.url) || "data/livres-arabe-archive.json";
+    arabeArchiveLoading = fetch(url, { cache: "default" })
+      .then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        mergeArchiveBooks((data && data.books) || []);
+        arabeArchiveLoaded = true;
+        arabeArchiveLoading = null;
+      })
+      .catch(function (err) {
+        arabeArchiveLoading = null;
+        console.warn("[bibliotheque] archive arabe:", err);
+        // Ne pas bloquer l'UI : curated arabe reste visible.
+        arabeArchiveLoaded = true;
+      });
+    return arabeArchiveLoading;
   }
 
   function setLang(next) {
@@ -319,7 +368,7 @@
       if (filterFeatured && !book.featured) return false;
       if (favoritesOnly && !favoriteIds.has(book.id)) return false;
       if (collection !== "all" && book.collection !== collection) return false;
-      if (category !== "all" && book.category !== category) return false;
+      if (!matchesCategory(book, category)) return false;
       return matchesSearch(book);
     });
   }
@@ -329,7 +378,7 @@
     return catalog.books.filter(function (book) {
       if (isBookHiddenFromCatalog(book)) return false;
       if (colKey !== "all" && book.collection !== colKey) return false;
-      if (category !== "all" && book.category !== category) return false;
+      if (!matchesCategory(book, category)) return false;
       if (favoritesOnly && !favoriteIds.has(book.id)) return false;
       return matchesSearch(book);
     }).length;
@@ -836,7 +885,7 @@
       btn.addEventListener("click", function () {
         collection = key;
         category = "all";
-        render();
+        maybeLoadArchiveThenRender();
         if (key !== "all") {
           const anchor = document.getElementById("collection-" + key);
           if (anchor) {
@@ -867,7 +916,7 @@
       if (iconId) btn.appendChild(makeThemeIcon(iconId));
       btn.addEventListener("click", function () {
         category = key;
-        render();
+        maybeLoadArchiveThenRender();
       });
       els.filters.appendChild(btn);
     }
@@ -890,7 +939,7 @@
         if (favoritesOnly) u.searchParams.set("favorites", "1");
         else u.searchParams.delete("favorites");
         history.replaceState({}, "", u.pathname + u.search);
-        render();
+        maybeLoadArchiveThenRender();
       });
       els.filters.appendChild(btn);
     }
@@ -926,7 +975,7 @@
         else favoriteIds.delete(book.id);
         btn.textContent = res.favorited ? "★" : "☆";
         btn.classList.toggle("btn-fav--on", res.favorited);
-        if (favoritesOnly) render();
+        if (favoritesOnly) maybeLoadArchiveThenRender();
       })
       .catch(function () {
         alert(t("Impossible d'enregistrer le favori.", "تعذر حفظ المفضلة.", "Could not save favourite."));
@@ -979,7 +1028,6 @@
     renderKnxGift();
 
     const filtered = getBooks(false);
-    const all = sortBooks(filtered);
     const featured = sortBooks(getBooks(true));
     const showFeatured =
       featured.length > 0 &&
@@ -989,11 +1037,22 @@
       !favoritesOnly &&
       sortBy === "default";
 
-    if (els.featured) els.featured.hidden = !showFeatured;
-    if (showFeatured && els.featuredGrid) renderGrid(els.featuredGrid, featured);
+    const limitAllToFeatured =
+      ALL_VIEW_FEATURED_ONLY &&
+      category === "all" &&
+      collection === "all" &&
+      !query.trim() &&
+      !favoritesOnly;
+
+    const all = sortBooks(limitAllToFeatured ? featured : filtered);
+
+    if (els.featured) els.featured.hidden = !showFeatured || limitAllToFeatured;
+    if (showFeatured && !limitAllToFeatured && els.featuredGrid) {
+      renderGrid(els.featuredGrid, featured);
+    }
 
     const sectionTitle = document.querySelector("[data-books-section-title]");
-    if (shouldGroupByCollection(filtered)) {
+    if (shouldGroupByCollection(filtered) && !limitAllToFeatured) {
       if (sectionTitle) {
         sectionTitle.classList.remove("library-knx-section-head");
         sectionTitle.textContent = t("Par collection", "حسب المجموعة", "By collection");
@@ -1007,24 +1066,76 @@
           sectionTitle.appendChild(createKnxTitleBlock(knxMainLabelText(), "section"));
         } else {
           sectionTitle.classList.remove("library-knx-section-head");
-          sectionTitle.textContent =
-            sortBy === "date-desc"
-              ? t("Triés par date (récent)", "مرتبة حسب التاريخ (الأحدث)", "Sorted by date (newest)")
-              : sortBy === "date-asc"
-                ? t("Triés par date (ancien)", "مرتبة حسب التاريخ (الأقدم)", "Sorted by date (oldest)")
-                : sortBy === "title-asc"
-                  ? t("Triés A → Z", "مرتبة أ → ي", "Sorted A → Z")
-                  : sortBy === "title-desc"
-                    ? t("Triés Z → A", "مرتبة ي → أ", "Sorted Z → A")
-                    : t("Tous les ouvrages", "كل الكتب", "All titles");
+          if (limitAllToFeatured) {
+            sectionTitle.textContent = t(
+              "À la une — choisissez un thème pour voir tous les PDF",
+              "المميزة — اختر موضوعًا لعرض كل ملفات PDF",
+              "Featured — pick a theme to browse all PDFs"
+            );
+          } else if (category === "arabe") {
+            sectionTitle.textContent = t(
+              "PDF Arabe (sélection + archive)",
+              "كتب عربية (مختارة + أرشيف)",
+              "Arabic PDFs (curated + archive)"
+            );
+          } else if (category !== "all") {
+            sectionTitle.textContent = categoryLabel(category);
+          } else {
+            sectionTitle.textContent =
+              sortBy === "date-desc"
+                ? t("Triés par date (récent)", "مرتبة حسب التاريخ (الأحدث)", "Sorted by date (newest)")
+                : sortBy === "date-asc"
+                  ? t("Triés par date (ancien)", "مرتبة حسب التاريخ (الأقدم)", "Sorted by date (oldest)")
+                  : sortBy === "title-asc"
+                    ? t("Triés A → Z", "مرتبة أ → ي", "Sorted A → Z")
+                    : sortBy === "title-desc"
+                      ? t("Triés Z → A", "مرتبة ي → أ", "Sorted Z → A")
+                      : t("Tous les ouvrages", "كل الكتب", "All titles");
+          }
         }
       }
       renderGrid(els.grid, all);
     }
 
-    if (els.count) els.count.textContent = t(all.length + " ouvrage(s)", all.length + " كتاب", all.length + " title(s)");
+    if (els.count) {
+      const archiveMeta = catalog.lazyArchives && catalog.lazyArchives.arabe;
+      const archiveHint =
+        category === "arabe" && archiveMeta && !arabeArchiveLoaded
+          ? "…"
+          : "";
+      els.count.textContent =
+        t(all.length + " ouvrage(s)", all.length + " كتاب", all.length + " title(s)") +
+        archiveHint;
+    }
     if (els.empty) els.empty.hidden = all.length > 0;
     if (els.sort) els.sort.value = sortBy;
+  }
+
+  function maybeLoadArchiveThenRender() {
+    if (!needsArabeArchive()) {
+      render();
+      return;
+    }
+    if (arabeArchiveLoaded) {
+      render();
+      return;
+    }
+    if (els.count) {
+      els.count.textContent = t("Chargement…", "جاري التحميل…", "Loading…");
+    }
+    if (els.grid && category === "arabe") {
+      els.grid.innerHTML =
+        '<p class="book-loading">' +
+        t(
+          "Chargement de l’archive PDF Arabe…",
+          "جاري تحميل أرشيف الكتب العربية…",
+          "Loading Arabic PDF archive…"
+        ) +
+        "</p>";
+    }
+    ensureArabeArchiveLoaded().then(function () {
+      render();
+    });
   }
 
   function loadCatalog() {
@@ -1035,6 +1146,8 @@
       })
       .then(function (data) {
         catalog = data;
+        arabeArchiveLoaded = false;
+        arabeArchiveLoading = null;
         if (Array.isArray(catalog.books)) {
           catalog.books.forEach(function (book, index) {
             book._catalogIndex = index;
@@ -1050,7 +1163,7 @@
         return loadSideData();
       })
       .then(function () {
-        render();
+        maybeLoadArchiveThenRender();
       })
       .catch(function () {
         els.grid.innerHTML =
@@ -1063,7 +1176,7 @@
   if (els.search) {
     els.search.addEventListener("input", function (e) {
       query = e.target.value || "";
-      render();
+      maybeLoadArchiveThenRender();
     });
   }
 
@@ -1076,7 +1189,7 @@
         sortBy = "default";
       }
       localStorage.setItem(STORAGE_SORT, sortBy);
-      render();
+      maybeLoadArchiveThenRender();
     });
   }
 

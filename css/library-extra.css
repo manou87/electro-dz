@@ -657,7 +657,8 @@ html[dir="rtl"] .library-sort {
 }
 
 .library-empty,
-.book-error {
+.book-error,
+.book-loading {
   text-align: center;
   color: var(--text-muted);
   padding: 2rem;
