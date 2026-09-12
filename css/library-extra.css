@@ -347,6 +347,20 @@ html[dir="rtl"] .library-sort {
   color: #f8fafc;
 }
 
+.book-filter__count {
+  display: block;
+  order: 1;
+  margin-top: -0.15rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba(148, 163, 184, 0.95);
+}
+
+.book-filter--active .book-filter__count {
+  color: rgba(15, 23, 42, 0.72);
+}
+
 .theme-ico-wrap {
   order: 2;
   width: 100%;

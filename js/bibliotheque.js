@@ -394,6 +394,36 @@
     }).length;
   }
 
+  /** Compte catalogue (sans recherche / favoris) pour badges thèmes. */
+  function countBooksForCategoryChip(catKey) {
+    if (!catalog) return 0;
+    return catalog.books.filter(function (book) {
+      if (isBookHiddenFromCatalog(book)) return false;
+      if (catKey === "all") return true;
+      return matchesCategory(book, catKey);
+    }).length;
+  }
+
+  /** Libellé compteur thème : arabe honnête avant / après archive. */
+  function categoryChipCountLabel(catKey) {
+    if (catKey === "all") {
+      // Vue « Toutes » = aperçu à la une, pas le total catalogue / featured (~130).
+      const featuredN = catalog.books.filter(function (book) {
+        if (isBookHiddenFromCatalog(book)) return false;
+        return !!book.featured;
+      }).length;
+      return String(Math.min(FEATURED_MAX, featuredN));
+    }
+    if (catKey === "arabe") {
+      const curated = countBooksForCategoryChip("arabe");
+      if (!arabeArchiveLoaded) {
+        return curated + "…";
+      }
+      return String(curated);
+    }
+    return String(countBooksForCategoryChip(catKey));
+  }
+
   function shouldGroupByCollection(books) {
     if (!COLLECTIONS_ENABLED) return false;
     return (
@@ -989,23 +1019,38 @@
     if (!els.filters || !catalog) return;
     els.filters.innerHTML = "";
 
-    function makeFilter(key, label, iconId) {
+    function makeFilter(key, label, iconId, countLabel) {
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.className = "book-filter" + (category === key ? " book-filter--active" : "");
+      btn.className = "book-filter" + (category === key && !favoritesOnly ? " book-filter--active" : "");
       const text = document.createElement("span");
       text.className = "book-filter__label";
       text.textContent = label;
       btn.appendChild(text);
+      if (countLabel != null && countLabel !== "") {
+        const count = document.createElement("span");
+        count.className = "book-filter__count";
+        count.textContent = countLabel;
+        btn.appendChild(count);
+      }
       if (iconId) btn.appendChild(makeThemeIcon(iconId));
       btn.addEventListener("click", function () {
+        favoritesOnly = false;
+        const u = new URL(location.href);
+        u.searchParams.delete("favorites");
+        history.replaceState({}, "", u.pathname + u.search);
         category = key;
         maybeLoadArchiveThenRender();
       });
       els.filters.appendChild(btn);
     }
 
-    makeFilter("all", t("Toutes", "الكل", "All"), "assets/library-themes/all.png");
+    makeFilter(
+      "all",
+      t("Toutes", "الكل", "All"),
+      "assets/library-themes/all.png",
+      categoryChipCountLabel("all")
+    );
     if (sessionLoggedIn) {
       const favLabel = t("Mes favoris", "مفضلتي", "My favourites");
       const btn = document.createElement("button");
@@ -1017,6 +1062,10 @@
       text.className = "book-filter__label";
       text.textContent = favLabel;
       btn.appendChild(text);
+      const favCount = document.createElement("span");
+      favCount.className = "book-filter__count";
+      favCount.textContent = String(favoriteIds.size);
+      btn.appendChild(favCount);
       btn.addEventListener("click", function () {
         favoritesOnly = !favoritesOnly;
         const u = new URL(location.href);
@@ -1032,9 +1081,9 @@
         return (catalog.categories[a].order || 99) - (catalog.categories[b].order || 99);
       })
       .forEach(function (key) {
-        makeFilter(key, categoryLabel(key), categoryIcon(key));
+        makeFilter(key, categoryLabel(key), categoryIcon(key), categoryChipCountLabel(key));
       });
-  }
+    }
 
   function toggleFavoriteUi(book, btn) {
     if (!window.ElectroDzFavorites) return;
@@ -1210,24 +1259,42 @@
       const archivePending =
         category === "arabe" && archiveMeta && !arabeArchiveLoaded;
       if (limitAllToFeatured) {
+        // Ne jamais afficher le total featured (~130) : seulement les cartes visibles.
         const shown = all.length;
-        const extra =
-          featuredAll.length > FEATURED_MAX
+        els.count.textContent = t(
+          "À la une · " + shown,
+          "المميزة · " + shown,
+          "Featured · " + shown
+        );
+      } else if (archivePending) {
+        const curatedShown = allFull.length;
+        const archiveKnown = Number(archiveMeta.count);
+        const hint =
+          Number.isFinite(archiveKnown) && archiveKnown > 0
             ? t(
-                " · " + featuredAll.length + " mises en avant (aperçu " + shown + ")",
-                " · " + featuredAll.length + " مميزة (عرض " + shown + ")",
-                " · " + featuredAll.length + " featured (showing " + shown + ")"
+                " (+" + archiveKnown + " en archive…)",
+                " (+" + archiveKnown + " أرشيف…)",
+                " (+" + archiveKnown + " archive…)"
               )
-            : "";
-        els.count.textContent =
-          t(shown + " ouvrage(s)", shown + " كتاب", shown + " title(s)") + extra;
-      } else {
+            : "…";
         els.count.textContent =
           t(
-            allFull.length + " ouvrage(s)",
-            allFull.length + " كتاب",
-            allFull.length + " title(s)"
-          ) + (archivePending ? "…" : "");
+            curatedShown + " ouvrage(s)",
+            curatedShown + " كتاب",
+            curatedShown + " title(s)"
+          ) + hint;
+      } else if (paginate && all.length < allFull.length) {
+        els.count.textContent = t(
+          all.length + " / " + allFull.length + " ouvrage(s)",
+          all.length + " / " + allFull.length + " كتاب",
+          all.length + " / " + allFull.length + " title(s)"
+        );
+      } else {
+        els.count.textContent = t(
+          allFull.length + " ouvrage(s)",
+          allFull.length + " كتاب",
+          allFull.length + " title(s)"
+        );
       }
     }
     if (els.empty) els.empty.hidden = allFull.length > 0 || (limitAllToFeatured && featured.length > 0);
