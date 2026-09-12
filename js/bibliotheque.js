@@ -36,10 +36,15 @@
   let lang = localStorage.getItem(STORAGE_LANG) || "ar";
   if (lang !== "fr" && lang !== "ar" && lang !== "en") lang = "ar";
   let collection = "all";
-  let category = "all";
+  /** Remplacé au chargement du catalogue (jamais « all » par défaut). */
+  let category = "normes";
   const COLLECTIONS_ENABLED = false;
+  /** Thème d'ouverture préféré (léger) — fallback = plus petit thème non vide. */
+  const DEFAULT_THEME_PREFERRED = "normes";
   /** Sur « Toutes », n'afficher que les mises en avant (+ message pour choisir un thème). */
   const ALL_VIEW_FEATURED_ONLY = true;
+  /** Afficher le chip « Toutes » en dernier (jamais ouverture initiale). */
+  const SHOW_ALL_THEME_CHIP = true;
   /** Ouverture initiale : jamais plus de N featured. */
   const FEATURED_MAX = 18;
   /** Lots de cartes (arabe + thèmes volumineux). */
@@ -404,6 +409,37 @@
     }).length;
   }
 
+  /**
+   * Thème d'ouverture : ?category= / ?theme=, sinon Normes,
+   * sinon le plus petit thème non vide (hors « all »).
+   */
+  function resolveInitialCategory() {
+    if (!catalog || !catalog.categories) return DEFAULT_THEME_PREFERRED;
+    const params = new URLSearchParams(location.search);
+    const fromUrl = (params.get("category") || params.get("theme") || "").trim();
+    if (fromUrl === "all") return "all";
+    if (fromUrl && catalog.categories[fromUrl]) return fromUrl;
+    if (favoritesOnly) return "all";
+
+    if (
+      catalog.categories[DEFAULT_THEME_PREFERRED] &&
+      countBooksForCategoryChip(DEFAULT_THEME_PREFERRED) > 0
+    ) {
+      return DEFAULT_THEME_PREFERRED;
+    }
+
+    let best = null;
+    let bestN = Infinity;
+    Object.keys(catalog.categories).forEach(function (key) {
+      const n = countBooksForCategoryChip(key);
+      if (n > 0 && n < bestN) {
+        bestN = n;
+        best = key;
+      }
+    });
+    return best || DEFAULT_THEME_PREFERRED;
+  }
+
   /** Libellé compteur thème : arabe honnête avant / après archive. */
   function categoryChipCountLabel(catKey) {
     if (catKey === "all") {
@@ -417,6 +453,11 @@
     if (catKey === "arabe") {
       const curated = countBooksForCategoryChip("arabe");
       if (!arabeArchiveLoaded) {
+        const archiveMeta = catalog.lazyArchives && catalog.lazyArchives.arabe;
+        const archiveKnown = archiveMeta ? Number(archiveMeta.count) : 0;
+        if (Number.isFinite(archiveKnown) && archiveKnown > 0) {
+          return curated + "+" + archiveKnown + "…";
+        }
         return curated + "…";
       }
       return String(curated);
@@ -1038,6 +1079,8 @@
         favoritesOnly = false;
         const u = new URL(location.href);
         u.searchParams.delete("favorites");
+        if (key === "all") u.searchParams.delete("category");
+        else u.searchParams.set("category", key);
         history.replaceState({}, "", u.pathname + u.search);
         category = key;
         maybeLoadArchiveThenRender();
@@ -1045,12 +1088,7 @@
       els.filters.appendChild(btn);
     }
 
-    makeFilter(
-      "all",
-      t("Toutes", "الكل", "All"),
-      "assets/library-themes/all.png",
-      categoryChipCountLabel("all")
-    );
+    // Favoris d'abord si connecté, puis thèmes, puis « Toutes » en dernier.
     if (sessionLoggedIn) {
       const favLabel = t("Mes favoris", "مفضلتي", "My favourites");
       const btn = document.createElement("button");
@@ -1083,6 +1121,14 @@
       .forEach(function (key) {
         makeFilter(key, categoryLabel(key), categoryIcon(key), categoryChipCountLabel(key));
       });
+    if (SHOW_ALL_THEME_CHIP) {
+      makeFilter(
+        "all",
+        t("Toutes", "الكل", "All"),
+        "assets/library-themes/all.png",
+        categoryChipCountLabel("all")
+      );
+    }
     }
 
   function toggleFavoriteUi(book, btn) {
@@ -1327,6 +1373,14 @@
             book._catalogIndex = index;
           });
         }
+        category = resolveInitialCategory();
+        try {
+          const u = new URL(location.href);
+          if (!u.searchParams.get("category") && !u.searchParams.get("theme") && !favoritesOnly) {
+            if (category !== "all") u.searchParams.set("category", category);
+            history.replaceState({}, "", u.pathname + u.search + u.hash);
+          }
+        } catch (_e) {}
         if (els.updated && data.updated) {
           els.updated.textContent = t(
             "Catalogue mis à jour le " + data.updated,
