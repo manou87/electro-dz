@@ -213,7 +213,9 @@
       })
       .then(function (catalog) {
         var books = (catalog.books || []).filter(function (b) {
-          return b.category === "formation" && b.pdfUrl && b.pdfUrl !== "#";
+          var lock = window.ElectroDzLibraryLock;
+          if (lock && b.id && lock.isProtected(b.id)) return false;
+          return b.category === "electro_calc" && b.pdfUrl && b.pdfUrl !== "#";
         });
         books.sort(function (a, b) {
           return (b.year || 0) - (a.year || 0);

@@ -37,6 +37,7 @@
   if (lang !== "fr" && lang !== "ar" && lang !== "en") lang = "ar";
   let collection = "all";
   let category = "all";
+  const COLLECTIONS_ENABLED = false;
   let query = "";
   let sortBy = localStorage.getItem(STORAGE_SORT) || "default";
   let favoritesOnly = new URLSearchParams(location.search).get("favorites") === "1";
@@ -47,14 +48,12 @@
   const COVER_COLORS = {
     normes: "#1e40af",
     installation: "#0d9488",
-    monophase: "#ca8a04",
-    triphase: "#059669",
-    magnetisme: "#7c3aed",
-    energie: "#dc2626",
+    electro_calc: "#7c3aed",
+    moteurs: "#dc2626",
+    mesures: "#ca8a04",
+    commande: "#059669",
+    domotique: "#4f46e5",
     securite: "#b45309",
-    formation: "#7c3aed",
-    knx: "#4f46e5",
-    autres: "#475569",
   };
 
   function t(fr, ar, en) {
@@ -138,6 +137,12 @@
   function isBookLocked(book) {
     const lock = window.ElectroDzLibraryLock;
     return !!(lock && book.id && lock.isProtected(book.id) && !lock.isUnlocked(book.id));
+  }
+
+  /** Livres protégés : jamais affichés dans le catalogue public. */
+  function isBookHiddenFromCatalog(book) {
+    const lock = window.ElectroDzLibraryLock;
+    return !!(lock && book.id && lock.isProtected(book.id));
   }
 
   function withBookAccess(book, fn) {
@@ -296,6 +301,7 @@
   function getBooks(filterFeatured) {
     if (!catalog) return [];
     return catalog.books.filter(function (book) {
+      if (isBookHiddenFromCatalog(book)) return false;
       if (filterFeatured && !book.featured) return false;
       if (favoritesOnly && !favoriteIds.has(book.id)) return false;
       if (collection !== "all" && book.collection !== collection) return false;
@@ -307,6 +313,7 @@
   function countBooksForCollection(colKey) {
     if (!catalog) return 0;
     return catalog.books.filter(function (book) {
+      if (isBookHiddenFromCatalog(book)) return false;
       if (colKey !== "all" && book.collection !== colKey) return false;
       if (category !== "all" && book.category !== category) return false;
       if (favoritesOnly && !favoriteIds.has(book.id)) return false;
@@ -315,6 +322,7 @@
   }
 
   function shouldGroupByCollection(books) {
+    if (!COLLECTIONS_ENABLED) return false;
     return (
       collection === "all" &&
       category === "all" &&
@@ -350,7 +358,31 @@
 
   function categoryIcon(key) {
     const cat = catalog.categories[key];
-    return (cat && cat.icon) || "📄";
+    return (cat && cat.icon) || "";
+  }
+
+  function makeThemeIcon(iconSrc) {
+    const wrap = document.createElement("span");
+    wrap.className = "theme-ico-wrap";
+    wrap.setAttribute("aria-hidden", "true");
+    if (iconSrc && /\.(png|webp|jpe?g|svg)(\?|$)/i.test(iconSrc)) {
+      const img = document.createElement("img");
+      img.className = "theme-ico-img";
+      img.src = resolveAssetUrl(iconSrc);
+      img.alt = "";
+      img.loading = "lazy";
+      img.decoding = "async";
+      wrap.appendChild(img);
+      return wrap;
+    }
+    // fallback SVG symbol id
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("class", "theme-ico");
+    const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    use.setAttribute("href", "#" + (iconSrc || "ico-pdf"));
+    svg.appendChild(use);
+    wrap.appendChild(svg);
+    return wrap;
   }
 
   function renderBookCard(book) {
@@ -397,11 +429,7 @@
         img.remove();
         coverDiv.classList.remove("book-cover--preview");
         coverDiv.style.background = "linear-gradient(135deg," + coverBg + ",#0f172a)";
-        const coverIcon = document.createElement("span");
-        coverIcon.className = "book-cover-icon";
-        coverIcon.setAttribute("aria-hidden", "true");
-        coverIcon.textContent = categoryIcon(catKey);
-        coverDiv.appendChild(coverIcon);
+        coverDiv.appendChild(makeThemeIcon(categoryIcon(catKey)));
       };
       coverDiv.appendChild(img);
       if (hasFile) {
@@ -433,18 +461,14 @@
       }
     } else {
       coverDiv.style.background = "linear-gradient(135deg," + coverBg + ",#0f172a)";
-      const coverIcon = document.createElement("span");
-      coverIcon.className = "book-cover-icon";
-      coverIcon.setAttribute("aria-hidden", "true");
-      coverIcon.textContent = categoryIcon(catKey);
-      coverDiv.appendChild(coverIcon);
+      coverDiv.appendChild(makeThemeIcon(categoryIcon(catKey)));
     }
     inner.appendChild(coverDiv);
 
     const body = document.createElement("div");
     body.className = "book-body";
 
-    if (book.collection && catalog.collections && catalog.collections[book.collection]) {
+    if (COLLECTIONS_ENABLED && book.collection && catalog.collections && catalog.collections[book.collection]) {
       const colSpan = document.createElement("span");
       colSpan.className = "book-collection-tag";
       colSpan.textContent = collectionLabel(book.collection);
@@ -629,15 +653,13 @@
   }
 
   function knxMainLabelText() {
-    const col = knxCollectionMeta();
-    const icon = (col && col.icon) || "🏠";
-    return icon + " " + collectionLabel("knx");
+    return collectionLabel("knx");
   }
 
   function renderKnxGift() {
     if (!els.knxGift || !catalog) return;
     const showCategoryOnly =
-      category === "knx" && collection !== "knx" && knxGiftFromText();
+      category === "domotique" && collection !== "knx" && knxGiftFromText();
     if (!showCategoryOnly) {
       els.knxGift.hidden = true;
       els.knxGift.innerHTML = "";
@@ -670,17 +692,16 @@
 
       const heading = document.createElement("h2");
       heading.className = "library-collection-heading";
-      const icon = (catalog.collections[key] && catalog.collections[key].icon) || "";
       const labelWrap = document.createElement("div");
       labelWrap.className = "library-collection-heading__label-wrap";
       if (key === "knx" && knxGiftFromText()) {
         labelWrap.appendChild(
-          createKnxTitleBlock(icon + " " + collectionLabel(key), "heading")
+          createKnxTitleBlock(collectionLabel(key), "heading")
         );
       } else {
         const label = document.createElement("span");
         label.className = "library-collection-heading__label";
-        label.textContent = icon ? icon + " " + collectionLabel(key) : collectionLabel(key);
+        label.textContent = collectionLabel(key);
         labelWrap.appendChild(label);
       }
       const count = document.createElement("span");
@@ -742,6 +763,11 @@
   }
 
   function renderCollections() {
+    if (!COLLECTIONS_ENABLED) {
+      collection = "all";
+      if (els.collections) els.collections.innerHTML = "";
+      return;
+    }
     if (!els.collections || !catalog || !catalog.collections) return;
     els.collections.innerHTML = "";
     function makeCol(key, labelText) {
@@ -777,8 +803,7 @@
     }
     makeCol("all", t("Toutes", "الكل", "All"));
     sortedCollectionKeys().forEach(function (key) {
-      const icon = catalog.collections[key].icon || "";
-      makeCol(key, icon + " " + collectionLabel(key));
+      makeCol(key, collectionLabel(key));
     });
   }
 
@@ -786,11 +811,15 @@
     if (!els.filters || !catalog) return;
     els.filters.innerHTML = "";
 
-    function makeFilter(key, label) {
+    function makeFilter(key, label, iconId) {
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "book-filter" + (category === key ? " book-filter--active" : "");
-      btn.textContent = label;
+      const text = document.createElement("span");
+      text.className = "book-filter__label";
+      text.textContent = label;
+      btn.appendChild(text);
+      if (iconId) btn.appendChild(makeThemeIcon(iconId));
       btn.addEventListener("click", function () {
         category = key;
         render();
@@ -798,14 +827,18 @@
       els.filters.appendChild(btn);
     }
 
-    makeFilter("all", t("Toutes", "الكل", "All"));
+    makeFilter("all", t("Toutes", "الكل", "All"), "assets/library-themes/all.png");
     if (sessionLoggedIn) {
-      const favLabel = t("★ Mes favoris", "★ مفضلتي", "★ My favourites");
+      const favLabel = t("Mes favoris", "مفضلتي", "My favourites");
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className =
         "book-filter" + (favoritesOnly ? " book-filter--active" : "");
-      btn.textContent = favLabel;
+      btn.appendChild(makeThemeIcon("assets/section-previews/training-neon.png"));
+      const text = document.createElement("span");
+      text.className = "book-filter__label";
+      text.textContent = favLabel;
+      btn.appendChild(text);
       btn.addEventListener("click", function () {
         favoritesOnly = !favoritesOnly;
         const u = new URL(location.href);
@@ -816,9 +849,13 @@
       });
       els.filters.appendChild(btn);
     }
-    Object.keys(catalog.categories).forEach(function (key) {
-      makeFilter(key, categoryIcon(key) + " " + categoryLabel(key));
-    });
+    Object.keys(catalog.categories)
+      .sort(function (a, b) {
+        return (catalog.categories[a].order || 99) - (catalog.categories[b].order || 99);
+      })
+      .forEach(function (key) {
+        makeFilter(key, categoryLabel(key), categoryIcon(key));
+      });
   }
 
   function toggleFavoriteUi(book, btn) {

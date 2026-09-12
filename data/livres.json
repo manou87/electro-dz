@@ -1,107 +1,93 @@
 {
   "version": 3,
-  "updated": "2026-07-21",
+  "updated": "2026-09-12",
   "collections": {
     "suisse": {
       "labelFr": "PDF Suisse",
       "labelAr": "كتب سويسرية",
-      "icon": "🇨🇭",
       "order": 1
     },
     "francais": {
       "labelFr": "PDF France",
       "labelAr": "كتب فرنسية",
-      "icon": "🇫🇷",
       "order": 2
     },
     "algerien": {
       "labelFr": "PDF Algérie",
       "labelAr": "كتب جزائرية",
-      "icon": "🇩🇿",
       "order": 3
     },
     "knx": {
       "labelFr": "PDF KNX",
       "labelAr": "كتب KNX",
-      "icon": "🏠",
       "order": 6
     },
     "arabe": {
       "labelFr": "PDF Arabe",
       "labelAr": "كتب عربية",
-      "icon": "📖",
       "order": 4
     },
     "anglais": {
       "labelFr": "PDF Anglais",
       "labelAr": "كتب إنجليزية",
-      "icon": "🇬🇧",
       "order": 5
-    },
-    "greme": {
-      "labelFr": "Formation électricien (Suisse) — électricité",
-      "labelAr": "تكوين كهربائي (سويسرا) — الكهرباء",
-      "icon": "🇨🇭",
-      "order": 7
     }
   },
   "categories": {
     "normes": {
-      "labelFr": "Normes & réglementation",
-      "labelAr": "المعايير واللوائح",
-      "icon": "📋"
+      "labelFr": "Normes",
+      "labelAr": "المعايير",
+      "icon": "assets/library-themes/normes.png",
+      "order": 1
     },
     "installation": {
-      "labelFr": "Installation & câblage",
-      "labelAr": "التركيب والكابلات",
-      "icon": "🔌"
+      "labelFr": "Installation & schémas",
+      "labelAr": "التركيب والمخططات",
+      "icon": "assets/library-themes/installation.png",
+      "order": 2
     },
-    "formation": {
-      "labelFr": "Formation",
-      "labelAr": "تكوين",
-      "icon": "🎓"
+    "electro_calc": {
+      "labelFr": "Électrotechnique & calcul",
+      "labelAr": "الكهروتقنية والحساب",
+      "icon": "assets/library-themes/electro_calc.png",
+      "order": 3
     },
-    "monophase": {
-      "labelFr": "Monophasé",
-      "labelAr": "أحادي الطور",
-      "icon": "〰️"
+    "moteurs": {
+      "labelFr": "Moteurs & machines",
+      "labelAr": "المحركات والآلات",
+      "icon": "assets/library-themes/moteurs.png",
+      "order": 4
     },
-    "triphase": {
-      "labelFr": "Triphasé",
-      "labelAr": "ثلاثي الطور",
-      "icon": "🔺"
+    "mesures": {
+      "labelFr": "Mesures & essais",
+      "labelAr": "القياس والاختبارات",
+      "icon": "assets/library-themes/mesures.png",
+      "order": 5
     },
-    "magnetisme": {
-      "labelFr": "Magnétisme",
-      "labelAr": "المغناطيسية",
-      "icon": "🧲"
+    "commande": {
+      "labelFr": "Commande & automatisme",
+      "labelAr": "التحكم والأتمتة",
+      "icon": "assets/library-themes/commande.png",
+      "order": 6
     },
-    "energie": {
-      "labelFr": "Énergie",
-      "labelAr": "الطاقة",
-      "icon": "⚡"
+    "domotique": {
+      "labelFr": "Domotique (KNX)",
+      "labelAr": "المنزل الذكي (KNX)",
+      "icon": "assets/library-themes/domotique.png",
+      "order": 7
     },
     "securite": {
       "labelFr": "Sécurité",
       "labelAr": "السلامة",
-      "icon": "🦺"
-    },
-    "autres": {
-      "labelFr": "Autres ressources",
-      "labelAr": "موارد أخرى",
-      "icon": "📚"
-    },
-    "knx": {
-      "labelFr": "KNX & domotique",
-      "labelAr": "KNX والمنزل الذكي",
-      "icon": "🏠"
+      "icon": "assets/library-themes/securite.png",
+      "order": 8
     }
   },
   "books": [
     {
       "id": "ae-prof-2019",
       "collection": "suisse",
-      "category": "formation",
+      "category": "electro_calc",
       "titleFr": "AE professionnel 2019",
       "titleAr": "تكوين مهني AE 2019",
       "descriptionFr": "Support de formation professionnelle électricité 2019.",
@@ -121,7 +107,7 @@
     {
       "id": "energie-suisse",
       "collection": "suisse",
-      "category": "energie",
+      "category": "electro_calc",
       "titleFr": "Diagramme énergie Suisse",
       "titleAr": "مخطط الطاقة سويسرا",
       "descriptionFr": "Vue d'ensemble des flux énergétiques.",
@@ -141,7 +127,7 @@
     {
       "id": "electrotechnique-ch11-2018",
       "collection": "suisse",
-      "category": "formation",
+      "category": "electro_calc",
       "titleFr": "Électrotechnique ch. 11 (2018)",
       "titleAr": "الكهروتقنية الفصل 11 (2018)",
       "descriptionFr": "Cours d'électrotechnique — chapitre 11, programme suisse.",
@@ -181,7 +167,7 @@
     {
       "id": "fet1-2014",
       "collection": "suisse",
-      "category": "formation",
+      "category": "electro_calc",
       "titleFr": "FET 1 — Formation électricien (2014)",
       "titleAr": "FET 1 — تكوين كهربائي (2014)",
       "descriptionFr": "Module de formation professionnelle suisse FET 1.",
@@ -201,7 +187,7 @@
     {
       "id": "fet2-2013",
       "collection": "suisse",
-      "category": "formation",
+      "category": "electro_calc",
       "titleFr": "FET 2 — Formation électricien (2013)",
       "titleAr": "FET 2 — تكوين كهربائي (2013)",
       "descriptionFr": "Module de formation professionnelle suisse FET 2.",
@@ -221,7 +207,7 @@
     {
       "id": "fet3-2014",
       "collection": "suisse",
-      "category": "formation",
+      "category": "electro_calc",
       "titleFr": "FET 3 — Formation électricien (2014)",
       "titleAr": "FET 3 — تكوين كهربائي (2014)",
       "descriptionFr": "Module de formation professionnelle suisse FET 3.",
@@ -261,7 +247,7 @@
     {
       "id": "mesures-sina-2002",
       "collection": "suisse",
-      "category": "normes",
+      "category": "mesures",
       "titleFr": "Mesures SiNa 2002",
       "titleAr": "قياسات SiNa 2002",
       "descriptionFr": "Procédure de mesures SiNa.",
@@ -362,7 +348,7 @@
     {
       "id": "oibt-mesures-jt22",
       "collection": "suisse",
-      "category": "normes",
+      "category": "mesures",
       "titleFr": "OIBT — procédure des mesures (JT22)",
       "titleAr": "OIBT — إجراء القياسات (JT22)",
       "descriptionFr": "Mesures et contrôles selon la procédure OIBT JT22.",
@@ -421,7 +407,7 @@
     {
       "id": "premiere-verification-oibt",
       "collection": "suisse",
-      "category": "normes",
+      "category": "mesures",
       "titleFr": "Première vérification OIBT",
       "titleAr": "الفحص الأول OIBT",
       "descriptionFr": "Première vérification des installations électriques.",
@@ -481,7 +467,7 @@
     {
       "id": "filtres-passe",
       "collection": "francais",
-      "category": "monophase",
+      "category": "electro_calc",
       "titleFr": "Filtres passifs passe haut / bas",
       "titleAr": "مرشحات سلبية عالية/منخفضة التردد",
       "descriptionFr": "Synthèse des filtres du premier ordre (Bode).",
@@ -661,7 +647,7 @@
     {
       "id": "phaseurs-2pp",
       "collection": "suisse",
-      "category": "monophase",
+      "category": "electro_calc",
       "titleFr": "Phaseurs — version 2 par page",
       "titleAr": "الأطوار — نسخة صفحتين",
       "descriptionFr": "Même contenu, mise en page 2 fiches par page.",
@@ -681,7 +667,7 @@
     {
       "id": "phaseurs-complexes",
       "collection": "suisse",
-      "category": "monophase",
+      "category": "electro_calc",
       "titleFr": "Phaseurs complexes",
       "titleAr": "أطوار مركبة",
       "descriptionFr": "Représentation complexe des grandeurs alternatives.",
@@ -701,7 +687,7 @@
     {
       "id": "phaseurs-80",
       "collection": "suisse",
-      "category": "monophase",
+      "category": "electro_calc",
       "titleFr": "Phaseurs en alternatif (80 formules)",
       "titleAr": "الأطوار في التيار المتناوب (80 صيغة)",
       "descriptionFr": "Diagrammes vectoriels et formules pour l'alternatif monophasé.",
@@ -742,7 +728,7 @@
     {
       "id": "magnetisme-resume",
       "collection": "suisse",
-      "category": "magnetisme",
+      "category": "electro_calc",
       "titleFr": "Résumé du magnétisme",
       "titleAr": "ملخص المغناطيسية",
       "descriptionFr": "Grandeurs magnétiques et électriques.",
@@ -763,7 +749,7 @@
     {
       "id": "triphase-denom",
       "collection": "suisse",
-      "category": "triphase",
+      "category": "electro_calc",
       "titleFr": "Triphasé — dénominations usuelles",
       "titleAr": "ثلاثي الطور — التسميات",
       "descriptionFr": "Schémas et vocabulaire étoile, triangle.",
@@ -784,7 +770,7 @@
     {
       "id": "plc-hassan-elshhat",
       "collection": "arabe",
-      "category": "installation",
+      "category": "commande",
       "titleFr": "API — Hassan El Chahat",
       "titleAr": "التحكم المنطقي المبرمج — م. حسن الشحات",
       "descriptionFr": "Automatisme et API.",
@@ -804,7 +790,7 @@
     {
       "id": "apprentissage-automatisme",
       "collection": "arabe",
-      "category": "installation",
+      "category": "commande",
       "titleFr": "Apprendre à lire les schémas d'automatisme",
       "titleAr": "تعلم كيف تقرأ دوائر التحكم الآلي",
       "descriptionFr": "Lecture et compréhension des circuits de commande automatisée.",
@@ -824,7 +810,7 @@
     {
       "id": "diagnostic-moteurs-ac",
       "collection": "arabe",
-      "category": "autres",
+      "category": "moteurs",
       "titleFr": "Diagnostic moteurs AC",
       "titleAr": "تشخيص الأعطال الكهربائية لمحركات التيار المتردد",
       "descriptionFr": "Diagnostic des pannes sur moteurs à courant alternatif.",
@@ -844,7 +830,7 @@
     {
       "id": "generateurs-electriques",
       "collection": "arabe",
-      "category": "energie",
+      "category": "moteurs",
       "titleFr": "Génératrices électriques",
       "titleAr": "المولدات الكهربائية",
       "descriptionFr": "Fonctionnement des génératrices.",
@@ -884,7 +870,7 @@
     {
       "id": "variateur-moteurs-ar",
       "collection": "arabe",
-      "category": "energie",
+      "category": "moteurs",
       "titleFr": "Variateur et moteurs à induction",
       "titleAr": "الإنفرتر وتنظيم سرعة المحركات الحثية",
       "descriptionFr": "Variation de vitesse des moteurs asynchrones.",
@@ -1024,7 +1010,7 @@
     {
       "id": "m19-moteurs-generatrices",
       "collection": "algerien",
-      "category": "triphase",
+      "category": "moteurs",
       "titleFr": "M19 — Moteurs et génératrices à c.a.",
       "titleAr": "M19 — محركات ومولدات التيار المتردد",
       "descriptionFr": "Installation et dépannage de moteurs et génératrices.",
@@ -1044,7 +1030,7 @@
     {
       "id": "electrotechnique-algerie",
       "collection": "francais",
-      "category": "formation",
+      "category": "electro_calc",
       "titleFr": "Électrotechnique (Algérie)",
       "titleAr": "الكهروتقنية (الجزائر)",
       "descriptionFr": "Cours / support électrotechnique.",
@@ -1105,7 +1091,7 @@
     {
       "id": "knx-arguments-rbh-2025",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX — Arguments (RBH 12.2025)",
       "titleAr": "KNX — الحجج (RBH 12.2025)",
       "descriptionFr": "Formation Innoval — arguments KNX.",
@@ -1125,7 +1111,7 @@
     {
       "id": "knx-formation-chap-1-4-rbh-2025",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX — Formation ch. 1 à 4 (RBH 2025)",
       "titleAr": "KNX — التكوين الفصول 1–4 (2025)",
       "descriptionFr": "Chapitres 1 à 4 — domotique KNX.",
@@ -1145,7 +1131,7 @@
     {
       "id": "knx-formation-chap-5-8-rbh-2025",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX — Formation ch. 5 à 8 (RBH 2025)",
       "titleAr": "KNX — التكوين الفصول 5–8 (2025)",
       "descriptionFr": "Chapitres 5 à 8 — domotique KNX.",
@@ -1165,7 +1151,7 @@
     {
       "id": "knx-formation-chap-9-10-rbh-2025",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX — Formation ch. 9 et 10 (RBH 2025)",
       "titleAr": "KNX — التكوين الفصول 9–10 (2025)",
       "descriptionFr": "Chapitres 9 et 10 — domotique KNX.",
@@ -1185,7 +1171,7 @@
     {
       "id": "knx-somaire-innoval-rbh-2025",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX — Sommaire formation Innoval (2025)",
       "titleAr": "KNX — فهرس تكوين Innoval (2025)",
       "descriptionFr": "Sommaire du classeur KNX RBH.",
@@ -1205,7 +1191,7 @@
     {
       "id": "knx-hvac-specialist-e0518d",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX HVAC Specialist Course (E0518d)",
       "titleAr": "KNX — دورة HVAC Specialist (E0518d)",
       "descriptionFr": "Cours KNX CVC / HVAC — format Word (cadeau ITQAN SMART & Rabah).",
@@ -1227,7 +1213,7 @@
     {
       "id": "knx-advanced-course-en0923h-couplers-en1017g",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Couplers (EN1017g) [EN]",
       "titleAr": "KNX المتقدم — Couplers (EN1017g) [EN]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -1248,7 +1234,7 @@
     {
       "id": "knx-advanced-course-en0923h-couplers-en1017g-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Couplers (EN1017g) [EN]",
       "titleAr": "KNX المتقدم — Couplers (EN1017g) [EN]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -1269,7 +1255,7 @@
     {
       "id": "knx-advanced-course-en0923h-flags-en1017c",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Flags (EN1017c) [EN]",
       "titleAr": "KNX المتقدم — Flags (EN1017c) [EN]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -1290,7 +1276,7 @@
     {
       "id": "knx-advanced-course-en0923h-flags-en1017c-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Flags (EN1017c) [EN]",
       "titleAr": "KNX المتقدم — Flags (EN1017c) [EN]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -1311,7 +1297,7 @@
     {
       "id": "knx-advanced-course-en0923h-ip-communication-en0423a",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — IP Communication (EN0423a) [EN]",
       "titleAr": "KNX المتقدم — IP Communication (EN0423a) [EN]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -1332,7 +1318,7 @@
     {
       "id": "knx-advanced-course-en0923h-ip-communication-en0423a-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — IP Communication (EN0423a) [EN]",
       "titleAr": "KNX المتقدم — IP Communication (EN0423a) [EN]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -1353,7 +1339,7 @@
     {
       "id": "knx-advanced-course-en0923h-informative-appx-ets-apps-en0923c",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Informative appx ETS Apps (EN0923c) [EN]",
       "titleAr": "KNX المتقدم — Informative appx ETS Apps (EN0923c) [EN]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -1374,7 +1360,7 @@
     {
       "id": "knx-advanced-course-en0923h-informative-appx-ets-apps-en0923c-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Informative appx ETS Apps (EN0923c) [EN]",
       "titleAr": "KNX المتقدم — Informative appx ETS Apps (EN0923c) [EN]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -1395,7 +1381,7 @@
     {
       "id": "knx-advanced-course-en0923h-informative-appx-fail-safe-planning-en1017d",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Informative appx Fail-Safe planning (EN1017d) [EN]",
       "titleAr": "KNX المتقدم — Informative appx Fail-Safe planning (EN1017d) [EN]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -1416,7 +1402,7 @@
     {
       "id": "knx-advanced-course-en0923h-informative-appx-fail-safe-planning-en1017e",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Informative appx Fail-safe planning (EN1017e) [EN]",
       "titleAr": "KNX المتقدم — Informative appx Fail-safe planning (EN1017e) [EN]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -1437,7 +1423,7 @@
     {
       "id": "knx-advanced-course-en0923h-informative-appx-hvac-en0813c",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Informative appx HVAC EN0813c [EN]",
       "titleAr": "KNX المتقدم — Informative appx HVAC EN0813c [EN]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -1458,7 +1444,7 @@
     {
       "id": "knx-advanced-course-en0923h-informative-appx-hvac-en0813c-docx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Informative appx HVAC (EN0813c) [EN]",
       "titleAr": "KNX المتقدم — Informative appx HVAC (EN0813c) [EN]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -1479,7 +1465,7 @@
     {
       "id": "knx-advanced-course-en0923h-informative-appx-knx-and-multimedia-en1017b",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Informative appx KNX and Multimedia (EN1017b) [EN]",
       "titleAr": "KNX المتقدم — Informative appx KNX and Multimedia (EN1017b) [EN]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -1500,7 +1486,7 @@
     {
       "id": "knx-advanced-course-en0923h-informative-appx-knx-and-multimedia-en1017b-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Informative appx KNX and multimedia (EN1017b) [EN]",
       "titleAr": "KNX المتقدم — Informative appx KNX and multimedia (EN1017b) [EN]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -1521,7 +1507,7 @@
     {
       "id": "knx-advanced-course-en0923h-informative-appx-security-technology-en1017b",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Informative appx Security Technology (EN1017b) [EN]",
       "titleAr": "KNX المتقدم — Informative appx Security Technology (EN1017b) [EN]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -1542,7 +1528,7 @@
     {
       "id": "knx-advanced-course-en0923h-informative-appx-security-technology-en1017b-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Informative appx Security technology (EN1017b) [EN]",
       "titleAr": "KNX المتقدم — Informative appx Security technology (EN1017b) [EN]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -1563,7 +1549,7 @@
     {
       "id": "knx-advanced-course-en0923h-interworking-en1017b",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Interworking (EN1017b) [EN]",
       "titleAr": "KNX المتقدم — Interworking (EN1017b) [EN]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -1584,7 +1570,7 @@
     {
       "id": "knx-advanced-course-en0923h-interworking-en1017b-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Interworking (EN1017b) [EN]",
       "titleAr": "KNX المتقدم — Interworking (EN1017b) [EN]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -1605,7 +1591,7 @@
     {
       "id": "knx-advanced-course-en0923h-knx-secure-en0722b",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — KNX Secure (EN0722b) [EN]",
       "titleAr": "KNX المتقدم — KNX Secure (EN0722b) [EN]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -1626,7 +1612,7 @@
     {
       "id": "knx-advanced-course-en0923h-knx-secure-en0722b-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — KNX Secure (EN0722b) [EN]",
       "titleAr": "KNX المتقدم — KNX Secure (EN0722b) [EN]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -1647,7 +1633,7 @@
     {
       "id": "knx-advanced-course-en0923h-lighting-control-en0518b",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Lighting Control (EN0518b) [EN]",
       "titleAr": "KNX المتقدم — Lighting Control (EN0518b) [EN]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -1668,7 +1654,7 @@
     {
       "id": "knx-advanced-course-en0923h-lighting-control-en0518b-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Lighting Control (EN0518b) [EN]",
       "titleAr": "KNX المتقدم — Lighting Control (EN0518b) [EN]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -1689,7 +1675,7 @@
     {
       "id": "knx-advanced-course-en0923h-logic-operations-en1017b",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Logic operations (EN1017b) [EN]",
       "titleAr": "KNX المتقدم — Logic operations (EN1017b) [EN]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -1710,7 +1696,7 @@
     {
       "id": "knx-advanced-course-en0923h-logic-operations-en1017b-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Logic operations (EN1017b) [EN]",
       "titleAr": "KNX المتقدم — Logic operations (EN1017b) [EN]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -1731,7 +1717,7 @@
     {
       "id": "knx-advanced-course-en0923h-telegram-en1213e",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Telegram (EN1213e) [EN]",
       "titleAr": "KNX المتقدم — Telegram (EN1213e) [EN]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -1752,7 +1738,7 @@
     {
       "id": "knx-advanced-course-en0923h-telegram-en1213e-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Telegram (EN1213e) [EN]",
       "titleAr": "KNX المتقدم — Telegram (EN1213e) [EN]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -1773,7 +1759,7 @@
     {
       "id": "knx-advanced-course-en0923h-visualization-systems-en0423a",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Visualization Systems (EN0423a) [EN]",
       "titleAr": "KNX المتقدم — Visualization Systems (EN0423a) [EN]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -1794,7 +1780,7 @@
     {
       "id": "knx-advanced-course-en0923h-visualization-systems-en0423a-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Visualization Systems (EN0423a) [EN]",
       "titleAr": "KNX المتقدم — Visualization Systems (EN0423a) [EN]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -1815,7 +1801,7 @@
     {
       "id": "knx-advanced-course-fr0923h-couplers-fr1017g",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Couplers (FR1017g) [FR]",
       "titleAr": "KNX المتقدم — Couplers (FR1017g) [FR]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -1836,7 +1822,7 @@
     {
       "id": "knx-advanced-course-fr0923h-couplers-fr1017g-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Couplers (FR1017g) [FR]",
       "titleAr": "KNX المتقدم — Couplers (FR1017g) [FR]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -1857,7 +1843,7 @@
     {
       "id": "knx-advanced-course-fr0923h-flags-fr1017c",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Flags FR1017c. [FR]",
       "titleAr": "KNX المتقدم — Flags FR1017c. [FR]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -1878,7 +1864,7 @@
     {
       "id": "knx-advanced-course-fr0923h-flags-fr1017c-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Flags (FR1017c) [FR]",
       "titleAr": "KNX المتقدم — Flags (FR1017c) [FR]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -1899,7 +1885,7 @@
     {
       "id": "knx-advanced-course-fr0923h-ip-communication-fr0423a",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — IP Communication (FR0423a) [FR]",
       "titleAr": "KNX المتقدم — IP Communication (FR0423a) [FR]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -1920,7 +1906,7 @@
     {
       "id": "knx-advanced-course-fr0923h-ip-communication-fr0423a-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — IP Communication (FR0423a) [FR]",
       "titleAr": "KNX المتقدم — IP Communication (FR0423a) [FR]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -1941,7 +1927,7 @@
     {
       "id": "knx-advanced-course-fr0923h-informative-appx-ets-apps-fr0923c",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Informative appx ETS Apps (FR0923c) [FR]",
       "titleAr": "KNX المتقدم — Informative appx ETS Apps (FR0923c) [FR]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -1962,7 +1948,7 @@
     {
       "id": "knx-advanced-course-fr0923h-informative-appx-ets-apps-fr0923c-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Informative appx ETS Apps (FR0923c) [FR]",
       "titleAr": "KNX المتقدم — Informative appx ETS Apps (FR0923c) [FR]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -1983,7 +1969,7 @@
     {
       "id": "knx-advanced-course-fr0923h-informative-appx-fail-safe-planning-fr1017d",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Informative appx Fail-safe planning (FR1017d) [FR]",
       "titleAr": "KNX المتقدم — Informative appx Fail-safe planning (FR1017d) [FR]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -2004,7 +1990,7 @@
     {
       "id": "knx-advanced-course-fr0923h-informative-appx-fail-safe-planning-fr1017e",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Informative appx Fail-safe planning (FR1017e) [FR]",
       "titleAr": "KNX المتقدم — Informative appx Fail-safe planning (FR1017e) [FR]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -2025,7 +2011,7 @@
     {
       "id": "knx-advanced-course-fr0923h-informative-appx-hvac-fr0813c",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Informative appx HVAC (FR0813c) [FR]",
       "titleAr": "KNX المتقدم — Informative appx HVAC (FR0813c) [FR]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -2046,7 +2032,7 @@
     {
       "id": "knx-advanced-course-fr0923h-informative-appx-hvac-fr0813c-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Informative appx HVAC (FR0813c) [FR]",
       "titleAr": "KNX المتقدم — Informative appx HVAC (FR0813c) [FR]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -2067,7 +2053,7 @@
     {
       "id": "knx-advanced-course-fr0923h-informative-appx-knx-and-multimedia-fr1017b",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Informative appx KNX and Multimedia (FR1017b) [FR]",
       "titleAr": "KNX المتقدم — Informative appx KNX and Multimedia (FR1017b) [FR]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -2088,7 +2074,7 @@
     {
       "id": "knx-advanced-course-fr0923h-informative-appx-knx-and-multimedia-fr1017b-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Informative appx KNX and multimedia (FR1017b) [FR]",
       "titleAr": "KNX المتقدم — Informative appx KNX and multimedia (FR1017b) [FR]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -2109,7 +2095,7 @@
     {
       "id": "knx-advanced-course-fr0923h-informative-appx-security-technology-fr1017b",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Informative appx Security technology (FR1017b) [FR]",
       "titleAr": "KNX المتقدم — Informative appx Security technology (FR1017b) [FR]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -2130,7 +2116,7 @@
     {
       "id": "knx-advanced-course-fr0923h-informative-appx-security-technology-fr1017b-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Informative appx Security technology (FR1017b) [FR]",
       "titleAr": "KNX المتقدم — Informative appx Security technology (FR1017b) [FR]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -2151,7 +2137,7 @@
     {
       "id": "knx-advanced-course-fr0923h-interworking-fr1017b",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Interworking (FR1017b) [FR]",
       "titleAr": "KNX المتقدم — Interworking (FR1017b) [FR]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -2172,7 +2158,7 @@
     {
       "id": "knx-advanced-course-fr0923h-interworking-fr1017b-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Interworking (FR1017b) [FR]",
       "titleAr": "KNX المتقدم — Interworking (FR1017b) [FR]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -2193,7 +2179,7 @@
     {
       "id": "knx-advanced-course-fr0923h-knx-secure-fr0722b",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — KNX Secure (FR0722b) [FR]",
       "titleAr": "KNX المتقدم — KNX Secure (FR0722b) [FR]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -2214,7 +2200,7 @@
     {
       "id": "knx-advanced-course-fr0923h-knx-secure-fr0722b-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — KNX Secure (FR0722b) [FR]",
       "titleAr": "KNX المتقدم — KNX Secure (FR0722b) [FR]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -2235,7 +2221,7 @@
     {
       "id": "knx-advanced-course-fr0923h-lighting-control-fr0518b",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Lighting control (FR0518b) [FR]",
       "titleAr": "KNX المتقدم — Lighting control (FR0518b) [FR]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -2256,7 +2242,7 @@
     {
       "id": "knx-advanced-course-fr0923h-lighting-control-fr0518b-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Lighting control (FR0518b) [FR]",
       "titleAr": "KNX المتقدم — Lighting control (FR0518b) [FR]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -2277,7 +2263,7 @@
     {
       "id": "knx-advanced-course-fr0923h-logic-operations-fr1017b",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Logic operations (FR1017b) [FR]",
       "titleAr": "KNX المتقدم — Logic operations (FR1017b) [FR]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -2298,7 +2284,7 @@
     {
       "id": "knx-advanced-course-fr0923h-logic-operations-fr1017b-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Logic operations (FR1017b) [FR]",
       "titleAr": "KNX المتقدم — Logic operations (FR1017b) [FR]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -2319,7 +2305,7 @@
     {
       "id": "knx-advanced-course-fr0923h-telegram-fr1213f",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Telegram (FR1213f) [FR]",
       "titleAr": "KNX المتقدم — Telegram (FR1213f) [FR]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -2340,7 +2326,7 @@
     {
       "id": "knx-advanced-course-fr0923h-telegram-fr1213f-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Telegram (FR1213f) [FR]",
       "titleAr": "KNX المتقدم — Telegram (FR1213f) [FR]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -2361,7 +2347,7 @@
     {
       "id": "knx-advanced-course-fr0923h-visualization-systems-fr0423a",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Visualization Systems (FR0423a) [FR]",
       "titleAr": "KNX المتقدم — Visualization Systems (FR0423a) [FR]",
       "descriptionFr": "Cours KNX Advanced — Word (cadeau ITQAN SMART & Rabah).",
@@ -2382,7 +2368,7 @@
     {
       "id": "knx-advanced-course-fr0923h-visualization-systems-fr0423a-pptx",
       "collection": "knx",
-      "category": "knx",
+      "category": "domotique",
       "titleFr": "KNX Advanced — Visualization Systems (FR0423a) [FR]",
       "titleAr": "KNX المتقدم — Visualization Systems (FR0423a) [FR]",
       "descriptionFr": "Cours KNX Advanced — PowerPoint (cadeau ITQAN SMART & Rabah).",
@@ -2583,7 +2569,7 @@
     {
       "id": "nf-c18-510-2012",
       "collection": "francais",
-      "category": "normes",
+      "category": "securite",
       "titleFr": "NF C 18-510 (2012)",
       "titleAr": "NF C 18-510 (2012)",
       "descriptionFr": "Travaux sous tension sur installations électriques.",
@@ -2603,7 +2589,7 @@
     {
       "id": "dourat-maamil-qudra",
       "collection": "arabe",
-      "category": "triphase",
+      "category": "mesures",
       "titleFr": "Formation — facteur de puissance (laboratoire)",
       "titleAr": "دورة تدريبية في معامل القدرة",
       "descriptionFr": "Cours de formation pratique sur les mesures et calculs de facteur de puissance.",
@@ -2623,7 +2609,7 @@
     {
       "id": "dalil-autocad-shamil",
       "collection": "arabe",
-      "category": "autres",
+      "category": "installation",
       "titleFr": "Guide complet AutoCAD",
       "titleAr": "الدليل الشامل في الاتوكاد",
       "descriptionFr": "Manuel complet AutoCAD pour schémas et plans électriques.",
@@ -2643,7 +2629,7 @@
     {
       "id": "cahier-electro-ch1",
       "collection": "arabe",
-      "category": "formation",
+      "category": "electro_calc",
       "titleFr": "Cahier électro — chapitre 1",
       "titleAr": "Cahier Electro — الفصل 1",
       "descriptionFr": "Cahier d'exercices électrotechnique — chapitre 1 (format Word).",
@@ -2665,7 +2651,7 @@
     {
       "id": "grand-livre-electricite",
       "collection": "francais",
-      "category": "formation",
+      "category": "electro_calc",
       "titleFr": "Le grand livre de l'électricité",
       "titleAr": "الكتاب الكبير في الكهرباء",
       "descriptionFr": "David Fedullo & Thierry Gallauziaux (2008) — ouvrage de référence, installations et applications. PDF en ligne (livre21).",
@@ -2685,7 +2671,7 @@
     {
       "id": "mesures-essais-machines-electriques",
       "collection": "francais",
-      "category": "energie",
+      "category": "mesures",
       "titleFr": "Mesures et essais sur machines électriques",
       "titleAr": "القياسات والاختبارات على الآلات الكهربائية",
       "descriptionFr": "Méthodes de mesure, essais et contrôle des machines électriques.",
@@ -2765,7 +2751,7 @@
     {
       "id": "blajkine-electrotechnique-generale-1977",
       "collection": "francais",
-      "category": "formation",
+      "category": "electro_calc",
       "titleFr": "Électrotechnique générale — Blajkine (Mir, 1977)",
       "titleAr": "الكهروتقنية العامة — بلايكين (مير، 1977)",
       "descriptionFr": "Blajkine et al. — cours d’électrotechnique générale (éd. Mir, 1977). PDF en ligne (Internet Archive).",
@@ -2783,12 +2769,12 @@
     },
     {
       "id": "greme-chap01",
-      "collection": "greme",
-      "category": "formation",
+      "collection": "suisse",
+      "category": "electro_calc",
       "titleFr": "Ch. 1 : Notions fondamentales",
       "titleAr": "فصل 1 : المفاهيم الأساسية",
-      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 1. Source : electrons.ch",
-      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 1. المصدر: electrons.ch",
+      "descriptionFr": "Sur Electro DZ : exercices corrigés — tension, courant, résistance et loi d’Ohm. SwissDZ.",
+      "descriptionAr": "على Electro DZ: تمارين محلولة — الجهد والتيار والمقاومة وقانون أوم. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -2803,12 +2789,12 @@
     },
     {
       "id": "greme-chap02",
-      "collection": "greme",
-      "category": "formation",
+      "collection": "suisse",
+      "category": "electro_calc",
       "titleFr": "Ch. 2 : Grandeurs fondamentales",
       "titleAr": "فصل 2 : المقادير الأساسية",
-      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 2. Source : electrons.ch",
-      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 2. المصدر: electrons.ch",
+      "descriptionFr": "Sur Electro DZ : exercices corrigés — grandeurs électriques et unités. SwissDZ.",
+      "descriptionAr": "على Electro DZ: تمارين محلولة — المقادير الكهربائية والوحدات. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -2823,12 +2809,12 @@
     },
     {
       "id": "greme-chap03",
-      "collection": "greme",
-      "category": "installation",
+      "collection": "suisse",
+      "category": "electro_calc",
       "titleFr": "Ch. 3 : Résistance électrique et couplage",
       "titleAr": "فصل 3 : المقاومة الكهربائية والربط",
-      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 3. Source : electrons.ch",
-      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 3. المصدر: electrons.ch",
+      "descriptionFr": "Sur Electro DZ : exercices corrigés — résistances en série/parallèle et couplages. SwissDZ.",
+      "descriptionAr": "على Electro DZ: تمارين محلولة — مقاومات على التوالي/التوازي والربط. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -2843,12 +2829,12 @@
     },
     {
       "id": "greme-chap04",
-      "collection": "greme",
-      "category": "energie",
+      "collection": "suisse",
+      "category": "electro_calc",
       "titleFr": "Ch. 4 : Énergie, puissance, rendement",
       "titleAr": "فصل 4 : الطاقة والقدرة والمردود",
-      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 4. Source : electrons.ch",
-      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 4. المصدر: electrons.ch",
+      "descriptionFr": "Sur Electro DZ : exercices corrigés — énergie, puissance et rendement. SwissDZ.",
+      "descriptionAr": "على Electro DZ: تمارين محلولة — الطاقة والقدرة والمردود. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -2863,12 +2849,12 @@
     },
     {
       "id": "greme-chap05",
-      "collection": "greme",
-      "category": "energie",
+      "collection": "suisse",
+      "category": "electro_calc",
       "titleFr": "Ch. 5 : Effets calorifiques",
       "titleAr": "فصل 5 : التأثيرات الحرارية",
-      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 5. Source : electrons.ch",
-      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 5. المصدر: electrons.ch",
+      "descriptionFr": "Sur Electro DZ : exercices corrigés — effets calorifiques du courant. SwissDZ.",
+      "descriptionAr": "على Electro DZ: تمارين محلولة — التأثيرات الحرارية للتيار. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -2883,12 +2869,12 @@
     },
     {
       "id": "greme-chap06",
-      "collection": "greme",
-      "category": "energie",
+      "collection": "suisse",
+      "category": "electro_calc",
       "titleFr": "Ch. 6 : Source chimique de tension",
       "titleAr": "فصل 6 : مصدر الجهد الكيميائي",
-      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 6. Source : electrons.ch",
-      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 6. المصدر: electrons.ch",
+      "descriptionFr": "Sur Electro DZ : exercices corrigés — piles, accumulateurs et sources chimiques. SwissDZ.",
+      "descriptionAr": "على Electro DZ: تمارين محلولة — البطاريات والمراكم والمصادر الكيميائية. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -2903,12 +2889,12 @@
     },
     {
       "id": "greme-chap07",
-      "collection": "greme",
-      "category": "magnetisme",
+      "collection": "suisse",
+      "category": "electro_calc",
       "titleFr": "Ch. 7 : Magnétisme (Courbe d'aimantation)",
       "titleAr": "فصل 7 : المغناطيسية (منحنى التمغنط)",
-      "descriptionFr": "Exercices — magnétisme, courbe d'aimantation. Source : electrons.ch",
-      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 7. المصدر: electrons.ch",
+      "descriptionFr": "Sur Electro DZ : exercices corrigés — magnétisme et courbe d’aimantation. SwissDZ.",
+      "descriptionAr": "على Electro DZ: تمارين محلولة — المغناطيسية ومنحنى التمغنط. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -2923,12 +2909,12 @@
     },
     {
       "id": "greme-chap08",
-      "collection": "greme",
-      "category": "formation",
+      "collection": "suisse",
+      "category": "electro_calc",
       "titleFr": "Ch. 8 : Électrostatique",
       "titleAr": "فصل 8 : الكهروستاتيكية",
-      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 8. Source : electrons.ch",
-      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 8. المصدر: electrons.ch",
+      "descriptionFr": "Sur Electro DZ : exercices corrigés — électrostatique et champs électriques. SwissDZ.",
+      "descriptionAr": "على Electro DZ: تمارين محلولة — الكهروستاتيكية والمجالات الكهربائية. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -2943,12 +2929,12 @@
     },
     {
       "id": "greme-chap09",
-      "collection": "greme",
-      "category": "formation",
+      "collection": "suisse",
+      "category": "mesures",
       "titleFr": "Ch. 9 : Instruments de mesure",
       "titleAr": "فصل 9 : أجهزة القياس",
-      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 9. Source : electrons.ch",
-      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 9. المصدر: electrons.ch",
+      "descriptionFr": "Sur Electro DZ : exercices corrigés — multimètres et instruments de mesure. SwissDZ.",
+      "descriptionAr": "على Electro DZ: تمارين محلولة — أجهزة القياس والمالتيميتر. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -2963,12 +2949,12 @@
     },
     {
       "id": "greme-chap10",
-      "collection": "greme",
-      "category": "monophase",
+      "collection": "suisse",
+      "category": "electro_calc",
       "titleFr": "Ch. 10 : Monophasé",
       "titleAr": "فصل 10 : أحادي الطور",
-      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 10. Source : electrons.ch",
-      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 10. المصدر: electrons.ch",
+      "descriptionFr": "Sur Electro DZ : exercices corrigés — courant alternatif monophasé. SwissDZ.",
+      "descriptionAr": "على Electro DZ: تمارين محلولة — التيار المتناوب أحادي الطور. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -2983,12 +2969,12 @@
     },
     {
       "id": "greme-chap11",
-      "collection": "greme",
-      "category": "triphase",
+      "collection": "suisse",
+      "category": "electro_calc",
       "titleFr": "Ch. 11 : Triphasé",
       "titleAr": "فصل 11 : ثلاثي الطور",
-      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 11. Source : electrons.ch",
-      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 11. المصدر: electrons.ch",
+      "descriptionFr": "Sur Electro DZ : exercices corrigés — réseaux et charges triphasés. SwissDZ.",
+      "descriptionAr": "على Electro DZ: تمارين محلولة — الشبكات والأحمال ثلاثية الطور. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -3003,12 +2989,12 @@
     },
     {
       "id": "greme-chap12",
-      "collection": "greme",
-      "category": "energie",
+      "collection": "suisse",
+      "category": "moteurs",
       "titleFr": "Ch. 12 : Moteurs triphasés",
       "titleAr": "فصل 12 : محركات ثلاثية الطور",
-      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 12. Source : electrons.ch",
-      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 12. المصدر: electrons.ch",
+      "descriptionFr": "Sur Electro DZ : exercices corrigés — moteurs asynchrones triphasés. SwissDZ.",
+      "descriptionAr": "على Electro DZ: تمارين محلولة — المحركات غير المتزامنة ثلاثية الطور. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -3023,12 +3009,12 @@
     },
     {
       "id": "greme-chap13",
-      "collection": "greme",
-      "category": "energie",
+      "collection": "suisse",
+      "category": "moteurs",
       "titleFr": "Ch. 13 : Moteurs DC",
       "titleAr": "فصل 13 : محركات التيار المستمر",
-      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 13. Source : electrons.ch",
-      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 13. المصدر: electrons.ch",
+      "descriptionFr": "Sur Electro DZ : exercices corrigés — moteurs à courant continu. SwissDZ.",
+      "descriptionAr": "على Electro DZ: تمارين محلولة — محركات التيار المستمر. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -3043,12 +3029,12 @@
     },
     {
       "id": "greme-chap14",
-      "collection": "greme",
-      "category": "energie",
+      "collection": "suisse",
+      "category": "moteurs",
       "titleFr": "Ch. 14 : Transformateurs",
       "titleAr": "فصل 14 : المحولات",
-      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 14. Source : electrons.ch",
-      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 14. المصدر: electrons.ch",
+      "descriptionFr": "Sur Electro DZ : exercices corrigés — transformateurs monophasés et triphasés. SwissDZ.",
+      "descriptionAr": "على Electro DZ: تمارين محلولة — المحولات أحادية وثلاثية الطور. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -3063,12 +3049,12 @@
     },
     {
       "id": "greme-chap15",
-      "collection": "greme",
-      "category": "autres",
+      "collection": "suisse",
+      "category": "installation",
       "titleFr": "Ch. 15 : Lumière",
       "titleAr": "فصل 15 : الضوء",
-      "descriptionFr": "Exercices électrotechnique (formation Suisse) — chapitre 15. Source : electrons.ch",
-      "descriptionAr": "تمارين كهروتقنية (تكوين سويسري) — الفصل 15. المصدر: electrons.ch",
+      "descriptionFr": "Sur Electro DZ : exercices corrigés — lumière et éclairage électrique. SwissDZ.",
+      "descriptionAr": "على Electro DZ: تمارين محلولة — الضوء والإضاءة الكهربائية. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -3083,12 +3069,12 @@
     },
     {
       "id": "greme-math-chap01",
-      "collection": "greme",
-      "category": "formation",
+      "collection": "suisse",
+      "category": "electro_calc",
       "titleFr": "Mathématiques — Ch. 1 : Notation, chiffres significatifs",
       "titleAr": "رياضيات — فصل 1 : الترميز والأرقام المعنوية",
-      "descriptionFr": "Mathématiques (CPNV / ) — chapitre 1. Format DOC. Source : electrons.ch",
-      "descriptionAr": "رياضيات (CPNV / ) — الفصل 1. تنسيق DOC. المصدر: electrons.ch",
+      "descriptionFr": "Sur Electro DZ : maths appliquées — notation et chiffres significatifs. SwissDZ.",
+      "descriptionAr": "على Electro DZ: رياضيات تطبيقية — الترميز والأرقام المعنوية. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -3104,12 +3090,12 @@
     },
     {
       "id": "greme-math-chap02",
-      "collection": "greme",
-      "category": "formation",
+      "collection": "suisse",
+      "category": "electro_calc",
       "titleFr": "Mathématiques — Ch. 2 : Pourcents, pourmille",
       "titleAr": "رياضيات — فصل 2 : النسب والمليم",
-      "descriptionFr": "Mathématiques (CPNV / ) — chapitre 2. Format DOC. Source : electrons.ch",
-      "descriptionAr": "رياضيات (CPNV / ) — الفصل 2. تنسيق DOC. المصدر: electrons.ch",
+      "descriptionFr": "Sur Electro DZ : maths appliquées — pourcents et pourmille. SwissDZ.",
+      "descriptionAr": "على Electro DZ: رياضيات تطبيقية — النسب والمليم. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -3125,12 +3111,12 @@
     },
     {
       "id": "greme-math-chap03",
-      "collection": "greme",
-      "category": "formation",
+      "collection": "suisse",
+      "category": "electro_calc",
       "titleFr": "Mathématiques — Ch. 3 : Angles et unités",
       "titleAr": "رياضيات — فصل 3 : الزوايا والوحدات",
-      "descriptionFr": "Mathématiques (CPNV / ) — chapitre 3. Format DOC. Source : electrons.ch",
-      "descriptionAr": "رياضيات (CPNV / ) — الفصل 3. تنسيق DOC. المصدر: electrons.ch",
+      "descriptionFr": "Sur Electro DZ : maths appliquées — angles et unités. SwissDZ.",
+      "descriptionAr": "على Electro DZ: رياضيات تطبيقية — الزوايا والوحدات. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -3146,12 +3132,12 @@
     },
     {
       "id": "greme-math-chap04",
-      "collection": "greme",
-      "category": "formation",
+      "collection": "suisse",
+      "category": "electro_calc",
       "titleFr": "Mathématiques — Ch. 4 : Erreur relative / absolue",
       "titleAr": "رياضيات — فصل 4 : الخطأ النسبي / المطلق",
-      "descriptionFr": "Mathématiques (CPNV / ) — chapitre 4. Format DOC. Source : electrons.ch",
-      "descriptionAr": "رياضيات (CPNV / ) — الفصل 4. تنسيق DOC. المصدر: electrons.ch",
+      "descriptionFr": "Sur Electro DZ : maths appliquées — erreur relative et absolue. SwissDZ.",
+      "descriptionAr": "على Electro DZ: رياضيات تطبيقية — الخطأ النسبي والمطلق. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -3167,12 +3153,12 @@
     },
     {
       "id": "greme-math-chap05",
-      "collection": "greme",
-      "category": "formation",
+      "collection": "suisse",
+      "category": "electro_calc",
       "titleFr": "Mathématiques — Ch. 5 : Transformation de formules",
       "titleAr": "رياضيات — فصل 5 : تحويل الصيغ",
-      "descriptionFr": "Mathématiques (CPNV / ) — chapitre 5. Format DOC. Source : electrons.ch",
-      "descriptionAr": "رياضيات (CPNV / ) — الفصل 5. تنسيق DOC. المصدر: electrons.ch",
+      "descriptionFr": "Sur Electro DZ : maths appliquées — transformation de formules. SwissDZ.",
+      "descriptionAr": "على Electro DZ: رياضيات تطبيقية — تحويل الصيغ. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -3188,12 +3174,12 @@
     },
     {
       "id": "greme-analo-cours",
-      "collection": "greme",
-      "category": "formation",
+      "collection": "suisse",
+      "category": "electro_calc",
       "titleFr": "Électronique analogique — Ch. 1 : Résistances non-linéaires (cours)",
       "titleAr": "إلكترونيات تماثلية — فصل 1 : المقاومات غير الخطية (دورة)",
-      "descriptionFr": "Cours CPNV d'électronique analogique (110 p.) — ch.1 résistances non-linéaires, puis semi-conducteurs, diodes, transistor, puissance, ampli op. Source : electrons.ch / Dropbox",
-      "descriptionAr": "دورة CPNV للإلكترونيات التماثلية (110 صفحة) — الفصل 1 المقاومات غير الخطية ثم أشباه الموصلات والثنائيات والترانزستور. المصدر: electrons.ch",
+      "descriptionFr": "Cours complet sur Electro DZ : électronique analogique — semi-conducteurs, diodes, transistors, ampli op. SwissDZ.",
+      "descriptionAr": "دورة كاملة على Electro DZ: إلكترونيات تماثلية — أشباه الموصلات والثنائيات والترانزستور ومضخم العمليات. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -3208,12 +3194,12 @@
     },
     {
       "id": "coel-chap01",
-      "collection": "greme",
-      "category": "installation",
+      "collection": "suisse",
+      "category": "commande",
       "titleFr": "Commande électrique — Ch. 1 : Symboles",
       "titleAr": "التحكم الكهربائي — فصل 1 : الرموز",
-      "descriptionFr": "Exercices commande électrique — définitions et symboles. Source formation Suisse (hébergé localement).",
-      "descriptionAr": "تمارين التحكم الكهربائي — تعريفات ورموز.",
+      "descriptionFr": "Sur Electro DZ : commande électrique — symboles et définitions. SwissDZ.",
+      "descriptionAr": "على Electro DZ: التحكم الكهربائي — الرموز والتعريفات. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -3228,12 +3214,12 @@
     },
     {
       "id": "coel-chap02",
-      "collection": "greme",
-      "category": "installation",
+      "collection": "suisse",
+      "category": "commande",
       "titleFr": "Commande électrique — Ch. 2 : Bornes et généralités",
       "titleAr": "التحكم الكهربائي — فصل 2 : الأطراف والعموميات",
-      "descriptionFr": "Exercices commande électrique — bornes, repères et schémas électriques.",
-      "descriptionAr": "تمارين التحكم الكهربائي — أطراف وعلامات ومخططات.",
+      "descriptionFr": "Sur Electro DZ : commande électrique — bornes, repères et schémas. SwissDZ.",
+      "descriptionAr": "على Electro DZ: التحكم الكهربائي — الأطراف والعلامات والمخططات. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -3248,12 +3234,12 @@
     },
     {
       "id": "coel-chap03",
-      "collection": "greme",
-      "category": "installation",
+      "collection": "suisse",
+      "category": "commande",
       "titleFr": "Commande électrique — Ch. 3 : Interrupteurs et table de vérité",
       "titleAr": "التحكم الكهربائي — فصل 3 : المفاتيح وجدول الحقيقة",
-      "descriptionFr": "Exercices commande électrique — interrupteurs, signalisation et tables de vérité.",
-      "descriptionAr": "تمارين التحكم الكهربائي — مفاتيح وإشارات وجداول الحقيقة.",
+      "descriptionFr": "Sur Electro DZ : commande électrique — interrupteurs et tables de vérité. SwissDZ.",
+      "descriptionAr": "على Electro DZ: التحكم الكهربائي — المفاتيح وجداول الحقيقة. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -3268,12 +3254,12 @@
     },
     {
       "id": "coel-chap04",
-      "collection": "greme",
-      "category": "installation",
+      "collection": "suisse",
+      "category": "commande",
       "titleFr": "Commande électrique — Ch. 4 : Relais, contacteurs et temporisés",
       "titleAr": "التحكم الكهربائي — فصل 4 : المرحلات والموصلات والمؤقتات",
-      "descriptionFr": "Exercices commande électrique — relais, contacteurs, temporisés, fonctions ET/OU.",
-      "descriptionAr": "تمارين التحكم الكهربائي — مرحلات وموصلات ومؤقتات.",
+      "descriptionFr": "Sur Electro DZ : commande électrique — relais, contacteurs et temporisés. SwissDZ.",
+      "descriptionAr": "على Electro DZ: التحكم الكهربائي — المرحلات والموصلات والمؤقتات. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -3288,12 +3274,12 @@
     },
     {
       "id": "coel-chap05",
-      "collection": "greme",
-      "category": "installation",
+      "collection": "suisse",
+      "category": "commande",
       "titleFr": "Commande électrique — Ch. 5 : Capteurs et détecteurs",
       "titleAr": "التحكم الكهربائي — فصل 5 : الحساسات والكواشف",
-      "descriptionFr": "Exercices commande électrique — interrupteurs de position, pressostats, thermostats, proximité, photoélectriques.",
-      "descriptionAr": "تمارين التحكم الكهربائي — حساسات موضع وضغط وحرارة وقرب.",
+      "descriptionFr": "Sur Electro DZ : commande électrique — capteurs et détecteurs. SwissDZ.",
+      "descriptionAr": "على Electro DZ: التحكم الكهربائي — الحساسات والكواشف. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -3308,12 +3294,12 @@
     },
     {
       "id": "coel-chap06",
-      "collection": "greme",
-      "category": "installation",
+      "collection": "suisse",
+      "category": "commande",
       "titleFr": "Commande électrique — Ch. 6 : Protections (fusibles, disjoncteurs)",
       "titleAr": "التحكم الكهربائي — فصل 6 : الحماية (مصهرات وقاطع)",
-      "descriptionFr": "Exercices commande électrique — fusibles, relais thermiques, disjoncteurs, protections NTC/PTC.",
-      "descriptionAr": "تمارين التحكم الكهربائي — مصهرات وواقيات حرارية وقاطعات.",
+      "descriptionFr": "Sur Electro DZ : commande électrique — fusibles, disjoncteurs et protections. SwissDZ.",
+      "descriptionAr": "على Electro DZ: التحكم الكهربائي — المصهرات والقاطعات والحماية. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -3328,12 +3314,12 @@
     },
     {
       "id": "coel-chap07",
-      "collection": "greme",
-      "category": "installation",
+      "collection": "suisse",
+      "category": "commande",
       "titleFr": "Commande électrique — Ch. 7 : Transformateurs",
       "titleAr": "التحكم الكهربائي — فصل 7 : المحولات",
-      "descriptionFr": "Exercices commande électrique — transformateurs de commande.",
-      "descriptionAr": "تمارين التحكم الكهربائي — محولات التحكم.",
+      "descriptionFr": "Sur Electro DZ : commande électrique — transformateurs de commande. SwissDZ.",
+      "descriptionAr": "على Electro DZ: التحكم الكهربائي — محولات التحكم. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -3348,12 +3334,12 @@
     },
     {
       "id": "coel-chap09",
-      "collection": "greme",
-      "category": "installation",
+      "collection": "suisse",
+      "category": "securite",
       "titleFr": "Commande électrique — Ch. 9 : Sécurité électrique",
       "titleAr": "التحكم الكهربائي — فصل 9 : السلامة الكهربائية",
-      "descriptionFr": "Exercices commande électrique — accidents électriques et courants de contact.",
-      "descriptionAr": "تمارين التحكم الكهربائي — حوادث الكهرباء وتيارات اللمس.",
+      "descriptionFr": "Sur Electro DZ : commande électrique — sécurité et courants de contact. SwissDZ.",
+      "descriptionAr": "على Electro DZ: التحكم الكهربائي — السلامة وتيارات اللمس. SwissDZ.",
       "lang": [
         "fr"
       ],
@@ -3368,12 +3354,12 @@
     },
     {
       "id": "coel-chap10",
-      "collection": "greme",
-      "category": "installation",
+      "collection": "suisse",
+      "category": "commande",
       "titleFr": "Commande électrique — Ch. 10 : Schémas d’application",
       "titleAr": "التحكم الكهربائي — فصل 10 : مخططات تطبيقية",
-      "descriptionFr": "Exercices commande électrique — schémas lumière, commandes relais/contacteur, applications.",
-      "descriptionAr": "تمارين التحكم الكهربائي — مخططات إضاءة وقيادة وتطبيقات.",
+      "descriptionFr": "Sur Electro DZ : commande électrique — schémas d’application terrain. SwissDZ.",
+      "descriptionAr": "على Electro DZ: التحكم الكهربائي — مخططات تطبيقية ميدانية. SwissDZ.",
       "lang": [
         "fr"
       ],

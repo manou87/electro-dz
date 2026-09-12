@@ -744,6 +744,18 @@ html.theme-electric-neon .book-filter--active {
   box-shadow: 0 0 16px rgba(148, 163, 184, 0.35) !important;
 }
 
+html.theme-electric-neon .book-filter .theme-ico-wrap {
+  background: #020617 !important;
+  border-color: rgba(34, 211, 238, 0.28) !important;
+  color: var(--neon-yellow) !important;
+}
+
+html.theme-electric-neon .book-filter--active .theme-ico-wrap {
+  background: #020617 !important;
+  border-color: rgba(250, 204, 21, 0.55) !important;
+  color: var(--neon-yellow) !important;
+}
+
 html.theme-electric-neon .library-sort,
 html.theme-electric-neon .library-search {
   background: rgba(6, 10, 18, 0.9) !important;
