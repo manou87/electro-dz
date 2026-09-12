@@ -55,6 +55,7 @@
     domotique: "#4f46e5",
     securite: "#b45309",
     bac: "#c2410c",
+    kutub: "#0369a1",
     autres: "#334155",
   };
 
