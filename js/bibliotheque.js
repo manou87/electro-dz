@@ -54,6 +54,8 @@
     commande: "#059669",
     domotique: "#4f46e5",
     securite: "#b45309",
+    bac: "#c2410c",
+    autres: "#334155",
   };
 
   function t(fr, ar, en) {
@@ -78,13 +80,24 @@
     return escapeHtml(s).replace(/'/g, "&#39;");
   }
 
-  function pdfViewerHref(book) {
+  function pdfViewerHref(book, opts) {
+    opts = opts || {};
+    const src = (opts.src || book.pdfUrl || "").trim();
     const q = new URLSearchParams();
-    q.set("src", book.pdfUrl);
-    q.set("id", book.id || "");
-    q.set("titleFr", book.titleFr || "");
-    q.set("titleAr", book.titleAr || book.titleFr || "");
+    q.set("src", src);
+    q.set("id", (opts.idSuffix ? (book.id || "") + opts.idSuffix : book.id) || "");
+    q.set("titleFr", opts.titleFr || book.titleFr || "");
+    q.set("titleAr", opts.titleAr || book.titleAr || book.titleFr || "");
     return "lecteur-pdf.html?" + q.toString();
+  }
+
+  function bookCorrectionUrl(book) {
+    return (book.correctionPdfUrl || "").trim();
+  }
+
+  function hasCorrection(book) {
+    const u = bookCorrectionUrl(book);
+    return Boolean(u && u !== "#");
   }
 
   function bookFileUrl(book) {
@@ -552,7 +565,9 @@
       read.href = pdfViewerHref(book);
       read.textContent = locked
         ? t("Mot de passe", "كلمة المرور", "Password")
-        : t("Lire le PDF", "قراءة PDF", "Read PDF");
+        : hasCorrection(book)
+          ? t("Sujet", "الموضوع", "Exam")
+          : t("Lire le PDF", "قراءة PDF", "Read PDF");
       read.addEventListener("click", function (e) {
         if (!isBookLocked(book)) return;
         e.preventDefault();
@@ -562,11 +577,26 @@
       });
       actions.appendChild(read);
 
+      if (hasCorrection(book) && !locked) {
+        const corr = document.createElement("a");
+        corr.className = "btn btn-correction btn-sm";
+        corr.href = pdfViewerHref(book, {
+          src: bookCorrectionUrl(book),
+          idSuffix: "-correction",
+          titleFr: (book.titleFr || "") + " — Corrigé",
+          titleAr: (book.titleAr || book.titleFr || "") + " — التصحيح",
+        });
+        corr.textContent = t("Corrigé", "التصحيح", "Answer key");
+        actions.appendChild(corr);
+      }
+
       const dl = document.createElement("a");
       dl.className = "btn btn-download btn-sm";
       dl.href = locked ? "#" : resolveAssetUrl(bookFileUrl(book));
       if (!locked) dl.setAttribute("download", "");
-      dl.textContent = t("Télécharger PDF", "تنزيل PDF", "Download PDF");
+      dl.textContent = hasCorrection(book)
+        ? t("DL sujet", "تنزيل الموضوع", "DL exam")
+        : t("Télécharger PDF", "تنزيل PDF", "Download PDF");
       dl.addEventListener("click", function (e) {
         if (isBookLocked(book)) {
           e.preventDefault();
@@ -578,6 +608,20 @@
         }
       });
       actions.appendChild(dl);
+
+      if (hasCorrection(book) && !locked) {
+        const dlCorr = document.createElement("a");
+        dlCorr.className = "btn btn-download btn-sm";
+        dlCorr.href = resolveAssetUrl(bookCorrectionUrl(book));
+        dlCorr.setAttribute("download", "");
+        dlCorr.textContent = t("DL corrigé", "تنزيل التصحيح", "DL key");
+        dlCorr.addEventListener("click", function () {
+          if (book.id && window.ElectroDzPdfStats) {
+            window.ElectroDzPdfStats.trackDownload(book.id + "-correction");
+          }
+        });
+        actions.appendChild(dlCorr);
+      }
 
       if (book.quizUrl) {
         const quiz = document.createElement("a");

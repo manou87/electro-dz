@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "updated": "2026-09-12",
   "collections": {
     "suisse": {
@@ -81,6 +81,12 @@
       "labelAr": "السلامة",
       "icon": "assets/library-themes/securite.png",
       "order": 8
+    },
+    "bac": {
+      "labelFr": "BAC électrotechnique",
+      "labelAr": "بكالوريا الهندسة الكهربائية",
+      "icon": "assets/library-themes/bac.png",
+      "order": 9
     }
   },
   "books": [
@@ -3371,6 +3377,386 @@
       "coverImageAr": "assets/covers/coel-chap10-ar.svg",
       "addedDate": "2026-07-21",
       "coverPreview": "assets/covers/previews/coel-chap10.png"
+    },
+    {
+      "id": "bac-ge-2026",
+      "collection": "algerien",
+      "category": "bac",
+      "titleFr": "BAC Génie électrique 2026",
+      "titleAr": "بكالوريا الهندسة الكهربائية 2026",
+      "descriptionFr": "Sujet officiel BAC Algérie — Génie électrique (Technique mathématiques) 2026. Corrigé modèle inclus.",
+      "descriptionAr": "موضوع رسمي لبكالوريا الجزائر — الهندسة الكهربائية (تقني رياضي) 2026. مع التصحيح النموذجي.",
+      "lang": [
+        "ar",
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2026,
+      "pdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2026.pdf",
+      "correctionPdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2026-correction.pdf",
+      "featured": true,
+      "addedDate": "2026-09-12"
+    },
+    {
+      "id": "bac-ge-2025",
+      "collection": "algerien",
+      "category": "bac",
+      "titleFr": "BAC Génie électrique 2025",
+      "titleAr": "بكالوريا الهندسة الكهربائية 2025",
+      "descriptionFr": "Sujet officiel BAC Algérie — Génie électrique (Technique mathématiques) 2025. Corrigé modèle inclus.",
+      "descriptionAr": "موضوع رسمي لبكالوريا الجزائر — الهندسة الكهربائية (تقني رياضي) 2025. مع التصحيح النموذجي.",
+      "lang": [
+        "ar",
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2025,
+      "pdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2025.pdf",
+      "correctionPdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2025-correction.pdf",
+      "featured": true,
+      "addedDate": "2026-09-12"
+    },
+    {
+      "id": "bac-ge-2024",
+      "collection": "algerien",
+      "category": "bac",
+      "titleFr": "BAC Génie électrique 2024",
+      "titleAr": "بكالوريا الهندسة الكهربائية 2024",
+      "descriptionFr": "Sujet officiel BAC Algérie — Génie électrique (Technique mathématiques) 2024. Corrigé modèle inclus.",
+      "descriptionAr": "موضوع رسمي لبكالوريا الجزائر — الهندسة الكهربائية (تقني رياضي) 2024. مع التصحيح النموذجي.",
+      "lang": [
+        "ar",
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2024,
+      "pdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2024.pdf",
+      "correctionPdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2024-correction.pdf",
+      "featured": true,
+      "addedDate": "2026-09-12"
+    },
+    {
+      "id": "bac-ge-2023",
+      "collection": "algerien",
+      "category": "bac",
+      "titleFr": "BAC Génie électrique 2023",
+      "titleAr": "بكالوريا الهندسة الكهربائية 2023",
+      "descriptionFr": "Sujet officiel BAC Algérie — Génie électrique (Technique mathématiques) 2023. Corrigé modèle inclus.",
+      "descriptionAr": "موضوع رسمي لبكالوريا الجزائر — الهندسة الكهربائية (تقني رياضي) 2023. مع التصحيح النموذجي.",
+      "lang": [
+        "ar",
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2023,
+      "pdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2023.pdf",
+      "correctionPdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2023-correction.pdf",
+      "featured": false,
+      "addedDate": "2026-09-12"
+    },
+    {
+      "id": "bac-ge-2022",
+      "collection": "algerien",
+      "category": "bac",
+      "titleFr": "BAC Génie électrique 2022",
+      "titleAr": "بكالوريا الهندسة الكهربائية 2022",
+      "descriptionFr": "Sujet officiel BAC Algérie — Génie électrique (Technique mathématiques) 2022. Corrigé modèle inclus.",
+      "descriptionAr": "موضوع رسمي لبكالوريا الجزائر — الهندسة الكهربائية (تقني رياضي) 2022. مع التصحيح النموذجي.",
+      "lang": [
+        "ar",
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2022,
+      "pdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2022.pdf",
+      "correctionPdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2022-correction.pdf",
+      "featured": false,
+      "addedDate": "2026-09-12"
+    },
+    {
+      "id": "bac-ge-2021",
+      "collection": "algerien",
+      "category": "bac",
+      "titleFr": "BAC Génie électrique 2021",
+      "titleAr": "بكالوريا الهندسة الكهربائية 2021",
+      "descriptionFr": "Sujet officiel BAC Algérie — Génie électrique (Technique mathématiques) 2021. Corrigé modèle inclus.",
+      "descriptionAr": "موضوع رسمي لبكالوريا الجزائر — الهندسة الكهربائية (تقني رياضي) 2021. مع التصحيح النموذجي.",
+      "lang": [
+        "ar",
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2021,
+      "pdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2021.pdf",
+      "correctionPdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2021-correction.pdf",
+      "featured": false,
+      "addedDate": "2026-09-12"
+    },
+    {
+      "id": "bac-ge-2020",
+      "collection": "algerien",
+      "category": "bac",
+      "titleFr": "BAC Génie électrique 2020",
+      "titleAr": "بكالوريا الهندسة الكهربائية 2020",
+      "descriptionFr": "Sujet officiel BAC Algérie — Génie électrique (Technique mathématiques) 2020. Corrigé modèle inclus.",
+      "descriptionAr": "موضوع رسمي لبكالوريا الجزائر — الهندسة الكهربائية (تقني رياضي) 2020. مع التصحيح النموذجي.",
+      "lang": [
+        "ar",
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2020,
+      "pdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2020.pdf",
+      "correctionPdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2020-correction.pdf",
+      "featured": false,
+      "addedDate": "2026-09-12"
+    },
+    {
+      "id": "bac-ge-2019",
+      "collection": "algerien",
+      "category": "bac",
+      "titleFr": "BAC Génie électrique 2019",
+      "titleAr": "بكالوريا الهندسة الكهربائية 2019",
+      "descriptionFr": "Sujet officiel BAC Algérie — Génie électrique (Technique mathématiques) 2019. Corrigé modèle inclus.",
+      "descriptionAr": "موضوع رسمي لبكالوريا الجزائر — الهندسة الكهربائية (تقني رياضي) 2019. مع التصحيح النموذجي.",
+      "lang": [
+        "ar",
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2019,
+      "pdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2019.pdf",
+      "correctionPdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2019-correction.pdf",
+      "featured": false,
+      "addedDate": "2026-09-12"
+    },
+    {
+      "id": "bac-ge-2018",
+      "collection": "algerien",
+      "category": "bac",
+      "titleFr": "BAC Génie électrique 2018",
+      "titleAr": "بكالوريا الهندسة الكهربائية 2018",
+      "descriptionFr": "Sujet officiel BAC Algérie — Génie électrique (Technique mathématiques) 2018. Corrigé modèle inclus.",
+      "descriptionAr": "موضوع رسمي لبكالوريا الجزائر — الهندسة الكهربائية (تقني رياضي) 2018. مع التصحيح النموذجي.",
+      "lang": [
+        "ar",
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2018,
+      "pdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2018.pdf",
+      "correctionPdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2018-correction.pdf",
+      "featured": false,
+      "addedDate": "2026-09-12"
+    },
+    {
+      "id": "bac-ge-2017",
+      "collection": "algerien",
+      "category": "bac",
+      "titleFr": "BAC Génie électrique 2017",
+      "titleAr": "بكالوريا الهندسة الكهربائية 2017",
+      "descriptionFr": "Sujet officiel BAC Algérie — Génie électrique (Technique mathématiques) 2017. Corrigé modèle inclus.",
+      "descriptionAr": "موضوع رسمي لبكالوريا الجزائر — الهندسة الكهربائية (تقني رياضي) 2017. مع التصحيح النموذجي.",
+      "lang": [
+        "ar",
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2017,
+      "pdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2017.pdf",
+      "correctionPdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2017-correction.pdf",
+      "featured": false,
+      "addedDate": "2026-09-12"
+    },
+    {
+      "id": "bac-ge-2017-session2",
+      "collection": "algerien",
+      "category": "bac",
+      "titleFr": "BAC Génie électrique 2017 — session 2",
+      "titleAr": "بكالوريا الهندسة الكهربائية 2017 — الدورة 2",
+      "descriptionFr": "Sujet officiel BAC Algérie — Génie électrique (Technique mathématiques) 2017 — session 2. Corrigé modèle inclus.",
+      "descriptionAr": "موضوع رسمي لبكالوريا الجزائر — الهندسة الكهربائية (تقني رياضي) 2017 — الدورة 2. مع التصحيح النموذجي.",
+      "lang": [
+        "ar",
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2017,
+      "pdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2017-session2.pdf",
+      "correctionPdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2017-session2-correction.pdf",
+      "featured": false,
+      "addedDate": "2026-09-12"
+    },
+    {
+      "id": "bac-ge-2016",
+      "collection": "algerien",
+      "category": "bac",
+      "titleFr": "BAC Génie électrique 2016",
+      "titleAr": "بكالوريا الهندسة الكهربائية 2016",
+      "descriptionFr": "Sujet officiel BAC Algérie — Génie électrique (Technique mathématiques) 2016. Corrigé modèle inclus.",
+      "descriptionAr": "موضوع رسمي لبكالوريا الجزائر — الهندسة الكهربائية (تقني رياضي) 2016. مع التصحيح النموذجي.",
+      "lang": [
+        "ar",
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2016,
+      "pdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2016.pdf",
+      "correctionPdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2016-correction.pdf",
+      "featured": false,
+      "addedDate": "2026-09-12"
+    },
+    {
+      "id": "bac-ge-2015",
+      "collection": "algerien",
+      "category": "bac",
+      "titleFr": "BAC Génie électrique 2015",
+      "titleAr": "بكالوريا الهندسة الكهربائية 2015",
+      "descriptionFr": "Sujet officiel BAC Algérie — Génie électrique (Technique mathématiques) 2015. Corrigé modèle inclus.",
+      "descriptionAr": "موضوع رسمي لبكالوريا الجزائر — الهندسة الكهربائية (تقني رياضي) 2015. مع التصحيح النموذجي.",
+      "lang": [
+        "ar",
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2015,
+      "pdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2015.pdf",
+      "correctionPdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2015-correction.pdf",
+      "featured": false,
+      "addedDate": "2026-09-12"
+    },
+    {
+      "id": "bac-ge-2014",
+      "collection": "algerien",
+      "category": "bac",
+      "titleFr": "BAC Génie électrique 2014",
+      "titleAr": "بكالوريا الهندسة الكهربائية 2014",
+      "descriptionFr": "Sujet officiel BAC Algérie — Génie électrique (Technique mathématiques) 2014. Corrigé modèle inclus.",
+      "descriptionAr": "موضوع رسمي لبكالوريا الجزائر — الهندسة الكهربائية (تقني رياضي) 2014. مع التصحيح النموذجي.",
+      "lang": [
+        "ar",
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2014,
+      "pdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2014.pdf",
+      "correctionPdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2014-correction.pdf",
+      "featured": false,
+      "addedDate": "2026-09-12"
+    },
+    {
+      "id": "bac-ge-2013",
+      "collection": "algerien",
+      "category": "bac",
+      "titleFr": "BAC Génie électrique 2013",
+      "titleAr": "بكالوريا الهندسة الكهربائية 2013",
+      "descriptionFr": "Sujet officiel BAC Algérie — Génie électrique (Technique mathématiques) 2013. Corrigé modèle inclus.",
+      "descriptionAr": "موضوع رسمي لبكالوريا الجزائر — الهندسة الكهربائية (تقني رياضي) 2013. مع التصحيح النموذجي.",
+      "lang": [
+        "ar",
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2013,
+      "pdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2013.pdf",
+      "correctionPdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2013-correction.pdf",
+      "featured": false,
+      "addedDate": "2026-09-12"
+    },
+    {
+      "id": "bac-ge-2012",
+      "collection": "algerien",
+      "category": "bac",
+      "titleFr": "BAC Génie électrique 2012",
+      "titleAr": "بكالوريا الهندسة الكهربائية 2012",
+      "descriptionFr": "Sujet officiel BAC Algérie — Génie électrique (Technique mathématiques) 2012. Corrigé modèle inclus.",
+      "descriptionAr": "موضوع رسمي لبكالوريا الجزائر — الهندسة الكهربائية (تقني رياضي) 2012. مع التصحيح النموذجي.",
+      "lang": [
+        "ar",
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2012,
+      "pdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2012.pdf",
+      "correctionPdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2012-correction.pdf",
+      "featured": false,
+      "addedDate": "2026-09-12"
+    },
+    {
+      "id": "bac-ge-2011",
+      "collection": "algerien",
+      "category": "bac",
+      "titleFr": "BAC Génie électrique 2011",
+      "titleAr": "بكالوريا الهندسة الكهربائية 2011",
+      "descriptionFr": "Sujet officiel BAC Algérie — Génie électrique (Technique mathématiques) 2011. Corrigé modèle inclus.",
+      "descriptionAr": "موضوع رسمي لبكالوريا الجزائر — الهندسة الكهربائية (تقني رياضي) 2011. مع التصحيح النموذجي.",
+      "lang": [
+        "ar",
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2011,
+      "pdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2011.pdf",
+      "correctionPdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2011-correction.pdf",
+      "featured": false,
+      "addedDate": "2026-09-12"
+    },
+    {
+      "id": "bac-ge-2010",
+      "collection": "algerien",
+      "category": "bac",
+      "titleFr": "BAC Génie électrique 2010",
+      "titleAr": "بكالوريا الهندسة الكهربائية 2010",
+      "descriptionFr": "Sujet officiel BAC Algérie — Génie électrique (Technique mathématiques) 2010. Corrigé modèle inclus.",
+      "descriptionAr": "موضوع رسمي لبكالوريا الجزائر — الهندسة الكهربائية (تقني رياضي) 2010. مع التصحيح النموذجي.",
+      "lang": [
+        "ar",
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2010,
+      "pdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2010.pdf",
+      "correctionPdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2010-correction.pdf",
+      "featured": false,
+      "addedDate": "2026-09-12"
+    },
+    {
+      "id": "bac-ge-2009",
+      "collection": "algerien",
+      "category": "bac",
+      "titleFr": "BAC Génie électrique 2009",
+      "titleAr": "بكالوريا الهندسة الكهربائية 2009",
+      "descriptionFr": "Sujet officiel BAC Algérie — Génie électrique (Technique mathématiques) 2009. Corrigé modèle inclus.",
+      "descriptionAr": "موضوع رسمي لبكالوريا الجزائر — الهندسة الكهربائية (تقني رياضي) 2009. مع التصحيح النموذجي.",
+      "lang": [
+        "ar",
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2009,
+      "pdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2009.pdf",
+      "correctionPdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2009-correction.pdf",
+      "featured": false,
+      "addedDate": "2026-09-12"
+    },
+    {
+      "id": "bac-ge-2008",
+      "collection": "algerien",
+      "category": "bac",
+      "titleFr": "BAC Génie électrique 2008",
+      "titleAr": "بكالوريا الهندسة الكهربائية 2008",
+      "descriptionFr": "Sujet officiel BAC Algérie — Génie électrique (Technique mathématiques) 2008. Corrigé modèle inclus.",
+      "descriptionAr": "موضوع رسمي لبكالوريا الجزائر — الهندسة الكهربائية (تقني رياضي) 2008. مع التصحيح النموذجي.",
+      "lang": [
+        "ar",
+        "fr"
+      ],
+      "pages": 0,
+      "year": 2008,
+      "pdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2008.pdf",
+      "correctionPdfUrl": "pdf/algerie/bac-genie-electrique/bac-genie-electrique-2008-correction.pdf",
+      "featured": false,
+      "addedDate": "2026-09-12"
     }
   ]
 }
