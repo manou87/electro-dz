@@ -59,6 +59,47 @@
 .quick-item--controle { --quick-accent: #34d399; }
 .quick-item--quote { --quick-accent: #fb923c; }
 .quick-item--cos { --quick-accent: #eab308; }
+.quick-item--event { --quick-accent: #facc15; }
+
+/* Section événement 19 septembre — même tuiles que #outils */
+.event-19 {
+  margin: 2px 0 10px;
+  padding: 4px 0 2px;
+}
+.event-19-head h2 {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--accent, #facc15);
+  margin: 0 0 2px;
+}
+.event-19-sub {
+  font-size: 0.74rem;
+  color: var(--muted, #94a3b8);
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+.event-19-grid {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  align-content: start;
+}
+.event-19 .quick-item {
+  min-height: 112px;
+  justify-content: flex-end;
+  padding: 0 0 10px;
+}
+@media (max-width: 960px) {
+  .event-19-grid { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 768px) {
+  .event-19-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 480px) {
+  .event-19-grid { grid-template-columns: repeat(2, 1fr); }
+}
 
 .quick-preview {
   display: block;

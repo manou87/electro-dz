@@ -42,6 +42,10 @@
       "quick.cosphi": "SwissDZ Cos φ",
       "quick.cosphi.hint":
         "Batterie de compensation BT — mesurer, corriger, contrôler le facteur de puissance",
+      "event19.title": "Événement samedi 19 septembre",
+      "event19.sub": "Séminaire contrôle OIBT — théorie le matin, exercices l'après-midi",
+      "event19.quiz": "Quiz séminaire 19 septembre",
+      "event19.quiz.hint": "Quiz du séminaire 19 septembre — mesures et contrôle OIBT (code d'accès)",
       "quick.job": "Emploi · bientôt",
       "quick.quote": "Devis",
       "quick.social": "Réseaux",
@@ -164,6 +168,10 @@
       "quick.cosphi": "SwissDZ Cos φ",
       "quick.cosphi.hint":
         "بطارية تعويض الجهد المنخفض — قياس وتصحيح ومراقبة معامل القدرة",
+      "event19.title": "حدث السبت 19 سبتمبر",
+      "event19.sub": "ندوة contrôle OIBT — نظرية صباحاً وتمارين بعد الظهر",
+      "event19.quiz": "اختبار الندوة 19 سبتمبر",
+      "event19.quiz.hint": "اختبار ندوة 19 سبتمبر — قياس ومراقبة OIBT (رمز دخول)",
       "quick.job": "عمل · قريباً",
       "quick.quote": "عروض أسعار",
       "quick.social": "شبكات",
@@ -287,6 +295,10 @@
       "quick.cosphi": "SwissDZ Cos φ",
       "quick.cosphi.hint":
         "LV power-factor correction bank — measure, correct, verify",
+      "event19.title": "Saturday 19 September event",
+      "event19.sub": "OIBT inspection seminar — theory in the morning, exercises in the afternoon",
+      "event19.quiz": "19 September seminar quiz",
+      "event19.quiz.hint": "19 September seminar quiz — OIBT measurements and inspection (access code)",
       "quick.job": "Jobs · coming soon",
       "quick.quote": "Quotes",
       "quick.social": "Social",
