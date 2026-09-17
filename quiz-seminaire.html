@@ -1,82 +1,20 @@
----
-layout: null
----
-{% raw %}
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <script src="js/theme-electric-neon.js"></script>
-  <meta name="robots" content="noindex"/>
-  <meta name="description" content="اختبار ندوة 19 سبتمبر 2026 — première vérification و mesures OIBT. دخول برمز."/>
-  <link rel="icon" href="assets/app-icon.png" type="image/png"/>
+  <meta name="robots" content="noindex" />
+  <meta name="description" content="اختبار ندوة 19 سبتمبر 2026 — première vérification و mesures OIBT. دخول برمز." />
+  <link rel="icon" href="assets/app-icon.png" type="image/png" />
+  <link rel="stylesheet" href="css/quiz-seminaire.css" />
   <title>اختبار الندوة 19 سبتمبر | SwissDZ</title>
-  <style>
-    :root{
-      --bg:#0a0f1a; --accent:#facc15; --text:#f1f5f9; --muted:#94a3b8;
-      --card:rgba(255,255,255,.05); --border:rgba(255,255,255,.12); --ok:#4ade80; --bad:#f87171;
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      font-family:"Geeza Pro","Tahoma","Segoe UI",system-ui,sans-serif;
-      background:var(--bg);
-      background-image:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(250,204,21,.12),transparent);
-      color:var(--text);line-height:1.55;min-height:100dvh;
-    }
-    a{color:var(--accent);text-decoration:none}
-    .nav{
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      padding:12px 5%;background:rgba(10,15,26,.94);border-bottom:1px solid var(--border);
-      position:sticky;top:0;z-index:20;
-    }
-    .logo{display:flex;align-items:center;gap:8px;color:var(--accent);font-weight:800}
-    .wrap{max-width:640px;margin:0 auto;padding:20px 5% calc(28px + env(safe-area-inset-bottom))}
-    h1{font-size:1.35rem;color:var(--accent);margin-bottom:8px}
-    .lead{color:var(--muted);font-size:.92rem;margin-bottom:18px}
-    .card{
-      background:var(--card);border:1px solid var(--border);border-radius:14px;
-      padding:16px;
-    }
-    label{display:block;font-weight:700;margin-bottom:8px}
-    input[type=text],input[type=password]{
-      width:100%;padding:14px 12px;border-radius:10px;border:1px solid var(--border);
-      background:#0f172a;color:#fff;font-size:1.05rem;text-align:center;letter-spacing:.08em;
-    }
-    button, .btn{
-      display:inline-flex;align-items:center;justify-content:center;width:100%;
-      margin-top:12px;padding:14px 16px;border:0;border-radius:12px;cursor:pointer;
-      background:var(--accent);color:#0a0f1a;font-weight:800;font-size:1rem;
-    }
-    [hidden]{display:none!important}
-    button:disabled{opacity:.45;cursor:not-allowed}
-    .err{color:var(--bad);font-weight:700;margin-top:10px;min-height:1.2em}
-    .progress{color:var(--muted);font-weight:700;margin-bottom:10px;font-size:.85rem}
-    .q{font-size:1.08rem;font-weight:800;margin-bottom:14px;line-height:1.45}
-    .opt{
-      display:block;width:100%;text-align:right;margin:8px 0;padding:12px 14px;
-      border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.04);
-      color:var(--text);font-weight:700;font-size:.95rem;cursor:pointer;
-    }
-    .opt:hover,.opt:focus{border-color:var(--accent)}
-    .opt.is-ok{border-color:var(--ok);background:rgba(74,222,128,.12)}
-    .opt.is-bad{border-color:var(--bad);background:rgba(248,113,113,.12)}
-    .why{
-      margin-top:12px;padding:12px;border-radius:10px;
-      background:rgba(250,204,21,.08);border:1px solid rgba(250,204,21,.28);
-      font-size:.92rem;
-    }
-    .src{color:var(--muted);font-size:.78rem;margin-top:8px}
-    #gate, #quiz, #done{display:none}
-    #gate.on, #quiz.on, #done.on{display:block}
-    .score{font-size:2rem;font-weight:900;color:var(--accent);text-align:center;margin:12px 0}
-    .fr{unicode-bidi:isolate;direction:ltr;font-weight:800}
-  </style>
+  <link rel="canonical" href="https://electro-dz.com/quiz-seminaire.html" />
 </head>
 <body>
   <nav class="nav">
     <a class="logo" href="index.html">
-      <img src="assets/app-icon.png" alt="" width="36" height="36"/>
+      <img src="assets/app-icon.png" alt="" width="36" height="36" />
       <span>SwissDZ</span>
     </a>
     <a href="index.html#evenement-19-septembre">الرئيسية</a>
@@ -87,7 +25,7 @@ layout: null
       <p class="lead">أسئلة بالعربية، والمصطلحات التقنية بالفرنسية. الدخول برمز القاعة فقط.</p>
       <div class="card">
         <label for="code">رمز الدخول</label>
-        <input id="code" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="••••••"/>
+        <input id="code" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="••••••" />
         <button type="button" id="enter">دخول</button>
         <p class="err" id="gate-err" hidden></p>
       </div>
@@ -110,12 +48,11 @@ layout: null
       <p class="lead" id="score-msg"></p>
       <div class="card">
         <p>بدون <span class="fr">appareil de mesure</span>، الـ <span class="fr">défaut</span> يبقى تخمين. مع <span class="fr">mesure</span>، يصبح دليل في <span class="fr">le rapport de sécurité</span>.</p>
-        <a class="btn" href="index.html#evenement-19-septembre" style="margin-top:16px">العودة إلى الحدث</a>
-        <button type="button" id="retry" style="background:transparent;border:1px solid var(--border);color:var(--accent)">إعادة المحاولة</button>
+        <a class="btn" href="index.html#evenement-19-septembre">العودة إلى الحدث</a>
+        <button type="button" id="retry" class="btn-ghost">إعادة المحاولة</button>
       </div>
     </section>
   </main>
   <script src="js/quiz-evenement-19-septembre.js"></script>
 </body>
 </html>
-{% endraw %}

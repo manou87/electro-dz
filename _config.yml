@@ -1,16 +1,5 @@
-# Site statique. Sans ce fichier, jekyll-default-layout casse le build
-# dès qu’une nouvelle page HTML est ajoutée (404 GitHub Pages).
 defaults:
   - scope:
       path: ""
     values:
       layout: null
-exclude:
-  - scripts
-  - supabase
-  - .venv-pdf
-  - node_modules
-  - vendor
-  - .cursor
-  - .specify
-  - README.md
