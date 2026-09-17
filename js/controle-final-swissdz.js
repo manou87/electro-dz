@@ -61,7 +61,7 @@
       colDate: 'Date',
       footer:
         'Contrôle final SwissDZ — outil pédagogique OIBT / NIV. Toute installation réelle doit être vérifiée par un inspecteur habilité.',
-      printTitle: 'Contrôle final SwissDZ — Protocole EP 2018',
+      printTitle: 'Contrôle final SwissDZ',
       printFooterApp: 'Généré avec SwissDZ',
       pdfErr: 'Impossible de générer le PDF officiel.',
       popupBlocked: 'Popup bloquée — autorisez les fenêtres pour imprimer.',
@@ -121,7 +121,7 @@
       colDate: 'Date',
       footer:
         'SwissDZ Final Inspection — OIBT / NIV training tool. Any live installation must be verified by a qualified inspector.',
-      printTitle: 'SwissDZ Final Inspection — EP 2018 Protocol',
+      printTitle: 'SwissDZ Final Inspection',
       printFooterApp: 'Generated with SwissDZ',
       pdfErr: 'Could not generate the official PDF.',
       popupBlocked: 'Popup blocked — allow popups to print.',
@@ -164,30 +164,30 @@
       organeDateSignature: 'جهة المراقبة — التاريخ / التوقيع',
       colNum: 'رقم',
       colObj: 'الموضوع',
-      colType: 'النوع',
-      colCourbe: 'المنحنى',
-      colIn: 'In (A)',
-      colVisuel: 'بصري',
-      colRe: 'Re (Ω)',
-      colRpe: 'RPE/RLOW (Ω)',
-      colRiso: 'Riso (MΩ)',
-      colIdiff: 'Idiff (mA)',
-      colIccLpe: 'Icc L-PE (A)',
-      colIccLn: 'Icc L-N (A)',
-      colIdn: 'IΔN (mA)',
-      colTestT: 't (s)',
-      colChamp: 'دوران',
-      colU: 'U (V)',
+      colType: 'نوع الجهاز',
+      colCourbe: 'منحنى الفصل',
+      colIn: 'التيار الاسمي In (A)',
+      colVisuel: 'الفحص البصري',
+      colRe: 'مقاومة الأرضي Re (Ω)',
+      colRpe: 'استمرارية الموصل PE — RPE/RLOW (Ω)',
+      colRiso: 'مقاومة العزل Riso (MΩ)',
+      colIdiff: 'تيار التسرب Idiff (mA)',
+      colIccLpe: 'تيار الدارة القصيرة Icc L-PE (A)',
+      colIccLn: 'تيار الدارة القصيرة Icc L-N (A)',
+      colIdn: 'تيار العتبة للـ DDR — IΔN (mA)',
+      colTestT: 'زمن القطع t (s)',
+      colChamp: 'دوران الأطوار (champ tournant)',
+      colU: 'التوتر U (V)',
       colDate: 'التاريخ',
       footer:
         'الفحص النهائي SwissDZ — أداة تعليمية OIBT / NIV. أي تركيب حقيقي يجب أن يتحقق منه مفتش مؤهل.',
-      printTitle: 'الفحص النهائي SwissDZ — بروتوكول EP 2018',
+      printTitle: 'الفحص النهائي SwissDZ',
       printFooterApp: 'أُنشئ بواسطة SwissDZ',
       pdfErr: 'تعذّر إنشاء PDF الرسمي.',
       popupBlocked: 'تم حظر النافذة — اسمح بالنوافذ المنبثقة للطباعة.',
       bilingualToggle: 'ثنائي اللغة FR / AR (النموذج)',
-      earthTitle: 'التأريض',
-      resistanceTerre: 'مقاومة التأريض (Ω)',
+      earthTitle: 'مقاومة الأرضي',
+      resistanceTerre: 'مقاومة الأرضي (Ω)',
       earthTableHint: 'Re (Ω) يظهر أيضاً في جدول القياسات أدناه. لا يُطبَّق حد OIBT.',
     },
   };
@@ -1091,6 +1091,7 @@
     var tplRes = await fetch(layout.templateUrl);
     var tplBytes = await tplRes.arrayBuffer();
     var pdfDoc = await PDFLib.PDFDocument.load(tplBytes);
+    pdfDoc.setTitle(tr('printTitle'));
     var page = pdfDoc.getPages()[0];
     var pageH = layout.page.height;
     var font = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
