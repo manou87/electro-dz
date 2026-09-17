@@ -11,3 +11,15 @@
   padding: 4px 8px !important;
   min-height: 0 !important;
 }
+
+@media (max-width: 640px) {
+  .application--embed .entete {
+    padding: 2px 6px !important;
+    gap: 4px !important;
+  }
+
+  .application--embed .marque p,
+  .application--embed .marque h1 {
+    font-size: 12px !important;
+  }
+}

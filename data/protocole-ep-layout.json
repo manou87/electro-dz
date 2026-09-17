@@ -12,12 +12,10 @@
     "objetPeriode": { "type": "text", "x": 25, "y": 108, "maxW": 360, "size": 8 },
     "instruments": { "type": "text", "x": 25, "y": 128, "maxW": 360, "size": 8 },
     "descriptionInstallation": { "type": "text", "x": 70, "y": 175, "maxW": 210, "size": 7, "multiline": true, "lines": 3, "lineHeight": 11 },
-    "resistanceTerre": { "type": "text", "x": 290, "y": 158, "maxW": 70, "size": 7 },
-    "methodeMesure": { "type": "text", "x": 420, "y": 158, "maxW": 200, "size": 7 }
+    "resistanceTerre": { "type": "text", "x": 290, "y": 158, "maxW": 200, "size": 7 }
   },
   "earthLabels": {
-    "resistanceTerre": { "x": 290, "y": 148, "size": 5.5 },
-    "methodeMesure": { "x": 420, "y": 148, "size": 5.5 }
+    "resistanceTerre": { "x": 290, "y": 148, "size": 5.5 }
   },
   "footer": {
     "executeurNom": { "type": "text", "x": 25, "y": 485, "maxW": 250, "size": 8 },

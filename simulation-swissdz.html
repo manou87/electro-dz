@@ -2,13 +2,13 @@
 <html lang="fr" dir="ltr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <script src="js/theme-electric-neon.js"></script>
   <meta name="description" content="Simulateur SwissDZ — tableau électrique, atelier virtuel & schéma unifilaire professionnel" />
   <meta name="robots" content="index, follow"/>
   <title>Simulateur SwissDZ — tableau, atelier & unifilaire pro | Electro DZ</title>
   <link rel="icon" href="assets/app-icon.png" type="image/png" />
-  <link rel="stylesheet" href="css/simulation-swissdz.css?v=20260630a" />
+  <link rel="stylesheet" href="css/simulation-swissdz.css?v=20260917fs2" />
   <link rel="canonical" href="https://electro-dz.com/simulation-swissdz.html" />
 </head>
 <body class="sim-page">
@@ -17,10 +17,19 @@
       <img src="assets/app-icon.png" alt="" width="32" height="32" decoding="async" />
       <span>Swiss<span class="accent">DZ</span></span>
     </a>
-    <div class="sim-lang">
-      <button type="button" class="lang-btn active" data-lang="fr" aria-label="Français">FR</button>
-      <button type="button" class="lang-btn" data-lang="ar" aria-label="العربية">AR</button>
-      <button type="button" class="lang-btn" data-lang="en" aria-label="English">EN</button>
+    <div class="sim-top-actions">
+      <div class="sim-lang">
+        <button type="button" class="lang-btn active" data-lang="fr" aria-label="Français">FR</button>
+        <button type="button" class="lang-btn" data-lang="ar" aria-label="العربية">AR</button>
+        <button type="button" class="lang-btn" data-lang="en" aria-label="English">EN</button>
+      </div>
+      <button type="button" class="sim-fs-toggle" id="simFsToggle" aria-pressed="false" aria-controls="simFrameWrap">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M7 14H5v5h5v-2H7v-3zm12 0h-2v3h-3v2h5v-5zM7 7h3V5H5v5h2V7zm12-2h-5v2h3v3h2V5z"/>
+        </svg>
+        <span class="sim-fs-enter" data-i18n="fs.enter">Plein écran</span>
+        <span class="sim-fs-exit" data-i18n="fs.exit">Quitter</span>
+      </button>
     </div>
   </header>
 
@@ -41,14 +50,19 @@
         </span>
       </button>
     </nav>
-    <div class="sim-frame-wrap">
+    <div class="sim-frame-wrap" id="simFrameWrap">
       <p class="sim-loading" id="simLoading" data-i18n="loading">Chargement du simulateur…</p>
       <iframe
         id="simFrame"
         title="Simulateur SwissDZ — tableau, atelier & unifilaire professionnel"
         allow="fullscreen"
+        allowfullscreen
         loading="eager"
       ></iframe>
+      <button type="button" class="sim-fs-close" id="simFsClose">
+        <span class="sim-fs-close-x" aria-hidden="true">×</span>
+        <span data-i18n="fs.close">Fermer</span>
+      </button>
     </div>
     <p class="sim-footer-note" data-i18n="footer">
       Outil pédagogique SwissDZ — NFC 15-100 · IEC 60364. Toute installation réelle doit être vérifiée par un professionnel habilité.
@@ -68,6 +82,9 @@
           "mod.tableau.desc": "Glissez vos disjoncteurs · unifilaire en 1 clic",
           "mod.ar": "Atelier",
           "mod.ar.desc": "Câblage virtuel · scénarios pro & débutant",
+          "fs.enter": "Plein écran",
+          "fs.exit": "Quitter",
+          "fs.close": "Fermer",
         },
         ar: {
           "meta.title": "محاكي SwissDZ — لوحة، ورشة ومخطط أحادي احترافي | Electro DZ",
@@ -78,6 +95,9 @@
           "mod.tableau.desc": "اسحب القواطع · مخطط أحادي بضغطة واحدة",
           "mod.ar": "ورشة",
           "mod.ar.desc": "تمديدات افتراضية · سيناريوهات احترافية ومبتدئة",
+          "fs.enter": "ملء الشاشة",
+          "fs.exit": "خروج",
+          "fs.close": "إغلاق",
         },
         en: {
           "meta.title": "SwissDZ simulator — panel, workshop & professional single-line | Electro DZ",
@@ -88,6 +108,9 @@
           "mod.tableau.desc": "Drag your circuit-breakers · single-line in one click",
           "mod.ar": "Workshop",
           "mod.ar.desc": "Virtual wiring · pro & beginner scenarios",
+          "fs.enter": "Fullscreen",
+          "fs.exit": "Exit",
+          "fs.close": "Close",
         },
       };
 
@@ -197,5 +220,6 @@
       applyLang(lang);
     })();
   </script>
+  <script src="js/sim-fullscreen.js?v=20260917fs2"></script>
 </body>
 </html>

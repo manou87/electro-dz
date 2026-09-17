@@ -45,21 +45,20 @@
       colNum: 'N°',
       colObj: 'Objet',
       colType: 'Type',
-      colInMagn: 'IN magn.',
-      colInTherm: 'IN therm.',
+      colCourbe: 'Courbe',
+      colIn: 'In (A)',
       colVisuel: 'Visuel',
-      colRpe: 'RPE/RLOW',
-      colRiso: 'Riso',
-      colIdiff: 'Idiff',
-      colIccLpe: 'Icc L-PE',
-      colIccLn: 'Icc L-N',
-      colDdrIn: 'IN DDR',
-      colIdn: 'IΔN',
-      colTestT: 't [ms]',
+      colRe: 'Re (Ω)',
+      colRpe: 'RPE/RLOW (Ω)',
+      colRiso: 'Riso (Ω)',
+      colIdiff: 'Idiff (mA)',
+      colIccLpe: 'Icc L-PE (A)',
+      colIccLn: 'Icc L-N (A)',
+      colIdn: 'IΔN (mA)',
+      colTestT: 't (s)',
       colChamp: 'Champ',
-      colU: 'U [V]',
-      colParaphePort: 'Port./Date',
-      colParapheInsp: 'Insp./Date',
+      colU: 'U (V)',
+      colDate: 'Date',
       footer:
         'Contrôle final SwissDZ — outil pédagogique OIBT / NIV. Toute installation réelle doit être vérifiée par un inspecteur habilité.',
       printTitle: 'Contrôle final SwissDZ — Protocole EP 2018',
@@ -69,12 +68,7 @@
       bilingualToggle: 'Bilingue FR / AR (formulaire)',
       earthTitle: 'Mise à la terre',
       resistanceTerre: 'Résistance de mise à la terre (Ω)',
-      methodeMesure: 'Méthode de mesure',
-      methode3fils: '3 fils (méthode de Wenner)',
-      methode2fils: '2 fils',
-      methodePince: 'Pince ampèremétrique',
-      methodeAutre: 'Autre méthode',
-      methodePlaceholder: '— Choisir —',
+      earthTableHint: 'Re (Ω) figure aussi dans le tableau de mesures ci-dessous.',
     },
     en: {
       title: 'SwissDZ Final Inspection',
@@ -111,21 +105,20 @@
       colNum: 'No.',
       colObj: 'Object',
       colType: 'Type',
-      colInMagn: 'IN mag.',
-      colInTherm: 'IN therm.',
+      colCourbe: 'Curve',
+      colIn: 'In (A)',
       colVisuel: 'Visual',
-      colRpe: 'RPE/RLOW',
-      colRiso: 'Riso',
-      colIdiff: 'Idiff',
-      colIccLpe: 'Icc L-PE',
-      colIccLn: 'Icc L-N',
-      colDdrIn: 'RCD IN',
-      colIdn: 'IΔN',
-      colTestT: 't [ms]',
+      colRe: 'Re (Ω)',
+      colRpe: 'RPE/RLOW (Ω)',
+      colRiso: 'Riso (Ω)',
+      colIdiff: 'Idiff (mA)',
+      colIccLpe: 'Icc L-PE (A)',
+      colIccLn: 'Icc L-N (A)',
+      colIdn: 'IΔN (mA)',
+      colTestT: 't (s)',
       colChamp: 'Rot.',
-      colU: 'U [V]',
-      colParaphePort: 'Auth./Date',
-      colParapheInsp: 'Insp./Date',
+      colU: 'U (V)',
+      colDate: 'Date',
       footer:
         'SwissDZ Final Inspection — OIBT / NIV training tool. Any live installation must be verified by a qualified inspector.',
       printTitle: 'SwissDZ Final Inspection — EP 2018 Protocol',
@@ -135,12 +128,7 @@
       bilingualToggle: 'Bilingual FR / AR (form)',
       earthTitle: 'Earthing',
       resistanceTerre: 'Earth grounding resistance (Ω)',
-      methodeMesure: 'Measurement method',
-      methode3fils: '3-wire (Wenner method)',
-      methode2fils: '2-wire',
-      methodePince: 'Clamp meter',
-      methodeAutre: 'Other method',
-      methodePlaceholder: '— Select —',
+      earthTableHint: 'Re (Ω) also appears in the measurements table below.',
     },
     ar: {
       title: 'الفحص النهائي SwissDZ',
@@ -177,21 +165,20 @@
       colNum: 'رقم',
       colObj: 'الموضوع',
       colType: 'النوع',
-      colInMagn: 'IN مغن.',
-      colInTherm: 'IN حراري',
+      colCourbe: 'المنحنى',
+      colIn: 'In (A)',
       colVisuel: 'بصري',
-      colRpe: 'RPE/RLOW',
-      colRiso: 'Riso',
-      colIdiff: 'Idiff',
-      colIccLpe: 'Icc L-PE',
-      colIccLn: 'Icc L-N',
-      colDdrIn: 'IN DDR',
-      colIdn: 'IΔN',
-      colTestT: 't [ms]',
+      colRe: 'Re (Ω)',
+      colRpe: 'RPE/RLOW (Ω)',
+      colRiso: 'Riso (Ω)',
+      colIdiff: 'Idiff (mA)',
+      colIccLpe: 'Icc L-PE (A)',
+      colIccLn: 'Icc L-N (A)',
+      colIdn: 'IΔN (mA)',
+      colTestT: 't (s)',
       colChamp: 'دوران',
-      colU: 'U [V]',
-      colParaphePort: 'مرخّص/تاريخ',
-      colParapheInsp: 'مفتش/تاريخ',
+      colU: 'U (V)',
+      colDate: 'التاريخ',
       footer:
         'الفحص النهائي SwissDZ — أداة تعليمية OIBT / NIV. أي تركيب حقيقي يجب أن يتحقق منه مفتش مؤهل.',
       printTitle: 'الفحص النهائي SwissDZ — بروتوكول EP 2018',
@@ -201,22 +188,29 @@
       bilingualToggle: 'ثنائي اللغة FR / AR (النموذج)',
       earthTitle: 'التأريض',
       resistanceTerre: 'مقاومة التأريض (Ω)',
-      methodeMesure: 'طريقة القياس',
-      methode3fils: '3 أسلاك (طريقة وينر)',
-      methode2fils: 'سلكان',
-      methodePince: 'مقياس ملزمة (كماشة)',
-      methodeAutre: 'طريقة أخرى',
-      methodePlaceholder: '— اختر —',
+      earthTableHint: 'Re (Ω) يظهر أيضاً في جدول القياسات أدناه.',
     },
   };
 
-  var METHODE_OPTIONS = [
-    { value: '', key: 'methodePlaceholder' },
-    { value: '3fils', key: 'methode3fils' },
-    { value: '2fils', key: 'methode2fils' },
-    { value: 'pince', key: 'methodePince' },
-    { value: 'autre', key: 'methodeAutre' },
+  var ROW_TEXT_FIELDS = [
+    'numero',
+    'objet',
+    'typeCaract',
+    'courbe',
+    'inRated',
+    're',
+    'rpe',
+    'riso',
+    'idiff',
+    'iccLpe',
+    'iccLn',
+    'idn',
+    'testT',
+    'tensionU',
+    'dateMesure',
   ];
+
+  var COURBE_OPTIONS = ['', 'B', 'C', 'D'];
 
   function lang() {
     try {
@@ -282,36 +276,6 @@
     return '<strong>' + esc(tr(key)) + '</strong>';
   }
 
-  function methodeLabel(value) {
-    if (!value) return '';
-    for (var i = 0; i < METHODE_OPTIONS.length; i++) {
-      if (METHODE_OPTIONS[i].value === value) return tr(METHODE_OPTIONS[i].key);
-    }
-    return value;
-  }
-
-  function methodeLabelBilingual(value) {
-    if (!value) return '';
-    for (var i = 0; i < METHODE_OPTIONS.length; i++) {
-      if (METHODE_OPTIONS[i].value === value) {
-        var opt = METHODE_OPTIONS[i];
-        if (isBilingual()) {
-          return esc(trFr(opt.key)) + ' / ' + esc(trAr(opt.key));
-        }
-        return tr(opt.key);
-      }
-    }
-    return value;
-  }
-
-  function methodeLabelFr(value) {
-    if (!value) return '';
-    for (var i = 0; i < METHODE_OPTIONS.length; i++) {
-      if (METHODE_OPTIONS[i].value === value) return trFr(METHODE_OPTIONS[i].key);
-    }
-    return value;
-  }
-
   function printTh(key) {
     if (isBilingual()) {
       return (
@@ -325,21 +289,12 @@
     return esc(tr(key));
   }
 
-  function buildMethodeSelect(selected) {
-    var sel = document.getElementById('methodeMesure');
-    if (!sel) return;
-    var cur = selected != null ? selected : sel.value;
-    sel.innerHTML = METHODE_OPTIONS.map(function (opt) {
-      return (
-        '<option value="' +
-        esc(opt.value) +
-        '"' +
-        (cur === opt.value ? ' selected' : '') +
-        '>' +
-        esc(tr(opt.key)) +
-        '</option>'
-      );
-    }).join('');
+  function firstRe(data) {
+    if (data.resistanceTerre) return data.resistanceTerre;
+    for (var i = 0; i < (data.rows || []).length; i++) {
+      if (data.rows[i] && data.rows[i].re) return data.rows[i].re;
+    }
+    return '';
   }
 
   function esc(s) {
@@ -363,6 +318,27 @@
     );
   }
 
+  function typeCellHtml(rowIndex) {
+    return (
+      '<td><input type="text" class="pep-cell-input" list="pep-type-list" name="rows.' +
+      rowIndex +
+      '.typeCaract" placeholder="CB, MCB…" autocomplete="off" /></td>'
+    );
+  }
+
+  function courbeCellHtml(rowIndex) {
+    var opts = COURBE_OPTIONS.map(function (v) {
+      return '<option value="' + esc(v) + '">' + esc(v) + '</option>';
+    }).join('');
+    return (
+      '<td><select class="pep-cell-select" name="rows.' +
+      rowIndex +
+      '.courbe">' +
+      opts +
+      '</select></td>'
+    );
+  }
+
   function buildRows() {
     var tbody = document.getElementById('pep-rows');
     if (!tbody) return;
@@ -374,26 +350,25 @@
         '">' +
         textCellHtml(r, 'numero') +
         textCellHtml(r, 'objet') +
-        textCellHtml(r, 'typeCaract') +
-        textCellHtml(r, 'inMagn') +
-        textCellHtml(r, 'inTherm') +
+        typeCellHtml(r) +
+        courbeCellHtml(r) +
+        textCellHtml(r, 'inRated') +
         '<td style="text-align:center"><input type="checkbox" name="rows.' +
         r +
         '.visuel" /></td>' +
+        textCellHtml(r, 're') +
         textCellHtml(r, 'rpe') +
         textCellHtml(r, 'riso') +
         textCellHtml(r, 'idiff') +
         textCellHtml(r, 'iccLpe') +
         textCellHtml(r, 'iccLn') +
-        textCellHtml(r, 'ddrIn') +
         textCellHtml(r, 'idn') +
         textCellHtml(r, 'testT') +
         '<td style="text-align:center"><input type="checkbox" name="rows.' +
         r +
         '.champOk" /></td>' +
         textCellHtml(r, 'tensionU') +
-        textCellHtml(r, 'paraphePort') +
-        textCellHtml(r, 'parapheInsp') +
+        textCellHtml(r, 'dateMesure') +
         '</tr>';
     }
     tbody.innerHTML = html;
@@ -452,22 +427,36 @@
       numero: '',
       objet: '',
       typeCaract: '',
-      inMagn: '',
-      inTherm: '',
+      courbe: '',
+      inRated: '',
       visuel: false,
+      re: '',
       rpe: '',
       riso: '',
       idiff: '',
       iccLpe: '',
       iccLn: '',
-      ddrIn: '',
       idn: '',
       testT: '',
       champOk: false,
       tensionU: '',
-      paraphePort: '',
-      parapheInsp: '',
+      dateMesure: '',
     };
+  }
+
+  function migrateRow(raw) {
+    var src = raw || {};
+    var row = Object.assign(emptyRow(), src);
+    if (!row.inRated) {
+      row.inRated = src.inTherm || src.inMagn || src.ddrIn || '';
+    }
+    if (!row.dateMesure) {
+      row.dateMesure = src.parapheInsp || src.paraphePort || '';
+    }
+    if (!row.re) {
+      row.re = src.re || src.resistanceTerre || '';
+    }
+    return row;
   }
 
   function defaultState() {
@@ -484,7 +473,6 @@
       numeroPage: '1',
       descriptionInstallation: '',
       resistanceTerre: '',
-      methodeMesure: '',
       rows: rows,
       executeurNom: '',
       executeurDateSignature: '',
@@ -498,16 +486,18 @@
       var raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return defaultState();
       var d = JSON.parse(raw);
-      if (!d.rows || d.rows.length !== ROW_COUNT) {
-        var base = defaultState();
-        if (d.rows) {
-          for (var i = 0; i < Math.min(d.rows.length, ROW_COUNT); i++) {
-            base.rows[i] = Object.assign(emptyRow(), d.rows[i]);
-          }
+      var base = defaultState();
+      if (d.rows) {
+        for (var i = 0; i < Math.min(d.rows.length, ROW_COUNT); i++) {
+          base.rows[i] = migrateRow(d.rows[i]);
         }
-        return Object.assign(base, d, { rows: base.rows });
       }
-      return Object.assign(defaultState(), d);
+      var merged = Object.assign(base, d, { rows: base.rows });
+      delete merged.methodeMesure;
+      if (!merged.resistanceTerre && merged.rows[0] && merged.rows[0].re) {
+        merged.resistanceTerre = merged.rows[0].re;
+      }
+      return merged;
     } catch (_) {
       return defaultState();
     }
@@ -603,7 +593,6 @@
       'numeroPage',
       'descriptionInstallation',
       'resistanceTerre',
-      'methodeMesure',
       'executeurNom',
       'executeurDateSignature',
       'organeEntreprise',
@@ -617,24 +606,7 @@
     if (tbody) {
       for (var i = 0; i < ROW_COUNT; i++) {
         var row = emptyRow();
-        var fields = [
-          'numero',
-          'objet',
-          'typeCaract',
-          'inMagn',
-          'inTherm',
-          'rpe',
-          'riso',
-          'idiff',
-          'iccLpe',
-          'iccLn',
-          'ddrIn',
-          'idn',
-          'testT',
-          'tensionU',
-          'paraphePort',
-          'parapheInsp',
-        ];
+        var fields = ROW_TEXT_FIELDS;
         fields.forEach(function (f) {
           var el = tbody.querySelector('[name="rows.' + i + '.' + f + '"]');
           row[f] = el ? String(el.value || '').trim() : '';
@@ -645,6 +617,11 @@
         row.champOk = !!(champ && champ.checked);
         data.rows[i] = row;
       }
+    }
+    if (data.resistanceTerre && data.rows[0] && !data.rows[0].re) {
+      data.rows[0].re = data.resistanceTerre;
+    } else if (!data.resistanceTerre && data.rows[0] && data.rows[0].re) {
+      data.resistanceTerre = data.rows[0].re;
     }
     return data;
   }
@@ -668,7 +645,6 @@
       'numeroPage',
       'descriptionInstallation',
       'resistanceTerre',
-      'methodeMesure',
       'executeurNom',
       'executeurDateSignature',
       'organeEntreprise',
@@ -677,30 +653,12 @@
       var el = form.elements[name];
       if (el) el.value = data[name] || '';
     });
-    buildMethodeSelect(data.methodeMesure || '');
 
     var tbody = document.getElementById('pep-rows');
     if (!tbody) return;
     for (var i = 0; i < ROW_COUNT; i++) {
       var row = data.rows[i] || emptyRow();
-      var fields = [
-        'numero',
-        'objet',
-        'typeCaract',
-        'inMagn',
-        'inTherm',
-        'rpe',
-        'riso',
-        'idiff',
-        'iccLpe',
-        'iccLn',
-        'ddrIn',
-        'idn',
-        'testT',
-        'tensionU',
-        'paraphePort',
-        'parapheInsp',
-      ];
+      var fields = ROW_TEXT_FIELDS;
       fields.forEach(function (f) {
         var el = tbody.querySelector('[name="rows.' + i + '.' + f + '"]');
         if (el) el.value = row[f] || '';
@@ -709,6 +667,10 @@
       var champ = tbody.querySelector('[name="rows.' + i + '.champOk"]');
       if (vis) vis.checked = !!row.visuel;
       if (champ) champ.checked = !!row.champOk;
+    }
+    if (data.resistanceTerre) {
+      var re0 = tbody.querySelector('[name="rows.0.re"]');
+      if (re0 && !String(re0.value || '').trim()) re0.value = data.resistanceTerre;
     }
     setupCellInputs(tbody);
   }
@@ -747,7 +709,7 @@
       if (!k) return;
       var inPaper = paper && paper.contains(el);
       var useBilingual = inPaper && isBilingual();
-      if (useBilingual && (el.tagName === 'LABEL' || el.tagName === 'TH' || el.tagName === 'H2')) {
+      if (useBilingual && (el.tagName === 'LABEL' || el.tagName === 'TH' || el.tagName === 'H2' || el.tagName === 'P')) {
         el.innerHTML = labelHtml(k);
         return;
       }
@@ -768,10 +730,6 @@
       bilingualCb.checked = isBilingual();
       bilingualCb.disabled = lang() === 'ar';
     }
-    var curMethode = '';
-    var methSel = document.getElementById('methodeMesure');
-    if (methSel) curMethode = methSel.value;
-    buildMethodeSelect(curMethode);
   }
 
   function chk(v) {
@@ -794,25 +752,24 @@
           printCell(r.numero || String(idx + 1)) +
           printCell(r.objet) +
           printCell(r.typeCaract) +
-          printCell(r.inMagn) +
-          printCell(r.inTherm) +
+          printCell(r.courbe) +
+          printCell(r.inRated) +
           '<td style="text-align:center">' +
           chk(r.visuel) +
           '</td>' +
+          printCell(r.re) +
           printCell(r.rpe) +
           printCell(r.riso) +
           printCell(r.idiff) +
           printCell(r.iccLpe) +
           printCell(r.iccLn) +
-          printCell(r.ddrIn) +
           printCell(r.idn) +
           printCell(r.testT) +
           '<td style="text-align:center">' +
           chk(r.champOk) +
           '</td>' +
           printCell(r.tensionU) +
-          printCell(r.paraphePort) +
-          printCell(r.parapheInsp) +
+          printCell(r.dateMesure) +
           '</tr>'
         );
       })
@@ -918,18 +875,14 @@
       ': ' +
       esc(data.numeroPage) +
       '</p></div></div>' +
-      (data.resistanceTerre || data.methodeMesure
+      (data.resistanceTerre || firstRe(data)
         ? '<div class="earth-box"><p>' +
           printLabelHtml('earthTitle') +
           '</p><p>' +
           printLabelHtml('resistanceTerre') +
           ': ' +
-          esc(data.resistanceTerre) +
-          (data.resistanceTerre ? ' Ω' : '') +
-          ' &nbsp;|&nbsp; ' +
-          printLabelHtml('methodeMesure') +
-          ': ' +
-          methodeLabelBilingual(data.methodeMesure) +
+          esc(data.resistanceTerre || firstRe(data)) +
+          ((data.resistanceTerre || firstRe(data)) ? ' Ω' : '') +
           '</p></div>'
         : '') +
       '<table><thead><tr>' +
@@ -940,11 +893,13 @@
       '</th><th>' +
       printTh('colType') +
       '</th><th>' +
-      printTh('colInMagn') +
+      printTh('colCourbe') +
       '</th><th>' +
-      printTh('colInTherm') +
+      printTh('colIn') +
       '</th><th>' +
       printTh('colVisuel') +
+      '</th><th>' +
+      printTh('colRe') +
       '</th><th>' +
       printTh('colRpe') +
       '</th><th>' +
@@ -956,8 +911,6 @@
       '</th><th>' +
       printTh('colIccLn') +
       '</th><th>' +
-      printTh('colDdrIn') +
-      '</th><th>' +
       printTh('colIdn') +
       '</th><th>' +
       printTh('colTestT') +
@@ -966,9 +919,7 @@
       '</th><th>' +
       printTh('colU') +
       '</th><th>' +
-      printTh('colParaphePort') +
-      '</th><th>' +
-      printTh('colParapheInsp') +
+      printTh('colDate') +
       '</th>' +
       '</tr></thead><tbody>' +
       measureRows +
@@ -1165,20 +1116,14 @@
     text('objetPeriode', data.objetPeriode);
     text('instruments', data.instruments);
     text('descriptionInstallation', data.descriptionInstallation);
-    if (data.resistanceTerre) {
-      text('resistanceTerre', data.resistanceTerre + ' Ohm');
+    var reValue = firstRe(data);
+    if (reValue) {
+      text('resistanceTerre', reValue + ' Ohm');
     }
-    if (data.methodeMesure) {
-      text('methodeMesure', methodeLabelFr(data.methodeMesure));
-    }
-    if (layout.earthLabels && (data.resistanceTerre || data.methodeMesure)) {
+    if (layout.earthLabels && reValue) {
       var elR = layout.earthLabels.resistanceTerre;
-      var elM = layout.earthLabels.methodeMesure;
       if (elR) {
-        drawTextFit(page, font, trFr('resistanceTerre') + ':', elR.x, elR.y, 120, elR.size, pageH, elR.size * 1.4);
-      }
-      if (elM) {
-        drawTextFit(page, font, trFr('methodeMesure') + ':', elM.x, elM.y, 140, elM.size, pageH, elM.size * 1.4);
+        drawTextFit(page, font, trFr('resistanceTerre') + ':', elR.x, elR.y, 200, elR.size, pageH, elR.size * 1.4);
       }
     }
 
@@ -1188,21 +1133,21 @@
       drawTextFit(page, font, row.numero, colX(cols, 'numero'), y, cols.numero[1] - cols.numero[0], 7, pageH, rowMaxH);
       drawTextFit(page, font, row.objet, colX(cols, 'objet'), y, cols.objet[1] - cols.objet[0], 7, pageH, rowMaxH);
       drawTextFit(page, font, row.typeCaract, colX(cols, 'typeCaract'), y, cols.typeCaract[1] - cols.typeCaract[0], 7, pageH, rowMaxH);
-      drawTextFit(page, font, row.inMagn, colX(cols, 'inMagn'), y, cols.inMagn[1] - cols.inMagn[0], 7, pageH, rowMaxH);
-      drawTextFit(page, font, row.inTherm, colX(cols, 'inTherm'), y, cols.inTherm[1] - cols.inTherm[0], 7, pageH, rowMaxH);
+      drawTextFit(page, font, row.courbe, colX(cols, 'inMagn'), y, cols.inMagn[1] - cols.inMagn[0], 7, pageH, rowMaxH);
+      drawTextFit(page, font, row.inRated, colX(cols, 'inTherm'), y, cols.inTherm[1] - cols.inTherm[0], 7, pageH, rowMaxH);
       if (row.visuel) drawCheck(page, font, cols.visuel.concat([y + 6, y - 6]), pageH, true);
       drawTextFit(page, font, row.rpe, colX(cols, 'rpe'), y, cols.rpe[1] - cols.rpe[0], 7, pageH, rowMaxH);
       drawTextFit(page, font, row.riso, colX(cols, 'riso'), y, cols.riso[1] - cols.riso[0], 7, pageH, rowMaxH);
       drawTextFit(page, font, row.idiff, colX(cols, 'idiff'), y, cols.idiff[1] - cols.idiff[0], 7, pageH, rowMaxH);
       drawTextFit(page, font, row.iccLpe, colX(cols, 'iccLpe'), y, cols.iccLpe[1] - cols.iccLpe[0], 7, pageH, rowMaxH);
       drawTextFit(page, font, row.iccLn, colX(cols, 'iccLn'), y, cols.iccLn[1] - cols.iccLn[0], 7, pageH, rowMaxH);
-      drawTextFit(page, font, row.ddrIn, colX(cols, 'ddrIn'), y, cols.ddrIn[1] - cols.ddrIn[0], 7, pageH, rowMaxH);
       drawTextFit(page, font, row.idn, colX(cols, 'idn'), y, cols.idn[1] - cols.idn[0], 7, pageH, rowMaxH);
       drawTextFit(page, font, row.testT, colX(cols, 'testT'), y, cols.testT[1] - cols.testT[0], 7, pageH, rowMaxH);
       if (row.champOk) drawCheck(page, font, [cols.champOk[0], y - 5, cols.champOk[1], y + 5], pageH, true);
       drawTextFit(page, font, row.tensionU, colX(cols, 'tensionU'), y, cols.tensionU[1] - cols.tensionU[0], 7, pageH, rowMaxH);
-      drawTextFit(page, font, row.paraphePort, colX(cols, 'paraphePort'), y, cols.paraphePort[1] - cols.paraphePort[0], 6, pageH, rowMaxH);
-      drawTextFit(page, font, row.parapheInsp, colX(cols, 'parapheInsp'), y, cols.parapheInsp[1] - cols.parapheInsp[0], 6, pageH, rowMaxH);
+      var dateW = cols.parapheInsp[1] - cols.parapheInsp[0];
+      if (cols.parapheInspDate) dateW = cols.parapheInspDate[1] - cols.parapheInsp[0];
+      drawTextFit(page, font, row.dateMesure, colX(cols, 'parapheInsp'), y, dateW, 6, pageH, rowMaxH);
     });
 
     text('executeurNom', data.executeurNom);
@@ -1263,6 +1208,19 @@
     if (form) {
       form.addEventListener('input', scheduleSave);
       form.addEventListener('change', scheduleSave);
+      var earthInput = form.elements.resistanceTerre;
+      if (earthInput) {
+        earthInput.addEventListener('input', function () {
+          var cell = document.querySelector('[name="rows.0.re"]');
+          if (!cell) return;
+          var prev = earthInput.getAttribute('data-last-re') || '';
+          if (!cell.value.trim() || cell.value.trim() === prev) {
+            cell.value = earthInput.value.trim();
+          }
+          earthInput.setAttribute('data-last-re', earthInput.value.trim());
+        });
+        earthInput.setAttribute('data-last-re', earthInput.value.trim());
+      }
     }
 
     document.getElementById('btn-print').addEventListener('click', printForm);

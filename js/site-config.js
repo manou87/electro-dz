@@ -80,8 +80,8 @@
     resolveSiteBase,
     pageUrl,
     libraryProtected: LIBRARY_PROTECTED,
-    /** Accès libre simulateur OIBT uniquement (fin de journée locale, inclus). */
-    oibtFreeUntil: '2026-09-16',
+    /** Accès libre simulateur SwissDZ / OIBT uniquement (journée locale inclusive). */
+    oibtFreeUntil: '2026-09-25',
     supabase: {
       url: SUPABASE_URL,
       anonKey: SUPABASE_ANON_KEY,

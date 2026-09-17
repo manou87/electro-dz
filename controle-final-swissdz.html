@@ -7,7 +7,7 @@
   <meta name="description" content="Contrôle final SwissDZ — protocole EP 2018 OIBT : saisie des mesures, logo entreprise et impression professionnelle | Electro DZ" />
   <title>Contrôle final SwissDZ | Electro DZ</title>
   <link rel="icon" href="assets/app-icon.png" type="image/png" />
-  <link rel="stylesheet" href="css/controle-final-swissdz.css?v=20260905" />
+  <link rel="stylesheet" href="css/controle-final-swissdz.css?v=20260917" />
   <link rel="canonical" href="https://electro-dz.com/controle-final-swissdz.html" />
 </head>
 <body class="pep-page">
@@ -86,38 +86,40 @@
             <label data-i18n="resistanceTerre">Résistance de mise à la terre (Ω)</label>
             <input type="text" name="resistanceTerre" inputmode="decimal" placeholder="ex. 12,5" />
           </div>
-          <div class="pep-field pep-field--earth">
-            <label data-i18n="methodeMesure">Méthode de mesure</label>
-            <select name="methodeMesure" id="methodeMesure"></select>
-          </div>
         </div>
+        <p class="pep-earth-hint" data-i18n="earthTableHint">Re (Ω) figure aussi dans le tableau de mesures ci-dessous.</p>
       </section>
 
       <section class="pep-panel">
         <h2 data-i18n="measuresTitle">Mesures (14 lignes)</h2>
         <p class="pep-table-scroll-hint" data-i18n="tableScrollHint">← Faire défiler horizontalement pour voir toutes les colonnes →</p>
+        <datalist id="pep-type-list">
+          <option value="CB"></option>
+          <option value="MCB"></option>
+          <option value="RCCB"></option>
+          <option value="RCBO"></option>
+        </datalist>
         <div class="pep-table-wrap">
           <table class="pep-table" id="pep-measures-table">
             <thead>
               <tr>
                 <th class="col-num" data-i18n="colNum">N°</th>
                 <th class="col-obj" data-i18n="colObj">Objet</th>
-                <th class="col-xs" data-i18n="colType">Type</th>
-                <th class="col-xs" data-i18n="colInMagn">IN magn.</th>
-                <th class="col-xs" data-i18n="colInTherm">IN therm.</th>
+                <th class="col-type" data-i18n="colType">Type</th>
+                <th class="col-xs" data-i18n="colCourbe">Courbe</th>
+                <th class="col-xs" data-i18n="colIn">In (A)</th>
                 <th class="col-chk" data-i18n="colVisuel">Visuel</th>
-                <th class="col-sm" data-i18n="colRpe">RPE/RLOW</th>
-                <th class="col-sm" data-i18n="colRiso">Riso</th>
-                <th class="col-sm" data-i18n="colIdiff">Idiff</th>
-                <th class="col-sm" data-i18n="colIccLpe">Icc L-PE</th>
-                <th class="col-sm" data-i18n="colIccLn">Icc L-N</th>
-                <th class="col-xs" data-i18n="colDdrIn">IN DDR</th>
-                <th class="col-xs" data-i18n="colIdn">IΔN</th>
-                <th class="col-xs" data-i18n="colTestT">t [ms]</th>
+                <th class="col-sm" data-i18n="colRe">Re (Ω)</th>
+                <th class="col-sm" data-i18n="colRpe">RPE/RLOW (Ω)</th>
+                <th class="col-sm" data-i18n="colRiso">Riso (Ω)</th>
+                <th class="col-sm" data-i18n="colIdiff">Idiff (mA)</th>
+                <th class="col-sm" data-i18n="colIccLpe">Icc L-PE (A)</th>
+                <th class="col-sm" data-i18n="colIccLn">Icc L-N (A)</th>
+                <th class="col-xs" data-i18n="colIdn">IΔN (mA)</th>
+                <th class="col-xs" data-i18n="colTestT">t (s)</th>
                 <th class="col-chk" data-i18n="colChamp">Champ</th>
-                <th class="col-xs" data-i18n="colU">U [V]</th>
-                <th class="col-sm" data-i18n="colParaphePort">Port./Date</th>
-                <th class="col-sm" data-i18n="colParapheInsp">Insp./Date</th>
+                <th class="col-xs" data-i18n="colU">U (V)</th>
+                <th class="col-sm" data-i18n="colDate">Date</th>
               </tr>
             </thead>
             <tbody id="pep-rows"></tbody>
@@ -141,6 +143,6 @@
   <p class="pep-footer-note" data-i18n="footer">Contrôle final SwissDZ — outil pédagogique OIBT / NIV. Toute installation réelle doit être vérifiée par un inspecteur habilité.</p>
 
   <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-  <script src="js/controle-final-swissdz.js?v=20260905"></script>
+  <script src="js/controle-final-swissdz.js?v=20260917"></script>
 </body>
 </html>

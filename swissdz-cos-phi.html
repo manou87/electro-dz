@@ -2,12 +2,12 @@
 <html lang="fr" dir="ltr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <script src="js/theme-electric-neon.js"></script>
   <meta name="description" content="SwissDZ Cos φ — simulateur de batterie de compensation BT. Français / English / العربية." />
   <title>SwissDZ Cos φ | Electro DZ</title>
   <link rel="icon" href="assets/app-icon.png" type="image/png" />
-  <link rel="stylesheet" href="css/simulation-swissdz.css?v=20260829tall" />
+  <link rel="stylesheet" href="css/simulation-swissdz.css?v=20260917fs2" />
   <link rel="canonical" href="https://electro-dz.com/swissdz-cos-phi.html" />
 </head>
 <body class="sim-page sim-page--cos-phi">
@@ -16,22 +16,36 @@
       <img src="assets/app-icon.png" alt="" width="32" height="32" decoding="async" />
       <span>Swiss<span class="accent">DZ</span></span>
     </a>
-    <div class="sim-lang">
-      <button type="button" class="lang-btn active" data-lang="fr" aria-label="Français">FR</button>
-      <button type="button" class="lang-btn" data-lang="en" aria-label="English">EN</button>
-      <button type="button" class="lang-btn" data-lang="ar" aria-label="العربية">AR</button>
+    <div class="sim-top-actions">
+      <div class="sim-lang">
+        <button type="button" class="lang-btn active" data-lang="fr" aria-label="Français">FR</button>
+        <button type="button" class="lang-btn" data-lang="en" aria-label="English">EN</button>
+        <button type="button" class="lang-btn" data-lang="ar" aria-label="العربية">AR</button>
+      </div>
+      <button type="button" class="sim-fs-toggle" id="simFsToggle" aria-pressed="false" aria-controls="simFrameWrap">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M7 14H5v5h5v-2H7v-3zm12 0h-2v3h-3v2h5v-5zM7 7h3V5H5v5h2V7zm12-2h-5v2h3v3h2V5z"/>
+        </svg>
+        <span class="sim-fs-enter" data-i18n="fs.enter">Plein écran</span>
+        <span class="sim-fs-exit" data-i18n="fs.exit">Quitter</span>
+      </button>
     </div>
   </header>
 
   <div class="sim-workspace">
-    <div class="sim-frame-wrap">
+    <div class="sim-frame-wrap" id="simFrameWrap">
       <p class="sim-loading" id="simLoading" data-i18n="loading">Chargement du simulateur…</p>
       <iframe
         id="simFrame"
         title="SwissDZ Cos φ"
         allow="fullscreen"
+        allowfullscreen
         loading="eager"
       ></iframe>
+      <button type="button" class="sim-fs-close" id="simFsClose">
+        <span class="sim-fs-close-x" aria-hidden="true">×</span>
+        <span data-i18n="fs.close">Fermer</span>
+      </button>
     </div>
     <p class="sim-footer-note" data-i18n="footer">
       Outil pédagogique — compensation BT (IEC 60831). Toute installation réelle doit être vérifiée par un professionnel habilité.
@@ -47,18 +61,27 @@
           "meta.desc": "SwissDZ Cos φ — simulateur de batterie de compensation BT. Français / English / العربية.",
           loading: "Chargement du simulateur…",
           footer: "SwissDZ Cos φ · IEC 60831. Toute installation réelle doit être vérifiée par un professionnel habilité.",
+          "fs.enter": "Plein écran",
+          "fs.exit": "Quitter",
+          "fs.close": "Fermer",
         },
         ar: {
           "meta.title": "SwissDZ Cos φ — تعويض معامل القدرة | Electro DZ",
           "meta.desc": "SwissDZ Cos φ — محاكي بطارية تعويض معامل القدرة للجهد المنخفض. Français / English / العربية.",
           loading: "جاري تحميل المحاكي…",
           footer: "SwissDZ Cos φ · IEC 60831. أي تركيب حقيقي يجب أن يتحقق منه مختص مؤهل.",
+          "fs.enter": "ملء الشاشة",
+          "fs.exit": "خروج",
+          "fs.close": "إغلاق",
         },
         en: {
           "meta.title": "SwissDZ Cos φ — LV power-factor correction | Electro DZ",
           "meta.desc": "SwissDZ Cos φ — LV PFC capacitor-bank simulator. Français / English / العربية.",
           loading: "Loading the simulator…",
           footer: "SwissDZ Cos φ · IEC 60831. Any live installation must be verified by a qualified professional.",
+          "fs.enter": "Fullscreen",
+          "fs.exit": "Exit",
+          "fs.close": "Close",
         },
       };
 
@@ -118,5 +141,6 @@
       applyLang(lang);
     })();
   </script>
+  <script src="js/sim-fullscreen.js?v=20260917fs2"></script>
 </body>
 </html>
