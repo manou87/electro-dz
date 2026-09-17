@@ -68,7 +68,13 @@
       bilingualToggle: 'Bilingue FR / AR (formulaire)',
       earthTitle: 'Mise à la terre',
       resistanceTerre: 'Résistance de mise à la terre (Ω)',
-      earthTableHint: 'Re (Ω) figure aussi dans le tableau de mesures ci-dessous.',
+      earthTableHint: 'Re (Ω) figure aussi dans le tableau de mesures ci-dessous. Aucune limite OIBT n’est appliquée.',
+      earthPedagoPrefix: 'Indication pédagogique NF C 15-100 (pas un critère OIBT)',
+      earthPedagoTresBien: 'très bien (< 10 Ω)',
+      earthPedagoBien: 'bien (10–30 Ω)',
+      earthPedagoMoyen: 'moyen (30–50 Ω)',
+      earthPedagoAcceptable: 'acceptable (50–100 Ω, seuil usuel TT NF C 15-100)',
+      earthPedagoMauvaise: 'mauvaise / à justifier (> 100 Ω)',
     },
     en: {
       title: 'SwissDZ Final Inspection',
@@ -128,7 +134,13 @@
       bilingualToggle: 'Bilingual FR / AR (form)',
       earthTitle: 'Earthing',
       resistanceTerre: 'Earth grounding resistance (Ω)',
-      earthTableHint: 'Re (Ω) also appears in the measurements table below.',
+      earthTableHint: 'Re (Ω) also appears in the measurements table below. No OIBT limit is applied.',
+      earthPedagoPrefix: 'Pedagogical indication NF C 15-100 (not an OIBT criterion)',
+      earthPedagoTresBien: 'very good (< 10 Ω)',
+      earthPedagoBien: 'good (10–30 Ω)',
+      earthPedagoMoyen: 'average (30–50 Ω)',
+      earthPedagoAcceptable: 'acceptable (50–100 Ω, usual TT NF C 15-100 threshold)',
+      earthPedagoMauvaise: 'poor / to be justified (> 100 Ω)',
     },
     ar: {
       title: 'الفحص النهائي SwissDZ',
@@ -188,7 +200,13 @@
       bilingualToggle: 'ثنائي اللغة FR / AR (النموذج)',
       earthTitle: 'التأريض',
       resistanceTerre: 'مقاومة التأريض (Ω)',
-      earthTableHint: 'Re (Ω) يظهر أيضاً في جدول القياسات أدناه.',
+      earthTableHint: 'Re (Ω) يظهر أيضاً في جدول القياسات أدناه. لا يُطبَّق حد OIBT.',
+      earthPedagoPrefix: 'إشارة تعليمية NF C 15-100 (ليست معيار OIBT)',
+      earthPedagoTresBien: 'جيد جداً (< 10 Ω)',
+      earthPedagoBien: 'جيد (10–30 Ω)',
+      earthPedagoMoyen: 'متوسط (30–50 Ω)',
+      earthPedagoAcceptable: 'مقبول (50–100 Ω، العتبة المعتادة TT حسب NF C 15-100)',
+      earthPedagoMauvaise: 'ضعيف / يحتاج تبريراً (> 100 Ω)',
     },
   };
 
@@ -295,6 +313,51 @@
       if (data.rows[i] && data.rows[i].re) return data.rows[i].re;
     }
     return '';
+  }
+
+  function parseOhm(raw) {
+    var s = String(raw == null ? '' : raw)
+      .trim()
+      .replace(/\s/g, '')
+      .replace(/[ΩohmOHM]+$/i, '')
+      .replace(',', '.');
+    if (!s) return null;
+    var n = parseFloat(s);
+    return isFinite(n) ? n : null;
+  }
+
+  function earthPedagoBand(ohm) {
+    if (ohm < 10) return { key: 'earthPedagoTresBien', tone: 'tres-bien' };
+    if (ohm < 30) return { key: 'earthPedagoBien', tone: 'bien' };
+    if (ohm < 50) return { key: 'earthPedagoMoyen', tone: 'moyen' };
+    if (ohm <= 100) return { key: 'earthPedagoAcceptable', tone: 'acceptable' };
+    return { key: 'earthPedagoMauvaise', tone: 'mauvaise' };
+  }
+
+  function updateReHint(rawOverride) {
+    var el = document.getElementById('pep-earth-pedago');
+    if (!el) return;
+    var raw = rawOverride;
+    if (raw == null) {
+      var form = document.getElementById('pep-form');
+      raw = '';
+      if (form && form.elements.resistanceTerre) raw = form.elements.resistanceTerre.value;
+      if (!String(raw).trim()) {
+        var firstCell = document.querySelector('[name="rows.0.re"]');
+        if (firstCell) raw = firstCell.value;
+      }
+    }
+    var ohm = parseOhm(raw);
+    if (ohm == null) {
+      el.hidden = true;
+      el.textContent = '';
+      el.removeAttribute('data-tone');
+      return;
+    }
+    var band = earthPedagoBand(ohm);
+    el.hidden = false;
+    el.setAttribute('data-tone', band.tone);
+    el.textContent = tr('earthPedagoPrefix') + ' — ' + tr(band.key);
   }
 
   function esc(s) {
@@ -673,6 +736,7 @@
       if (re0 && !String(re0.value || '').trim()) re0.value = data.resistanceTerre;
     }
     setupCellInputs(tbody);
+    updateReHint();
   }
 
   function scheduleSave() {
@@ -730,6 +794,7 @@
       bilingualCb.checked = isBilingual();
       bilingualCb.disabled = lang() === 'ar';
     }
+    updateReHint();
   }
 
   function chk(v) {
@@ -1212,15 +1277,21 @@
       if (earthInput) {
         earthInput.addEventListener('input', function () {
           var cell = document.querySelector('[name="rows.0.re"]');
-          if (!cell) return;
-          var prev = earthInput.getAttribute('data-last-re') || '';
-          if (!cell.value.trim() || cell.value.trim() === prev) {
-            cell.value = earthInput.value.trim();
+          if (cell) {
+            var prev = earthInput.getAttribute('data-last-re') || '';
+            if (!cell.value.trim() || cell.value.trim() === prev) {
+              cell.value = earthInput.value.trim();
+            }
           }
           earthInput.setAttribute('data-last-re', earthInput.value.trim());
+          updateReHint(earthInput.value);
         });
         earthInput.setAttribute('data-last-re', earthInput.value.trim());
       }
+      form.addEventListener('input', function (ev) {
+        var t = ev.target;
+        if (t && t.name && /\.re$/.test(t.name)) updateReHint(t.value);
+      });
     }
 
     document.getElementById('btn-print').addEventListener('click', printForm);

@@ -7,7 +7,7 @@
   <meta name="description" content="Contrôle final SwissDZ — protocole EP 2018 OIBT : saisie des mesures, logo entreprise et impression professionnelle | Electro DZ" />
   <title>Contrôle final SwissDZ | Electro DZ</title>
   <link rel="icon" href="assets/app-icon.png" type="image/png" />
-  <link rel="stylesheet" href="css/controle-final-swissdz.css?v=20260917" />
+  <link rel="stylesheet" href="css/controle-final-swissdz.css?v=20260917re" />
   <link rel="canonical" href="https://electro-dz.com/controle-final-swissdz.html" />
 </head>
 <body class="pep-page">
@@ -84,10 +84,11 @@
         <div class="pep-earth-grid">
           <div class="pep-field pep-field--earth">
             <label data-i18n="resistanceTerre">Résistance de mise à la terre (Ω)</label>
-            <input type="text" name="resistanceTerre" inputmode="decimal" placeholder="ex. 12,5" />
+            <input type="text" name="resistanceTerre" inputmode="decimal" placeholder="ex. 12,5" aria-describedby="pep-earth-pedago pep-earth-table-hint" />
           </div>
         </div>
-        <p class="pep-earth-hint" data-i18n="earthTableHint">Re (Ω) figure aussi dans le tableau de mesures ci-dessous.</p>
+        <p id="pep-earth-pedago" class="pep-earth-pedago" hidden></p>
+        <p id="pep-earth-table-hint" class="pep-earth-hint" data-i18n="earthTableHint">Re (Ω) figure aussi dans le tableau de mesures ci-dessous. Aucune limite OIBT n’est appliquée.</p>
       </section>
 
       <section class="pep-panel">
@@ -143,6 +144,6 @@
   <p class="pep-footer-note" data-i18n="footer">Contrôle final SwissDZ — outil pédagogique OIBT / NIV. Toute installation réelle doit être vérifiée par un inspecteur habilité.</p>
 
   <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-  <script src="js/controle-final-swissdz.js?v=20260917"></script>
+  <script src="js/controle-final-swissdz.js?v=20260917re"></script>
 </body>
 </html>
