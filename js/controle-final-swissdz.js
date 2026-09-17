@@ -50,7 +50,7 @@
       colVisuel: 'Visuel',
       colRe: 'Re (Ω)',
       colRpe: 'RPE/RLOW (Ω)',
-      colRiso: 'Riso (Ω)',
+      colRiso: 'Riso (MΩ)',
       colIdiff: 'Idiff (mA)',
       colIccLpe: 'Icc L-PE (A)',
       colIccLn: 'Icc L-N (A)',
@@ -110,7 +110,7 @@
       colVisuel: 'Visual',
       colRe: 'Re (Ω)',
       colRpe: 'RPE/RLOW (Ω)',
-      colRiso: 'Riso (Ω)',
+      colRiso: 'Riso (MΩ)',
       colIdiff: 'Idiff (mA)',
       colIccLpe: 'Icc L-PE (A)',
       colIccLn: 'Icc L-N (A)',
@@ -170,7 +170,7 @@
       colVisuel: 'بصري',
       colRe: 'Re (Ω)',
       colRpe: 'RPE/RLOW (Ω)',
-      colRiso: 'Riso (Ω)',
+      colRiso: 'Riso (MΩ)',
       colIdiff: 'Idiff (mA)',
       colIccLpe: 'Icc L-PE (A)',
       colIccLn: 'Icc L-N (A)',
@@ -307,6 +307,7 @@
 
   function textCellHtml(rowIndex, field) {
     var cls = 'pep-cell-input' + (field === 'objet' ? ' pep-cell-obj' : '');
+    var ph = field === 'riso' ? ' placeholder="MΩ"' : '';
     return (
       '<td><textarea class="' +
       cls +
@@ -314,7 +315,9 @@
       rowIndex +
       '.' +
       field +
-      '"></textarea></td>'
+      '"' +
+      ph +
+      '></textarea></td>'
     );
   }
 
