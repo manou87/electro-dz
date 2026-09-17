@@ -348,6 +348,10 @@
   function ensure() {
     pinLangSwitcher();
     if (isHomePage()) return;
+    if (document.body && document.body.classList.contains("sim-page")) {
+      var extraBar = document.querySelector(".edz-home-bar");
+      if (extraBar && document.querySelector(".sim-topbar")) extraBar.remove();
+    }
     injectCss();
     var lang = getLang();
     updateBrandHrefs(lang);
@@ -418,6 +422,9 @@
       flatNav.insertBefore(createHomeLink(lang), flatNav.firstChild);
       return;
     }
+
+    /* Simulateurs : ne jamais empiler une 2e barre au-dessus de .sim-topbar */
+    if (document.body && document.body.classList.contains("sim-page")) return;
 
     injectTopBar(lang);
   }

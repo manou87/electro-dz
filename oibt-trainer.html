@@ -3,13 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <script src="js/theme-electric-neon.js?v=oibt-slide5"></script>
+  <script>
+    /* Si ce wrapper est lui-même dans une iframe du même wrapper,
+       aller directement à Flutter (évite chrome doublé oibt-trainer.html vs oibt-trainer/). */
+    (function () {
+      if (window === window.top) return;
+      try {
+        var parentPath = window.parent.location.pathname || "";
+        if (!/oibt-trainer\.html$/i.test(parentPath) && !/\/oibt-trainer\/?$/.test(parentPath)) return;
+      } catch (e) {
+        return;
+      }
+      var path = location.pathname || "/";
+      if (/\/oibt-trainer\/index\.html$/i.test(path)) return;
+      var dir = path.replace(/\/[^/]*$/, "/");
+      if (dir.slice(-1) !== "/") dir += "/";
+      var lang = "fr";
+      try {
+        var s = localStorage.getItem("electrodz-site-lang");
+        if (s === "fr" || s === "ar" || s === "en") lang = s;
+      } catch (e) {}
+      var meter = (location.hash || "").toLowerCase().indexOf("meter") !== -1;
+      location.replace(dir + "oibt-trainer/index.html?embed=1&lang=" + lang + (meter ? "#/meter" : "#/trainer"));
+    })();
+  </script>
+  <script src="js/theme-electric-neon.js?v=chrome1"></script>
   <meta name="description" content="Electrical inspection training — panel, outlets and multifunction tester | Electro DZ" />
   <title>Entraînement au contrôle électrique | Electro DZ</title>
   <link rel="icon" href="assets/app-icon.png" type="image/png" />
   <link rel="preload" href="oibt-trainer/flutter_bootstrap.js?v=re1" as="script">
   <link rel="preload" href="oibt-trainer/main.dart.js?v=re1" as="script">
-  <link rel="stylesheet" href="css/simulation-swissdz.css?v=20260917fs2" />
+  <link rel="stylesheet" href="css/simulation-swissdz.css?v=20260917chrome1" />
   <link rel="canonical" href="https://electro-dz.com/oibt-trainer.html" />
 </head>
 <body class="sim-page">
@@ -36,6 +60,7 @@
       <img src="assets/app-icon.png" alt="" width="32" height="32" decoding="async" />
       <span>Swiss<span class="accent">DZ</span></span>
     </a>
+    <a href="index-fr.html" class="edz-home-link" data-edz-home="1" data-i18n="nav.home">Accueil</a>
     <div class="sim-top-actions">
       <div class="sim-lang">
         <button type="button" class="lang-btn active" data-lang="fr" aria-label="Français">FR</button>
@@ -83,6 +108,7 @@
           "meta.title": "Entraînement au contrôle électrique | Electro DZ",
           "meta.desc": "Entraînement au contrôle d'installations — tableau, prises et testeur multifonction.",
           loading: "Chargement du simulateur…",
+          "nav.home": "Accueil",
           footer: "Outil pédagogique OIBT / NIV. Toute installation réelle doit être vérifiée par un inspecteur habilité.",
           "intro.kicker": "Entraînement au contrôle électrique",
           "intro.title": "Accès sans code",
@@ -96,6 +122,7 @@
           "meta.title": "تدريب على المراقبة الكهربائية | Electro DZ",
           "meta.desc": "تدريب على مراقبة التركيبات — لوحة، مقابس وجهاز اختبار متعدد الوظائف.",
           loading: "جاري تحميل المحاكي…",
+          "nav.home": "الرئيسية",
           footer: "أداة تعليمية OIBT / NIV. أي تركيب حقيقي يجب أن يتحقق منه مفتش مؤهل.",
           "intro.kicker": "تدريب على المراقبة الكهربائية",
           "intro.title": "دخول بدون رمز",
@@ -109,6 +136,7 @@
           "meta.title": "Electrical inspection training | Electro DZ",
           "meta.desc": "Electrical inspection training — distribution board, outlets and multifunction tester.",
           loading: "Loading the trainer…",
+          "nav.home": "Home",
           footer: "Training tool — OIBT / NIV. Any live installation must be verified by a qualified inspector.",
           "intro.kicker": "Electrical inspection training",
           "intro.title": "Access without a code",
@@ -175,8 +203,16 @@
         return "#/trainer";
       }
 
+      function childDir() {
+        var path = location.pathname || "/";
+        var dir = path.replace(/\/[^/]*$/, "/");
+        return dir.slice(-1) === "/" ? dir : dir + "/";
+      }
+
       function frameSrc() {
-        return "oibt-trainer/index.html?lang=" + lang + routeHash();
+        /* Chemin depuis le dossier de la page — évite que
+           « oibt-trainer/index.html » soit résolu en oibt-trainer.html. */
+        return childDir() + "oibt-trainer/index.html?embed=1&lang=" + lang + routeHash();
       }
 
       var frame = document.getElementById("simFrame");
@@ -227,8 +263,8 @@
           el.textContent = t(el.getAttribute("data-i18n"));
         });
         var home = lang === "fr" ? "index-fr.html" : "index.html";
-        document.querySelectorAll(".sim-brand").forEach(function (brand) {
-          brand.setAttribute("href", home);
+        document.querySelectorAll(".sim-brand, [data-edz-home]").forEach(function (el) {
+          el.setAttribute("href", home);
         });
         document.querySelectorAll(".sim-lang .lang-btn").forEach(function (btn) {
           btn.classList.toggle("active", btn.getAttribute("data-lang") === lang);
@@ -271,6 +307,6 @@
       else showSimulator();
     })();
   </script>
-  <script src="js/sim-fullscreen.js?v=20260917fs2"></script>
+  <script src="js/sim-fullscreen.js?v=20260917chrome1"></script>
 </body>
 </html>
