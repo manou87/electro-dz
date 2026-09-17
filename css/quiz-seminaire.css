@@ -233,7 +233,7 @@ button:disabled {
 }
 .board-row {
   display: grid;
-  grid-template-columns: 4.5rem 1fr 6.5rem 4.5rem;
+  grid-template-columns: 4.5rem 1fr 6.5rem 4.5rem 5rem;
   gap: 8px;
   align-items: center;
   padding: 12px 16px;
@@ -241,6 +241,10 @@ button:disabled {
   font-family: "Segoe UI", system-ui, sans-serif;
   font-weight: 700;
   font-size: clamp(1rem, 2.2vw, 1.35rem);
+}
+.board-row .time {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
 }
 .board-row--head {
   color: var(--muted);
