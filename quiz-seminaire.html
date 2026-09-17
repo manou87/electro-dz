@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <script src="js/theme-electric-neon.js"></script>
   <meta name="robots" content="noindex" />
-  <meta name="description" content="اختبار ندوة 19 سبتمبر 2026 — première vérification و mesures OIBT. دخول برمز." />
+  <meta name="description" content="اختبار ندوة 19 سبتمبر 2026 — Icc · Riso · DDR مع تصنيف مباشر." />
   <link rel="icon" href="assets/app-icon.png" type="image/png" />
-  <link rel="stylesheet" href="css/quiz-seminaire.css" />
+  <link rel="stylesheet" href="css/quiz-seminaire.css?v=20260918a" />
   <title>اختبار الندوة 19 سبتمبر | SwissDZ</title>
   <link rel="canonical" href="https://electro-dz.com/quiz-seminaire.html" />
 </head>
@@ -17,12 +17,12 @@
       <img src="assets/app-icon.png" alt="" width="36" height="36" />
       <span>SwissDZ</span>
     </a>
-    <a href="index.html#evenement-19-septembre">الرئيسية</a>
+    <a href="quiz-seminaire-classement.html">التصنيف المباشر</a>
   </nav>
   <main class="wrap">
     <section id="gate" class="on">
       <h1>اختبار الندوة — 19 سبتمبر 2026</h1>
-      <p class="lead">أسئلة بالعربية، والمصطلحات التقنية بالفرنسية. الدخول برمز القاعة فقط.</p>
+      <p class="lead">14 سؤالاً حول القياسات: تيار القصر، العزل، التفاضلي. الدخول برمز القاعة ثم اسم مستعار للتصنيف.</p>
       <div class="card">
         <label for="code">رمز الدخول</label>
         <input id="code" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="••••••" />
@@ -31,13 +31,24 @@
       </div>
     </section>
 
+    <section id="nick">
+      <h1>اسمك في التصنيف</h1>
+      <p class="lead">حروف لاتينية فقط (مثل Ali23). 3 إلى 12 حرفاً. يظهر على شاشة القاعة.</p>
+      <div class="card">
+        <label for="pseudo">الاسم المستعار</label>
+        <input id="pseudo" class="ltr-input" type="text" maxlength="16" autocomplete="nickname" spellcheck="false" placeholder="Ali23" dir="ltr" />
+        <button type="button" id="nick-go">ابدأ الاختبار</button>
+        <p id="nick-msg" hidden></p>
+      </div>
+    </section>
+
     <section id="quiz">
       <p class="progress" id="progress"></p>
       <div class="card">
         <p class="q" id="qtext"></p>
+        <p class="terms" id="terms" dir="ltr" hidden></p>
         <div id="opts"></div>
         <div class="why" id="why" hidden></div>
-        <p class="src" id="src"></p>
         <button type="button" id="next" hidden>التالي</button>
       </div>
     </section>
@@ -45,14 +56,18 @@
     <section id="done">
       <h1>انتهى الاختبار</h1>
       <p class="score" id="score"></p>
+      <p class="lead" id="score-time"></p>
       <p class="lead" id="score-msg"></p>
       <div class="card">
-        <p>بدون <span class="fr">appareil de mesure</span>، الـ <span class="fr">défaut</span> يبقى تخمين. مع <span class="fr">mesure</span>، يصبح دليل في <span class="fr">le rapport de sécurité</span>.</p>
-        <a class="btn" href="index.html#evenement-19-septembre">العودة إلى الحدث</a>
+        <p id="submit-msg" class="wait-msg" hidden></p>
+        <button type="button" id="submit-score">إرسال النتيجة إلى التصنيف</button>
+        <a class="btn" href="quiz-seminaire-classement.html">فتح التصنيف المباشر</a>
         <button type="button" id="retry" class="btn-ghost">إعادة المحاولة</button>
       </div>
     </section>
   </main>
-  <script src="js/quiz-evenement-19-septembre.js"></script>
+  <script src="js/site-config.js"></script>
+  <script src="js/quiz-leaderboard.js?v=20260918a"></script>
+  <script src="js/quiz-evenement-19-septembre.js?v=20260918a"></script>
 </body>
 </html>

@@ -3,215 +3,175 @@
 
   var STORAGE = "edz-event19-ok";
   var CODE = "SWISS19";
+  var MODULE_SLUG = "seminaire-19-sept";
+  var TOTAL = 14;
 
   var QUESTIONS = [
     {
-      q: "لماذا نقيس قبل تسليم تركيب كهربائي؟",
+      q: "أين تقيس تيار القصر الأدنى؟",
+      terms: "Icc min",
       opts: [
-        "لأن الجهاز يجمّل الصورة على فيسبوك",
-        "لأن بدون appareil de mesure يبقى الـ défaut تخميناً، ومع mesure يصبح دليلاً في le rapport de sécurité",
-        "لأن GRD يطلب فاتورة فقط",
-        "لأن القياس يغني عن examen visuel"
+        "في رأس اللوحة فقط",
+        "في آخر نقطة، على المئة متر",
+        "على زر التفاضلي",
+        "بين المحايد والأرضي فقط"
       ],
       a: 1,
-      why: "هدف الأمان: حماية الأشخاص والأشياء. الرقم المكتوب هو اللغة التي يقبلها المالك وGRD.",
-      src: "بيداغوجيا الندوة + OIBT art. 24"
+      why: "تيار القصر الأدنى يُقاس في أبعد نقطة. في رأس اللوحة ننظر غالباً إلى تيار القصر الأقصى وقدرة القطع."
     },
     {
-      q: "وفق المادة 24 من OIBT، متى تُجرى première vérification؟",
-      opts: [
-        "بعد خمس سنوات من التشغيل",
-        "فقط إذا طلب المالك ذلك كتابةً",
-        "قبل mise en service لتركيب أو جزء منه، بموازاة البناء",
-        "عند بيع العقار فقط"
-      ],
+      q: "قاطع ستة عشر أمبير منحنى سي: ما قيمة العتبة المغناطيسية التي نقارن بها القياس؟",
+      terms: "16 A · courbe C · 10 × In",
+      opts: ["16 أمبير", "80 أمبير", "160 أمبير", "320 أمبير"],
       a: 2,
-      why: "المادة 24: première vérification قبل وضع التركيب أو أجزائه في الخدمة، وتُثبَّت في procès-verbal.",
-      src: "premiere-verification-oibt.pdf · oibt-mesures-jt22.pdf"
+      why: "منحنى B حوالي 5×In، منحنى C حوالي 10×In، منحنى D حوالي 20×In. هنا 10×16 = 160 أمبير."
     },
     {
-      q: "أين تُسجَّل نتائج première vérification؟",
+      q: "على آخر مأخذ الجهاز يظهر خمسة وتسعين أمبير. كيف تقرأ النتيجة؟",
+      terms: "Icc min = 95 A · 10 × In = 160 A",
       opts: [
-        "في procès-verbal / protocole de mesure et d'essai",
-        "في رسالة واتساب إلى الجار",
-        "لا وثيقة إن اشتغل التركيب",
-        "في ضمان تجاري شفهي فقط"
-      ],
-      a: 0,
-      why: "OIBT art. 24: هذه الأولى تُثبَّت في procès-verbal. الوثيقة 1 تضيف أنها أساس للـ contrôle final اللاحق.",
-      src: "premiere-verification-oibt.pdf · JT22"
-    },
-    {
-      q: "من يجوز له إجراء première vérification (وفق الوثيقتين)؟",
-      opts: [
-        "أي صاحب محل كهرباء",
-        "installateur-électricien CFC أو électricien de montage CFC وفق شروط التكوين",
-        "المالك وحده",
-        "المتدرّب بلا مراقبة"
+        "خمسة وتسعون هو الحد الأدنى المطلوب للقاطع",
+        "خمسة وتسعون هو تيار القصر الأدنى المقاس، وهو أصغر من مئة وستين: القاطع قد لا يقطع فوراً",
+        "نسمّي مئة وستين تيار القصر الأدنى",
+        "نكتفي بالقياس في رأس اللوحة"
       ],
       a: 1,
-      why: "الوثيقة 1: CFC installateur أو montage (2015 أو complément). المتدربون تحت مراقبة personne du métier.",
-      src: "premiere-verification-oibt.pdf"
+      why: "Icc min هو ما قاسه الجهاز في النهاية (95 A). نقارنه بعتبة القاطع (160 A)، لا العكس."
     },
     {
-      q: "من لا يحق له إجراء contrôle final أو périodique؟",
+      q: "إذا كان تيار القصر الأدنى أصغر من عتبة القاطع، ماذا تفعل؟",
+      terms: "Icc min < 10 × In",
       opts: [
-        "conseiller en sécurité électrique (Brevet)",
-        "personne de métier (maîtrise)",
-        "installateur CFC بمفرده دون صفة contrôle",
-        "organe de contrôle مستقلة"
-      ],
-      a: 2,
-      why: "JT22: installateur CFC ليس له حق CF ولا CR ولا CP. هذه للـ Brevet / maîtrise / organe de contrôle.",
-      src: "oibt-mesures-jt22.pdf"
-    },
-    {
-      q: "ما الترتيب الصحيح للسلسلة السويسرية؟",
-      opts: [
-        "rapport de sécurité ثم première vérification ثم visuel",
-        "première vérification → contrôle final → rapport de sécurité → GRD  (ثم périodique)",
-        "périodique أولاً ثم بناء التركيب",
-        "إعلان فيسبوك ثم توصيل العداد"
+        "تكبر القاطع إلى اثنين وثلاثين أمبير",
+        "تقصّر الدارة، أو تزيد المقطع، أو تأخذ منحنى بي، أو تقسّم الخط",
+        "تعطّل التفاضلي",
+        "تكتب صالح لأن المصباح يضيء"
       ],
       a: 1,
-      why: "أثناء البناء: première vérification (procès-verbal). قبل التسليم: contrôle final و rapport de sécurité نحو GRD. لاحقاً périodique.",
-      src: "OIBT art. 24 · الوثيقتان"
+      why: "تكبير القاطع يرفع العتبة ويزيد المشكلة. الحل في الكابل، الطول، المقطع، أو المنحنى."
     },
     {
-      q: "نحو كم في المئة من أخطاء التركيب يكشفها examen visuel الكامل (الوثيقة 1)؟",
-      opts: ["نحو 10٪", "نحو 30٪", "نحو 70٪", "100٪ فلا حاجة لأي mesure"],
-      a: 2,
-      why: "الوثيقة 1: نحو 70٪ — خصوصاً ما لا تقيسه الأجهزة (absence de protection principale، barrière coupe-feu).",
-      src: "premiere-verification-oibt.pdf"
-    },
-    {
-      q: "إذا ظهرت عيوب أثناء examen visuel، ماذا يفعل المُتحكّم؟",
-      opts: [
-        "يكمل قياسات Icc فوراً",
-        "يوقف التحكم وتُصلح العيوب قبل المتابعة",
-        "يشغّل التركيب ليرى هل يتحمل",
-        "يؤجّل visuel إلى périodique"
-      ],
+      q: "مقاومة العزل تُكتب بأي وحدة؟",
+      terms: "Riso",
+      opts: ["أوم", "ميغاأوم", "أمبير", "ميلي ثانية"],
       a: 1,
-      why: "JT22: إن وُجدت مشاكل من visuel يُوقف التحكم وتُصلح العيوب قبل أي قياس.",
-      src: "oibt-mesures-jt22.pdf"
+      why: "العزل يُسجَّل بالميغاأوم (MΩ)، ليس بالأوم."
     },
     {
-      q: "لماذا يجب فتح sectionneur de neutre عند قياس continuité (Rlo)؟",
-      opts: [
-        "لتجميل اللوحة",
-        "وإلا قد نقيس موصل N بدل PE ولا نعرف ماذا نقيس",
-        "لأن DDR لا يعمل إلا كذلك",
-        "لا يُفتح أبداً"
-      ],
+      q: "لمنشأة مئتين وثلاثين فولت، توتر تجربة العزل الأكثر استعمالاً:",
+      terms: "Riso · 230 V",
+      opts: ["50 فولت", "500 فولت", "5000 فولت", "نفس توتر تيار القصر"],
       a: 1,
-      why: "JT22: مع sectionneur مغلق لا نعرف ماذا نقيس. القياس خارج التوتر وsectionneur مفتوح.",
-      src: "oibt-mesures-jt22.pdf"
+      why: "للتركيبات 50–500 فولت يُستعمل عادةً 500 فولت للتجربة."
     },
     {
-      q: "قيم continuity الموصى بها في الوثيقة 1 (basse impédance)؟",
-      opts: [
-        "PE < 1 Ω و équipotentielle supplémentaire < 0,1 Ω  (Um 4–24 V و Im ≥ 200 mA)",
-        "PE < 30 Ω دائماً",
-        "أي صفير على الملتيمتر يكفي",
-        "لا قيمة: القياس ممنوع"
-      ],
-      a: 0,
-      why: "وثيقة première vérification: 4–24 V، 200 mA على الأقل، PE < 1 Ω، équipot. suppl. < 0,1 Ω.",
-      src: "premiere-verification-oibt.pdf"
-    },
-    {
-      q: "لماذا continuity قبل résistance d'isolement؟",
+      q: "لماذا استمرارية الموصل الواقي قبل العزل؟",
+      terms: "RPE ثم Riso",
       opts: [
         "لا أهمية للترتيب",
-        "لأن défaut d'isolement لا يظهر إذا كان PE غير موصول على العنصر",
-        "لأن Riso أسهل",
-        "لأن GRD يطلب ذلك في الفاتورة"
+        "إذا كان الواقي مقطوعاً، عيب العزل قد لا يظهر",
+        "لأن العزل أسهل",
+        "لأن البطارية تفرض ذلك"
       ],
       a: 1,
-      why: "JT22: نعم للترتيب أهمية كبيرة. عيب العزل لا يظهر إن لم يكن PE مربوطاً.",
-      src: "oibt-mesures-jt22.pdf"
+      why: "بدون موصل واقي متصل، قد يبدو العزل سليماً وهو ليس كذلك."
     },
     {
-      q: "قيم Riso الواردة في JT22 للمنشأة 50–500 V؟",
+      q: "قياس العزل يتم:",
+      terms: "Riso",
       opts: [
-        "250 V و ≥ 0,05 MΩ",
-        "500 V و ≥ 1 MΩ",
-        "50 V و ≥ 30 Ω",
-        "لا قياس عزل إذا وُجد DDR"
+        "تحت التوتر",
+        "خارج التوتر، بعد التحقق من غياب التوتر",
+        "أثناء اختبار التفاضلي",
+        "مع المصباح مشتعل"
       ],
       a: 1,
-      why: "JT22: TBTS/TBTP 250 V ≥ 0,5 MΩ · 50–500 V : 500 V ≥ 1 MΩ · > 500 V : 1000 V ≥ 1 MΩ.",
-      src: "oibt-mesures-jt22.pdf"
+      why: "حقن توتر التجربة يتم دائماً خارج التوتر وبعد التأكد من غياب التوتر."
     },
     {
-      q: "اختبار DDR 30 mA وفق JT22 (NIBT 2020) يشمل:",
+      q: "على المئة متر، العزل يظهر اثنان من عشرة ميغاأوم عند خمسمائة فولت. ماذا تستنتج؟",
+      terms: "Riso = 0,2 MΩ · 500 V",
       opts: [
-        "touche d'essai فقط",
-        "touche d'essai ثم 40٪ IΔn (12 mA) ثم 100٪ IΔn مع قطع ≤ 300 ms",
-        "قياس Riso مكان DDR",
-        "تشغيل التركيب 24 ساعة"
+        "صالح لأنه أكبر من صفر",
+        "ضعيف: العزل غير مقبول",
+        "نرفع العيار إلى ألف فولت ونمرّ",
+        "نعوّض بقياس تيار القصر"
       ],
       a: 1,
-      why: "JT22: زر التجربة، 40٪ IΔn، ثم 100٪ IΔn وقطع في 300 ms كحد أقصى. الهدف أن mesure de protection تعمل.",
-      src: "oibt-mesures-jt22.pdf · premiere-verification-oibt.pdf"
+      why: "القيمة المرجعية المعتادة ≥ 1 ميغاأوم عند 500 فولت. 0,2 ميغاأوم ضعيف."
     },
     {
-      q: "زمن coupure automatique للمآخذ حتى 63 A (JT22 / NIBT 2020)؟",
-      opts: ["5 ثوانٍ دائماً", "0,4 ثانية", "30 ثانية", "لا زمن إن وُجد terre"],
+      q: "عيار التفاضلي على خط المآخذ هو عادة:",
+      terms: "IΔN",
+      opts: ["160 أمبير", "30 ميلي أمبير", "500 فولت", "1 ميغاأوم"],
       a: 1,
-      why: "JT22: prises حتى 63 A → 0,4 s. تيارات أعلى: 5 s وفق جداول NIBT / شكل الوثيقة 1.",
-      src: "oibt-mesures-jt22.pdf"
+      why: "لمآخذ الاستعمال العادي، العيار الشائع 30 ميلي أمبير."
     },
     {
-      q: "ماذا تفرض الممارسة السويسرية على mesure de terre في rapport de sécurité؟",
+      q: "عند نصف العيار، ماذا يجب أن يحدث؟",
+      terms: "½ × IΔN",
       opts: [
-        "نجاح تلقائي إن كانت أقل من 30 Ω",
-        "عدم القياس إن وُجد DDR",
-        "توثيق القيمة بـ Ω (ESTI يناير 2021) بلا حد قبول/رفض واحد من نوع 30 Ω في OIBT",
-        "كتابة «bonne terre» بدون رقم"
+        "يقطع دائماً",
+        "لا يقطع",
+        "يقطع في أقل من أربعين ميلي ثانية",
+        "يقيس العزل"
       ],
-      a: 2,
-      why: "JT22 ينقل ESTI 2021: توثيق القياس. أربع طرائق. pince قد تكذب (chauffe-eau). لا حد 30 Ω كحكم OIBT.",
-      src: "oibt-mesures-jt22.pdf · ESTI janv. 2021"
-    },
-    {
-      q: "230 V × 16 A تعادل تقريباً:",
-      opts: ["1 kVA وإعفاء كامل من contrôle", "3,7 kVA — عتبة avis d'installation لـ GRD وليست إعفاءً من contrôle", "25 kVA", "0,16 kVA"],
       a: 1,
-      why: "230×16 ≈ 3,68 kVA ≈ 3,7 kVA. عتبة إعلان لـ gestionnaire de réseau، لا تلغي première vérification ولا contrôle final.",
-      src: "بيداغوجيا الندوة · ESTI 221"
+      why: "عند ½ × IΔN يجب ألا يقطع. عند 1 × IΔN يجب أن يقطع ونسجّل الزمن."
     },
     {
-      q: "من الوثيقة 1: تشغيل قصير (enclenchement) ومراقبة النتيجة على تركيب مؤقت:",
+      q: "تقيس التفاضلي على نفس المأخذ في نهاية المئة متر. زمن القطع يجب أن يكون:",
+      terms: "DDR · IΔT · 1 × IΔN",
       opts: [
-        "مقبول إن لم يقع حادث",
-        "غير مقبول — première vérification واجبة بنفس متطلبات التركيب النهائي",
-        "يكفي إذا وافق رئيس الورشة شفهياً",
-        "يغني عن visuel"
+        "أقل من خمس ثوانٍ",
+        "ثلاثمئة ميلي ثانية أو أقل",
+        "مساوياً لتيار القصر",
+        "غير مهم إذا اشتغل زر التجربة"
       ],
       a: 1,
-      why: "الوثيقة 1: هذه الممارسة غير مقبولة. الحوادث مرتبطة بـ fils بلا protection principale.",
-      src: "premiere-verification-oibt.pdf"
+      why: "عند 1 × IΔN، زمن القطع المقبول ≤ 300 ميلي ثانية."
     },
     {
-      q: "chute de tension في كامل التركيب وفق NIBT 5.2.5 (الوثيقتان) لا تتجاوز:",
-      opts: ["40٪", "4٪ من tension assignée (نحو 9,2 V على 230 V)", "1 V دائماً", "لا حد إن كان Icc مرتفعاً"],
+      q: "زر التجربة على التفاضلي:",
+      terms: "touche Test",
+      opts: [
+        "يغني عن جهاز القياس",
+        "يتحقق أن الآلية تتحرك، لكن لا يعطي زمن القطع ولا التيار",
+        "يقيس تيار القصر",
+        "يقيس العزل"
+      ],
       a: 1,
-      why: "الوثيقة 1 و JT22: 4٪. يمكن حسابها أو قياسها. 4٪ من 230 V = 9,2 V.",
-      src: "premiere-verification-oibt.pdf · oibt-mesures-jt22.pdf"
+      why: "زر التجربة يحرّك الآلية فقط. IΔN و IΔT يأتيان من جهاز القياس."
+    },
+    {
+      q: "الجهاز يظهر زمن قطع ثمانمئة ميلي ثانية عند العيار. ماذا تفعل؟",
+      terms: "IΔT = 800 ms · IΔN",
+      opts: [
+        "تقبل لأن التفاضلي تحرّك",
+        "غير مقبول: تبدّل الجهاز وتعيد القياس",
+        "تكتفي بزر التجربة",
+        "تزيد طول الكابل"
+      ],
+      a: 1,
+      why: "800 ميلي ثانية أكبر من 300. النتيجة غير مقبولة حتى لو تحرّك الجهاز."
     }
   ];
 
   var gate = document.getElementById("gate");
+  var nick = document.getElementById("nick");
   var quiz = document.getElementById("quiz");
   var done = document.getElementById("done");
   var i = 0;
   var score = 0;
   var locked = false;
+  var pseudo = "";
+  var startedAt = 0;
+  var durationSec = 0;
+  var scoreSubmitted = false;
 
   function show(el) {
     gate.classList.toggle("on", el === gate);
+    nick.classList.toggle("on", el === nick);
     quiz.classList.toggle("on", el === quiz);
     done.classList.toggle("on", el === done);
   }
@@ -223,16 +183,6 @@
       .replace(/\s+/g, "");
   }
 
-  function unlock() {
-    try {
-      sessionStorage.setItem(STORAGE, "1");
-    } catch (e) {}
-    i = 0;
-    score = 0;
-    renderQ();
-    show(quiz);
-  }
-
   function already() {
     try {
       return sessionStorage.getItem(STORAGE) === "1";
@@ -241,11 +191,57 @@
     }
   }
 
+  function markGate() {
+    try {
+      sessionStorage.setItem(STORAGE, "1");
+    } catch (e) {}
+  }
+
+  function lb() {
+    return window.QuizLeaderboard || null;
+  }
+
+  function setNickMsg(text, kind) {
+    var msg = document.getElementById("nick-msg");
+    if (!msg) return;
+    msg.hidden = !text;
+    msg.textContent = text || "";
+    msg.className = "err";
+    if (kind === "ok") msg.className = "ok-msg";
+    if (kind === "wait") msg.className = "wait-msg";
+  }
+
+  function fillSavedPseudo() {
+    var api = lb();
+    var input = document.getElementById("pseudo");
+    if (!input || !api) return;
+    var saved = api.getSavedPseudo();
+    if (saved) input.value = saved;
+  }
+
+  function goNick() {
+    markGate();
+    fillSavedPseudo();
+    setNickMsg("", "");
+    show(nick);
+  }
+
+  function startQuizWithPseudo(name) {
+    pseudo = name;
+    i = 0;
+    score = 0;
+    scoreSubmitted = false;
+    startedAt = Date.now();
+    durationSec = 0;
+    renderQ();
+    show(quiz);
+  }
+
   document.getElementById("enter").addEventListener("click", function () {
     var err = document.getElementById("gate-err");
     if (normalize(document.getElementById("code").value) === CODE) {
       err.hidden = true;
-      unlock();
+      goNick();
     } else {
       err.hidden = false;
       err.textContent = "رمز غير صحيح. اطلبوا الرمز في القاعة.";
@@ -255,13 +251,51 @@
     if (e.key === "Enter") document.getElementById("enter").click();
   });
 
+  document.getElementById("nick-go").addEventListener("click", function () {
+    var api = lb();
+    var input = document.getElementById("pseudo");
+    var btn = document.getElementById("nick-go");
+    if (!api) {
+      setNickMsg("التصنيف غير متاح (إعداد الخادم).", "err");
+      return;
+    }
+    var base = api.normalizePseudo(input.value);
+    if (!api.isValidPseudoBase(base) && !api.isValidPseudo(base)) {
+      setNickMsg(api.errorMessage("pseudo_invalid", "ar"), "err");
+      return;
+    }
+    btn.disabled = true;
+    setNickMsg("جاري التحقق من الاسم…", "wait");
+    api.reservePseudo(base).then(function (res) {
+      btn.disabled = false;
+      if (res && res.ok && res.pseudo) {
+        input.value = res.pseudo;
+        setNickMsg("تم حفظ الاسم: " + res.pseudo, "ok");
+        startQuizWithPseudo(res.pseudo);
+        return;
+      }
+      var code = (res && res.error) || "network_reserve";
+      setNickMsg(api.errorMessage(code, "ar"), "err");
+    });
+  });
+  document.getElementById("pseudo").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") document.getElementById("nick-go").click();
+  });
+
   function renderQ() {
     locked = false;
     var q = QUESTIONS[i];
     document.getElementById("progress").textContent =
       "سؤال " + (i + 1) + " / " + QUESTIONS.length;
     document.getElementById("qtext").textContent = q.q;
-    document.getElementById("src").textContent = q.src;
+    var terms = document.getElementById("terms");
+    if (q.terms) {
+      terms.hidden = false;
+      terms.textContent = q.terms;
+    } else {
+      terms.hidden = true;
+      terms.textContent = "";
+    }
     var why = document.getElementById("why");
     why.hidden = true;
     var next = document.getElementById("next");
@@ -274,7 +308,7 @@
       b.className = "opt";
       b.textContent = label;
       b.addEventListener("click", function () {
-        pick(idx, b);
+        pick(idx);
       });
       box.appendChild(b);
     });
@@ -299,27 +333,93 @@
     next.textContent = i + 1 === QUESTIONS.length ? "النتيجة" : "التالي";
   }
 
+  function finishScreen() {
+    durationSec = Math.max(1, Math.round((Date.now() - startedAt) / 1000));
+    document.getElementById("score").textContent = score + " / " + TOTAL;
+    document.getElementById("score-time").textContent =
+      "الوقت: " + durationSec + " ثانية · الاسم: " + (pseudo || "—");
+    var msg = document.getElementById("score-msg");
+    if (score >= 12) msg.textContent = "ممتاز — Icc و Riso و DDR حاضرة.";
+    else if (score >= 9) msg.textContent = "جيد — راجعوا عتبة القاطع وزمن التفاضلي.";
+    else msg.textContent = "أعيدوا قياسات المئة متر: Icc ثم Riso ثم DDR.";
+    var submitMsg = document.getElementById("submit-msg");
+    submitMsg.hidden = false;
+    submitMsg.className = "wait-msg";
+    submitMsg.textContent = "جاري إرسال النتيجة إلى التصنيف…";
+    show(done);
+    autoSubmit();
+  }
+
+  function autoSubmit() {
+    var api = lb();
+    var submitMsg = document.getElementById("submit-msg");
+    var btn = document.getElementById("submit-score");
+    if (!api || !pseudo) {
+      submitMsg.className = "err";
+      submitMsg.textContent = "تعذّر الإرسال: الاسم غير جاهز.";
+      btn.disabled = false;
+      return;
+    }
+    if (scoreSubmitted) {
+      submitMsg.className = "ok-msg";
+      submitMsg.textContent = "النتيجة مسجّلة في التصنيف.";
+      btn.disabled = true;
+      return;
+    }
+    btn.disabled = true;
+    api
+      .submitScore({
+        pseudo: pseudo,
+        moduleSlug: MODULE_SLUG,
+        moduleId: null,
+        score: score,
+        total: TOTAL,
+        durationSec: durationSec || 1
+      })
+      .then(function (res) {
+        if (res && res.ok) {
+          scoreSubmitted = true;
+          submitMsg.className = "ok-msg";
+          submitMsg.textContent =
+            "تم التسجيل ✓ — " + score + "/" + TOTAL + " (" + (res.pct != null ? res.pct : Math.round((100 * score) / TOTAL)) + "٪)";
+          btn.textContent = "تم التسجيل ✓";
+          btn.disabled = true;
+          return;
+        }
+        var code = (res && res.error) || "network_score";
+        submitMsg.className = "err";
+        if (code === "not_better" && res.best != null) {
+          submitMsg.textContent =
+            api.errorMessage("not_better", "ar") + " (" + res.best + "/" + TOTAL + ")";
+          scoreSubmitted = true;
+          btn.disabled = true;
+        } else {
+          submitMsg.textContent = api.errorMessage(code, "ar");
+          btn.disabled = false;
+          btn.textContent = "إعادة إرسال النتيجة";
+        }
+      });
+  }
+
   document.getElementById("next").addEventListener("click", function () {
-    if (i + 1 >= QUESTIONS.length) {
-      document.getElementById("score").textContent =
-        score + " / " + QUESTIONS.length;
-      var msg = document.getElementById("score-msg");
-      if (score >= 15) msg.textContent = "ممتاز — السلسلة والقياسات حاضرة.";
-      else if (score >= 10) msg.textContent = "جيد — راجعوا ترتيب hors tension و DDR.";
-      else msg.textContent = "أعيدوا شرائح الصباح: visuel ثم PE ثم Riso ثم التوتر.";
-      show(done);
-    } else {
+    if (i + 1 >= QUESTIONS.length) finishScreen();
+    else {
       i += 1;
       renderQ();
     }
   });
 
-  document.getElementById("retry").addEventListener("click", function () {
-    i = 0;
-    score = 0;
-    renderQ();
-    show(quiz);
+  document.getElementById("submit-score").addEventListener("click", function () {
+    autoSubmit();
   });
 
-  if (already()) unlock();
+  document.getElementById("retry").addEventListener("click", function () {
+    if (!pseudo) {
+      goNick();
+      return;
+    }
+    startQuizWithPseudo(pseudo);
+  });
+
+  if (already()) goNick();
 })();
