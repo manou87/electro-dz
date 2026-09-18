@@ -268,3 +268,19 @@ button:disabled {
   text-align: center;
   color: var(--muted);
 }
+.admin-reset {
+  margin-top: 22px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.admin-reset summary {
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.admin-reset .card {
+  margin-top: 8px;
+}
+.btn-danger {
+  background: #ef4444;
+  color: #fff;
+}

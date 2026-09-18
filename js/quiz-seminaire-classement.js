@@ -131,4 +131,64 @@
 
   tick();
   setInterval(tick, REFRESH_MS);
+
+  var resetBtn = document.getElementById("reset-btn");
+  var resetCode = document.getElementById("reset-code");
+  var resetMsg = document.getElementById("reset-msg");
+
+  function setResetMsg(text, kind) {
+    if (!resetMsg) return;
+    resetMsg.hidden = !text;
+    resetMsg.textContent = text || "";
+    resetMsg.className = kind === "ok" ? "ok-msg" : kind === "wait" ? "wait-msg" : "err";
+  }
+
+  if (resetBtn && resetCode) {
+    resetBtn.addEventListener("click", function () {
+      var cfg = getConfig();
+      if (!cfg) {
+        setResetMsg("إعداد الخادم غير متاح.", "err");
+        return;
+      }
+      if (!window.confirm("مسح كل نتائج تصنيف الندوة؟")) return;
+      resetBtn.disabled = true;
+      setResetMsg("جاري المسح…", "wait");
+      fetch(cfg.url + "/rest/v1/rpc/reset_quiz_module_scores", {
+        method: "POST",
+        headers: {
+          apikey: cfg.anonKey,
+          Authorization: "Bearer " + cfg.anonKey,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          p_module_slug: MODULE_SLUG,
+          p_code: String(resetCode.value || "").trim()
+        })
+      })
+        .then(function (res) {
+          return res.json().then(function (data) {
+            return { okHttp: res.ok, data: data };
+          });
+        })
+        .then(function (out) {
+          resetBtn.disabled = false;
+          if (out.data && out.data.ok) {
+            resetCode.value = "";
+            setResetMsg("تم المسح ✓ (" + (out.data.deleted || 0) + ")", "ok");
+            tick();
+            return;
+          }
+          var err = (out.data && out.data.error) || "network";
+          if (err === "code_invalid") {
+            setResetMsg("رمز غير صحيح.", "err");
+          } else {
+            setResetMsg("تعذّر المسح. حاول مجدداً.", "err");
+          }
+        })
+        .catch(function () {
+          resetBtn.disabled = false;
+          setResetMsg("تعذّر الاتصال بالخادم.", "err");
+        });
+    });
+  }
 })();

@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex" />
   <meta name="description" content="تصنيف مباشر — ندوة 19 سبتمبر 2026" />
   <link rel="icon" href="assets/app-icon.png" type="image/png" />
-  <link rel="stylesheet" href="css/quiz-seminaire.css?v=20260918a" />
+  <link rel="stylesheet" href="css/quiz-seminaire.css?v=20260918c" />
   <title>التصنيف المباشر | ندوة 19 سبتمبر</title>
   <link rel="canonical" href="https://electro-dz.com/quiz-seminaire-classement.html" />
 </head>
@@ -35,9 +35,19 @@
       <div id="board-rows"></div>
       <p class="board-empty" id="board-empty" hidden>لا نتائج بعد — انتظروا انتهاء أول مشاركين.</p>
     </div>
+
+    <details class="admin-reset">
+      <summary>إعادة ضبط القائمة (منظّم القاعة فقط)</summary>
+      <div class="card">
+        <label for="reset-code">رمز إعادة الضبط</label>
+        <input id="reset-code" class="ltr-input" type="password" autocomplete="off" spellcheck="false" placeholder="••••••" dir="ltr" />
+        <button type="button" id="reset-btn" class="btn-danger">مسح التصنيف وإعادة الصفر</button>
+        <p id="reset-msg" hidden></p>
+      </div>
+    </details>
   </main>
   <script src="js/site-config.js"></script>
-  <script src="js/quiz-leaderboard.js?v=20260918a"></script>
-  <script src="js/quiz-seminaire-classement.js?v=20260918a"></script>
+  <script src="js/quiz-leaderboard.js?v=20260918c"></script>
+  <script src="js/quiz-seminaire-classement.js?v=20260918c"></script>
 </body>
 </html>
