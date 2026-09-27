@@ -7,8 +7,12 @@
   <style>
     :root { --line:#e5e7eb; --text:#1f2937; --muted:#6b7280; --blue:#2563eb; }
     * { box-sizing: border-box; }
-    html, body { margin:0; height:100%; background:#f4f7fb; color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
-    header { background:#fff; border-bottom:1px solid var(--line); padding:6px 10px 8px; }
+    html, body {
+      margin:0; height:100%; height:100dvh; background:#f4f7fb; color:var(--text);
+      font-family:"Segoe UI", system-ui, sans-serif; overflow:hidden;
+    }
+    body { display:flex; flex-direction:column; }
+    header { flex:0 0 auto; background:#fff; border-bottom:1px solid var(--line); padding:6px 10px 8px; }
     .bar { display:flex; align-items:flex-end; gap:16px; flex-wrap:wrap; }
     .group { display:flex; flex-direction:column; align-items:center; gap:3px; }
     .group b { font-size:9px; letter-spacing:.08em; color:#9ca3af; font-weight:700; }
@@ -24,37 +28,56 @@
     .swatch { width:16px; height:16px; border-radius:50%; border:1px solid #d1d5db; padding:0; }
     .swatch.on { outline:2px solid #111; outline-offset:1px; }
     select { border:1px solid #d1d5db; border-radius:6px; padding:4px 6px; font-size:12px; background:#fff; }
-    main { display:grid; grid-template-columns:210px 1fr; height:calc(100% - 78px); }
-    aside { background:#fff; border-right:1px solid var(--line); padding:10px; overflow:auto; }
+    main {
+      flex:1 1 auto; min-height:0; display:flex; flex-direction:column;
+      width:100%;
+    }
     h2 { margin:0 0 8px; font-size:11px; letter-spacing:.06em; color:#6b7280; }
-    .workspace { display:flex; min-width:0; height:100%; overflow:hidden; }
-    .workspace #board { flex:1 1 auto; min-width:0; }
-    /* Mobile : biblio étroite (miniatures) → plus d’espace pour #board */
+    /* Biblio en haut : onglets + rangée horizontale compacte */
+    .lib-top {
+      flex:0 0 auto; background:#fff; border-bottom:1px solid var(--line);
+      min-width:0;
+    }
+    .lib-tabs {
+      display:flex; gap:4px; overflow-x:auto; overflow-y:hidden;
+      padding:6px 8px 0; -webkit-overflow-scrolling:touch;
+      scrollbar-width:thin;
+    }
+    .lib-tab {
+      flex:0 0 auto; white-space:nowrap; padding:5px 10px; font-size:11px;
+      border-radius:8px 8px 0 0; border:1px solid transparent; border-bottom:none;
+      background:transparent; color:#64748b; font-weight:700;
+    }
+    .lib-tab:hover { background:#f3f4f6; color:#334155; }
+    .lib-tab.active {
+      background:#eff6ff; color:var(--blue); border-color:#bfdbfe;
+    }
+    .lib-items {
+      display:flex; gap:6px; align-items:stretch;
+      overflow-x:auto; overflow-y:hidden;
+      padding:6px 8px 8px; height:80px; min-height:72px; max-height:88px;
+      -webkit-overflow-scrolling:touch; scrollbar-width:thin;
+    }
+    .workspace {
+      position:relative; display:flex; min-width:0; flex:1 1 auto; min-height:0;
+      overflow:hidden;
+    }
+    .workspace #board { flex:1 1 auto; min-width:0; min-height:0; height:100%; }
     @media (max-width: 900px) {
-      main { grid-template-columns:88px 1fr; }
-      main > aside:not(.ladder-panel) {
-        padding:6px 4px; overflow-x:hidden; overflow-y:auto;
+      header { padding:4px 6px 6px; }
+      .lib-tab { padding:4px 8px; font-size:10px; }
+      .lib-items { height:72px; min-height:72px; max-height:76px; padding:4px 6px 6px; gap:4px; }
+      .item { padding:4px 6px; min-width:56px; }
+      .item img, .item .thumb { width:36px; height:36px; flex:0 0 36px; }
+      .item > span:not(.thumb) {
+        font-size:8px; max-width:64px; overflow:hidden; text-overflow:ellipsis;
+        white-space:nowrap; line-height:1.15;
       }
-      main > aside:not(.ladder-panel) > h2 {
-        font-size:8px; letter-spacing:.02em; text-align:center; margin:0 0 4px;
-        word-break:break-all; line-height:1.15;
-      }
-      .lib-note { display:none; }
-      .cat {
-        font-size:7px; margin:8px 0 3px; text-align:center; letter-spacing:0;
-        line-height:1.2; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
-      }
-      .item {
-        padding:5px 2px; gap:0; justify-content:center; margin-bottom:4px;
-      }
-      .item > span:not(.thumb) { display:none; }
-      .item img, .item .thumb {
-        width:40px; height:40px; flex:0 0 40px;
-      }
-      /* Ladder ouvert : ne pas écraser le board */
-      .ladder-panel {
-        flex:0 0 min(260px, 40vw);
-        width:min(260px, 40vw); max-width:42vw;
+      /* Ladder / ETS : overlay — ne mange pas la hauteur du board */
+      .ladder-panel, .ets-panel {
+        position:absolute; top:0; right:0; bottom:0;
+        flex:none !important; width:min(320px, 92vw) !important; max-width:92vw !important;
+        box-shadow:-8px 0 24px rgba(15,23,42,.18);
       }
     }
     /* Ladder — style éditeur clair type Soft Comfort / LOGO! Soft */
@@ -62,7 +85,7 @@
       display:none; flex-direction:column; flex:0 0 min(460px, 44vw);
       width:min(460px, 44vw); max-width:50vw;
       background:#eef1f5; color:#1e293b; border-left:1px solid #c5cedd;
-      min-height:0; z-index:5;
+      min-height:0; z-index:20;
     }
     .workspace.has-ladder .ladder-panel { display:flex; }
     .ladder-head {
@@ -163,15 +186,9 @@
       display:none; flex-direction:column; flex:0 0 min(420px, 42vw);
       width:min(420px, 42vw); max-width:48vw;
       background:#eef1f5; color:#1e293b; border-left:1px solid #c5cedd;
-      min-height:0; z-index:5;
+      min-height:0; z-index:20;
     }
     .workspace.has-ets .ets-panel { display:flex; }
-    @media (max-width: 900px) {
-      .ets-panel {
-        flex:0 0 min(260px, 40vw);
-        width:min(260px, 40vw); max-width:42vw;
-      }
-    }
     .ets-head {
       flex:0 0 auto; padding:10px 12px 8px; border-bottom:1px solid #c5cedd;
       background:linear-gradient(180deg, #f8fafc 0%, #e8edf4 100%);
@@ -300,14 +317,17 @@
     }
     .knx-bin-hit.on { border-color:rgba(34,197,94,.75); background:rgba(34,197,94,.2); }
 
-    .lib-note { font-size:11px; color:#64748b; background:#eff6ff; border-radius:8px; padding:8px; margin-bottom:10px; line-height:1.4; }
-    .cat { margin:12px 0 6px; font-size:10px; font-weight:800; color:#94a3b8; letter-spacing:.06em; text-transform:uppercase; }
     .item {
-      display:flex; gap:8px; align-items:center; width:100%; text-align:left;
-      margin-bottom:6px; border:1px solid #eef2f7; border-radius:10px; padding:7px 8px;
+      display:flex; flex-direction:column; gap:3px; align-items:center; justify-content:center;
+      flex:0 0 auto; width:auto; min-width:62px; max-width:88px; text-align:center;
+      margin:0; border:1px solid #eef2f7; border-radius:10px; padding:5px 7px;
+    }
+    .item > span:not(.thumb) {
+      font-size:9px; font-weight:650; color:#475569; line-height:1.15;
+      max-width:78px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
     }
     .item img, .item .thumb {
-      width:44px; height:44px; flex:0 0 44px; object-fit:contain;
+      width:40px; height:40px; flex:0 0 40px; object-fit:contain;
       background:transparent; border-radius:6px;
     }
     .item .thumb {
@@ -323,7 +343,7 @@
       background-color:#f3f6fb;
       background-image:radial-gradient(#c5cedd 1.1px, transparent 1.1px);
       background-size:22px 22px;
-      min-height:100%;
+      height:100%; min-height:0;
     }
     #board.mode-select { cursor:default; }
     /* touch-action:none = le doigt déplace le module, pas le scroll du board */
@@ -950,11 +970,10 @@
     </div>
   </header>
   <main>
-    <aside>
-      <h2>BIBLIOTHÈQUE</h2>
-      <div class="lib-note">Biblio SwissDz — clique pour poser. <b>Vérifier</b> = sim : compteur = source, protections ON/OFF, poussoir maintenu, bobines KM/TL, thermique Ir, voyants + <b>sonore</b> (bip). Sélecteur Man/0/Auto. Double-clic = dimensions (thermique = aussi Ir). Avec un <b>PLC</b> : panneau <b>Ladder</b> (logique à contacts) — les sorties Q suivent le programme. <b>KNX / ETS formation</b> : alim L/N → un fil vert <b>BUS en bas</b> (paire +/−) → objets de com / GA (poussoir, actionneur, volet, variateur…). Panneau <b>ETS formation</b> : adresses physiques + liens GA.</div>
-      <div id="palette"></div>
-    </aside>
+    <section class="lib-top" aria-label="Bibliothèque">
+      <div class="lib-tabs" id="libTabs" role="tablist"></div>
+      <div class="lib-items" id="palette" role="tabpanel"></div>
+    </section>
     <div id="workspace" class="workspace">
       <div id="board"></div>
       <aside id="ladderPanel" class="ladder-panel" aria-label="Éditeur Ladder">
@@ -1232,9 +1251,9 @@
       ]},
       knx_dali: {name:"Passerelle DALI KNX SwissDz",prefix:"UG",cat:"Domotique KNX",w:95,h:137,din:true,image:"assets/knx-passerelle-dali-swissdz.png",badge:"DALI",iec:"UG",knxDali:true,busLed:{nx:0.50,ny:0.16},terminals:[
         {id:"DA+",nx:0.28,ny:0.40,direction:"top"},{id:"DA-",nx:0.72,ny:0.40,direction:"top"},
-        {id:"L",nx:0.28,ny:0.58,direction:"top"},{id:"N",nx:0.72,ny:0.58,direction:"top"},
+        {id:"L",nx:0.28,ny:0.58,direction:"top"},{id:"~",nx:0.50,ny:0.58,direction:"top"},{id:"N",nx:0.72,ny:0.58,direction:"top"},
         {id:"BUS",nx:0.50,ny:0.904,direction:"bottom"}
-      ],pairs:[["L","N"]]},
+      ],pairs:[["L","~"]]},
     };
 
     // Alias rétrocompat (anciens ids calibre → type unique)
@@ -1487,6 +1506,599 @@
       knxBusValues: {}
     };
 
+
+    /* ========== ETS FORMATION (pédagogique, pas ETS officiel) ========== */
+    const KNX_KEY_FNS = [
+      { v: "switch", lab: "Commutation" },
+      { v: "up", lab: "Volet ↑" },
+      { v: "down", lab: "Volet ↓" },
+      { v: "stop", lab: "Volet stop" },
+      { v: "dim_tog", lab: "Variateur ON/OFF" },
+      { v: "dim_up", lab: "Variateur +" },
+      { v: "dim_down", lab: "Variateur −" }
+    ];
+    function normGa(s) {
+      const m = String(s || "").trim().match(/^(\d+)\s*\/\s*(\d+)\s*\/\s*(\d+)$/);
+      return m ? (m[1] + "/" + m[2] + "/" + m[3]) : "";
+    }
+    function validGa(s) { return !!normGa(s); }
+    function normPhys(s) {
+      const m = String(s || "").trim().match(/^(\d+)\s*\.\s*(\d+)\s*\.\s*(\d+)$/);
+      return m ? (m[1] + "." + m[2] + "." + m[3]) : "";
+    }
+    function validPhys(s) { return !!normPhys(s); }
+    function nextKnxPhysAddr(prefer) {
+      const used = new Set(state.items.map((i) => normPhys(i.physAddr)).filter(Boolean));
+      const pref = prefer ? normPhys(prefer) : "";
+      if (pref && !used.has(pref)) return pref;
+      for (let z = 0; z < 250; z++) {
+        const a = "1.1." + z;
+        if (!used.has(a)) return a;
+      }
+      return pref || "1.1.0";
+    }
+    function defaultKnxKeysProg() {
+      return {
+        1: { fn: "switch", ga: "1/1/1" },
+        2: { fn: "switch", ga: "1/1/2" },
+        3: { fn: "up", ga: "1/2/1" },
+        4: { fn: "down", ga: "1/2/2" }
+      };
+    }
+    function defaultKnxChProg() {
+      return { 1: { ga: "1/1/1" }, 2: { ga: "1/1/2" }, 3: { ga: "1/1/3" }, 4: { ga: "1/1/4" } };
+    }
+    function defaultKnxShutterProg() {
+      return {
+        1: { gaUp: "1/2/1", gaDown: "1/2/2", gaStop: "1/2/3" },
+        2: { gaUp: "1/2/4", gaDown: "1/2/5", gaStop: "1/2/6" }
+      };
+    }
+    function ensureKnxProgram(item) {
+      if (!item) return;
+      const def = LIB[item.type];
+      if (!def || !isKnxDevice(def)) return;
+      if (!item.physAddr) {
+        const prefer = def.knxPsu ? "1.1.0" : def.knxPush ? "1.1.1" : def.knxActuator ? "1.1.2"
+          : def.knxShutter ? "1.1.3" : def.knxDimmer ? "1.1.4" : def.knxPresence ? "1.1.5"
+          : def.knxTemp ? "1.1.6" : def.knxThermo ? "1.1.7" : def.knxBinary ? "1.1.8"
+          : def.knxIp ? "1.1.9" : def.knxDali ? "1.1.10" : "1.1.11";
+        item.physAddr = nextKnxPhysAddr(prefer);
+      }
+      if (def.knxPush) {
+        if (!item.knxToggle) item.knxToggle = { 1: false, 2: false, 3: false, 4: false };
+        if (!item.knxKeysProg) item.knxKeysProg = defaultKnxKeysProg();
+      }
+      if (def.knxActuator) {
+        if (!item.knxCh) item.knxCh = { 1: false, 2: false, 3: false, 4: false };
+        if (!item.knxChProg) item.knxChProg = defaultKnxChProg();
+      }
+      if (def.knxShutter) {
+        if (!item.knxShutter) item.knxShutter = { 1: { dir: "stop", pos: 0.35 }, 2: { dir: "stop", pos: 0.35 } };
+        if (!item.knxShutterProg) item.knxShutterProg = defaultKnxShutterProg();
+      }
+      if (def.knxDimmer || def.knxDali) {
+        if (!item.knxDim) item.knxDim = { on: false, level: 80 };
+        if (!item.knxDimProg) item.knxDimProg = { gaOn: "1/3/1", gaLevel: "1/3/2" };
+      }
+      if (def.knxPresence) {
+        if (item.knxPresence == null) item.knxPresence = false;
+        if (!item.knxPresenceProg) item.knxPresenceProg = { ga: "1/4/1" };
+      }
+      if (def.knxTemp) {
+        if (item.knxTemp == null) item.knxTemp = 21.5;
+        if (!item.knxTempProg) item.knxTempProg = { ga: "1/5/1" };
+      }
+      if (def.knxThermo) {
+        if (!item.knxThermo) item.knxThermo = { set: 20, room: 21, heat: false };
+        if (!item.knxThermoProg) item.knxThermoProg = { gaSet: "1/6/1", gaHeat: "1/6/2" };
+      }
+      if (def.knxBinary) {
+        if (!item.knxBin) item.knxBin = { 1: false, 2: false, 3: false, 4: false };
+        if (!item.knxBinProg) item.knxBinProg = { 1: { ga: "1/7/1" }, 2: { ga: "1/7/2" }, 3: { ga: "1/7/3" }, 4: { ga: "1/7/4" } };
+      }
+    }
+    function resetAllKnxAddresses() {
+      state.items.forEach((it) => {
+        const def = LIB[it.type];
+        if (!def || !isKnxDevice(def)) return;
+        delete it.physAddr;
+        delete it.knxKeysProg; delete it.knxChProg; delete it.knxShutterProg;
+        delete it.knxDimProg; delete it.knxPresenceProg; delete it.knxTempProg;
+        delete it.knxThermoProg; delete it.knxBinProg;
+        ensureKnxProgram(it);
+      });
+    }
+    function knxBusPowered() {
+      return state.items.some((i) => {
+        const d = LIB[i.type];
+        return d && d.knxPsu && i.knxBusOk;
+      });
+    }
+    function knxHasListenerOnBus() {
+      return state.items.some((i) => {
+        const d = LIB[i.type];
+        return d && i.knxBusOk && (d.knxActuator || d.knxShutter || d.knxDimmer || d.knxDali || d.knxThermo);
+      });
+    }
+    function knxCanSend(item) {
+      return !!(state.sim && item && item.knxBusOk && knxBusPowered() && knxHasListenerOnBus());
+    }
+    function knxPublish(ga, value, src) {
+      const g = normGa(ga);
+      if (!g) return;
+      if (!state.knxBusValues) state.knxBusValues = {};
+      state.knxBusValues[g] = value;
+      state.knxLastTelegram = { ga: g, value: value, src: src || "", ts: performance.now() };
+      knxApplyBusToDevices();
+    }
+    function knxApplyBusToDevices() {
+      const vals = state.knxBusValues || {};
+      state.items.forEach((item) => {
+        const def = LIB[item.type];
+        if (!def) return;
+        if (!item.knxBusOk) {
+          if (def.knxActuator && item.knxCh) item.knxCh = { 1: false, 2: false, 3: false, 4: false };
+          if ((def.knxDimmer || def.knxDali) && item.knxDim) item.knxDim.on = false;
+          if (def.knxShutter && item.knxShutter) {
+            [1, 2].forEach((n) => { if (item.knxShutter[n]) item.knxShutter[n].dir = "stop"; });
+          }
+          return;
+        }
+        ensureKnxProgram(item);
+        if (def.knxActuator) {
+          for (let n = 1; n <= 4; n++) {
+            const g = normGa(item.knxChProg[n] && item.knxChProg[n].ga);
+            item.knxCh[n] = !!(g && vals[g]);
+          }
+        }
+        if (def.knxDimmer || def.knxDali) {
+          const gOn = normGa(item.knxDimProg.gaOn);
+          const gLv = normGa(item.knxDimProg.gaLevel);
+          if (gOn && Object.prototype.hasOwnProperty.call(vals, gOn)) item.knxDim.on = !!vals[gOn];
+          if (gLv && Object.prototype.hasOwnProperty.call(vals, gLv)) {
+            const v = Number(vals[gLv]);
+            if (!Number.isNaN(v)) item.knxDim.level = Math.max(0, Math.min(100, v));
+          }
+        }
+        if (def.knxShutter) {
+          for (let n = 1; n <= 2; n++) {
+            const p = item.knxShutterProg[n];
+            const ch = item.knxShutter[n];
+            if (!p || !ch) continue;
+            const gu = normGa(p.gaUp), gd = normGa(p.gaDown), gs = normGa(p.gaStop);
+            const up = !!(gu && vals[gu]);
+            const down = !!(gd && vals[gd]);
+            const stop = !!(gs && vals[gs]);
+            if (stop || (up && down)) ch.dir = "stop";
+            else if (up) { ch.dir = "up"; if (gd) vals[gd] = 0; }
+            else if (down) { ch.dir = "down"; if (gu) vals[gu] = 0; }
+            else ch.dir = "stop";
+          }
+        }
+        if (def.knxThermo) {
+          const gSet = normGa(item.knxThermoProg.gaSet);
+          if (gSet && Object.prototype.hasOwnProperty.call(vals, gSet)) {
+            const v = Number(vals[gSet]);
+            if (!Number.isNaN(v)) item.knxThermo.set = v;
+          }
+          item.knxThermo.heat = item.knxThermo.room < item.knxThermo.set;
+          const gHeat = normGa(item.knxThermoProg.gaHeat);
+          if (gHeat) state.knxBusValues[gHeat] = item.knxThermo.heat ? 1 : 0;
+        }
+      });
+    }
+    function knxClearShutterOpposite(ga, kind) {
+      state.items.forEach((act) => {
+        if (!LIB[act.type] || !LIB[act.type].knxShutter || !act.knxBusOk) return;
+        ensureKnxProgram(act);
+        [1, 2].forEach((n) => {
+          const p = act.knxShutterProg[n];
+          if (kind === "up" && normGa(p.gaUp) === ga) {
+            if (p.gaDown) state.knxBusValues[normGa(p.gaDown)] = 0;
+            if (p.gaStop) state.knxBusValues[normGa(p.gaStop)] = 0;
+          }
+          if (kind === "down" && normGa(p.gaDown) === ga) {
+            if (p.gaUp) state.knxBusValues[normGa(p.gaUp)] = 0;
+            if (p.gaStop) state.knxBusValues[normGa(p.gaStop)] = 0;
+          }
+          if (kind === "stop" && normGa(p.gaStop) === ga) {
+            if (p.gaUp) state.knxBusValues[normGa(p.gaUp)] = 0;
+            if (p.gaDown) state.knxBusValues[normGa(p.gaDown)] = 0;
+          }
+        });
+      });
+    }
+    function knxHandleKeyPress(item, keyId) {
+      ensureKnxProgram(item);
+      const prog = item.knxKeysProg[keyId];
+      if (!prog) return;
+      const ga = normGa(prog.ga);
+      const fn = prog.fn || "switch";
+      if (!knxCanSend(item)) {
+        if (fn === "switch" || fn === "dim_tog") item.knxToggle[keyId] = !item.knxToggle[keyId];
+        return;
+      }
+      if (fn === "switch" || fn === "dim_tog") {
+        item.knxToggle[keyId] = !item.knxToggle[keyId];
+        knxPublish(ga, item.knxToggle[keyId] ? 1 : 0, item.tag + ".T" + keyId);
+      } else if (fn === "up") {
+        knxPublish(ga, 1, item.tag + ".T" + keyId + "↑");
+        knxClearShutterOpposite(ga, "up");
+        knxApplyBusToDevices();
+      } else if (fn === "down") {
+        knxPublish(ga, 1, item.tag + ".T" + keyId + "↓");
+        knxClearShutterOpposite(ga, "down");
+        knxApplyBusToDevices();
+      } else if (fn === "stop") {
+        knxPublish(ga, 1, item.tag + ".T" + keyId + "stop");
+        knxClearShutterOpposite(ga, "stop");
+        knxApplyBusToDevices();
+      } else if (fn === "dim_up" || fn === "dim_down") {
+        const delta = fn === "dim_up" ? 10 : -10;
+        let sent = false;
+        state.items.forEach((d) => {
+          const dd = LIB[d.type];
+          if (!dd || !(dd.knxDimmer || dd.knxDali) || !d.knxBusOk) return;
+          ensureKnxProgram(d);
+          if (normGa(d.knxDimProg.gaLevel) !== ga) return;
+          d.knxDim.level = Math.max(0, Math.min(100, (d.knxDim.level || 0) + delta));
+          d.knxDim.on = d.knxDim.level > 0;
+          knxPublish(ga, d.knxDim.level, item.tag + ".T" + keyId);
+          if (d.knxDimProg.gaOn) knxPublish(d.knxDimProg.gaOn, d.knxDim.on ? 1 : 0, item.tag);
+          sent = true;
+        });
+        if (!sent) knxPublish(ga, delta > 0 ? 1 : 0, item.tag + ".T" + keyId);
+      }
+    }
+    let knxAnimRaf = null;
+    let knxAnimLast = 0;
+    function stopKnxAnim() {
+      if (knxAnimRaf != null) { cancelAnimationFrame(knxAnimRaf); knxAnimRaf = null; }
+    }
+    function startKnxAnim() {
+      stopKnxAnim();
+      knxAnimLast = performance.now();
+      const tick = (now) => {
+        if (!state.sim) { knxAnimRaf = null; return; }
+        const dt = Math.min(0.05, (now - knxAnimLast) / 1000);
+        knxAnimLast = now;
+        let moved = false;
+        state.items.forEach((item) => {
+          const def = LIB[item.type];
+          if (!def || !def.knxShutter || !item.knxShutter) return;
+          [1, 2].forEach((n) => {
+            const ch = item.knxShutter[n];
+            if (!ch) return;
+            const speed = 0.35;
+            if (ch.dir === "up") {
+              const np = Math.max(0, ch.pos - speed * dt);
+              if (np !== ch.pos) moved = true;
+              ch.pos = np;
+              if (ch.pos <= 0) ch.dir = "stop";
+            } else if (ch.dir === "down") {
+              const np = Math.min(1, ch.pos + speed * dt);
+              if (np !== ch.pos) moved = true;
+              ch.pos = np;
+              if (ch.pos >= 1) ch.dir = "stop";
+            }
+          });
+        });
+        if (moved) {
+          document.querySelectorAll(".knx-shutter").forEach((el) => {
+            const uid = el.dataset.uid;
+            const ch = Number(el.dataset.ch);
+            const it = find(uid);
+            if (!it || !it.knxShutter || !it.knxShutter[ch]) return;
+            const sl = el.querySelector(".slats");
+            if (sl) sl.style.transform = "translateY(" + ((it.knxShutter[ch].pos - 1) * 100) + "%)";
+          });
+        }
+        knxAnimRaf = requestAnimationFrame(tick);
+      };
+      knxAnimRaf = requestAnimationFrame(tick);
+    }
+    function updateEtsTelegram() {
+      const tel = document.getElementById("etsTelegram");
+      if (!tel) return;
+      const t = state.knxLastTelegram;
+      if (t && state.sim) {
+        tel.className = "ets-telegram";
+        tel.textContent = "Télégramme : " + t.ga + " = " + t.value + (t.src ? "  ← " + t.src : "");
+      } else {
+        tel.className = "ets-telegram off";
+        tel.textContent = state.sim ? "Bus : en attente de télégramme" : "Simulation arrêtée — lance « Vérifier »";
+      }
+    }
+    function syncEtsLayout() {
+      const ws = document.getElementById("workspace");
+      const btn = document.getElementById("btnEts");
+      const panel = document.getElementById("etsPanel");
+      if (ws) ws.classList.toggle("has-ets", !!state.etsOpen);
+      if (btn) btn.classList.toggle("on", !!state.etsOpen);
+      if (!state.etsOpen) return;
+      const ae = document.activeElement;
+      const typing = panel && ae && panel.contains(ae) && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName || "");
+      if (typing) updateEtsTelegram();
+      else renderEtsPanel();
+    }
+    function collectKnxLinks() {
+      const producers = [];
+      const consumers = [];
+      state.items.forEach((it) => {
+        const def = LIB[it.type];
+        if (!def || !isKnxDevice(def)) return;
+        ensureKnxProgram(it);
+        if (def.knxPush) {
+          [1, 2, 3, 4].forEach((n) => {
+            const p = it.knxKeysProg[n];
+            producers.push({ tag: it.tag, obj: "T" + n + " (" + (p.fn || "") + ")", ga: normGa(p.ga), phys: it.physAddr });
+          });
+        }
+        if (def.knxPresence) producers.push({ tag: it.tag, obj: "Présence", ga: normGa(it.knxPresenceProg.ga), phys: it.physAddr });
+        if (def.knxTemp) producers.push({ tag: it.tag, obj: "Température", ga: normGa(it.knxTempProg.ga), phys: it.physAddr });
+        if (def.knxThermo) {
+          producers.push({ tag: it.tag, obj: "Consigne", ga: normGa(it.knxThermoProg.gaSet), phys: it.physAddr });
+          producers.push({ tag: it.tag, obj: "Chauffage", ga: normGa(it.knxThermoProg.gaHeat), phys: it.physAddr });
+        }
+        if (def.knxBinary) {
+          [1, 2, 3, 4].forEach((n) => producers.push({ tag: it.tag, obj: "E" + n, ga: normGa(it.knxBinProg[n].ga), phys: it.physAddr }));
+        }
+        if (def.knxActuator) {
+          [1, 2, 3, 4].forEach((n) => consumers.push({ tag: it.tag, obj: "Sortie " + n, ga: normGa(it.knxChProg[n].ga), phys: it.physAddr }));
+        }
+        if (def.knxShutter) {
+          [1, 2].forEach((n) => {
+            const p = it.knxShutterProg[n];
+            consumers.push({ tag: it.tag, obj: "Volet" + n + " ↑", ga: normGa(p.gaUp), phys: it.physAddr });
+            consumers.push({ tag: it.tag, obj: "Volet" + n + " ↓", ga: normGa(p.gaDown), phys: it.physAddr });
+            consumers.push({ tag: it.tag, obj: "Volet" + n + " stop", ga: normGa(p.gaStop), phys: it.physAddr });
+          });
+        }
+        if (def.knxDimmer || def.knxDali) {
+          consumers.push({ tag: it.tag, obj: "ON/OFF", ga: normGa(it.knxDimProg.gaOn), phys: it.physAddr });
+          consumers.push({ tag: it.tag, obj: "Niveau", ga: normGa(it.knxDimProg.gaLevel), phys: it.physAddr });
+        }
+      });
+      const byGa = {};
+      producers.forEach((p) => { if (!p.ga) return; (byGa[p.ga] = byGa[p.ga] || { ga: p.ga, prod: [], cons: [] }).prod.push(p); });
+      consumers.forEach((c) => { if (!c.ga) return; (byGa[c.ga] = byGa[c.ga] || { ga: c.ga, prod: [], cons: [] }).cons.push(c); });
+      return Object.values(byGa).sort((a, b) => a.ga.localeCompare(b.ga, "fr"));
+    }
+    function etsInput(val, cls, onCommit) {
+      const inp = document.createElement("input");
+      inp.type = "text";
+      inp.value = val || "";
+      inp.className = cls || "";
+      if (cls === "phys" && !validPhys(val)) inp.classList.add("bad");
+      if (cls === "ga" && val && !validGa(val)) inp.classList.add("bad");
+      inp.onpointerdown = (ev) => ev.stopPropagation();
+      inp.onchange = () => { onCommit(inp.value); };
+      inp.onblur = () => { onCommit(inp.value); };
+      return inp;
+    }
+    function renderEtsPanel() {
+      const body = document.getElementById("etsBody");
+      const tel = document.getElementById("etsTelegram");
+      if (!body) return;
+      state.items.forEach((it) => { if (isKnxDevice(LIB[it.type])) ensureKnxProgram(it); });
+      if (tel) {
+        const t = state.knxLastTelegram;
+        if (t && state.sim) {
+          tel.className = "ets-telegram";
+          tel.textContent = "Télégramme : " + t.ga + " = " + t.value + (t.src ? "  ← " + t.src : "");
+        } else {
+          tel.className = "ets-telegram off";
+          tel.textContent = state.sim ? "Bus : en attente de télégramme" : "Simulation arrêtée — lance « Vérifier »";
+        }
+      }
+      body.innerHTML = "";
+      const modules = state.items.filter((i) => isKnxDevice(LIB[i.type]));
+      if (!modules.length) {
+        const empty = document.createElement("div");
+        empty.className = "ets-empty";
+        empty.innerHTML = "Aucun module KNX sur le canevas.<br>Pose alim, poussoir, actionneur, volet… depuis la biblio <b>Domotique KNX</b>.";
+        body.appendChild(empty);
+        return;
+      }
+      const listTitle = document.createElement("div");
+      listTitle.className = "ets-section-title";
+      listTitle.textContent = "Participants / objets de communication";
+      body.appendChild(listTitle);
+
+      modules.forEach((item) => {
+        const def = LIB[item.type];
+        ensureKnxProgram(item);
+        const card = document.createElement("div");
+        card.className = "ets-card";
+        const title = document.createElement("div");
+        title.className = "ets-card-title";
+        title.innerHTML = "<span><b>" + item.tag + "</b> — " + def.name.replace(" SwissDz", "") +
+          ' <span class="tag">' + (item.physAddr || "") + "</span></span>" +
+          '<span class="bus-pill' + (item.knxBusOk ? " on" : "") + '">' + (item.knxBusOk ? "BUS OK" : "BUS —") + "</span>";
+        card.appendChild(title);
+        const cb = document.createElement("div");
+        cb.className = "ets-card-body";
+
+        const row = document.createElement("div");
+        row.className = "ets-row";
+        row.innerHTML = "<label>Physique</label>";
+        row.appendChild(etsInput(item.physAddr, "phys", (v) => {
+          pushHistory();
+          const n = normPhys(v);
+          item.physAddr = n || v.trim();
+          renderEtsPanel();
+        }));
+        cb.appendChild(row);
+
+        if (def.knxPush) {
+          [1, 2, 3, 4].forEach((n) => {
+            const p = item.knxKeysProg[n];
+            const cell = document.createElement("div");
+            cell.className = "ets-ga-cell";
+            cell.style.marginTop = "6px";
+            cell.innerHTML = "<span>T" + n + " — objet</span>";
+            const sel = document.createElement("select");
+            sel.className = "ets-fn";
+            KNX_KEY_FNS.forEach((o) => {
+              const op = document.createElement("option");
+              op.value = o.v; op.textContent = o.lab; if (p.fn === o.v) op.selected = true;
+              sel.appendChild(op);
+            });
+            sel.onchange = () => { pushHistory(); p.fn = sel.value; renderEtsPanel(); };
+            cell.appendChild(sel);
+            cell.appendChild(etsInput(p.ga, "ga", (v) => {
+              pushHistory(); p.ga = normGa(v) || v.trim(); renderEtsPanel(); if (state.sim) render();
+            }));
+            cb.appendChild(cell);
+          });
+        }
+        if (def.knxActuator) {
+          const grid = document.createElement("div");
+          grid.className = "ets-ga-grid";
+          [1, 2, 3, 4].forEach((n) => {
+            const cell = document.createElement("div");
+            cell.className = "ets-ga-cell";
+            cell.innerHTML = "<span>Sortie " + n + " GA</span>";
+            cell.appendChild(etsInput(item.knxChProg[n].ga, "ga", (v) => {
+              pushHistory(); item.knxChProg[n].ga = normGa(v) || v.trim(); knxApplyBusToDevices(); renderEtsPanel(); if (state.sim) render();
+            }));
+            grid.appendChild(cell);
+          });
+          cb.appendChild(grid);
+        }
+        if (def.knxShutter) {
+          [1, 2].forEach((n) => {
+            const p = item.knxShutterProg[n];
+            const lab = document.createElement("div");
+            lab.className = "ets-section-title";
+            lab.textContent = "Canal volet " + n;
+            cb.appendChild(lab);
+            const grid = document.createElement("div");
+            grid.className = "ets-ga-grid";
+            [["gaUp", "GA montée"], ["gaDown", "GA descente"], ["gaStop", "GA stop"]].forEach(([k, label]) => {
+              const cell = document.createElement("div");
+              cell.className = "ets-ga-cell";
+              cell.innerHTML = "<span>" + label + "</span>";
+              cell.appendChild(etsInput(p[k], "ga", (v) => {
+                pushHistory(); p[k] = normGa(v) || v.trim(); knxApplyBusToDevices(); renderEtsPanel(); if (state.sim) render();
+              }));
+              grid.appendChild(cell);
+            });
+            cb.appendChild(grid);
+          });
+        }
+        if (def.knxDimmer || def.knxDali) {
+          const grid = document.createElement("div");
+          grid.className = "ets-ga-grid";
+          [["gaOn", "GA ON/OFF"], ["gaLevel", "GA niveau %"]].forEach(([k, label]) => {
+            const cell = document.createElement("div");
+            cell.className = "ets-ga-cell";
+            cell.innerHTML = "<span>" + label + "</span>";
+            cell.appendChild(etsInput(item.knxDimProg[k], "ga", (v) => {
+              pushHistory(); item.knxDimProg[k] = normGa(v) || v.trim(); knxApplyBusToDevices(); renderEtsPanel(); if (state.sim) render();
+            }));
+            grid.appendChild(cell);
+          });
+          cb.appendChild(grid);
+        }
+        if (def.knxPresence) {
+          const cell = document.createElement("div");
+          cell.className = "ets-ga-cell";
+          cell.innerHTML = "<span>GA présence (1 bit)</span>";
+          cell.appendChild(etsInput(item.knxPresenceProg.ga, "ga", (v) => {
+            pushHistory(); item.knxPresenceProg.ga = normGa(v) || v.trim(); renderEtsPanel();
+          }));
+          cb.appendChild(cell);
+        }
+        if (def.knxTemp) {
+          const cell = document.createElement("div");
+          cell.className = "ets-ga-cell";
+          cell.innerHTML = "<span>GA température</span>";
+          cell.appendChild(etsInput(item.knxTempProg.ga, "ga", (v) => {
+            pushHistory(); item.knxTempProg.ga = normGa(v) || v.trim(); renderEtsPanel();
+          }));
+          const rowT = document.createElement("div");
+          rowT.className = "ets-row";
+          rowT.innerHTML = "<label>Valeur °C</label>";
+          const tin = document.createElement("input");
+          tin.type = "number"; tin.step = "0.1"; tin.value = item.knxTemp;
+          tin.onpointerdown = (e) => e.stopPropagation();
+          tin.onchange = () => {
+            pushHistory();
+            item.knxTemp = Number(tin.value) || 21.5;
+            if (knxCanSend(item)) knxPublish(item.knxTempProg.ga, item.knxTemp, item.tag);
+            renderEtsPanel();
+          };
+          rowT.appendChild(tin);
+          cb.appendChild(cell);
+          cb.appendChild(rowT);
+        }
+        if (def.knxThermo) {
+          const grid = document.createElement("div");
+          grid.className = "ets-ga-grid";
+          [["gaSet", "GA consigne"], ["gaHeat", "GA chauffage"]].forEach(([k, label]) => {
+            const cell = document.createElement("div");
+            cell.className = "ets-ga-cell";
+            cell.innerHTML = "<span>" + label + "</span>";
+            cell.appendChild(etsInput(item.knxThermoProg[k], "ga", (v) => {
+              pushHistory(); item.knxThermoProg[k] = normGa(v) || v.trim(); renderEtsPanel();
+            }));
+            grid.appendChild(cell);
+          });
+          cb.appendChild(grid);
+        }
+        if (def.knxBinary) {
+          const grid = document.createElement("div");
+          grid.className = "ets-ga-grid";
+          [1, 2, 3, 4].forEach((n) => {
+            const cell = document.createElement("div");
+            cell.className = "ets-ga-cell";
+            cell.innerHTML = "<span>E" + n + " GA</span>";
+            cell.appendChild(etsInput(item.knxBinProg[n].ga, "ga", (v) => {
+              pushHistory(); item.knxBinProg[n].ga = normGa(v) || v.trim(); renderEtsPanel();
+            }));
+            grid.appendChild(cell);
+          });
+          cb.appendChild(grid);
+        }
+        if (def.knxIp) {
+          const note = document.createElement("div");
+          note.style.cssText = "font-size:10px;color:#64748b;margin-top:4px;";
+          note.textContent = "Coupleur IP : participant bus (adresse physique). Pas d’objet de com. simulé.";
+          cb.appendChild(note);
+        }
+        card.appendChild(cb);
+        body.appendChild(card);
+      });
+
+      const linksTitle = document.createElement("div");
+      linksTitle.className = "ets-section-title";
+      linksTitle.textContent = "Tableau des liens (GA)";
+      body.appendChild(linksTitle);
+      const links = collectKnxLinks();
+      const table = document.createElement("table");
+      table.className = "ets-links";
+      table.innerHTML = "<thead><tr><th>GA</th><th>Émetteurs</th><th>Récepteurs</th><th>Lien</th></tr></thead>";
+      const tb = document.createElement("tbody");
+      if (!links.length) {
+        tb.innerHTML = "<tr><td colspan='4'>Aucun objet GA programmé.</td></tr>";
+      } else {
+        links.forEach((L) => {
+          const tr = document.createElement("tr");
+          const ok = L.prod.length && L.cons.length;
+          tr.innerHTML = "<td><b>" + L.ga + "</b></td><td>" +
+            (L.prod.map((p) => p.tag + " " + p.obj).join("<br>") || "—") + "</td><td>" +
+            (L.cons.map((c) => c.tag + " " + c.obj).join("<br>") || "—") + "</td><td class='" +
+            (ok ? "ok" : "miss") + "'>" + (ok ? "lié" : "incomplet") + "</td>";
+          tb.appendChild(tr);
+        });
+      }
+      table.appendChild(tb);
+      body.appendChild(table);
+    }
+    /* ========== fin ETS FORMATION ========== */
+
     /* ========== LADDER v1 (logique à contacts / bobines / TON) ========== */
     let ladderRungSeq = 4;
     let ladderRaf = null;
@@ -1544,6 +2156,10 @@
     }
 
     function ladderShouldShow() {
+      /* Mobile : pas d’auto-ouverture (évite bande / overlay non demandé) */
+      if (window.matchMedia && window.matchMedia("(max-width: 900px)").matches) {
+        return state.ladderOpen === true;
+      }
       if (state.ladderOpen === true) return true;
       if (state.ladderOpen === false) return false;
       return boardHasPlc();
@@ -1937,10 +2553,21 @@
       if (it.knxCh && typeof it.knxCh === "object") {
         out.knxCh = { 1: !!it.knxCh[1], 2: !!it.knxCh[2], 3: !!it.knxCh[3], 4: !!it.knxCh[4] };
       }
-      /* Champs KNX / ETS formation (présents si un autre module les pose) */
       if (it.physAddr != null && it.physAddr !== "") out.physAddr = String(it.physAddr);
-      if (it.ga != null) out.ga = deepClone(it.ga);
-      if (it.BUS != null) out.BUS = deepClone(it.BUS);
+      if (it.knxKeysProg) out.knxKeysProg = deepClone(it.knxKeysProg);
+      if (it.knxChProg) out.knxChProg = deepClone(it.knxChProg);
+      if (it.knxShutterProg) out.knxShutterProg = deepClone(it.knxShutterProg);
+      if (it.knxShutter) out.knxShutter = deepClone(it.knxShutter);
+      if (it.knxDimProg) out.knxDimProg = deepClone(it.knxDimProg);
+      if (it.knxDim) out.knxDim = deepClone(it.knxDim);
+      if (it.knxPresenceProg) out.knxPresenceProg = deepClone(it.knxPresenceProg);
+      if (it.knxPresence != null) out.knxPresence = !!it.knxPresence;
+      if (it.knxTempProg) out.knxTempProg = deepClone(it.knxTempProg);
+      if (it.knxTemp != null) out.knxTemp = it.knxTemp;
+      if (it.knxThermoProg) out.knxThermoProg = deepClone(it.knxThermoProg);
+      if (it.knxThermo) out.knxThermo = deepClone(it.knxThermo);
+      if (it.knxBinProg) out.knxBinProg = deepClone(it.knxBinProg);
+      if (it.knxBin) out.knxBin = deepClone(it.knxBin);
       return out;
     }
 
@@ -2192,13 +2819,12 @@
       if (!def || !def.cat || ALIAS_IDS.has(id)) return;
       (cats[def.cat] = cats[def.cat] || []).push([id, def]);
     });
-    CAT_ORDER.forEach((cat) => {
-      const list = cats[cat];
-      if (!list || !list.length) return;
-      const h = document.createElement("div");
-      h.className = "cat";
-      h.textContent = cat;
-      palette.appendChild(h);
+    const libTabs = document.getElementById("libTabs");
+    let activeCat = CAT_ORDER.find((c) => cats[c] && cats[c].length) || CAT_ORDER[0];
+
+    function renderPaletteItems() {
+      palette.innerHTML = "";
+      const list = cats[activeCat] || [];
       list.forEach(([id, def]) => {
         const b = document.createElement("button");
         b.type = "button";
@@ -2217,7 +2843,29 @@
         b.onclick = () => add(id);
         palette.appendChild(b);
       });
+    }
+
+    CAT_ORDER.forEach((cat) => {
+      const list = cats[cat];
+      if (!list || !list.length) return;
+      const tab = document.createElement("button");
+      tab.type = "button";
+      tab.className = "lib-tab" + (cat === activeCat ? " active" : "");
+      tab.setAttribute("role", "tab");
+      tab.setAttribute("aria-selected", cat === activeCat ? "true" : "false");
+      tab.textContent = cat;
+      tab.onclick = () => {
+        activeCat = cat;
+        libTabs.querySelectorAll(".lib-tab").forEach((t) => {
+          const on = t === tab;
+          t.classList.toggle("active", on);
+          t.setAttribute("aria-selected", on ? "true" : "false");
+        });
+        renderPaletteItems();
+      };
+      libTabs.appendChild(tab);
     });
+    renderPaletteItems();
 
     function nextTag(type) {
       const p = LIB[type].prefix;
@@ -2235,7 +2883,7 @@
         x: 50 + (n % 4) * 170,
         y: 50 + Math.floor(n / 4) * 190,
         /* Contacteurs / relais à bobine : ouverts par défaut (fermés si bobine alimentée). */
-        closed: !!(def.pair && !def.push && !hasCoil(def) && !def.latch && !def.phaseMonitor && !def.plc && !def.knxActuator && !def.knxPush),
+        closed: !!(def.pair && !def.push && !hasCoil(def) && !def.latch && !def.phaseMonitor && !def.plc && !def.knxActuator && !def.knxPush && !def.knxShutter && !def.knxDimmer && !def.knxDali && !def.knxBinary),
         pressed: false,
         lit: false,
         coilOn: false,
@@ -2251,7 +2899,9 @@
       item.y = snapToRailY(item, item.x, item.y);
       item.x = resolveDinX(item, item.x, item.y);
       state.items.push(item);
+      if (isKnxDevice(def)) ensureKnxProgram(item);
       state.selected = item.uid;
+      if (state.etsOpen) renderEtsPanel();
       render();
     }
     function find(uid) { return state.items.find((i) => i.uid === uid); }
@@ -2471,61 +3121,177 @@
       if (audioCtx.state === "suspended") audioCtx.resume().catch(() => {});
       return audioCtx;
     }
-    /* Bang basse + noise bandpass + étincelles sawtooth (1re version CC). */
-    function playShortCircuitSound() {
-      const ctx = ensureAudio();
-      if (!ctx) return;
-      const t0 = ctx.currentTime;
-      const boom = ctx.createOscillator();
-      const boomG = ctx.createGain();
-      boom.type = "sine";
-      boom.frequency.setValueAtTime(90, t0);
-      boom.frequency.exponentialRampToValueAtTime(35, t0 + 0.18);
-      boomG.gain.setValueAtTime(0.0001, t0);
-      boomG.gain.exponentialRampToValueAtTime(0.55, t0 + 0.012);
-      boomG.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.35);
-      boom.connect(boomG);
-      boomG.connect(ctx.destination);
-      boom.start(t0);
-      boom.stop(t0 + 0.4);
-
-      const n = 2 * ctx.sampleRate | 0;
+    /* Arc L–N : claquement sec puis bourdonnement 50 Hz + grésillement (Web Audio). */
+    let scArcCtl = null;
+    function makeScNoiseBuffer(ctx, seconds) {
+      const n = Math.max(1, (seconds * ctx.sampleRate) | 0);
       const buf = ctx.createBuffer(1, n, ctx.sampleRate);
       const data = buf.getChannelData(0);
       for (let i = 0; i < n; i++) data[i] = Math.random() * 2 - 1;
-      const noise = ctx.createBufferSource();
-      noise.buffer = buf;
-      const filt = ctx.createBiquadFilter();
-      filt.type = "bandpass";
-      filt.frequency.setValueAtTime(1800, t0);
-      filt.frequency.exponentialRampToValueAtTime(400, t0 + 0.5);
-      filt.Q.value = 0.7;
-      const noiseG = ctx.createGain();
-      noiseG.gain.setValueAtTime(0.0001, t0);
-      noiseG.gain.exponentialRampToValueAtTime(0.4, t0 + 0.008);
-      noiseG.gain.exponentialRampToValueAtTime(0.12, t0 + 0.08);
-      noiseG.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.55);
-      noise.connect(filt);
-      filt.connect(noiseG);
-      noiseG.connect(ctx.destination);
-      noise.start(t0);
-      noise.stop(t0 + 0.6);
+      return buf;
+    }
+    function makeScWaveShaper(ctx, amount) {
+      const n = 256;
+      const curve = new Float32Array(n);
+      for (let i = 0; i < n; i++) {
+        const x = (i * 2) / n - 1;
+        curve[i] = ((Math.PI + amount) * x) / (Math.PI + amount * Math.abs(x));
+      }
+      const sh = ctx.createWaveShaper();
+      sh.curve = curve;
+      sh.oversample = "2x";
+      return sh;
+    }
+    function stopShortCircuitArc() {
+      if (!scArcCtl) return;
+      const ctl = scArcCtl;
+      scArcCtl = null;
+      if (ctl.crackTimer != null) {
+        clearTimeout(ctl.crackTimer);
+        ctl.crackTimer = null;
+      }
+      const ctx = audioCtx;
+      const t = ctx ? ctx.currentTime : 0;
+      try {
+        if (ctl.master) {
+          ctl.master.gain.cancelScheduledValues(t);
+          ctl.master.gain.setValueAtTime(Math.max(0.0001, ctl.master.gain.value), t);
+          ctl.master.gain.exponentialRampToValueAtTime(0.0001, t + 0.04);
+        }
+      } catch (e) {}
+      setTimeout(() => {
+        ctl.sources.forEach((s) => {
+          try { s.stop(); } catch (e) {}
+          try { s.disconnect(); } catch (e) {}
+        });
+        ctl.nodes.forEach((n) => {
+          try { n.disconnect(); } catch (e) {}
+        });
+      }, 60);
+    }
+    function playShortCircuitSound() {
+      const ctx = ensureAudio();
+      if (!ctx) return;
+      if (scArcCtl) return;
+      const t0 = ctx.currentTime;
+      const sources = [];
+      const nodes = [];
+      const master = ctx.createGain();
+      master.gain.setValueAtTime(0.0001, t0);
+      master.gain.exponentialRampToValueAtTime(0.4, t0 + 0.01);
+      const shaper = makeScWaveShaper(ctx, 1.4);
+      const lim = ctx.createDynamicsCompressor();
+      lim.threshold.value = -14;
+      lim.knee.value = 10;
+      lim.ratio.value = 10;
+      lim.attack.value = 0.002;
+      lim.release.value = 0.12;
+      master.connect(shaper);
+      shaper.connect(lim);
+      lim.connect(ctx.destination);
+      nodes.push(master, shaper, lim);
 
-      for (let k = 0; k < 5; k++) {
+      /* 1) Claquement d’arc : burst large bande très court (pas un boom basse). */
+      const clapBuf = makeScNoiseBuffer(ctx, 0.08);
+      const clap = ctx.createBufferSource();
+      clap.buffer = clapBuf;
+      const clapHp = ctx.createBiquadFilter();
+      clapHp.type = "highpass";
+      clapHp.frequency.value = 200;
+      clapHp.Q.value = 0.7;
+      const clapBp = ctx.createBiquadFilter();
+      clapBp.type = "bandpass";
+      clapBp.frequency.value = 2800;
+      clapBp.Q.value = 0.55;
+      const clapG = ctx.createGain();
+      clapG.gain.setValueAtTime(0.0001, t0);
+      clapG.gain.exponentialRampToValueAtTime(0.95, t0 + 0.002);
+      clapG.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.028);
+      clap.connect(clapHp);
+      clapHp.connect(clapBp);
+      clapBp.connect(clapG);
+      clapG.connect(master);
+      clap.start(t0);
+      clap.stop(t0 + 0.05);
+      sources.push(clap);
+      nodes.push(clapHp, clapBp, clapG);
+
+      /* 2) Bourdonnement secteur 50 Hz + harmoniques, légèrement instable. */
+      const humG = ctx.createGain();
+      humG.gain.setValueAtTime(0.22, t0);
+      const lfo = ctx.createOscillator();
+      lfo.type = "sine";
+      lfo.frequency.value = 0.35 + Math.random() * 0.45;
+      const lfoG = ctx.createGain();
+      lfoG.gain.value = 0.07;
+      lfo.connect(lfoG);
+      lfoG.connect(humG.gain);
+      lfo.start(t0);
+      sources.push(lfo);
+      nodes.push(humG, lfoG);
+      const hums = [
+        { f: 50, g: 0.28, type: "sawtooth" },
+        { f: 100, g: 0.2, type: "square" },
+        { f: 150, g: 0.14, type: "sawtooth" },
+        { f: 250, g: 0.09, type: "triangle" }
+      ];
+      hums.forEach((h) => {
         const o = ctx.createOscillator();
         const g = ctx.createGain();
-        const tk = t0 + 0.02 + k * 0.045;
-        o.type = "sawtooth";
-        o.frequency.setValueAtTime(1200 + Math.random() * 2400, tk);
-        o.frequency.exponentialRampToValueAtTime(200 + Math.random() * 400, tk + 0.06);
-        g.gain.setValueAtTime(0.0001, tk);
-        g.gain.exponentialRampToValueAtTime(0.12, tk + 0.005);
-        g.gain.exponentialRampToValueAtTime(0.0001, tk + 0.07);
+        o.type = h.type;
+        o.frequency.setValueAtTime(h.f * (1 + (Math.random() - 0.5) * 0.006), t0);
+        g.gain.value = h.g;
         o.connect(g);
-        g.connect(ctx.destination);
-        o.start(tk);
-        o.stop(tk + 0.08);
+        g.connect(humG);
+        o.start(t0);
+        sources.push(o);
+        nodes.push(g);
+      });
+      humG.connect(master);
+
+      /* 3) Grésillement / crépitement HF irrégulier (bruit filtré + pics aléatoires). */
+      const crackNoise = ctx.createBufferSource();
+      crackNoise.buffer = makeScNoiseBuffer(ctx, 1.5);
+      crackNoise.loop = true;
+      const crackHp = ctx.createBiquadFilter();
+      crackHp.type = "highpass";
+      crackHp.frequency.value = 1500;
+      crackHp.Q.value = 0.8;
+      const crackBp = ctx.createBiquadFilter();
+      crackBp.type = "bandpass";
+      crackBp.frequency.value = 4200;
+      crackBp.Q.value = 1.1;
+      const crackBase = ctx.createGain();
+      crackBase.gain.value = 0.08;
+      const crackSpike = ctx.createGain();
+      crackSpike.gain.setValueAtTime(0.0001, t0);
+      crackNoise.connect(crackHp);
+      crackHp.connect(crackBp);
+      crackBp.connect(crackBase);
+      crackBase.connect(master);
+      crackBp.connect(crackSpike);
+      crackSpike.connect(master);
+      crackNoise.start(t0);
+      sources.push(crackNoise);
+      nodes.push(crackHp, crackBp, crackBase, crackSpike);
+
+      const ctl = { master, sources, nodes, crackTimer: null, crackSpike };
+      function scheduleCrackle() {
+        if (scArcCtl !== ctl) return;
+        const now = ctx.currentTime;
+        const peak = 0.18 + Math.random() * 0.45;
+        const dur = 0.012 + Math.random() * 0.045;
+        try {
+          crackSpike.gain.cancelScheduledValues(now);
+          crackSpike.gain.setValueAtTime(0.0001, now);
+          crackSpike.gain.exponentialRampToValueAtTime(peak, now + 0.0015);
+          crackSpike.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+          crackBp.frequency.setValueAtTime(2200 + Math.random() * 5500, now);
+        } catch (e) {}
+        ctl.crackTimer = setTimeout(scheduleCrackle, 30 + Math.random() * 110);
       }
+      scArcCtl = ctl;
+      scheduleCrackle();
     }
     function locateShortPoint(findp, key, shortRoot) {
       let best = null;
@@ -2563,6 +3329,14 @@
         if (def.pair || def.pairs || def.vv) item.closed = false;
       });
     }
+    /* Vibration téléphone : no-op desktop / API absente. Pattern fini, pas de boucle. */
+    function vibrateShortCircuit(pattern) {
+      try {
+        if (typeof navigator !== "undefined" && typeof navigator.vibrate === "function") {
+          navigator.vibrate(pattern);
+        }
+      } catch (e) {}
+    }
     function triggerShortCircuit(loc) {
       state.short = {
         x: loc.x,
@@ -2573,6 +3347,7 @@
       if (!state.shortArmed) {
         state.shortArmed = true;
         playShortCircuitSound();
+        vibrateShortCircuit([80, 40, 80, 40, 200]);
         tripProtectionsOnShort();
       }
     }
@@ -2586,12 +3361,13 @@
         clearInterval(fireSoundTimer);
         fireSoundTimer = null;
       }
+      stopShortCircuitArc();
       if (state._fireAnimRaf != null) {
         cancelAnimationFrame(state._fireAnimRaf);
         state._fireAnimRaf = null;
       }
     }
-    /* Relance le bang CC toutes les ~0,7 s tant que le feu est actif. */
+    /* Arc continu tant que le feu / défaut est actif ; stop net à la coupure. */
     function startFireSoundLoop() {
       if (fireSoundTimer != null) return;
       playShortCircuitSound();
@@ -2600,7 +3376,7 @@
           stopFireSoundLoop();
           return;
         }
-        playShortCircuitSound();
+        if (!scArcCtl) playShortCircuitSound();
       }, 700);
     }
     function fireGrowProgress() {
@@ -2700,6 +3476,7 @@
       }
       if (now - state.shortSince < 2500) return;
       state.fire = { x: loc.x, y: loc.y, t0: now, clearAt: null };
+      vibrateShortCircuit([120, 60, 300]);
       startFireSoundLoop();
     }
     function stopAllBuzzers() {
@@ -3390,28 +4167,31 @@
             });
           }
         }
-        /* KNX : LED bus + touches / canaux */
-        if (def.knxPsu || def.knxPush || def.knxActuator) {
+        /* KNX : LED bus + objets (touches, sorties, volet, dim, capteurs) */
+        if (isKnxDevice(def)) {
+          ensureKnxProgram(item);
           const led = def.busLed || { nx: 0.5, ny: 0.2 };
           const d = document.createElement("div");
           d.className = "knx-bus-led" + (item.knxBusOk ? " on" : "");
           d.style.left = (led.nx * 100) + "%";
           d.style.top = (led.ny * 100) + "%";
-          d.title = item.knxBusOk ? "Bus KNX OK" : "Bus KNX hors tension";
+          d.title = (item.physAddr || "") + " — " + (item.knxBusOk ? "Bus KNX OK" : "Bus KNX hors tension");
           el.appendChild(d);
         }
         if (def.knxPush && def.knxKeys) {
-          if (!item.knxToggle) item.knxToggle = { 1: false, 2: false, 3: false, 4: false };
           def.knxKeys.forEach((k) => {
             const btn = document.createElement("div");
+            const prog = item.knxKeysProg && item.knxKeysProg[k.id];
+            const fn = (prog && prog.fn) || "switch";
             const on = !!item.knxToggle[k.id];
-            btn.className = "knx-key" + (on ? " on" : "");
+            btn.className = "knx-key" + (on && (fn === "switch" || fn === "dim_tog") ? " on" : "");
             btn.style.left = (k.nx * 100) + "%";
             btn.style.top = (k.ny * 100) + "%";
             btn.style.width = (k.nw * 100) + "%";
             btn.style.height = (k.nh * 100) + "%";
+            const ga = prog ? prog.ga : "";
             btn.title = state.sim
-              ? ("T" + k.id + " — clic = bascule canal " + k.id + (on ? " (ON)" : " (OFF)"))
+              ? ("T" + k.id + " · " + fn + " · GA " + ga)
               : "Lance « Vérifier » puis clique T" + k.id;
             btn.setAttribute("aria-label", "Touche KNX T" + k.id);
             btn.onpointerdown = (ev) => {
@@ -3419,9 +4199,10 @@
               ev.preventDefault();
               if (!state.sim) return;
               pushHistory();
-              item.knxToggle[k.id] = !item.knxToggle[k.id];
+              knxHandleKeyPress(item, k.id);
               ensureAudio();
               render();
+              if (state.etsOpen) renderEtsPanel();
             };
             el.appendChild(btn);
           });
@@ -3433,8 +4214,108 @@
             d.className = "knx-ch-led" + (ch[c.id] ? " on" : "");
             d.style.left = (c.nx * 100) + "%";
             d.style.top = (c.ny * 100) + "%";
-            d.title = "Sortie " + c.id + (ch[c.id] ? " ON" : " OFF");
+            const ga = item.knxChProg && item.knxChProg[c.id] ? item.knxChProg[c.id].ga : "";
+            d.title = "Sortie " + c.id + " GA " + ga + (ch[c.id] ? " ON" : " OFF");
             el.appendChild(d);
+          });
+        }
+        if (def.knxShutter && def.knxShutters) {
+          def.knxShutters.forEach((s) => {
+            const ch = item.knxShutter && item.knxShutter[s.id];
+            const wrap = document.createElement("div");
+            wrap.className = "knx-shutter";
+            wrap.dataset.uid = item.uid;
+            wrap.dataset.ch = String(s.id);
+            wrap.style.left = (s.nx * 100) + "%";
+            wrap.style.top = (s.ny * 100) + "%";
+            wrap.style.width = (s.nw * 100) + "%";
+            wrap.style.height = (s.nh * 100) + "%";
+            const sl = document.createElement("div");
+            sl.className = "slats";
+            const pos = ch ? ch.pos : 0.35;
+            sl.style.transform = "translateY(" + ((pos - 1) * 100) + "%)";
+            wrap.appendChild(sl);
+            wrap.title = "Volet " + s.id + " — " + (ch ? ch.dir : "stop") + " (" + Math.round((ch ? ch.pos : 0) * 100) + "%)";
+            el.appendChild(wrap);
+          });
+        }
+        if ((def.knxDimmer || def.knxDali) && item.knxDim) {
+          const bar = document.createElement("div");
+          bar.className = "knx-dim-bar";
+          const conf = def.knxDimBar || { nx: 0.5, ny: 0.3, nw: 0.5 };
+          bar.style.left = (conf.nx * 100) + "%";
+          bar.style.top = (conf.ny * 100) + "%";
+          bar.style.width = ((conf.nw || 0.5) * 100) + "%";
+          const i = document.createElement("i");
+          i.style.width = (item.knxDim.on ? item.knxDim.level : 0) + "%";
+          bar.appendChild(i);
+          bar.title = "Niveau " + (item.knxDim.on ? item.knxDim.level : 0) + "%";
+          el.appendChild(bar);
+        }
+        if (def.knxPresence && def.knxPir) {
+          const hit = document.createElement("div");
+          hit.className = "knx-presence-hit" + (item.knxPresence ? " on" : "");
+          hit.style.left = (def.knxPir.nx * 100) + "%";
+          hit.style.top = (def.knxPir.ny * 100) + "%";
+          hit.title = "Présence " + (item.knxPresence ? "ON" : "OFF");
+          hit.onpointerdown = (ev) => {
+            ev.stopPropagation(); ev.preventDefault();
+            if (!state.sim) return;
+            pushHistory();
+            item.knxPresence = !item.knxPresence;
+            if (knxCanSend(item)) knxPublish(item.knxPresenceProg.ga, item.knxPresence ? 1 : 0, item.tag);
+            render();
+            if (state.etsOpen) renderEtsPanel();
+          };
+          el.appendChild(hit);
+        }
+        if (def.knxTemp && def.knxDisplay) {
+          const rd = document.createElement("div");
+          rd.className = "knx-temp-readout";
+          rd.style.left = (def.knxDisplay.nx * 100) + "%";
+          rd.style.top = (def.knxDisplay.ny * 100) + "%";
+          rd.textContent = (Number(item.knxTemp) || 0).toFixed(1) + "°C";
+          el.appendChild(rd);
+        }
+        if (def.knxThermo && def.knxThermoBtns) {
+          def.knxThermoBtns.forEach((b) => {
+            const hit = document.createElement("div");
+            hit.className = "knx-thermo-btn";
+            hit.style.left = (b.nx * 100) + "%";
+            hit.style.top = (b.ny * 100) + "%";
+            hit.title = b.id === "plus" ? "Consigne +" : "Consigne −";
+            hit.onpointerdown = (ev) => {
+              ev.stopPropagation(); ev.preventDefault();
+              if (!state.sim) return;
+              pushHistory();
+              ensureKnxProgram(item);
+              item.knxThermo.set = Math.max(5, Math.min(35, item.knxThermo.set + (b.id === "plus" ? 0.5 : -0.5)));
+              if (knxCanSend(item)) knxPublish(item.knxThermoProg.gaSet, item.knxThermo.set, item.tag);
+              knxApplyBusToDevices();
+              render();
+              if (state.etsOpen) renderEtsPanel();
+            };
+            el.appendChild(hit);
+          });
+        }
+        if (def.knxBinary && def.knxBinHits) {
+          def.knxBinHits.forEach((h) => {
+            const hit = document.createElement("div");
+            hit.className = "knx-bin-hit" + (item.knxBin && item.knxBin[h.id] ? " on" : "");
+            hit.style.left = (h.nx * 100) + "%";
+            hit.style.top = (h.ny * 100) + "%";
+            hit.title = "Entrée E" + h.id;
+            hit.onpointerdown = (ev) => {
+              ev.stopPropagation(); ev.preventDefault();
+              if (!state.sim) return;
+              pushHistory();
+              ensureKnxProgram(item);
+              item.knxBin[h.id] = !item.knxBin[h.id];
+              if (knxCanSend(item)) knxPublish(item.knxBinProg[h.id].ga, item.knxBin[h.id] ? 1 : 0, item.tag + ".E" + h.id);
+              render();
+              if (state.etsOpen) renderEtsPanel();
+            };
+            el.appendChild(hit);
           });
         }
         if (def.selector) {
@@ -3501,7 +4382,7 @@
             el.appendChild(d);
           });
         }
-        if ((def.pair || def.pairs || def.selector || def.vv) && !def.knxActuator && !def.knxPush) {
+        if ((def.pair || def.pairs || def.selector || def.vv) && !def.knxActuator && !def.knxPush && !def.knxShutter && !def.knxDimmer && !def.knxDali && !def.knxBinary) {
           const b = document.createElement("div");
           /* Pas de libellé Marche/Arrêt sur aucun composant — zone clic discrète seulement */
           let on = def.push ? item.pressed : item.closed;
@@ -3601,7 +4482,7 @@
             return;
           }
           /* Disjoncteur / IDR / VV / VSD en sim : clic corps = ouvrir/fermer */
-          if (state.sim && (def.pair || def.pairs || def.vv) && !def.push && !hasCoil(def) && !def.plc && !def.knxActuator) {
+          if (state.sim && (def.pair || def.pairs || def.vv) && !def.push && !hasCoil(def) && !def.plc && !def.knxActuator && !def.knxShutter && !def.knxDimmer && !def.knxDali && !def.knxBinary) {
             pushHistory();
             item.closed = !item.closed;
             render();
@@ -3773,6 +4654,7 @@
       syncColorSwatches();
       syncLadderLayout();
       if (ladderShouldShow()) renderLadderPanel();
+      syncEtsLayout();
       writeAutosave();
     }
 
@@ -4159,20 +5041,40 @@
         ensureAudio();
         resetLadderTimers();
         startLadderLoop();
+        startKnxAnim();
       } else {
         stopLadderLoop();
+        stopKnxAnim();
         stopAllBuzzers();
         state.shortArmed = false;
         state.short = null;
         clearFireImmediate();
         resetLadderTimers();
+        state.knxLastTelegram = null;
       }
       render();
+      if (state.etsOpen) renderEtsPanel();
     };
     document.getElementById("btnLadder").onclick = () => {
       const showing = ladderShouldShow();
       state.ladderOpen = !showing;
       syncLadderLayout();
+    };
+    document.getElementById("btnEts").onclick = () => {
+      state.etsOpen = !state.etsOpen;
+      syncEtsLayout();
+    };
+    document.getElementById("btnEtsClose").onclick = () => {
+      state.etsOpen = false;
+      syncEtsLayout();
+    };
+    document.getElementById("btnEtsReset").onclick = () => {
+      pushHistory();
+      resetAllKnxAddresses();
+      state.knxBusValues = {};
+      state.knxLastTelegram = null;
+      renderEtsPanel();
+      if (state.sim) render();
     };
     document.getElementById("btnAddRung").onclick = () => addSimpleRung();
     document.getElementById("btnResetLadder").onclick = () => {
@@ -4219,8 +5121,12 @@
       state.wireFrom = null;
       state.preview = null;
       state.ladderOpen = null;
+      state.etsOpen = false;
+      state.knxLastTelegram = null;
+      state.knxBusValues = {};
       state.projectName = "schema-swissdz";
       stopLadderLoop();
+      stopKnxAnim();
       resetLadderTimers();
       document.getElementById("btnPlay").classList.remove("on");
       document.getElementById("btnPlay").textContent = "Vérifier";
@@ -4231,6 +5137,7 @@
     updateHistoryButtons();
     ensureLadder();
     syncLadderLayout();
+    syncEtsLayout();
     if (!tryRestoreAutosave()) render();
   </script>
 </body>
