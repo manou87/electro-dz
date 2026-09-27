@@ -1,0 +1,142 @@
+/* École électricité — gate + embed SwissDZ Panel (palette Electro DZ) */
+
+.ecole-page.sim-page {
+  background: #0a0f1a;
+}
+
+.ecole-workspace {
+  position: relative;
+}
+
+.ecole-gate {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 5% 32px;
+  background:
+    radial-gradient(ellipse 70% 45% at 50% -10%, rgba(250, 204, 21, 0.14), transparent 60%),
+    radial-gradient(ellipse 40% 30% at 90% 80%, rgba(227, 6, 19, 0.08), transparent 55%);
+}
+
+.ecole-gate[hidden] {
+  display: none !important;
+}
+
+.ecole-gate-card {
+  width: min(420px, 100%);
+  padding: 1.75rem 1.6rem 1.85rem;
+  border-radius: 16px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.07) 0%, rgba(15, 23, 42, 0.92) 100%);
+  border: 1px solid rgba(250, 204, 21, 0.32);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+}
+
+.ecole-badge {
+  display: inline-block;
+  margin: 0 0 0.75rem;
+  padding: 0.28rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(250, 204, 21, 0.16);
+  color: #fde047;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.ecole-gate-card h1 {
+  margin: 0 0 0.55rem;
+  font-size: clamp(1.35rem, 4vw, 1.75rem);
+  line-height: 1.25;
+  color: #f8fafc;
+  font-weight: 800;
+}
+
+.ecole-lead {
+  margin: 0 0 1.25rem;
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.ecole-gate-form label {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #e2e8f0;
+}
+
+.ecole-gate-form input {
+  width: 100%;
+  padding: 0.85rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: #0f172a;
+  color: #f8fafc;
+  font-size: 1.05rem;
+  text-align: center;
+  letter-spacing: 0.06em;
+  outline: none;
+}
+
+.ecole-gate-form input:focus {
+  border-color: rgba(250, 204, 21, 0.65);
+  box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.15);
+}
+
+.ecole-gate-form button[type="submit"] {
+  display: flex;
+  width: 100%;
+  margin-top: 0.85rem;
+  padding: 0.85rem 1rem;
+  border: 0;
+  border-radius: 12px;
+  cursor: pointer;
+  background: #facc15;
+  color: #0a0f1a;
+  font-weight: 800;
+  font-size: 1rem;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.ecole-gate-form button[type="submit"]:hover {
+  background: #fde047;
+  transform: translateY(-1px);
+}
+
+.ecole-err {
+  margin: 0.75rem 0 0;
+  color: #f87171;
+  font-weight: 700;
+  font-size: 0.9rem;
+  min-height: 1.2em;
+}
+
+.ecole-err[hidden] {
+  display: none !important;
+}
+
+.ecole-frame-wrap[hidden] {
+  display: none !important;
+}
+
+.ecole-unlocked .ecole-frame-wrap {
+  flex: 1;
+  min-height: 0;
+}
+
+html[dir="rtl"] .ecole-gate-card h1,
+html[dir="rtl"] .ecole-lead,
+html[dir="rtl"] .ecole-gate-form label {
+  text-align: right;
+}
+
+@media (max-width: 480px) {
+  .ecole-gate {
+    padding: 16px 4% 24px;
+  }
+  .ecole-gate-card {
+    padding: 1.35rem 1.15rem 1.45rem;
+  }
+}

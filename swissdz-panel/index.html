@@ -1,0 +1,3619 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SwissDZ Tableau</title>
+  <style>
+    :root { --line:#e5e7eb; --text:#1f2937; --muted:#6b7280; --blue:#2563eb; }
+    * { box-sizing: border-box; }
+    html, body { margin:0; height:100%; background:#f4f7fb; color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+    header { background:#fff; border-bottom:1px solid var(--line); padding:6px 10px 8px; }
+    .bar { display:flex; align-items:flex-end; gap:16px; flex-wrap:wrap; }
+    .group { display:flex; flex-direction:column; align-items:center; gap:3px; }
+    .group b { font-size:9px; letter-spacing:.08em; color:#9ca3af; font-weight:700; }
+    .row { display:flex; gap:4px; align-items:center; }
+    button {
+      background:#fff; color:#374151; border:1px solid transparent; border-radius:8px;
+      padding:7px 10px; font-size:12px; font-weight:650; cursor:pointer;
+    }
+    button:hover { background:#f3f4f6; }
+    button.active { background:var(--blue); color:#fff; }
+    button.on { background:#dbeafe; color:#1d4ed8; }
+    .swatches { display:flex; gap:4px; }
+    .swatch { width:16px; height:16px; border-radius:50%; border:1px solid #d1d5db; padding:0; }
+    .swatch.on { outline:2px solid #111; outline-offset:1px; }
+    select { border:1px solid #d1d5db; border-radius:6px; padding:4px 6px; font-size:12px; background:#fff; }
+    main { display:grid; grid-template-columns:270px 1fr; height:calc(100% - 78px); }
+    aside { background:#fff; border-right:1px solid var(--line); padding:10px; overflow:auto; }
+    h2 { margin:0 0 8px; font-size:11px; letter-spacing:.06em; color:#6b7280; }
+    .workspace { display:flex; min-width:0; height:100%; overflow:hidden; }
+    .workspace #board { flex:1 1 auto; min-width:0; }
+    .ladder-panel {
+      display:none; flex-direction:column; flex:0 0 min(440px, 42vw);
+      width:min(440px, 42vw); max-width:48vw;
+      background:#0f172a; color:#e2e8f0; border-left:1px solid #1e293b;
+      min-height:0; z-index:5;
+    }
+    .workspace.has-ladder .ladder-panel { display:flex; }
+    .ladder-head {
+      flex:0 0 auto; padding:10px 12px 8px; border-bottom:1px solid #1e293b;
+      background:#111827;
+    }
+    .ladder-head h2 { color:#94a3b8; margin:0 0 6px; }
+    .ladder-status {
+      font-size:11px; font-weight:700; padding:5px 8px; border-radius:6px;
+      background:#14532d; color:#86efac; margin-bottom:8px;
+    }
+    .ladder-status.off { background:#334155; color:#94a3b8; }
+    .ladder-toolbar { display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+    .ladder-toolbar button {
+      background:#1e293b; color:#e2e8f0; border:1px solid #334155;
+      padding:6px 10px; font-size:11px; border-radius:7px;
+    }
+    .ladder-toolbar button:hover { background:#334155; }
+    .ladder-toolbar .hint { font-size:10px; color:#64748b; margin-left:auto; }
+    .ladder-body { flex:1 1 auto; overflow:auto; padding:10px 12px 16px; }
+    .ladder-rung {
+      margin-bottom:14px; border:1px solid #1e293b; border-radius:10px;
+      background:#111827; overflow:hidden;
+    }
+    .ladder-rung-title {
+      font-size:10px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
+      color:#64748b; padding:6px 10px; border-bottom:1px solid #1e293b;
+      display:flex; justify-content:space-between; align-items:center;
+    }
+    .ladder-rung-title .del {
+      background:transparent; border:none; color:#64748b; padding:2px 6px; font-size:12px;
+    }
+    .ladder-rung-title .del:hover { color:#f87171; }
+    .ladder-rail {
+      display:grid; grid-template-columns:10px 1fr 10px; gap:0; padding:12px 8px;
+      font-family:"Segoe UI", system-ui, sans-serif; user-select:none;
+    }
+    .ladder-rail .rail-l, .ladder-rail .rail-r {
+      background:#38bdf8; border-radius:2px; opacity:.85;
+    }
+    .ladder-rail.power .rail-l, .ladder-rail.power .rail-r,
+    .ladder-rail.power .ld-wire { background:#4ade80; }
+    .ladder-net { display:flex; flex-direction:column; gap:6px; min-width:0; }
+    .ladder-row {
+      display:flex; align-items:center; gap:0; min-height:44px; flex-wrap:nowrap;
+    }
+    .ld-wire {
+      flex:1 1 18px; height:3px; min-width:12px; background:#475569; border-radius:1px;
+      transition: background .12s ease, box-shadow .12s ease;
+    }
+    .ld-wire.on {
+      background:#4ade80;
+      box-shadow:0 0 8px rgba(74,222,128,.55);
+    }
+    .ld-contact, .ld-coil, .ld-ton {
+      flex:0 0 auto; display:flex; flex-direction:column; align-items:center;
+      justify-content:center; gap:2px; color:#cbd5e1; font-size:11px; font-weight:700;
+    }
+    .ld-sym {
+      font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+      font-size:13px; letter-spacing:.02em; padding:2px 4px; border-radius:4px;
+      border:1.5px solid #64748b; background:#0f172a; white-space:nowrap;
+    }
+    .ld-contact.on .ld-sym, .ld-coil.on .ld-sym {
+      border-color:#4ade80; color:#bbf7d0; background:#14532d;
+      box-shadow:0 0 10px rgba(74,222,128,.35);
+    }
+    .ld-ton {
+      min-width:88px; padding:4px 6px; border:1.5px solid #64748b; border-radius:8px;
+      background:#0f172a; font-size:10px; line-height:1.25;
+    }
+    .ld-ton.on { border-color:#4ade80; box-shadow:0 0 10px rgba(74,222,128,.3); }
+    .ld-ton .ton-title { font-weight:800; color:#f8fafc; font-size:11px; }
+    .ld-ton .ton-row { display:flex; justify-content:space-between; gap:8px; width:100%; color:#94a3b8; }
+    .ld-ton .ton-row b { color:#e2e8f0; font-weight:700; }
+    .ld-ton.q-on .ton-title { color:#86efac; }
+    .ld-branch {
+      display:flex; flex-direction:column; gap:4px; padding:2px 0;
+      border-left:2px solid #475569; border-right:2px solid #475569;
+      margin:0 2px; padding-left:4px; padding-right:4px;
+    }
+    .ld-branch.on { border-color:#4ade80; }
+    .ld-branch .ladder-row { min-height:36px; }
+    .ladder-empty {
+      color:#64748b; font-size:12px; text-align:center; padding:24px 12px;
+    }
+    .lib-note { font-size:11px; color:#64748b; background:#eff6ff; border-radius:8px; padding:8px; margin-bottom:10px; line-height:1.4; }
+    .cat { margin:12px 0 6px; font-size:10px; font-weight:800; color:#94a3b8; letter-spacing:.06em; text-transform:uppercase; }
+    .item {
+      display:flex; gap:8px; align-items:center; width:100%; text-align:left;
+      margin-bottom:6px; border:1px solid #eef2f7; border-radius:10px; padding:7px 8px;
+    }
+    .item img, .item .thumb {
+      width:44px; height:44px; flex:0 0 44px; object-fit:contain;
+      background:transparent; border-radius:6px;
+    }
+    .item .thumb {
+      display:grid; place-items:center; font-size:11px; font-weight:800; color:#111;
+    }
+    .item .thumb.rail-t {
+      background:linear-gradient(#d7dde8, #8d97a8 40%, #f4f7fb 55%, #6e7888);
+    }
+    .item .thumb.l { background:#fecaca; }
+    .item .thumb.n { background:#bfdbfe; }
+    #board {
+      position:relative; overflow:auto;
+      background-color:#f3f6fb;
+      background-image:radial-gradient(#c5cedd 1.1px, transparent 1.1px);
+      background-size:22px 22px;
+      min-height:100%;
+    }
+    #board.mode-select { cursor:default; }
+    #board.mode-select .dev { cursor:grab; }
+    #board.mode-select .dev:active { cursor:grabbing; }
+    #board.mode-wire { cursor:crosshair; }
+    #board.mode-wire .dev { cursor:crosshair; }
+    .empty-hint {
+      position:absolute; inset:0; display:grid; place-items:center;
+      color:#94a3b8; font-size:15px; pointer-events:none; text-align:center; padding:24px;
+    }
+    /* Stacking: rail (8) → modules (20) → fils (40) → pastilles (60) */
+    /* Image pure : pas de bande/bordure ; sélection = outline léger. */
+    .dev {
+      position:absolute; border:none; background:transparent; border-radius:0;
+      box-shadow:none; outline:none; z-index:20; overflow:visible;
+    }
+    /* Cadre = boîte image (pas d’offset) pour que les 4/8 poignées collent au composant */
+    .dev.sel { outline:1.5px solid #93c5fd; outline-offset:0; }
+    .dev img {
+      width:100%; height:100%; object-fit:fill; object-position:center;
+      background:transparent; pointer-events:none; border:none; border-radius:0; display:block;
+      transition: transform .08s ease, filter .08s ease;
+    }
+    /* Poussoir / AU enfoncé : la tête bouge sur la photo */
+    .dev.is-pressed img {
+      transform: translateY(5%) scale(0.94);
+      filter: brightness(0.88);
+    }
+    .dev.is-pressed {
+      filter: drop-shadow(0 1px 0 rgba(0,0,0,.25));
+    }
+    .dev.rail { z-index:8; background:transparent; box-shadow:none; }
+    /* Fallback sans photo (ne doit pas dessiner de barre grise si image présente). */
+    .dev.rail-body {
+      z-index:8; background:transparent; box-shadow:none;
+    }
+    .dev.source {
+      display:grid; place-items:center; font-weight:800; font-size:18px; color:#111; border-radius:8px;
+    }
+    .dev.source.phase { background:#fecaca; }
+    .dev.source.neutre { background:#bfdbfe; }
+    /* Pastilles : L rouge · N bleu · PE jaune-vert (IEC 60445) */
+    .term {
+      position:absolute; width:13px; height:13px; margin:-6.5px 0 0 -6.5px; border-radius:50%;
+      background:rgba(225,29,46,.92); color:#fff; font-size:7px; font-weight:800;
+      display:grid; place-items:center; z-index:60; cursor:crosshair; line-height:1;
+      box-shadow:0 1px 2px rgba(0,0,0,.35);
+      pointer-events:auto;
+    }
+    .term.neu { background:#0088ce; }
+    .term.pe {
+      background:repeating-linear-gradient(-45deg, #c4d600 0 3px, #008c45 3px 6px);
+      color:#111; font-size:6px;
+    }
+    .term.hot { box-shadow:0 0 0 2px #fecaca, 0 1px 2px rgba(0,0,0,.25); }
+    .badge {
+      position:absolute; left:4px; bottom:4px; font-size:9px; font-weight:800;
+      background:#fff; color:#111; border-radius:4px; padding:0 4px; border:1px solid #e5e7eb; z-index:70;
+    }
+    /* Zone clic état sim sans libellé (disjoncteurs / IDR / AGCP / QS / FU…) */
+    .badge.badge-hit {
+      background:transparent; border:none; color:transparent; padding:0;
+      width:36px; height:28px; cursor:pointer; left:2px; bottom:2px;
+    }
+    /* Borne PE : fond jaune-vert + symbole terre IEC */
+    .dev.source.pe {
+      background:repeating-linear-gradient(-45deg, #c4d600 0 6px, #008c45 6px 12px);
+      border:2px solid #166534; color:#111; width:56px; height:56px; border-radius:10px;
+    }
+    .dev.source.pe .pe-symbol {
+      width:70%; height:70%; display:block;
+    }
+    .thumb .pe-symbol { width:22px; height:22px; display:block; }
+    /* Halo sim : défaut générique ; lampe/voyants calés via LIB.glow {nx,ny,w,h} */
+    .glow {
+      position:absolute; inset:18% 18% 30%; border-radius:50%;
+      background:radial-gradient(circle, rgba(253,224,71,.95), transparent 70%);
+      pointer-events:none; mix-blend-mode:screen;
+    }
+    /* Lampe / voyants allumés : luminosité ≈ 400 % (halo très visible) */
+    .glow:not(.buzz):not(.motor) {
+      filter: brightness(4) saturate(1.35) contrast(1.2);
+      opacity: 1;
+      transform: scale(1.65);
+      transform-origin: center center;
+      mix-blend-mode: screen;
+      background: radial-gradient(circle,
+        rgba(255,255,240,1) 0%,
+        rgba(254,243,199,1) 18%,
+        rgba(253,224,71,1) 38%,
+        rgba(250,204,21,.9) 55%,
+        transparent 75%);
+      box-shadow:
+        0 0 10px 4px rgba(255,255,220,.95),
+        0 0 22px 10px rgba(253,224,71,.95),
+        0 0 42px 20px rgba(250,204,21,.7),
+        0 0 70px 32px rgba(251,191,36,.4);
+    }
+    .glow.buzz {
+      inset:12% 12% 22%;
+      background:radial-gradient(circle, rgba(251,146,60,.95), transparent 70%);
+      animation: buzzPulse .18s ease-in-out infinite alternate;
+    }
+    .glow.motor {
+      inset:10% 10% 18%;
+      background:radial-gradient(circle, rgba(56,189,248,.55), transparent 70%);
+      animation: buzzPulse .35s ease-in-out infinite alternate;
+      z-index:22;
+    }
+    /* Moteur sous tension : rotor qui tourne (pas seulement un glow) */
+    .dev.motor-run,
+    .dev.is-running { filter: drop-shadow(0 0 10px rgba(56,189,248,.45)); }
+    .motor-rotor-wrap {
+      position:absolute; left:50%; top:56%; width:34%; aspect-ratio:1;
+      transform:translate(-50%,-50%); z-index:24; pointer-events:none;
+      opacity:0; transition:opacity .12s ease;
+    }
+    .dev.motor-run .motor-rotor-wrap,
+    .dev.is-running .motor-rotor-wrap { opacity:1; }
+    .motor-rotor {
+      width:100%; height:100%; border-radius:50%;
+      background:
+        conic-gradient(from 0deg,
+          rgba(15,23,42,.92) 0 28deg,
+          rgba(148,163,184,.35) 28deg 60deg,
+          rgba(15,23,42,.92) 60deg 88deg,
+          rgba(148,163,184,.2) 88deg 120deg,
+          rgba(15,23,42,.92) 120deg 148deg,
+          rgba(148,163,184,.35) 148deg 180deg,
+          rgba(15,23,42,.92) 180deg 208deg,
+          rgba(148,163,184,.2) 208deg 240deg,
+          rgba(15,23,42,.92) 240deg 268deg,
+          rgba(148,163,184,.35) 268deg 300deg,
+          rgba(15,23,42,.92) 300deg 328deg,
+          rgba(239,68,68,.85) 328deg 360deg);
+      box-shadow:
+        inset 0 0 0 2px rgba(30,41,59,.55),
+        0 0 8px rgba(56,189,248,.35);
+      transform-origin:50% 50%;
+    }
+    .dev.motor-run .motor-rotor,
+    .dev.is-running .motor-rotor {
+      animation: motorSpin .55s linear infinite;
+    }
+    @keyframes motorSpin {
+      to { transform: rotate(360deg); }
+    }
+    /* Court-circuit : bannière + arc / étincelles */
+    .sc-banner {
+      position:absolute; top:10px; left:50%; transform:translateX(-50%);
+      z-index:120; pointer-events:none;
+      background:#7f1d1d; color:#fff; font-weight:800; font-size:14px;
+      letter-spacing:.04em; padding:8px 16px; border-radius:10px;
+      box-shadow:0 8px 28px rgba(127,29,29,.45);
+      animation: scPulse .35s ease-in-out infinite alternate;
+      white-space:nowrap;
+    }
+    .sc-banner small { display:block; font-weight:600; font-size:11px; opacity:.9; margin-top:2px; }
+    @keyframes scPulse {
+      from { filter:brightness(1); }
+      to { filter:brightness(1.25); }
+    }
+    .sc-fx {
+      position:absolute; width:0; height:0; z-index:110; pointer-events:none;
+      transform:translate(-50%,-50%);
+    }
+    .sc-arc {
+      position:absolute; left:-18px; top:-28px; width:36px; height:56px;
+      background:
+        radial-gradient(ellipse at 50% 20%, #fff 0 8%, transparent 40%),
+        linear-gradient(180deg, #fff 0%, #fde047 25%, #f97316 55%, transparent 80%);
+      filter:blur(0.4px) drop-shadow(0 0 8px #fbbf24);
+      clip-path:polygon(45% 0, 62% 18%, 48% 32%, 70% 48%, 42% 58%, 60% 78%, 38% 100%, 50% 70%, 30% 55%, 48% 40%, 28% 22%);
+      animation: scArc .12s linear infinite;
+    }
+    @keyframes scArc {
+      0% { opacity:1; transform:scaleY(1) scaleX(1) rotate(-4deg); }
+      50% { opacity:.85; transform:scaleY(1.15) scaleX(.85) rotate(6deg); }
+      100% { opacity:1; transform:scaleY(.95) scaleX(1.1) rotate(-2deg); }
+    }
+    .sc-flash {
+      position:absolute; left:-40px; top:-40px; width:80px; height:80px; border-radius:50%;
+      background:radial-gradient(circle, rgba(255,255,255,.95), rgba(253,224,71,.6) 30%, transparent 70%);
+      animation: scFlash .2s ease-out infinite;
+    }
+    @keyframes scFlash {
+      from { opacity:1; transform:scale(.6); }
+      to { opacity:.15; transform:scale(1.4); }
+    }
+    .sc-spark {
+      position:absolute; left:0; top:0; width:4px; height:4px; border-radius:50%;
+      background:#fde047; box-shadow:0 0 6px #f97316;
+      animation: scSpark .45s ease-out infinite;
+      --dx: 0px; --dy: 0px;
+    }
+    @keyframes scSpark {
+      0% { opacity:1; transform:translate(0,0) scale(1); }
+      100% { opacity:0; transform:translate(var(--dx), var(--dy)) scale(.2); }
+    }
+    /* Incendie pédagogique (CC non éliminé) */
+    .sc-banner.fire {
+      background:#9a3412;
+      box-shadow:0 8px 28px rgba(154,52,18,.5);
+      animation: scFirePulse .55s ease-in-out infinite alternate;
+    }
+    @keyframes scFirePulse {
+      from { filter:brightness(1); }
+      to { filter:brightness(1.2); }
+    }
+    /* Couche feu : origine fixe + front de langues + zone brûlée + fumée (~12 s) */
+    .sc-fire-layer {
+      position:absolute; inset:0; z-index:111; pointer-events:none; overflow:hidden;
+      --fp: 0;
+      --fr: 40px; /* rayon courant du front */
+    }
+    /* Voile fumée (gris/noir) — densifie, pas un wash orange circulaire */
+    .sc-fire-veil {
+      position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 70% 55% at var(--fx, 50%) calc(var(--fy, 50%) - 12%),
+          rgba(12,12,12,.72) 0%, rgba(30,28,26,.45) 40%, transparent 72%),
+        radial-gradient(ellipse 90% 80% at var(--fx, 50%) var(--fy, 50%),
+          rgba(40,28,18,.35) 0%, rgba(20,16,14,.55) 45%, rgba(6,6,6,.78) 100%);
+      opacity:0;
+      will-change:opacity;
+    }
+    /* Zone carbonisée irrégulière sous le front */
+    .sc-burn-zone {
+      position:absolute; left:var(--fx); top:var(--fy);
+      width:calc(var(--fr) * 2); height:calc(var(--fr) * 2);
+      transform:translate(-50%,-50%);
+      background:
+        radial-gradient(ellipse 60% 55% at 45% 50%, rgba(80,35,10,.55) 0%, rgba(30,18,10,.5) 40%, rgba(10,8,6,.35) 70%, transparent 85%),
+        radial-gradient(ellipse at 55% 45%, rgba(180,60,20,.25) 0%, transparent 55%);
+      clip-path:polygon(
+        50% 2%, 61% 8%, 70% 4%, 78% 14%, 88% 12%, 94% 24%, 98% 36%, 92% 48%,
+        99% 58%, 93% 70%, 96% 82%, 84% 90%, 72% 86%, 60% 96%, 48% 90%, 36% 98%,
+        24% 90%, 14% 94%, 6% 82%, 10% 68%, 2% 56%, 8% 42%, 3% 28%, 12% 16%,
+        22% 8%, 34% 12%, 42% 4%
+      );
+      opacity:calc(0.35 + var(--fp) * 0.6);
+      filter:blur(1px);
+      mix-blend-mode:multiply;
+    }
+    /* Lueur orange pulsée près du front */
+    .sc-fire-light {
+      position:absolute; left:var(--fx); top:var(--fy);
+      width:0; height:0; pointer-events:none;
+    }
+    .sc-fire-light::before {
+      content:""; position:absolute; left:0; top:0;
+      width:calc(var(--fr) * 2.2); height:calc(var(--fr) * 1.7);
+      transform:translate(-50%,-50%);
+      border-radius:48% 52% 45% 55% / 55% 45% 55% 45%;
+      background:radial-gradient(ellipse at 50% 55%,
+        rgba(255,170,50,.5) 0%, rgba(239,68,68,.22) 42%, transparent 72%);
+      animation: scFireLightPulse .65s ease-in-out infinite alternate;
+      mix-blend-mode:screen;
+      filter:blur(8px);
+    }
+    @keyframes scFireLightPulse {
+      from { opacity:.5; filter:blur(7px) brightness(.9); }
+      to { opacity:1; filter:blur(10px) brightness(1.3); }
+    }
+    /* Anneau de langues = front de flamme (positions JS, taille fixe) */
+    .sc-flame-ring {
+      position:absolute; left:var(--fx); top:var(--fy);
+      width:0; height:0; z-index:2;
+    }
+    .sc-ring-flame {
+      position:absolute; left:0; top:0;
+      width:0; height:0;
+      opacity:0;
+      will-change:transform, opacity;
+      pointer-events:none;
+    }
+    .sc-ring-flame > i {
+      position:absolute; left:0; top:0;
+      width:22px; height:44px;
+      margin-left:-11px; margin-top:-40px;
+      display:block;
+      background:
+        radial-gradient(ellipse at 50% 90%, #fffbeb 0 12%, transparent 36%),
+        linear-gradient(180deg, #fff7ed 0%, #fde047 16%, #fb923c 48%, #dc2626 82%, transparent 100%);
+      clip-path:polygon(50% 0, 66% 18%, 58% 32%, 76% 48%, 56% 60%, 70% 78%, 50% 100%, 30% 76%, 42% 58%, 22% 44%, 40% 28%, 32% 14%);
+      filter:drop-shadow(0 0 5px #f97316);
+      transform-origin:50% 100%;
+      animation: scFlame .2s steps(2, end) infinite alternate;
+    }
+    .sc-ring-flame.tall > i { width:18px; height:52px; margin-left:-9px; margin-top:-48px; animation-duration:.17s; }
+    .sc-ring-flame.wide > i { width:28px; height:36px; margin-left:-14px; margin-top:-32px; animation-duration:.28s; }
+    .sc-ring-flame.hot > i {
+      background:linear-gradient(180deg, #fff 0%, #fef08a 20%, #fb923c 55%, #b91c1c 90%, transparent 100%);
+      animation-duration:.15s;
+    }
+    /* Point d’origine : langues de flammes (taille fixe) */
+    .sc-fire-origin {
+      position:absolute; left:var(--fx); top:var(--fy);
+      width:0; height:0; transform:translate(-50%,-50%);
+      z-index:3;
+    }
+    .sc-fire-glow {
+      position:absolute; left:-56px; top:-44px; width:112px; height:96px; border-radius:50%;
+      background:radial-gradient(ellipse at 50% 70%, rgba(255,200,80,.85), rgba(249,115,22,.45) 42%, rgba(239,68,68,.2) 62%, transparent 78%);
+      animation: scFireGlow .85s ease-in-out infinite alternate;
+      mix-blend-mode:screen;
+    }
+    @keyframes scFireGlow {
+      from { opacity:.75; transform:scale(.92); }
+      to { opacity:1; transform:scale(1.18); }
+    }
+    .sc-flame {
+      position:absolute; left:-16px; top:-58px; width:32px; height:68px;
+      background:
+        radial-gradient(ellipse at 50% 88%, #fffbeb 0 14%, transparent 38%),
+        radial-gradient(ellipse at 45% 70%, #fef08a 0 22%, transparent 48%),
+        linear-gradient(180deg, #fff7ed 0%, #fde047 14%, #fb923c 42%, #ea580c 68%, #b91c1c 88%, transparent 100%);
+      filter:blur(.2px) drop-shadow(0 0 6px #f97316) drop-shadow(0 -4px 10px rgba(255,200,60,.5));
+      clip-path:polygon(50% 0, 64% 16%, 56% 28%, 74% 42%, 58% 52%, 72% 68%, 54% 78%, 66% 92%, 50% 100%, 34% 90%, 44% 76%, 26% 64%, 40% 50%, 22% 38%, 42% 24%, 34% 12%);
+      animation: scFlame .22s steps(2, end) infinite alternate;
+      transform-origin:50% 100%;
+    }
+    .sc-flame.f2 { left:-30px; top:-50px; width:26px; height:56px; animation-duration:.26s; animation-delay:.05s; opacity:.95; }
+    .sc-flame.f3 { left:2px; top:-52px; width:24px; height:54px; animation-duration:.19s; animation-delay:.11s; opacity:.9; }
+    .sc-flame.f4 { left:-42px; top:-42px; width:22px; height:48px; animation-duration:.3s; animation-delay:.03s; opacity:.85; }
+    .sc-flame.f5 { left:14px; top:-44px; width:22px; height:50px; animation-duration:.24s; animation-delay:.15s; opacity:.88; }
+    .sc-flame.f6 { left:-10px; top:-64px; width:18px; height:42px; animation-duration:.17s; animation-delay:.08s; opacity:.95;
+      background:linear-gradient(180deg, #fff 0%, #fef08a 25%, #fb923c 70%, transparent 100%); }
+    .sc-flame.f7 { left:-22px; top:-38px; width:20px; height:40px; animation-duration:.28s; animation-delay:.2s; opacity:.75; }
+    .sc-flame.f8 { left:8px; top:-36px; width:18px; height:38px; animation-duration:.21s; animation-delay:.13s; opacity:.8; }
+    @keyframes scFlame {
+      from { transform:scaleY(1) scaleX(1) rotate(-4deg) skewX(-2deg); opacity:.9; }
+      to { transform:scaleY(1.18) scaleX(.82) rotate(5deg) skewX(3deg); opacity:1; }
+    }
+    /* Fumée : panaches gris/noirs qui montent et densifient */
+    .sc-smoke-field {
+      position:absolute; left:var(--fx); top:var(--fy);
+      width:0; height:0; z-index:4;
+      opacity:calc(0.4 + var(--fp) * 0.6);
+    }
+    .sc-smoke {
+      position:absolute; left:-22px; top:-80px; width:44px; height:44px; border-radius:50%;
+      background:radial-gradient(circle, rgba(55,55,55,.6), rgba(30,30,30,.3) 48%, transparent 70%);
+      filter:blur(5px);
+      animation: scSmoke 2.5s ease-out infinite;
+      opacity:0;
+    }
+    .sc-smoke.s2 { left:14px; top:-95px; width:56px; height:56px; animation-delay:.35s; animation-duration:2.9s; }
+    .sc-smoke.s3 { left:-42px; top:-88px; width:50px; height:50px; animation-delay:.85s; animation-duration:2.7s; }
+    .sc-smoke.s4 { left:-8px; top:-120px; width:68px; height:68px; animation-delay:.1s; animation-duration:3.3s;
+      background:radial-gradient(circle, rgba(22,22,22,.55), rgba(12,12,12,.28) 50%, transparent 72%); }
+    .sc-smoke.s5 { left:28px; top:-105px; width:52px; height:52px; animation-delay:1.2s; animation-duration:3.1s; }
+    .sc-smoke.s6 { left:-56px; top:-112px; width:72px; height:72px; animation-delay:.6s; animation-duration:3.5s;
+      background:radial-gradient(circle, rgba(18,18,18,.5), transparent 68%); }
+    .sc-smoke.s7 { left:42px; top:-135px; width:60px; height:60px; animation-delay:1.55s; animation-duration:3.7s; }
+    .sc-smoke.s8 { left:-24px; top:-155px; width:84px; height:84px; animation-delay:1s; animation-duration:4s;
+      background:radial-gradient(circle, rgba(10,10,10,.48), transparent 65%); }
+    .sc-smoke.s9 { left:8px; top:-170px; width:90px; height:90px; animation-delay:1.8s; animation-duration:4.2s;
+      background:radial-gradient(circle, rgba(8,8,8,.4), transparent 62%); }
+    @keyframes scSmoke {
+      0% { opacity:0; transform:translate(0,0) scale(.4); filter:blur(4px); }
+      12% { opacity:.75; }
+      50% { opacity:.5; }
+      100% { opacity:0; transform:translate(22px,-130px) scale(3.1); filter:blur(12px); }
+    }
+    .sc-ember {
+      position:absolute; width:3px; height:3px; border-radius:50%;
+      background:#fbbf24; box-shadow:0 0 4px #f97316;
+      animation: scEmber 1.6s ease-out infinite;
+      opacity:0;
+    }
+    .sc-ember.e2 { left:12px; animation-delay:.3s; animation-duration:1.9s; }
+    .sc-ember.e3 { left:-16px; animation-delay:.7s; animation-duration:1.5s; }
+    .sc-ember.e4 { left:4px; animation-delay:1.1s; animation-duration:2.1s; }
+    .sc-ember.e5 { left:-8px; animation-delay:.5s; animation-duration:1.7s; }
+    @keyframes scEmber {
+      0% { opacity:0; transform:translate(0,0) scale(1); }
+      20% { opacity:1; }
+      100% { opacity:0; transform:translate(var(--ex, 8px), -90px) scale(.3); }
+    }
+    svg.wires path.live-glow-l {
+      stroke:#ef4444; stroke-opacity:.35; filter:blur(1.2px);
+    }
+    svg.wires path.live-glow-n {
+      stroke:#0088ce; stroke-opacity:.35; filter:blur(1.2px);
+    }
+    svg.wires path.fault-wire {
+      stroke:#ef4444 !important;
+      animation: faultBlink .2s linear infinite;
+    }
+    @keyframes faultBlink {
+      50% { opacity:.35; }
+    }
+    @keyframes buzzPulse {
+      from { opacity:.55; transform:scale(.92); }
+      to { opacity:1; transform:scale(1.05); }
+    }
+    .sel-pos {
+      position:absolute; left:50%; bottom:6px; transform:translateX(-50%);
+      font-size:9px; font-weight:800; background:#111; color:#fff;
+      border-radius:4px; padding:1px 5px; z-index:70; pointer-events:none;
+    }
+    .coil-on-hint {
+      position:absolute; top:4px; right:4px; width:8px; height:8px; border-radius:50%;
+      background:#22c55e; box-shadow:0 0 6px #22c55e; z-index:70; pointer-events:none;
+    }
+    /* PLC LOGO! 8 : LCD face avant — OFF sombre / ON rétroéclairé jaunâtre-vert + I/Q */
+    .plc-lcd {
+      position:absolute; pointer-events:none; z-index:26; border-radius:2px;
+      overflow:hidden; box-sizing:border-box;
+      container-type:size;
+      font-family:"Courier New", Courier, monospace;
+      display:flex; flex-direction:column; justify-content:space-between;
+      padding:5% 4% 4% 5%;
+      background:#121510;
+      box-shadow:inset 0 0 6px rgba(0,0,0,.55);
+      color:transparent;
+    }
+    .plc-lcd.on {
+      background:linear-gradient(165deg, #e4ef6e 0%, #cddc39 45%, #b8c82a 100%);
+      box-shadow:inset 0 0 8px rgba(255,255,220,.4), 0 0 5px rgba(180,200,40,.3);
+      color:#14140e;
+      font-size:clamp(6px, 16cqh, 10px);
+    }
+    .plc-lcd-row {
+      display:flex; align-items:center; gap:0.08em;
+      font-size:1em; font-weight:800; letter-spacing:0.01em;
+      line-height:1.05; white-space:nowrap;
+    }
+    .plc-lcd-lab { opacity:0.9; margin-right:0.12em; }
+    .plc-lcd-d {
+      display:inline-flex; align-items:center; justify-content:center;
+      min-width:0.9em; padding:0 1px; border-radius:1px;
+    }
+    .plc-lcd-d.active {
+      background:#14140e; color:#dce775;
+      box-shadow:0 0 0 0.5px #14140e;
+    }
+    .plc-lcd-status {
+      display:flex; justify-content:space-between; align-items:flex-end;
+      font-size:0.78em; font-weight:800; letter-spacing:0.04em;
+      margin-top:auto;
+    }
+    .plc-lcd-status .lan { opacity:0.75; }
+    .plc-lcd-status .run { letter-spacing:0.1em; }
+    .plc-q-glow {
+      position:absolute; width:10px; height:10px; margin:-5px 0 0 -5px; border-radius:50%;
+      background:radial-gradient(circle, rgba(250,204,21,.95), transparent 70%);
+      box-shadow:0 0 8px 2px rgba(250,204,21,.65); pointer-events:none; z-index:25;
+    }
+    /* LEDs compteur Sonelgaz : overlays calés sur IMP (rouge) / ÉTAT (vert) de la photo */
+    .meter-led {
+      position:absolute; width:3.4%; aspect-ratio:1; border-radius:50%;
+      transform:translate(-50%,-50%); pointer-events:none; z-index:6;
+      /* OFF : assombrit la LED photo déjà présente */
+      opacity:.85; background:radial-gradient(circle, rgba(15,15,15,.55) 35%, rgba(0,0,0,.25) 70%, transparent 78%);
+      box-shadow:none; filter:none;
+    }
+    .meter-led.on {
+      opacity:1;
+      mix-blend-mode:screen;
+    }
+    .meter-led.on.imp {
+      background:radial-gradient(circle, #ff6b6b 18%, #ef4444 45%, transparent 72%);
+      box-shadow:0 0 6px 2px rgba(239,68,68,.9), 0 0 14px 4px rgba(239,68,68,.45);
+      filter:brightness(1.35);
+    }
+    .meter-led.on.etat {
+      background:radial-gradient(circle, #86efac 18%, #22c55e 45%, transparent 72%);
+      box-shadow:0 0 6px 2px rgba(34,197,94,.9), 0 0 14px 4px rgba(34,197,94,.45);
+      filter:brightness(1.3);
+    }
+    .meter-led.blink {
+      animation: meterImp 0.7s ease-in-out infinite;
+    }
+    @keyframes meterImp {
+      0%, 100% { opacity:1; filter:brightness(1.45); }
+      50% { opacity:.22; filter:brightness(.45); }
+    }
+    /* Un seul calque fil au-dessus des modules / rail */
+    svg.wires {
+      position:absolute; inset:0; width:100%; height:100%; overflow:visible;
+      pointer-events:none; min-width:1600px; min-height:1000px; z-index:40;
+    }
+    svg.wires path.hit { pointer-events:stroke; cursor:pointer; }
+    svg.wires path.sel-ring { pointer-events:none; }
+    svg.wires .whandle {
+      fill:#fff; stroke:#2563eb; stroke-width:1.5; cursor:grab; pointer-events:all;
+    }
+    svg.wires .whandle:active { cursor:grabbing; }
+    /* Poignées collées aux 4 côtés + coins (= bords réels de l’image, object-fit:fill) */
+    .rhandle {
+      position:absolute; width:10px; height:10px;
+      margin:0; transform:translate(-50%, -50%);
+      background:#fff; border:1.5px solid #2563eb; border-radius:2px;
+      z-index:80; box-sizing:border-box; pointer-events:auto;
+    }
+    .rhandle.n  { top:0; left:50%; cursor:ns-resize; }
+    .rhandle.s  { top:100%; left:50%; cursor:ns-resize; }
+    .rhandle.e  { top:50%; left:100%; cursor:ew-resize; }
+    .rhandle.w  { top:50%; left:0; cursor:ew-resize; }
+    .rhandle.nw { top:0; left:0; cursor:nwse-resize; }
+    .rhandle.ne { top:0; left:100%; cursor:nesw-resize; }
+    .rhandle.sw { top:100%; left:0; cursor:nesw-resize; }
+    .rhandle.se { top:100%; left:100%; cursor:nwse-resize; }
+    /* Dialogue dimensions (double-clic) */
+    .size-modal {
+      position:fixed; inset:0; z-index:200; display:none;
+      align-items:center; justify-content:center;
+      background:rgba(15,23,42,.35);
+    }
+    .size-modal.open { display:flex; }
+    .size-card {
+      background:#fff; border-radius:12px; padding:16px 18px; width:min(340px,92vw);
+      box-shadow:0 12px 40px rgba(15,23,42,.2); border:1px solid #e5e7eb;
+    }
+    .size-card h3 { margin:0 0 4px; font-size:15px; }
+    .size-card .sub { margin:0 0 12px; font-size:12px; color:#64748b; }
+    .size-fields { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px; }
+    .size-fields #sizeIrWrap { grid-column:1 / -1; }
+    .badge.badge-ir {
+      left:auto; right:4px; bottom:4px; z-index:72;
+      background:#fffbeb; color:#92400e; border-color:#fcd34d; cursor:pointer;
+      pointer-events:auto;
+    }
+    .badge.badge-trip {
+      left:50%; bottom:36px; transform:translateX(-50%);
+      width:40px; height:18px; background:transparent; border:none; color:transparent;
+      cursor:pointer; z-index:72;
+    }
+    .size-fields label { display:flex; flex-direction:column; gap:4px; font-size:11px; font-weight:700; color:#6b7280; }
+    .size-fields input {
+      border:1px solid #d1d5db; border-radius:8px; padding:8px 10px; font-size:14px; font-weight:600;
+    }
+    .size-actions { display:flex; flex-wrap:wrap; gap:6px; }
+    .size-actions button { flex:1 1 auto; min-width:0; }
+    .size-actions .primary { background:var(--blue); color:#fff; }
+    .size-actions .ghost { background:#f8fafc; border:1px solid #e5e7eb; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="bar">
+      <div class="group">
+        <div class="row">
+          <button id="btnNew" type="button">Nouveau</button>
+          <button id="btnUndo" type="button" title="Annuler (Ctrl+Z / Cmd+Z)" disabled>Annuler</button>
+          <button id="btnRedo" type="button" title="Rétablir (Ctrl+Shift+Z / Cmd+Shift+Z)" disabled>Rétablir</button>
+          <button id="btnDelete" type="button" title="Supprimer la sélection (Suppr.)">Supprimer</button>
+          <button id="btnClearWires" type="button">Eff. fils</button>
+          <button id="btnPlay" type="button">Vérifier</button>
+          <button id="btnLadder" type="button" title="Afficher / masquer l'éditeur Ladder (auto si PLC posé)">Ladder</button>
+        </div>
+        <b>PROJET</b>
+      </div>
+      <div class="group">
+        <div class="row">
+          <button id="modeSelect" class="active" type="button">Sélection</button>
+          <button id="modeWire" type="button">Fil</button>
+        </div>
+        <b>MODE</b>
+      </div>
+      <div class="group">
+        <div class="row">
+          <select id="section">
+            <option value="1.5">1,5 mm²</option>
+            <option value="2.5">2,5 mm²</option>
+            <option value="6" selected>6 mm²</option>
+          </select>
+          <div class="swatches" id="colors"></div>
+        </div>
+        <b>STYLE FIL</b>
+      </div>
+    </div>
+  </header>
+  <main>
+    <aside>
+      <h2>BIBLIOTHÈQUE</h2>
+      <div class="lib-note">Biblio SwissDz — clique pour poser. <b>Vérifier</b> = sim : compteur = source, protections ON/OFF, poussoir maintenu, bobines KM/TL, thermique Ir, voyants + <b>sonore</b> (bip). Sélecteur Man/0/Auto. Double-clic = dimensions (thermique = aussi Ir). Avec un <b>PLC</b> : panneau <b>Ladder</b> (logique à contacts) — les sorties Q suivent le programme, plus le mapping fixe I→Q.</div>
+      <div id="palette"></div>
+    </aside>
+    <div id="workspace" class="workspace">
+      <div id="board"></div>
+      <aside id="ladderPanel" class="ladder-panel" aria-label="Éditeur Ladder">
+        <div class="ladder-head">
+          <h2>LADDER</h2>
+          <div id="ladderStatus" class="ladder-status off">Simulation arrêtée</div>
+          <div class="ladder-toolbar">
+            <button type="button" id="btnAddRung">+ Segment</button>
+            <button type="button" id="btnResetLadder" title="Recharger le programme pédagogique">Reset prog.</button>
+            <span class="hint">I / Q / TON</span>
+          </div>
+        </div>
+        <div id="ladderBody" class="ladder-body"></div>
+      </aside>
+    </div>
+  </main>
+  <div id="sizeModal" class="size-modal" aria-hidden="true">
+    <div class="size-card" role="dialog" aria-labelledby="sizeModalTitle">
+      <h3 id="sizeModalTitle">Dimensions</h3>
+      <p class="sub" id="sizeModalSub"></p>
+      <div class="size-fields">
+        <label>Largeur (px)
+          <input id="sizeW" type="number" min="30" step="1" />
+        </label>
+        <label>Hauteur (px)
+          <input id="sizeH" type="number" min="30" step="1" />
+        </label>
+        <label id="sizeIrWrap" hidden>Réglage Ir (A)
+          <input id="sizeIr" type="number" min="0.63" max="40" step="0.01" />
+        </label>
+      </div>
+      <div class="size-actions">
+        <button type="button" id="sizeApply" class="primary">Appliquer</button>
+        <button type="button" id="sizeApplyAll" class="ghost" title="Copier ces dimensions sur tous les composants du même type">Appliquer aux autres</button>
+        <button type="button" id="sizeCancel" class="ghost">Annuler</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    /* Assets pré-cadrés (photos studio trop larges → bandes). */
+    const COLORS = [
+      { c: "#111111", name: "noir" },
+      { c: "#dc2626", name: "rouge (L)" },
+      { c: "#0088ce", name: "bleu (N)" },
+      { c: "#c4d600", name: "jaune-vert (PE)" },
+      { c: "#92400e", name: "marron" },
+      { c: "#f59e0b", name: "jaune" },
+      { c: "#ea580c", name: "orange" },
+      { c: "#f8fafc", name: "blanc" },
+      { c: "#9ca3af", name: "gris" }
+    ];
+    /* Couleurs conducteurs IEC 60445 */
+    const COLOR_L = "#dc2626";
+    const COLOR_N = "#0088ce";
+    const COLOR_PE = "#c4d600";
+    const COLOR_PE_STRIPE = "#008c45";
+
+    function termRole(type, termId) {
+      const id = String(termId || "");
+      if (id === "PE" || /^PE\b/i.test(id)) return "pe";
+      if (id === "N" || id === "N'" || id === "0V" || /^N['′]?$/i.test(id)) return "n";
+      const def = LIB[type];
+      if (def && Array.isArray(def.pairs) && def.pairs[1] && def.pairs[1].includes(termId)) return "n";
+      return "l";
+    }
+    function wireColorForRefs(a, b) {
+      let roleA = "l", roleB = "l";
+      try {
+        const ia = find(a.uid), ib = find(b.uid);
+        if (ia) roleA = termRole(ia.type, a.term);
+        if (ib) roleB = termRole(ib.type, b.term);
+      } catch (e) { /* ignore */ }
+      if (roleA === "pe" || roleB === "pe") return COLOR_PE;
+      if (roleA === "n" || roleB === "n") return COLOR_N;
+      return state.color || COLOR_L;
+    }
+    function isPeWireColor(c) {
+      return c === COLOR_PE || c === "#c4d600" || c === "#C4D600";
+    }
+    function peSymbolSvg() {
+      /* Symbole terre / PE (IEC 60417-5017) */
+      return `<svg class="pe-symbol" viewBox="0 0 24 24" aria-hidden="true">
+        <g fill="none" stroke="#111" stroke-width="2.2" stroke-linecap="square">
+          <path d="M12 3v9"/>
+          <path d="M5 12h14"/>
+          <path d="M7 15.5h10"/>
+          <path d="M9.5 19h5"/>
+        </g>
+      </svg>`;
+    }
+
+    /* Coordonnées nx/ny = centre des vis sur l'image (object-fit:fill : image = boîte des poignées). */
+    const LIB = {
+      /* Rail DIN = support mécanique uniquement (pas d'alim L/N/PE). */
+      rail_din_35: {name:"Rail DIN 35 mm (TH35)",prefix:"X",cat:"Structure",w:473,h:103,kind:"rail",image:"assets/rail-din-35-swissdz.png",badge:"TH35",terminals:[]},
+      rail_din_long: {name:"Rail DIN long perforé",prefix:"X",cat:"Structure",w:715,h:189,kind:"rail",image:"assets/rail-din-long-swissdz.png",badge:"Long",terminals:[]},
+      rail_din_embouts: {name:"Rail DIN + embouts",prefix:"X",cat:"Structure",w:547,h:110,kind:"rail",image:"assets/rail-din-embouts-swissdz.png",badge:"Embouts",terminals:[]},
+      /* L/N = uniquement via compteur Sonelgaz — pas de pastilles source L/N dans la lib. PE Terre seul. */
+      pe: {name:"Terre PE",prefix:"PE",cat:"Alimentation",w:56,h:56,kind:"pe",terminals:[{id:"PE",nx:0.5,ny:0.5,direction:"left"}],badge:"PE"},
+      /* Tête de réseau : compteur → L+N uniquement (jamais PE). PE = prise de terre / bornier PE. Empilable avec AGCP. */
+      compteur_sonelgaz: {name:"Compteur Sonelgaz (L+N)",prefix:"P",cat:"Alimentation",w:129,h:172,image:"assets/compteur-sonelgaz.png",badge:"Sonelgaz",iec:"P",kind:"compteur",source:true,terminals:[{id:"L",nx:0.2312,ny:0.8215,direction:"bottom"},{id:"N",nx:0.4991,ny:0.8215,direction:"bottom"}],leds:[{id:"imp",cls:"imp",nx:0.2270,ny:0.2943},{id:"etat",cls:"etat",nx:0.7619,ny:0.2942}]},
+      /* Compteur tri 3P+N : L1/L2/L3/N (jamais PE). Face adaptée de compteur-sonelgaz — assets/COMPTEUR-3PN-SOURCE.md */
+      compteur_sonelgaz_3pn: {name:"Compteur Sonelgaz 3P+N (L1 L2 L3 N)",prefix:"P",cat:"Alimentation",w:178,h:172,image:"assets/compteur-sonelgaz-3pn.png",badge:"3P+N",iec:"P",kind:"compteur3",source:true,terminals:[{id:"L1",nx:0.215,ny:0.815,direction:"bottom"},{id:"L2",nx:0.405,ny:0.815,direction:"bottom"},{id:"L3",nx:0.595,ny:0.815,direction:"bottom"},{id:"N",nx:0.785,ny:0.815,direction:"bottom"}],leds:[{id:"imp",cls:"imp",nx:0.2270,ny:0.2943},{id:"etat",cls:"etat",nx:0.7619,ny:0.2942}]},
+      /* AGCP mono Sonelgaz : face 2D 1P+N (L/N), pas 3P / pas perspective 3D. */
+      agcp_principal: {name:"Disj. principal AGCP 1P+N SwissDz",prefix:"QA",cat:"Alimentation",w:83,h:172,din:true,image:"assets/disj-2p-swissdz.png",badge:"AGCP",iec:"QA",terminals:[{id:"L",nx:0.2321,ny:0.1173,direction:"top"},{id:"L'",nx:0.2321,ny:0.8525,direction:"bottom"},{id:"N",nx:0.7369,ny:0.1173,direction:"top"},{id:"N'",nx:0.7609,ny:0.8525,direction:"bottom"}],pair:["L","L'"],pairs:[["L","L'"],["N","N'"]]},
+      disj1pn: {name:"Disj. 1P+N SwissDz",prefix:"QF",cat:"Protection",w:83,h:172,din:true,image:"assets/disj-2p-swissdz.png",badge:"1P+N",iec:"QF",terminals:[{id:"1",nx:0.2321,ny:0.1173,direction:"top"},{id:"2",nx:0.2321,ny:0.8525,direction:"bottom"},{id:"3",nx:0.7369,ny:0.1173,direction:"top"},{id:"4",nx:0.7609,ny:0.8525,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"]]},
+      disj3p: {name:"Disj. 3P SwissDz",prefix:"QF",cat:"Protection",w:129,h:172,din:true,image:"assets/disj-3p-swissdz.png",badge:"3P",iec:"QF",terminals:[{id:"1",nx:0.23,ny:0.12,direction:"top"},{id:"2",nx:0.22,ny:0.87,direction:"bottom"},{id:"3",nx:0.5,ny:0.12,direction:"top"},{id:"4",nx:0.49,ny:0.87,direction:"bottom"},{id:"5",nx:0.78,ny:0.12,direction:"top"},{id:"6",nx:0.78,ny:0.87,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"]]},
+      disj4p: {name:"Disj. 4P SwissDz",prefix:"QF",cat:"Protection",w:169,h:172,din:true,image:"assets/disj-4p-swissdz.png",badge:"4P",iec:"QF",terminals:[{id:"1",nx:0.1263,ny:0.11,direction:"top"},{id:"2",nx:0.1263,ny:0.87,direction:"bottom"},{id:"3",nx:0.3702,ny:0.11,direction:"top"},{id:"4",nx:0.3702,ny:0.86,direction:"bottom"},{id:"5",nx:0.614,ny:0.11,direction:"top"},{id:"6",nx:0.614,ny:0.87,direction:"bottom"},{id:"7",nx:0.8375,ny:0.11,direction:"top"},{id:"8",nx:0.8375,ny:0.87,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]]},
+      spd: {name:"Parafoudre SPD SwissDz",prefix:"FV",cat:"Protection",w:84,h:172,din:true,image:"assets/spd-swissdz.png",badge:"SPD",iec:"FV",terminals:[{id:"1",nx:0.3422,ny:0.0982,direction:"top"},{id:"2",nx:0.7421,ny:0.0982,direction:"top"},{id:"PE",nx:0.5155,ny:0.8952,direction:"bottom"}]},
+      sectionneur3p: {name:"Sectionneur 3P SwissDz",prefix:"QS",cat:"Protection",w:123,h:172,din:true,image:"assets/sectionneur-swissdz.png",badge:"3P",iec:"QS",terminals:[{id:"1",nx:0.1463,ny:0.1081,direction:"top"},{id:"2",nx:0.1782,ny:0.9038,direction:"bottom"},{id:"3",nx:0.5075,ny:0.1081,direction:"top"},{id:"4",nx:0.4756,ny:0.8937,direction:"bottom"},{id:"5",nx:0.8475,ny:0.1081,direction:"top"},{id:"6",nx:0.8156,ny:0.9038,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"]]},
+      fusible_gG: {name:"Porte-fusible 1P+N gG SwissDz",prefix:"FU",cat:"Protection",w:83,h:172,din:true,image:"assets/disj-2p-swissdz.png",badge:"gG",iec:"FU",terminals:[{id:"1",nx:0.2321,ny:0.1173,direction:"top"},{id:"2",nx:0.2321,ny:0.8525,direction:"bottom"},{id:"3",nx:0.7369,ny:0.1173,direction:"top"},{id:"4",nx:0.7609,ny:0.8525,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"]]},
+      fusible_aM: {name:"Porte-fusible 1P+N aM SwissDz",prefix:"FU",cat:"Protection",w:83,h:172,din:true,image:"assets/disj-2p-swissdz.png",badge:"aM",iec:"FU",terminals:[{id:"1",nx:0.2321,ny:0.1173,direction:"top"},{id:"2",nx:0.2321,ny:0.8525,direction:"bottom"},{id:"3",nx:0.7369,ny:0.1173,direction:"top"},{id:"4",nx:0.7609,ny:0.8525,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"]]},
+      idr2p: {name:"IDR 2P SwissDz",prefix:"QI",cat:"Différentiel",w:107,h:172,din:true,image:"assets/idr.png",badge:"2P",iec:"QI",terminals:[{id:"1",nx:0.24,ny:0.1184,direction:"top"},{id:"2",nx:0.79,ny:0.1184,direction:"top"},{id:"3",nx:0.24,ny:0.8715,direction:"bottom"},{id:"4",nx:0.78,ny:0.8816,direction:"bottom"}],pair:["1","3"],pairs:[["1","3"],["2","4"]]},
+      idr4p: {name:"IDR 4P SwissDz",prefix:"QI",cat:"Différentiel",w:164,h:172,din:true,image:"assets/idr-4p-swissdz.png",badge:"4P",iec:"QI",terminals:[{id:"1",nx:0.1426,ny:0.0977,direction:"top"},{id:"2",nx:0.1426,ny:0.853,direction:"bottom"},{id:"3",nx:0.3697,ny:0.0977,direction:"top"},{id:"4",nx:0.3697,ny:0.853,direction:"bottom"},{id:"5",nx:0.6293,ny:0.0977,direction:"top"},{id:"6",nx:0.6293,ny:0.853,direction:"bottom"},{id:"7",nx:0.8672,ny:0.0977,direction:"top"},{id:"8",nx:0.8563,ny:0.853,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]]},
+      telerupteur: {name:"Télérupteur SwissDz",prefix:"TL",cat:"Commande",w:60,h:172,din:true,image:"assets/telerupteur.png",iec:"TL",latch:true,terminals:[{id:"A1",nx:0.27,ny:0.1285,direction:"top"},{id:"A2",nx:0.7,ny:0.1285,direction:"top"},{id:"11",nx:0.27,ny:0.8615,direction:"bottom"},{id:"14",nx:0.79,ny:0.8615,direction:"bottom"}],pair:["11","14"],pairs:[["11","14"]]},
+      minuterie: {name:"Minuterie SwissDz",prefix:"KT",cat:"Commande",w:42,h:172,din:true,image:"assets/minuterie.png",iec:"KT",terminals:[{id:"1",nx:0.4978,ny:0.0983,direction:"top"},{id:"2",nx:0.4978,ny:0.8816,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"]]},
+      jour_nuit: {name:"Contact jour/nuit SwissDz",prefix:"KT",cat:"Commande",w:45,h:172,din:true,image:"assets/jour-nuit-swissdz.png",badge:"J/N",iec:"KT",terminals:[{id:"1",nx:0.5,ny:0.1079,direction:"top"},{id:"2",nx:0.5,ny:0.882,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"]]},
+      inter_horaire: {name:"Interrupteur horaire SwissDz",prefix:"KT",cat:"Commande",w:45,h:172,din:true,image:"assets/inter-horaire-swissdz.png",badge:"7j",iec:"KT",terminals:[{id:"1",nx:0.2036,ny:0.1101,direction:"top"},{id:"2",nx:0.6697,ny:0.1101,direction:"top"},{id:"3",nx:0.2348,ny:0.8808,direction:"bottom"},{id:"4",nx:0.6387,ny:0.8808,direction:"bottom"}],pair:["1","3"],pairs:[["1","3"],["2","4"]]},
+      inter: {name:"Interrupteur SwissDz",prefix:"S",cat:"Commande",w:112,h:110,image:"assets/interrupteur.png",iec:"S",terminals:[{id:"L",nx:0.38,ny:0.66,direction:"bottom"},{id:"1",nx:0.62,ny:0.66,direction:"bottom"}],pair:["L","1"],pairs:[["L","1"]]},
+      va_et_vient: {name:"Va-et-vient SwissDz",prefix:"S",cat:"Commande",w:97,h:100,image:"assets/va-et-vient-swissdz.png",badge:"VV",iec:"S",vv:true,terminals:[{id:"L",nx:0.2383,ny:0.7833,direction:"bottom"},{id:"1",nx:0.4995,ny:0.7833,direction:"bottom"},{id:"2",nx:0.7607,ny:0.7833,direction:"bottom"}],pair:["L","1"],pairs:[["L","1"]]},
+      poussoir: {name:"Poussoir mur SwissDz",prefix:"S",cat:"Commande",w:100,h:100,image:"assets/poussoir-swissdz.png",badge:"NO",iec:"S",push:true,terminals:[{id:"1",nx:0.3491,ny:0.7817,direction:"bottom"},{id:"2",nx:0.6509,ny:0.7817,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"]]},
+      bp: {name:"BP NO SwissDz",prefix:"S",cat:"Boutonnerie",w:90,h:99,image:"assets/bp-swissdz.png",badge:"NO",iec:"S",push:true,terminals:[{id:"3",nx:0.0677,ny:0.4521,direction:"left"},{id:"4",nx:0.9431,ny:0.4521,direction:"right"}],pair:["3","4"],pairs:[["3","4"]]},
+      bp_nc: {name:"BP NC SwissDz",prefix:"S",cat:"Boutonnerie",w:89,h:99,image:"assets/bp-nc-swissdz.png",badge:"NC",iec:"S",push:true,nc:true,terminals:[{id:"1",nx:0.0694,ny:0.4497,direction:"left"},{id:"2",nx:0.9623,ny:0.4497,direction:"right"}],pair:["1","2"],pairs:[["1","2"]]},
+      marche: {name:"Marche / Arrêt SwissDz",prefix:"S",cat:"Boutonnerie",w:90,h:148,image:"assets/marche-swissdz.png",iec:"S",terminals:[{id:"1",nx:0.5132,ny:0.0526,direction:"top"},{id:"2",nx:0.5132,ny:0.9482,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"]]},
+      au: {name:"AU SwissDz",prefix:"S",cat:"Boutonnerie",w:80,h:128,image:"assets/au-swissdz.png",badge:"AU",iec:"S",push:true,nc:true,terminals:[{id:"11",nx:0.279,ny:0.8244,direction:"bottom"},{id:"12",nx:0.7092,ny:0.8085,direction:"bottom"}],pair:["11","12"],pairs:[["11","12"]]},
+      voyant: {name:"Voyant vert 230V SwissDz",prefix:"HL",cat:"Boutonnerie",w:77,h:92,image:"assets/voyant-swissdz.png",badge:"V",iec:"HL",lamp:true,glow:{nx:0.30,ny:0.20,w:0.40,h:0.32},terminals:[{id:"X1",nx:0.2992,ny:0.7599,direction:"bottom"},{id:"X2",nx:0.6828,ny:0.7417,direction:"bottom"}]},
+      voyantRouge: {name:"Voyant rouge 230V SwissDz",prefix:"HL",cat:"Boutonnerie",w:85,h:100,image:"assets/voyant-rouge-swissdz.png",badge:"R",iec:"HL",lamp:true,glow:{nx:0.28,ny:0.32,w:0.40,h:0.34},terminals:[{id:"X1",nx:0.2739,ny:0.8022,direction:"bottom"},{id:"X2",nx:0.7153,ny:0.8022,direction:"bottom"}]},
+      voyantOrange: {name:"Voyant orange 230V SwissDz",prefix:"HL",cat:"Boutonnerie",w:78,h:92,image:"assets/voyant-orange-swissdz.png",badge:"O",iec:"HL",lamp:true,glow:{nx:0.30,ny:0.20,w:0.40,h:0.32},terminals:[{id:"X1",nx:0.3734,ny:0.7957,direction:"bottom"},{id:"X2",nx:0.7631,ny:0.7957,direction:"bottom"}]},
+      lampe: {name:"Lampe SwissDz",prefix:"HL",cat:"Éclairage / Prises",w:70,h:111,image:"assets/lampe.png",iec:"HL",lamp:true,glow:{nx:0.22,ny:0.60,w:0.56,h:0.34},terminals:[{id:"L",nx:0.36,ny:0.12,direction:"top"},{id:"N",nx:0.64,ny:0.12,direction:"top"}]},
+      prise: {name:"Prise 2P+T SwissDz",prefix:"X",cat:"Éclairage / Prises",w:100,h:93,image:"assets/prise.png",iec:"X",lamp:true,terminals:[{id:"L",nx:0.1787,ny:0.5803,direction:"left"},{id:"N",nx:0.8213,ny:0.5803,direction:"right"},{id:"PE",nx:0.5,ny:0.2188,direction:"top"}]},
+      dcl: {name:"DCL SwissDz",prefix:"X",cat:"Éclairage / Prises",w:110,h:102,image:"assets/dcl.png",iec:"X",lamp:true,terminals:[{id:"L",nx:0.7,ny:0.739,direction:"bottom"},{id:"N",nx:0.3,ny:0.739,direction:"bottom"},{id:"PE",nx:0.5,ny:0.518,direction:"top"}]},
+      transfo_sonnerie: {name:"Transfo sonnerie SwissDz",prefix:"T",cat:"Éclairage / Prises",w:54,h:172,din:true,image:"assets/transfo-sonnerie-swissdz.png",badge:"8V",iec:"T",secondary:["8V","0V"],terminals:[{id:"L",nx:0.2962,ny:0.1069,direction:"top"},{id:"N",nx:0.7038,ny:0.1069,direction:"top"},{id:"8V",nx:0.2962,ny:0.8931,direction:"bottom"},{id:"0V",nx:0.7038,ny:0.8931,direction:"bottom"}]},
+      /* KM mono / tri : un seul de chaque (pas de calibres). Photo SwissDz existante. */
+      contacteur_1ph: {name:"Contacteur monophasé SwissDz",prefix:"KM",cat:"Moteur / Indus",w:99,h:172,din:true,image:"assets/contacteur-swissdz.png",badge:"1~",iec:"KM",terminals:[{id:"1",nx:0.1984,ny:0.1623,direction:"top"},{id:"3",nx:0.8203,ny:0.1623,direction:"top"},{id:"A1",nx:-0.0,ny:0.3245,direction:"left"},{id:"A2",nx:0.9526,ny:0.3245,direction:"right"},{id:"2",nx:0.172,ny:0.8315,direction:"bottom"},{id:"4",nx:0.7806,ny:0.8315,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"]]},
+      contacteur_3ph: {name:"Contacteur triphasé SwissDz",prefix:"KM",cat:"Moteur / Indus",w:99,h:172,din:true,image:"assets/contacteur-swissdz.png",badge:"3~",iec:"KM",terminals:[{id:"1",nx:0.1984,ny:0.1623,direction:"top"},{id:"3",nx:0.5027,ny:0.1623,direction:"top"},{id:"5",nx:0.8203,ny:0.1623,direction:"top"},{id:"A1",nx:-0.0,ny:0.3245,direction:"left"},{id:"A2",nx:0.9526,ny:0.3245,direction:"right"},{id:"2",nx:0.172,ny:0.8315,direction:"bottom"},{id:"4",nx:0.4894,ny:0.8315,direction:"bottom"},{id:"6",nx:0.7806,ny:0.8315,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"]]},
+      /* Relais thermique 3P réglable Ir — un seul modèle. NC 95-96 s'ouvre au déclenchement. */
+      thermique: {name:"Relais thermique 3P SwissDz",prefix:"FR",cat:"Moteur / Indus",w:99,h:172,din:true,image:"assets/thermique-swissdz.png",badge:"Ir",iec:"FR",thermal:true,thermalIr:10,irMin:0.63,irMax:40,terminals:[{id:"1",nx:0.1717,ny:0.1388,direction:"top"},{id:"3",nx:0.4758,ny:0.1388,direction:"top"},{id:"5",nx:0.7937,ny:0.1283,direction:"top"},{id:"2",nx:0.1994,ny:0.8496,direction:"bottom"},{id:"4",nx:0.5173,ny:0.839,direction:"bottom"},{id:"6",nx:0.8076,ny:0.8496,direction:"bottom"},{id:"95",nx:0.0744,ny:0.5004,direction:"left"},{id:"96",nx:0.8954,ny:0.5004,direction:"right"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"],["95","96"]]},
+      guard_moteur: {name:"Disj. moteur SwissDz",prefix:"QM",cat:"Moteur / Indus",w:99,h:172,din:true,image:"assets/guard-moteur-swissdz.png",badge:"0.1–32A",iec:"QM",terminals:[{id:"1",nx:0.1838,ny:0.1469,direction:"top"},{id:"2",nx:0.1838,ny:0.854,direction:"bottom"},{id:"3",nx:0.4985,ny:0.1469,direction:"top"},{id:"4",nx:0.5122,ny:0.8337,direction:"bottom"},{id:"5",nx:0.7996,ny:0.1469,direction:"top"},{id:"6",nx:0.7996,ny:0.854,direction:"bottom"},{id:"95",nx:0.0744,ny:0.5004,direction:"left"},{id:"96",nx:0.8954,ny:0.5004,direction:"right"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"]]},
+      moteur: {name:"Moteur triphasé SwissDz",prefix:"M",cat:"Moteur / Indus",w:145,h:199,image:"assets/moteur-swissdz.png",iec:"M",motor:true,motorI:10,terminals:[{id:"U",nx:0.3296,ny:0.147,direction:"top"},{id:"V",nx:0.499,ny:0.146,direction:"top"},{id:"W",nx:0.6646,ny:0.1492,direction:"top"}]},
+      vsd: {name:"Variateur de vitesse SwissDz",prefix:"U",cat:"Moteur / Indus",w:94,h:172,din:true,image:"assets/vsd-swissdz.png",iec:"U",terminals:[{id:"L1",nx:0.1844,ny:0.1037,direction:"top"},{id:"L2",nx:0.5118,ny:0.1037,direction:"top"},{id:"L3",nx:0.8107,ny:0.1037,direction:"top"},{id:"U",nx:0.1844,ny:0.8985,direction:"bottom"},{id:"V",nx:0.5118,ny:0.8985,direction:"bottom"},{id:"W",nx:0.8249,ny:0.8985,direction:"bottom"}],pair:["L1","U"],pairs:[["L1","U"],["L2","V"],["L3","W"]]},
+      /* Photo réelle Siemens LOGO! 8 12/24RCE (face redressée) — source : assets/PLC-PHOTO-SOURCE.md
+         Sim : L+N → LCD ON ; Ix au potentiel L → highlight Ix ; sorties Qi pilotées par le Ladder (pas de map fixe I→Q).
+         Bornes photo : L+/M (libellées L/N pédagogique), I1–I8 haut ; Qi = borne 2 de chaque paire Q. */
+      plc: {name:"PLC Siemens LOGO! 8 12/24RCE",prefix:"A",cat:"Moteur / Indus",w:140,h:172,din:true,image:"assets/plc-logo8-front.jpg",iec:"A",plc:true,lamp:true,lcd:{nx:0.072,ny:0.3105,nw:0.396,nh:0.2137},terminals:[
+        {id:"L",nx:0.225,ny:0.0726,direction:"top"},{id:"N",nx:0.275,ny:0.0726,direction:"top"},
+        {id:"I1",nx:0.33,ny:0.0726,direction:"top"},{id:"I2",nx:0.385,ny:0.0726,direction:"top"},
+        {id:"I3",nx:0.445,ny:0.0726,direction:"top"},{id:"I4",nx:0.505,ny:0.0726,direction:"top"},
+        {id:"I5",nx:0.57,ny:0.0726,direction:"top"},{id:"I6",nx:0.63,ny:0.0726,direction:"top"},
+        {id:"I7",nx:0.7,ny:0.0726,direction:"top"},{id:"I8",nx:0.775,ny:0.0726,direction:"top"},
+        {id:"Q1",nx:0.145,ny:0.8952,direction:"bottom"},{id:"Q2",nx:0.31,ny:0.8952,direction:"bottom"},
+        {id:"Q3",nx:0.485,ny:0.8952,direction:"bottom"},{id:"Q4",nx:0.665,ny:0.8952,direction:"bottom"}
+      ]},
+      borniers: {name:"Borniers N / PE SwissDz",prefix:"X",cat:"Borniers / Alim",w:140,h:90,image:"assets/borniers.png",iec:"X",terminals:[{id:"N",nx:0.3194,ny:0.3191,direction:"top"},{id:"PE",nx:0.3194,ny:0.7211,direction:"bottom"}]},
+      peigne: {name:"Peigne d'alimentation SwissDz",prefix:"X",cat:"Borniers / Alim",w:200,h:80,image:"assets/peigne-swissdz.png",badge:"Peigne",iec:"X",bus:true,terminals:[{id:"IN",nx:0.0572,ny:0.5039,direction:"left"},{id:"1",nx:0.2484,ny:0.351,direction:"top"},{id:"2",nx:0.4497,ny:0.351,direction:"top"},{id:"3",nx:0.6509,ny:0.351,direction:"top"},{id:"4",nx:0.8522,ny:0.351,direction:"top"}]},
+      sectionneur_fusible: {name:"Sectionneur-fusible 3P SwissDz",prefix:"QS",cat:"Protection",w:124,h:172,din:true,image:"assets/sectionneur-fusible-swissdz.png",badge:"SF",iec:"QS",terminals:[{id:"1",nx:0.1552,ny:0.11,direction:"top"},{id:"2",nx:0.186,ny:0.9,direction:"bottom"},{id:"3",nx:0.4745,ny:0.11,direction:"top"},{id:"4",nx:0.4745,ny:0.9,direction:"bottom"},{id:"5",nx:0.8454,ny:0.11,direction:"top"},{id:"6",nx:0.8351,ny:0.9,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"]]},
+      selecteur: {name:"Sélecteur Man/0/Auto SwissDz",prefix:"S",cat:"Boutonnerie",w:96,h:96,image:"assets/selecteur-swissdz.png",badge:"M-0-A",iec:"S",selector:true,terminals:[{id:"1",nx:0.2974,ny:0.8869,direction:"bottom"},{id:"2",nx:0.501,ny:0.8869,direction:"bottom"},{id:"3",nx:0.7046,ny:0.8869,direction:"bottom"}]},
+      buzzer: {name:"Avertisseur sonore SwissDz",prefix:"HA",cat:"Boutonnerie",w:68,h:100,image:"assets/buzzer-swissdz.png",badge:"HA",iec:"HA",lamp:true,buzzer:true,terminals:[{id:"X1",nx:0.3914,ny:0.887,direction:"bottom"},{id:"X2",nx:0.7371,ny:0.887,direction:"bottom"}]},
+      fin_course: {name:"Fin de course SwissDz",prefix:"S",cat:"Commande",w:85,h:110,image:"assets/fin-course-swissdz.png",badge:"SQ",iec:"S",fc:true,push:true,terminals:[{id:"11",nx:0.2003,ny:0.5459,direction:"left"},{id:"12",nx:0.8366,ny:0.5459,direction:"right"},{id:"13",nx:0.2003,ny:0.7003,direction:"left"},{id:"14",nx:0.8366,ny:0.7003,direction:"right"}],pair:["11","12"],pairs:[["11","12"]]},
+      temporisateur: {name:"Temporisateur TON/TOF SwissDz",prefix:"KT",cat:"Commande",w:46,h:172,din:true,image:"assets/temporisateur-swissdz.png",badge:"TON",iec:"KT",terminals:[{id:"A1",nx:0.4156,ny:0.117,direction:"top"},{id:"A2",nx:0.5844,ny:0.117,direction:"top"},{id:"15",nx:0.4156,ny:0.9059,direction:"bottom"},{id:"18",nx:0.5844,ny:0.9059,direction:"bottom"}],pair:["15","18"],pairs:[["15","18"]]},
+      inter_cle: {name:"Interrupteur à clé SwissDz",prefix:"S",cat:"Commande",w:100,h:100,image:"assets/inter-cle-swissdz.png",badge:"Clé",iec:"S",terminals:[{id:"1",nx:0.35,ny:0.85,direction:"bottom"},{id:"2",nx:0.65,ny:0.85,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"]]},
+      detecteur: {name:"Détecteur de présence SwissDz",prefix:"B",cat:"Commande",w:100,h:100,image:"assets/detecteur-swissdz.png",badge:"PIR",iec:"B",push:true,terminals:[{id:"L",nx:0.2973,ny:0.8822,direction:"bottom"},{id:"N",nx:0.4995,ny:0.8822,direction:"bottom"},{id:"1",nx:0.7017,ny:0.8822,direction:"bottom"}],pair:["L","1"],pairs:[["L","1"]]},
+      variateur_eclairage: {name:"Variateur éclairage SwissDz",prefix:"T",cat:"Éclairage / Prises",w:100,h:100,image:"assets/variateur-eclairage-swissdz.png",badge:"DIM",iec:"T",terminals:[{id:"L",nx:0.3474,ny:0.8559,direction:"bottom"},{id:"1",nx:0.6526,ny:0.8559,direction:"bottom"}],pair:["L","1"],pairs:[["L","1"]]},
+      softstarter: {name:"Démarreur progressif SwissDz",prefix:"U",cat:"Moteur / Indus",w:95,h:172,din:true,image:"assets/softstarter-swissdz.png",badge:"SS",iec:"U",terminals:[{id:"L1",nx:0.2024,ny:0.1146,direction:"top"},{id:"L2",nx:0.4795,ny:0.1146,direction:"top"},{id:"L3",nx:0.8387,ny:0.1146,direction:"top"},{id:"T1",nx:0.2024,ny:0.9057,direction:"bottom"},{id:"T2",nx:0.5205,ny:0.9057,direction:"bottom"},{id:"T3",nx:0.8387,ny:0.9057,direction:"bottom"}],pair:["L1","T1"],pairs:[["L1","T1"],["L2","T2"],["L3","T3"]]},
+      relais_phase: {name:"Relais contrôle de phase SwissDz",prefix:"K",cat:"Moteur / Indus",w:67,h:172,din:true,image:"assets/relais-phase-swissdz.png",badge:"L1-2-3",iec:"K",phaseMonitor:true,terminals:[{id:"L1",nx:0.2719,ny:0.1207,direction:"top"},{id:"L2",nx:0.5,ny:0.1207,direction:"top"},{id:"L3",nx:0.7281,ny:0.1207,direction:"top"},{id:"11",nx:0.3237,ny:0.8653,direction:"bottom"},{id:"14",nx:0.6763,ny:0.8653,direction:"bottom"}],pair:["11","14"],pairs:[["11","14"]]},
+      contacteur_aux: {name:"Contacteur auxiliaire SwissDz",prefix:"KA",cat:"Moteur / Indus",w:99,h:172,din:true,image:"assets/contacteur-aux-swissdz.png",badge:"AUX",iec:"KA",terminals:[{id:"A1",nx:0.003,ny:0.3225,direction:"left"},{id:"A2",nx:0.9527,ny:0.3225,direction:"right"},{id:"13",nx:0.2009,ny:0.1613,direction:"top"},{id:"14",nx:0.5042,ny:0.1613,direction:"top"},{id:"21",nx:0.8208,ny:0.1613,direction:"top"},{id:"22",nx:0.1745,ny:0.8265,direction:"bottom"},{id:"23",nx:0.4911,ny:0.8265,direction:"bottom"},{id:"24",nx:0.7813,ny:0.8265,direction:"bottom"}],pair:["13","22"],pairs:[["13","22"],["14","23"],["21","24"]]},
+      moteur_1ph: {name:"Moteur monophasé SwissDz",prefix:"M",cat:"Moteur / Indus",w:135,h:185,image:"assets/moteur-1ph-swissdz.png",badge:"1~",iec:"M",motor:true,motorI:6,terminals:[{id:"L",nx:0.3932,ny:0.1486,direction:"top"},{id:"N",nx:0.5521,ny:0.1486,direction:"top"},{id:"PE",nx:0.7111,ny:0.1486,direction:"top"}]},
+      relais_securite: {name:"Relais de sécurité SwissDz",prefix:"K",cat:"Moteur / Indus",w:61,h:172,din:true,image:"assets/relais-securite-swissdz.png",badge:"SIL",iec:"K",terminals:[{id:"A1",nx:0.3335,ny:0.1409,direction:"top"},{id:"A2",nx:0.7497,ny:0.1409,direction:"top"},{id:"13",nx:0.3439,ny:0.8552,direction:"bottom"},{id:"14",nx:0.6561,ny:0.8552,direction:"bottom"}],pair:["13","14"],pairs:[["13","14"]]},
+      alim24v: {name:"Alimentation 24V DC SwissDz",prefix:"G",cat:"Borniers / Alim",w:58,h:172,din:true,image:"assets/alim24v-swissdz.png",badge:"24V",iec:"G",secondary:["24V","0V"],terminals:[{id:"L",nx:0.2917,ny:0.1181,direction:"top"},{id:"N",nx:0.5,ny:0.1181,direction:"top"},{id:"PE",nx:0.7083,ny:0.1181,direction:"top"},{id:"24V",nx:0.3438,ny:0.9029,direction:"bottom"},{id:"0V",nx:0.6562,ny:0.9029,direction:"bottom"}]},
+      transfo24v: {name:"Transfo 230/24V SwissDz",prefix:"T",cat:"Borniers / Alim",w:57,h:172,din:true,image:"assets/transfo24v-swissdz.png",badge:"24V~",iec:"T",secondary:["24V","0V"],terminals:[{id:"L",nx:0.3435,ny:0.1182,direction:"top"},{id:"N",nx:0.6565,ny:0.1182,direction:"top"},{id:"24V",nx:0.3435,ny:0.9037,direction:"bottom"},{id:"0V",nx:0.6565,ny:0.9037,direction:"bottom"}]},
+    };
+
+    // Alias rétrocompat (anciens ids calibre → type unique)
+    LIB.rail = LIB.rail_din_35;
+    LIB.disj = LIB.disj1pn;
+    LIB.idr = LIB.idr2p;
+    LIB.contacteur = LIB.contacteur_3ph;
+    LIB.thermique_3ph = LIB.thermique;
+    LIB.moteur_3ph = LIB.moteur;
+    LIB.compteur_3pn = LIB.compteur_sonelgaz_3pn;
+
+    function isCompteurKind(kind) {
+      return kind === "compteur" || kind === "compteur3";
+    }
+    function compteurPhaseIds(def) {
+      if (!def || !def.terminals) return [];
+      return ["L", "L1", "L2", "L3"].filter((id) => def.terminals.some((t) => t.id === id));
+    }
+
+    const TYPE_ALIASES = {
+      disj: "disj1pn", idr: "idr2p",
+      spd_t2: "spd", spd_t1t2: "spd",
+      sectionneur3p_32: "sectionneur3p", sectionneur3p_63: "sectionneur3p", sectionneur3p_100: "sectionneur3p",
+      sectionneur_fusible_32: "sectionneur_fusible", sectionneur_fusible_63: "sectionneur_fusible",
+      fusible_gG_6: "fusible_gG", fusible_gG_10: "fusible_gG", fusible_gG_16: "fusible_gG",
+      fusible_gG_20: "fusible_gG", fusible_gG_32: "fusible_gG", fusible_gG_50: "fusible_gG",
+      fusible_aM_4: "fusible_aM", fusible_aM_10: "fusible_aM", fusible_aM_16: "fusible_aM", fusible_aM_25: "fusible_aM",
+      agcp_C32: "agcp_principal", agcp_C40: "agcp_principal", agcp_C63: "agcp_principal", agcp_C80: "agcp_principal",
+      agcp_D32: "agcp_principal", agcp_D40: "agcp_principal", agcp_D63: "agcp_principal", agcp_D80: "agcp_principal",
+    };
+    ["C2","C6","C10","C16","C20","C25","C32","C40","C50","C63","B10","B16","B20"].forEach((c) => {
+      TYPE_ALIASES["disj1p_" + c] = "disj1pn";
+    });
+    ["C6","C10","C16","C20","C25","C32","C40","C63"].forEach((c) => {
+      TYPE_ALIASES["disj2p_" + c] = "disj1pn";
+    });
+    ["C10","C16","C20","C25","C32","C40","C63"].forEach((c) => {
+      TYPE_ALIASES["disj3p_" + c] = "disj3p";
+    });
+    ["C16","C20","C25","C32","C40","C63"].forEach((c) => {
+      TYPE_ALIASES["disj4p_" + c] = "disj4p";
+    });
+    [
+      "idr2p_25_30_A","idr2p_25_30_AC","idr2p_40_30_A","idr2p_40_30_AC","idr2p_40_300_A","idr2p_40_300_AC",
+      "idr2p_63_30_A","idr2p_63_30_AC","idr2p_63_300_A","idr2p_63_300_AC","idr2p_40_30_B"
+    ].forEach((k) => { TYPE_ALIASES[k] = "idr2p"; });
+    ["idr4p_40_30_A","idr4p_40_300_A","idr4p_63_30_A","idr4p_63_300_A","idr4p_63_30_B"].forEach((k) => {
+      TYPE_ALIASES[k] = "idr4p";
+    });
+    ["contacteur_9","contacteur_12","contacteur_18","contacteur_25","contacteur_32"].forEach((k) => {
+      TYPE_ALIASES[k] = "contacteur_3ph";
+    });
+    const THERMAL_IR_FROM_TYPE = {
+      thermique_16A: 1.6, thermique_4A: 4, thermique_6A: 6, thermique_10A: 10,
+      thermique_13A: 13, thermique_18A: 18, thermique_23A: 23
+    };
+    Object.keys(THERMAL_IR_FROM_TYPE).forEach((k) => { TYPE_ALIASES[k] = "thermique"; });
+    TYPE_ALIASES.thermique_3ph = "thermique";
+    function resolveLibType(type) {
+      if (LIB[type]) return type;
+      const mapped = TYPE_ALIASES[type];
+      return mapped && LIB[mapped] ? mapped : type;
+    }
+    function clampThermalIr(v, def) {
+      const min = (def && def.irMin != null) ? def.irMin : 0.63;
+      const max = (def && def.irMax != null) ? def.irMax : 40;
+      const n = Number(v);
+      if (!Number.isFinite(n)) return (def && def.thermalIr != null) ? def.thermalIr : 10;
+      return Math.round(Math.min(max, Math.max(min, n)) * 100) / 100;
+    }
+    function thermalIrOf(item) {
+      const def = LIB[item && item.type];
+      if (!def || !def.thermal) return null;
+      if (item.thermalIr != null) return clampThermalIr(item.thermalIr, def);
+      return clampThermalIr(def.thermalIr, def);
+    }
+    function formatIr(v) {
+      const n = Number(v);
+      if (!Number.isFinite(n)) return "?";
+      return Number.isInteger(n) ? String(n) : String(Math.round(n * 100) / 100);
+    }
+    function migrateItemTypes() {
+      state.items.forEach((i) => {
+        const old = i.type;
+        const next = resolveLibType(i.type);
+        if (next !== i.type) i.type = next;
+        const def = LIB[i.type];
+        if (def && def.thermal) {
+          if (i.thermalIr == null && THERMAL_IR_FROM_TYPE[old] != null) {
+            i.thermalIr = THERMAL_IR_FROM_TYPE[old];
+          }
+          if (i.thermalIr == null) i.thermalIr = clampThermalIr(def.thermalIr, def);
+          else i.thermalIr = clampThermalIr(i.thermalIr, def);
+        }
+      });
+    }
+
+    // Déplacement libre X/Y : pas de snap rail (modules non verrouillés sur le DIN).
+    function snapToRailY(_item, _x, y) {
+      return y;
+    }
+
+    function isRail(item) {
+      const def = LIB[item && item.type];
+      return !!(def && def.kind === "rail");
+    }
+    /** Modules DIN (disj, IDR, etc.) — pas le rail ni les sources L/N/PE. */
+    function isDinModule(item) {
+      const def = LIB[item && item.type];
+      return !!(def && def.din);
+    }
+    /** Modules posés sur un rail (chevauchement X + bande Y autour du rail). */
+    function modulesOnRail(rail) {
+      if (!rail || !isRail(rail)) return [];
+      const rs = itemSize(rail);
+      const railCy = rail.y + rs.h / 2;
+      return state.items.filter((it) => {
+        if (!isDinModule(it)) return false;
+        const sz = itemSize(it);
+        const overlapX = it.x < rail.x + rs.w && it.x + sz.w > rail.x;
+        if (!overlapX) return false;
+        const mCy = it.y + sz.h / 2;
+        const nearY = Math.abs(mCy - railCy) < Math.max(rs.h, sz.h) * 0.7;
+        const overlapY = it.y < rail.y + rs.h + 50 && it.y + sz.h > rail.y - 50;
+        return nearY || overlapY;
+      });
+    }
+    /** Snapshot pour déplacer rail + modules + waypoints des fils liés. */
+    function beginRailGroupDrag(rail) {
+      const mods = modulesOnRail(rail);
+      const groupIds = new Set([rail.uid, ...mods.map((m) => m.uid)]);
+      const items = [
+        { uid: rail.uid, x: rail.x, y: rail.y },
+        ...mods.map((m) => ({ uid: m.uid, x: m.x, y: m.y }))
+      ];
+      const wires = state.wires
+        .filter((w) => groupIds.has(w.a.uid) || groupIds.has(w.b.uid))
+        .map((w) => ({
+          id: w.id,
+          waypoints: (w.waypoints || []).map((p) => ({ x: p.x, y: p.y }))
+        }));
+      return { items, wires, groupIds };
+    }
+    function applyRailGroupDrag(drag, nx, ny) {
+      if (!drag || !drag.group) return;
+      const dx = nx - drag.x;
+      const dy = ny - drag.y;
+      drag.group.items.forEach((s) => {
+        const it = find(s.uid);
+        if (!it) return;
+        it.x = Math.max(8, s.x + dx);
+        it.y = Math.max(8, s.y + dy);
+      });
+      drag.group.wires.forEach((ws) => {
+        const w = state.wires.find((x) => x.id === ws.id);
+        if (!w) return;
+        w.waypoints = ws.waypoints.map((p) => ({ x: p.x + dx, y: p.y + dy }));
+      });
+    }
+    const MIN_SIZE = 30;
+    /** Taille affichée : override item.w/h sinon def LIB. */
+    function itemSize(item) {
+      const def = LIB[item && item.type] || { w: 40, h: 40 };
+      const w = Number(item && item.w);
+      const h = Number(item && item.h);
+      return {
+        w: Number.isFinite(w) && w > 0 ? w : def.w,
+        h: Number.isFinite(h) && h > 0 ? h : def.h
+      };
+    }
+    function clampSize(n) {
+      const v = Math.round(Number(n));
+      if (!Number.isFinite(v)) return MIN_SIZE;
+      return Math.max(MIN_SIZE, v);
+    }
+    /** Persiste w/h sur l'item (override LIB) et résout collision DIN. */
+    function applyItemSize(item, w, h) {
+      if (!item) return;
+      item.w = clampSize(w);
+      item.h = clampSize(h);
+      item.x = resolveDinX(item, item.x, item.y);
+    }
+    function applySizeToSameType(source, w, h) {
+      if (!source) return;
+      const ww = clampSize(w);
+      const hh = clampSize(h);
+      state.items.forEach((it) => {
+        if (it.type !== source.type) return;
+        it.w = ww;
+        it.h = hh;
+      });
+      // 2e passe collision après tailles synchronisées
+      state.items.forEach((it) => {
+        if (it.type !== source.type) return;
+        it.x = resolveDinX(it, it.x, it.y);
+      });
+    }
+    function rectsOverlap(a, b) {
+      return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+    }
+    /**
+     * Anti-chevauchement DIN : si overlap, pousse en X à côté du voisin
+     * (gauche/droite selon le côté le plus naturel). Y libre.
+     */
+    function resolveDinX(item, x, y) {
+      if (!isDinModule(item)) return x;
+      const sz = itemSize(item);
+      let nx = x;
+      for (let iter = 0; iter < 24; iter++) {
+        const me = { x: nx, y: y, w: sz.w, h: sz.h };
+        let hit = null;
+        let bestArea = 0;
+        for (const other of state.items) {
+          if (other.uid === item.uid || !isDinModule(other)) continue;
+          const os = itemSize(other);
+          const them = { x: other.x, y: other.y, w: os.w, h: os.h };
+          if (!rectsOverlap(me, them)) continue;
+          const ox = Math.min(me.x + me.w, them.x + them.w) - Math.max(me.x, them.x);
+          const oy = Math.min(me.y + me.h, them.y + them.h) - Math.max(me.y, them.y);
+          const area = ox * oy;
+          if (area > bestArea) {
+            bestArea = area;
+            hit = them;
+          }
+        }
+        if (!hit) break;
+        const myCx = nx + sz.w / 2;
+        const hitCx = hit.x + hit.w / 2;
+        nx = myCx >= hitCx ? hit.x + hit.w : hit.x - sz.w;
+        nx = Math.max(8, nx);
+      }
+      return nx;
+    }
+
+    const DIR = { top: [0, -1], bottom: [0, 1], left: [-1, 0], right: [1, 0] };
+    const STUB = 28;
+    const state = {
+      mode: "select", sim: false, color: COLORS[1].c, section: 6,
+      seq: 1, wireNo: 1, counts: {}, items: [], wires: [],
+      selected: null, selectedWire: null, wireFrom: null, drag: null,
+      resize: null, wireDrag: null, preview: null,
+      short: null, shortArmed: false,
+      shortSince: null, fire: null,
+      ladderOpen: null, /* null = auto si PLC ; true/false = forcé */
+      ladder: null
+    };
+
+    /* ========== LADDER v1 (logique à contacts / bobines / TON) ========== */
+    let ladderRungSeq = 4;
+    let ladderRaf = null;
+    let ladderLastOutSig = "";
+
+    function defaultLadderProgram() {
+      return [
+        {
+          id: "s1",
+          title: "Segment 1 — marche directe",
+          kind: "series",
+          steps: [
+            { type: "no", addr: "I1" },
+            { type: "coil", addr: "Q1" }
+          ]
+        },
+        {
+          id: "s2",
+          title: "Segment 2 — temporisation TON",
+          kind: "ton",
+          steps: [
+            { type: "no", addr: "I4" },
+            { type: "ton", tid: "T1", pt: 3.0 },
+            { type: "coil", addr: "Q2" }
+          ]
+        },
+        {
+          id: "s3",
+          title: "Segment 3 — latch (mémoire)",
+          kind: "latch",
+          set: { type: "no", addr: "I8" },
+          seal: { type: "no", addr: "Q3" },
+          reset: { type: "nc", addr: "I2" },
+          coil: { type: "coil", addr: "Q3" }
+        }
+      ];
+    }
+
+    function ensureLadder() {
+      if (!state.ladder) {
+        state.ladder = {
+          rungs: defaultLadderProgram(),
+          timers: {},
+          inputs: {},
+          outputs: { Q1: false, Q2: false, Q3: false, Q4: false },
+          hl: {},
+          now: 0
+        };
+      }
+      return state.ladder;
+    }
+
+    function boardHasPlc() {
+      return state.items.some((it) => LIB[it.type] && LIB[it.type].plc);
+    }
+
+    function ladderShouldShow() {
+      if (state.ladderOpen === true) return true;
+      if (state.ladderOpen === false) return false;
+      return boardHasPlc();
+    }
+
+    function syncLadderLayout() {
+      const ws = document.getElementById("workspace");
+      const btn = document.getElementById("btnLadder");
+      const show = ladderShouldShow();
+      if (ws) ws.classList.toggle("has-ladder", show);
+      if (btn) btn.classList.toggle("on", show);
+      if (show) {
+        ensureLadder();
+        renderLadderPanel();
+      }
+    }
+
+    function contactValue(addr, nc, inputs, prevOut) {
+      let v = false;
+      if (/^I\d+$/.test(addr)) v = !!inputs[addr];
+      else if (/^Q\d+$/.test(addr)) v = !!prevOut[addr];
+      return nc ? !v : v;
+    }
+
+    function evalLadder(inputs, nowMs) {
+      const L = ensureLadder();
+      L.now = nowMs;
+      L.inputs = inputs;
+      const prevOut = Object.assign({ Q1: false, Q2: false, Q3: false, Q4: false }, L.outputs);
+      const nextOut = { Q1: false, Q2: false, Q3: false, Q4: false };
+      const hl = {};
+      let needsTick = false;
+
+      L.rungs.forEach((rung) => {
+        if (rung.kind === "series") {
+          let power = true;
+          const nodes = [];
+          rung.steps.forEach((st) => {
+            if (st.type === "no" || st.type === "nc") {
+              const ok = contactValue(st.addr, st.type === "nc", inputs, prevOut);
+              const active = power && ok;
+              nodes.push({ kind: "contact", addr: st.addr, nc: st.type === "nc", active, powerIn: power });
+              power = power && ok;
+            } else if (st.type === "coil") {
+              nextOut[st.addr] = power;
+              nodes.push({ kind: "coil", addr: st.addr, active: power });
+            }
+          });
+          hl[rung.id] = { power, nodes };
+        } else if (rung.kind === "ton") {
+          let power = true;
+          const nodes = [];
+          let tonStep = null;
+          let coilAddr = null;
+          rung.steps.forEach((st) => {
+            if (st.type === "no" || st.type === "nc") {
+              const ok = contactValue(st.addr, st.type === "nc", inputs, prevOut);
+              const active = power && ok;
+              nodes.push({ kind: "contact", addr: st.addr, nc: st.type === "nc", active, powerIn: power });
+              power = power && ok;
+            } else if (st.type === "ton") {
+              tonStep = st;
+            } else if (st.type === "coil") {
+              coilAddr = st.addr;
+            }
+          });
+          const tid = (tonStep && tonStep.tid) || "T1";
+          const pt = (tonStep && Number(tonStep.pt)) || 3;
+          if (!L.timers[tid]) L.timers[tid] = { et: 0, q: false, t0: null };
+          const t = L.timers[tid];
+          if (power) {
+            if (t.t0 == null) t.t0 = nowMs;
+            t.et = Math.min(pt, (nowMs - t.t0) / 1000);
+            t.q = t.et >= pt;
+            if (!t.q) needsTick = true;
+          } else {
+            t.t0 = null;
+            t.et = 0;
+            t.q = false;
+          }
+          nodes.push({
+            kind: "ton", tid, pt, et: t.et, q: t.q, active: power, inOn: power
+          });
+          if (coilAddr) {
+            nextOut[coilAddr] = !!t.q;
+            nodes.push({ kind: "coil", addr: coilAddr, active: !!t.q });
+          }
+          hl[rung.id] = { power: !!t.q, nodes, inPower: power };
+        } else if (rung.kind === "latch") {
+          const setOn = contactValue(rung.set.addr, false, inputs, prevOut);
+          const sealOn = contactValue(rung.seal.addr, false, inputs, prevOut);
+          const orOn = setOn || sealOn;
+          const resetOk = contactValue(rung.reset.addr, true, inputs, prevOut);
+          const power = orOn && resetOk;
+          nextOut[rung.coil.addr] = power;
+          hl[rung.id] = {
+            power,
+            orOn,
+            setOn,
+            sealOn,
+            resetOk,
+            set: rung.set,
+            seal: rung.seal,
+            reset: rung.reset,
+            coil: rung.coil
+          };
+        }
+      });
+
+      L.outputs = nextOut;
+      L.hl = hl;
+      L.needsTick = needsTick;
+      return nextOut;
+    }
+
+    function collectPlcInputs() {
+      const inputs = {};
+      for (let n = 1; n <= 8; n++) inputs["I" + n] = false;
+      state.items.forEach((item) => {
+        const def = LIB[item.type];
+        if (!def || !def.plc || !item.plcIn) return;
+        for (let n = 1; n <= 8; n++) {
+          const id = "I" + n;
+          if (item.plcIn[id]) inputs[id] = true;
+        }
+      });
+      return inputs;
+    }
+
+    function applyLadderToPlc(unite, key) {
+      const outs = ensureLadder().outputs;
+      state.items.forEach((item) => {
+        const def = LIB[item.type];
+        if (!def || !def.plc || !item.coilOn) return;
+        item.plcOut = item.plcOut || {};
+        for (let n = 1; n <= 4; n++) {
+          const q = "Q" + n;
+          if (outs[q]) {
+            unite(key(item.uid, "L"), key(item.uid, q));
+            item.plcOut[q] = true;
+          } else {
+            item.plcOut[q] = false;
+          }
+        }
+      });
+    }
+
+    function resetLadderTimers() {
+      const L = ensureLadder();
+      L.timers = {};
+      L.outputs = { Q1: false, Q2: false, Q3: false, Q4: false };
+      L.hl = {};
+      L.needsTick = false;
+    }
+
+    function elContact(addr, nc, active) {
+      const wrap = document.createElement("div");
+      wrap.className = "ld-contact" + (active ? " on" : "");
+      const sym = document.createElement("div");
+      sym.className = "ld-sym";
+      sym.textContent = nc ? "-|/|-" : "-| |-";
+      const lab = document.createElement("span");
+      lab.textContent = addr;
+      wrap.appendChild(sym);
+      wrap.appendChild(lab);
+      return wrap;
+    }
+
+    function elCoil(addr, active) {
+      const wrap = document.createElement("div");
+      wrap.className = "ld-coil" + (active ? " on" : "");
+      const sym = document.createElement("div");
+      sym.className = "ld-sym";
+      sym.textContent = "(   )";
+      const lab = document.createElement("span");
+      lab.textContent = addr;
+      wrap.appendChild(sym);
+      wrap.appendChild(lab);
+      return wrap;
+    }
+
+    function elTon(node) {
+      const wrap = document.createElement("div");
+      wrap.className = "ld-ton" + (node.active ? " on" : "") + (node.q ? " q-on" : "");
+      const etMs = Math.round((node.et || 0) * 1000);
+      wrap.innerHTML =
+        '<div class="ton-title">TON ' + (node.tid || "T1") + "</div>" +
+        '<div class="ton-row"><span>IN</span><b>' + (node.inOn ? "1" : "0") + "</b></div>" +
+        '<div class="ton-row"><span>PT</span><b>' + Number(node.pt).toFixed(1) + "s</b></div>" +
+        '<div class="ton-row"><span>ET</span><b data-et="' + (node.tid || "") + '">' + etMs + "ms</b></div>" +
+        '<div class="ton-row"><span>Q</span><b>' + (node.q ? "1" : "0") + "</b></div>";
+      return wrap;
+    }
+
+    function elWire(on) {
+      const w = document.createElement("div");
+      w.className = "ld-wire" + (on ? " on" : "");
+      return w;
+    }
+
+    function appendSeriesRow(parent, nodes) {
+      const row = document.createElement("div");
+      row.className = "ladder-row";
+      let powerSoFar = true;
+      row.appendChild(elWire(true));
+      (nodes || []).forEach((n, idx) => {
+        if (n.kind === "contact") {
+          row.appendChild(elContact(n.addr, n.nc, n.active));
+          powerSoFar = n.active;
+          row.appendChild(elWire(powerSoFar));
+        } else if (n.kind === "ton") {
+          row.appendChild(elTon(n));
+          powerSoFar = !!n.q;
+          row.appendChild(elWire(powerSoFar));
+        } else if (n.kind === "coil") {
+          row.appendChild(elCoil(n.addr, n.active));
+          if (idx < nodes.length - 1) row.appendChild(elWire(n.active));
+        }
+      });
+      if (!(nodes || []).some((n) => n.kind === "coil")) {
+        /* laisse un fil jusqu'à la rail droite */
+      }
+      parent.appendChild(row);
+    }
+
+    function renderLadderPanel() {
+      const body = document.getElementById("ladderBody");
+      const status = document.getElementById("ladderStatus");
+      if (!body) return;
+      const L = ensureLadder();
+      if (status) {
+        status.className = "ladder-status" + (state.sim ? "" : " off");
+        status.textContent = state.sim
+          ? "Simulation active — lecture I/Q live"
+          : "Simulation arrêtée — lance « Vérifier »";
+      }
+      body.innerHTML = "";
+      if (!L.rungs.length) {
+        const empty = document.createElement("div");
+        empty.className = "ladder-empty";
+        empty.textContent = "Aucun segment — clique « + Segment ».";
+        body.appendChild(empty);
+        return;
+      }
+      L.rungs.forEach((rung, idx) => {
+        const card = document.createElement("div");
+        card.className = "ladder-rung";
+        const title = document.createElement("div");
+        title.className = "ladder-rung-title";
+        const left = document.createElement("span");
+        left.textContent = rung.title || ("Segment " + (idx + 1));
+        title.appendChild(left);
+        if (idx >= 3 || rung.user) {
+          const del = document.createElement("button");
+          del.type = "button";
+          del.className = "del";
+          del.title = "Supprimer ce segment";
+          del.textContent = "✕";
+          del.onclick = () => {
+            L.rungs = L.rungs.filter((r) => r.id !== rung.id);
+            renderLadderPanel();
+            if (state.sim) render();
+          };
+          title.appendChild(del);
+        }
+        card.appendChild(title);
+
+        const rail = document.createElement("div");
+        const h = L.hl[rung.id] || {};
+        rail.className = "ladder-rail" + (h.power ? " power" : "");
+        rail.innerHTML = '<div class="rail-l"></div><div class="ladder-net"></div><div class="rail-r"></div>';
+        const net = rail.querySelector(".ladder-net");
+
+        if (rung.kind === "latch") {
+          const branch = document.createElement("div");
+          branch.className = "ld-branch" + (h.orOn ? " on" : "");
+          const rowSet = document.createElement("div");
+          rowSet.className = "ladder-row";
+          rowSet.appendChild(elWire(true));
+          rowSet.appendChild(elContact(rung.set.addr, false, !!h.setOn));
+          rowSet.appendChild(elWire(!!h.setOn));
+          branch.appendChild(rowSet);
+          const rowSeal = document.createElement("div");
+          rowSeal.className = "ladder-row";
+          rowSeal.appendChild(elWire(true));
+          rowSeal.appendChild(elContact(rung.seal.addr, false, !!h.sealOn));
+          rowSeal.appendChild(elWire(!!h.sealOn));
+          branch.appendChild(rowSeal);
+
+          const row = document.createElement("div");
+          row.className = "ladder-row";
+          row.appendChild(elWire(true));
+          row.appendChild(branch);
+          row.appendChild(elWire(!!h.orOn));
+          row.appendChild(elContact(rung.reset.addr, true, !!h.resetOk && !!h.orOn));
+          row.appendChild(elWire(!!h.power));
+          row.appendChild(elCoil(rung.coil.addr, !!h.power));
+          net.appendChild(row);
+        } else {
+          appendSeriesRow(net, h.nodes || rung.steps.map((st) => {
+            if (st.type === "no" || st.type === "nc")
+              return { kind: "contact", addr: st.addr, nc: st.type === "nc", active: false };
+            if (st.type === "ton")
+              return { kind: "ton", tid: st.tid, pt: st.pt, et: 0, q: false, active: false, inOn: false };
+            return { kind: "coil", addr: st.addr, active: false };
+          }));
+        }
+
+        card.appendChild(rail);
+        body.appendChild(card);
+      });
+    }
+
+    function addSimpleRung() {
+      const L = ensureLadder();
+      const n = ladderRungSeq++;
+      const iAddr = "I" + Math.min(8, ((n - 1) % 8) + 1);
+      const qAddr = "Q" + Math.min(4, ((n - 1) % 4) + 1);
+      L.rungs.push({
+        id: "u" + n,
+        title: "Segment " + L.rungs.length + " — " + iAddr + " → " + qAddr,
+        kind: "series",
+        user: true,
+        steps: [
+          { type: "no", addr: iAddr },
+          { type: "coil", addr: qAddr }
+        ]
+      });
+      renderLadderPanel();
+      if (state.sim) render();
+    }
+
+    function stopLadderLoop() {
+      if (ladderRaf != null) {
+        cancelAnimationFrame(ladderRaf);
+        ladderRaf = null;
+      }
+    }
+
+    function startLadderLoop() {
+      stopLadderLoop();
+      let lastEtPaint = 0;
+      const tick = (t) => {
+        if (!state.sim) {
+          ladderRaf = null;
+          return;
+        }
+        if (boardHasPlc()) {
+          const L = ensureLadder();
+          const activeTon = Object.values(L.timers || {}).some((tm) => tm.t0 != null && !tm.q);
+          if (activeTon || L.needsTick) {
+            const prev = JSON.stringify(L.outputs);
+            evalLadder(collectPlcInputs(), performance.now());
+            if (JSON.stringify(L.outputs) !== prev) {
+              ladderLastOutSig = JSON.stringify(L.outputs);
+              render();
+            } else if (t - lastEtPaint > 40) {
+              lastEtPaint = t;
+              renderLadderPanel();
+            }
+          }
+        }
+        ladderRaf = requestAnimationFrame(tick);
+      };
+      ladderRaf = requestAnimationFrame(tick);
+    }
+
+    /* ========== fin LADDER ========== */
+    const HISTORY_LIMIT = 60;
+    const undoStack = [];
+    const redoStack = [];
+    let historySuspended = false;
+    function deepClone(v) {
+      return JSON.parse(JSON.stringify(v));
+    }
+    /** Snapshot de l'état éditable (structure schéma). */
+    function sanitizeItem(it) {
+      return {
+        uid: it.uid,
+        type: it.type,
+        tag: it.tag,
+        x: it.x,
+        y: it.y,
+        w: it.w,
+        h: it.h,
+        closed: !!it.closed,
+        selPos: it.selPos == null ? null : it.selPos,
+        thermalIr: it.thermalIr == null ? null : it.thermalIr
+      };
+    }
+    function sanitizeWire(w) {
+      return {
+        id: w.id,
+        no: w.no,
+        a: deepClone(w.a),
+        b: deepClone(w.b),
+        color: w.color,
+        waypoints: deepClone(w.waypoints || [])
+      };
+    }
+    function cloneEditableState() {
+      return {
+        items: state.items.map(sanitizeItem),
+        wires: state.wires.map(sanitizeWire),
+        counts: deepClone(state.counts),
+        seq: state.seq,
+        wireNo: state.wireNo,
+        selected: state.selected,
+        selectedWire: state.selectedWire
+      };
+    }
+    function structuralKey(snap) {
+      return JSON.stringify({
+        items: snap.items,
+        wires: snap.wires,
+        counts: snap.counts,
+        seq: snap.seq,
+        wireNo: snap.wireNo
+      });
+    }
+    function updateHistoryButtons() {
+      const bu = document.getElementById("btnUndo");
+      const br = document.getElementById("btnRedo");
+      if (bu) bu.disabled = !undoStack.length;
+      if (br) br.disabled = !redoStack.length;
+    }
+    /** Enregistre l'état courant AVANT une action significative. */
+    function pushHistory() {
+      if (historySuspended) return;
+      undoStack.push(cloneEditableState());
+      while (undoStack.length > HISTORY_LIMIT) undoStack.shift();
+      redoStack.length = 0;
+      updateHistoryButtons();
+    }
+    /** Si rien n'a changé structurellement depuis le push, retire l'entrée (clic sans drag). */
+    function discardHistoryIfUnchanged(beforeKey) {
+      if (!beforeKey || !undoStack.length) return;
+      if (structuralKey(cloneEditableState()) === beforeKey) {
+        undoStack.pop();
+        updateHistoryButtons();
+      }
+    }
+    function applySnapshot(snap) {
+      historySuspended = true;
+      state.items = deepClone(snap.items).map((it) => ({
+        ...it,
+        pressed: false,
+        lit: false,
+        coilOn: false,
+        _coilPrev: false,
+        hot: {},
+        neu: {}
+      }));
+      state.wires = deepClone(snap.wires).map((w) => ({
+        ...w,
+        live: false,
+        waypoints: w.waypoints || []
+      }));
+      state.counts = deepClone(snap.counts || {});
+      state.seq = snap.seq;
+      state.wireNo = snap.wireNo;
+      const selOk = snap.selected && state.items.some((i) => i.uid === snap.selected);
+      const wireOk = snap.selectedWire && state.wires.some((w) => w.id === snap.selectedWire);
+      state.selected = selOk ? snap.selected : null;
+      state.selectedWire = wireOk ? snap.selectedWire : null;
+      state.wireFrom = null;
+      state.preview = null;
+      state.drag = null;
+      state.resize = null;
+      state.wireDrag = null;
+      historySuspended = false;
+      updateHistoryButtons();
+      render();
+    }
+    function undo() {
+      if (!undoStack.length) return;
+      redoStack.push(cloneEditableState());
+      while (redoStack.length > HISTORY_LIMIT) redoStack.shift();
+      applySnapshot(undoStack.pop());
+    }
+    function redo() {
+      if (!redoStack.length) return;
+      undoStack.push(cloneEditableState());
+      while (undoStack.length > HISTORY_LIMIT) undoStack.shift();
+      applySnapshot(redoStack.pop());
+    }
+    const board = document.getElementById("board");
+    const palette = document.getElementById("palette");
+
+    COLORS.forEach((entry) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "swatch" + (entry.c === state.color ? " on" : "");
+      b.style.background = entry.c;
+      b.dataset.c = entry.c;
+      b.title = entry.name;
+      b.onclick = () => {
+        if (state.selectedWire) {
+          const w = state.wires.find((x) => x.id === state.selectedWire);
+          if (w && w.color !== entry.c) {
+            pushHistory();
+            w.color = entry.c;
+            render();
+          }
+          return;
+        }
+        state.color = entry.c;
+        syncColorSwatches();
+      };
+      document.getElementById("colors").appendChild(b);
+    });
+    function syncColorSwatches() {
+      let active = state.color;
+      if (state.selectedWire) {
+        const w = state.wires.find((x) => x.id === state.selectedWire);
+        if (w) active = w.color;
+      }
+      document.querySelectorAll(".swatch").forEach((n) => n.classList.toggle("on", n.dataset.c === active));
+    }
+    document.getElementById("section").onchange = (ev) => { state.section = Number(ev.target.value); render(); };
+
+    const CAT_ORDER = [
+      "Structure", "Alimentation", "Protection", "Différentiel",
+      "Commande", "Boutonnerie", "Éclairage / Prises", "Moteur / Indus", "Borniers / Alim"
+    ];
+    const ALIAS_IDS = new Set(["rail", "disj", "idr", "contacteur", "thermique_3ph", "moteur_3ph", "compteur_3pn"]);
+    const cats = {};
+    Object.entries(LIB).forEach(([id, def]) => {
+      if (!def || !def.cat || ALIAS_IDS.has(id)) return;
+      (cats[def.cat] = cats[def.cat] || []).push([id, def]);
+    });
+    CAT_ORDER.forEach((cat) => {
+      const list = cats[cat];
+      if (!list || !list.length) return;
+      const h = document.createElement("div");
+      h.className = "cat";
+      h.textContent = cat;
+      palette.appendChild(h);
+      list.forEach(([id, def]) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "item";
+        const label = def.badge ? `${def.name}` : def.name;
+        if (def.image) {
+          b.innerHTML = `<img alt="" src="${def.image}"><span>${label}</span>`;
+        } else if (def.kind === "rail") {
+          b.innerHTML = `<span class="thumb rail-t">DIN</span><span>${def.name}</span>`;
+        } else if (def.kind === "pe") {
+          b.innerHTML = `<span class="thumb" style="background:repeating-linear-gradient(-45deg,#c4d600 0 4px,#008c45 4px 8px);padding:2px">${peSymbolSvg()}</span><span>${def.name}</span>`;
+        } else {
+          b.innerHTML = `<span class="thumb">${(def.badge || def.prefix || "?").slice(0, 3)}</span><span>${def.name}</span>`;
+        }
+        b.onclick = () => add(id);
+        palette.appendChild(b);
+      });
+    });
+
+    function nextTag(type) {
+      const p = LIB[type].prefix;
+      state.counts[p] = (state.counts[p] || 0) + 1;
+      return p + state.counts[p];
+    }
+    function add(type) {
+      const def = LIB[type];
+      const n = state.items.length;
+      pushHistory();
+      const item = {
+        uid: "c" + (state.seq++),
+        type,
+        tag: nextTag(type),
+        x: 50 + (n % 4) * 170,
+        y: 50 + Math.floor(n / 4) * 190,
+        /* Contacteurs / relais à bobine : ouverts par défaut (fermés si bobine alimentée). */
+        closed: !!(def.pair && !def.push && !hasCoil(def) && !def.latch && !def.phaseMonitor && !def.plc),
+        pressed: false,
+        lit: false,
+        coilOn: false,
+        selPos: def.selector ? "man" : null,
+        thermalIr: def.thermal ? clampThermalIr(def.thermalIr, def) : null,
+        _coilPrev: false,
+        hot: {},
+        neu: {}
+      };
+      item.y = snapToRailY(item, item.x, item.y);
+      item.x = resolveDinX(item, item.x, item.y);
+      state.items.push(item);
+      state.selected = item.uid;
+      render();
+    }
+    function find(uid) { return state.items.find((i) => i.uid === uid); }
+    function termAbs(item, term) {
+      const sz = itemSize(item);
+      return { x: item.x + term.nx * sz.w, y: item.y + term.ny * sz.h, direction: term.direction };
+    }
+    function endpoint(ref) {
+      const item = find(ref.uid);
+      const term = LIB[item.type].terminals.find((t) => t.id === ref.term);
+      return { ...termAbs(item, term), id: term.id };
+    }
+    function almostEq(a, b) { return Math.abs(a - b) < 0.75; }
+    function dedupePts(pts) {
+      return pts.filter((p, i) => i === 0 || Math.hypot(p.x - pts[i - 1].x, p.y - pts[i - 1].y) > 0.5);
+    }
+    function simplifyOrtho(pts) {
+      const raw = dedupePts(pts.map((p) => ({ x: p.x, y: p.y })));
+      if (raw.length < 3) return raw;
+      const out = [raw[0]];
+      for (let i = 1; i < raw.length - 1; i++) {
+        const a = out[out.length - 1], b = raw[i], c = raw[i + 1];
+        const colH = almostEq(a.y, b.y) && almostEq(b.y, c.y);
+        const colV = almostEq(a.x, b.x) && almostEq(b.x, c.x);
+        if (!colH && !colV) out.push(b);
+      }
+      out.push(raw[raw.length - 1]);
+      return dedupePts(out);
+    }
+    function forceOrtho(pts) {
+      if (pts.length < 2) return pts.slice();
+      const out = [{ x: pts[0].x, y: pts[0].y }];
+      for (let i = 1; i < pts.length; i++) {
+        const prev = out[out.length - 1];
+        const cur = pts[i];
+        if (almostEq(prev.x, cur.x) || almostEq(prev.y, cur.y)) {
+          out.push({ x: cur.x, y: cur.y });
+        } else {
+          out.push({ x: prev.x, y: cur.y });
+          out.push({ x: cur.x, y: cur.y });
+        }
+      }
+      return simplifyOrtho(out);
+    }
+    /* Stub directionnel + Manhattan simple — uniquement à la création (puis waypoints libres). */
+    function autoRoute(a, b) {
+      const da = DIR[a.direction] || [0, -1];
+      const db = DIR[b.direction] || [0, -1];
+      const A = { x: a.x, y: a.y };
+      const B = { x: b.x, y: b.y };
+      const A2 = { x: A.x + da[0] * STUB, y: A.y + da[1] * STUB };
+      const B2 = { x: B.x + db[0] * STUB, y: B.y + db[1] * STUB };
+      const mid = [A2];
+      if (Math.abs(A2.x - B2.x) > 1 && Math.abs(A2.y - B2.y) > 1) {
+        const preferYFirst = Math.abs(da[1]) >= Math.abs(da[0]);
+        if (preferYFirst) mid.push({ x: A2.x, y: B2.y });
+        else mid.push({ x: B2.x, y: A2.y });
+      }
+      mid.push(B2);
+      return dedupePts([A, ...simplifyOrtho(mid), B]);
+    }
+    function route(a, b) { return autoRoute(a, b); }
+    function wirePts(w) {
+      const A = endpoint(w.a);
+      const B = endpoint(w.b);
+      /* Édition : jamais re-router — bornes exactes + waypoints 100 % libres. */
+      if (w.waypoints && w.waypoints.length) {
+        const mids = w.waypoints.map((p) => ({ x: p.x, y: p.y }));
+        return forceOrtho([{ x: A.x, y: A.y }, ...mids, { x: B.x, y: B.y }]);
+      }
+      return autoRoute(A, B);
+    }
+    /* Affichage seul (guidage inchangé) : N≥2 fils sur une borne → léger écart parallèle. */
+    function wiresSharingTerm(ref) {
+      return state.wires.filter(
+        (w) =>
+          (w.a.uid === ref.uid && w.a.term === ref.term) ||
+          (w.b.uid === ref.uid && w.b.term === ref.term)
+      );
+    }
+    function fanDelta(w, side) {
+      const ref = w[side];
+      const sibs = wiresSharingTerm(ref);
+      if (sibs.length < 2) return { dx: 0, dy: 0 };
+      const idx = sibs.findIndex((x) => x.id === w.id);
+      if (idx < 0) return { dx: 0, dy: 0 };
+      const off = (idx - (sibs.length - 1) / 2) * 6;
+      const ep = endpoint(ref);
+      const dir = DIR[ep.direction] || [0, -1];
+      return { dx: -dir[1] * off, dy: dir[0] * off };
+    }
+    function wirePtsDraw(w) {
+      const pts = wirePts(w).map((p) => ({ x: p.x, y: p.y }));
+      if (pts.length < 2) return pts;
+      const fa = fanDelta(w, "a");
+      const fb = fanDelta(w, "b");
+      if (pts.length === 2) {
+        pts[0].x += fa.dx;
+        pts[0].y += fa.dy;
+        pts[1].x += fb.dx;
+        pts[1].y += fb.dy;
+      } else {
+        pts[0].x += fa.dx;
+        pts[0].y += fa.dy;
+        pts[1].x += fa.dx;
+        pts[1].y += fa.dy;
+        const n = pts.length;
+        pts[n - 1].x += fb.dx;
+        pts[n - 1].y += fb.dy;
+        pts[n - 2].x += fb.dx;
+        pts[n - 2].y += fb.dy;
+      }
+      return pts;
+    }
+    function bakeWaypoints(w, pts) {
+      const cleaned = simplifyOrtho(pts);
+      w.waypoints = cleaned.slice(1, -1).map((p) => ({ x: p.x, y: p.y }));
+    }
+    function moveOrthoSegment(pts, segIndex, nx, ny) {
+      const p = pts.map((q) => ({ x: q.x, y: q.y }));
+      const i = segIndex;
+      if (i < 1 || i >= p.length - 2) return forceOrtho(p);
+      const a = p[i], b = p[i + 1];
+      const horiz = almostEq(a.y, b.y);
+      if (horiz) {
+        p[i].y = ny;
+        p[i + 1].y = ny;
+      } else {
+        p[i].x = nx;
+        p[i + 1].x = nx;
+      }
+      p[0] = { x: pts[0].x, y: pts[0].y };
+      p[p.length - 1] = { x: pts[pts.length - 1].x, y: pts[pts.length - 1].y };
+      return forceOrtho(p);
+    }
+    function insertJog(pts, segIndex) {
+      const i = segIndex;
+      if (i < 0 || i >= pts.length - 1) return pts.map((q) => ({ x: q.x, y: q.y }));
+      const a = pts[i], b = pts[i + 1];
+      const horiz = almostEq(a.y, b.y);
+      const off = 36;
+      const left = pts.slice(0, i + 1).map((q) => ({ x: q.x, y: q.y }));
+      const right = pts.slice(i + 1).map((q) => ({ x: q.x, y: q.y }));
+      if (horiz) {
+        const mid = (a.x + b.x) / 2;
+        const dir = a.y < 100 ? 1 : -1;
+        return forceOrtho([
+          ...left,
+          { x: mid, y: a.y },
+          { x: mid, y: a.y + off * dir },
+          { x: b.x, y: a.y + off * dir },
+          ...right
+        ]);
+      }
+      const mid = (a.y + b.y) / 2;
+      const dir = a.x < 100 ? 1 : -1;
+      return forceOrtho([
+        ...left,
+        { x: a.x, y: mid },
+        { x: a.x + off * dir, y: mid },
+        { x: a.x + off * dir, y: b.y },
+        ...right
+      ]);
+    }
+    function pathD(pts) {
+      /* Coudes Manhattan légèrement arrondis. */
+      const r = 10;
+      if (pts.length < 2) return "";
+      let d = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
+      for (let i = 1; i < pts.length - 1; i++) {
+        const prev = pts[i - 1], cur = pts[i], next = pts[i + 1];
+        const l1 = Math.hypot(cur.x - prev.x, cur.y - prev.y) || 1;
+        const l2 = Math.hypot(next.x - cur.x, next.y - cur.y) || 1;
+        const rr = Math.min(r, l1 / 2, l2 / 2);
+        const v1x = (cur.x - prev.x) / l1, v1y = (cur.y - prev.y) / l1;
+        const v2x = (next.x - cur.x) / l2, v2y = (next.y - cur.y) / l2;
+        d += ` L ${(cur.x - v1x * rr).toFixed(1)} ${(cur.y - v1y * rr).toFixed(1)}`;
+        d += ` Q ${cur.x.toFixed(1)} ${cur.y.toFixed(1)} ${(cur.x + v2x * rr).toFixed(1)} ${(cur.y + v2y * rr).toFixed(1)}`;
+      }
+      const last = pts[pts.length - 1];
+      d += ` L ${last.x.toFixed(1)} ${last.y.toFixed(1)}`;
+      return d;
+    }
+    function midPoint(pts) {
+      let total = 0;
+      for (let i = 1; i < pts.length; i++) total += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y);
+      let half = total / 2, acc = 0;
+      for (let i = 1; i < pts.length; i++) {
+        const seg = Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y) || 1;
+        if (acc + seg >= half) {
+          const t = (half - acc) / seg;
+          return { x: pts[i - 1].x + (pts[i].x - pts[i - 1].x) * t, y: pts[i - 1].y + (pts[i].y - pts[i - 1].y) * t };
+        }
+        acc += seg;
+      }
+      return pts[Math.floor(pts.length / 2)];
+    }
+    function wireWidth() {
+      if (state.section <= 1.5) return 3.2;
+      if (state.section <= 2.5) return 4.2;
+      return 5.5;
+    }
+
+    function hasCoil(def) {
+      if (!def || !def.terminals) return false;
+      const ids = def.terminals.map((t) => t.id);
+      return ids.includes("A1") && ids.includes("A2");
+    }
+
+    /* Web Audio : bip tant que le sonore est alimenté (X1/X2 sous L+N). */
+    const buzzerNodes = new Map();
+    let audioCtx = null;
+    function ensureAudio() {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      if (!audioCtx) audioCtx = new AC();
+      if (audioCtx.state === "suspended") audioCtx.resume().catch(() => {});
+      return audioCtx;
+    }
+    /* Bang basse + noise bandpass + étincelles sawtooth (1re version CC). */
+    function playShortCircuitSound() {
+      const ctx = ensureAudio();
+      if (!ctx) return;
+      const t0 = ctx.currentTime;
+      const boom = ctx.createOscillator();
+      const boomG = ctx.createGain();
+      boom.type = "sine";
+      boom.frequency.setValueAtTime(90, t0);
+      boom.frequency.exponentialRampToValueAtTime(35, t0 + 0.18);
+      boomG.gain.setValueAtTime(0.0001, t0);
+      boomG.gain.exponentialRampToValueAtTime(0.55, t0 + 0.012);
+      boomG.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.35);
+      boom.connect(boomG);
+      boomG.connect(ctx.destination);
+      boom.start(t0);
+      boom.stop(t0 + 0.4);
+
+      const n = 2 * ctx.sampleRate | 0;
+      const buf = ctx.createBuffer(1, n, ctx.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < n; i++) data[i] = Math.random() * 2 - 1;
+      const noise = ctx.createBufferSource();
+      noise.buffer = buf;
+      const filt = ctx.createBiquadFilter();
+      filt.type = "bandpass";
+      filt.frequency.setValueAtTime(1800, t0);
+      filt.frequency.exponentialRampToValueAtTime(400, t0 + 0.5);
+      filt.Q.value = 0.7;
+      const noiseG = ctx.createGain();
+      noiseG.gain.setValueAtTime(0.0001, t0);
+      noiseG.gain.exponentialRampToValueAtTime(0.4, t0 + 0.008);
+      noiseG.gain.exponentialRampToValueAtTime(0.12, t0 + 0.08);
+      noiseG.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.55);
+      noise.connect(filt);
+      filt.connect(noiseG);
+      noiseG.connect(ctx.destination);
+      noise.start(t0);
+      noise.stop(t0 + 0.6);
+
+      for (let k = 0; k < 5; k++) {
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        const tk = t0 + 0.02 + k * 0.045;
+        o.type = "sawtooth";
+        o.frequency.setValueAtTime(1200 + Math.random() * 2400, tk);
+        o.frequency.exponentialRampToValueAtTime(200 + Math.random() * 400, tk + 0.06);
+        g.gain.setValueAtTime(0.0001, tk);
+        g.gain.exponentialRampToValueAtTime(0.12, tk + 0.005);
+        g.gain.exponentialRampToValueAtTime(0.0001, tk + 0.07);
+        o.connect(g);
+        g.connect(ctx.destination);
+        o.start(tk);
+        o.stop(tk + 0.08);
+      }
+    }
+    function locateShortPoint(findp, key, shortRoot) {
+      let best = null;
+      state.wires.forEach((w) => {
+        if (findp(key(w.a.uid, w.a.term)) !== shortRoot) return;
+        const ia = find(w.a.uid), ib = find(w.b.uid);
+        if (!ia || !ib) return;
+        const ra = termRole(ia.type, w.a.term);
+        const rb = termRole(ib.type, w.b.term);
+        const pts = wirePts(w);
+        if (pts.length < 2) return;
+        const mid = midPoint(pts);
+        const score = ((ra === "l" && rb === "n") || (ra === "n" && rb === "l")) ? 2
+          : (ra !== rb ? 1 : 0);
+        if (!best || score > best.score) best = { x: mid.x, y: mid.y, wireId: w.id, score };
+      });
+      if (best) return best;
+      const cpt = state.items.find((i) => LIB[i.type] && isCompteurKind(LIB[i.type].kind));
+      if (cpt) {
+        const def = LIB[cpt.type];
+        const phaseId = compteurPhaseIds(def)[0];
+        const tL = phaseId ? def.terminals.find((t) => t.id === phaseId) : null;
+        const tN = def.terminals.find((t) => t.id === "N");
+        if (tL && tN) {
+          const a = termAbs(cpt, tL), b = termAbs(cpt, tN);
+          return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2, wireId: null, score: 0 };
+        }
+      }
+      return { x: 400, y: 300, wireId: null, score: 0 };
+    }
+    function tripProtectionsOnShort() {
+      state.items.forEach((item) => {
+        const def = LIB[item.type];
+        if (!def || def.push || hasCoil(def) || def.lamp || def.buzzer || def.motor) return;
+        if (def.pair || def.pairs || def.vv) item.closed = false;
+      });
+    }
+    function triggerShortCircuit(loc) {
+      state.short = {
+        x: loc.x,
+        y: loc.y,
+        wireId: loc.wireId,
+        t0: performance.now()
+      };
+      if (!state.shortArmed) {
+        state.shortArmed = true;
+        playShortCircuitSound();
+        tripProtectionsOnShort();
+      }
+    }
+    function clearShortIfIdle() {
+      if (!state.short) return;
+      if (performance.now() - state.short.t0 > 1600) state.short = null;
+    }
+    let fireSoundTimer = null;
+    function stopFireSoundLoop() {
+      if (fireSoundTimer != null) {
+        clearInterval(fireSoundTimer);
+        fireSoundTimer = null;
+      }
+      if (state._fireAnimRaf != null) {
+        cancelAnimationFrame(state._fireAnimRaf);
+        state._fireAnimRaf = null;
+      }
+    }
+    /* Relance le bang CC toutes les ~0,7 s tant que le feu est actif. */
+    function startFireSoundLoop() {
+      if (fireSoundTimer != null) return;
+      playShortCircuitSound();
+      fireSoundTimer = setInterval(() => {
+        if (!state.fire || !state.sim) {
+          stopFireSoundLoop();
+          return;
+        }
+        playShortCircuitSound();
+      }, 700);
+    }
+    function fireGrowProgress() {
+      if (!state.fire) return 0;
+      const elapsed = performance.now() - state.fire.t0;
+      const raw = Math.min(1, elapsed / 12000);
+      return raw * raw * (3 - 2 * raw);
+    }
+    /* Front organique : anneau de langues à rayon variable (pas un scale unique). */
+    function applyFireGrow(layer) {
+      if (!state.fire || !layer) return;
+      if (state._fireAnimRaf != null) {
+        cancelAnimationFrame(state._fireAnimRaf);
+        state._fireAnimRaf = null;
+      }
+      const p = fireGrowProgress();
+      const veil = layer.querySelector(".sc-fire-veil");
+      const ring = layer.querySelectorAll(".sc-ring-flame");
+      const smokeField = layer.querySelector(".sc-smoke-field");
+      const w = Math.max(board.clientWidth || 800, board.scrollWidth || 0);
+      const h = Math.max(board.clientHeight || 600, board.scrollHeight || 0);
+      const maxR = Math.min(Math.sqrt(w * w + h * h) * 0.55, Math.max(w, h) * 0.85);
+      const radius = 36 + p * Math.max(160, maxR);
+      const t = performance.now() * 0.001;
+      layer.style.setProperty("--fp", String(p));
+      layer.style.setProperty("--fr", radius.toFixed(1) + "px");
+      const bands = { "0": [], "1": [], "2": [] };
+      ring.forEach((el) => {
+        const b = el.getAttribute("data-band") || "0";
+        (bands[b] || bands["0"]).push(el);
+      });
+      const bandScale = { "0": 1, "1": 0.62, "2": 0.28 };
+      const bandAlpha = { "0": 0.95, "1": 0.75, "2": 0.55 };
+      Object.keys(bands).forEach((b) => {
+        const list = bands[b];
+        const n = list.length || 1;
+        const scale = bandScale[b] || 1;
+        list.forEach((el, i) => {
+          const ang = (i / n) * Math.PI * 2 + t * (0.12 + Number(b) * 0.04) + Number(b) * 0.4;
+          const lobe = 0.78 + 0.22 * Math.sin(i * 2.7 + p * 5 + Number(b)) + 0.06 * Math.sin(t * 4 + i);
+          const r = radius * scale * lobe;
+          const x = Math.cos(ang) * r;
+          const y = Math.sin(ang) * r * 0.78;
+          /* Flammes surtout verticales (montée), léger tilt selon l’angle */
+          const rot = Math.sin(ang) * 28 + Math.sin(t * 6 + i) * 12;
+          const appear = Math.max(0, Math.min(1, (p - i * 0.008 - Number(b) * 0.04) * 4));
+          el.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px) rotate(" + rot.toFixed(1) + "deg)";
+          el.style.opacity = String((bandAlpha[b] || 0.8) * appear);
+          const tongue = el.firstElementChild;
+          if (tongue) tongue.style.animationDelay = ((i + Number(b) * 3) * 0.03) + "s";
+        });
+      });
+      if (veil) veil.style.opacity = String(0.1 + p * 0.78);
+      if (smokeField) {
+        const spread = 1 + p * Math.max(3.5, radius / 90);
+        smokeField.style.transform = "scale(" + spread.toFixed(2) + ")";
+      }
+      if (p < 1 && state.fire) {
+        state._fireAnimRaf = requestAnimationFrame(() => {
+          state._fireAnimRaf = null;
+          const live = board.querySelector(".sc-fire-layer");
+          if (live && state.fire) applyFireGrow(live);
+        });
+      }
+    }
+    function clearFireImmediate() {
+      state.fire = null;
+      state.shortSince = null;
+      stopFireSoundLoop();
+      if (state._fireClearTimer) {
+        clearTimeout(state._fireClearTimer);
+        state._fireClearTimer = null;
+      }
+    }
+    function updateFireAfterShortCleared() {
+      state.shortSince = null;
+      if (!state.fire) return;
+      if (!state.sim) {
+        clearFireImmediate();
+        return;
+      }
+      /* Son stop net dès que le défaut est corrigé ; le visual s’éteint sous ~1,5 s */
+      stopFireSoundLoop();
+      const now = performance.now();
+      if (state.fire.clearAt == null) state.fire.clearAt = now + 1500;
+      if (now >= state.fire.clearAt) clearFireImmediate();
+    }
+    function maybeIgniteFire(loc) {
+      const now = performance.now();
+      if (state.shortSince == null) state.shortSince = now;
+      if (state.fire) {
+        state.fire.x = loc.x;
+        state.fire.y = loc.y;
+        state.fire.clearAt = null;
+        startFireSoundLoop();
+        return;
+      }
+      if (now - state.shortSince < 2500) return;
+      state.fire = { x: loc.x, y: loc.y, t0: now, clearAt: null };
+      startFireSoundLoop();
+    }
+    function stopAllBuzzers() {
+      buzzerNodes.forEach((node) => {
+        try { node.osc.stop(); } catch (e) {}
+        try { node.gain.disconnect(); } catch (e) {}
+      });
+      buzzerNodes.clear();
+    }
+    function syncBuzzers() {
+      if (!state.sim) {
+        stopAllBuzzers();
+        return;
+      }
+      const active = new Set();
+      state.items.forEach((item) => {
+        const def = LIB[item.type];
+        if (!def || !def.buzzer || !item.lit) return;
+        active.add(item.uid);
+        if (buzzerNodes.has(item.uid)) return;
+        const ctx = ensureAudio();
+        if (!ctx) return;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "square";
+        osc.frequency.value = 880;
+        gain.gain.value = 0.045;
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        buzzerNodes.set(item.uid, { osc, gain });
+      });
+      [...buzzerNodes.keys()].forEach((uid) => {
+        if (active.has(uid)) return;
+        const node = buzzerNodes.get(uid);
+        try { node.osc.stop(); } catch (e) {}
+        try { node.gain.disconnect(); } catch (e) {}
+        buzzerNodes.delete(uid);
+      });
+    }
+
+    function findSourceRoots(findp, key) {
+      let hotRoot = null, neuRoot = null, hotKey = null, neuKey = null;
+      state.items.forEach((item) => {
+        const def = LIB[item.type];
+        if (!def) return;
+        if (def.kind === "phase" || isCompteurKind(def.kind)) {
+          const phaseId = compteurPhaseIds(def)[0];
+          if (phaseId) {
+            const k = key(item.uid, phaseId);
+            if (!hotRoot) { hotRoot = findp(k); hotKey = k; }
+          }
+        }
+        if (def.kind === "neutre" || isCompteurKind(def.kind)) {
+          if (def.terminals.some((t) => t.id === "N")) {
+            const k = key(item.uid, "N");
+            if (!neuRoot) { neuRoot = findp(k); neuKey = k; }
+          }
+        }
+      });
+      return { hotRoot, neuRoot, hotKey, neuKey };
+    }
+
+    function simulate() {
+      state.items.forEach((i) => { i.hot = {}; i.neu = {}; i.lit = false; i.coilOn = false; });
+      state.wires.forEach((w) => { w.live = false; });
+      if (!state.sim) {
+        stopAllBuzzers();
+        state.shortArmed = false;
+        state.shortSince = null;
+        clearFireImmediate();
+        state.wires.forEach((w) => { w.live = false; w.liveN = false; w.fault = false; });
+        clearShortIfIdle();
+        if (state.ladder) {
+          resetLadderTimers();
+          state.ladder.hl = {};
+        }
+        return;
+      }
+      const parent = new Map();
+      const key = (uid, term) => uid + ":" + term;
+      function findp(k) {
+        if (!parent.has(k)) parent.set(k, k);
+        if (parent.get(k) !== k) parent.set(k, findp(parent.get(k)));
+        return parent.get(k);
+      }
+      function unite(a, b) { a = findp(a); b = findp(b); if (a !== b) parent.set(b, a); }
+
+      /* 1) Fils toujours connectés */
+      state.wires.forEach((w) => unite(key(w.a.uid, w.a.term), key(w.b.uid, w.b.term)));
+
+      /* 1b) Compteur 3P+N : L1/L2/L3 unis au même hotRoot pédagogique (sim mono-compatible) */
+      state.items.forEach((item) => {
+        const def = LIB[item.type];
+        if (!def || !isCompteurKind(def.kind)) return;
+        const phases = compteurPhaseIds(def);
+        for (let i = 1; i < phases.length; i++) {
+          unite(key(item.uid, phases[0]), key(item.uid, phases[i]));
+        }
+      });
+
+      /* 2) Passes : bus, contacts, poussoirs, bobines, secondaires */
+      for (let pass = 0; pass < 12; pass++) {
+        const roots = findSourceRoots(findp, key);
+        let { hotRoot, neuRoot, hotKey, neuKey } = roots;
+        if (!hotRoot || !neuRoot) return;
+
+        /* Peigne / bus : toutes bornes en parallèle */
+        state.items.forEach((item) => {
+          const def = LIB[item.type];
+          if (!def || !def.bus || !def.terminals || def.terminals.length < 2) return;
+          const ids = def.terminals.map((t) => t.id);
+          for (let i = 1; i < ids.length; i++) unite(key(item.uid, ids[0]), key(item.uid, ids[i]));
+        });
+
+        /* Secondaire transfo / alim 24V : si primaire L+N OK → couple pédagogique sec± → L/N */
+        state.items.forEach((item) => {
+          const def = LIB[item.type];
+          if (!def || !def.secondary) return;
+          const pL = findp(key(item.uid, "L"));
+          const pN = findp(key(item.uid, "N"));
+          if (pL === hotRoot && pN === neuRoot && hotKey && neuKey) {
+            unite(key(item.uid, def.secondary[0]), hotKey);
+            unite(key(item.uid, def.secondary[1]), neuKey);
+          }
+        });
+
+        /* Recalc roots après bus/secondaires */
+        ({ hotRoot, neuRoot, hotKey, neuKey } = findSourceRoots(findp, key));
+        if (!hotRoot || !neuRoot) return;
+
+        state.items.forEach((item) => {
+          const def = LIB[item.type];
+          if (!def) return;
+
+          /* Sélecteur Man / 0 / Auto : commun = borne 2 */
+          if (def.selector) {
+            const pos = item.selPos || "0";
+            if (pos === "man") unite(key(item.uid, "1"), key(item.uid, "2"));
+            else if (pos === "auto") unite(key(item.uid, "2"), key(item.uid, "3"));
+            return;
+          }
+
+          /* Va-et-vient : L↔1 ou L↔2 */
+          if (def.vv) {
+            if (item.closed) unite(key(item.uid, "L"), key(item.uid, "1"));
+            else unite(key(item.uid, "L"), key(item.uid, "2"));
+            return;
+          }
+
+          /* Fin de course : repos NC 11-12 ; actionné NO 13-14 */
+          if (def.fc) {
+            if (item.pressed) unite(key(item.uid, "13"), key(item.uid, "14"));
+            else unite(key(item.uid, "11"), key(item.uid, "12"));
+            return;
+          }
+
+          /* PLC : alimenté L+N → LCD ON ; Ix au potentiel L → plcIn ; Qi via Ladder (après scan) */
+          if (def.plc) {
+            const pL = findp(key(item.uid, "L"));
+            const pN = findp(key(item.uid, "N"));
+            const powered = (pL === hotRoot && pN === neuRoot) || (pL === neuRoot && pN === hotRoot);
+            item.coilOn = powered;
+            item.plcIn = {};
+            item.plcOut = {};
+            if (powered) {
+              for (let n = 1; n <= 8; n++) {
+                const id = "I" + n;
+                if (findp(key(item.uid, id)) === hotRoot) item.plcIn[id] = true;
+              }
+            }
+            return;
+          }
+
+          const pairList = def.pairs || (def.pair ? [def.pair] : null);
+          if (!pairList) return;
+
+          let closed;
+          if (def.push) {
+            closed = def.nc ? !item.pressed : !!item.pressed;
+          } else if (def.phaseMonitor) {
+            const nHot = ["L1", "L2", "L3"].filter((t) => findp(key(item.uid, t)) === hotRoot).length;
+            closed = nHot >= 2 || !!item.closed;
+            item.coilOn = nHot >= 2;
+          } else if (hasCoil(def)) {
+            const a1 = findp(key(item.uid, "A1"));
+            const a2 = findp(key(item.uid, "A2"));
+            const coilOn = (a1 === hotRoot && a2 === neuRoot) || (a1 === neuRoot && a2 === hotRoot);
+            item.coilOn = coilOn;
+            if (def.latch) {
+              /* Télérupteur : front montant bobine → bascule contact */
+              if (coilOn && !item._coilPrev) item.closed = !item.closed;
+              item._coilPrev = coilOn;
+              closed = !!item.closed;
+            } else {
+              closed = coilOn || !!item.closed;
+            }
+          } else {
+            closed = !!item.closed;
+          }
+          if (closed) pairList.forEach((pr) => unite(key(item.uid, pr[0]), key(item.uid, pr[1])));
+        });
+
+        /* Ladder : évalue I/Q/TON puis unit L→Qi selon les bobines actives */
+        if (boardHasPlc()) {
+          ensureLadder();
+          const ladderIns = collectPlcInputs();
+          evalLadder(ladderIns, performance.now());
+          applyLadderToPlc(unite, key);
+        }
+      }
+
+      const roots = findSourceRoots(findp, key);
+      let { hotRoot, neuRoot, hotKey, neuKey } = roots;
+      if (!hotRoot || !neuRoot) {
+        state.shortArmed = false;
+        updateFireAfterShortCleared();
+        clearShortIfIdle();
+        return;
+      }
+
+      /* Court-circuit franc : L et N dans le même nœud (sans charge — les lampes n’unissent pas). */
+      if (hotKey && neuKey && findp(hotKey) === findp(neuKey)) {
+        const shortRoot = findp(hotKey);
+        const loc = locateShortPoint(findp, key, shortRoot);
+        triggerShortCircuit(loc);
+        maybeIgniteFire(loc);
+        state.items.forEach((i) => { i.hot = {}; i.neu = {}; i.lit = false; i.coilOn = false; });
+        state.wires.forEach((w) => {
+          w.live = false;
+          w.liveN = false;
+          w.fault = loc.wireId && w.id === loc.wireId;
+        });
+        stopAllBuzzers();
+        return;
+      }
+
+      state.shortArmed = false;
+      state.wires.forEach((w) => { w.fault = false; });
+      updateFireAfterShortCleared();
+      clearShortIfIdle();
+
+      function mark(uid, term) {
+        const root = findp(key(uid, term));
+        return { hot: root === hotRoot, neu: root === neuRoot };
+      }
+      state.items.forEach((item) => {
+        const def = LIB[item.type];
+        if (!def || !def.terminals) return;
+        def.terminals.forEach((t) => {
+          const m = mark(item.uid, t.id);
+          if (m.hot) item.hot[t.id] = true;
+          if (m.neu) item.neu[t.id] = true;
+        });
+        if (def.lamp) {
+          const ids = def.terminals.map((t) => t.id);
+          /* Voyant / sonore / PLC : bornes d'alim (X1/X2 ou L/N) */
+          let aId = ids[0], bId = ids[1] || ids[0];
+          if (ids.includes("X1") && ids.includes("X2")) { aId = "X1"; bId = "X2"; }
+          else if (ids.includes("L") && ids.includes("N")) { aId = "L"; bId = "N"; }
+          const a = mark(item.uid, aId);
+          const b = mark(item.uid, bId);
+          item.lit = (a.hot && b.neu) || (a.neu && b.hot);
+        }
+        if (def.motor) {
+          if (item.type === "moteur_1ph") {
+            /* Mono : L + N sous tension (polarité indifférente) */
+            const a = mark(item.uid, "L");
+            const b = mark(item.uid, "N");
+            item.lit = (a.hot && b.neu) || (a.neu && b.hot);
+          } else {
+            /* Tri : U/V/W alimentés (au moins une phase — sim pédagogique L1≈L2≈L3) */
+            item.lit = !!(item.hot.U || item.hot.V || item.hot.W);
+          }
+        }
+      });
+      /* Thermique : Isimulé moteur > Ir + fil direct sortie FR → moteur → trip (sinon clic zone trip) */
+      let thermalTrip = false;
+      state.items.forEach((item) => {
+        const def = LIB[item.type];
+        if (!def || !def.thermal || !item.closed) return;
+        const ir = thermalIrOf(item);
+        const outs = new Set(["2", "4", "6"].map((o) => item.uid + ":" + o));
+        const overloaded = state.items.some((m) => {
+          const md = LIB[m.type];
+          if (!md || !md.motor || !m.lit) return false;
+          const mi = Number(m.motorI) || md.motorI || 8;
+          if (!(mi > ir)) return false;
+          const targets = new Set(md.terminals.map((t) => m.uid + ":" + t.id));
+          return state.wires.some((w) => {
+            const a = w.a.uid + ":" + w.a.term;
+            const b = w.b.uid + ":" + w.b.term;
+            return (outs.has(a) && targets.has(b)) || (outs.has(b) && targets.has(a));
+          });
+        });
+        if (overloaded) {
+          item.closed = false;
+          thermalTrip = true;
+        }
+      });
+      if (thermalTrip && !state._thermalResim) {
+        state._thermalResim = true;
+        try { simulate(); } finally { state._thermalResim = false; }
+        return;
+      }
+      state.wires.forEach((w) => {
+        const m = mark(w.a.uid, w.a.term);
+        w.live = m.hot;
+        w.liveN = m.neu && !m.hot;
+      });
+    }
+
+    function render() {
+      /* Migre les anciens ids calibre, puis retire les types inconnus (ex. pastilles L/N). */
+      migrateItemTypes();
+      const before = state.items.length;
+      state.items = state.items.filter((i) => LIB[i.type]);
+      if (state.items.length !== before) {
+        const uids = new Set(state.items.map((i) => i.uid));
+        state.wires = state.wires.filter((w) => uids.has(w.a.uid) && uids.has(w.b.uid));
+      }
+      simulate();
+      syncBuzzers();
+      board.innerHTML = "";
+      const svgWires = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svgWires.setAttribute("class", "wires");
+      const width = wireWidth();
+      const NS = svgWires.namespaceURI;
+
+      if (!state.items.length && !state.wires.length) {
+        const hint = document.createElement("div");
+        hint.className = "empty-hint";
+        hint.textContent = "Canevas vide — choisis un composant à gauche";
+        board.appendChild(hint);
+      }
+
+      const appendStroke = (svg, d, attrs) => {
+        const el = document.createElementNS(NS, "path");
+        el.setAttribute("d", d);
+        el.setAttribute("fill", "none");
+        Object.entries(attrs).forEach(([k, v]) => {
+          if (v == null || v === "") return;
+          if (k === "className") el.setAttribute("class", v);
+          else if (k === "style") Object.assign(el.style, v);
+          else el.setAttribute(k, v);
+        });
+        svg.appendChild(el);
+        return el;
+      };
+
+      /* Un seul tracé fil complet (devant modules) — pas de masque / double rendu. */
+      const drawWire = (pts, color, live, id, liveN) => {
+        if (!pts || pts.length < 2) return;
+        const d = pathD(pts);
+        const selected = id != null && state.selectedWire === id;
+        const fault = id != null && state.wires.some((w) => w.id === id && w.fault);
+        const stroke = fault ? "#ef4444" : (live ? "#ef4444" : (liveN ? "#0088ce" : color));
+
+        if (id != null) {
+          const hit = appendStroke(svgWires, d, {
+            className: "hit",
+            stroke: "transparent",
+            "stroke-width": String(Math.max(16, width + 12)),
+            "stroke-linecap": "round",
+            "stroke-linejoin": "round"
+          });
+          hit.addEventListener("pointerdown", (ev) => {
+            ev.stopPropagation();
+            ev.preventDefault();
+            if (ev.button === 2) return;
+            if (ev.detail >= 2) {
+              const w = state.wires.find((x) => x.id === id);
+              if (!w) return;
+              pushHistory();
+              const cur = wirePts(w);
+              const rect = board.getBoundingClientRect();
+              const x = ev.clientX - rect.left + board.scrollLeft;
+              const y = ev.clientY - rect.top + board.scrollTop;
+              let best = 1, bestD = Infinity;
+              for (let i = 0; i < cur.length - 1; i++) {
+                const a = cur[i], b = cur[i + 1];
+                const dx = b.x - a.x, dy = b.y - a.y;
+                const len2 = dx * dx + dy * dy || 1;
+                let t = ((x - a.x) * dx + (y - a.y) * dy) / len2;
+                t = Math.max(0, Math.min(1, t));
+                const px = a.x + t * dx, py = a.y + t * dy;
+                const dist = Math.hypot(x - px, y - py);
+                if (dist < bestD) { bestD = dist; best = i; }
+              }
+              bakeWaypoints(w, insertJog(cur, best));
+              state.selected = null;
+              state.selectedWire = id;
+              render();
+              return;
+            }
+            state.selected = null;
+            state.selectedWire = id;
+            render();
+          });
+          hit.addEventListener("contextmenu", (ev) => {
+            ev.stopPropagation();
+            ev.preventDefault();
+            removeWire(id);
+          });
+        }
+
+        if (selected) {
+          appendStroke(svgWires, d, {
+            className: "sel-ring",
+            stroke: "#3b82f6",
+            "stroke-width": String(width + 6),
+            "stroke-linecap": "round",
+            "stroke-linejoin": "round",
+            "stroke-dasharray": "7 5"
+          });
+        }
+
+        /* Glow léger des conducteurs sous tension (L rouge / N bleu) */
+        if (!fault && (live || liveN)) {
+          appendStroke(svgWires, d, {
+            className: live ? "live-glow-l" : "live-glow-n",
+            stroke: live ? "#ef4444" : "#0088ce",
+            "stroke-width": String(width + 7),
+            "stroke-linecap": "round",
+            "stroke-linejoin": "round",
+            "stroke-opacity": "0.28"
+          });
+        }
+
+        appendStroke(svgWires, d, {
+          stroke: "rgba(15,23,42,.18)",
+          "stroke-width": String(width + 2.2),
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round"
+        });
+        if (isPeWireColor(color) && !live && !liveN) {
+          /* Fil PE bi-couleur jaune-vert (norme) */
+          appendStroke(svgWires, d, {
+            stroke: COLOR_PE_STRIPE,
+            "stroke-width": String(width),
+            "stroke-linecap": "round",
+            "stroke-linejoin": "round"
+          });
+          appendStroke(svgWires, d, {
+            stroke: COLOR_PE,
+            "stroke-width": String(Math.max(1.5, width * 0.45)),
+            "stroke-linecap": "round",
+            "stroke-linejoin": "round",
+            "stroke-dasharray": "5 4"
+          });
+        } else {
+          appendStroke(svgWires, d, {
+            className: fault ? "fault-wire" : undefined,
+            stroke,
+            "stroke-width": String(width + (fault ? 1.5 : 0)),
+            "stroke-linecap": "round",
+            "stroke-linejoin": "round"
+          });
+        }
+
+        /* Caps exacts sur la pastille (pas de gap). */
+        const capFill = (isPeWireColor(color) && !live && !liveN) ? COLOR_PE_STRIPE : stroke;
+        [pts[0], pts[pts.length - 1]].forEach((pt) => {
+          const dot = document.createElementNS(NS, "circle");
+          dot.setAttribute("cx", String(pt.x));
+          dot.setAttribute("cy", String(pt.y));
+          dot.setAttribute("r", String(Math.max(3.2, width * 0.55)));
+          dot.setAttribute("fill", capFill);
+          if (selected) {
+            dot.setAttribute("stroke", "#3b82f6");
+            dot.setAttribute("stroke-width", "2");
+          } else {
+            dot.setAttribute("stroke", "none");
+          }
+          dot.style.pointerEvents = "none";
+          svgWires.appendChild(dot);
+        });
+
+        if (selected && state.mode === "select" && pts.length >= 2) {
+          for (let i = 0; i < pts.length - 1; i++) {
+            const a = pts[i], b = pts[i + 1];
+            const len = Math.hypot(b.x - a.x, b.y - a.y);
+            if (len < 12) continue;
+            const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+            const horiz = almostEq(a.y, b.y);
+            const handle = document.createElementNS(NS, "rect");
+            handle.setAttribute("class", "whandle");
+            handle.setAttribute("x", String(mx - 5));
+            handle.setAttribute("y", String(my - 5));
+            handle.setAttribute("width", "10");
+            handle.setAttribute("height", "10");
+            handle.setAttribute("rx", "2");
+            handle.style.cursor = horiz ? "ns-resize" : "ew-resize";
+            handle.addEventListener("pointerdown", (ev) => {
+              ev.stopPropagation();
+              ev.preventDefault();
+              if (ev.button === 2) return;
+              const w = state.wires.find((x) => x.id === id);
+              if (!w) return;
+              const histKey = structuralKey(cloneEditableState());
+              pushHistory();
+              let startPts = wirePts(w);
+              let segIndex = i;
+              if (segIndex === 0 || segIndex === startPts.length - 2) {
+                startPts = insertJog(startPts, segIndex);
+                segIndex = segIndex === 0 ? 2 : startPts.length - 3;
+                bakeWaypoints(w, startPts);
+              }
+              state.wireDrag = {
+                id,
+                segIndex,
+                startPts,
+                ox: ev.clientX,
+                oy: ev.clientY,
+                histKey
+              };
+            });
+            svgWires.appendChild(handle);
+          }
+        }
+      };
+
+      /* 1) Composants / rail */
+      state.items.forEach((item) => {
+        const def = LIB[item.type];
+        if (!def) return;
+        const sz = itemSize(item);
+        const el = document.createElement("div");
+        el.className = "dev" + (state.selected === item.uid ? " sel" : "");
+        el.dataset.uid = item.uid;
+        if (def.push && item.pressed) el.classList.add("is-pressed");
+        if (def.kind === "rail") {
+          el.classList.add("rail");
+          if (!def.image) el.classList.add("rail-body");
+        }
+        if (def.kind === "pe") el.classList.add("source", "pe");
+        el.style.left = item.x + "px";
+        el.style.top = item.y + "px";
+        el.style.width = sz.w + "px";
+        el.style.height = sz.h + "px";
+        if (def.image) {
+          const img = document.createElement("img");
+          img.alt = def.name;
+          img.src = def.image;
+          el.appendChild(img);
+        } else if (def.kind === "pe") {
+          el.innerHTML = peSymbolSvg();
+          el.title = "Mise à la terre PE";
+        }
+        if (def.motor) {
+          const wrap = document.createElement("div");
+          wrap.className = "motor-rotor-wrap";
+          wrap.setAttribute("aria-hidden", "true");
+          const rotor = document.createElement("div");
+          rotor.className = "motor-rotor";
+          wrap.appendChild(rotor);
+          el.appendChild(wrap);
+          if (item.lit) {
+            el.classList.add("motor-run", "is-running");
+            el.title = (def.name || "Moteur") + " — en marche";
+          }
+        }
+        if (item.lit && !def.plc) {
+          const g = document.createElement("div");
+          g.className = "glow" + (def.buzzer ? " buzz" : def.motor ? " motor" : "");
+          /* Position du halo calée sur le dôme / globe (LIB.glow), pas le boîtier */
+          if (def.glow && !def.buzzer && !def.motor) {
+            const gl = def.glow;
+            g.style.inset = "auto";
+            g.style.left = (gl.nx * 100) + "%";
+            g.style.top = (gl.ny * 100) + "%";
+            g.style.width = (gl.w * 100) + "%";
+            g.style.height = (gl.h * 100) + "%";
+          }
+          el.appendChild(g);
+        }
+        if (hasCoil(def) && item.coilOn) {
+          const c = document.createElement("div");
+          c.className = "coil-on-hint";
+          c.title = "Bobine alimentée";
+          el.appendChild(c);
+        }
+        if (def.plc) {
+          const lcdDef = def.lcd || def.glow || { nx: 0.07, ny: 0.31, nw: 0.40, nh: 0.21 };
+          const lcd = document.createElement("div");
+          lcd.className = "plc-lcd" + (item.coilOn ? " on" : "");
+          lcd.style.left = (lcdDef.nx * 100) + "%";
+          lcd.style.top = (lcdDef.ny * 100) + "%";
+          lcd.style.width = (lcdDef.nw * 100) + "%";
+          lcd.style.height = (lcdDef.nh * 100) + "%";
+          lcd.title = item.coilOn ? "PLC alimenté (L+N) — RUN" : "PLC éteint";
+          if (item.coilOn) {
+            const rowI = document.createElement("div");
+            rowI.className = "plc-lcd-row";
+            const labI = document.createElement("span");
+            labI.className = "plc-lcd-lab";
+            labI.textContent = "I";
+            rowI.appendChild(labI);
+            for (let n = 1; n <= 8; n++) {
+              const d = document.createElement("span");
+              d.className = "plc-lcd-d" + (item.plcIn && item.plcIn["I" + n] ? " active" : "");
+              d.textContent = String(n);
+              rowI.appendChild(d);
+            }
+            const rowQ = document.createElement("div");
+            rowQ.className = "plc-lcd-row";
+            const labQ = document.createElement("span");
+            labQ.className = "plc-lcd-lab";
+            labQ.textContent = "Q";
+            rowQ.appendChild(labQ);
+            for (let n = 1; n <= 4; n++) {
+              const d = document.createElement("span");
+              d.className = "plc-lcd-d" + (item.plcOut && item.plcOut["Q" + n] ? " active" : "");
+              d.dataset.q = String(n);
+              d.textContent = String(n);
+              rowQ.appendChild(d);
+            }
+            const st = document.createElement("div");
+            st.className = "plc-lcd-status";
+            st.innerHTML = '<span class="lan">LAN</span><span class="run">RUN</span>';
+            lcd.appendChild(rowI);
+            lcd.appendChild(rowQ);
+            lcd.appendChild(st);
+          }
+          el.appendChild(lcd);
+          if (item.coilOn && item.plcOut) {
+            def.terminals.filter((t) => /^Q\d+$/.test(t.id) && item.plcOut[t.id]).forEach((t) => {
+              const g = document.createElement("div");
+              g.className = "plc-q-glow";
+              g.style.left = (t.nx * 100) + "%";
+              g.style.top = (t.ny * 100) + "%";
+              g.title = t.id + " ON";
+              el.appendChild(g);
+            });
+          }
+        }
+        if (def.selector) {
+          const sp = document.createElement("div");
+          sp.className = "sel-pos";
+          const lab = { man: "MAN", "0": "0", auto: "AUTO" };
+          sp.textContent = lab[item.selPos] || "0";
+          el.appendChild(sp);
+        }
+        /* IDR : zone TEST = déclenchement (ouvre le différentiel) */
+        if (def.prefix === "QI" && (def.pair || def.pairs)) {
+          const tb = document.createElement("div");
+          tb.className = "badge badge-hit";
+          tb.style.left = "auto";
+          tb.style.right = "4px";
+          tb.style.bottom = "36px";
+          tb.style.width = "34px";
+          tb.style.height = "22px";
+          tb.title = "TEST = déclencher l'IDR";
+          tb.setAttribute("aria-label", "TEST IDR");
+          tb.onclick = (ev) => {
+            ev.stopPropagation();
+            pushHistory();
+            item.closed = false;
+            render();
+          };
+          el.appendChild(tb);
+        }
+        /* Thermique : badge Ir + zone trip (ouvre puissance + NC 95-96) */
+        if (def.thermal) {
+          const ir = thermalIrOf(item);
+          const irBadge = document.createElement("div");
+          irBadge.className = "badge badge-ir";
+          irBadge.textContent = "Ir " + formatIr(ir) + "A";
+          irBadge.title = "Double-clic ou clic = régler Ir (A)";
+          irBadge.onclick = (ev) => {
+            ev.stopPropagation();
+            openSizeDialog(item);
+          };
+          el.appendChild(irBadge);
+          const trip = document.createElement("div");
+          trip.className = "badge badge-trip";
+          trip.title = "Déclencher le thermique (trip)";
+          trip.setAttribute("aria-label", "Trip thermique");
+          trip.onclick = (ev) => {
+            ev.stopPropagation();
+            pushHistory();
+            item.closed = false;
+            render();
+          };
+          el.appendChild(trip);
+        }
+        /* Compteur = source : LEDs IMP / ÉTAT comme un vrai compteur sous tension */
+        if (isCompteurKind(def.kind) && def.leds) {
+          const powered = !!state.sim;
+          def.leds.forEach((led) => {
+            const d = document.createElement("div");
+            d.className = "meter-led " + led.cls + (powered ? " on" : "");
+            /* IMP clignote comme un vrai compteur sous tension ; ÉTAT fixe = OK */
+            if (powered && led.cls === "imp") d.classList.add("blink");
+            d.style.left = (led.nx * 100) + "%";
+            d.style.top = (led.ny * 100) + "%";
+            d.title = led.cls === "imp" ? "IMP (impulsion)" : "ÉTAT (sous tension)";
+            el.appendChild(d);
+          });
+        }
+        if (def.pair || def.pairs || def.selector || def.vv) {
+          const b = document.createElement("div");
+          /* Pas de libellé Marche/Arrêt sur aucun composant — zone clic discrète seulement */
+          let on = def.push ? item.pressed : item.closed;
+          if (def.nc && def.push) on = !item.pressed;
+          if (hasCoil(def) && state.sim) on = def.latch ? !!item.closed : !!(item.coilOn || item.closed);
+          if (def.selector) on = item.selPos !== "0";
+          b.className = "badge badge-hit";
+          b.textContent = "";
+          b.setAttribute("aria-label", on ? "Marche" : "Arrêt");
+          b.title = def.selector
+            ? "Clic = Man → 0 → Auto"
+            : def.push
+            ? (state.sim ? "Maintenir = contact fermé" : "Lance « Vérifier » puis maintiens le bouton")
+            : hasCoil(def)
+              ? (def.latch ? "Impulsion A1/A2 bascule le contact — clic = reset" : "Bobine A1/A2 en sim — clic = forcer ouvert/fermé")
+              : "Clic = ouvrir/fermer — double-clic composant = dimensions";
+          b.style.cursor = "pointer";
+          b.onpointerdown = (ev) => {
+            ev.stopPropagation();
+            if (def.push) {
+              ev.preventDefault();
+              item.pressed = true;
+              render();
+            }
+          };
+          if (!def.push) {
+            b.onclick = (ev) => {
+              ev.stopPropagation();
+              pushHistory();
+              if (def.selector) {
+                const order = ["man", "0", "auto"];
+                const i = order.indexOf(item.selPos || "man");
+                item.selPos = order[(i + 1) % order.length];
+              } else {
+                item.closed = !item.closed;
+              }
+              render();
+            };
+          }
+          el.appendChild(b);
+        }
+        if (state.selected === item.uid && state.mode === "select") {
+          ["nw", "n", "ne", "e", "se", "s", "sw", "w"].forEach((dir) => {
+            const h = document.createElement("div");
+            h.className = "rhandle " + dir;
+            h.title = "Redimensionner";
+            h.onpointerdown = (ev) => {
+              ev.stopPropagation();
+              ev.preventDefault();
+              state.selected = item.uid;
+              state.selectedWire = null;
+              state.drag = null;
+              const histKey = structuralKey(cloneEditableState());
+              pushHistory();
+              state.resize = {
+                uid: item.uid,
+                dir,
+                px: ev.clientX,
+                py: ev.clientY,
+                x: item.x,
+                y: item.y,
+                w: sz.w,
+                h: sz.h,
+                ratio: sz.w / Math.max(1, sz.h),
+                histKey
+              };
+            };
+            el.appendChild(h);
+          });
+        }
+        el.onpointerdown = (ev) => {
+          if (ev.target.classList.contains("term")) return;
+          if (ev.target.classList.contains("rhandle")) return;
+          if (ev.target.classList.contains("badge")) return;
+          if (state.mode === "wire") return;
+          state.selected = item.uid;
+          state.selectedWire = null;
+          /* Poussoir : toujours enfoncer visuellement ; en sim = contact + pas de drag */
+          if (def.push) {
+            item.pressed = true;
+            if (state.sim) {
+              ensureAudio();
+              render();
+              return;
+            }
+          }
+          /* Sélecteur : cycle Man/0/Auto */
+          if (def.selector) {
+            const order = ["man", "0", "auto"];
+            const i = order.indexOf(item.selPos || "man");
+            pushHistory();
+            item.selPos = order[(i + 1) % order.length];
+            render();
+            return;
+          }
+          /* Disjoncteur / IDR / VV / VSD en sim : clic corps = ouvrir/fermer */
+          if (state.sim && (def.pair || def.pairs || def.vv) && !def.push && !hasCoil(def) && !def.plc) {
+            pushHistory();
+            item.closed = !item.closed;
+            render();
+            return;
+          }
+          const histKey = structuralKey(cloneEditableState());
+          pushHistory();
+          state.drag = { uid: item.uid, px: ev.clientX, py: ev.clientY, x: item.x, y: item.y, histKey };
+          if (isRail(item)) {
+            state.drag.group = beginRailGroupDrag(item);
+          }
+          render();
+        };
+        el.ondblclick = (ev) => {
+          if (ev.target.classList.contains("term") || ev.target.classList.contains("rhandle")) return;
+          ev.preventDefault();
+          ev.stopPropagation();
+          state.drag = null;
+          openSizeDialog(item);
+        };
+        board.appendChild(el);
+      });
+
+      /* 2) Fils au-dessus des modules */
+      board.appendChild(svgWires);
+      state.wires.forEach((w) => {
+        drawWire(wirePtsDraw(w), w.color, w.live, w.id, w.liveN);
+      });
+      if (state.preview) {
+        const pc = state.wireFrom
+          ? wireColorForRefs(state.wireFrom, state.wireFrom)
+          : state.color;
+        drawWire(state.preview.pts, pc, false, null, false);
+      }
+
+      /* 3) Pastilles bornes au premier plan */
+      state.items.forEach((item) => {
+        const def = LIB[item.type];
+        if (!def) return;
+        def.terminals.forEach((t) => {
+          const p = termAbs(item, t);
+          const role = termRole(item.type, t.id);
+          board.appendChild(makeTerm(p.x, p.y, item.uid, t.id, {
+            hot: item.hot[t.id],
+            neu: role === "n" || item.neu[t.id],
+            pe: role === "pe"
+          }));
+        });
+      });
+
+      /* 4) Effet court-circuit : bannière + arc / étincelles */
+      if (state.short) {
+        if (!state.fire) {
+          const banner = document.createElement("div");
+          banner.className = "sc-banner";
+          banner.innerHTML = "⚠ COURT-CIRCUIT L↔N<small>Protections déclenchées — corrige le câblage</small>";
+          board.appendChild(banner);
+          const fx = document.createElement("div");
+          fx.className = "sc-fx";
+          fx.style.left = state.short.x + "px";
+          fx.style.top = state.short.y + "px";
+          fx.innerHTML = '<div class="sc-flash"></div><div class="sc-arc"></div>';
+          for (let i = 0; i < 12; i++) {
+            const ang = (i / 12) * Math.PI * 2 + (i % 3) * 0.2;
+            const dist = 28 + (i % 4) * 18;
+            const sp = document.createElement("div");
+            sp.className = "sc-spark";
+            sp.style.setProperty("--dx", Math.cos(ang) * dist + "px");
+            sp.style.setProperty("--dy", Math.sin(ang) * dist + "px");
+            sp.style.animationDelay = (i * 0.03) + "s";
+            fx.appendChild(sp);
+          }
+          board.appendChild(fx);
+        }
+        /* Timer : relance simulate/render pour shortSince → feu et cycles d’arc */
+        if (!state._shortClearTimer) {
+          state._shortClearTimer = setTimeout(() => {
+            state._shortClearTimer = null;
+            if (!state.shortArmed) {
+              state.short = null;
+              render();
+            } else if (state.sim && state.short) {
+              /* CC toujours là : nouveau cycle d’étincelles (+ feu si délai dépassé) */
+              state.short.t0 = performance.now();
+              render();
+            }
+          }, 700);
+        }
+      }
+      /* 4b) Incendie pédagogique si CC persiste ~2,5 s — croît jusqu’au board entier */
+      if (state.fire) {
+        const banner = document.createElement("div");
+        banner.className = "sc-banner fire";
+        banner.innerHTML = "🔥 INCENDIE — défaut non éliminé<small>Retire le pont L↔N / corrige le câblage</small>";
+        board.appendChild(banner);
+        const layer = document.createElement("div");
+        layer.className = "sc-fire-layer";
+        layer.style.setProperty("--fx", state.fire.x + "px");
+        layer.style.setProperty("--fy", state.fire.y + "px");
+        layer.style.setProperty("--fp", "0");
+        const veil = document.createElement("div");
+        veil.className = "sc-fire-veil";
+        layer.appendChild(veil);
+        const burn = document.createElement("div");
+        burn.className = "sc-burn-zone";
+        layer.appendChild(burn);
+        const light = document.createElement("div");
+        light.className = "sc-fire-light";
+        layer.appendChild(light);
+        const ring = document.createElement("div");
+        ring.className = "sc-flame-ring";
+        /* Plusieurs anneaux densifiés (front + intérieur) — pas un blob scale */
+        const kinds = ["", "tall", "wide", "hot"];
+        let ringHtml = "";
+        for (let i = 0; i < 42; i++) {
+          const k = kinds[i % kinds.length];
+          const band = i < 18 ? "0" : (i < 30 ? "1" : "2"); /* 0=front, 1=mid, 2=core */
+          ringHtml += '<div class="sc-ring-flame' + (k ? " " + k : "") + '" data-band="' + band + '"><i></i></div>';
+        }
+        ring.innerHTML = ringHtml;
+        layer.appendChild(ring);
+        const origin = document.createElement("div");
+        origin.className = "sc-fire-origin";
+        origin.innerHTML =
+          '<div class="sc-fire-glow"></div>' +
+          '<div class="sc-flame"></div><div class="sc-flame f2"></div><div class="sc-flame f3"></div>' +
+          '<div class="sc-flame f4"></div><div class="sc-flame f5"></div>' +
+          '<div class="sc-flame f6"></div><div class="sc-flame f7"></div><div class="sc-flame f8"></div>' +
+          '<div class="sc-ember" style="--ex:10px;left:0;top:-20px"></div>' +
+          '<div class="sc-ember e2" style="--ex:-12px;left:0;top:-18px"></div>' +
+          '<div class="sc-ember e3" style="--ex:16px;left:0;top:-22px"></div>' +
+          '<div class="sc-ember e4" style="--ex:-6px;left:0;top:-16px"></div>' +
+          '<div class="sc-ember e5" style="--ex:4px;left:0;top:-24px"></div>';
+        layer.appendChild(origin);
+        const smoke = document.createElement("div");
+        smoke.className = "sc-smoke-field";
+        smoke.innerHTML =
+          '<div class="sc-smoke"></div><div class="sc-smoke s2"></div><div class="sc-smoke s3"></div>' +
+          '<div class="sc-smoke s4"></div><div class="sc-smoke s5"></div><div class="sc-smoke s6"></div>' +
+          '<div class="sc-smoke s7"></div><div class="sc-smoke s8"></div><div class="sc-smoke s9"></div>';
+        layer.appendChild(smoke);
+        board.appendChild(layer);
+        applyFireGrow(layer);
+        if (state.fire.clearAt != null && !state._fireClearTimer) {
+          const delay = Math.max(0, state.fire.clearAt - performance.now()) + 30;
+          state._fireClearTimer = setTimeout(() => {
+            state._fireClearTimer = null;
+            if (state.fire && state.fire.clearAt != null && performance.now() >= state.fire.clearAt) {
+              clearFireImmediate();
+            }
+            render();
+          }, delay);
+        }
+      }
+      syncColorSwatches();
+      syncLadderLayout();
+      if (ladderShouldShow()) renderLadderPanel();
+    }
+
+    function removeWire(id) {
+      pushHistory();
+      state.wires = state.wires.filter((w) => w.id !== id);
+      if (state.selectedWire === id) state.selectedWire = null;
+      render();
+    }
+
+    function deleteSelection() {
+      if (state.selectedWire) {
+        removeWire(state.selectedWire);
+        return true;
+      }
+      if (state.selected) {
+        pushHistory();
+        const uid = state.selected;
+        state.wires = state.wires.filter((w) => w.a.uid !== uid && w.b.uid !== uid);
+        state.items = state.items.filter((i) => i.uid !== uid);
+        state.selected = null;
+        render();
+        return true;
+      }
+      return false;
+    }
+
+    function makeTerm(x, y, uid, id, mark) {
+      const t = document.createElement("div");
+      const pe = mark && mark.pe;
+      const neu = mark && mark.neu && !mark.hot && !pe;
+      t.className = "term" + (mark && mark.hot ? " hot" : "") + (neu ? " neu" : "") + (pe ? " pe" : "");
+      t.style.left = x + "px";
+      t.style.top = y + "px";
+      t.textContent = pe ? "PE" : (id.length > 2 ? id.slice(0, 2) : id);
+      t.title = pe ? "PE — mise à la terre" : (neu ? "N — neutre (bleu)" : id);
+      t.onpointerdown = (ev) => {
+        ev.stopPropagation();
+        ev.preventDefault();
+        if (state.mode === "wire") {
+          onTerm(uid, id);
+          return;
+        }
+        // Mode Select : clic borne = décrocher tous les fils de cette borne
+        const before = state.wires.length;
+        const next = state.wires.filter((w) => !(
+          (w.a.uid === uid && w.a.term === id) ||
+          (w.b.uid === uid && w.b.term === id)
+        ));
+        if (next.length !== before) {
+          pushHistory();
+          state.wires = next;
+          state.selectedWire = null;
+          render();
+        }
+      };
+      return t;
+    }
+
+    function onTerm(uid, id) {
+      if (!state.wireFrom) {
+        state.wireFrom = { uid, term: id };
+        const item = find(uid);
+        if (item) {
+          const role = termRole(item.type, id);
+          if (role === "pe") state.color = COLOR_PE;
+          else if (role === "n") state.color = COLOR_N;
+          syncColorSwatches();
+        }
+        return;
+      }
+      if (state.wireFrom.uid === uid && state.wireFrom.term === id) {
+        state.wireFrom = null;
+        state.preview = null;
+        render();
+        return;
+      }
+      pushHistory();
+      const bRef = { uid, term: id };
+      const w = {
+        id: "w" + (state.seq++),
+        no: state.wireNo++,
+        a: state.wireFrom,
+        b: bRef,
+        color: wireColorForRefs(state.wireFrom, bRef),
+        live: false,
+        waypoints: []
+      };
+      /* Figé à la création : stub directionnel + Manhattan ; édition = waypoints libres. */
+      bakeWaypoints(w, autoRoute(endpoint(w.a), endpoint(w.b)));
+      state.wires.push(w);
+      state.wireFrom = null;
+      state.preview = null;
+      render();
+    }
+
+    function applyResizePointer(ev) {
+      if (!state.resize) return false;
+      const item = find(state.resize.uid);
+      if (!item) return true;
+      const dx = ev.clientX - state.resize.px;
+      const dy = ev.clientY - state.resize.py;
+      const dir = state.resize.dir;
+      const keep = ev.shiftKey;
+      let nx = state.resize.x;
+      let ny = state.resize.y;
+      let nw = state.resize.w;
+      let nh = state.resize.h;
+      if (dir.includes("e")) nw = state.resize.w + dx;
+      if (dir.includes("w")) { nw = state.resize.w - dx; nx = state.resize.x + dx; }
+      if (dir.includes("s")) nh = state.resize.h + dy;
+      if (dir.includes("n")) { nh = state.resize.h - dy; ny = state.resize.y + dy; }
+      if (keep) {
+        const r = state.resize.ratio || 1;
+        const corner = dir.length === 2;
+        if (corner) {
+          if (Math.abs(dx) >= Math.abs(dy)) {
+            nh = nw / r;
+            if (dir.includes("n")) ny = state.resize.y + state.resize.h - nh;
+          } else {
+            nw = nh * r;
+            if (dir.includes("w")) nx = state.resize.x + state.resize.w - nw;
+          }
+        } else if (dir === "e" || dir === "w") {
+          nh = nw / r;
+          ny = state.resize.y + (state.resize.h - nh) / 2;
+        } else if (dir === "n" || dir === "s") {
+          nw = nh * r;
+          nx = state.resize.x + (state.resize.w - nw) / 2;
+        }
+      }
+      nw = Math.max(MIN_SIZE, nw);
+      nh = Math.max(MIN_SIZE, nh);
+      if (dir.includes("w")) nx = state.resize.x + state.resize.w - nw;
+      if (dir.includes("n")) ny = state.resize.y + state.resize.h - nh;
+      item.w = Math.round(nw);
+      item.h = Math.round(nh);
+      item.y = Math.max(8, ny);
+      item.x = resolveDinX(item, Math.max(8, nx), item.y);
+      render();
+      return true;
+    }
+
+    board.addEventListener("pointermove", (ev) => {
+      const rect = board.getBoundingClientRect();
+      const x = ev.clientX - rect.left + board.scrollLeft;
+      const y = ev.clientY - rect.top + board.scrollTop;
+      if (state.wireDrag || state.resize) return;
+      if (state.drag) {
+        const item = find(state.drag.uid);
+        if (!item) return;
+        const nx = Math.max(8, state.drag.x + (ev.clientX - state.drag.px));
+        const ny = Math.max(8, state.drag.y + (ev.clientY - state.drag.py));
+        if (state.drag.group) {
+          applyRailGroupDrag(state.drag, nx, ny);
+        } else {
+          item.y = ny;
+          item.x = resolveDinX(item, nx, ny);
+        }
+        render();
+        return;
+      }
+      if (state.mode === "wire" && state.wireFrom) {
+        const a = endpoint(state.wireFrom);
+        state.preview = { pts: route(a, { x, y, direction: "top" }) };
+        render();
+      }
+    });
+    window.addEventListener("pointermove", (ev) => {
+      if (applyResizePointer(ev)) return;
+      if (!state.wireDrag) return;
+      const w = state.wires.find((x) => x.id === state.wireDrag.id);
+      if (!w) return;
+      const dx = ev.clientX - state.wireDrag.ox;
+      const dy = ev.clientY - state.wireDrag.oy;
+      const start = state.wireDrag.startPts;
+      const i = state.wireDrag.segIndex;
+      if (i < 0 || i >= start.length - 1) return;
+      const a = start[i], b = start[i + 1];
+      const horiz = almostEq(a.y, b.y);
+      const targetX = horiz ? a.x : a.x + dx;
+      const targetY = horiz ? a.y + dy : a.y;
+      bakeWaypoints(w, moveOrthoSegment(start, i, targetX, targetY));
+      render();
+    });
+    window.addEventListener("pointerup", () => {
+      state.items.forEach((i) => {
+        if (LIB[i.type].push) i.pressed = false;
+      });
+      const wasWireDrag = !!state.wireDrag;
+      const wireHistKey = state.wireDrag && state.wireDrag.histKey;
+      const dragHistKey = state.drag && state.drag.histKey;
+      const resizeHistKey = state.resize && state.resize.histKey;
+      const dragged = state.drag && find(state.drag.uid);
+      if (dragged) {
+        if (state.drag.group && state.drag.group.items) {
+          state.drag.group.items.forEach((s) => {
+            const it = find(s.uid);
+            if (it && isDinModule(it)) {
+              it.x = resolveDinX(it, it.x, it.y);
+            }
+          });
+        } else {
+          dragged.x = resolveDinX(dragged, dragged.x, dragged.y);
+        }
+      }
+      const resized = state.resize && find(state.resize.uid);
+      if (resized) {
+        resized.x = resolveDinX(resized, resized.x, resized.y);
+      }
+      const wasDrag = !!state.drag;
+      const wasResize = !!state.resize;
+      state.drag = null;
+      state.resize = null;
+      state.wireDrag = null;
+      if (wasDrag) discardHistoryIfUnchanged(dragHistKey);
+      if (wasResize) discardHistoryIfUnchanged(resizeHistKey);
+      if (wasWireDrag) discardHistoryIfUnchanged(wireHistKey);
+      if (state.sim || wasWireDrag || wasDrag || wasResize) render();
+    });
+
+    /* --- Dialogue Largeur / Hauteur (double-clic) — + Ir si thermique --- */
+    let sizeDialogUid = null;
+    const sizeModal = document.getElementById("sizeModal");
+    const sizeW = document.getElementById("sizeW");
+    const sizeH = document.getElementById("sizeH");
+    const sizeIr = document.getElementById("sizeIr");
+    const sizeIrWrap = document.getElementById("sizeIrWrap");
+    function closeSizeDialog() {
+      sizeDialogUid = null;
+      sizeModal.classList.remove("open");
+      sizeModal.setAttribute("aria-hidden", "true");
+      if (sizeIrWrap) sizeIrWrap.hidden = true;
+    }
+    function openSizeDialog(item) {
+      if (!item) return;
+      state.selected = item.uid;
+      state.selectedWire = null;
+      state.drag = null;
+      sizeDialogUid = item.uid;
+      const def = LIB[item.type];
+      const sz = itemSize(item);
+      document.getElementById("sizeModalSub").textContent =
+        (item.tag || "") + " — " + (def && def.name ? def.name : item.type);
+      sizeW.value = String(Math.round(sz.w));
+      sizeH.value = String(Math.round(sz.h));
+      const isThermal = !!(def && def.thermal);
+      if (sizeIrWrap) sizeIrWrap.hidden = !isThermal;
+      if (isThermal && sizeIr) {
+        sizeIr.min = String(def.irMin != null ? def.irMin : 0.63);
+        sizeIr.max = String(def.irMax != null ? def.irMax : 40);
+        sizeIr.value = String(thermalIrOf(item));
+        document.getElementById("sizeModalTitle").textContent = "Dimensions / Ir";
+      } else {
+        document.getElementById("sizeModalTitle").textContent = "Dimensions";
+      }
+      sizeModal.classList.add("open");
+      sizeModal.setAttribute("aria-hidden", "false");
+      setTimeout(() => (isThermal && sizeIr ? sizeIr : sizeW).focus(), 0);
+    }
+    function readSizeInputs() {
+      return { w: clampSize(sizeW.value), h: clampSize(sizeH.value) };
+    }
+    function applyThermalIrFromDialog(item) {
+      const def = LIB[item.type];
+      if (!def || !def.thermal || !sizeIr) return;
+      item.thermalIr = clampThermalIr(sizeIr.value, def);
+    }
+    document.getElementById("sizeApply").onclick = () => {
+      const item = find(sizeDialogUid);
+      if (!item) { closeSizeDialog(); return; }
+      const { w, h } = readSizeInputs();
+      pushHistory();
+      applyItemSize(item, w, h);
+      applyThermalIrFromDialog(item);
+      closeSizeDialog();
+      render();
+    };
+    document.getElementById("sizeApplyAll").onclick = () => {
+      const item = find(sizeDialogUid);
+      if (!item) { closeSizeDialog(); return; }
+      const { w, h } = readSizeInputs();
+      pushHistory();
+      applySizeToSameType(item, w, h);
+      applyThermalIrFromDialog(item);
+      const def = LIB[item.type];
+      if (def && def.thermal) {
+        const ir = item.thermalIr;
+        state.items.forEach((it) => {
+          if (it.type === item.type) it.thermalIr = ir;
+        });
+      }
+      closeSizeDialog();
+      render();
+    };
+    document.getElementById("sizeCancel").onclick = () => closeSizeDialog();
+    sizeModal.addEventListener("pointerdown", (ev) => {
+      if (ev.target === sizeModal) closeSizeDialog();
+    });
+    sizeW.addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter") document.getElementById("sizeApply").click();
+      if (ev.key === "Escape") closeSizeDialog();
+    });
+    sizeH.addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter") document.getElementById("sizeApply").click();
+      if (ev.key === "Escape") closeSizeDialog();
+    });
+    if (sizeIr) {
+      sizeIr.addEventListener("keydown", (ev) => {
+        if (ev.key === "Enter") document.getElementById("sizeApply").click();
+        if (ev.key === "Escape") closeSizeDialog();
+      });
+    }
+    window.addEventListener("keydown", (ev) => {
+      if (ev.key === "Escape" && sizeModal.classList.contains("open")) {
+        closeSizeDialog();
+        ev.preventDefault();
+      }
+    });
+    window.addEventListener("keydown", (ev) => {
+      const tag = (ev.target && ev.target.tagName) || "";
+      const inField = /^(INPUT|TEXTAREA|SELECT)$/.test(tag);
+      const mod = ev.metaKey || ev.ctrlKey;
+      if (mod && !inField && (ev.key === "z" || ev.key === "Z")) {
+        ev.preventDefault();
+        if (ev.shiftKey) redo();
+        else undo();
+        return;
+      }
+      if (mod && !inField && (ev.key === "y" || ev.key === "Y")) {
+        ev.preventDefault();
+        redo();
+        return;
+      }
+      if (ev.key !== "Delete" && ev.key !== "Backspace") return;
+      if (sizeModal.classList.contains("open")) return;
+      if (inField) return;
+      if (deleteSelection()) ev.preventDefault();
+    });
+
+    board.addEventListener("pointerdown", (ev) => {
+      if (ev.target !== board) return;
+      state.selected = null;
+      state.selectedWire = null;
+      render();
+    });
+
+    function setMode(mode) {
+      state.mode = mode;
+      state.wireFrom = null;
+      state.preview = null;
+      document.getElementById("modeSelect").classList.toggle("active", mode === "select");
+      document.getElementById("modeWire").classList.toggle("active", mode === "wire");
+      board.classList.toggle("mode-select", mode === "select");
+      board.classList.toggle("mode-wire", mode === "wire");
+      render();
+    }
+    document.getElementById("modeSelect").onclick = () => setMode("select");
+    document.getElementById("modeWire").onclick = () => setMode("wire");
+    document.getElementById("btnPlay").onclick = () => {
+      state.sim = !state.sim;
+      document.getElementById("btnPlay").classList.toggle("on", state.sim);
+      document.getElementById("btnPlay").textContent = state.sim ? "Arrêter" : "Vérifier";
+      if (state.sim) {
+        ensureAudio();
+        resetLadderTimers();
+        startLadderLoop();
+      } else {
+        stopLadderLoop();
+        stopAllBuzzers();
+        state.shortArmed = false;
+        state.short = null;
+        clearFireImmediate();
+        resetLadderTimers();
+      }
+      render();
+    };
+    document.getElementById("btnLadder").onclick = () => {
+      const showing = ladderShouldShow();
+      state.ladderOpen = !showing;
+      syncLadderLayout();
+    };
+    document.getElementById("btnAddRung").onclick = () => addSimpleRung();
+    document.getElementById("btnResetLadder").onclick = () => {
+      ensureLadder();
+      state.ladder.rungs = defaultLadderProgram();
+      ladderRungSeq = 4;
+      resetLadderTimers();
+      renderLadderPanel();
+      if (state.sim) render();
+    };
+    document.getElementById("btnDelete").onclick = () => { deleteSelection(); };
+    document.getElementById("btnUndo").onclick = () => undo();
+    document.getElementById("btnRedo").onclick = () => redo();
+    document.getElementById("btnClearWires").onclick = () => {
+      if (!state.wires.length) return;
+      pushHistory();
+      state.wires = [];
+      state.preview = null;
+      state.wireFrom = null;
+      state.selectedWire = null;
+      render();
+    };
+    document.getElementById("btnNew").onclick = () => {
+      if (!state.items.length && !state.wires.length) return;
+      pushHistory();
+      state.items = [];
+      state.wires = [];
+      state.counts = {};
+      state.wireNo = 1;
+      state.sim = false;
+      state.selected = null;
+      state.selectedWire = null;
+      state.wireFrom = null;
+      state.preview = null;
+      state.ladderOpen = null;
+      stopLadderLoop();
+      resetLadderTimers();
+      document.getElementById("btnPlay").classList.remove("on");
+      document.getElementById("btnPlay").textContent = "Vérifier";
+      render();
+    };
+    board.classList.add("mode-select");
+    updateHistoryButtons();
+    ensureLadder();
+    syncLadderLayout();
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <script src="js/theme-electric-neon.js?v=chrome1"></script>
+  <meta name="description" content="École électricité — SwissDZ Panel, tableau électrique pédagogique pour la formation. Accès par code." />
+  <meta name="robots" content="noindex, follow" />
+  <title>École électricité — SwissDZ Panel | Electro DZ</title>
+  <link rel="icon" href="assets/app-icon.png" type="image/png" />
+  <link rel="stylesheet" href="css/simulation-swissdz.css?v=20260917chrome1" />
+  <link rel="stylesheet" href="css/ecole-electricite.css?v=20260927a" />
+  <link rel="canonical" href="https://electro-dz.com/ecole-electricite.html" />
+</head>
+<body class="sim-page ecole-page">
+  <header class="sim-topbar">
+    <a href="index-fr.html" class="sim-brand" data-i18n-href-fr="index-fr.html" data-i18n-href-ar="index.html">
+      <img src="assets/app-icon.png" alt="" width="32" height="32" decoding="async" />
+      <span>Swiss<span class="accent">DZ</span></span>
+    </a>
+    <a href="index-fr.html" class="edz-home-link" data-edz-home="1" data-i18n="nav.home">Accueil</a>
+    <div class="sim-top-actions">
+      <div class="sim-lang">
+        <button type="button" class="lang-btn active" data-lang="fr" aria-label="Français">FR</button>
+        <button type="button" class="lang-btn" data-lang="ar" aria-label="العربية">AR</button>
+        <button type="button" class="lang-btn" data-lang="en" aria-label="English">EN</button>
+      </div>
+      <button type="button" class="sim-fs-toggle" id="simFsToggle" aria-pressed="false" aria-controls="simFrameWrap" hidden>
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M7 14H5v5h5v-2H7v-3zm12 0h-2v3h-3v2h5v-5zM7 7h3V5H5v5h2V7zm12-2h-5v2h3v3h2V5z"/>
+        </svg>
+        <span class="sim-fs-enter" data-i18n="fs.enter">Plein écran</span>
+        <span class="sim-fs-exit" data-i18n="fs.exit">Quitter</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="sim-workspace ecole-workspace">
+    <section id="ecoleGate" class="ecole-gate" aria-labelledby="ecoleGateTitle">
+      <div class="ecole-gate-card">
+        <p class="ecole-badge" data-i18n="badge">Formation</p>
+        <h1 id="ecoleGateTitle" data-i18n="title">École électricité</h1>
+        <p class="ecole-lead" data-i18n="lead">
+          Accédez au SwissDZ Panel — tableau électrique pédagogique pour composer et comprendre un tableau.
+        </p>
+        <form id="ecoleGateForm" class="ecole-gate-form" autocomplete="off">
+          <label for="ecoleCode" data-i18n="codeLabel">Code d’accès</label>
+          <input
+            id="ecoleCode"
+            name="code"
+            type="password"
+            inputmode="text"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            placeholder="••••••••"
+            required
+          />
+          <button type="submit" id="ecoleEnter" data-i18n="enter">Entrer</button>
+          <p class="ecole-err" id="ecoleGateErr" hidden data-i18n-err="err">Code incorrect. Réessayez.</p>
+        </form>
+      </div>
+    </section>
+
+    <div class="sim-frame-wrap ecole-frame-wrap" id="simFrameWrap" hidden>
+      <p class="sim-loading" id="simLoading" data-i18n="loading">Chargement du tableau…</p>
+      <iframe
+        id="simFrame"
+        title="SwissDZ Panel — École électricité"
+        allow="fullscreen"
+        allowfullscreen
+        loading="lazy"
+      ></iframe>
+      <button type="button" class="sim-fs-close" id="simFsClose">
+        <span class="sim-fs-close-x" aria-hidden="true">×</span>
+        <span data-i18n="fs.close">Fermer</span>
+      </button>
+    </div>
+
+    <p class="sim-footer-note" data-i18n="footer">
+      Outil pédagogique SwissDZ — École électricité. Toute installation réelle doit être vérifiée par un professionnel habilité.
+    </p>
+  </div>
+
+  <script>
+    (function () {
+      var LANG_STORAGE = "electrodz-site-lang";
+      var UNLOCK_KEY = "electrodz-ecole-unlocked";
+      var ACCESS_CODE = "athmano";
+      var PANEL_SRC = "swissdz-panel/index.html";
+
+      var T = {
+        fr: {
+          "meta.title": "École électricité — SwissDZ Panel | Electro DZ",
+          "meta.desc": "École électricité — SwissDZ Panel, tableau électrique pédagogique pour la formation. Accès par code.",
+          "nav.home": "Accueil",
+          badge: "Formation",
+          title: "École électricité",
+          lead: "Accédez au SwissDZ Panel — tableau électrique pédagogique pour composer et comprendre un tableau.",
+          codeLabel: "Code d’accès",
+          enter: "Entrer",
+          err: "Code incorrect. Réessayez.",
+          loading: "Chargement du tableau…",
+          footer: "Outil pédagogique SwissDZ — École électricité. Toute installation réelle doit être vérifiée par un professionnel habilité.",
+          "fs.enter": "Plein écran",
+          "fs.exit": "Quitter",
+          "fs.close": "Fermer",
+        },
+        ar: {
+          "meta.title": "مدرسة الكهرباء — SwissDZ Panel | Electro DZ",
+          "meta.desc": "مدرسة الكهرباء — لوحة SwissDZ التعليمية للتكوين. الدخول برمز.",
+          "nav.home": "الرئيسية",
+          badge: "تكوين",
+          title: "مدرسة الكهرباء",
+          lead: "ادخل إلى SwissDZ Panel — لوحة كهربائية تعليمية لتركيب وفهم لوحة التوزيع.",
+          codeLabel: "رمز الدخول",
+          enter: "دخول",
+          err: "رمز غير صحيح. أعد المحاولة.",
+          loading: "جاري تحميل اللوحة…",
+          footer: "أداة تعليمية SwissDZ — مدرسة الكهرباء. أي تركيب حقيقي يجب أن يتحقق منه مختص مؤهل.",
+          "fs.enter": "ملء الشاشة",
+          "fs.exit": "خروج",
+          "fs.close": "إغلاق",
+        },
+        en: {
+          "meta.title": "Electricity school — SwissDZ Panel | Electro DZ",
+          "meta.desc": "Electricity school — SwissDZ Panel, educational electrical board for training. Access code required.",
+          "nav.home": "Home",
+          badge: "Training",
+          title: "Electricity school",
+          lead: "Access the SwissDZ Panel — an educational electrical board to build and understand a distribution board.",
+          codeLabel: "Access code",
+          enter: "Enter",
+          err: "Incorrect code. Please try again.",
+          loading: "Loading the panel…",
+          footer: "SwissDZ educational tool — Electricity school. Any live installation must be verified by a qualified professional.",
+          "fs.enter": "Fullscreen",
+          "fs.exit": "Exit",
+          "fs.close": "Close",
+        },
+      };
+
+      function normalizeLang(next) {
+        return next === "fr" || next === "ar" || next === "en" ? next : "fr";
+      }
+
+      var lang = "fr";
+      try {
+        lang = normalizeLang(localStorage.getItem(LANG_STORAGE) || "");
+      } catch (e) {}
+
+      function t(k) {
+        return (T[lang] && T[lang][k]) || T.fr[k] || k;
+      }
+
+      function isUnlocked() {
+        try {
+          return sessionStorage.getItem(UNLOCK_KEY) === "1";
+        } catch (e) {
+          return false;
+        }
+      }
+
+      function setUnlocked() {
+        try {
+          sessionStorage.setItem(UNLOCK_KEY, "1");
+        } catch (e) {}
+      }
+
+      function normalizeCode(raw) {
+        return String(raw || "")
+          .trim()
+          .toLowerCase()
+          .replace(/\s+/g, "");
+      }
+
+      function applyLang(next) {
+        lang = normalizeLang(next);
+        try {
+          localStorage.setItem(LANG_STORAGE, lang);
+        } catch (e) {}
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+        document.title = t("meta.title");
+        var meta = document.querySelector('meta[name="description"]');
+        if (meta) meta.setAttribute("content", t("meta.desc"));
+        document.querySelectorAll("[data-i18n]").forEach(function (el) {
+          el.textContent = t(el.getAttribute("data-i18n"));
+        });
+        var errEl = document.getElementById("ecoleGateErr");
+        if (errEl && !errEl.hidden) {
+          errEl.textContent = t("err");
+        }
+        var brand = document.querySelector(".sim-brand");
+        var home = lang === "fr" ? "index-fr.html" : "index.html";
+        if (brand) brand.setAttribute("href", home);
+        document.querySelectorAll("[data-edz-home]").forEach(function (a) {
+          a.setAttribute("href", home);
+        });
+        document.querySelectorAll(".sim-lang .lang-btn").forEach(function (btn) {
+          btn.classList.toggle("active", btn.getAttribute("data-lang") === lang);
+        });
+      }
+
+      function openPanel() {
+        var gate = document.getElementById("ecoleGate");
+        var wrap = document.getElementById("simFrameWrap");
+        var frame = document.getElementById("simFrame");
+        var loading = document.getElementById("simLoading");
+        var fsToggle = document.getElementById("simFsToggle");
+        if (gate) gate.hidden = true;
+        if (wrap) wrap.hidden = false;
+        if (fsToggle) fsToggle.hidden = false;
+        document.body.classList.add("ecole-unlocked");
+        if (frame && !frame.getAttribute("src")) {
+          if (loading) loading.hidden = false;
+          frame.src = PANEL_SRC;
+        }
+      }
+
+      document.querySelectorAll(".sim-lang .lang-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          applyLang(btn.getAttribute("data-lang"));
+        });
+      });
+
+      var form = document.getElementById("ecoleGateForm");
+      var codeInput = document.getElementById("ecoleCode");
+      var errEl = document.getElementById("ecoleGateErr");
+      var frame = document.getElementById("simFrame");
+      var loading = document.getElementById("simLoading");
+
+      if (form) {
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          if (normalizeCode(codeInput && codeInput.value) === ACCESS_CODE) {
+            if (errEl) errEl.hidden = true;
+            setUnlocked();
+            openPanel();
+            return;
+          }
+          if (errEl) {
+            errEl.textContent = t("err");
+            errEl.hidden = false;
+          }
+          if (codeInput) {
+            codeInput.value = "";
+            codeInput.focus();
+          }
+        });
+      }
+
+      if (frame && loading) {
+        frame.addEventListener("load", function () {
+          loading.hidden = true;
+        });
+      }
+
+      applyLang(lang);
+      if (isUnlocked()) openPanel();
+      else if (codeInput) codeInput.focus();
+    })();
+  </script>
+  <script src="js/sim-fullscreen.js?v=20260917chrome1"></script>
+  <script src="js/site-home-nav.js"></script>
+</body>
+</html>
