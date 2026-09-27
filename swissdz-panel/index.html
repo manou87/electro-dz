@@ -493,6 +493,35 @@
       transform-origin: 46% 40%;
     }
     #board.mode-select .dev.fluke-meter { cursor:default; }
+    .dev.fluke-meter .fluke-tips {
+      position:absolute; inset:0; pointer-events:none; z-index:8;
+    }
+    .dev.fluke-meter .fluke-tip {
+      position:absolute; width:20px; height:34px; margin:-2px 0 0 -10px;
+      pointer-events:auto; cursor:grab; touch-action:none;
+      border-radius:6px 6px 10px 10px;
+      box-shadow:0 1px 3px rgba(0,0,0,.35), inset 0 -6px 0 rgba(0,0,0,.12);
+      border:1.5px solid rgba(15,23,42,.35);
+    }
+    .dev.fluke-meter .fluke-tip::after {
+      content:attr(data-label);
+      position:absolute; left:50%; top:3px; transform:translateX(-50%);
+      font-size:7px; font-weight:900; color:#fff; text-shadow:0 1px 0 rgba(0,0,0,.45);
+      pointer-events:none;
+    }
+    .dev.fluke-meter .fluke-tip[data-id="L"] { background:linear-gradient(180deg,#f87171,#dc2626); }
+    .dev.fluke-meter .fluke-tip[data-id="N"] { background:linear-gradient(180deg,#60a5fa,#2563eb); }
+    .dev.fluke-meter .fluke-tip[data-id="PE"] {
+      background:repeating-linear-gradient(-45deg,#c4d600 0 4px,#008c45 4px 8px);
+    }
+    .dev.fluke-meter .fluke-tip[data-id="PE"]::after { color:#111; text-shadow:none; }
+    .dev.fluke-meter .fluke-tip:active { cursor:grabbing; }
+    .dev.fluke-meter .fluke-tip.snap-near {
+      outline:2px solid #fbbf24; outline-offset:1px;
+    }
+    #board.mode-wire .dev.fluke-meter .fluke-tip {
+      pointer-events:none; opacity:.35;
+    }
     #flukePark { display:none !important; }
     /* Poussoir / AU enfoncé : la tête bouge sur la photo */
     .dev.is-pressed img {
@@ -1653,7 +1682,11 @@
         {id:"BUS",nx:0.50,ny:0.904,direction:"bottom"}
       ],pairs:[["L","~"]]},
       /* Fluke 1664 FC — iframe live oibt-trainer #/meter (paysage, collé à l'appareil). */
-      fluke_1664: {name:"Fluke 1664 FC",prefix:"MT",cat:"Appareils de mesure",w:400,h:268,image:"assets/fluke/fluke_thumb.png",thumb:"assets/fluke/fluke_thumb.png",badge:"1664",iec:"P",flukeMeter:true,terminals:[]},
+      fluke_1664: {name:"Fluke 1664 FC",prefix:"MT",cat:"Alimentation",w:400,h:268,image:"assets/fluke/fluke_thumb.png",thumb:"assets/fluke/fluke_thumb.png",badge:"1664",iec:"P",flukeMeter:true,terminals:[
+        {id:"L",nx:0.22,ny:1.20,direction:"bottom"},
+        {id:"N",nx:0.50,ny:1.28,direction:"bottom"},
+        {id:"PE",nx:0.78,ny:1.20,direction:"bottom"}
+      ]},
 /* === ELECTRODZ_LIB_BEGIN (generated — do not edit by hand) === */
       edz_c_16p_riel_din_35_mm: {name:"DIN Rail 35 mm 16P",prefix:"X",cat:"ElectroDZ",w:150,h:24,image:"assets/electrodz/c_16p_riel_din_35_mm.png",badge:"Structure",terminals:[]},
       edz_c_20p_riel_din_35_mm: {name:"DIN Rail 35 mm 20P",prefix:"X",cat:"ElectroDZ",w:150,h:24,image:"assets/electrodz/c_20p_riel_din_35_mm.png",badge:"Structure",terminals:[]},
@@ -2090,7 +2123,7 @@
     };
 
     function syncDragLock() {
-      board.classList.toggle("is-dragging", !!(state.drag || state.resize || state.wireDrag));
+      board.classList.toggle("is-dragging", !!(state.drag || state.resize || state.wireDrag || state.flukeTipDrag));
     }
 
     /* ========== ETS FORMATION (pédagogique, pas ETS officiel) ========== */
@@ -3488,7 +3521,6 @@
     const CAT_ORDER = [
       "Structure", "Alimentation", "Protection", "Différentiel",
       "Commande", "Boutonnerie", "Éclairage / Prises", "Domotique KNX", "Moteur / Indus", "Borniers / Alim",
-      "Appareils de mesure",
       /* === ELECTRODZ_CAT_BEGIN === */ "ElectroDZ", /* === ELECTRODZ_CAT_END === */
     ];
     const ALIAS_IDS = new Set(["rail", "disj", "idr", "contacteur", "thermique_3ph", "moteur_3ph", "compteur_3pn"]);
@@ -3664,7 +3696,79 @@
       return park;
     }
     function flukeMeterSrc() {
-      return "../oibt-trainer/meter-embed.html?embed=1&lang=fr&v=panel7#/meter";
+      return "../oibt-trainer/meter-embed.html?embed=1&lang=fr&v=panel8#/meter";
+    }
+    const FLUKE_TIP_SNAP = 34;
+    function flukeTipLabel(id) {
+      return id === "PE" ? "PE" : id;
+    }
+    function nearestPanelTerm(x, y, opts) {
+      const maxD = (opts && opts.maxDist) || FLUKE_TIP_SNAP;
+      const skipUid = opts && opts.skipUid;
+      const skipTerm = opts && opts.skipTerm;
+      let best = null;
+      let bestD = maxD;
+      state.items.forEach((item) => {
+        const def = LIB[item.type];
+        if (!def || !def.terminals) return;
+        def.terminals.forEach((t) => {
+          if (item.uid === skipUid && t.id === skipTerm) return;
+          const p = termAbs(item, t);
+          const d = Math.hypot(p.x - x, p.y - y);
+          if (d < bestD) {
+            bestD = d;
+            best = { uid: item.uid, term: t.id, x: p.x, y: p.y };
+          }
+        });
+      });
+      return best;
+    }
+    function connectFlukeTipTo(flukeUid, tipId, bRef) {
+      if (flukeUid === bRef.uid && tipId === bRef.term) return;
+      pushHistory();
+      state.wires = state.wires.filter((w) => !(
+        (w.a.uid === flukeUid && w.a.term === tipId) ||
+        (w.b.uid === flukeUid && w.b.term === tipId)
+      ));
+      const aRef = { uid: flukeUid, term: tipId };
+      const w = {
+        id: "w" + (state.seq++),
+        no: state.wireNo++,
+        a: aRef,
+        b: bRef,
+        color: wireColorForRefs(aRef, bRef),
+        section: state.section,
+        live: false,
+        waypoints: []
+      };
+      bakeWaypoints(w, autoRoute(endpoint(aRef), endpoint(bRef)));
+      state.wires.push(w);
+      state.preview = null;
+    }
+    function pushFlukeEmbedVoltages() {
+      if (!state.sim) return;
+      state.items.forEach((item) => {
+        if (item.type !== "fluke_1664") return;
+        const frame = flukeLiveFrames.get(item.uid);
+        if (!frame || !frame.contentWindow) return;
+        const lHot = !!item.hot.L;
+        const lNeu = !!item.neu.L;
+        const nHot = !!item.hot.N;
+        const nNeu = !!item.neu.N;
+        const peHot = !!item.hot.PE;
+        let ln = 0;
+        if ((lHot && nNeu) || (lNeu && nHot)) ln = 230;
+        let lpe = 0;
+        if (lHot && !peHot) lpe = 230;
+        try {
+          frame.contentWindow.postMessage({
+            type: "panelwire/fluke-measures",
+            ln,
+            lpe,
+            sim: true
+          }, "*");
+        } catch (_) {}
+      });
     }
     function flukeLiveFrame(uid) {
       let frame = flukeLiveFrames.get(uid);
@@ -3753,6 +3857,48 @@
       viewport.className = "fluke-viewport";
       viewport.appendChild(flukeLiveFrame(item.uid));
       el.appendChild(viewport);
+      const tipsWrap = document.createElement("div");
+      tipsWrap.className = "fluke-tips";
+      tipsWrap.setAttribute("aria-hidden", "true");
+      FLUKE_CABLES.forEach((cab) => {
+        const tip = flukeTipsOf(item)[cab.id];
+        if (!tip) return;
+        const probe = document.createElement("div");
+        probe.className = "fluke-tip";
+        probe.dataset.id = cab.id;
+        probe.dataset.label = flukeTipLabel(cab.id);
+        probe.style.left = (tip.nx * 100) + "%";
+        probe.style.top = (tip.ny * 100) + "%";
+        probe.title = "Cordon " + cab.id + " — glisser vers une borne du tableau";
+        probe.onpointerdown = (ev) => {
+          ev.stopPropagation();
+          if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
+          ev.preventDefault();
+          if (state.mode === "wire") return;
+          state.wireFrom = null;
+          state.wireDrag = null;
+          state.selected = item.uid;
+          state.selectedWire = null;
+          const histKey = structuralKey(cloneEditableState());
+          pushHistory();
+          state.flukeTipDrag = {
+            uid: item.uid,
+            tip: cab.id,
+            px: ev.clientX,
+            py: ev.clientY,
+            histKey,
+            pointerId: ev.pointerId,
+            snap: null,
+            mx: 0,
+            my: 0
+          };
+          syncDragLock();
+          try { board.setPointerCapture(ev.pointerId); } catch (_) {}
+          render();
+        };
+        tipsWrap.appendChild(probe);
+      });
+      el.appendChild(tipsWrap);
     }
     function endpoint(ref) {
       const item = find(ref.uid);
@@ -4804,6 +4950,7 @@
         w.live = m.hot;
         w.liveN = m.neu && !m.hot;
       });
+      pushFlukeEmbedVoltages();
     }
 
     function render() {
@@ -5702,6 +5849,7 @@
         const def = LIB[item.type];
         if (!def) return;
         def.terminals.forEach((t) => {
+          if (def.flukeMeter && state.mode === "select") return;
           const p = termAbs(item, t);
           const role = termRole(item.type, t.id);
           board.appendChild(makeTerm(p.x, p.y, item.uid, t.id, {
@@ -5984,6 +6132,19 @@
       if (state.wireDrag || state.resize || state.drag) {
         if (ev.cancelable) ev.preventDefault();
       }
+      if (state.flukeTipDrag) {
+        const fd = state.flukeTipDrag;
+        fd.mx = x;
+        fd.my = y;
+        const a = endpoint({ uid: fd.uid, term: fd.tip });
+        fd.snap = nearestPanelTerm(x, y, { skipUid: fd.uid, skipTerm: fd.tip });
+        const end = fd.snap
+          ? { x: fd.snap.x, y: fd.snap.y, direction: "bottom" }
+          : { x, y, direction: "bottom" };
+        state.preview = { pts: route(a, end) };
+        render();
+        return;
+      }
       if (state.wireDrag || state.resize) return;
       if (state.drag) {
         const item = find(state.drag.uid);
@@ -6012,7 +6173,7 @@
     });
     /* touchmove non-passif : annule le pan iOS pendant drag composant / resize / fil */
     window.addEventListener("touchmove", (ev) => {
-      if (state.drag || state.resize || state.wireDrag) ev.preventDefault();
+      if (state.drag || state.resize || state.wireDrag || state.flukeTipDrag) ev.preventDefault();
     }, { passive: false });
     window.addEventListener("pointermove", (ev) => {
       if (applyResizePointer(ev)) return;
@@ -6044,10 +6205,29 @@
         if (d && d.push && !d.fc) i.pressed = false;
       });
       const wasWireDrag = !!state.wireDrag;
+      const wasFlukeTip = !!state.flukeTipDrag;
+      const flukeTipHistKey = state.flukeTipDrag && state.flukeTipDrag.histKey;
       const wireHistKey = state.wireDrag && state.wireDrag.histKey;
       const dragHistKey = state.drag && state.drag.histKey;
       const resizeHistKey = state.resize && state.resize.histKey;
-      const captureId = (state.drag && state.drag.pointerId) || (state.resize && state.resize.pointerId);
+      const captureId = (state.drag && state.drag.pointerId)
+        || (state.resize && state.resize.pointerId)
+        || (state.flukeTipDrag && state.flukeTipDrag.pointerId);
+      if (state.flukeTipDrag) {
+        const fd = state.flukeTipDrag;
+        const rect = board.getBoundingClientRect();
+        const mx = fd.mx || (ev.clientX - rect.left + board.scrollLeft);
+        const my = fd.my || (ev.clientY - rect.top + board.scrollTop);
+        const moved = Math.hypot(ev.clientX - fd.px, ev.clientY - fd.py);
+        const snap = fd.snap || nearestPanelTerm(mx, my, { skipUid: fd.uid, skipTerm: fd.tip });
+        state.flukeTipDrag = null;
+        state.preview = null;
+        if (moved >= 6 && snap) {
+          connectFlukeTipTo(fd.uid, fd.tip, { uid: snap.uid, term: snap.term });
+        } else {
+          discardHistoryIfUnchanged(flukeTipHistKey);
+        }
+      }
       if (captureId != null) {
         try { if (board.hasPointerCapture(captureId)) board.releasePointerCapture(captureId); } catch (_) {}
       }
@@ -6080,7 +6260,7 @@
       if (wasDrag) discardHistoryIfUnchanged(dragHistKey);
       if (wasResize) discardHistoryIfUnchanged(resizeHistKey);
       if (wasWireDrag) discardHistoryIfUnchanged(wireHistKey);
-      if (state.sim || wasWireDrag || wasDrag || wasResize) render();
+      if (state.sim || wasWireDrag || wasFlukeTip || wasDrag || wasResize) render();
       else writeAutosave();
     });
 
@@ -6219,6 +6399,7 @@
       state.mode = mode;
       state.wireFrom = null;
       state.preview = null;
+      state.flukeTipDrag = null;
       document.getElementById("modeSelect").classList.toggle("active", mode === "select");
       document.getElementById("modeWire").classList.toggle("active", mode === "wire");
       board.classList.toggle("mode-select", mode === "select");
