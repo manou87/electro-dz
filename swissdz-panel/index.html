@@ -3696,7 +3696,7 @@
       return park;
     }
     function flukeMeterSrc() {
-      return "../oibt-trainer/meter-embed.html?embed=1&lang=fr&v=panel8#/meter";
+      return "../oibt-trainer/meter-embed.html?embed=1&lang=fr&v=panel9#/meter";
     }
     const FLUKE_TIP_SNAP = 34;
     function flukeTipLabel(id) {
@@ -3725,7 +3725,6 @@
     }
     function connectFlukeTipTo(flukeUid, tipId, bRef) {
       if (flukeUid === bRef.uid && tipId === bRef.term) return;
-      pushHistory();
       state.wires = state.wires.filter((w) => !(
         (w.a.uid === flukeUid && w.a.term === tipId) ||
         (w.b.uid === flukeUid && w.b.term === tipId)
@@ -5838,9 +5837,12 @@
         drawWire(wirePtsDraw(w), w.color, w.live, w.id, w.liveN);
       });
       if (state.preview) {
-        const pc = state.wireFrom
-          ? wireColorForRefs(state.wireFrom, state.wireFrom)
-          : state.color;
+        let pc = state.color;
+        if (state.wireFrom) pc = wireColorForRefs(state.wireFrom, state.wireFrom);
+        else if (state.flukeTipDrag) {
+          const cab = FLUKE_CABLES.find((c) => c.id === state.flukeTipDrag.tip);
+          if (cab) pc = cab.color;
+        }
         drawWire(state.preview.pts, pc, false, null, false);
       }
 
@@ -6224,6 +6226,13 @@
         state.preview = null;
         if (moved >= 6 && snap) {
           connectFlukeTipTo(fd.uid, fd.tip, { uid: snap.uid, term: snap.term });
+        } else if (moved < 6) {
+          const before = state.wires.length;
+          state.wires = state.wires.filter((w) => !(
+            (w.a.uid === fd.uid && w.a.term === fd.tip) ||
+            (w.b.uid === fd.uid && w.b.term === fd.tip)
+          ));
+          if (state.wires.length === before) discardHistoryIfUnchanged(flukeTipHistKey);
         } else {
           discardHistoryIfUnchanged(flukeTipHistKey);
         }

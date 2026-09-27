@@ -26,6 +26,15 @@
     html.embed-meter flt-scene-host canvas {
       background-color: transparent !important;
     }
+    #panelwire-measures {
+      position: fixed; right: 6px; bottom: 6px; z-index: 99999;
+      font: 600 11px/1.35 system-ui, sans-serif; color: #0f172a;
+      background: rgba(255,255,255,.88); border: 1px solid rgba(148,163,184,.55);
+      border-radius: 8px; padding: 6px 8px; pointer-events: none;
+      box-shadow: 0 2px 8px rgba(15,23,42,.12);
+      display: none;
+    }
+    #panelwire-measures.on { display: block; }
   </style>
 </head>
 <body>
@@ -45,6 +54,20 @@
     try { document.body.style.background = "transparent"; } catch (_) {}
   })();
   </script>
-  <script src="flutter_bootstrap.js?v=meter-embed-2" async></script>
+  <div id="panelwire-measures" aria-live="polite"></div>
+  <script>
+  (function () {
+    var hud = document.getElementById("panelwire-measures");
+    window.addEventListener("message", function (ev) {
+      var d = ev.data;
+      if (!d || d.type !== "panelwire/fluke-measures") return;
+      if (!hud) return;
+      if (!d.sim) { hud.classList.remove("on"); return; }
+      hud.classList.add("on");
+      hud.textContent = "PanelWire · L–N " + (d.ln || 0) + " V · L–PE " + (d.lpe || 0) + " V";
+    });
+  })();
+  </script>
+  <script src="flutter_bootstrap.js?v=meter-embed-3" async></script>
 </body>
 </html>
