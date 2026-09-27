@@ -1481,7 +1481,10 @@
       ladderOpen: null, /* null = auto si PLC ; true/false = forcé */
       ladder: null,
       projectName: "schema-swissdz",
-      knx: null
+      knx: null,
+      etsOpen: false,
+      knxLastTelegram: null,
+      knxBusValues: {}
     };
 
     /* ========== LADDER v1 (logique à contacts / bobines / TON) ========== */
@@ -3770,6 +3773,7 @@
       syncColorSwatches();
       syncLadderLayout();
       if (ladderShouldShow()) renderLadderPanel();
+      writeAutosave();
     }
 
     function removeWire(id) {
@@ -4006,6 +4010,7 @@
       if (wasResize) discardHistoryIfUnchanged(resizeHistKey);
       if (wasWireDrag) discardHistoryIfUnchanged(wireHistKey);
       if (state.sim || wasWireDrag || wasDrag || wasResize) render();
+      else writeAutosave();
     });
 
     /* --- Dialogue Largeur / Hauteur (double-clic) — + Ir si thermique --- */
@@ -4190,8 +4195,19 @@
       state.selectedWire = null;
       render();
     };
+    document.getElementById("btnSave").onclick = () => downloadProject();
+    document.getElementById("btnOpen").onclick = () => {
+      const inp = document.getElementById("fileOpen");
+      if (inp) { inp.value = ""; inp.click(); }
+    };
+    document.getElementById("fileOpen").onchange = (ev) => {
+      const f = ev.target && ev.target.files && ev.target.files[0];
+      openProjectFile(f);
+      ev.target.value = "";
+    };
     document.getElementById("btnNew").onclick = () => {
       if (!state.items.length && !state.wires.length) return;
+      if (!confirm("Effacer le schéma et recommencer ?")) return;
       pushHistory();
       state.items = [];
       state.wires = [];
@@ -4203,17 +4219,19 @@
       state.wireFrom = null;
       state.preview = null;
       state.ladderOpen = null;
+      state.projectName = "schema-swissdz";
       stopLadderLoop();
       resetLadderTimers();
       document.getElementById("btnPlay").classList.remove("on");
       document.getElementById("btnPlay").textContent = "Vérifier";
       render();
+      clearAutosave();
     };
     board.classList.add("mode-select");
     updateHistoryButtons();
     ensureLadder();
     syncLadderLayout();
-    render();
+    if (!tryRestoreAutosave()) render();
   </script>
 </body>
 </html>
