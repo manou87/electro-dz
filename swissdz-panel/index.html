@@ -1419,7 +1419,15 @@
       "rail_din_35", "rail_din_long", "rail_din_embouts", "rail", "pe"
     ]);
     function isVipUnlocked() {
-      try { return localStorage.getItem(VIP_STORAGE_KEY) === "1"; } catch (_) { return false; }
+      try {
+        if (localStorage.getItem(VIP_STORAGE_KEY) === "1") return true;
+      } catch (_) {}
+      /* École électricité (athmano) : bibliothèque complète avec photos */
+      try {
+        const q = new URLSearchParams(location.search);
+        if (q.get("ecole") === "1" || q.get("school") === "1") return true;
+      } catch (_) {}
+      return false;
     }
     function setVipUnlocked(on) {
       try {
