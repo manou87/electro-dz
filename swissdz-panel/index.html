@@ -24,102 +24,282 @@
     .swatch { width:16px; height:16px; border-radius:50%; border:1px solid #d1d5db; padding:0; }
     .swatch.on { outline:2px solid #111; outline-offset:1px; }
     select { border:1px solid #d1d5db; border-radius:6px; padding:4px 6px; font-size:12px; background:#fff; }
-    main { display:grid; grid-template-columns:270px 1fr; height:calc(100% - 78px); }
+    main { display:grid; grid-template-columns:210px 1fr; height:calc(100% - 78px); }
     aside { background:#fff; border-right:1px solid var(--line); padding:10px; overflow:auto; }
     h2 { margin:0 0 8px; font-size:11px; letter-spacing:.06em; color:#6b7280; }
     .workspace { display:flex; min-width:0; height:100%; overflow:hidden; }
     .workspace #board { flex:1 1 auto; min-width:0; }
+    /* Mobile : biblio étroite (miniatures) → plus d’espace pour #board */
+    @media (max-width: 900px) {
+      main { grid-template-columns:88px 1fr; }
+      main > aside:not(.ladder-panel) {
+        padding:6px 4px; overflow-x:hidden; overflow-y:auto;
+      }
+      main > aside:not(.ladder-panel) > h2 {
+        font-size:8px; letter-spacing:.02em; text-align:center; margin:0 0 4px;
+        word-break:break-all; line-height:1.15;
+      }
+      .lib-note { display:none; }
+      .cat {
+        font-size:7px; margin:8px 0 3px; text-align:center; letter-spacing:0;
+        line-height:1.2; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+      }
+      .item {
+        padding:5px 2px; gap:0; justify-content:center; margin-bottom:4px;
+      }
+      .item > span:not(.thumb) { display:none; }
+      .item img, .item .thumb {
+        width:40px; height:40px; flex:0 0 40px;
+      }
+      /* Ladder ouvert : ne pas écraser le board */
+      .ladder-panel {
+        flex:0 0 min(260px, 40vw);
+        width:min(260px, 40vw); max-width:42vw;
+      }
+    }
+    /* Ladder — style éditeur clair type Soft Comfort / LOGO! Soft */
     .ladder-panel {
-      display:none; flex-direction:column; flex:0 0 min(440px, 42vw);
-      width:min(440px, 42vw); max-width:48vw;
-      background:#0f172a; color:#e2e8f0; border-left:1px solid #1e293b;
+      display:none; flex-direction:column; flex:0 0 min(460px, 44vw);
+      width:min(460px, 44vw); max-width:50vw;
+      background:#eef1f5; color:#1e293b; border-left:1px solid #c5cedd;
       min-height:0; z-index:5;
     }
     .workspace.has-ladder .ladder-panel { display:flex; }
     .ladder-head {
-      flex:0 0 auto; padding:10px 12px 8px; border-bottom:1px solid #1e293b;
-      background:#111827;
+      flex:0 0 auto; padding:10px 12px 8px; border-bottom:1px solid #c5cedd;
+      background:linear-gradient(180deg, #f8fafc 0%, #e8edf4 100%);
     }
-    .ladder-head h2 { color:#94a3b8; margin:0 0 6px; }
+    .ladder-head h2 {
+      color:#334155; margin:0 0 6px; font-size:13px; letter-spacing:.08em;
+      font-weight:800;
+    }
     .ladder-status {
       font-size:11px; font-weight:700; padding:5px 8px; border-radius:6px;
-      background:#14532d; color:#86efac; margin-bottom:8px;
+      background:#dcfce7; color:#166534; margin-bottom:8px; border:1px solid #86efac;
     }
-    .ladder-status.off { background:#334155; color:#94a3b8; }
+    .ladder-status.off {
+      background:#f1f5f9; color:#64748b; border-color:#cbd5e1;
+    }
     .ladder-toolbar { display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
     .ladder-toolbar button {
-      background:#1e293b; color:#e2e8f0; border:1px solid #334155;
-      padding:6px 10px; font-size:11px; border-radius:7px;
+      background:#fff; color:#1e293b; border:1px solid #94a3b8;
+      padding:6px 10px; font-size:11px; border-radius:6px; font-weight:600;
     }
-    .ladder-toolbar button:hover { background:#334155; }
+    .ladder-toolbar button:hover { background:#f1f5f9; border-color:#64748b; }
     .ladder-toolbar .hint { font-size:10px; color:#64748b; margin-left:auto; }
-    .ladder-body { flex:1 1 auto; overflow:auto; padding:10px 12px 16px; }
+    .ladder-body { flex:1 1 auto; overflow:auto; padding:10px 12px 16px; background:#e8edf3; }
     .ladder-rung {
-      margin-bottom:14px; border:1px solid #1e293b; border-radius:10px;
-      background:#111827; overflow:hidden;
+      margin-bottom:12px; border:1px solid #b8c4d6; border-radius:8px;
+      background:#fff; overflow:hidden; box-shadow:0 1px 2px rgba(15,23,42,.04);
     }
     .ladder-rung-title {
-      font-size:10px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
-      color:#64748b; padding:6px 10px; border-bottom:1px solid #1e293b;
+      font-size:10px; font-weight:800; letter-spacing:.05em; text-transform:uppercase;
+      color:#475569; padding:7px 10px; border-bottom:1px solid #e2e8f0;
       display:flex; justify-content:space-between; align-items:center;
+      background:#f8fafc;
     }
     .ladder-rung-title .del {
-      background:transparent; border:none; color:#64748b; padding:2px 6px; font-size:12px;
+      background:transparent; border:none; color:#94a3b8; padding:2px 6px; font-size:12px;
     }
-    .ladder-rung-title .del:hover { color:#f87171; }
+    .ladder-rung-title .del:hover { color:#dc2626; }
     .ladder-rail {
-      display:grid; grid-template-columns:10px 1fr 10px; gap:0; padding:12px 8px;
+      display:grid; grid-template-columns:8px 1fr 8px; gap:0; padding:14px 10px;
       font-family:"Segoe UI", system-ui, sans-serif; user-select:none;
+      background:#fff;
     }
     .ladder-rail .rail-l, .ladder-rail .rail-r {
-      background:#38bdf8; border-radius:2px; opacity:.85;
+      background:#334155; border-radius:1px;
     }
-    .ladder-rail.power .rail-l, .ladder-rail.power .rail-r,
-    .ladder-rail.power .ld-wire { background:#4ade80; }
+    .ladder-rail.power .rail-l, .ladder-rail.power .rail-r {
+      background:#16a34a;
+    }
     .ladder-net { display:flex; flex-direction:column; gap:6px; min-width:0; }
     .ladder-row {
-      display:flex; align-items:center; gap:0; min-height:44px; flex-wrap:nowrap;
+      display:flex; align-items:center; gap:0; min-height:48px; flex-wrap:nowrap;
     }
     .ld-wire {
-      flex:1 1 18px; height:3px; min-width:12px; background:#475569; border-radius:1px;
-      transition: background .12s ease, box-shadow .12s ease;
+      flex:1 1 18px; height:2.5px; min-width:12px; background:#94a3b8; border-radius:1px;
+      transition: background .1s ease;
     }
     .ld-wire.on {
-      background:#4ade80;
-      box-shadow:0 0 8px rgba(74,222,128,.55);
+      background:#16a34a;
+      height:3px;
     }
     .ld-contact, .ld-coil, .ld-ton {
       flex:0 0 auto; display:flex; flex-direction:column; align-items:center;
-      justify-content:center; gap:2px; color:#cbd5e1; font-size:11px; font-weight:700;
+      justify-content:center; gap:2px; color:#334155; font-size:11px; font-weight:700;
     }
     .ld-sym {
       font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
-      font-size:13px; letter-spacing:.02em; padding:2px 4px; border-radius:4px;
-      border:1.5px solid #64748b; background:#0f172a; white-space:nowrap;
+      font-size:14px; letter-spacing:.02em; padding:3px 6px; border-radius:3px;
+      border:1.5px solid #475569; background:#fff; white-space:nowrap; color:#0f172a;
     }
     .ld-contact.on .ld-sym, .ld-coil.on .ld-sym {
-      border-color:#4ade80; color:#bbf7d0; background:#14532d;
-      box-shadow:0 0 10px rgba(74,222,128,.35);
+      border-color:#16a34a; color:#14532d; background:#dcfce7;
+      border-width:2px;
     }
     .ld-ton {
-      min-width:88px; padding:4px 6px; border:1.5px solid #64748b; border-radius:8px;
-      background:#0f172a; font-size:10px; line-height:1.25;
+      min-width:96px; padding:5px 8px; border:1.5px solid #64748b; border-radius:4px;
+      background:#f8fafc; font-size:10px; line-height:1.3;
     }
-    .ld-ton.on { border-color:#4ade80; box-shadow:0 0 10px rgba(74,222,128,.3); }
-    .ld-ton .ton-title { font-weight:800; color:#f8fafc; font-size:11px; }
-    .ld-ton .ton-row { display:flex; justify-content:space-between; gap:8px; width:100%; color:#94a3b8; }
-    .ld-ton .ton-row b { color:#e2e8f0; font-weight:700; }
-    .ld-ton.q-on .ton-title { color:#86efac; }
+    .ld-ton.on { border-color:#16a34a; background:#f0fdf4; }
+    .ld-ton .ton-title { font-weight:800; color:#0f172a; font-size:11px; }
+    .ld-ton .ton-row { display:flex; justify-content:space-between; gap:8px; width:100%; color:#64748b; }
+    .ld-ton .ton-row b { color:#1e293b; font-weight:700; }
+    .ld-ton.q-on .ton-title { color:#15803d; }
+    .ld-ton.q-on { border-color:#16a34a; border-width:2px; background:#dcfce7; }
     .ld-branch {
       display:flex; flex-direction:column; gap:4px; padding:2px 0;
-      border-left:2px solid #475569; border-right:2px solid #475569;
+      border-left:2px solid #94a3b8; border-right:2px solid #94a3b8;
       margin:0 2px; padding-left:4px; padding-right:4px;
     }
-    .ld-branch.on { border-color:#4ade80; }
+    .ld-branch.on { border-color:#16a34a; }
     .ld-branch .ladder-row { min-height:36px; }
     .ladder-empty {
       color:#64748b; font-size:12px; text-align:center; padding:24px 12px;
     }
+    /* ETS formation — panneau pédagogique (pas l’ETS officiel) */
+    .ets-panel {
+      display:none; flex-direction:column; flex:0 0 min(420px, 42vw);
+      width:min(420px, 42vw); max-width:48vw;
+      background:#eef1f5; color:#1e293b; border-left:1px solid #c5cedd;
+      min-height:0; z-index:5;
+    }
+    .workspace.has-ets .ets-panel { display:flex; }
+    @media (max-width: 900px) {
+      .ets-panel {
+        flex:0 0 min(260px, 40vw);
+        width:min(260px, 40vw); max-width:42vw;
+      }
+    }
+    .ets-head {
+      flex:0 0 auto; padding:10px 12px 8px; border-bottom:1px solid #c5cedd;
+      background:linear-gradient(180deg, #f8fafc 0%, #e8edf4 100%);
+    }
+    .ets-head h2 {
+      color:#334155; margin:0 0 4px; font-size:13px; letter-spacing:.06em;
+      font-weight:800;
+    }
+    .ets-sub {
+      font-size:10px; color:#64748b; margin:0 0 8px; line-height:1.35;
+    }
+    .ets-telegram {
+      font-size:11px; font-weight:700; padding:6px 8px; border-radius:6px;
+      background:#ecfdf5; color:#065f46; margin-bottom:8px; border:1px solid #6ee7b7;
+      font-family:ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .ets-telegram.off {
+      background:#f1f5f9; color:#64748b; border-color:#cbd5e1;
+    }
+    .ets-toolbar { display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+    .ets-toolbar button {
+      background:#fff; color:#1e293b; border:1px solid #94a3b8;
+      padding:6px 10px; font-size:11px; border-radius:6px; font-weight:600;
+    }
+    .ets-toolbar button:hover { background:#f1f5f9; border-color:#64748b; }
+    .ets-body { flex:1 1 auto; overflow:auto; padding:10px 12px 16px; background:#e8edf3; }
+    .ets-card {
+      margin-bottom:10px; border:1px solid #b8c4d6; border-radius:8px;
+      background:#fff; overflow:hidden; box-shadow:0 1px 2px rgba(15,23,42,.04);
+    }
+    .ets-card-title {
+      font-size:11px; font-weight:800; color:#334155; padding:8px 10px;
+      border-bottom:1px solid #e2e8f0; background:#f8fafc;
+      display:flex; justify-content:space-between; align-items:center; gap:8px;
+    }
+    .ets-card-title .tag { color:#009640; font-family:ui-monospace, Menlo, monospace; font-size:10px; }
+    .ets-card-title .bus-pill {
+      font-size:9px; font-weight:700; padding:2px 6px; border-radius:999px;
+      background:#f1f5f9; color:#64748b; border:1px solid #cbd5e1;
+    }
+    .ets-card-title .bus-pill.on {
+      background:#dcfce7; color:#166534; border-color:#86efac;
+    }
+    .ets-card-body { padding:8px 10px 10px; }
+    .ets-row {
+      display:grid; grid-template-columns:72px 1fr; gap:6px; align-items:center;
+      margin-bottom:6px; font-size:11px; color:#475569;
+    }
+    .ets-row label { font-weight:700; }
+    .ets-row input {
+      border:1px solid #cbd5e1; border-radius:6px; padding:5px 8px;
+      font-size:12px; font-family:ui-monospace, Menlo, monospace; font-weight:600;
+      color:#0f172a; background:#fff; width:100%; box-sizing:border-box;
+    }
+    .ets-row input.bad { border-color:#f87171; background:#fef2f2; }
+    .ets-ga-grid {
+      display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:4px;
+    }
+    .ets-ga-cell {
+      display:flex; flex-direction:column; gap:3px; font-size:10px; font-weight:700; color:#64748b;
+    }
+    .ets-ga-cell input {
+      border:1px solid #cbd5e1; border-radius:6px; padding:5px 6px;
+      font-size:11px; font-family:ui-monospace, Menlo, monospace; font-weight:600;
+      color:#0f172a; background:#fff; width:100%; box-sizing:border-box;
+    }
+    .ets-ga-cell input.bad { border-color:#f87171; background:#fef2f2; }
+    .ets-empty {
+      color:#64748b; font-size:12px; text-align:center; padding:24px 12px; line-height:1.45;
+    }
+
+    .ets-section-title {
+      font-size:10px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
+      color:#64748b; margin:12px 0 6px;
+    }
+    .ets-links {
+      width:100%; border-collapse:collapse; font-size:10px; margin-top:4px;
+    }
+    .ets-links th, .ets-links td {
+      border:1px solid #dbe3ee; padding:4px 6px; text-align:left; vertical-align:top;
+    }
+    .ets-links th { background:#f1f5f9; color:#475569; font-weight:800; }
+    .ets-links .ok { color:#166534; font-weight:700; }
+    .ets-links .miss { color:#b91c1c; }
+    .ets-fn {
+      border:1px solid #cbd5e1; border-radius:6px; padding:4px 4px; font-size:10px;
+      font-weight:600; background:#fff; width:100%; box-sizing:border-box;
+    }
+    .knx-shutter {
+      position:absolute; z-index:26; overflow:hidden; pointer-events:none;
+      border:1px solid rgba(71,85,105,.35); border-radius:4px; background:rgba(248,250,252,.55);
+      transform:translate(-50%,-50%);
+    }
+    .knx-shutter .slats {
+      position:absolute; left:8%; right:8%; top:0; height:100%;
+      background:repeating-linear-gradient(
+        to bottom,
+        rgba(71,85,105,.55) 0 5px,
+        rgba(148,163,184,.25) 5px 10px
+      );
+      transition: transform .08s linear;
+    }
+    .knx-dim-bar {
+      position:absolute; z-index:26; height:8px; border-radius:4px;
+      background:#1e293b; overflow:hidden; transform:translate(-50%,-50%);
+      pointer-events:none; border:1px solid #334155;
+    }
+    .knx-dim-bar > i {
+      display:block; height:100%; background:#22c55e; width:0%;
+    }
+    .knx-temp-readout, .knx-presence-hit {
+      position:absolute; z-index:40; transform:translate(-50%,-50%);
+      font-size:10px; font-weight:800; color:#e2e8f0; pointer-events:none;
+      text-shadow:0 1px 2px rgba(0,0,0,.5);
+    }
+    .knx-presence-hit { pointer-events:auto; cursor:pointer; width:42%; aspect-ratio:1; border-radius:50%; border:2px solid transparent; }
+    .knx-presence-hit.on { border-color:rgba(34,197,94,.8); box-shadow:0 0 10px rgba(34,197,94,.45); }
+    .knx-thermo-btn {
+      position:absolute; z-index:40; transform:translate(-50%,-50%);
+      width:18%; height:10%; border-radius:6px; cursor:pointer; border:2px solid transparent;
+    }
+    .knx-thermo-btn:hover { border-color:rgba(37,99,235,.5); background:rgba(37,99,235,.08); }
+    .knx-bin-hit {
+      position:absolute; z-index:40; transform:translate(-50%,-50%);
+      width:12%; height:8%; border-radius:4px; cursor:pointer; border:2px solid transparent;
+    }
+    .knx-bin-hit.on { border-color:rgba(34,197,94,.75); background:rgba(34,197,94,.2); }
+
     .lib-note { font-size:11px; color:#64748b; background:#eff6ff; border-radius:8px; padding:8px; margin-bottom:10px; line-height:1.4; }
     .cat { margin:12px 0 6px; font-size:10px; font-weight:800; color:#94a3b8; letter-spacing:.06em; text-transform:uppercase; }
     .item {
@@ -146,7 +326,8 @@
       min-height:100%;
     }
     #board.mode-select { cursor:default; }
-    #board.mode-select .dev { cursor:grab; }
+    /* touch-action:none = le doigt déplace le module, pas le scroll du board */
+    #board.mode-select .dev { cursor:grab; touch-action:none; }
     #board.mode-select .dev:active { cursor:grabbing; }
     #board.mode-wire { cursor:crosshair; }
     #board.mode-wire .dev { cursor:crosshair; }
@@ -185,7 +366,7 @@
     }
     .dev.source.phase { background:#fecaca; }
     .dev.source.neutre { background:#bfdbfe; }
-    /* Pastilles : L rouge · N bleu · PE jaune-vert (IEC 60445) */
+    /* Pastilles : L rouge · N bleu · PE jaune-vert · BUS KNX vert (1 câble = +/−) */
     .term {
       position:absolute; width:13px; height:13px; margin:-6.5px 0 0 -6.5px; border-radius:50%;
       background:rgba(225,29,46,.92); color:#fff; font-size:7px; font-weight:800;
@@ -198,7 +379,15 @@
       background:repeating-linear-gradient(-45deg, #c4d600 0 3px, #008c45 3px 6px);
       color:#111; font-size:6px;
     }
+    .term.knxbus {
+      width:16px; height:16px; margin:-8px 0 0 -8px;
+      background:#009640; color:#fff; font-size:6px; letter-spacing:-0.02em;
+      box-shadow:0 1px 3px rgba(0,0,0,.4);
+    }
     .term.hot { box-shadow:0 0 0 2px #fecaca, 0 1px 2px rgba(0,0,0,.25); }
+    .term.knxbus.hot {
+      box-shadow:0 0 0 2px rgba(0,150,64,.45), 0 1px 3px rgba(0,0,0,.35);
+    }
     .badge {
       position:absolute; left:4px; bottom:4px; font-size:9px; font-weight:800;
       background:#fff; color:#111; border-radius:4px; padding:0 4px; border:1px solid #e5e7eb; z-index:70;
@@ -223,11 +412,11 @@
       background:radial-gradient(circle, rgba(253,224,71,.95), transparent 70%);
       pointer-events:none; mix-blend-mode:screen;
     }
-    /* Lampe / voyants allumés : luminosité ≈ 400 % (halo très visible) */
+    /* Lampe / voyants allumés : luminosité ≈ 200 % */
     .glow:not(.buzz):not(.motor) {
-      filter: brightness(4) saturate(1.35) contrast(1.2);
+      filter: brightness(2) saturate(1.35) contrast(1.2);
       opacity: 1;
-      transform: scale(1.65);
+      transform: scale(1.3);
       transform-origin: center center;
       mix-blend-mode: screen;
       background: radial-gradient(circle,
@@ -237,10 +426,10 @@
         rgba(250,204,21,.9) 55%,
         transparent 75%);
       box-shadow:
-        0 0 10px 4px rgba(255,255,220,.95),
-        0 0 22px 10px rgba(253,224,71,.95),
-        0 0 42px 20px rgba(250,204,21,.7),
-        0 0 70px 32px rgba(251,191,36,.4);
+        0 0 5px 2px rgba(255,255,220,.7),
+        0 0 11px 5px rgba(253,224,71,.7),
+        0 0 21px 10px rgba(250,204,21,.45),
+        0 0 35px 16px rgba(251,191,36,.25);
     }
     .glow.buzz {
       inset:12% 12% 22%;
@@ -550,49 +739,86 @@
       position:absolute; top:4px; right:4px; width:8px; height:8px; border-radius:50%;
       background:#22c55e; box-shadow:0 0 6px #22c55e; z-index:70; pointer-events:none;
     }
-    /* PLC LOGO! 8 : LCD face avant — OFF sombre / ON rétroéclairé jaunâtre-vert + I/Q */
+    /* PLC LOGO! 8 : LCD face avant — OFF sombre / ON rétroéclairé jaune-vert + I/Q/RUN */
     .plc-lcd {
-      position:absolute; pointer-events:none; z-index:26; border-radius:2px;
+      position:absolute; pointer-events:none; z-index:26; border-radius:2.5%;
       overflow:hidden; box-sizing:border-box;
       container-type:size;
       font-family:"Courier New", Courier, monospace;
       display:flex; flex-direction:column; justify-content:space-between;
-      padding:5% 4% 4% 5%;
-      background:#121510;
-      box-shadow:inset 0 0 6px rgba(0,0,0,.55);
+      padding:6% 5% 5% 6%;
+      background:#0e120c;
+      box-shadow:inset 0 0 8px rgba(0,0,0,.65);
       color:transparent;
     }
     .plc-lcd.on {
-      background:linear-gradient(165deg, #e4ef6e 0%, #cddc39 45%, #b8c82a 100%);
-      box-shadow:inset 0 0 8px rgba(255,255,220,.4), 0 0 5px rgba(180,200,40,.3);
-      color:#14140e;
-      font-size:clamp(6px, 16cqh, 10px);
+      background:linear-gradient(165deg, #e8f07a 0%, #d4e157 40%, #c0d030 100%);
+      box-shadow:inset 0 1px 0 rgba(255,255,220,.55), inset 0 0 10px rgba(255,255,200,.25), 0 0 6px rgba(180,200,40,.35);
+      color:#1a1a12;
+      font-size:clamp(6px, 15.5cqh, 11px);
     }
     .plc-lcd-row {
-      display:flex; align-items:center; gap:0.08em;
-      font-size:1em; font-weight:800; letter-spacing:0.01em;
-      line-height:1.05; white-space:nowrap;
+      display:flex; align-items:center; gap:0.06em;
+      font-size:1em; font-weight:800; letter-spacing:0.02em;
+      line-height:1.1; white-space:nowrap;
     }
-    .plc-lcd-lab { opacity:0.9; margin-right:0.12em; }
+    .plc-lcd-lab { opacity:0.95; margin-right:0.15em; font-weight:900; }
     .plc-lcd-d {
       display:inline-flex; align-items:center; justify-content:center;
-      min-width:0.9em; padding:0 1px; border-radius:1px;
+      min-width:0.85em; padding:0 1px; border-radius:1px;
     }
     .plc-lcd-d.active {
-      background:#14140e; color:#dce775;
-      box-shadow:0 0 0 0.5px #14140e;
+      background:#1a1a12; color:#e6ee9c;
+      box-shadow:0 0 0 0.5px #1a1a12;
     }
     .plc-lcd-status {
       display:flex; justify-content:space-between; align-items:flex-end;
-      font-size:0.78em; font-weight:800; letter-spacing:0.04em;
+      font-size:0.82em; font-weight:800; letter-spacing:0.04em;
       margin-top:auto;
     }
-    .plc-lcd-status .lan { opacity:0.75; }
-    .plc-lcd-status .run { letter-spacing:0.1em; }
+    .plc-lcd-status .lan { opacity:0.7; }
+    .plc-lcd-status .run { letter-spacing:0.12em; font-weight:900; }
     .plc-q-glow {
       position:absolute; width:10px; height:10px; margin:-5px 0 0 -5px; border-radius:50%;
       background:radial-gradient(circle, rgba(250,204,21,.95), transparent 70%);
       box-shadow:0 0 8px 2px rgba(250,204,21,.65); pointer-events:none; z-index:25;
+    }
+    /* KNX SwissDz : LED bus + touches poussoir + canaux actionneur */
+    .knx-bus-led {
+      position:absolute; width:3.6%; aspect-ratio:1; border-radius:50%;
+      transform:translate(-50%,-50%); pointer-events:none; z-index:28;
+      opacity:.75;
+      background:radial-gradient(circle, rgba(20,20,20,.5) 35%, transparent 75%);
+    }
+    .knx-bus-led.on {
+      opacity:1; mix-blend-mode:screen;
+      background:radial-gradient(circle, #86efac 15%, #22c55e 45%, transparent 72%);
+      box-shadow:0 0 7px 2px rgba(34,197,94,.95), 0 0 14px 4px rgba(34,197,94,.4);
+      filter:brightness(1.25);
+    }
+    .knx-key {
+      position:absolute; z-index:40; border-radius:10%;
+      transform:translate(-50%,-50%); cursor:pointer;
+      box-sizing:border-box; border:2px solid transparent;
+      background:transparent;
+    }
+    .knx-key:hover { border-color:rgba(37,99,235,.45); background:rgba(37,99,235,.08); }
+    .knx-key.on {
+      border-color:rgba(34,197,94,.75);
+      background:rgba(34,197,94,.22);
+      box-shadow:inset 0 0 10px rgba(34,197,94,.35), 0 0 8px rgba(34,197,94,.35);
+    }
+    .knx-ch-led {
+      position:absolute; width:2.8%; aspect-ratio:1; border-radius:50%;
+      transform:translate(-50%,-50%); pointer-events:none; z-index:28;
+      opacity:.7;
+      background:radial-gradient(circle, rgba(15,15,15,.45) 40%, transparent 75%);
+    }
+    .knx-ch-led.on {
+      opacity:1; mix-blend-mode:screen;
+      background:radial-gradient(circle, #86efac 18%, #22c55e 48%, transparent 72%);
+      box-shadow:0 0 6px 2px rgba(34,197,94,.9);
+      filter:brightness(1.3);
     }
     /* LEDs compteur Sonelgaz : overlays calés sur IMP (rouge) / ÉTAT (vert) de la photo */
     .meter-led {
@@ -690,12 +916,16 @@
       <div class="group">
         <div class="row">
           <button id="btnNew" type="button">Nouveau</button>
+          <button id="btnSave" type="button" title="Télécharger le schéma en JSON">Enregistrer</button>
+          <button id="btnOpen" type="button" title="Ouvrir un schéma JSON">Ouvrir</button>
+          <input id="fileOpen" type="file" accept="application/json,.json" hidden />
           <button id="btnUndo" type="button" title="Annuler (Ctrl+Z / Cmd+Z)" disabled>Annuler</button>
           <button id="btnRedo" type="button" title="Rétablir (Ctrl+Shift+Z / Cmd+Shift+Z)" disabled>Rétablir</button>
           <button id="btnDelete" type="button" title="Supprimer la sélection (Suppr.)">Supprimer</button>
           <button id="btnClearWires" type="button">Eff. fils</button>
           <button id="btnPlay" type="button">Vérifier</button>
           <button id="btnLadder" type="button" title="Afficher / masquer l'éditeur Ladder (auto si PLC posé)">Ladder</button>
+          <button id="btnEts" type="button" title="ETS formation — adresses physiques, GA, objets (pas l'ETS officiel)">ETS formation</button>
         </div>
         <b>PROJET</b>
       </div>
@@ -722,7 +952,7 @@
   <main>
     <aside>
       <h2>BIBLIOTHÈQUE</h2>
-      <div class="lib-note">Biblio SwissDz — clique pour poser. <b>Vérifier</b> = sim : compteur = source, protections ON/OFF, poussoir maintenu, bobines KM/TL, thermique Ir, voyants + <b>sonore</b> (bip). Sélecteur Man/0/Auto. Double-clic = dimensions (thermique = aussi Ir). Avec un <b>PLC</b> : panneau <b>Ladder</b> (logique à contacts) — les sorties Q suivent le programme, plus le mapping fixe I→Q.</div>
+      <div class="lib-note">Biblio SwissDz — clique pour poser. <b>Vérifier</b> = sim : compteur = source, protections ON/OFF, poussoir maintenu, bobines KM/TL, thermique Ir, voyants + <b>sonore</b> (bip). Sélecteur Man/0/Auto. Double-clic = dimensions (thermique = aussi Ir). Avec un <b>PLC</b> : panneau <b>Ladder</b> (logique à contacts) — les sorties Q suivent le programme. <b>KNX / ETS formation</b> : alim L/N → un fil vert <b>BUS en bas</b> (paire +/−) → objets de com / GA (poussoir, actionneur, volet, variateur…). Panneau <b>ETS formation</b> : adresses physiques + liens GA.</div>
       <div id="palette"></div>
     </aside>
     <div id="workspace" class="workspace">
@@ -738,6 +968,18 @@
           </div>
         </div>
         <div id="ladderBody" class="ladder-body"></div>
+      </aside>
+      <aside id="etsPanel" class="ets-panel" aria-label="ETS formation">
+        <div class="ets-head">
+          <h2>ETS FORMATION</h2>
+          <p class="ets-sub">Outil pédagogique SwissDz — même logique que l’ETS (adresses physiques, objets de communication, GA, liens). Ce n’est <b>pas</b> le logiciel ETS officiel KNX Association.</p>
+          <div id="etsTelegram" class="ets-telegram off">Bus : aucun télégramme</div>
+          <div class="ets-toolbar">
+            <button type="button" id="btnEtsReset" title="Réinitialiser les adresses par défaut">Reset adresses</button>
+            <button type="button" id="btnEtsClose" title="Fermer">Fermer</button>
+          </div>
+        </div>
+        <div id="etsBody" class="ets-body"></div>
       </aside>
     </div>
   </main>
@@ -770,22 +1012,34 @@
       { c: "#dc2626", name: "rouge (L)" },
       { c: "#0088ce", name: "bleu (N)" },
       { c: "#c4d600", name: "jaune-vert (PE)" },
+      { c: "#009640", name: "vert (KNX)" },
       { c: "#92400e", name: "marron" },
       { c: "#f59e0b", name: "jaune" },
       { c: "#ea580c", name: "orange" },
       { c: "#f8fafc", name: "blanc" },
       { c: "#9ca3af", name: "gris" }
     ];
-    /* Couleurs conducteurs IEC 60445 */
+    /* Couleurs conducteurs IEC 60445 + gaine bus KNX */
     const COLOR_L = "#dc2626";
     const COLOR_N = "#0088ce";
     const COLOR_PE = "#c4d600";
     const COLOR_PE_STRIPE = "#008c45";
+    const COLOR_KNX = "#009640"; /* gaine / câble bus KNX (vert) */
 
+    function isKnxBusTerm(termId) {
+      const id = String(termId || "");
+      return id === "BUS" || id === "KNX+" || id === "KNX-" || id === "KNX−";
+    }
+    function isKnxDevice(def) {
+      return !!(def && (def.knxPsu || def.knxPush || def.knxActuator || def.knxShutter
+        || def.knxDimmer || def.knxPresence || def.knxTemp || def.knxThermo
+        || def.knxBinary || def.knxIp || def.knxDali));
+    }
     function termRole(type, termId) {
       const id = String(termId || "");
       if (id === "PE" || /^PE\b/i.test(id)) return "pe";
-      if (id === "N" || id === "N'" || id === "0V" || /^N['′]?$/i.test(id)) return "n";
+      if (id === "BUS" || id === "KNX+" || id === "KNX-" || id === "KNX−") return "knxbus";
+      if (id === "N" || id === "N'" || id === "0V" || id === "N1" || id === "N2" || /^N\d*$/i.test(id) || /^N['′]?$/i.test(id)) return "n";
       const def = LIB[type];
       if (def && Array.isArray(def.pairs) && def.pairs[1] && def.pairs[1].includes(termId)) return "n";
       return "l";
@@ -798,8 +1052,34 @@
         if (ib) roleB = termRole(ib.type, b.term);
       } catch (e) { /* ignore */ }
       if (roleA === "pe" || roleB === "pe") return COLOR_PE;
+      /* Câble bus KNX : un seul fil vert (paire +/−) */
+      if (roleA === "knxbus" || roleB === "knxbus") return COLOR_KNX;
       if (roleA === "n" || roleB === "n") return COLOR_N;
       return state.color || COLOR_L;
+    }
+    /** Anciens schémas KNX+/KNX− → borne unique BUS (1 câble). */
+    function migrateKnxBusWires() {
+      let changed = false;
+      state.wires.forEach((w) => {
+        ["a", "b"].forEach((side) => {
+          const t = w[side] && w[side].term;
+          if (t === "KNX+" || t === "KNX-" || t === "KNX−") {
+            w[side].term = "BUS";
+            changed = true;
+          }
+        });
+        if (wireColorForRefs(w.a, w.b) === COLOR_KNX) w.color = COLOR_KNX;
+      });
+      if (!changed) return;
+      const seen = new Set();
+      state.wires = state.wires.filter((w) => {
+        const ka = w.a.uid + ":" + w.a.term;
+        const kb = w.b.uid + ":" + w.b.term;
+        const key = ka < kb ? ka + "|" + kb : kb + "|" + ka;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
     }
     function isPeWireColor(c) {
       return c === COLOR_PE || c === "#c4d600" || c === "#C4D600";
@@ -865,18 +1145,20 @@
       guard_moteur: {name:"Disj. moteur SwissDz",prefix:"QM",cat:"Moteur / Indus",w:99,h:172,din:true,image:"assets/guard-moteur-swissdz.png",badge:"0.1–32A",iec:"QM",terminals:[{id:"1",nx:0.1838,ny:0.1469,direction:"top"},{id:"2",nx:0.1838,ny:0.854,direction:"bottom"},{id:"3",nx:0.4985,ny:0.1469,direction:"top"},{id:"4",nx:0.5122,ny:0.8337,direction:"bottom"},{id:"5",nx:0.7996,ny:0.1469,direction:"top"},{id:"6",nx:0.7996,ny:0.854,direction:"bottom"},{id:"95",nx:0.0744,ny:0.5004,direction:"left"},{id:"96",nx:0.8954,ny:0.5004,direction:"right"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"]]},
       moteur: {name:"Moteur triphasé SwissDz",prefix:"M",cat:"Moteur / Indus",w:145,h:199,image:"assets/moteur-swissdz.png",iec:"M",motor:true,motorI:10,terminals:[{id:"U",nx:0.3296,ny:0.147,direction:"top"},{id:"V",nx:0.499,ny:0.146,direction:"top"},{id:"W",nx:0.6646,ny:0.1492,direction:"top"}]},
       vsd: {name:"Variateur de vitesse SwissDz",prefix:"U",cat:"Moteur / Indus",w:94,h:172,din:true,image:"assets/vsd-swissdz.png",iec:"U",terminals:[{id:"L1",nx:0.1844,ny:0.1037,direction:"top"},{id:"L2",nx:0.5118,ny:0.1037,direction:"top"},{id:"L3",nx:0.8107,ny:0.1037,direction:"top"},{id:"U",nx:0.1844,ny:0.8985,direction:"bottom"},{id:"V",nx:0.5118,ny:0.8985,direction:"bottom"},{id:"W",nx:0.8249,ny:0.8985,direction:"bottom"}],pair:["L1","U"],pairs:[["L1","U"],["L2","V"],["L3","W"]]},
-      /* Photo réelle Siemens LOGO! 8 12/24RCE (face redressée) — source : assets/PLC-PHOTO-SOURCE.md
+      /* Face avant complète Siemens LOGO! 8 (vue orthogonale) — source : assets/PLC-PHOTO-SOURCE.md
          Sim : L+N → LCD ON ; Ix au potentiel L → highlight Ix ; sorties Qi pilotées par le Ladder (pas de map fixe I→Q).
-         Bornes photo : L+/M (libellées L/N pédagogique), I1–I8 haut ; Qi = borne 2 de chaque paire Q. */
-      plc: {name:"PLC Siemens LOGO! 8 12/24RCE",prefix:"A",cat:"Moteur / Indus",w:140,h:172,din:true,image:"assets/plc-logo8-front.jpg",iec:"A",plc:true,lamp:true,lcd:{nx:0.072,ny:0.3105,nw:0.396,nh:0.2137},terminals:[
-        {id:"L",nx:0.225,ny:0.0726,direction:"top"},{id:"N",nx:0.275,ny:0.0726,direction:"top"},
-        {id:"I1",nx:0.33,ny:0.0726,direction:"top"},{id:"I2",nx:0.385,ny:0.0726,direction:"top"},
-        {id:"I3",nx:0.445,ny:0.0726,direction:"top"},{id:"I4",nx:0.505,ny:0.0726,direction:"top"},
-        {id:"I5",nx:0.57,ny:0.0726,direction:"top"},{id:"I6",nx:0.63,ny:0.0726,direction:"top"},
-        {id:"I7",nx:0.7,ny:0.0726,direction:"top"},{id:"I8",nx:0.775,ny:0.0726,direction:"top"},
-        {id:"Q1",nx:0.145,ny:0.8952,direction:"bottom"},{id:"Q2",nx:0.31,ny:0.8952,direction:"bottom"},
-        {id:"Q3",nx:0.485,ny:0.8952,direction:"bottom"},{id:"Q4",nx:0.665,ny:0.8952,direction:"bottom"}
-      ]},
+         Bornes : L/N/I1–I8 haut ; Qi.1/Qi.2 = paire de vis bas (contact sec relais quand Ladder active Qi). w/h = ratio image entière. */
+      plc: {name:"PLC Siemens LOGO! 8 12/24RCE",prefix:"A",cat:"Moteur / Indus",w:136,h:187,din:true,image:"assets/plc-logo8-front.png",iec:"A",plc:true,lamp:true,lcd:{nx:0.0533,ny:0.3187,nw:0.4505,nh:0.3087},terminals:[
+        {id:"L",nx:0.0736,ny:0.0463,direction:"top"},{id:"N",nx:0.1602,ny:0.0463,direction:"top"},
+        {id:"I1",nx:0.2436,ny:0.0463,direction:"top"},{id:"I2",nx:0.3323,ny:0.0463,direction:"top"},
+        {id:"I3",nx:0.4179,ny:0.0463,direction:"top"},{id:"I4",nx:0.5013,ny:0.0463,direction:"top"},
+        {id:"I5",nx:0.6681,ny:0.0463,direction:"top"},{id:"I6",nx:0.7504,ny:0.0463,direction:"top"},
+        {id:"I7",nx:0.8339,ny:0.0463,direction:"top"},{id:"I8",nx:0.9162,ny:0.0463,direction:"top"},
+        {id:"Q1.1",nx:0.0829,ny:0.8654,direction:"bottom"},{id:"Q1.2",nx:0.1670,ny:0.8654,direction:"bottom"},
+        {id:"Q2.1",nx:0.3379,ny:0.8654,direction:"bottom"},{id:"Q2.2",nx:0.4221,ny:0.8654,direction:"bottom"},
+        {id:"Q3.1",nx:0.5891,ny:0.8654,direction:"bottom"},{id:"Q3.2",nx:0.6757,ny:0.8654,direction:"bottom"},
+        {id:"Q4.1",nx:0.8317,ny:0.8654,direction:"bottom"},{id:"Q4.2",nx:0.9159,ny:0.8654,direction:"bottom"}
+      ],pairs:[["Q1.1","Q1.2"],["Q2.1","Q2.2"],["Q3.1","Q3.2"],["Q4.1","Q4.2"]]},
       borniers: {name:"Borniers N / PE SwissDz",prefix:"X",cat:"Borniers / Alim",w:140,h:90,image:"assets/borniers.png",iec:"X",terminals:[{id:"N",nx:0.3194,ny:0.3191,direction:"top"},{id:"PE",nx:0.3194,ny:0.7211,direction:"bottom"}]},
       peigne: {name:"Peigne d'alimentation SwissDz",prefix:"X",cat:"Borniers / Alim",w:200,h:80,image:"assets/peigne-swissdz.png",badge:"Peigne",iec:"X",bus:true,terminals:[{id:"IN",nx:0.0572,ny:0.5039,direction:"left"},{id:"1",nx:0.2484,ny:0.351,direction:"top"},{id:"2",nx:0.4497,ny:0.351,direction:"top"},{id:"3",nx:0.6509,ny:0.351,direction:"top"},{id:"4",nx:0.8522,ny:0.351,direction:"top"}]},
       sectionneur_fusible: {name:"Sectionneur-fusible 3P SwissDz",prefix:"QS",cat:"Protection",w:124,h:172,din:true,image:"assets/sectionneur-fusible-swissdz.png",badge:"SF",iec:"QS",terminals:[{id:"1",nx:0.1552,ny:0.11,direction:"top"},{id:"2",nx:0.186,ny:0.9,direction:"bottom"},{id:"3",nx:0.4745,ny:0.11,direction:"top"},{id:"4",nx:0.4745,ny:0.9,direction:"bottom"},{id:"5",nx:0.8454,ny:0.11,direction:"top"},{id:"6",nx:0.8351,ny:0.9,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"]]},
@@ -894,6 +1176,65 @@
       relais_securite: {name:"Relais de sécurité SwissDz",prefix:"K",cat:"Moteur / Indus",w:61,h:172,din:true,image:"assets/relais-securite-swissdz.png",badge:"SIL",iec:"K",terminals:[{id:"A1",nx:0.3335,ny:0.1409,direction:"top"},{id:"A2",nx:0.7497,ny:0.1409,direction:"top"},{id:"13",nx:0.3439,ny:0.8552,direction:"bottom"},{id:"14",nx:0.6561,ny:0.8552,direction:"bottom"}],pair:["13","14"],pairs:[["13","14"]]},
       alim24v: {name:"Alimentation 24V DC SwissDz",prefix:"G",cat:"Borniers / Alim",w:58,h:172,din:true,image:"assets/alim24v-swissdz.png",badge:"24V",iec:"G",secondary:["24V","0V"],terminals:[{id:"L",nx:0.2917,ny:0.1181,direction:"top"},{id:"N",nx:0.5,ny:0.1181,direction:"top"},{id:"PE",nx:0.7083,ny:0.1181,direction:"top"},{id:"24V",nx:0.3438,ny:0.9029,direction:"bottom"},{id:"0V",nx:0.6562,ny:0.9029,direction:"bottom"}]},
       transfo24v: {name:"Transfo 230/24V SwissDz",prefix:"T",cat:"Borniers / Alim",w:57,h:172,din:true,image:"assets/transfo24v-swissdz.png",badge:"24V~",iec:"T",secondary:["24V","0V"],terminals:[{id:"L",nx:0.3435,ny:0.1182,direction:"top"},{id:"N",nx:0.6565,ny:0.1182,direction:"top"},{id:"24V",nx:0.3435,ny:0.9037,direction:"bottom"},{id:"0V",nx:0.6565,ny:0.9037,direction:"bottom"}]},
+      /* Domotique KNX SwissDz — pastille BUS unique en bas (câble vert = paire +/−) */
+      knx_alim: {name:"Alimentation KNX SwissDz 30 V DC",prefix:"G",cat:"Domotique KNX",w:68,h:170,din:true,image:"assets/knx-alim-swissdz.png",badge:"KNX",iec:"G",knxPsu:true,secondary:["KNX+","KNX-"],busLed:{nx:0.50,ny:0.40},terminals:[
+        {id:"L",nx:0.30,ny:0.12,direction:"top"},{id:"N",nx:0.70,ny:0.12,direction:"top"},
+        {id:"BUS",nx:0.50,ny:0.926,direction:"bottom"}
+      ]},
+      knx_poussoir: {name:"Poussoir KNX SwissDz 4 touches",prefix:"S",cat:"Domotique KNX",w:90,h:155,image:"assets/knx-poussoir-4t-swissdz.png",badge:"4T",iec:"S",knxPush:true,busLed:{nx:0.50,ny:0.16},knxKeys:[
+        {id:1,nx:0.306,ny:0.347,nw:0.306,nh:0.177},{id:2,nx:0.694,ny:0.347,nw:0.306,nh:0.177},
+        {id:3,nx:0.306,ny:0.573,nw:0.306,nh:0.177},{id:4,nx:0.694,ny:0.573,nw:0.306,nh:0.177}
+      ],terminals:[
+        {id:"BUS",nx:0.50,ny:0.916,direction:"bottom"}
+      ]},
+      knx_actionneur: {name:"Actionneur commutation KNX SwissDz 4 sorties",prefix:"KA",cat:"Domotique KNX",w:210,h:151,din:true,image:"assets/knx-actionneur-4s-swissdz.png",badge:"4S",iec:"KA",knxActuator:true,busLed:{nx:0.50,ny:0.12},knxChLeds:[
+        {id:1,nx:0.205,ny:0.214},{id:2,nx:0.385,ny:0.214},{id:3,nx:0.564,ny:0.214},{id:4,nx:0.744,ny:0.214}
+      ],terminals:[
+        {id:"1",nx:0.096,ny:0.373,direction:"top"},{id:"2",nx:0.212,ny:0.373,direction:"top"},
+        {id:"3",nx:0.327,ny:0.373,direction:"top"},{id:"4",nx:0.442,ny:0.373,direction:"top"},
+        {id:"5",nx:0.558,ny:0.373,direction:"top"},{id:"6",nx:0.673,ny:0.373,direction:"top"},
+        {id:"7",nx:0.788,ny:0.373,direction:"top"},{id:"8",nx:0.904,ny:0.373,direction:"top"},
+        {id:"BUS",nx:0.50,ny:0.90,direction:"bottom"}
+      ],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]]},
+      knx_volet: {name:"Actionneur volet KNX SwissDz 2 canaux",prefix:"KA",cat:"Domotique KNX",w:200,h:144,din:true,image:"assets/knx-actionneur-volet-swissdz.png",badge:"Volet",iec:"KA",knxShutter:true,busLed:{nx:0.50,ny:0.10},knxShutters:[
+        {id:1,nx:0.278,ny:0.283,nw:0.222,nh:0.202},{id:2,nx:0.667,ny:0.283,nw:0.222,nh:0.202}
+      ],terminals:[
+        {id:"L1",nx:0.086,ny:0.494,direction:"top"},{id:"U1",nx:0.204,ny:0.494,direction:"top"},
+        {id:"D1",nx:0.322,ny:0.494,direction:"top"},{id:"N1",nx:0.440,ny:0.494,direction:"top"},
+        {id:"L2",nx:0.558,ny:0.494,direction:"top"},{id:"U2",nx:0.676,ny:0.494,direction:"top"},
+        {id:"D2",nx:0.794,ny:0.494,direction:"top"},{id:"N2",nx:0.912,ny:0.494,direction:"top"},
+        {id:"BUS",nx:0.50,ny:0.896,direction:"bottom"}
+      ]},
+      knx_variateur: {name:"Variateur KNX SwissDz 1 canal",prefix:"UD",cat:"Domotique KNX",w:86,h:150,din:true,image:"assets/knx-variateur-swissdz.png",badge:"Dim",iec:"UD",knxDimmer:true,busLed:{nx:0.50,ny:0.14},knxDimBar:{nx:0.50,ny:0.30,nw:0.62},terminals:[
+        {id:"L",nx:0.20,ny:0.52,direction:"top"},{id:"~",nx:0.50,ny:0.52,direction:"top"},{id:"N",nx:0.80,ny:0.52,direction:"top"},
+        {id:"BUS",nx:0.50,ny:0.907,direction:"bottom"}
+      ],pairs:[["L","~"]]},
+      knx_presence: {name:"Détecteur de présence KNX SwissDz",prefix:"B",cat:"Domotique KNX",w:100,h:124,image:"assets/knx-presence-swissdz.png",badge:"PIR",iec:"B",knxPresence:true,busLed:{nx:0.50,ny:0.22},knxPir:{nx:0.50,ny:0.48},terminals:[
+        {id:"BUS",nx:0.50,ny:0.881,direction:"bottom"}
+      ]},
+      knx_sonde: {name:"Sonde de température KNX SwissDz",prefix:"B",cat:"Domotique KNX",w:90,h:120,image:"assets/knx-sonde-temp-swissdz.png",badge:"°C",iec:"B",knxTemp:true,busLed:{nx:0.50,ny:0.20},knxDisplay:{nx:0.50,ny:0.40},terminals:[
+        {id:"BUS",nx:0.50,ny:0.88,direction:"bottom"}
+      ]},
+      knx_thermostat: {name:"Thermostat d'ambiance KNX SwissDz",prefix:"B",cat:"Domotique KNX",w:98,h:127,image:"assets/knx-thermostat-swissdz.png",badge:"TH",iec:"B",knxThermo:true,busLed:{nx:0.50,ny:0.18},knxDisplay:{nx:0.50,ny:0.36},knxThermoBtns:[{id:"minus",nx:0.31,ny:0.60},{id:"plus",nx:0.69,ny:0.60}],terminals:[
+        {id:"BUS",nx:0.50,ny:0.891,direction:"bottom"}
+      ]},
+      knx_binaires: {name:"Entrées binaires KNX SwissDz 4 contacts",prefix:"E",cat:"Domotique KNX",w:120,h:137,din:true,image:"assets/knx-entrees-binaires-swissdz.png",badge:"4E",iec:"E",knxBinary:true,busLed:{nx:0.50,ny:0.14},knxBinHits:[
+        {id:1,nx:0.28,ny:0.281},{id:2,nx:0.71,ny:0.281},{id:3,nx:0.28,ny:0.510},{id:4,nx:0.71,ny:0.510}
+      ],terminals:[
+        {id:"A1",nx:0.179,ny:0.281,direction:"top"},{id:"B1",nx:0.381,ny:0.281,direction:"top"},
+        {id:"A2",nx:0.607,ny:0.281,direction:"top"},{id:"B2",nx:0.810,ny:0.281,direction:"top"},
+        {id:"A3",nx:0.179,ny:0.510,direction:"top"},{id:"B3",nx:0.381,ny:0.510,direction:"top"},
+        {id:"A4",nx:0.607,ny:0.510,direction:"top"},{id:"B4",nx:0.810,ny:0.510,direction:"top"},
+        {id:"BUS",nx:0.50,ny:0.896,direction:"bottom"}
+      ],pairs:[["A1","B1"],["A2","B2"],["A3","B3"],["A4","B4"]]},
+      knx_ip: {name:"Coupleur / interface IP KNX SwissDz",prefix:"IK",cat:"Domotique KNX",w:100,h:133,din:true,image:"assets/knx-coupleur-ip-swissdz.png",badge:"IP",iec:"IK",knxIp:true,busLed:{nx:0.50,ny:0.18},terminals:[
+        {id:"BUS",nx:0.50,ny:0.896,direction:"bottom"}
+      ]},
+      knx_dali: {name:"Passerelle DALI KNX SwissDz",prefix:"UG",cat:"Domotique KNX",w:95,h:137,din:true,image:"assets/knx-passerelle-dali-swissdz.png",badge:"DALI",iec:"UG",knxDali:true,busLed:{nx:0.50,ny:0.16},terminals:[
+        {id:"DA+",nx:0.28,ny:0.40,direction:"top"},{id:"DA-",nx:0.72,ny:0.40,direction:"top"},
+        {id:"L",nx:0.28,ny:0.58,direction:"top"},{id:"N",nx:0.72,ny:0.58,direction:"top"},
+        {id:"BUS",nx:0.50,ny:0.904,direction:"bottom"}
+      ],pairs:[["L","N"]]},
     };
 
     // Alias rétrocompat (anciens ids calibre → type unique)
@@ -1138,7 +1479,9 @@
       short: null, shortArmed: false,
       shortSince: null, fire: null,
       ladderOpen: null, /* null = auto si PLC ; true/false = forcé */
-      ladder: null
+      ladder: null,
+      projectName: "schema-swissdz",
+      knx: null
     };
 
     /* ========== LADDER v1 (logique à contacts / bobines / TON) ========== */
@@ -1150,7 +1493,7 @@
       return [
         {
           id: "s1",
-          title: "Segment 1 — marche directe",
+          title: "Segment 1 — marche directe (I1 → Q1)",
           kind: "series",
           steps: [
             { type: "no", addr: "I1" },
@@ -1159,7 +1502,7 @@
         },
         {
           id: "s2",
-          title: "Segment 2 — temporisation TON",
+          title: "Segment 2 — temporisation TON T1",
           kind: "ton",
           steps: [
             { type: "no", addr: "I4" },
@@ -1169,7 +1512,7 @@
         },
         {
           id: "s3",
-          title: "Segment 3 — latch (mémoire)",
+          title: "Segment 3 — latch (I8 + Q3 / NC I2 → Q3)",
           kind: "latch",
           set: { type: "no", addr: "I8" },
           seal: { type: "no", addr: "Q3" },
@@ -1336,7 +1679,8 @@
         for (let n = 1; n <= 4; n++) {
           const q = "Q" + n;
           if (outs[q]) {
-            unite(key(item.uid, "L"), key(item.uid, q));
+            /* Contact sec relais : unit Qi.1 ↔ Qi.2 (câbler L sur .1, charge sur .2). */
+            unite(key(item.uid, q + ".1"), key(item.uid, q + ".2"));
             item.plcOut[q] = true;
           } else {
             item.plcOut[q] = false;
@@ -1371,7 +1715,7 @@
       wrap.className = "ld-coil" + (active ? " on" : "");
       const sym = document.createElement("div");
       sym.className = "ld-sym";
-      sym.textContent = "(   )";
+      sym.textContent = "(  )";
       const lab = document.createElement("span");
       lab.textContent = addr;
       wrap.appendChild(sym);
@@ -1401,12 +1745,12 @@
     function appendSeriesRow(parent, nodes) {
       const row = document.createElement("div");
       row.className = "ladder-row";
-      let powerSoFar = true;
-      row.appendChild(elWire(true));
+      let powerSoFar = !!state.sim;
+      row.appendChild(elWire(powerSoFar));
       (nodes || []).forEach((n, idx) => {
         if (n.kind === "contact") {
           row.appendChild(elContact(n.addr, n.nc, n.active));
-          powerSoFar = n.active;
+          powerSoFar = !!n.active;
           row.appendChild(elWire(powerSoFar));
         } else if (n.kind === "ton") {
           row.appendChild(elTon(n));
@@ -1417,9 +1761,6 @@
           if (idx < nodes.length - 1) row.appendChild(elWire(n.active));
         }
       });
-      if (!(nodes || []).some((n) => n.kind === "coil")) {
-        /* laisse un fil jusqu'à la rail droite */
-      }
       parent.appendChild(row);
     }
 
@@ -1476,20 +1817,20 @@
           branch.className = "ld-branch" + (h.orOn ? " on" : "");
           const rowSet = document.createElement("div");
           rowSet.className = "ladder-row";
-          rowSet.appendChild(elWire(true));
+          rowSet.appendChild(elWire(!!state.sim));
           rowSet.appendChild(elContact(rung.set.addr, false, !!h.setOn));
           rowSet.appendChild(elWire(!!h.setOn));
           branch.appendChild(rowSet);
           const rowSeal = document.createElement("div");
           rowSeal.className = "ladder-row";
-          rowSeal.appendChild(elWire(true));
+          rowSeal.appendChild(elWire(!!state.sim));
           rowSeal.appendChild(elContact(rung.seal.addr, false, !!h.sealOn));
           rowSeal.appendChild(elWire(!!h.sealOn));
           branch.appendChild(rowSeal);
 
           const row = document.createElement("div");
           row.className = "ladder-row";
-          row.appendChild(elWire(true));
+          row.appendChild(elWire(!!state.sim));
           row.appendChild(branch);
           row.appendChild(elWire(!!h.orOn));
           row.appendChild(elContact(rung.reset.addr, true, !!h.resetOk && !!h.orOn));
@@ -1575,7 +1916,7 @@
     }
     /** Snapshot de l'état éditable (structure schéma). */
     function sanitizeItem(it) {
-      return {
+      const out = {
         uid: it.uid,
         type: it.type,
         tag: it.tag,
@@ -1587,6 +1928,125 @@
         selPos: it.selPos == null ? null : it.selPos,
         thermalIr: it.thermalIr == null ? null : it.thermalIr
       };
+      if (it.knxToggle && typeof it.knxToggle === "object") {
+        out.knxToggle = { 1: !!it.knxToggle[1], 2: !!it.knxToggle[2], 3: !!it.knxToggle[3], 4: !!it.knxToggle[4] };
+      }
+      if (it.knxCh && typeof it.knxCh === "object") {
+        out.knxCh = { 1: !!it.knxCh[1], 2: !!it.knxCh[2], 3: !!it.knxCh[3], 4: !!it.knxCh[4] };
+      }
+      /* Champs KNX / ETS formation (présents si un autre module les pose) */
+      if (it.physAddr != null && it.physAddr !== "") out.physAddr = String(it.physAddr);
+      if (it.ga != null) out.ga = deepClone(it.ga);
+      if (it.BUS != null) out.BUS = deepClone(it.BUS);
+      return out;
+    }
+
+    const AUTOSAVE_KEY = "swissdz-panel-autosave";
+    function buildProject() {
+      const project = {
+        version: 1,
+        name: state.projectName || "schema-swissdz",
+        items: state.items.map(sanitizeItem),
+        wires: state.wires.map(sanitizeWire),
+        counts: deepClone(state.counts),
+        seq: state.seq,
+        wireNo: state.wireNo
+      };
+      if (state.ladder && Array.isArray(state.ladder.rungs)) {
+        project.ladder = { rungs: deepClone(state.ladder.rungs) };
+      }
+      if (state.knx) project.knx = deepClone(state.knx);
+      return project;
+    }
+    function clearAutosave() {
+      try { localStorage.removeItem(AUTOSAVE_KEY); } catch (_) {}
+    }
+    function writeAutosave() {
+      if (state.drag || state.resize || state.wireDrag) return;
+      try {
+        localStorage.setItem(AUTOSAVE_KEY, JSON.stringify(buildProject()));
+      } catch (_) {}
+    }
+    function applyProject(data, opts) {
+      opts = opts || {};
+      if (!data || !Array.isArray(data.items) || !Array.isArray(data.wires)) {
+        throw new Error("JSON invalide");
+      }
+      if (opts.pushHist) pushHistory();
+      historySuspended = true;
+      state.projectName = (data.name && String(data.name)) || "schema-swissdz";
+      state.items = deepClone(data.items).map((it) => ({
+        ...it,
+        pressed: false,
+        lit: false,
+        coilOn: false,
+        _coilPrev: false,
+        hot: {},
+        neu: {}
+      }));
+      state.wires = deepClone(data.wires).map((w) => ({
+        ...w,
+        live: false,
+        waypoints: w.waypoints || []
+      }));
+      state.counts = deepClone(data.counts || {});
+      if (data.seq != null) state.seq = data.seq;
+      if (data.wireNo != null) state.wireNo = data.wireNo;
+      if (data.ladder && Array.isArray(data.ladder.rungs)) {
+        ensureLadder();
+        state.ladder.rungs = deepClone(data.ladder.rungs);
+        resetLadderTimers();
+      }
+      if (data.knx) state.knx = deepClone(data.knx);
+      state.selected = null;
+      state.selectedWire = null;
+      state.wireFrom = null;
+      state.preview = null;
+      state.drag = null;
+      state.resize = null;
+      state.wireDrag = null;
+      historySuspended = false;
+      updateHistoryButtons();
+      syncLadderLayout();
+      render();
+    }
+    function downloadProject() {
+      const project = buildProject();
+      const blob = new Blob([JSON.stringify(project, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      const safe = String(project.name || "schema-swissdz").replace(/[^\w\-àâäéèêëïîôùûüç]+/gi, "_");
+      a.href = URL.createObjectURL(blob);
+      a.download = safe + ".json";
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+      writeAutosave();
+    }
+    function openProjectFile(file) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const data = JSON.parse(String(reader.result || ""));
+          applyProject(data, { pushHist: true });
+          writeAutosave();
+        } catch (err) {
+          alert("Impossible d'ouvrir ce fichier JSON.");
+        }
+      };
+      reader.readAsText(file);
+    }
+    function tryRestoreAutosave() {
+      try {
+        const raw = localStorage.getItem(AUTOSAVE_KEY);
+        if (!raw) return false;
+        const data = JSON.parse(raw);
+        if (!data || !Array.isArray(data.items) || !Array.isArray(data.wires)) return false;
+        if (!data.items.length && !data.wires.length) return false;
+        applyProject(data, { pushHist: false });
+        return true;
+      } catch (_) {
+        return false;
+      }
     }
     function sanitizeWire(w) {
       return {
@@ -1721,7 +2181,7 @@
 
     const CAT_ORDER = [
       "Structure", "Alimentation", "Protection", "Différentiel",
-      "Commande", "Boutonnerie", "Éclairage / Prises", "Moteur / Indus", "Borniers / Alim"
+      "Commande", "Boutonnerie", "Éclairage / Prises", "Domotique KNX", "Moteur / Indus", "Borniers / Alim"
     ];
     const ALIAS_IDS = new Set(["rail", "disj", "idr", "contacteur", "thermique_3ph", "moteur_3ph", "compteur_3pn"]);
     const cats = {};
@@ -1740,6 +2200,7 @@
         const b = document.createElement("button");
         b.type = "button";
         b.className = "item";
+        b.title = def.name;
         const label = def.badge ? `${def.name}` : def.name;
         if (def.image) {
           b.innerHTML = `<img alt="" src="${def.image}"><span>${label}</span>`;
@@ -1771,12 +2232,15 @@
         x: 50 + (n % 4) * 170,
         y: 50 + Math.floor(n / 4) * 190,
         /* Contacteurs / relais à bobine : ouverts par défaut (fermés si bobine alimentée). */
-        closed: !!(def.pair && !def.push && !hasCoil(def) && !def.latch && !def.phaseMonitor && !def.plc),
+        closed: !!(def.pair && !def.push && !hasCoil(def) && !def.latch && !def.phaseMonitor && !def.plc && !def.knxActuator && !def.knxPush),
         pressed: false,
         lit: false,
         coilOn: false,
         selPos: def.selector ? "man" : null,
         thermalIr: def.thermal ? clampThermalIr(def.thermalIr, def) : null,
+        knxToggle: def.knxPush ? { 1: false, 2: false, 3: false, 4: false } : null,
+        knxCh: def.knxActuator ? { 1: false, 2: false, 3: false, 4: false } : null,
+        knxBusOk: false,
         _coilPrev: false,
         hot: {},
         neu: {}
@@ -2297,7 +2761,7 @@
     }
 
     function simulate() {
-      state.items.forEach((i) => { i.hot = {}; i.neu = {}; i.lit = false; i.coilOn = false; });
+      state.items.forEach((i) => { i.hot = {}; i.neu = {}; i.lit = false; i.coilOn = false; i.knxBusOk = false; });
       state.wires.forEach((w) => { w.live = false; });
       if (!state.sim) {
         stopAllBuzzers();
@@ -2323,6 +2787,16 @@
 
       /* 1) Fils toujours connectés */
       state.wires.forEach((w) => unite(key(w.a.uid, w.a.term), key(w.b.uid, w.b.term)));
+
+      /* 1a) Câble bus KNX : un fil BUS↔BUS unit les deux polarités (KNX+ et KNX−) */
+      state.wires.forEach((w) => {
+        if (!isKnxBusTerm(w.a.term) || !isKnxBusTerm(w.b.term)) return;
+        const ia = find(w.a.uid), ib = find(w.b.uid);
+        if (!ia || !ib) return;
+        if (!isKnxDevice(LIB[ia.type]) || !isKnxDevice(LIB[ib.type])) return;
+        unite(key(w.a.uid, "KNX+"), key(w.b.uid, "KNX+"));
+        unite(key(w.a.uid, "KNX-"), key(w.b.uid, "KNX-"));
+      });
 
       /* 1b) Compteur 3P+N : L1/L2/L3 unis au même hotRoot pédagogique (sim mono-compatible) */
       state.items.forEach((item) => {
@@ -2364,6 +2838,33 @@
         ({ hotRoot, neuRoot, hotKey, neuKey } = findSourceRoots(findp, key));
         if (!hotRoot || !neuRoot) return;
 
+        /* KNX : participant sur bus si KNX+ = hot et KNX− = neu (alim secondaire + câble BUS) ;
+           poussoir bascule → canaux actionneur sur le même bus alimenté */
+        state.items.forEach((item) => {
+          const def = LIB[item.type];
+          if (!isKnxDevice(def)) return;
+          const pP = findp(key(item.uid, "KNX+"));
+          const pM = findp(key(item.uid, "KNX-"));
+          item.knxBusOk = (pP === hotRoot && pM === neuRoot) || (pP === neuRoot && pM === hotRoot);
+          if (def.knxPsu) item.coilOn = !!item.knxBusOk;
+        });
+        const knxPushes = state.items.filter((i) => {
+          const d = LIB[i.type];
+          return d && d.knxPush && i.knxBusOk;
+        });
+        state.items.forEach((item) => {
+          const def = LIB[item.type];
+          if (!def || !def.knxActuator) return;
+          if (!item.knxCh) item.knxCh = { 1: false, 2: false, 3: false, 4: false };
+          if (!item.knxBusOk) {
+            item.knxCh = { 1: false, 2: false, 3: false, 4: false };
+            return;
+          }
+          for (let n = 1; n <= 4; n++) {
+            item.knxCh[n] = knxPushes.some((p) => p.knxToggle && p.knxToggle[n]);
+          }
+        });
+
         state.items.forEach((item) => {
           const def = LIB[item.type];
           if (!def) return;
@@ -2404,6 +2905,19 @@
                 if (findp(key(item.uid, id)) === hotRoot) item.plcIn[id] = true;
               }
             }
+            return;
+          }
+
+          /* KNX poussoir : pas de contact puissance — ordres via bus (voir sync plus bas) */
+          if (def.knxPush) return;
+
+          /* KNX actionneur : contacts par canal (sync poussoir → knxCh) */
+          if (def.knxActuator) {
+            const ch = item.knxCh || {};
+            const pairList = def.pairs || [];
+            pairList.forEach((pr, idx) => {
+              if (ch[idx + 1]) unite(key(item.uid, pr[0]), key(item.uid, pr[1]));
+            });
             return;
           }
 
@@ -2460,7 +2974,7 @@
         const loc = locateShortPoint(findp, key, shortRoot);
         triggerShortCircuit(loc);
         maybeIgniteFire(loc);
-        state.items.forEach((i) => { i.hot = {}; i.neu = {}; i.lit = false; i.coilOn = false; });
+        state.items.forEach((i) => { i.hot = {}; i.neu = {}; i.lit = false; i.coilOn = false; i.knxBusOk = false; });
         state.wires.forEach((w) => {
           w.live = false;
           w.liveN = false;
@@ -2548,6 +3062,7 @@
     function render() {
       /* Migre les anciens ids calibre, puis retire les types inconnus (ex. pastilles L/N). */
       migrateItemTypes();
+      migrateKnxBusWires();
       const before = state.items.length;
       state.items = state.items.filter((i) => LIB[i.type]);
       if (state.items.length !== before) {
@@ -2859,7 +3374,10 @@
           }
           el.appendChild(lcd);
           if (item.coilOn && item.plcOut) {
-            def.terminals.filter((t) => /^Q\d+$/.test(t.id) && item.plcOut[t.id]).forEach((t) => {
+            def.terminals.filter((t) => {
+              const m = /^Q(\d)\.[12]$/.exec(t.id);
+              return m && item.plcOut["Q" + m[1]];
+            }).forEach((t) => {
               const g = document.createElement("div");
               g.className = "plc-q-glow";
               g.style.left = (t.nx * 100) + "%";
@@ -2868,6 +3386,53 @@
               el.appendChild(g);
             });
           }
+        }
+        /* KNX : LED bus + touches / canaux */
+        if (def.knxPsu || def.knxPush || def.knxActuator) {
+          const led = def.busLed || { nx: 0.5, ny: 0.2 };
+          const d = document.createElement("div");
+          d.className = "knx-bus-led" + (item.knxBusOk ? " on" : "");
+          d.style.left = (led.nx * 100) + "%";
+          d.style.top = (led.ny * 100) + "%";
+          d.title = item.knxBusOk ? "Bus KNX OK" : "Bus KNX hors tension";
+          el.appendChild(d);
+        }
+        if (def.knxPush && def.knxKeys) {
+          if (!item.knxToggle) item.knxToggle = { 1: false, 2: false, 3: false, 4: false };
+          def.knxKeys.forEach((k) => {
+            const btn = document.createElement("div");
+            const on = !!item.knxToggle[k.id];
+            btn.className = "knx-key" + (on ? " on" : "");
+            btn.style.left = (k.nx * 100) + "%";
+            btn.style.top = (k.ny * 100) + "%";
+            btn.style.width = (k.nw * 100) + "%";
+            btn.style.height = (k.nh * 100) + "%";
+            btn.title = state.sim
+              ? ("T" + k.id + " — clic = bascule canal " + k.id + (on ? " (ON)" : " (OFF)"))
+              : "Lance « Vérifier » puis clique T" + k.id;
+            btn.setAttribute("aria-label", "Touche KNX T" + k.id);
+            btn.onpointerdown = (ev) => {
+              ev.stopPropagation();
+              ev.preventDefault();
+              if (!state.sim) return;
+              pushHistory();
+              item.knxToggle[k.id] = !item.knxToggle[k.id];
+              ensureAudio();
+              render();
+            };
+            el.appendChild(btn);
+          });
+        }
+        if (def.knxActuator && def.knxChLeds) {
+          const ch = item.knxCh || {};
+          def.knxChLeds.forEach((c) => {
+            const d = document.createElement("div");
+            d.className = "knx-ch-led" + (ch[c.id] ? " on" : "");
+            d.style.left = (c.nx * 100) + "%";
+            d.style.top = (c.ny * 100) + "%";
+            d.title = "Sortie " + c.id + (ch[c.id] ? " ON" : " OFF");
+            el.appendChild(d);
+          });
         }
         if (def.selector) {
           const sp = document.createElement("div");
@@ -2933,7 +3498,7 @@
             el.appendChild(d);
           });
         }
-        if (def.pair || def.pairs || def.selector || def.vv) {
+        if ((def.pair || def.pairs || def.selector || def.vv) && !def.knxActuator && !def.knxPush) {
           const b = document.createElement("div");
           /* Pas de libellé Marche/Arrêt sur aucun composant — zone clic discrète seulement */
           let on = def.push ? item.pressed : item.closed;
@@ -2998,8 +3563,10 @@
                 w: sz.w,
                 h: sz.h,
                 ratio: sz.w / Math.max(1, sz.h),
-                histKey
+                histKey,
+                pointerId: ev.pointerId
               };
+              try { board.setPointerCapture(ev.pointerId); } catch (_) {}
             };
             el.appendChild(h);
           });
@@ -3008,6 +3575,7 @@
           if (ev.target.classList.contains("term")) return;
           if (ev.target.classList.contains("rhandle")) return;
           if (ev.target.classList.contains("badge")) return;
+          if (ev.target.classList.contains("knx-key")) return;
           if (state.mode === "wire") return;
           state.selected = item.uid;
           state.selectedWire = null;
@@ -3030,7 +3598,7 @@
             return;
           }
           /* Disjoncteur / IDR / VV / VSD en sim : clic corps = ouvrir/fermer */
-          if (state.sim && (def.pair || def.pairs || def.vv) && !def.push && !hasCoil(def) && !def.plc) {
+          if (state.sim && (def.pair || def.pairs || def.vv) && !def.push && !hasCoil(def) && !def.plc && !def.knxActuator) {
             pushHistory();
             item.closed = !item.closed;
             render();
@@ -3038,10 +3606,21 @@
           }
           const histKey = structuralKey(cloneEditableState());
           pushHistory();
-          state.drag = { uid: item.uid, px: ev.clientX, py: ev.clientY, x: item.x, y: item.y, histKey };
+          /* Mobile : empêche le pan/scroll du board ; capture sur #board (survit au render) */
+          ev.preventDefault();
+          state.drag = {
+            uid: item.uid,
+            px: ev.clientX,
+            py: ev.clientY,
+            x: item.x,
+            y: item.y,
+            histKey,
+            pointerId: ev.pointerId
+          };
           if (isRail(item)) {
             state.drag.group = beginRailGroupDrag(item);
           }
+          try { board.setPointerCapture(ev.pointerId); } catch (_) {}
           render();
         };
         el.ondblclick = (ev) => {
@@ -3057,6 +3636,8 @@
       /* 2) Fils au-dessus des modules */
       board.appendChild(svgWires);
       state.wires.forEach((w) => {
+        /* Bus KNX : forcer vert (y compris schémas anciens rouge/noir) */
+        if (wireColorForRefs(w.a, w.b) === COLOR_KNX) w.color = COLOR_KNX;
         drawWire(wirePtsDraw(w), w.color, w.live, w.id, w.liveN);
       });
       if (state.preview) {
@@ -3074,9 +3655,10 @@
           const p = termAbs(item, t);
           const role = termRole(item.type, t.id);
           board.appendChild(makeTerm(p.x, p.y, item.uid, t.id, {
-            hot: item.hot[t.id],
-            neu: role === "n" || item.neu[t.id],
-            pe: role === "pe"
+            hot: role === "knxbus" ? !!item.knxBusOk : item.hot[t.id],
+            neu: role === "n" || (item.neu[t.id] && role !== "knxbus" && role !== "pe"),
+            pe: role === "pe",
+            knxbus: role === "knxbus"
           }));
         });
       });
@@ -3217,12 +3799,19 @@
     function makeTerm(x, y, uid, id, mark) {
       const t = document.createElement("div");
       const pe = mark && mark.pe;
-      const neu = mark && mark.neu && !mark.hot && !pe;
-      t.className = "term" + (mark && mark.hot ? " hot" : "") + (neu ? " neu" : "") + (pe ? " pe" : "");
+      const knxbus = mark && mark.knxbus;
+      const neu = mark && mark.neu && !mark.hot && !pe && !knxbus;
+      t.className = "term"
+        + (mark && mark.hot ? " hot" : "")
+        + (neu ? " neu" : "")
+        + (pe ? " pe" : "")
+        + (knxbus ? " knxbus" : "");
       t.style.left = x + "px";
       t.style.top = y + "px";
-      t.textContent = pe ? "PE" : (id.length > 2 ? id.slice(0, 2) : id);
-      t.title = pe ? "PE — mise à la terre" : (neu ? "N — neutre (bleu)" : id);
+      t.textContent = pe ? "PE" : knxbus ? "BUS" : (id.length > 2 ? id.slice(0, 2) : id);
+      t.title = pe ? "PE — mise à la terre"
+        : knxbus ? "BUS KNX — un câble vert (KNX+ et KNX−)"
+        : (neu ? "N — neutre (bleu)" : id);
       t.onpointerdown = (ev) => {
         ev.stopPropagation();
         ev.preventDefault();
@@ -3254,6 +3843,7 @@
           const role = termRole(item.type, id);
           if (role === "pe") state.color = COLOR_PE;
           else if (role === "n") state.color = COLOR_N;
+          else if (role === "knxbus") state.color = COLOR_KNX;
           syncColorSwatches();
         }
         return;
@@ -3336,6 +3926,8 @@
       const y = ev.clientY - rect.top + board.scrollTop;
       if (state.wireDrag || state.resize) return;
       if (state.drag) {
+        /* Empêche le scroll tactile pendant le drag module (pas de lock body) */
+        if (ev.cancelable) ev.preventDefault();
         const item = find(state.drag.uid);
         if (!item) return;
         const nx = Math.max(8, state.drag.x + (ev.clientX - state.drag.px));
@@ -3355,6 +3947,10 @@
         render();
       }
     });
+    /* touchmove non-passif : annule le pan iOS pendant drag/resize (sans lock body) */
+    window.addEventListener("touchmove", (ev) => {
+      if (state.drag || state.resize) ev.preventDefault();
+    }, { passive: false });
     window.addEventListener("pointermove", (ev) => {
       if (applyResizePointer(ev)) return;
       if (!state.wireDrag) return;
@@ -3372,7 +3968,7 @@
       bakeWaypoints(w, moveOrthoSegment(start, i, targetX, targetY));
       render();
     });
-    window.addEventListener("pointerup", () => {
+    window.addEventListener("pointerup", (ev) => {
       state.items.forEach((i) => {
         if (LIB[i.type].push) i.pressed = false;
       });
@@ -3380,6 +3976,10 @@
       const wireHistKey = state.wireDrag && state.wireDrag.histKey;
       const dragHistKey = state.drag && state.drag.histKey;
       const resizeHistKey = state.resize && state.resize.histKey;
+      const captureId = (state.drag && state.drag.pointerId) || (state.resize && state.resize.pointerId);
+      if (captureId != null) {
+        try { if (board.hasPointerCapture(captureId)) board.releasePointerCapture(captureId); } catch (_) {}
+      }
       const dragged = state.drag && find(state.drag.uid);
       if (dragged) {
         if (state.drag.group && state.drag.group.items) {
