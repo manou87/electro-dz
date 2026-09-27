@@ -24881,7 +24881,7 @@ _.d=b
 _.e=c
 _.f=d
 _.a=e},
-awq(a,b){return new A.Jh(a,b,null)},
+awq(a,b){var s=(self.location.search||"")+(self.location.hash||"");return new A.Jh(a,/\bembed=1\b/.test(s)?!1:b,null)},
 aD3(a,b,c,d,e,f,g,h){return new A.nP(h,g,f,b,e,a,d,c,null)},
 M9:function M9(a){this.a=a},
 aai:function aai(){},
@@ -83324,7 +83324,7 @@ p=new A.p(r,q,r+s,q+s)}else p=B.T
 if(g>0&&f>0){o=e.e
 $.Y.k3$.push(new A.a_Z(this.b,new A.p(o.a/g,o.b/f,o.c/g,o.d/f)))}o=t.p
 n=A.b([],o)
-if(d){m=p.a
+if(d&&!/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))){m=p.a
 l=p.b
 k=l-64
 j=p.c-m
@@ -85285,10 +85285,13 @@ s=s>0.5?s:1.86
 return A.aet(!0,new A.eP(new A.aae(s,this.a,B.c.aL(0.7081763793485487*s,0.8,3)),null),!0)},
 $S:556}
 A.aae.prototype={
-$2(a,b){var s,r,q,p,o,n,m,l,k,j,i,h=null,g=b.b,f=b.d,e
+$2(a,b){var s,r,q,p,o,n,m,l,k,j,i,h=null,g=b.b,f=b.d,e,a0
+/* PanelWire embed=1 : uniquement le Fluke + cordons (pas prise / Retour / bandeau). */
+a0=/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))
 l=this.b
 k=l.ck($.e7(),t.l)
-if(k.e===B.cM){e=f>=g?B.c.aL(f*0.34,88,f*0.42):B.c.aL(f*0.28,88,f*0.36)
+if(a0)e=0
+else if(k.e===B.cM){e=f>=g?B.c.aL(f*0.34,88,f*0.42):B.c.aL(f*0.28,88,f*0.36)
 if(f<248)e=B.c.aL(f*0.26,64,f*0.32)}else e=0
 s=e>0?B.c.aL(f-e-10,80,f):B.c.aL(f,80,f)
 r=A.bi("w")
@@ -85302,12 +85305,12 @@ p=r.aJ()
 m=q.aJ()
 j=r.aJ()
 j=A.c5(h,B.ov,q.aJ(),h,o,h,n,j)
-m=A.c5(h,A.awq(new A.p(o,n,o+p,n+m),!0),s,h,0,h,0,g)
+m=A.c5(h,A.awq(new A.p(o,n,o+p,n+m),!a0),s,h,0,h,0,g)
 i=A.b([j,m],t.p)
 if(e>0){p=A.bk(8)
 i.push(A.c5(8,A.fv(new A.bd(B.Gb,B.NN,h),new A.b7(B.j.bl(0.08),h,A.d5(B.j.bl(0.16),1),p,h,h,B.E),B.aV),e-8,h,12,12,h,h))}
-i.push(A.c5(h,A.n9(h,h,A.pU(B.hT,B.j.bl(0.45),h,h),h,h,new A.aac(a),h,h,"Retour"),h,h,4,h,4,h))
-i.push(A.c5(h,A.ks(!1,B.AV,h,h,h,h,h,h,new A.aad(l),h,A.vg(h,h,h,h,h,h,h,h,h,B.eR,h,h,h,h,h,h,h,h,B.iO)),h,h,h,8,8,h))
+if(!a0){i.push(A.c5(h,A.n9(h,h,A.pU(B.hT,B.j.bl(0.45),h,h),h,h,new A.aac(a),h,h,"Retour"),h,h,4,h,4,h))
+i.push(A.c5(h,A.ks(!1,B.AV,h,h,h,h,h,h,new A.aad(l),h,A.vg(h,h,h,h,h,h,h,h,h,B.eR,h,h,h,h,h,h,h,h,B.iO)),h,h,h,8,8,h))}
 return A.cP(B.ac,i,B.S,B.ay,h)},
 $S:114}
 A.aac.prototype={

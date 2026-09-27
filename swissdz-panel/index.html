@@ -3,8 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SwissDZ Tableau</title>
+  <title>PanelWire by SwissDZ</title>
+  <link rel="icon" type="image/png" href="brand/logo-panelwire-icon.png" />
   <style>
+    .brand {
+      display:flex; align-items:center; gap:8px; flex:0 0 auto;
+      margin-inline-end:6px; min-width:0;
+    }
+    .brand img {
+      width:36px; height:36px; border-radius:8px; object-fit:cover;
+      flex-shrink:0; background:#fff; border:1px solid var(--line);
+    }
+    .brand-text { min-width:0; line-height:1.15; }
+    .brand-text strong {
+      display:block; font-size:14px; font-weight:800; color:#1f2937; letter-spacing:-.01em;
+    }
+    .brand-text small {
+      display:block; font-size:10px; font-weight:650; color:#9ca3af; letter-spacing:.02em;
+    }
+    @media (max-width:720px) {
+      .brand-text small { display:none; }
+      .brand img { width:30px; height:30px; }
+      .brand-text strong { font-size:12px; }
+    }
     :root { --line:#e5e7eb; --text:#1f2937; --muted:#6b7280; --blue:#2563eb; }
     * { box-sizing: border-box; }
     html, body {
@@ -13,21 +34,32 @@
     }
     body { display:flex; flex-direction:column; }
     header { flex:0 0 auto; background:#fff; border-bottom:1px solid var(--line); padding:6px 10px 8px; }
-    .bar { display:flex; align-items:flex-end; gap:16px; flex-wrap:wrap; }
-    .group { display:flex; flex-direction:column; align-items:center; gap:3px; }
+    .header-top { display:flex; align-items:flex-end; gap:8px; min-width:0; }
+    .bar { display:flex; align-items:flex-end; gap:16px; flex-wrap:wrap; flex:1 1 auto; min-width:0; }
+    .group { display:flex; flex-direction:column; align-items:center; gap:3px; flex:0 0 auto; }
     .group b { font-size:9px; letter-spacing:.08em; color:#9ca3af; font-weight:700; }
-    .row { display:flex; gap:4px; align-items:center; }
+    .row { display:flex; gap:4px; align-items:center; flex-wrap:nowrap; }
+    .row button { flex:0 0 auto; white-space:nowrap; }
+    .btn-lib-toggle { display:none; }
+    .lib-backdrop { display:none; }
     button {
       background:#fff; color:#374151; border:1px solid transparent; border-radius:8px;
       padding:7px 10px; font-size:12px; font-weight:650; cursor:pointer;
+      touch-action:manipulation; -webkit-tap-highlight-color:transparent;
     }
     button:hover { background:#f3f4f6; }
     button.active { background:var(--blue); color:#fff; }
     button.on { background:#dbeafe; color:#1d4ed8; }
     .swatches { display:flex; gap:4px; }
-    .swatch { width:16px; height:16px; border-radius:50%; border:1px solid #d1d5db; padding:0; }
+    .swatch {
+      width:16px; height:16px; border-radius:50%; border:1px solid #d1d5db; padding:0;
+      touch-action:manipulation; -webkit-tap-highlight-color:transparent;
+    }
     .swatch.on { outline:2px solid #111; outline-offset:1px; }
-    select { border:1px solid #d1d5db; border-radius:6px; padding:4px 6px; font-size:12px; background:#fff; }
+    select {
+      border:1px solid #d1d5db; border-radius:6px; padding:4px 6px; font-size:12px; background:#fff;
+      touch-action:manipulation; -webkit-tap-highlight-color:transparent;
+    }
     main {
       flex:1 1 auto; min-height:0; display:flex; flex-direction:column;
       width:100%;
@@ -47,6 +79,7 @@
       flex:0 0 auto; white-space:nowrap; padding:5px 10px; font-size:11px;
       border-radius:8px 8px 0 0; border:1px solid transparent; border-bottom:none;
       background:transparent; color:#64748b; font-weight:700;
+      touch-action:manipulation; -webkit-tap-highlight-color:transparent;
     }
     .lib-tab:hover { background:#f3f4f6; color:#334155; }
     .lib-tab.active {
@@ -79,6 +112,46 @@
         flex:none !important; width:min(320px, 92vw) !important; max-width:92vw !important;
         box-shadow:-8px 0 24px rgba(15,23,42,.18);
       }
+    }
+    /* Téléphone / tablette étroite : barre glissable + biblio en tiroir */
+    @media (max-width: 800px) {
+      header { padding:4px 6px; }
+      .header-top { align-items:center; gap:6px; }
+      .bar {
+        flex-wrap:nowrap;
+        overflow-x:auto;
+        overflow-y:hidden;
+        -webkit-overflow-scrolling:touch;
+        touch-action:pan-x;
+        gap:12px;
+        padding-bottom:2px;
+        scrollbar-width:thin;
+      }
+      .group { flex-shrink:0; }
+      .row { white-space:nowrap; }
+      .btn-lib-toggle {
+        display:inline-flex; align-items:center; justify-content:center;
+        flex:0 0 auto; white-space:nowrap;
+        background:var(--blue); color:#fff; border:none;
+        padding:8px 10px; font-size:12px; font-weight:700; border-radius:8px;
+        touch-action:manipulation;
+      }
+      body.lib-open .btn-lib-toggle { background:#1d4ed8; }
+      main { position:relative; }
+      .lib-backdrop {
+        display:none; position:absolute; inset:0; z-index:45;
+        background:rgba(15,23,42,.28); touch-action:manipulation;
+      }
+      body.lib-open .lib-backdrop { display:block; }
+      .lib-top {
+        display:none; position:absolute; left:0; right:0; top:0; z-index:50;
+        max-height:min(52vh, 360px); overflow:auto;
+        box-shadow:0 10px 28px rgba(15,23,42,.2);
+        border-bottom:1px solid var(--line);
+        -webkit-overflow-scrolling:touch;
+      }
+      body.lib-open .lib-top { display:block; }
+      .lib-items { height:88px; min-height:80px; max-height:96px; }
     }
     /* Ladder — style éditeur clair type Soft Comfort / LOGO! Soft */
     .ladder-panel {
@@ -152,6 +225,8 @@
       flex:0 0 auto; display:flex; flex-direction:column; align-items:center;
       justify-content:center; gap:2px; color:#334155; font-size:11px; font-weight:700;
     }
+    .ld-contact, .ld-coil { cursor:pointer; }
+    .ld-contact:hover .ld-sym, .ld-coil:hover .ld-sym { border-color:#2563eb; }
     .ld-sym {
       font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
       font-size:14px; letter-spacing:.02em; padding:3px 6px; border-radius:3px;
@@ -321,6 +396,7 @@
       display:flex; flex-direction:column; gap:3px; align-items:center; justify-content:center;
       flex:0 0 auto; width:auto; min-width:62px; max-width:88px; text-align:center;
       margin:0; border:1px solid #eef2f7; border-radius:10px; padding:5px 7px;
+      touch-action:manipulation; -webkit-tap-highlight-color:transparent;
     }
     .item > span:not(.thumb) {
       font-size:9px; font-weight:650; color:#475569; line-height:1.15;
@@ -344,6 +420,8 @@
       background-image:radial-gradient(#c5cedd 1.1px, transparent 1.1px);
       background-size:22px 22px;
       height:100%; min-height:0;
+      -webkit-user-select:none; user-select:none;
+      -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent;
     }
     #board.mode-select { cursor:default; }
     /* touch-action:none = le doigt déplace le module, pas le scroll du board */
@@ -351,6 +429,8 @@
     #board.mode-select .dev:active { cursor:grabbing; }
     #board.mode-wire { cursor:crosshair; }
     #board.mode-wire .dev { cursor:crosshair; }
+    /* Pendant drag fil/composant : le board ne panne pas sous le doigt */
+    #board.is-dragging { touch-action:none; }
     .empty-hint {
       position:absolute; inset:0; display:grid; place-items:center;
       color:#94a3b8; font-size:15px; pointer-events:none; text-align:center; padding:24px;
@@ -360,14 +440,60 @@
     .dev {
       position:absolute; border:none; background:transparent; border-radius:0;
       box-shadow:none; outline:none; z-index:20; overflow:visible;
+      -webkit-user-select:none; user-select:none;
+      -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent;
     }
     /* Cadre = boîte image (pas d’offset) pour que les 4/8 poignées collent au composant */
     .dev.sel { outline:1.5px solid #93c5fd; outline-offset:0; }
     .dev img {
+      position:absolute; inset:0; z-index:1;
       width:100%; height:100%; object-fit:fill; object-position:center;
       background:transparent; pointer-events:none; border:none; border-radius:0; display:block;
-      transition: transform .08s ease, filter .08s ease;
+      transition: filter .08s ease;
+      -webkit-user-select:none; user-select:none;
+      -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent;
     }
+    /* Fluke 1664 FC — iframe OIBT live recadrée (appareil + cordons uniquement) */
+    .dev.fluke-meter {
+      z-index:22; overflow:hidden; background:transparent !important;
+      border-radius:0; cursor:default; touch-action:none;
+      box-shadow:none; outline-color:#93c5fd;
+    }
+    .dev.fluke-meter.sel {
+      outline:1.5px solid #93c5fd;
+      background:transparent !important;
+    }
+    .dev.fluke-meter .fluke-drag-handle {
+      position:absolute; left:18%; right:18%; top:0; height:14px; z-index:6;
+      cursor:grab; touch-action:none; pointer-events:auto;
+      background:linear-gradient(180deg, rgba(15,23,42,.28), rgba(15,23,42,.02));
+      border-radius:0 0 6px 6px;
+      border-bottom:1px solid rgba(148,163,184,.22);
+    }
+    .dev.fluke-meter .fluke-drag-handle:active { cursor:grabbing; }
+    .dev.fluke-meter .fluke-drag-handle::after {
+      content:""; position:absolute; left:50%; top:50%;
+      width:28px; height:3px; margin:-1.5px 0 0 -14px;
+      border-radius:2px; background:rgba(148,163,184,.55);
+    }
+    .dev.fluke-meter .fluke-viewport {
+      position:absolute; inset:0;
+      overflow:hidden; background:transparent; pointer-events:auto;
+      /* Corps Fluke + cordons : coupe prise, bandeau « Sous tension », molette */
+      -webkit-clip-path: inset(1% 24% 15% 3% round 38%);
+      clip-path: inset(1% 24% 15% 3% round 38%);
+    }
+    .dev.fluke-meter iframe.fluke-live {
+      /* Zoom + translation : letterbox OIBT + labels côté droit / bas */
+      position:absolute; left:-3%; top:-13%;
+      width:116%; height:132%;
+      border:0; background:transparent; pointer-events:auto;
+      mix-blend-mode:multiply;
+      transform: scale(1.14);
+      transform-origin: 46% 40%;
+    }
+    #board.mode-select .dev.fluke-meter { cursor:default; }
+    #flukePark { display:none !important; }
     /* Poussoir / AU enfoncé : la tête bouge sur la photo */
     .dev.is-pressed img {
       transform: translateY(5%) scale(0.94);
@@ -376,7 +502,27 @@
     .dev.is-pressed {
       filter: drop-shadow(0 1px 0 rgba(0,0,0,.25));
     }
+    /* Fin de course : levier métallique qui pivote (pas de squash image) */
+    .dev.fc-dev.is-pressed img { transform:none; filter:none; }
+    .fc-arm {
+      position:absolute; left:44%; top:12%; width:12%; height:54%;
+      transform-origin:50% 88%; z-index:36; pointer-events:none;
+      border-radius:45% 45% 4px 4px / 18% 18% 4px 4px;
+      background:
+        radial-gradient(circle at 50% 10%, #e5e7eb 0 28%, transparent 30%),
+        linear-gradient(90deg, #6b7280, #f3f4f6 42%, #4b5563);
+      box-shadow:1px 2px 3px rgba(0,0,0,.35);
+      transition:transform .18s ease;
+    }
+    .dev.fc-on .fc-arm { transform:rotate(48deg); }
+    .fc-lever-hit {
+      position:absolute; left:32%; top:8%; width:36%; height:62%;
+      z-index:40; cursor:pointer; background:transparent; border:none; padding:0;
+      -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+    }
     .dev.rail { z-index:8; background:transparent; box-shadow:none; }
+    /* Rail sélectionné : au-dessus des modules pour que les poignées resize restent cliquables */
+    .dev.rail.sel { z-index:25; }
     /* Fallback sans photo (ne doit pas dessiner de barre grise si image présente). */
     .dev.rail-body {
       z-index:8; background:transparent; box-shadow:none;
@@ -416,6 +562,12 @@
     .badge.badge-hit {
       background:transparent; border:none; color:transparent; padding:0;
       width:36px; height:28px; cursor:pointer; left:2px; bottom:2px;
+    }
+    /* Zone levier I-ON / O-OFF (photo) — hors bornes L/N */
+    .lever-hit {
+      position:absolute; left:22%; top:30%; width:56%; height:22%;
+      z-index:40; cursor:pointer; background:transparent; border:none; padding:0;
+      -webkit-tap-highlight-color:transparent; touch-action:manipulation;
     }
     /* Borne PE : fond jaune-vert + symbole terre IEC */
     .dev.source.pe {
@@ -466,12 +618,13 @@
     .dev.motor-run,
     .dev.is-running { filter: drop-shadow(0 0 10px rgba(56,189,248,.45)); }
     .motor-rotor-wrap {
-      position:absolute; left:50%; top:56%; width:34%; aspect-ratio:1;
+      position:absolute; left:50%; top:58%; width:38%; aspect-ratio:1;
       transform:translate(-50%,-50%); z-index:24; pointer-events:none;
       opacity:0; transition:opacity .12s ease;
+      mix-blend-mode:multiply;
     }
     .dev.motor-run .motor-rotor-wrap,
-    .dev.is-running .motor-rotor-wrap { opacity:1; }
+    .dev.is-running .motor-rotor-wrap { opacity:0.92; }
     .motor-rotor {
       width:100%; height:100%; border-radius:50%;
       background:
@@ -755,6 +908,22 @@
       font-size:9px; font-weight:800; background:#111; color:#fff;
       border-radius:4px; padding:1px 5px; z-index:70; pointer-events:none;
     }
+    /* Sélecteur Man/0/Auto : bouton rotatif calé sur la photo (nx/ny mesurés) */
+    .sel-knob-wrap {
+      position:absolute; z-index:28; pointer-events:none;
+      left:34.13%; top:27.94%; width:31.44%; height:34.53%;
+    }
+    .sel-knob-wrap img {
+      width:100%; height:100%; object-fit:fill; display:block;
+      transform-origin: 50.67% 46.58%;
+      transition: transform .18s ease;
+    }
+    .sel-knob-hit {
+      position:absolute; z-index:40; cursor:pointer;
+      left:22%; top:14%; width:56%; height:56%;
+      border-radius:50%; background:transparent;
+      -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+    }
     .coil-on-hint {
       position:absolute; top:4px; right:4px; width:8px; height:8px; border-radius:50%;
       background:#22c55e; box-shadow:0 0 6px #22c55e; z-index:70; pointer-events:none;
@@ -873,19 +1042,36 @@
     svg.wires {
       position:absolute; inset:0; width:100%; height:100%; overflow:visible;
       pointer-events:none; min-width:1600px; min-height:1000px; z-index:40;
+      -webkit-user-select:none; user-select:none;
+      -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent;
     }
-    svg.wires path.hit { pointer-events:stroke; cursor:pointer; }
+    svg.wires path.hit {
+      pointer-events:stroke; cursor:pointer; touch-action:none;
+      -webkit-user-select:none; user-select:none;
+      -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent;
+    }
     svg.wires path.sel-ring { pointer-events:none; }
     svg.wires .whandle {
-      fill:#fff; stroke:#2563eb; stroke-width:1.5; cursor:grab; pointer-events:all;
+      fill:#3b82f6; stroke:#fff; stroke-width:1.5; cursor:grab; pointer-events:all;
+      touch-action:none;
     }
     svg.wires .whandle:active { cursor:grabbing; }
+    svg.wires .wdel {
+      fill:#ef4444; stroke:#fff; stroke-width:1; cursor:pointer; pointer-events:all;
+      touch-action:none;
+    }
+    svg.wires .wdel-x {
+      fill:none; stroke:#fff; stroke-width:1.4; stroke-linecap:round; pointer-events:none;
+    }
     /* Poignées collées aux 4 côtés + coins (= bords réels de l’image, object-fit:fill) */
     .rhandle {
-      position:absolute; width:10px; height:10px;
+      position:absolute; width:14px; height:14px;
       margin:0; transform:translate(-50%, -50%);
       background:#fff; border:1.5px solid #2563eb; border-radius:2px;
       z-index:80; box-sizing:border-box; pointer-events:auto;
+      touch-action:none;
+      -webkit-user-select:none; user-select:none;
+      -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent;
     }
     .rhandle.n  { top:0; left:50%; cursor:ns-resize; }
     .rhandle.s  { top:100%; left:50%; cursor:ns-resize; }
@@ -928,49 +1114,163 @@
     .size-actions button { flex:1 1 auto; min-width:0; }
     .size-actions .primary { background:var(--blue); color:#fff; }
     .size-actions .ghost { background:#f8fafc; border:1px solid #e5e7eb; }
+
+    /* VIP gate */
+    .item.vip-locked { opacity:.55; position:relative; }
+    .item.vip-locked img, .item.vip-locked .thumb { filter:grayscale(.85) brightness(1.05); }
+    .item.vip-locked::after {
+      content:"VIP"; position:absolute; top:3px; right:3px;
+      font-size:8px; font-weight:800; letter-spacing:.04em;
+      background:#0f172a; color:#f8fafc; border-radius:4px; padding:1px 4px;
+    }
+    button#btnVip {
+      background:#0f172a; color:#fff; border:none;
+    }
+    button#btnVip.on { background:#14532d; color:#ecfdf5; }
+    .vip-gate {
+      position:fixed; inset:0; z-index:300; display:none;
+      align-items:stretch; justify-content:center;
+      background:
+        radial-gradient(ellipse 80% 50% at 20% 0%, rgba(37,99,235,.18), transparent 55%),
+        radial-gradient(ellipse 60% 40% at 90% 100%, rgba(220,38,38,.12), transparent 50%),
+        #0b1220;
+      color:#e2e8f0; padding:16px; overflow:auto;
+      -webkit-overflow-scrolling:touch;
+    }
+    .vip-gate.open { display:flex; }
+    .vip-card {
+      margin:auto; width:min(440px, 100%);
+      background:linear-gradient(165deg, #141c2e 0%, #0f172a 55%, #111827 100%);
+      border:1px solid rgba(148,163,184,.22);
+      border-radius:18px; padding:22px 20px 18px;
+      box-shadow:0 24px 60px rgba(0,0,0,.45);
+    }
+    .vip-brand {
+      display:flex; align-items:center; gap:10px; margin-bottom:14px;
+    }
+    .vip-brand .mark {
+      width:34px; height:34px; border-radius:8px; overflow:hidden;
+      background:#fff; border:1px solid rgba(148,163,184,.25);
+      flex-shrink:0;
+    }
+    .vip-brand .mark img { width:100%; height:100%; object-fit:cover; display:block; }
+    .vip-brand .name { font-size:15px; font-weight:800; letter-spacing:.02em; color:#f8fafc; }
+    .vip-brand .name span { color:#94a3b8; font-weight:650; }
+    .vip-card h1 {
+      margin:0 0 6px; font-size:clamp(22px, 5vw, 28px); line-height:1.15;
+      font-weight:800; letter-spacing:-.02em; color:#f8fafc;
+    }
+    .vip-card .lead {
+      margin:0 0 16px; font-size:13px; line-height:1.45; color:#94a3b8;
+    }
+    .vip-perks {
+      list-style:none; margin:0 0 16px; padding:0; display:grid; gap:8px;
+    }
+    .vip-perks li {
+      display:flex; gap:10px; align-items:flex-start;
+      font-size:12.5px; color:#cbd5e1; line-height:1.35;
+      padding:8px 10px; border-radius:10px;
+      background:rgba(255,255,255,.04); border:1px solid rgba(148,163,184,.12);
+    }
+    .vip-perks li b { color:#f8fafc; font-weight:700; display:block; margin-bottom:1px; }
+    .vip-perks .dot {
+      flex:0 0 8px; height:8px; margin-top:5px; border-radius:50%; background:#2563eb;
+    }
+    .vip-price {
+      margin:0 0 16px; padding:12px 14px; border-radius:12px;
+      background:rgba(37,99,235,.12); border:1px solid rgba(37,99,235,.28);
+    }
+    .vip-price .tag {
+      font-size:10px; font-weight:800; letter-spacing:.1em; color:#93c5fd; margin-bottom:4px;
+    }
+    .vip-price .amt {
+      font-size:18px; font-weight:800; color:#f8fafc;
+    }
+    .vip-price .hint { font-size:11px; color:#94a3b8; margin-top:4px; }
+    .vip-form { display:flex; flex-direction:column; gap:8px; margin-bottom:10px; }
+    .vip-form label { font-size:11px; font-weight:700; color:#94a3b8; letter-spacing:.04em; }
+    .vip-form input {
+      border:1px solid rgba(148,163,184,.35); border-radius:10px;
+      padding:11px 12px; font-size:15px; font-weight:650;
+      background:#0b1220; color:#f8fafc; outline:none;
+    }
+    .vip-form input:focus { border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.25); }
+    .vip-actions { display:flex; gap:8px; flex-wrap:wrap; }
+    .vip-actions button { flex:1 1 auto; min-height:42px; border-radius:10px; font-weight:750; }
+    .vip-actions .primary { background:#2563eb; color:#fff; border:none; }
+    .vip-actions .ghost {
+      background:transparent; color:#cbd5e1; border:1px solid rgba(148,163,184,.3);
+    }
+    .vip-err {
+      display:none; margin:0 0 8px; font-size:12px; font-weight:700; color:#fca5a5;
+    }
+    .vip-err.show { display:block; }
+    .vip-demo {
+      margin:12px 0 0; font-size:10px; color:#64748b; text-align:center;
+    }
+    .vip-demo code {
+      font-family:ui-monospace, Consolas, monospace; color:#94a3b8;
+      background:rgba(255,255,255,.06); padding:1px 5px; border-radius:4px;
+    }
+    @media (max-width: 520px) {
+      .vip-card { padding:18px 14px 14px; border-radius:14px; }
+      .vip-actions { flex-direction:column; }
+    }
   </style>
 </head>
 <body>
   <header>
-    <div class="bar">
-      <div class="group">
-        <div class="row">
-          <button id="btnNew" type="button">Nouveau</button>
-          <button id="btnSave" type="button" title="Télécharger le schéma en JSON">Enregistrer</button>
-          <button id="btnOpen" type="button" title="Ouvrir un schéma JSON">Ouvrir</button>
-          <input id="fileOpen" type="file" accept="application/json,.json" hidden />
-          <button id="btnUndo" type="button" title="Annuler (Ctrl+Z / Cmd+Z)" disabled>Annuler</button>
-          <button id="btnRedo" type="button" title="Rétablir (Ctrl+Shift+Z / Cmd+Shift+Z)" disabled>Rétablir</button>
-          <button id="btnDelete" type="button" title="Supprimer la sélection (Suppr.)">Supprimer</button>
-          <button id="btnClearWires" type="button">Eff. fils</button>
-          <button id="btnPlay" type="button">Vérifier</button>
-          <button id="btnLadder" type="button" title="Afficher / masquer l'éditeur Ladder (auto si PLC posé)">Ladder</button>
-          <button id="btnEts" type="button" title="ETS formation — adresses physiques, GA, objets (pas l'ETS officiel)">ETS formation</button>
+    <div class="header-top">
+      <div class="brand" title="PanelWire by SwissDZ">
+        <img src="brand/logo-panelwire-icon.png" alt="" width="36" height="36" />
+        <div class="brand-text">
+          <strong>PanelWire</strong>
+          <small>by SwissDZ</small>
         </div>
-        <b>PROJET</b>
       </div>
-      <div class="group">
-        <div class="row">
-          <button id="modeSelect" class="active" type="button">Sélection</button>
-          <button id="modeWire" type="button">Fil</button>
+      <div class="bar" id="topBar">
+        <div class="group">
+          <div class="row">
+            <button id="btnNew" type="button">Nouveau</button>
+            <button id="btnSave" type="button" title="Télécharger le schéma en JSON">Enregistrer</button>
+            <button id="btnOpen" type="button" title="Ouvrir un schéma JSON">Ouvrir</button>
+            <input id="fileOpen" type="file" accept="application/json,.json" hidden />
+            <button id="btnUndo" type="button" title="Annuler (Ctrl+Z / Cmd+Z)" disabled>Annuler</button>
+            <button id="btnRedo" type="button" title="Rétablir (Ctrl+Shift+Z / Cmd+Shift+Z)" disabled>Rétablir</button>
+            <button id="btnDelete" type="button" title="Supprimer la sélection (Suppr.)">Supprimer</button>
+            <button id="btnClearWires" type="button">Eff. fils</button>
+            <button id="btnPlay" type="button">Vérifier</button>
+            <button id="btnLadder" type="button" title="Afficher / masquer l'éditeur Ladder (auto si PLC posé)">Ladder</button>
+            <button id="btnEts" type="button" title="ETS formation — adresses physiques, GA, objets (pas l'ETS officiel)">ETS formation</button>
+            <button id="btnVip" type="button" title="Version VIP — débloquer toute la bibliothèque">VIP</button>
+          </div>
+          <b>PROJET</b>
         </div>
-        <b>MODE</b>
-      </div>
-      <div class="group">
-        <div class="row">
-          <select id="section">
-            <option value="1.5">1,5 mm²</option>
-            <option value="2.5">2,5 mm²</option>
-            <option value="6" selected>6 mm²</option>
-          </select>
-          <div class="swatches" id="colors"></div>
+        <div class="group">
+          <div class="row">
+            <button id="modeSelect" class="active" type="button">Sélection</button>
+            <button id="modeWire" type="button">Fil</button>
+          </div>
+          <b>MODE</b>
         </div>
-        <b>STYLE FIL</b>
+        <div class="group">
+          <div class="row">
+            <select id="section">
+              <option value="1.5">1,5 mm²</option>
+              <option value="2.5">2,5 mm²</option>
+              <option value="6" selected>6 mm²</option>
+            </select>
+            <div class="swatches" id="colors"></div>
+          </div>
+          <b>STYLE FIL</b>
+        </div>
       </div>
+      <button id="btnLibToggle" class="btn-lib-toggle" type="button" aria-expanded="false" aria-controls="libTop">Composants</button>
     </div>
   </header>
   <main>
-    <section class="lib-top" aria-label="Bibliothèque">
+    <div class="lib-backdrop" id="libBackdrop"></div>
+    <section class="lib-top" id="libTop" aria-label="Bibliothèque">
       <div class="lib-tabs" id="libTabs" role="tablist"></div>
       <div class="lib-items" id="palette" role="tabpanel"></div>
     </section>
@@ -983,7 +1283,7 @@
           <div class="ladder-toolbar">
             <button type="button" id="btnAddRung">+ Segment</button>
             <button type="button" id="btnResetLadder" title="Recharger le programme pédagogique">Reset prog.</button>
-            <span class="hint">I / Q / TON</span>
+            <span class="hint">Clic contact = NO/NC · double-clic = adresse · clic bobine = Q</span>
           </div>
         </div>
         <div id="ladderBody" class="ladder-body"></div>
@@ -1024,6 +1324,36 @@
       </div>
     </div>
   </div>
+  <div id="vipGate" class="vip-gate" aria-hidden="true" role="dialog" aria-labelledby="vipTitle">
+    <div class="vip-card">
+      <div class="vip-brand">
+        <div class="mark" aria-hidden="true"><img src="brand/logo-panelwire-icon.png" alt="" width="34" height="34" /></div>
+        <div class="name">PanelWire <span>by SwissDZ</span></div>
+      </div>
+      <h1 id="vipTitle">Version VIP</h1>
+      <p class="lead">La version libre couvre les bases. VIP débloque toute la bibliothèque professionnelle pour schémas complets.</p>
+      <ul class="vip-perks">
+        <li><span class="dot"></span><div><b>Protections &amp; différentiels</b>Disj. 3P/4P, IDR, SPD, sectionneurs, fusibles</div></li>
+        <li><span class="dot"></span><div><b>Domotique KNX &amp; commande</b>Actionneurs, poussoirs, présence, DALI, ETS formation</div></li>
+        <li><span class="dot"></span><div><b>Moteurs &amp; industrie</b>Contacteurs tri, thermique, PLC LOGO!, variateurs</div></li>
+      </ul>
+      <div class="vip-price">
+        <div class="tag">TARIF</div>
+        <div class="amt">Bientôt via achat in-app</div>
+        <div class="hint">Pas de paiement réel pour l’instant — simulation par code d’accès.</div>
+      </div>
+      <p id="vipErr" class="vip-err" role="alert">Code incorrect. Réessaie.</p>
+      <div class="vip-form">
+        <label for="vipCode">Code d’accès</label>
+        <input id="vipCode" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Saisir le code VIP" />
+      </div>
+      <div class="vip-actions">
+        <button type="button" class="primary" id="vipValidate">Valider</button>
+        <button type="button" class="ghost" id="vipClose">Continuer en version libre</button>
+      </div>
+      <p class="vip-demo">Démo test : <code>SWISSDZ-VIP</code></p>
+    </div>
+  </div>
   <script>
     /* Assets pré-cadrés (photos studio trop larges → bandes). */
     const COLORS = [
@@ -1044,6 +1374,78 @@
     const COLOR_PE = "#c4d600";
     const COLOR_PE_STRIPE = "#008c45";
     const COLOR_KNX = "#009640"; /* gaine / câble bus KNX (vert) */
+
+    /* ========== VIP (code d’accès, pas de paiement réel) ========== */
+    const VIP_STORAGE_KEY = "swissdz-panel-vip";
+    const VIP_DEMO_CODE = "SWISSDZ-VIP";
+    const VIP_FREE_TYPES = new Set([
+      "compteur_sonelgaz",
+      "disj1pn",
+      "disj",
+      "lampe",
+      "contacteur_1ph",
+      "knx_presence",
+      "fluke_1664",
+      /* structure de base pour poser les modules DIN */
+      "rail_din_35", "rail_din_long", "rail_din_embouts", "rail", "pe"
+    ]);
+    function isVipUnlocked() {
+      try { return localStorage.getItem(VIP_STORAGE_KEY) === "1"; } catch (_) { return false; }
+    }
+    function setVipUnlocked(on) {
+      try {
+        if (on) localStorage.setItem(VIP_STORAGE_KEY, "1");
+        else localStorage.removeItem(VIP_STORAGE_KEY);
+      } catch (_) {}
+      syncVipUi();
+    }
+    function isVipFree(typeId) {
+      if (isVipUnlocked()) return true;
+      if (VIP_FREE_TYPES.has(typeId)) return true;
+      /* electrodz-vip-free */ const d = LIB[typeId]; if (d && d.cat === "ElectroDZ") return true;
+      return false;
+    }
+    function syncVipUi() {
+      const btn = document.getElementById("btnVip");
+      if (btn) {
+        const on = isVipUnlocked();
+        btn.classList.toggle("on", on);
+        btn.textContent = on ? "VIP ✓" : "VIP";
+        btn.title = on ? "Version VIP active — clic pour gérer" : "Débloquer la version VIP";
+      }
+    }
+    function openVipGate() {
+      const gate = document.getElementById("vipGate");
+      const err = document.getElementById("vipErr");
+      const inp = document.getElementById("vipCode");
+      if (err) err.classList.remove("show");
+      if (inp) inp.value = "";
+      if (gate) {
+        gate.classList.add("open");
+        gate.setAttribute("aria-hidden", "false");
+      }
+      if (inp) setTimeout(() => inp.focus(), 50);
+    }
+    function closeVipGate() {
+      const gate = document.getElementById("vipGate");
+      if (gate) {
+        gate.classList.remove("open");
+        gate.setAttribute("aria-hidden", "true");
+      }
+    }
+    function validateVipCode() {
+      const inp = document.getElementById("vipCode");
+      const err = document.getElementById("vipErr");
+      const raw = (inp && inp.value ? inp.value : "").trim().toUpperCase();
+      if (raw === VIP_DEMO_CODE) {
+        setVipUnlocked(true);
+        closeVipGate();
+        try { renderPaletteItems(); } catch (_) {}
+        return;
+      }
+      if (err) err.classList.add("show");
+    }
+    /* ========== fin VIP ========== */
 
     function isKnxBusTerm(termId) {
       const id = String(termId || "");
@@ -1128,21 +1530,20 @@
       /* Compteur tri 3P+N : L1/L2/L3/N (jamais PE). Face adaptée de compteur-sonelgaz — assets/COMPTEUR-3PN-SOURCE.md */
       compteur_sonelgaz_3pn: {name:"Compteur Sonelgaz 3P+N (L1 L2 L3 N)",prefix:"P",cat:"Alimentation",w:178,h:172,image:"assets/compteur-sonelgaz-3pn.png",badge:"3P+N",iec:"P",kind:"compteur3",source:true,terminals:[{id:"L1",nx:0.215,ny:0.815,direction:"bottom"},{id:"L2",nx:0.405,ny:0.815,direction:"bottom"},{id:"L3",nx:0.595,ny:0.815,direction:"bottom"},{id:"N",nx:0.785,ny:0.815,direction:"bottom"}],leds:[{id:"imp",cls:"imp",nx:0.2270,ny:0.2943},{id:"etat",cls:"etat",nx:0.7619,ny:0.2942}]},
       /* AGCP mono Sonelgaz : face 2D 1P+N (L/N), pas 3P / pas perspective 3D. */
-      agcp_principal: {name:"Disj. principal AGCP 1P+N SwissDz",prefix:"QA",cat:"Alimentation",w:83,h:172,din:true,image:"assets/disj-2p-swissdz.png",badge:"AGCP",iec:"QA",terminals:[{id:"L",nx:0.2321,ny:0.1173,direction:"top"},{id:"L'",nx:0.2321,ny:0.8525,direction:"bottom"},{id:"N",nx:0.7369,ny:0.1173,direction:"top"},{id:"N'",nx:0.7609,ny:0.8525,direction:"bottom"}],pair:["L","L'"],pairs:[["L","L'"],["N","N'"]]},
-      disj1pn: {name:"Disj. 1P+N SwissDz",prefix:"QF",cat:"Protection",w:83,h:172,din:true,image:"assets/disj-2p-swissdz.png",badge:"1P+N",iec:"QF",terminals:[{id:"1",nx:0.2321,ny:0.1173,direction:"top"},{id:"2",nx:0.2321,ny:0.8525,direction:"bottom"},{id:"3",nx:0.7369,ny:0.1173,direction:"top"},{id:"4",nx:0.7609,ny:0.8525,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"]]},
+      agcp_principal: {name:"Disj. principal AGCP 1P+N SwissDz",prefix:"QA",cat:"Alimentation",w:83,h:172,din:true,image:"assets/disj-2p-on.png",imageOff:"assets/disj-2p-off.png",badge:"AGCP",iec:"QA",terminals:[{id:"L",nx:0.2816,ny:0.0567,direction:"top"},{id:"L'",nx:0.2816,ny:0.9340,direction:"bottom"},{id:"N",nx:0.7531,ny:0.0567,direction:"top"},{id:"N'",nx:0.7531,ny:0.9340,direction:"bottom"}],pair:["L","L'"],pairs:[["L","L'"],["N","N'"]]},
+      disj1pn: {name:"Disj. 1P+N SwissDz",prefix:"QF",cat:"Protection",w:83,h:172,din:true,image:"assets/disj-2p-on.png",imageOff:"assets/disj-2p-off.png",badge:"1P+N",iec:"QF",terminals:[{id:"1",nx:0.2816,ny:0.0567,direction:"top"},{id:"2",nx:0.2816,ny:0.9340,direction:"bottom"},{id:"3",nx:0.7531,ny:0.0567,direction:"top"},{id:"4",nx:0.7531,ny:0.9340,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"]]},
       disj3p: {name:"Disj. 3P SwissDz",prefix:"QF",cat:"Protection",w:129,h:172,din:true,image:"assets/disj-3p-swissdz.png",badge:"3P",iec:"QF",terminals:[{id:"1",nx:0.23,ny:0.12,direction:"top"},{id:"2",nx:0.22,ny:0.87,direction:"bottom"},{id:"3",nx:0.5,ny:0.12,direction:"top"},{id:"4",nx:0.49,ny:0.87,direction:"bottom"},{id:"5",nx:0.78,ny:0.12,direction:"top"},{id:"6",nx:0.78,ny:0.87,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"]]},
-      disj4p: {name:"Disj. 4P SwissDz",prefix:"QF",cat:"Protection",w:169,h:172,din:true,image:"assets/disj-4p-swissdz.png",badge:"4P",iec:"QF",terminals:[{id:"1",nx:0.1263,ny:0.11,direction:"top"},{id:"2",nx:0.1263,ny:0.87,direction:"bottom"},{id:"3",nx:0.3702,ny:0.11,direction:"top"},{id:"4",nx:0.3702,ny:0.86,direction:"bottom"},{id:"5",nx:0.614,ny:0.11,direction:"top"},{id:"6",nx:0.614,ny:0.87,direction:"bottom"},{id:"7",nx:0.8375,ny:0.11,direction:"top"},{id:"8",nx:0.8375,ny:0.87,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]]},
+      disj4p: {name:"Disj. 4P SwissDz",prefix:"QF",cat:"Protection",w:169,h:172,din:true,image:"assets/disj-4p-on.png",imageOff:"assets/disj-4p-off.png",badge:"4P",iec:"QF",terminals:[{id:"1",nx:0.1263,ny:0.11,direction:"top"},{id:"2",nx:0.1263,ny:0.87,direction:"bottom"},{id:"3",nx:0.3702,ny:0.11,direction:"top"},{id:"4",nx:0.3702,ny:0.86,direction:"bottom"},{id:"5",nx:0.614,ny:0.11,direction:"top"},{id:"6",nx:0.614,ny:0.87,direction:"bottom"},{id:"7",nx:0.8375,ny:0.11,direction:"top"},{id:"8",nx:0.8375,ny:0.87,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]]},
       spd: {name:"Parafoudre SPD SwissDz",prefix:"FV",cat:"Protection",w:84,h:172,din:true,image:"assets/spd-swissdz.png",badge:"SPD",iec:"FV",terminals:[{id:"1",nx:0.3422,ny:0.0982,direction:"top"},{id:"2",nx:0.7421,ny:0.0982,direction:"top"},{id:"PE",nx:0.5155,ny:0.8952,direction:"bottom"}]},
-      sectionneur3p: {name:"Sectionneur 3P SwissDz",prefix:"QS",cat:"Protection",w:123,h:172,din:true,image:"assets/sectionneur-swissdz.png",badge:"3P",iec:"QS",terminals:[{id:"1",nx:0.1463,ny:0.1081,direction:"top"},{id:"2",nx:0.1782,ny:0.9038,direction:"bottom"},{id:"3",nx:0.5075,ny:0.1081,direction:"top"},{id:"4",nx:0.4756,ny:0.8937,direction:"bottom"},{id:"5",nx:0.8475,ny:0.1081,direction:"top"},{id:"6",nx:0.8156,ny:0.9038,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"]]},
+      sectionneur3p: {name:"Sectionneur 3P SwissDz",prefix:"QS",cat:"Protection",w:123,h:172,din:true,image:"assets/sectionneur-3p-on.png",imageOff:"assets/sectionneur-3p-off.png",badge:"3P",iec:"QS",terminals:[{id:"1",nx:0.1463,ny:0.1081,direction:"top"},{id:"2",nx:0.1782,ny:0.9038,direction:"bottom"},{id:"3",nx:0.5075,ny:0.1081,direction:"top"},{id:"4",nx:0.4756,ny:0.8937,direction:"bottom"},{id:"5",nx:0.8475,ny:0.1081,direction:"top"},{id:"6",nx:0.8156,ny:0.9038,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"]]},
       fusible_gG: {name:"Porte-fusible 1P+N gG SwissDz",prefix:"FU",cat:"Protection",w:83,h:172,din:true,image:"assets/disj-2p-swissdz.png",badge:"gG",iec:"FU",terminals:[{id:"1",nx:0.2321,ny:0.1173,direction:"top"},{id:"2",nx:0.2321,ny:0.8525,direction:"bottom"},{id:"3",nx:0.7369,ny:0.1173,direction:"top"},{id:"4",nx:0.7609,ny:0.8525,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"]]},
       fusible_aM: {name:"Porte-fusible 1P+N aM SwissDz",prefix:"FU",cat:"Protection",w:83,h:172,din:true,image:"assets/disj-2p-swissdz.png",badge:"aM",iec:"FU",terminals:[{id:"1",nx:0.2321,ny:0.1173,direction:"top"},{id:"2",nx:0.2321,ny:0.8525,direction:"bottom"},{id:"3",nx:0.7369,ny:0.1173,direction:"top"},{id:"4",nx:0.7609,ny:0.8525,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"]]},
-      idr2p: {name:"IDR 2P SwissDz",prefix:"QI",cat:"Différentiel",w:107,h:172,din:true,image:"assets/idr.png",badge:"2P",iec:"QI",terminals:[{id:"1",nx:0.24,ny:0.1184,direction:"top"},{id:"2",nx:0.79,ny:0.1184,direction:"top"},{id:"3",nx:0.24,ny:0.8715,direction:"bottom"},{id:"4",nx:0.78,ny:0.8816,direction:"bottom"}],pair:["1","3"],pairs:[["1","3"],["2","4"]]},
-      idr4p: {name:"IDR 4P SwissDz",prefix:"QI",cat:"Différentiel",w:164,h:172,din:true,image:"assets/idr-4p-swissdz.png",badge:"4P",iec:"QI",terminals:[{id:"1",nx:0.1426,ny:0.0977,direction:"top"},{id:"2",nx:0.1426,ny:0.853,direction:"bottom"},{id:"3",nx:0.3697,ny:0.0977,direction:"top"},{id:"4",nx:0.3697,ny:0.853,direction:"bottom"},{id:"5",nx:0.6293,ny:0.0977,direction:"top"},{id:"6",nx:0.6293,ny:0.853,direction:"bottom"},{id:"7",nx:0.8672,ny:0.0977,direction:"top"},{id:"8",nx:0.8563,ny:0.853,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]]},
+      idr2p: {name:"IDR 2P SwissDz",prefix:"QI",cat:"Différentiel",w:107,h:172,din:true,image:"assets/idr-2p-on.png",imageOff:"assets/idr-2p-off.png",badge:"2P",iec:"QI",terminals:[{id:"1",nx:0.24,ny:0.1184,direction:"top"},{id:"2",nx:0.79,ny:0.1184,direction:"top"},{id:"3",nx:0.24,ny:0.8715,direction:"bottom"},{id:"4",nx:0.78,ny:0.8816,direction:"bottom"}],pair:["1","3"],pairs:[["1","3"],["2","4"]]},
+      idr4p: {name:"IDR 4P SwissDz",prefix:"QI",cat:"Différentiel",w:164,h:172,din:true,image:"assets/idr-4p-on.png",imageOff:"assets/idr-4p-off.png",badge:"4P",iec:"QI",terminals:[{id:"1",nx:0.1426,ny:0.0977,direction:"top"},{id:"2",nx:0.1426,ny:0.853,direction:"bottom"},{id:"3",nx:0.3697,ny:0.0977,direction:"top"},{id:"4",nx:0.3697,ny:0.853,direction:"bottom"},{id:"5",nx:0.6293,ny:0.0977,direction:"top"},{id:"6",nx:0.6293,ny:0.853,direction:"bottom"},{id:"7",nx:0.8672,ny:0.0977,direction:"top"},{id:"8",nx:0.8563,ny:0.853,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]]},
       telerupteur: {name:"Télérupteur SwissDz",prefix:"TL",cat:"Commande",w:60,h:172,din:true,image:"assets/telerupteur.png",iec:"TL",latch:true,terminals:[{id:"A1",nx:0.27,ny:0.1285,direction:"top"},{id:"A2",nx:0.7,ny:0.1285,direction:"top"},{id:"11",nx:0.27,ny:0.8615,direction:"bottom"},{id:"14",nx:0.79,ny:0.8615,direction:"bottom"}],pair:["11","14"],pairs:[["11","14"]]},
       minuterie: {name:"Minuterie SwissDz",prefix:"KT",cat:"Commande",w:42,h:172,din:true,image:"assets/minuterie.png",iec:"KT",terminals:[{id:"1",nx:0.4978,ny:0.0983,direction:"top"},{id:"2",nx:0.4978,ny:0.8816,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"]]},
       jour_nuit: {name:"Contact jour/nuit SwissDz",prefix:"KT",cat:"Commande",w:45,h:172,din:true,image:"assets/jour-nuit-swissdz.png",badge:"J/N",iec:"KT",terminals:[{id:"1",nx:0.5,ny:0.1079,direction:"top"},{id:"2",nx:0.5,ny:0.882,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"]]},
       inter_horaire: {name:"Interrupteur horaire SwissDz",prefix:"KT",cat:"Commande",w:45,h:172,din:true,image:"assets/inter-horaire-swissdz.png",badge:"7j",iec:"KT",terminals:[{id:"1",nx:0.2036,ny:0.1101,direction:"top"},{id:"2",nx:0.6697,ny:0.1101,direction:"top"},{id:"3",nx:0.2348,ny:0.8808,direction:"bottom"},{id:"4",nx:0.6387,ny:0.8808,direction:"bottom"}],pair:["1","3"],pairs:[["1","3"],["2","4"]]},
-      inter: {name:"Interrupteur SwissDz",prefix:"S",cat:"Commande",w:112,h:110,image:"assets/interrupteur.png",iec:"S",terminals:[{id:"L",nx:0.38,ny:0.66,direction:"bottom"},{id:"1",nx:0.62,ny:0.66,direction:"bottom"}],pair:["L","1"],pairs:[["L","1"]]},
       va_et_vient: {name:"Va-et-vient SwissDz",prefix:"S",cat:"Commande",w:97,h:100,image:"assets/va-et-vient-swissdz.png",badge:"VV",iec:"S",vv:true,terminals:[{id:"L",nx:0.2383,ny:0.7833,direction:"bottom"},{id:"1",nx:0.4995,ny:0.7833,direction:"bottom"},{id:"2",nx:0.7607,ny:0.7833,direction:"bottom"}],pair:["L","1"],pairs:[["L","1"]]},
       poussoir: {name:"Poussoir mur SwissDz",prefix:"S",cat:"Commande",w:100,h:100,image:"assets/poussoir-swissdz.png",badge:"NO",iec:"S",push:true,terminals:[{id:"1",nx:0.3491,ny:0.7817,direction:"bottom"},{id:"2",nx:0.6509,ny:0.7817,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"]]},
       bp: {name:"BP NO SwissDz",prefix:"S",cat:"Boutonnerie",w:90,h:99,image:"assets/bp-swissdz.png",badge:"NO",iec:"S",push:true,terminals:[{id:"3",nx:0.0677,ny:0.4521,direction:"left"},{id:"4",nx:0.9431,ny:0.4521,direction:"right"}],pair:["3","4"],pairs:[["3","4"]]},
@@ -1153,8 +1554,6 @@
       voyantRouge: {name:"Voyant rouge 230V SwissDz",prefix:"HL",cat:"Boutonnerie",w:85,h:100,image:"assets/voyant-rouge-swissdz.png",badge:"R",iec:"HL",lamp:true,glow:{nx:0.28,ny:0.32,w:0.40,h:0.34},terminals:[{id:"X1",nx:0.2739,ny:0.8022,direction:"bottom"},{id:"X2",nx:0.7153,ny:0.8022,direction:"bottom"}]},
       voyantOrange: {name:"Voyant orange 230V SwissDz",prefix:"HL",cat:"Boutonnerie",w:78,h:92,image:"assets/voyant-orange-swissdz.png",badge:"O",iec:"HL",lamp:true,glow:{nx:0.30,ny:0.20,w:0.40,h:0.32},terminals:[{id:"X1",nx:0.3734,ny:0.7957,direction:"bottom"},{id:"X2",nx:0.7631,ny:0.7957,direction:"bottom"}]},
       lampe: {name:"Lampe SwissDz",prefix:"HL",cat:"Éclairage / Prises",w:70,h:111,image:"assets/lampe.png",iec:"HL",lamp:true,glow:{nx:0.22,ny:0.60,w:0.56,h:0.34},terminals:[{id:"L",nx:0.36,ny:0.12,direction:"top"},{id:"N",nx:0.64,ny:0.12,direction:"top"}]},
-      prise: {name:"Prise 2P+T SwissDz",prefix:"X",cat:"Éclairage / Prises",w:100,h:93,image:"assets/prise.png",iec:"X",lamp:true,terminals:[{id:"L",nx:0.1787,ny:0.5803,direction:"left"},{id:"N",nx:0.8213,ny:0.5803,direction:"right"},{id:"PE",nx:0.5,ny:0.2188,direction:"top"}]},
-      dcl: {name:"DCL SwissDz",prefix:"X",cat:"Éclairage / Prises",w:110,h:102,image:"assets/dcl.png",iec:"X",lamp:true,terminals:[{id:"L",nx:0.7,ny:0.739,direction:"bottom"},{id:"N",nx:0.3,ny:0.739,direction:"bottom"},{id:"PE",nx:0.5,ny:0.518,direction:"top"}]},
       transfo_sonnerie: {name:"Transfo sonnerie SwissDz",prefix:"T",cat:"Éclairage / Prises",w:54,h:172,din:true,image:"assets/transfo-sonnerie-swissdz.png",badge:"8V",iec:"T",secondary:["8V","0V"],terminals:[{id:"L",nx:0.2962,ny:0.1069,direction:"top"},{id:"N",nx:0.7038,ny:0.1069,direction:"top"},{id:"8V",nx:0.2962,ny:0.8931,direction:"bottom"},{id:"0V",nx:0.7038,ny:0.8931,direction:"bottom"}]},
       /* KM mono / tri : un seul de chaque (pas de calibres). Photo SwissDz existante. */
       contacteur_1ph: {name:"Contacteur monophasé SwissDz",prefix:"KM",cat:"Moteur / Indus",w:99,h:172,din:true,image:"assets/contacteur-swissdz.png",badge:"1~",iec:"KM",terminals:[{id:"1",nx:0.1984,ny:0.1623,direction:"top"},{id:"3",nx:0.8203,ny:0.1623,direction:"top"},{id:"A1",nx:-0.0,ny:0.3245,direction:"left"},{id:"A2",nx:0.9526,ny:0.3245,direction:"right"},{id:"2",nx:0.172,ny:0.8315,direction:"bottom"},{id:"4",nx:0.7806,ny:0.8315,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"]]},
@@ -1181,11 +1580,10 @@
       borniers: {name:"Borniers N / PE SwissDz",prefix:"X",cat:"Borniers / Alim",w:140,h:90,image:"assets/borniers.png",iec:"X",terminals:[{id:"N",nx:0.3194,ny:0.3191,direction:"top"},{id:"PE",nx:0.3194,ny:0.7211,direction:"bottom"}]},
       peigne: {name:"Peigne d'alimentation SwissDz",prefix:"X",cat:"Borniers / Alim",w:200,h:80,image:"assets/peigne-swissdz.png",badge:"Peigne",iec:"X",bus:true,terminals:[{id:"IN",nx:0.0572,ny:0.5039,direction:"left"},{id:"1",nx:0.2484,ny:0.351,direction:"top"},{id:"2",nx:0.4497,ny:0.351,direction:"top"},{id:"3",nx:0.6509,ny:0.351,direction:"top"},{id:"4",nx:0.8522,ny:0.351,direction:"top"}]},
       sectionneur_fusible: {name:"Sectionneur-fusible 3P SwissDz",prefix:"QS",cat:"Protection",w:124,h:172,din:true,image:"assets/sectionneur-fusible-swissdz.png",badge:"SF",iec:"QS",terminals:[{id:"1",nx:0.1552,ny:0.11,direction:"top"},{id:"2",nx:0.186,ny:0.9,direction:"bottom"},{id:"3",nx:0.4745,ny:0.11,direction:"top"},{id:"4",nx:0.4745,ny:0.9,direction:"bottom"},{id:"5",nx:0.8454,ny:0.11,direction:"top"},{id:"6",nx:0.8351,ny:0.9,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"]]},
-      selecteur: {name:"Sélecteur Man/0/Auto SwissDz",prefix:"S",cat:"Boutonnerie",w:96,h:96,image:"assets/selecteur-swissdz.png",badge:"M-0-A",iec:"S",selector:true,terminals:[{id:"1",nx:0.2974,ny:0.8869,direction:"bottom"},{id:"2",nx:0.501,ny:0.8869,direction:"bottom"},{id:"3",nx:0.7046,ny:0.8869,direction:"bottom"}]},
+      selecteur: {name:"Sélecteur Man/0/Auto SwissDz",prefix:"S",cat:"Boutonnerie",w:96,h:96,image:"assets/selecteur-dial-base.png",thumb:"assets/selecteur-swissdz.png",badge:"M-0-A",iec:"S",selector:true,knobImage:"assets/selecteur-knob.png",knobAngles:{man:-55,"0":180,auto:55},terminals:[{id:"1",nx:0.2974,ny:0.8869,direction:"bottom"},{id:"2",nx:0.501,ny:0.8869,direction:"bottom"},{id:"3",nx:0.7046,ny:0.8869,direction:"bottom"}]},
       buzzer: {name:"Avertisseur sonore SwissDz",prefix:"HA",cat:"Boutonnerie",w:68,h:100,image:"assets/buzzer-swissdz.png",badge:"HA",iec:"HA",lamp:true,buzzer:true,terminals:[{id:"X1",nx:0.3914,ny:0.887,direction:"bottom"},{id:"X2",nx:0.7371,ny:0.887,direction:"bottom"}]},
       fin_course: {name:"Fin de course SwissDz",prefix:"S",cat:"Commande",w:85,h:110,image:"assets/fin-course-swissdz.png",badge:"SQ",iec:"S",fc:true,push:true,terminals:[{id:"11",nx:0.2003,ny:0.5459,direction:"left"},{id:"12",nx:0.8366,ny:0.5459,direction:"right"},{id:"13",nx:0.2003,ny:0.7003,direction:"left"},{id:"14",nx:0.8366,ny:0.7003,direction:"right"}],pair:["11","12"],pairs:[["11","12"]]},
       temporisateur: {name:"Temporisateur TON/TOF SwissDz",prefix:"KT",cat:"Commande",w:46,h:172,din:true,image:"assets/temporisateur-swissdz.png",badge:"TON",iec:"KT",terminals:[{id:"A1",nx:0.4156,ny:0.117,direction:"top"},{id:"A2",nx:0.5844,ny:0.117,direction:"top"},{id:"15",nx:0.4156,ny:0.9059,direction:"bottom"},{id:"18",nx:0.5844,ny:0.9059,direction:"bottom"}],pair:["15","18"],pairs:[["15","18"]]},
-      inter_cle: {name:"Interrupteur à clé SwissDz",prefix:"S",cat:"Commande",w:100,h:100,image:"assets/inter-cle-swissdz.png",badge:"Clé",iec:"S",terminals:[{id:"1",nx:0.35,ny:0.85,direction:"bottom"},{id:"2",nx:0.65,ny:0.85,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"]]},
       detecteur: {name:"Détecteur de présence SwissDz",prefix:"B",cat:"Commande",w:100,h:100,image:"assets/detecteur-swissdz.png",badge:"PIR",iec:"B",push:true,terminals:[{id:"L",nx:0.2973,ny:0.8822,direction:"bottom"},{id:"N",nx:0.4995,ny:0.8822,direction:"bottom"},{id:"1",nx:0.7017,ny:0.8822,direction:"bottom"}],pair:["L","1"],pairs:[["L","1"]]},
       variateur_eclairage: {name:"Variateur éclairage SwissDz",prefix:"T",cat:"Éclairage / Prises",w:100,h:100,image:"assets/variateur-eclairage-swissdz.png",badge:"DIM",iec:"T",terminals:[{id:"L",nx:0.3474,ny:0.8559,direction:"bottom"},{id:"1",nx:0.6526,ny:0.8559,direction:"bottom"}],pair:["L","1"],pairs:[["L","1"]]},
       softstarter: {name:"Démarreur progressif SwissDz",prefix:"U",cat:"Moteur / Indus",w:95,h:172,din:true,image:"assets/softstarter-swissdz.png",badge:"SS",iec:"U",terminals:[{id:"L1",nx:0.2024,ny:0.1146,direction:"top"},{id:"L2",nx:0.4795,ny:0.1146,direction:"top"},{id:"L3",nx:0.8387,ny:0.1146,direction:"top"},{id:"T1",nx:0.2024,ny:0.9057,direction:"bottom"},{id:"T2",nx:0.5205,ny:0.9057,direction:"bottom"},{id:"T3",nx:0.8387,ny:0.9057,direction:"bottom"}],pair:["L1","T1"],pairs:[["L1","T1"],["L2","T2"],["L3","T3"]]},
@@ -1254,6 +1652,110 @@
         {id:"L",nx:0.28,ny:0.58,direction:"top"},{id:"~",nx:0.50,ny:0.58,direction:"top"},{id:"N",nx:0.72,ny:0.58,direction:"top"},
         {id:"BUS",nx:0.50,ny:0.904,direction:"bottom"}
       ],pairs:[["L","~"]]},
+      /* Fluke 1664 FC — iframe live oibt-trainer #/meter (paysage, collé à l'appareil). */
+      fluke_1664: {name:"Fluke 1664 FC",prefix:"MT",cat:"Appareils de mesure",w:400,h:268,image:"assets/fluke/fluke_thumb.png",thumb:"assets/fluke/fluke_thumb.png",badge:"1664",iec:"P",flukeMeter:true,terminals:[]},
+/* === ELECTRODZ_LIB_BEGIN (generated — do not edit by hand) === */
+      edz_c_16p_riel_din_35_mm: {name:"DIN Rail 35 mm 16P",prefix:"X",cat:"ElectroDZ",w:150,h:24,image:"assets/electrodz/c_16p_riel_din_35_mm.png",badge:"Structure",terminals:[]},
+      edz_c_20p_riel_din_35_mm: {name:"DIN Rail 35 mm 20P",prefix:"X",cat:"ElectroDZ",w:150,h:24,image:"assets/electrodz/c_20p_riel_din_35_mm.png",badge:"Structure",terminals:[]},
+      edz_c_3_pole_mcb: {name:"3 pole mcb",prefix:"QF",cat:"ElectroDZ",w:108,h:170,image:"assets/electrodz/c_3_pole_mcb.png",imageOff:"assets/electrodz/c_3_pole_mcb_off.png",badge:"Protection",din:true,startOpen:true,terminals:[{id:"1",nx:0.2623,ny:0.197,direction:"top"},{id:"3",nx:0.4766,ny:0.1905,direction:"top"},{id:"5",nx:0.685,ny:0.1931,direction:"top"},{id:"2",nx:0.2604,ny:0.8602,direction:"bottom"},{id:"4",nx:0.4766,ny:0.8602,direction:"bottom"},{id:"6",nx:0.7006,ny:0.8589,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"]],pair:["1","2"]},
+      edz_c_4p_riel_din_35_mm: {name:"DIN Rail 35 mm 4P",prefix:"X",cat:"ElectroDZ",w:150,h:50,image:"assets/electrodz/c_4p_riel_din_35_mm.png",badge:"Structure",terminals:[]},
+      edz_c_6p_riel_din_35_mm: {name:"DIN Rail 35 mm 6P",prefix:"X",cat:"ElectroDZ",w:150,h:38,image:"assets/electrodz/c_6p_riel_din_35_mm.png",badge:"Structure",terminals:[]},
+      edz_abb_cr_u230ac3_cr_u3s: {name:"ABB CR-U230AC3 on CR-U3S",prefix:"KA",cat:"ElectroDZ",w:76,h:150,image:"assets/electrodz/abb_cr_u230ac3_cr_u3s.png",imageOff:"assets/electrodz/abb_cr_u230ac3_cr_u3s_off.png",badge:"ABB",din:true,startOpen:true,terminals:[{id:"34",nx:0.109,ny:0.083,direction:"top"},{id:"32",nx:0.263,ny:0.083,direction:"top"},{id:"24",nx:0.417,ny:0.083,direction:"top"},{id:"22",nx:0.573,ny:0.083,direction:"top"},{id:"14",nx:0.729,ny:0.083,direction:"top"},{id:"12",nx:0.887,ny:0.083,direction:"top"},{id:"A2A",nx:0.109,ny:0.936,direction:"bottom"},{id:"A2B",nx:0.263,ny:0.936,direction:"bottom"},{id:"31",nx:0.417,ny:0.936,direction:"bottom"},{id:"21",nx:0.573,ny:0.936,direction:"bottom"},{id:"11",nx:0.729,ny:0.936,direction:"bottom"},{id:"A1",nx:0.887,ny:0.936,direction:"bottom"}],pairs:[["11","14"],["21","24"],["31","34"]],pair:["11","14"]},
+      edz_abb_cr_m: {name:"ABB Cr M",prefix:"KA",cat:"ElectroDZ",w:45,h:156,image:"assets/electrodz/abb_cr_m.png",imageOff:"assets/electrodz/abb_cr_m_off.png",badge:"ABB",din:true,startOpen:true,terminals:[{id:"A1",nx:0.2,ny:0.03,direction:"top"},{id:"A2",nx:0.8,ny:0.03,direction:"top"},{id:"11",nx:0.25,ny:0.97,direction:"bottom"},{id:"12",nx:0.5,ny:0.97,direction:"bottom"},{id:"14",nx:0.75,ny:0.97,direction:"bottom"}],pairs:[["11","14"]],pair:["11","14"]},
+      edz_abb_s200_s201_1p: {name:"ABB S200 S201 1p",prefix:"QF",cat:"ElectroDZ",w:36,h:170,image:"assets/electrodz/abb_s200_s201_1p.png",imageOff:"assets/electrodz/abb_s200_s201_1p_off.png",badge:"ABB",din:true,startOpen:true,terminals:[{id:"1",nx:0.5,ny:0.02,direction:"top"},{id:"2",nx:0.5,ny:0.98,direction:"bottom"}],pairs:[["1","2"]],pair:["1","2"]},
+      edz_abb_s200_s202_2p: {name:"ABB S200 S202 2p",prefix:"QF",cat:"ElectroDZ",w:72,h:170,image:"assets/electrodz/abb_s200_s202_2p.png",imageOff:"assets/electrodz/abb_s200_s202_2p_off.png",badge:"ABB",din:true,startOpen:true,terminals:[{id:"1",nx:0.25,ny:0.02,direction:"top"},{id:"2",nx:0.25,ny:0.98,direction:"bottom"},{id:"3",nx:0.75,ny:0.02,direction:"top"},{id:"4",nx:0.75,ny:0.98,direction:"bottom"}],pairs:[["1","2"],["3","4"]],pair:["1","2"]},
+      edz_abb_s200_s203_3p: {name:"ABB S200 S203 3p",prefix:"QF",cat:"ElectroDZ",w:108,h:170,image:"assets/electrodz/abb_s200_s203_3p.png",imageOff:"assets/electrodz/abb_s200_s203_3p_off.png",badge:"ABB",din:true,startOpen:true,terminals:[{id:"1",nx:0.1667,ny:0.02,direction:"top"},{id:"2",nx:0.1667,ny:0.98,direction:"bottom"},{id:"3",nx:0.5,ny:0.02,direction:"top"},{id:"4",nx:0.5,ny:0.98,direction:"bottom"},{id:"5",nx:0.8333,ny:0.02,direction:"top"},{id:"6",nx:0.8333,ny:0.98,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"]],pair:["1","2"]},
+      edz_abb_s200_s204_4p: {name:"ABB S200 S204 4p",prefix:"QF",cat:"ElectroDZ",w:144,h:170,image:"assets/electrodz/abb_s200_s204_4p.png",imageOff:"assets/electrodz/abb_s200_s204_4p_off.png",badge:"ABB",din:true,startOpen:true,terminals:[{id:"1",nx:0.125,ny:0.02,direction:"top"},{id:"2",nx:0.125,ny:0.98,direction:"bottom"},{id:"3",nx:0.375,ny:0.02,direction:"top"},{id:"4",nx:0.375,ny:0.98,direction:"bottom"},{id:"5",nx:0.625,ny:0.02,direction:"top"},{id:"6",nx:0.625,ny:0.98,direction:"bottom"},{id:"7",nx:0.875,ny:0.02,direction:"top"},{id:"8",nx:0.875,ny:0.98,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]],pair:["1","2"]},
+      edz_abb_tmax_t2s160_tmd125_1250: {name:"ABB SACE Tmax T2S 160 TMD125-1250",prefix:"QF",cat:"ElectroDZ",w:180,h:260,image:"assets/electrodz/abb_tmax_t2s160_tmd125_1250.png",imageOff:"assets/electrodz/abb_tmax_t2s160_tmd125_1250_off.png",badge:"ABB",din:true,startOpen:true,terminals:[{id:"1",nx:0.1667,ny:0.08,direction:"top"},{id:"2",nx:0.1667,ny:0.92,direction:"bottom"},{id:"3",nx:0.5,ny:0.08,direction:"top"},{id:"4",nx:0.5,ny:0.92,direction:"bottom"},{id:"5",nx:0.8333,ny:0.08,direction:"top"},{id:"6",nx:0.8333,ny:0.92,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"]],pair:["1","2"]},
+      edz_abb_tmax_t3n250_tmd250_2500: {name:"ABB SACE Tmax T3N 250 TMD250-2500",prefix:"QF",cat:"ElectroDZ",w:196,h:280,image:"assets/electrodz/abb_tmax_t3n250_tmd250_2500.png",imageOff:"assets/electrodz/abb_tmax_t3n250_tmd250_2500_off.png",badge:"ABB",din:true,startOpen:true,terminals:[{id:"1",nx:0.1667,ny:0.08,direction:"top"},{id:"2",nx:0.1667,ny:0.92,direction:"bottom"},{id:"3",nx:0.5,ny:0.08,direction:"top"},{id:"4",nx:0.5,ny:0.92,direction:"bottom"},{id:"5",nx:0.8333,ny:0.08,direction:"top"},{id:"6",nx:0.8333,ny:0.92,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"]],pair:["1","2"]},
+      edz_abb_tmax_t5n400: {name:"ABB SACE Tmax T5N 400 TMA",prefix:"QF",cat:"ElectroDZ",w:191,h:280,image:"assets/electrodz/abb_tmax_t5n400.png",imageOff:"assets/electrodz/abb_tmax_t5n400_off.png",badge:"ABB",din:true,startOpen:true,terminals:[{id:"1",nx:0.1667,ny:0.08,direction:"top"},{id:"2",nx:0.1667,ny:0.92,direction:"bottom"},{id:"3",nx:0.5,ny:0.08,direction:"top"},{id:"4",nx:0.5,ny:0.92,direction:"bottom"},{id:"5",nx:0.8333,ny:0.08,direction:"top"},{id:"6",nx:0.8333,ny:0.92,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"]],pair:["1","2"]},
+      edz_abb_sh201_c2: {name:"ABB SH201-C2",prefix:"QF",cat:"ElectroDZ",w:35,h:170,image:"assets/electrodz/abb_sh201_c2.png",imageOff:"assets/electrodz/abb_sh201_c2_off.png",badge:"ABB",din:true,startOpen:true,terminals:[{id:"1",nx:0.5,ny:0.05,direction:"top"},{id:"2",nx:0.5,ny:0.795,direction:"bottom"}],pairs:[["1","2"]],pair:["1","2"]},
+      edz_abb_tmax_xt1_4p: {name:"ABB Tmax Xt1 4p",prefix:"QF",cat:"ElectroDZ",w:203,h:240,image:"assets/electrodz/abb_tmax_xt1_4p.png",imageOff:"assets/electrodz/abb_tmax_xt1_4p_off.png",badge:"ABB",din:true,startOpen:true,terminals:[{id:"1",nx:0.125,ny:0.02,direction:"top"},{id:"2",nx:0.125,ny:0.98,direction:"bottom"},{id:"3",nx:0.375,ny:0.02,direction:"top"},{id:"4",nx:0.375,ny:0.98,direction:"bottom"},{id:"5",nx:0.625,ny:0.02,direction:"top"},{id:"6",nx:0.625,ny:0.98,direction:"bottom"},{id:"7",nx:0.875,ny:0.02,direction:"top"},{id:"8",nx:0.875,ny:0.98,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]],pair:["1","2"]},
+      edz_botric_ba49_63_2p_c63_dc: {name:"BOTRIC BA49-63 2P C63 DC",prefix:"QF",cat:"ElectroDZ",w:72,h:160,image:"assets/electrodz/botric_ba49_63_2p_c63_dc.png",imageOff:"assets/electrodz/botric_ba49_63_2p_c63_dc_off.png",badge:"BOTRIC",din:true,startOpen:true,terminals:[{id:"1",nx:0.25,ny:0.08,direction:"top"},{id:"2",nx:0.25,ny:0.92,direction:"bottom"},{id:"3",nx:0.75,ny:0.08,direction:"top"},{id:"4",nx:0.75,ny:0.92,direction:"bottom"}],pairs:[["1","2"],["3","4"]],pair:["1","2"]},
+      edz_barra_de_neutro_n_6t_b: {name:"Neutral Busbar (N) - 6T B",prefix:"X",cat:"ElectroDZ",w:28,h:170,image:"assets/electrodz/barra_de_neutro_n_6t_b.png",passthrough:true,terminals:[{id:"N",nx:0.215,ny:0.0833,direction:"left"},{id:"N1",nx:0.7217,ny:0.25,direction:"right"},{id:"N2",nx:0.7217,ny:0.4167,direction:"right"},{id:"N3",nx:0.7217,ny:0.5833,direction:"right"},{id:"N4",nx:0.7217,ny:0.75,direction:"right"},{id:"N5",nx:0.7217,ny:0.9167,direction:"right"}],pairs:[["N","N1"]],pair:["N","N1"]},
+      edz_barra_de_neutro_n_6t_d: {name:"Neutral Busbar (N) - 6T D",prefix:"X",cat:"ElectroDZ",w:28,h:170,image:"assets/electrodz/barra_de_neutro_n_6t_d.png",passthrough:true,terminals:[{id:"N5",nx:0.7217,ny:0.0833,direction:"right"},{id:"N4",nx:0.7217,ny:0.25,direction:"right"},{id:"N3",nx:0.7217,ny:0.4167,direction:"right"},{id:"N2",nx:0.7217,ny:0.5833,direction:"right"},{id:"N1",nx:0.7217,ny:0.75,direction:"right"},{id:"N",nx:0.2158,ny:0.9167,direction:"left"}],pairs:[["N5","N4"]],pair:["N5","N4"]},
+      edz_barra_de_tierra_pe_6t_a: {name:"Earth Busbar (PE) - 6T A",prefix:"X",cat:"ElectroDZ",w:28,h:170,image:"assets/electrodz/barra_de_tierra_pe_6t_a.png",passthrough:true,terminals:[{id:"PE",nx:0.7817,ny:0.0833,direction:"right"},{id:"PE1",nx:0.7217,ny:0.25,direction:"right"},{id:"PE2",nx:0.7217,ny:0.4167,direction:"right"},{id:"PE3",nx:0.7217,ny:0.5833,direction:"right"},{id:"PE4",nx:0.7217,ny:0.75,direction:"right"},{id:"PE5",nx:0.7217,ny:0.9167,direction:"right"}],pairs:[["PE","PE1"]],pair:["PE","PE1"]},
+      edz_barra_de_tierra_pe_6t_b: {name:"Earth Busbar (PE) - 6T B",prefix:"X",cat:"ElectroDZ",w:28,h:170,image:"assets/electrodz/barra_de_tierra_pe_6t_b.png",passthrough:true,terminals:[{id:"PE",nx:0.215,ny:0.0833,direction:"left"},{id:"PE1",nx:0.7217,ny:0.25,direction:"right"},{id:"PE2",nx:0.7217,ny:0.4167,direction:"right"},{id:"PE3",nx:0.7217,ny:0.5833,direction:"right"},{id:"PE4",nx:0.7217,ny:0.75,direction:"right"},{id:"PE5",nx:0.7217,ny:0.9167,direction:"right"}],pairs:[["PE","PE1"]],pair:["PE","PE1"]},
+      edz_borne_n: {name:"N Terminal",prefix:"X",cat:"ElectroDZ",w:28,h:170,image:"assets/electrodz/borne_n.png",badge:"Power",din:true,passthrough:true,terminals:[{id:"1",nx:0.5,ny:0.0,direction:"top"},{id:"2",nx:0.5,ny:1.0,direction:"bottom"}],pairs:[["1","2"]],pair:["1","2"]},
+      edz_chint_njyb3_11: {name:"CHINT NJYB3-11",prefix:"K",cat:"ElectroDZ",w:72,h:182,image:"assets/electrodz/chint_njyb3_11.png",badge:"CHINT",din:true,terminals:[{id:"L1",nx:0.12,ny:0.08,direction:"top"},{id:"L2",nx:0.45,ny:0.08,direction:"top"},{id:"L3",nx:0.74,ny:0.08,direction:"top"},{id:"N",nx:0.9,ny:0.08,direction:"top"},{id:"14",nx:0.12,ny:0.92,direction:"bottom"},{id:"11",nx:0.28,ny:0.92,direction:"bottom"},{id:"12",nx:0.45,ny:0.92,direction:"bottom"}],pairs:[["11","14"]],pair:["11","14"]},
+      edz_chint_nxhb_125_3p: {name:"CHINT NXHB-125-3P",prefix:"QF",cat:"ElectroDZ",w:180,h:244,image:"assets/electrodz/chint_nxhb_125_3p.png",imageOff:"assets/electrodz/chint_nxhb_125_3p_off.png",badge:"CHINT",din:true,startOpen:true,terminals:[{id:"1",nx:0.1667,ny:0.02,direction:"top"},{id:"2",nx:0.1667,ny:0.98,direction:"bottom"},{id:"3",nx:0.5,ny:0.02,direction:"top"},{id:"4",nx:0.5,ny:0.98,direction:"bottom"},{id:"5",nx:0.8333,ny:0.02,direction:"top"},{id:"6",nx:0.8333,ny:0.98,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"]],pair:["1","2"]},
+      edz_chint_nxm160s_3300: {name:"CHINT NXM-160S/3300",prefix:"QF",cat:"ElectroDZ",w:163,h:280,image:"assets/electrodz/chint_nxm160s_3300.png",imageOff:"assets/electrodz/chint_nxm160s_3300_off.png",badge:"CHINT",din:true,startOpen:true,terminals:[{id:"1",nx:0.1667,ny:0.08,direction:"top"},{id:"2",nx:0.1667,ny:0.92,direction:"bottom"},{id:"3",nx:0.5,ny:0.08,direction:"top"},{id:"4",nx:0.5,ny:0.92,direction:"bottom"},{id:"5",nx:0.8333,ny:0.08,direction:"top"},{id:"6",nx:0.8333,ny:0.92,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"]],pair:["1","2"]},
+      edz_chint_nxm160s_4300b: {name:"CHINT NXM-160S/4300B",prefix:"QF",cat:"ElectroDZ",w:217,h:280,image:"assets/electrodz/chint_nxm160s_4300b.png",imageOff:"assets/electrodz/chint_nxm160s_4300b_off.png",badge:"CHINT",din:true,startOpen:true,terminals:[{id:"1",nx:0.125,ny:0.08,direction:"top"},{id:"2",nx:0.125,ny:0.92,direction:"bottom"},{id:"3",nx:0.375,ny:0.08,direction:"top"},{id:"4",nx:0.375,ny:0.92,direction:"bottom"},{id:"5",nx:0.625,ny:0.08,direction:"top"},{id:"6",nx:0.625,ny:0.92,direction:"bottom"},{id:"7",nx:0.875,ny:0.08,direction:"top"},{id:"8",nx:0.875,ny:0.92,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]],pair:["1","2"]},
+      edz_chint_nxm250s_4300b: {name:"CHINT NXM-250S/4300B",prefix:"QF",cat:"ElectroDZ",w:238,h:280,image:"assets/electrodz/chint_nxm250s_4300b.png",imageOff:"assets/electrodz/chint_nxm250s_4300b_off.png",badge:"CHINT",din:true,startOpen:true,terminals:[{id:"1",nx:0.125,ny:0.08,direction:"top"},{id:"2",nx:0.125,ny:0.92,direction:"bottom"},{id:"3",nx:0.375,ny:0.08,direction:"top"},{id:"4",nx:0.375,ny:0.92,direction:"bottom"},{id:"5",nx:0.625,ny:0.08,direction:"top"},{id:"6",nx:0.625,ny:0.92,direction:"bottom"},{id:"7",nx:0.875,ny:0.08,direction:"top"},{id:"8",nx:0.875,ny:0.92,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]],pair:["1","2"]},
+      edz_chint_nxzm_125_4p: {name:"CHINT NXZM-125-4P",prefix:"Q",cat:"ElectroDZ",w:190,h:280,image:"assets/electrodz/chint_nxzm_125_4p.png",badge:"CHINT",din:true,terminals:[{id:"NI1",nx:0.12,ny:0.02,direction:"top"},{id:"NI2",nx:0.19,ny:0.02,direction:"top"},{id:"NI3",nx:0.26,ny:0.02,direction:"top"},{id:"NI4",nx:0.33,ny:0.02,direction:"top"},{id:"RI1",nx:0.4,ny:0.02,direction:"top"},{id:"RI2",nx:0.47,ny:0.02,direction:"top"},{id:"RI3",nx:0.54,ny:0.02,direction:"top"},{id:"RI4",nx:0.61,ny:0.02,direction:"top"},{id:"O1",nx:0.34,ny:0.98,direction:"bottom"},{id:"O2",nx:0.46,ny:0.98,direction:"bottom"},{id:"O3",nx:0.58,ny:0.98,direction:"bottom"},{id:"O4",nx:0.7,ny:0.98,direction:"bottom"}],pairs:[["NI1","O1"],["RI1","O1"],["NI2","O2"],["RI2","O2"],["NI3","O3"],["RI3","O3"],["NI4","O4"],["RI4","O4"]],pair:["NI1","O1"]},
+      edz_chint_nm1_125s_3p: {name:"CHINT Nm1 125s 3p",prefix:"QF",cat:"ElectroDZ",w:172,h:280,image:"assets/electrodz/chint_nm1_125s_3p.png",imageOff:"assets/electrodz/chint_nm1_125s_3p_off.png",badge:"CHINT",din:true,startOpen:true,terminals:[{id:"1",nx:0.1667,ny:0.02,direction:"top"},{id:"2",nx:0.1667,ny:0.98,direction:"bottom"},{id:"3",nx:0.5,ny:0.02,direction:"top"},{id:"4",nx:0.5,ny:0.98,direction:"bottom"},{id:"5",nx:0.8333,ny:0.02,direction:"top"},{id:"6",nx:0.8333,ny:0.98,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"]],pair:["1","2"]},
+      edz_chint_nm1_125s_4p: {name:"CHINT Nm1 125s 4p",prefix:"QF",cat:"ElectroDZ",w:224,h:280,image:"assets/electrodz/chint_nm1_125s_4p.png",imageOff:"assets/electrodz/chint_nm1_125s_4p_off.png",badge:"CHINT",din:true,startOpen:true,terminals:[{id:"1",nx:0.125,ny:0.02,direction:"top"},{id:"2",nx:0.125,ny:0.98,direction:"bottom"},{id:"3",nx:0.375,ny:0.02,direction:"top"},{id:"4",nx:0.375,ny:0.98,direction:"bottom"},{id:"5",nx:0.625,ny:0.02,direction:"top"},{id:"6",nx:0.625,ny:0.98,direction:"bottom"},{id:"7",nx:0.875,ny:0.02,direction:"top"},{id:"8",nx:0.875,ny:0.98,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]],pair:["1","2"]},
+      edz_chint_nxb63h_1p: {name:"CHINT Nxb63h 1p",prefix:"QF",cat:"ElectroDZ",w:36,h:170,image:"assets/electrodz/chint_nxb63h_1p.png",imageOff:"assets/electrodz/chint_nxb63h_1p_off.png",badge:"CHINT",din:true,startOpen:true,terminals:[{id:"1",nx:0.5,ny:0.02,direction:"top"},{id:"2",nx:0.5,ny:0.98,direction:"bottom"}],pairs:[["1","2"]],pair:["1","2"]},
+      edz_chint_nxb63h_2p: {name:"CHINT Nxb63h 2p",prefix:"QF",cat:"ElectroDZ",w:72,h:170,image:"assets/electrodz/chint_nxb63h_2p.png",imageOff:"assets/electrodz/chint_nxb63h_2p_off.png",badge:"CHINT",din:true,startOpen:true,terminals:[{id:"1",nx:0.25,ny:0.02,direction:"top"},{id:"2",nx:0.25,ny:0.98,direction:"bottom"},{id:"3",nx:0.75,ny:0.02,direction:"top"},{id:"4",nx:0.75,ny:0.98,direction:"bottom"}],pairs:[["1","2"],["3","4"]],pair:["1","2"]},
+      edz_chint_nxb63h_3p: {name:"CHINT Nxb63h 3p",prefix:"QF",cat:"ElectroDZ",w:108,h:170,image:"assets/electrodz/chint_nxb63h_3p.png",imageOff:"assets/electrodz/chint_nxb63h_3p_off.png",badge:"CHINT",din:true,startOpen:true,terminals:[{id:"1",nx:0.1667,ny:0.02,direction:"top"},{id:"2",nx:0.1667,ny:0.98,direction:"bottom"},{id:"3",nx:0.5,ny:0.02,direction:"top"},{id:"4",nx:0.5,ny:0.98,direction:"bottom"},{id:"5",nx:0.8333,ny:0.02,direction:"top"},{id:"6",nx:0.8333,ny:0.98,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"]],pair:["1","2"]},
+      edz_chint_nxb63h_4p: {name:"CHINT Nxb63h 4p",prefix:"QF",cat:"ElectroDZ",w:144,h:170,image:"assets/electrodz/chint_nxb63h_4p.png",imageOff:"assets/electrodz/chint_nxb63h_4p_off.png",badge:"CHINT",din:true,startOpen:true,terminals:[{id:"1",nx:0.125,ny:0.02,direction:"top"},{id:"2",nx:0.125,ny:0.98,direction:"bottom"},{id:"3",nx:0.375,ny:0.02,direction:"top"},{id:"4",nx:0.375,ny:0.98,direction:"bottom"},{id:"5",nx:0.625,ny:0.02,direction:"top"},{id:"6",nx:0.625,ny:0.98,direction:"bottom"},{id:"7",nx:0.875,ny:0.02,direction:"top"},{id:"8",nx:0.875,ny:0.98,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]],pair:["1","2"]},
+      edz_generic_distribution_200a: {name:"Generic 4-Pole 200 A Barrier Block",prefix:"X",cat:"ElectroDZ",w:280,h:112,image:"assets/electrodz/generic_distribution_200a.png",badge:"Generic",din:true,passthrough:true,terminals:[{id:"1",nx:0.125,ny:0.08,direction:"top"},{id:"2",nx:0.125,ny:0.92,direction:"bottom"},{id:"3",nx:0.375,ny:0.08,direction:"top"},{id:"4",nx:0.375,ny:0.92,direction:"bottom"},{id:"5",nx:0.625,ny:0.08,direction:"top"},{id:"6",nx:0.625,ny:0.92,direction:"bottom"},{id:"7",nx:0.875,ny:0.08,direction:"top"},{id:"8",nx:0.875,ny:0.92,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]],pair:["1","2"]},
+      edz_generic_distribution_60a: {name:"Generic 4-Pole 60 A Barrier Block",prefix:"X",cat:"ElectroDZ",w:228,h:84,image:"assets/electrodz/generic_distribution_60a.png",badge:"Generic",din:true,passthrough:true,terminals:[{id:"1",nx:0.125,ny:0.08,direction:"top"},{id:"2",nx:0.125,ny:0.92,direction:"bottom"},{id:"3",nx:0.375,ny:0.08,direction:"top"},{id:"4",nx:0.375,ny:0.92,direction:"bottom"},{id:"5",nx:0.625,ny:0.08,direction:"top"},{id:"6",nx:0.625,ny:0.92,direction:"bottom"},{id:"7",nx:0.875,ny:0.08,direction:"top"},{id:"8",nx:0.875,ny:0.92,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]],pair:["1","2"]},
+      edz_ukk100: {name:"Generic UKK-100",prefix:"X",cat:"ElectroDZ",w:59,h:132,image:"assets/electrodz/ukk100.png",badge:"Generic",din:true,passthrough:true,terminals:[{id:"IN",nx:0.2,ny:0.5,direction:"left"},{id:"O1",nx:0.78,ny:0.13,direction:"right"},{id:"O2",nx:0.78,ny:0.275,direction:"right"},{id:"O3",nx:0.78,ny:0.42,direction:"right"},{id:"O4",nx:0.78,ny:0.565,direction:"right"},{id:"O5",nx:0.78,ny:0.71,direction:"right"},{id:"O6",nx:0.78,ny:0.855,direction:"right"}],pairs:[["IN","O1"],["IN","O2"],["IN","O3"],["IN","O4"],["IN","O5"],["IN","O6"]],pair:["IN","O1"]},
+      edz_ukk160: {name:"Generic UKK-160",prefix:"X",cat:"ElectroDZ",w:59,h:140,image:"assets/electrodz/ukk160.png",badge:"Generic",din:true,passthrough:true,terminals:[{id:"IN",nx:0.2,ny:0.5,direction:"left"},{id:"O1",nx:0.78,ny:0.13,direction:"right"},{id:"O2",nx:0.78,ny:0.275,direction:"right"},{id:"O3",nx:0.78,ny:0.42,direction:"right"},{id:"O4",nx:0.78,ny:0.565,direction:"right"},{id:"O5",nx:0.78,ny:0.71,direction:"right"},{id:"O6",nx:0.78,ny:0.855,direction:"right"}],pairs:[["IN","O1"],["IN","O2"],["IN","O3"],["IN","O4"],["IN","O5"],["IN","O6"]],pair:["IN","O1"]},
+      edz_ukk250: {name:"Generic UKK-250",prefix:"X",cat:"ElectroDZ",w:99,h:194,image:"assets/electrodz/ukk250.png",badge:"Generic",din:true,passthrough:true,terminals:[{id:"IN",nx:0.2,ny:0.5,direction:"left"},{id:"O1",nx:0.55,ny:0.18,direction:"right"},{id:"O2",nx:0.55,ny:0.36,direction:"right"},{id:"O3",nx:0.55,ny:0.54,direction:"right"},{id:"O4",nx:0.73,ny:0.36,direction:"right"},{id:"O5",nx:0.73,ny:0.54,direction:"right"},{id:"O6",nx:0.73,ny:0.72,direction:"right"},{id:"O7",nx:0.73,ny:0.9,direction:"right"},{id:"O8",nx:0.91,ny:0.36,direction:"right"},{id:"O9",nx:0.91,ny:0.54,direction:"right"},{id:"O10",nx:0.91,ny:0.72,direction:"right"},{id:"O11",nx:0.91,ny:0.9,direction:"right"}],pairs:[["IN","O1"],["IN","O2"],["IN","O3"],["IN","O4"],["IN","O5"],["IN","O6"],["IN","O7"],["IN","O8"],["IN","O9"],["IN","O10"],["IN","O11"]],pair:["IN","O1"]},
+      edz_itm_1p_c32: {name:"MCB 1P C32",prefix:"Q",cat:"ElectroDZ",w:28,h:170,image:"assets/electrodz/itm_1p_c32.png",imageOff:"assets/electrodz/itm_1p_c32_off.png",badge:"Protection",startOpen:true,terminals:[{id:"1",nx:0.5,ny:0.0,direction:"top"},{id:"2",nx:0.5,ny:1.0,direction:"bottom"}],pairs:[["1","2"]],pair:["1","2"]},
+      edz_itm_2p_c32: {name:"MCB 2P C32",prefix:"Q",cat:"ElectroDZ",w:57,h:170,image:"assets/electrodz/itm_2p_c32.png",imageOff:"assets/electrodz/itm_2p_c32_off.png",badge:"Protection",din:true,startOpen:true,terminals:[{id:"1",nx:0.25,ny:0.0,direction:"top"},{id:"3",nx:0.75,ny:0.0,direction:"top"},{id:"2",nx:0.25,ny:1.0,direction:"bottom"},{id:"4",nx:0.75,ny:1.0,direction:"bottom"}],pairs:[["1","2"],["3","4"]],pair:["1","2"]},
+      edz_itm_3p_c32: {name:"MCB 3P C32",prefix:"Q",cat:"ElectroDZ",w:85,h:170,image:"assets/electrodz/itm_3p_c32.png",imageOff:"assets/electrodz/itm_3p_c32_off.png",badge:"Protection",din:true,startOpen:true,terminals:[{id:"1",nx:0.1667,ny:0.0,direction:"top"},{id:"3",nx:0.5,ny:0.0,direction:"top"},{id:"2",nx:0.1667,ny:1.0,direction:"bottom"},{id:"4",nx:0.5,ny:1.0,direction:"bottom"},{id:"5",nx:0.8333,ny:0.0,direction:"top"},{id:"6",nx:0.8333,ny:1.0,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"]],pair:["1","2"]},
+      edz_itm_4p_c32: {name:"MCB 4P C32",prefix:"Q",cat:"ElectroDZ",w:113,h:170,image:"assets/electrodz/itm_4p_c32.png",imageOff:"assets/electrodz/itm_4p_c32_off.png",badge:"Protection",din:true,startOpen:true,terminals:[{id:"1",nx:0.125,ny:0.0,direction:"top"},{id:"3",nx:0.375,ny:0.0,direction:"top"},{id:"2",nx:0.125,ny:1.0,direction:"bottom"},{id:"4",nx:0.375,ny:1.0,direction:"bottom"},{id:"5",nx:0.625,ny:0.0,direction:"top"},{id:"6",nx:0.625,ny:1.0,direction:"bottom"},{id:"8",nx:0.875,ny:1.0,direction:"bottom"},{id:"7",nx:0.875,ny:0.0,direction:"top"}],pairs:[["1","2"],["3","4"],["5","6"],["8","7"]],pair:["1","2"]},
+      edz_mccb_cvs160b: {name:"MCCB CVS160B",prefix:"QF",cat:"ElectroDZ",w:183,h:280,image:"assets/electrodz/mccb_cvs160b.png",imageOff:"assets/electrodz/mccb_cvs160b_off.png",badge:"Protection",din:true,startOpen:true,terminals:[{id:"1",nx:0.18,ny:0.0,direction:"top"},{id:"3",nx:0.5,ny:0.0,direction:"top"},{id:"5",nx:0.82,ny:0.0,direction:"top"},{id:"2",nx:0.18,ny:1.0,direction:"bottom"},{id:"4",nx:0.5,ny:1.0,direction:"bottom"},{id:"6",nx:0.82,ny:1.0,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"]],pair:["1","2"]},
+      edz_mccb_schneider_3_pole_lv429825: {name:"MCCB Schneider 3 pole LV429825",prefix:"QF",cat:"ElectroDZ",w:183,h:280,image:"assets/electrodz/mccb_schneider_3_pole_lv429825.png",imageOff:"assets/electrodz/mccb_schneider_3_pole_lv429825_off.png",badge:"MCCB",din:true,startOpen:true,terminals:[{id:"1",nx:0.24,ny:0.115,direction:"top"},{id:"3",nx:0.5,ny:0.115,direction:"top"},{id:"5",nx:0.76,ny:0.115,direction:"top"},{id:"2",nx:0.24,ny:0.9,direction:"bottom"},{id:"4",nx:0.5,ny:0.9,direction:"bottom"},{id:"6",nx:0.76,ny:0.9,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"]],pair:["1","2"]},
+      edz_oumik_frequency_meter: {name:"OUMIK 72 45-65 Hz",prefix:"PF",cat:"ElectroDZ",w:144,h:144,image:"assets/electrodz/oumik_frequency_meter.png",imageOff:"assets/electrodz/oumik_frequency_meter_off.png",badge:"OUMIK",terminals:[{id:"IN1",nx:0.36,ny:0.92,direction:"bottom"},{id:"IN2",nx:0.7,ny:0.92,direction:"bottom"}]},
+      edz_oumik_m72_voltmeter: {name:"OUMIK M-72 0-500 V",prefix:"PV",cat:"ElectroDZ",w:144,h:144,image:"assets/electrodz/oumik_m72_voltmeter.png",imageOff:"assets/electrodz/oumik_m72_voltmeter_off.png",badge:"OUMIK",terminals:[{id:"IN1",nx:0.36,ny:0.92,direction:"bottom"},{id:"IN2",nx:0.7,ny:0.92,direction:"bottom"}]},
+      edz_logo_230rce: {name:"LOGO! 230RCE",prefix:"A",cat:"ElectroDZ",w:146,h:170,image:"assets/electrodz/logo_230rce.png",badge:"PLC",terminals:[{id:"L",nx:0.0833,ny:0.0,direction:"top"},{id:"N",nx:0.1667,ny:0.0,direction:"top"},{id:"I1",nx:0.25,ny:0.0,direction:"top"},{id:"I2",nx:0.3333,ny:0.0,direction:"top"},{id:"I3",nx:0.4167,ny:0.0,direction:"top"},{id:"I4",nx:0.5,ny:0.0,direction:"top"},{id:"I5",nx:0.6667,ny:0.0,direction:"top"},{id:"I6",nx:0.75,ny:0.0,direction:"top"},{id:"I7",nx:0.8333,ny:0.0,direction:"top"},{id:"I8",nx:0.9167,ny:0.0,direction:"top"},{id:"Q1.1",nx:0.0833,ny:1.0,direction:"bottom"},{id:"Q1.2",nx:0.1667,ny:1.0,direction:"bottom"},{id:"Q2.2",nx:0.4167,ny:1.0,direction:"bottom"},{id:"Q2.1",nx:0.3333,ny:1.0,direction:"bottom"},{id:"Q3.2",nx:0.6667,ny:1.0,direction:"bottom"},{id:"Q3.1",nx:0.5833,ny:1.0,direction:"bottom"},{id:"Q4.2",nx:0.9167,ny:1.0,direction:"bottom"},{id:"Q4.1",nx:0.8333,ny:1.0,direction:"bottom"},{id:"PE",nx:0.6667,ny:0.8706,direction:"bottom"}],pairs:[["Q1.1","Q1.2"],["Q2.1","Q2.2"],["Q3.1","Q3.2"],["Q4.1","Q4.2"]],pair:["Q1.1","Q1.2"]},
+      edz_pulsador_rojo_1no_1nc: {name:"Red Push Button 1NO+1NC",prefix:"S",cat:"ElectroDZ",w:146,h:170,image:"assets/electrodz/pulsador_rojo_1no_1nc.png",imageOff:"assets/electrodz/pulsador_rojo_1no_1nc_off.png",badge:"Drives",push:true,terminals:[{id:"1A",nx:0.2967,ny:0.0,direction:"top"},{id:"3A",nx:0.7278,ny:0.0,direction:"top"},{id:"2A",nx:0.2967,ny:1.0,direction:"bottom"},{id:"4A",nx:0.7278,ny:1.0,direction:"bottom"}],pairs:[["3A","4A"]],pair:["3A","4A"]},
+      edz_resistor_6_6kohm: {name:"Resistor 6.6kOhm",prefix:"X",cat:"ElectroDZ",w:150,h:25,image:"assets/electrodz/resistor_6_6kohm.png",terminals:[{id:"A",nx:0.0,ny:0.5,direction:"left"},{id:"B",nx:1.0,ny:0.5,direction:"right"}]},
+      edz_siame_epc_n61_1pn_c32: {name:"SIAME EPC N61 1P+N C32",prefix:"QF",cat:"ElectroDZ",w:35,h:170,image:"assets/electrodz/siame_epc_n61_1pn_c32.png",imageOff:"assets/electrodz/siame_epc_n61_1pn_c32_off.png",badge:"SIAME",din:true,startOpen:true,terminals:[{id:"L_IN",nx:0.28,ny:0.08,direction:"top"},{id:"N_IN",nx:0.72,ny:0.08,direction:"top"},{id:"L_OUT",nx:0.28,ny:0.92,direction:"bottom"},{id:"N_OUT",nx:0.72,ny:0.92,direction:"bottom"}],pairs:[["L_IN","L_OUT"],["N_IN","N_OUT"]],pair:["L_IN","L_OUT"]},
+      edz_siame_hti_2p_c100: {name:"SIAME Hti 2P C100",prefix:"QF",cat:"ElectroDZ",w:106,h:165,image:"assets/electrodz/siame_hti_2p_c100.png",imageOff:"assets/electrodz/siame_hti_2p_c100_off.png",badge:"SIAME",din:true,startOpen:true,terminals:[{id:"1",nx:0.25,ny:0.08,direction:"top"},{id:"2",nx:0.25,ny:0.92,direction:"bottom"},{id:"3",nx:0.75,ny:0.08,direction:"top"},{id:"4",nx:0.75,ny:0.92,direction:"bottom"}],pairs:[["1","2"],["3","4"]],pair:["1","2"]},
+      edz_siame_hti_3p_c125: {name:"SIAME Hti 3P C125",prefix:"QF",cat:"ElectroDZ",w:159,h:165,image:"assets/electrodz/siame_hti_3p_c125.png",imageOff:"assets/electrodz/siame_hti_3p_c125_off.png",badge:"SIAME",din:true,startOpen:true,terminals:[{id:"1",nx:0.1667,ny:0.08,direction:"top"},{id:"2",nx:0.1667,ny:0.92,direction:"bottom"},{id:"3",nx:0.5,ny:0.08,direction:"top"},{id:"4",nx:0.5,ny:0.92,direction:"bottom"},{id:"5",nx:0.8333,ny:0.08,direction:"top"},{id:"6",nx:0.8333,ny:0.92,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"]],pair:["1","2"]},
+      edz_schneider_acti9_ic60n_1p_c16: {name:"Schneider Acti9 iC60N 1P C16 MCB",prefix:"QF",cat:"ElectroDZ",w:36,h:170,image:"assets/electrodz/schneider_acti9_ic60n_1p_c16.png",imageOff:"assets/electrodz/schneider_acti9_ic60n_1p_c16_off.png",badge:"Protection",din:true,startOpen:true,terminals:[{id:"1",nx:0.5,ny:0.025,direction:"top"},{id:"2",nx:0.5,ny:0.975,direction:"bottom"}],pairs:[["1","2"]],pair:["1","2"]},
+      edz_schneider_acti9_ic60n_3p_c16: {name:"Schneider Acti9 iC60N 3P C16 MCB",prefix:"QF",cat:"ElectroDZ",w:108,h:170,image:"assets/electrodz/schneider_acti9_ic60n_3p_c16.png",imageOff:"assets/electrodz/schneider_acti9_ic60n_3p_c16_off.png",badge:"Protection",din:true,startOpen:true,terminals:[{id:"1",nx:0.1667,ny:0.025,direction:"top"},{id:"2",nx:0.1667,ny:0.975,direction:"bottom"},{id:"3",nx:0.5,ny:0.025,direction:"top"},{id:"4",nx:0.5,ny:0.975,direction:"bottom"},{id:"5",nx:0.8333,ny:0.025,direction:"top"},{id:"6",nx:0.8333,ny:0.975,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"]],pair:["1","2"]},
+      edz_schneider_acti9_ic60n_4p_c16: {name:"Schneider Acti9 iC60N 4P C16 MCB",prefix:"QF",cat:"ElectroDZ",w:144,h:170,image:"assets/electrodz/schneider_acti9_ic60n_4p_c16.png",imageOff:"assets/electrodz/schneider_acti9_ic60n_4p_c16_off.png",badge:"Protection",din:true,startOpen:true,terminals:[{id:"1",nx:0.125,ny:0.025,direction:"top"},{id:"2",nx:0.125,ny:0.975,direction:"bottom"},{id:"3",nx:0.375,ny:0.025,direction:"top"},{id:"4",nx:0.375,ny:0.975,direction:"bottom"},{id:"5",nx:0.625,ny:0.025,direction:"top"},{id:"6",nx:0.625,ny:0.975,direction:"bottom"},{id:"7",nx:0.875,ny:0.025,direction:"top"},{id:"8",nx:0.875,ny:0.975,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]],pair:["1","2"]},
+      edz_schneider_compact_nsx400n_3p: {name:"Schneider ComPacT NSX400N 3P MCCB",prefix:"QF",cat:"ElectroDZ",w:154,h:280,image:"assets/electrodz/schneider_compact_nsx400n_3p.png",imageOff:"assets/electrodz/schneider_compact_nsx400n_3p_off.png",badge:"Protection",din:true,startOpen:true,terminals:[{id:"1",nx:0.1667,ny:0.025,direction:"top"},{id:"2",nx:0.1667,ny:0.975,direction:"bottom"},{id:"3",nx:0.5,ny:0.025,direction:"top"},{id:"4",nx:0.5,ny:0.975,direction:"bottom"},{id:"5",nx:0.8333,ny:0.025,direction:"top"},{id:"6",nx:0.8333,ny:0.975,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"]],pair:["1","2"]},
+      edz_schneider_compact_nsx630n_4p: {name:"Schneider ComPacT NSX630N 4P MCCB",prefix:"QF",cat:"ElectroDZ",w:203,h:280,image:"assets/electrodz/schneider_compact_nsx630n_4p.png",imageOff:"assets/electrodz/schneider_compact_nsx630n_4p_off.png",badge:"Protection",din:true,startOpen:true,terminals:[{id:"1",nx:0.125,ny:0.025,direction:"top"},{id:"2",nx:0.125,ny:0.975,direction:"bottom"},{id:"3",nx:0.375,ny:0.025,direction:"top"},{id:"4",nx:0.375,ny:0.975,direction:"bottom"},{id:"5",nx:0.625,ny:0.025,direction:"top"},{id:"6",nx:0.625,ny:0.975,direction:"bottom"},{id:"7",nx:0.875,ny:0.025,direction:"top"},{id:"8",nx:0.875,ny:0.975,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]],pair:["1","2"]},
+      edz_schneider_ic60n_1p_c10: {name:"Schneider Electric Acti9 iC60N 1P C10",prefix:"QF",cat:"ElectroDZ",w:36,h:170,image:"assets/electrodz/schneider_ic60n_1p_c10.png",imageOff:"assets/electrodz/schneider_ic60n_1p_c10_off.png",badge:"Schneide",din:true,startOpen:true,terminals:[{id:"1",nx:0.5,ny:0.08,direction:"top"},{id:"2",nx:0.5,ny:0.92,direction:"bottom"}],pairs:[["1","2"]],pair:["1","2"]},
+      edz_schneider_ic60n_2p_c63: {name:"Schneider Electric Acti9 iC60N 2P C63",prefix:"QF",cat:"ElectroDZ",w:72,h:170,image:"assets/electrodz/schneider_ic60n_2p_c63.png",imageOff:"assets/electrodz/schneider_ic60n_2p_c63_off.png",badge:"Schneide",din:true,startOpen:true,terminals:[{id:"1",nx:0.25,ny:0.08,direction:"top"},{id:"2",nx:0.25,ny:0.92,direction:"bottom"},{id:"3",nx:0.75,ny:0.08,direction:"top"},{id:"4",nx:0.75,ny:0.92,direction:"bottom"}],pairs:[["1","2"],["3","4"]],pair:["1","2"]},
+      edz_schneider_ic60n_3p_c40: {name:"Schneider Electric Acti9 iC60N 3P C40",prefix:"QF",cat:"ElectroDZ",w:108,h:170,image:"assets/electrodz/schneider_ic60n_3p_c40.png",imageOff:"assets/electrodz/schneider_ic60n_3p_c40_off.png",badge:"Schneide",din:true,startOpen:true,terminals:[{id:"1",nx:0.1667,ny:0.08,direction:"top"},{id:"2",nx:0.1667,ny:0.92,direction:"bottom"},{id:"3",nx:0.5,ny:0.08,direction:"top"},{id:"4",nx:0.5,ny:0.92,direction:"bottom"},{id:"5",nx:0.8333,ny:0.08,direction:"top"},{id:"6",nx:0.8333,ny:0.92,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"]],pair:["1","2"]},
+      edz_schneider_a9f74232: {name:"Schneider Electric Acti9 iC60N A9F74232 2P C32",prefix:"QF",cat:"ElectroDZ",w:72,h:170,image:"assets/electrodz/schneider_a9f74232.png",imageOff:"assets/electrodz/schneider_a9f74232_off.png",badge:"Schneide",din:true,startOpen:true,terminals:[{id:"1",nx:0.25,ny:0.08,direction:"top"},{id:"2",nx:0.25,ny:0.92,direction:"bottom"},{id:"3",nx:0.75,ny:0.08,direction:"top"},{id:"4",nx:0.75,ny:0.92,direction:"bottom"}],pairs:[["1","2"],["3","4"]],pair:["1","2"]},
+      edz_schneider_c120n_2p_c100: {name:"Schneider Electric C120N A9N60734 2P C100",prefix:"QF",cat:"ElectroDZ",w:108,h:162,image:"assets/electrodz/schneider_c120n_2p_c100.png",imageOff:"assets/electrodz/schneider_c120n_2p_c100_off.png",badge:"Schneide",din:true,startOpen:true,terminals:[{id:"1",nx:0.25,ny:0.08,direction:"top"},{id:"2",nx:0.25,ny:0.92,direction:"bottom"},{id:"3",nx:0.75,ny:0.08,direction:"top"},{id:"4",nx:0.75,ny:0.92,direction:"bottom"}],pairs:[["1","2"],["3","4"]],pair:["1","2"]},
+      edz_schneider_nsx100n_tm100d: {name:"Schneider Electric ComPacT NSX100N TM100D",prefix:"QF",cat:"ElectroDZ",w:183,h:280,image:"assets/electrodz/schneider_nsx100n_tm100d.png",imageOff:"assets/electrodz/schneider_nsx100n_tm100d_off.png",badge:"Schneide",din:true,startOpen:true,terminals:[{id:"1",nx:0.1667,ny:0.08,direction:"top"},{id:"2",nx:0.1667,ny:0.92,direction:"bottom"},{id:"3",nx:0.5,ny:0.08,direction:"top"},{id:"4",nx:0.5,ny:0.92,direction:"bottom"},{id:"5",nx:0.8333,ny:0.08,direction:"top"},{id:"6",nx:0.8333,ny:0.92,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"]],pair:["1","2"]},
+      edz_schneider_nsx160b_tm160d: {name:"Schneider Electric ComPacT NSX160B TM160D",prefix:"QF",cat:"ElectroDZ",w:183,h:280,image:"assets/electrodz/schneider_nsx160b_tm160d.png",imageOff:"assets/electrodz/schneider_nsx160b_tm160d_off.png",badge:"Schneide",din:true,startOpen:true,terminals:[{id:"1",nx:0.1667,ny:0.08,direction:"top"},{id:"2",nx:0.1667,ny:0.92,direction:"bottom"},{id:"3",nx:0.5,ny:0.08,direction:"top"},{id:"4",nx:0.5,ny:0.92,direction:"bottom"},{id:"5",nx:0.8333,ny:0.08,direction:"top"},{id:"6",nx:0.8333,ny:0.92,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"]],pair:["1","2"]},
+      edz_schneider_harmony_relay_rsl1pvbu: {name:"Schneider Harmony RSL1PVBU Slim Relay 24V AC/DC",prefix:"KA",cat:"ElectroDZ",w:24,h:157,image:"assets/electrodz/schneider_harmony_relay_rsl1pvbu.png",imageOff:"assets/electrodz/schneider_harmony_relay_rsl1pvbu_off.png",din:true,startOpen:true,terminals:[{id:"A1",nx:0.28,ny:0.02,direction:"top"},{id:"A2",nx:0.72,ny:0.02,direction:"top"},{id:"14",nx:0.2,ny:0.98,direction:"bottom"},{id:"11",nx:0.5,ny:0.98,direction:"bottom"},{id:"12",nx:0.8,ny:0.98,direction:"bottom"}],pairs:[["11","14"]],pair:["11","14"]},
+      edz_schneider_ic60n_4p_c125_physical: {name:"Schneider-style physical asset 4P C125 (non-catalog physical)",prefix:"QF",cat:"ElectroDZ",w:144,h:170,image:"assets/electrodz/schneider_ic60n_4p_c125_physical.png",imageOff:"assets/electrodz/schneider_ic60n_4p_c125_physical_off.png",badge:"Schneide",din:true,startOpen:true,terminals:[{id:"1",nx:0.125,ny:0.08,direction:"top"},{id:"2",nx:0.125,ny:0.92,direction:"bottom"},{id:"3",nx:0.375,ny:0.08,direction:"top"},{id:"4",nx:0.375,ny:0.92,direction:"bottom"},{id:"5",nx:0.625,ny:0.08,direction:"top"},{id:"6",nx:0.625,ny:0.92,direction:"bottom"},{id:"7",nx:0.875,ny:0.08,direction:"top"},{id:"8",nx:0.875,ny:0.92,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]],pair:["1","2"]},
+      edz_selector_de_2_posiciones_1no_1nc: {name:"2-Position Selector Switch 1NO+1NC",prefix:"S",cat:"ElectroDZ",w:146,h:170,image:"assets/electrodz/selector_de_2_posiciones_1no_1nc.png",imageOff:"assets/electrodz/selector_de_2_posiciones_1no_1nc_off.png",badge:"Drives",startOpen:true,terminals:[{id:"1A",nx:0.2967,ny:0.0,direction:"top"},{id:"3A",nx:0.7278,ny:0.0,direction:"top"},{id:"2A",nx:0.2967,ny:1.0,direction:"bottom"},{id:"4A",nx:0.7278,ny:1.0,direction:"bottom"}],pairs:[["3A","4A"]],pair:["3A","4A"]},
+      edz_selector_de_2_posiciones_2nc: {name:"2-Position Selector Switch 2NC",prefix:"S",cat:"ElectroDZ",w:146,h:170,image:"assets/electrodz/selector_de_2_posiciones_2nc.png",imageOff:"assets/electrodz/selector_de_2_posiciones_2nc_off.png",badge:"Drives",nc:true,startOpen:true,terminals:[{id:"1A",nx:0.2967,ny:0.0,direction:"top"},{id:"1B",nx:0.7278,ny:0.0,direction:"top"},{id:"2A",nx:0.2967,ny:1.0,direction:"bottom"},{id:"2B",nx:0.7278,ny:1.0,direction:"bottom"}],pairs:[["1A","2A"],["1B","2B"]],pair:["1A","2A"]},
+      edz_selector_de_2_posiciones_2no: {name:"2-Position Selector Switch 2NO",prefix:"S",cat:"ElectroDZ",w:146,h:170,image:"assets/electrodz/selector_de_2_posiciones_2no.png",imageOff:"assets/electrodz/selector_de_2_posiciones_2no_off.png",badge:"Drives",startOpen:true,terminals:[{id:"3A",nx:0.2967,ny:0.0,direction:"top"},{id:"3B",nx:0.7278,ny:0.0,direction:"top"},{id:"4A",nx:0.2967,ny:1.0,direction:"bottom"},{id:"4B",nx:0.7278,ny:1.0,direction:"bottom"}],pairs:[["3A","4A"],["3B","4B"]],pair:["3A","4A"]},
+      edz_tablero_residencial_12p_bk: {name:"Residential Distribution Board 12P-BK",prefix:"X",cat:"ElectroDZ",w:150,h:119,image:"assets/electrodz/tablero_residencial_12p_bk.png",badge:"Structure",terminals:[]},
+      edz_tablero_residencial_12p: {name:"Residential Distribution Board 12P",prefix:"X",cat:"ElectroDZ",w:150,h:119,image:"assets/electrodz/tablero_residencial_12p.png",badge:"Structure",terminals:[]},
+      edz_tense_em06: {name:"Tense EM-06",prefix:"PM",cat:"ElectroDZ",w:192,h:192,image:"assets/electrodz/tense_em06.png",imageOff:"assets/electrodz/tense_em06_off.png",badge:"Tense",iec:"P",kind:"compteur3",source:true,terminals:[{id:"N",nx:0.07,ny:0.91,direction:"bottom"},{id:"L1",nx:0.165,ny:0.91,direction:"bottom"},{id:"L2",nx:0.26,ny:0.91,direction:"bottom"},{id:"L3",nx:0.355,ny:0.91,direction:"bottom"},{id:"k1",nx:0.45,ny:0.91,direction:"bottom"},{id:"l1",nx:0.545,ny:0.91,direction:"bottom"},{id:"k2",nx:0.64,ny:0.91,direction:"bottom"},{id:"l2",nx:0.735,ny:0.91,direction:"bottom"},{id:"k3",nx:0.83,ny:0.91,direction:"bottom"},{id:"l3",nx:0.925,ny:0.91,direction:"bottom"}]},
+      edz_tense_fkv03hf: {name:"Tense FKV-03HF",prefix:"K",cat:"ElectroDZ",w:46,h:189,image:"assets/electrodz/tense_fkv03hf.png",badge:"Tense",din:true,terminals:[{id:"1",nx:0.18,ny:0.1,direction:"top"},{id:"2",nx:0.4,ny:0.1,direction:"top"},{id:"3",nx:0.62,ny:0.1,direction:"top"},{id:"N",nx:0.18,ny:0.9,direction:"bottom"},{id:"L1",nx:0.4,ny:0.9,direction:"bottom"},{id:"L2",nx:0.62,ny:0.9,direction:"bottom"},{id:"L3",nx:0.84,ny:0.9,direction:"bottom"}],pairs:[["2","3"]],pair:["2","3"]},
+      edz_vfd_svc_3phase_interactive: {name:"SVC / V-F Variable Frequency Drive",prefix:"G",cat:"ElectroDZ",w:179,h:280,image:"assets/electrodz/vfd_svc_3phase_interactive.png",badge:"Drives",terminals:[{id:"R",nx:0.298,ny:0.075,direction:"top"},{id:"S",nx:0.381,ny:0.075,direction:"top"},{id:"T",nx:0.465,ny:0.075,direction:"top"},{id:"PE",nx:0.543,ny:0.075,direction:"top"},{id:"U",nx:0.258,ny:0.926,direction:"bottom"},{id:"V",nx:0.341,ny:0.926,direction:"bottom"},{id:"W",nx:0.423,ny:0.926,direction:"bottom"},{id:"P4",nx:0.505,ny:0.926,direction:"bottom"},{id:"PB",nx:0.587,ny:0.926,direction:"bottom"},{id:"+10V",nx:0.202,ny:0.748,direction:"left"},{id:"AI1",nx:0.256,ny:0.748,direction:"left"},{id:"ACM",nx:0.31,ny:0.748,direction:"left"},{id:"AOV",nx:0.364,ny:0.748,direction:"left"},{id:"AOI",nx:0.418,ny:0.748,direction:"left"},{id:"FM",nx:0.472,ny:0.748,direction:"right"},{id:"A+",nx:0.526,ny:0.748,direction:"right"},{id:"B-",nx:0.58,ny:0.748,direction:"right"},{id:"COM",nx:0.634,ny:0.748,direction:"right"},{id:"+24V",nx:0.202,ny:0.806,direction:"left"},{id:"DI1",nx:0.256,ny:0.806,direction:"left"},{id:"DI2",nx:0.31,ny:0.806,direction:"left"},{id:"DI3",nx:0.364,ny:0.806,direction:"left"},{id:"DI4",nx:0.418,ny:0.806,direction:"right"},{id:"DI5",nx:0.472,ny:0.806,direction:"right"},{id:"TA",nx:0.526,ny:0.806,direction:"right"},{id:"TB",nx:0.58,ny:0.806,direction:"right"},{id:"TC",nx:0.634,ny:0.806,direction:"right"}],pairs:[["TA","TC"]],pair:["TA","TC"]},
+      edz_atek_ast20_pt1000_rtd_3wire: {name:"ATEK AST20 - PT1000 RTD 3-WIRE",prefix:"TT",cat:"ElectroDZ",w:280,h:280,image:"assets/electrodz/atek_ast20_pt1000_rtd_3wire.png",terminals:[{id:"P1",nx:0.2458,ny:0.2058,direction:"bottom"},{id:"P2",nx:0.3392,ny:0.2058,direction:"bottom"},{id:"P3",nx:0.2458,ny:0.2692,direction:"bottom"},{id:"P4",nx:0.3392,ny:0.2692,direction:"bottom"}]},
+      edz_atek_ast20_pt1000_rtd_4wire: {name:"ATEK AST20 - PT1000 RTD 4-WIRE",prefix:"TT",cat:"ElectroDZ",w:280,h:280,image:"assets/electrodz/atek_ast20_pt1000_rtd_4wire.png",terminals:[{id:"P1",nx:0.2458,ny:0.2058,direction:"bottom"},{id:"P2",nx:0.3392,ny:0.2058,direction:"bottom"},{id:"P3",nx:0.2458,ny:0.2692,direction:"bottom"},{id:"P4",nx:0.3392,ny:0.2692,direction:"bottom"}]},
+      edz_atek_ast20_pt100_4_20ma: {name:"ATEK AST20 - PT100 4-20 mA",prefix:"TT",cat:"ElectroDZ",w:280,h:280,image:"assets/electrodz/atek_ast20_pt100_4_20ma.png",terminals:[{id:"P1",nx:0.2458,ny:0.2058,direction:"bottom"},{id:"P2",nx:0.3392,ny:0.2058,direction:"bottom"},{id:"P3",nx:0.2458,ny:0.2692,direction:"bottom"},{id:"P4",nx:0.3392,ny:0.2692,direction:"bottom"}]},
+      edz_atek_ast20_pt100_rtd_3wire: {name:"ATEK AST20 - PT100 RTD 3-WIRE",prefix:"TT",cat:"ElectroDZ",w:280,h:280,image:"assets/electrodz/atek_ast20_pt100_rtd_3wire.png",terminals:[{id:"P1",nx:0.2458,ny:0.2058,direction:"bottom"},{id:"P2",nx:0.3392,ny:0.2058,direction:"bottom"},{id:"P3",nx:0.2458,ny:0.2692,direction:"bottom"},{id:"P4",nx:0.3392,ny:0.2692,direction:"bottom"}]},
+      edz_atek_ast20_pt100_rtd_4wire: {name:"ATEK AST20 - PT100 RTD 4-WIRE",prefix:"TT",cat:"ElectroDZ",w:280,h:280,image:"assets/electrodz/atek_ast20_pt100_rtd_4wire.png",terminals:[{id:"P1",nx:0.2458,ny:0.2058,direction:"bottom"},{id:"P2",nx:0.3392,ny:0.2058,direction:"bottom"},{id:"P3",nx:0.2458,ny:0.2692,direction:"bottom"},{id:"P4",nx:0.3392,ny:0.2692,direction:"bottom"}]},
+      edz_atek_ast20_pt100_v: {name:"ATEK AST20 - PT100 0-10 V",prefix:"TT",cat:"ElectroDZ",w:280,h:280,image:"assets/electrodz/atek_ast20_pt100_v.png",terminals:[{id:"P1",nx:0.2458,ny:0.2058,direction:"bottom"},{id:"P2",nx:0.3392,ny:0.2058,direction:"bottom"},{id:"P3",nx:0.2458,ny:0.2692,direction:"bottom"},{id:"P4",nx:0.3392,ny:0.2692,direction:"bottom"}]},
+      edz_atek_ast20_pt100_v1: {name:"ATEK AST20 - PT100 0-5 V",prefix:"TT",cat:"ElectroDZ",w:280,h:280,image:"assets/electrodz/atek_ast20_pt100_v1.png",terminals:[{id:"P1",nx:0.2458,ny:0.2058,direction:"bottom"},{id:"P2",nx:0.3392,ny:0.2058,direction:"bottom"},{id:"P3",nx:0.2458,ny:0.2692,direction:"bottom"},{id:"P4",nx:0.3392,ny:0.2692,direction:"bottom"}]},
+      edz_atek_ast20_pt100_v5: {name:"ATEK AST20 - PT100 1-5 V",prefix:"TT",cat:"ElectroDZ",w:280,h:280,image:"assets/electrodz/atek_ast20_pt100_v5.png",terminals:[{id:"P1",nx:0.2458,ny:0.2058,direction:"bottom"},{id:"P2",nx:0.3392,ny:0.2058,direction:"bottom"},{id:"P3",nx:0.2458,ny:0.2692,direction:"bottom"},{id:"P4",nx:0.3392,ny:0.2692,direction:"bottom"}]},
+      edz_endress_hauser_pmc11_gauge_0_10v: {name:"Endress+Hauser Cerabar PMC11 - 0–10 V",prefix:"PT",cat:"ElectroDZ",w:280,h:187,image:"assets/electrodz/endress_hauser_pmc11_gauge_0_10v.png",terminals:[{id:"1",nx:0.2031,ny:0.1582,direction:"left"},{id:"2",nx:0.2031,ny:0.2256,direction:"left"},{id:"3",nx:0.2031,ny:0.293,direction:"left"}]},
+      edz_endress_hauser_pmc21_absolute_iolink: {name:"Endress+Hauser Cerabar PMC21 IO-Link - IO-Link + 4–20 mA",prefix:"PT",cat:"ElectroDZ",w:280,h:187,image:"assets/electrodz/endress_hauser_pmc21_absolute_iolink.png",terminals:[{id:"1",nx:0.2031,ny:0.1582,direction:"left"},{id:"2",nx:0.2031,ny:0.2256,direction:"left"},{id:"3",nx:0.2031,ny:0.293,direction:"left"},{id:"4",nx:0.2031,ny:0.3604,direction:"left"}]},
+      edz_endress_hauser_pmc21_gauge_4_20ma: {name:"Endress+Hauser Cerabar PMC21 - 4–20 mA",prefix:"PT",cat:"ElectroDZ",w:280,h:187,image:"assets/electrodz/endress_hauser_pmc21_gauge_4_20ma.png",terminals:[{id:"1",nx:0.2031,ny:0.1875,direction:"left"},{id:"3",nx:0.2031,ny:0.2549,direction:"left"}]},
+      edz_endress_hauser_pmp51b_hart_4_20ma: {name:"Endress+Hauser Cerabar PMP51B - 4–20 mA + HART 7",prefix:"PT",cat:"ElectroDZ",w:280,h:187,image:"assets/electrodz/endress_hauser_pmp51b_hart_4_20ma.png",terminals:[{id:"1",nx:0.2031,ny:0.1582,direction:"left"},{id:"3",nx:0.2031,ny:0.2256,direction:"left"},{id:"4",nx:0.2031,ny:0.293,direction:"left"}]},
+      edz_epluse_ee16_t3a21_pt1000_0_10v: {name:"E+E Elektronik EE16-T3A21 - PT1000 0-10 V",prefix:"TT",cat:"ElectroDZ",w:280,h:280,image:"assets/electrodz/epluse_ee16_t3a21_pt1000_0_10v.png",terminals:[{id:"1",nx:0.2042,ny:0.24,direction:"bottom"},{id:"2",nx:0.2625,ny:0.24,direction:"bottom"},{id:"3",nx:0.3208,ny:0.24,direction:"bottom"},{id:"4",nx:0.3792,ny:0.24,direction:"bottom"}]},
+      edz_epluse_ee16_t6a21_pt1000_4_20ma: {name:"E+E Elektronik EE16-T6A21 - PT1000 4-20 mA",prefix:"TT",cat:"ElectroDZ",w:280,h:280,image:"assets/electrodz/epluse_ee16_t6a21_pt1000_4_20ma.png",terminals:[{id:"1",nx:0.2042,ny:0.24,direction:"bottom"},{id:"2",nx:0.2917,ny:0.24,direction:"bottom"},{id:"3",nx:0.3792,ny:0.24,direction:"bottom"}]},
+      edz_ifm_ta2105_pt1000_iolink_4_20ma: {name:"ifm electronic TA2105 - PT1000 IO-LINK + 4-20 mA",prefix:"TT",cat:"ElectroDZ",w:280,h:280,image:"assets/electrodz/ifm_ta2105_pt1000_iolink_4_20ma.png",terminals:[{id:"P1",nx:0.2458,ny:0.2058,direction:"bottom"},{id:"P2",nx:0.3392,ny:0.2058,direction:"bottom"},{id:"P3",nx:0.2458,ny:0.2692,direction:"bottom"},{id:"P4",nx:0.3392,ny:0.2692,direction:"bottom"}]},
+      edz_novus_txmini_m12_485_mp_pt100_modbus: {name:"NOVUS TxMini-M12-485-MP - PT100 MODBUS RTU",prefix:"TT",cat:"ElectroDZ",w:280,h:280,image:"assets/electrodz/novus_txmini_m12_485_mp_pt100_modbus.png",terminals:[{id:"P1",nx:0.2458,ny:0.2058,direction:"bottom"},{id:"P2",nx:0.3392,ny:0.2058,direction:"bottom"},{id:"P3",nx:0.2458,ny:0.2692,direction:"bottom"},{id:"P4",nx:0.3392,ny:0.2692,direction:"bottom"}]},
+      edz_wika_tr10_3_t32_1s_pt100_hart: {name:"WIKA TR10-3 + T32.1S - PT100 4-20 mA + HART",prefix:"TT",cat:"ElectroDZ",w:280,h:280,image:"assets/electrodz/wika_tr10_3_t32_1s_pt100_hart.png",terminals:[{id:"1",nx:0.2042,ny:0.2,direction:"bottom"},{id:"2",nx:0.2925,ny:0.2,direction:"bottom"},{id:"3",nx:0.3808,ny:0.2,direction:"bottom"},{id:"4",nx:0.2042,ny:0.2683,direction:"bottom"},{id:"L+",nx:0.2925,ny:0.2683,direction:"bottom"},{id:"L-",nx:0.3808,ny:0.2683,direction:"bottom"}]},
+      edz_wika_tr33_pt1000_2_wire: {name:"WIKA TR33 - PT1000 RTD 2-WIRE",prefix:"TT",cat:"ElectroDZ",w:280,h:280,image:"assets/electrodz/wika_tr33_pt1000_2_wire.png",terminals:[{id:"P1",nx:0.2458,ny:0.2058,direction:"bottom"},{id:"P2",nx:0.3392,ny:0.2058,direction:"bottom"},{id:"P3",nx:0.2458,ny:0.2692,direction:"bottom"},{id:"P4",nx:0.3392,ny:0.2692,direction:"bottom"}]},
+      edz_wika_tr33_pt1000_3_wire: {name:"WIKA TR33 - PT1000 RTD 3-WIRE",prefix:"TT",cat:"ElectroDZ",w:280,h:280,image:"assets/electrodz/wika_tr33_pt1000_3_wire.png",terminals:[{id:"P1",nx:0.2458,ny:0.2058,direction:"bottom"},{id:"P2",nx:0.3392,ny:0.2058,direction:"bottom"},{id:"P3",nx:0.2458,ny:0.2692,direction:"bottom"},{id:"P4",nx:0.3392,ny:0.2692,direction:"bottom"}]},
+      edz_wika_tr33_pt1000_4_wire: {name:"WIKA TR33 - PT1000 RTD 4-WIRE",prefix:"TT",cat:"ElectroDZ",w:280,h:280,image:"assets/electrodz/wika_tr33_pt1000_4_wire.png",terminals:[{id:"P1",nx:0.2458,ny:0.2058,direction:"bottom"},{id:"P2",nx:0.3392,ny:0.2058,direction:"bottom"},{id:"P3",nx:0.2458,ny:0.2692,direction:"bottom"},{id:"P4",nx:0.3392,ny:0.2692,direction:"bottom"}]},
+      edz_wika_tr33_pt100_2_wire: {name:"WIKA TR33 - PT100 RTD 2-WIRE",prefix:"TT",cat:"ElectroDZ",w:280,h:280,image:"assets/electrodz/wika_tr33_pt100_2_wire.png",terminals:[{id:"P1",nx:0.2458,ny:0.2058,direction:"bottom"},{id:"P2",nx:0.3392,ny:0.2058,direction:"bottom"},{id:"P3",nx:0.2458,ny:0.2692,direction:"bottom"},{id:"P4",nx:0.3392,ny:0.2692,direction:"bottom"}]},
+      edz_wika_tr33_pt100_3_wire: {name:"WIKA TR33 - PT100 RTD 3-WIRE",prefix:"TT",cat:"ElectroDZ",w:280,h:280,image:"assets/electrodz/wika_tr33_pt100_3_wire.png",terminals:[{id:"P1",nx:0.2458,ny:0.2058,direction:"bottom"},{id:"P2",nx:0.3392,ny:0.2058,direction:"bottom"},{id:"P3",nx:0.2458,ny:0.2692,direction:"bottom"},{id:"P4",nx:0.3392,ny:0.2692,direction:"bottom"}]},
+      edz_wika_tr33_pt100_4_wire: {name:"WIKA TR33 - PT100 RTD 4-WIRE",prefix:"TT",cat:"ElectroDZ",w:280,h:280,image:"assets/electrodz/wika_tr33_pt100_4_wire.png",terminals:[{id:"P1",nx:0.2458,ny:0.2058,direction:"bottom"},{id:"P2",nx:0.3392,ny:0.2058,direction:"bottom"},{id:"P3",nx:0.2458,ny:0.2692,direction:"bottom"},{id:"P4",nx:0.3392,ny:0.2692,direction:"bottom"}]},
+      edz_wika_tr33_z_tt_pt1000_4_20ma: {name:"WIKA TR33-Z-TT - PT1000 4-20 mA",prefix:"TT",cat:"ElectroDZ",w:280,h:280,image:"assets/electrodz/wika_tr33_z_tt_pt1000_4_20ma.png",terminals:[{id:"P1",nx:0.2458,ny:0.2058,direction:"bottom"},{id:"P2",nx:0.3392,ny:0.2058,direction:"bottom"},{id:"P3",nx:0.2458,ny:0.2692,direction:"bottom"},{id:"P4",nx:0.3392,ny:0.2692,direction:"bottom"}]},
+/* === ELECTRODZ_LIB_END === */
+
     };
 
     // Alias rétrocompat (anciens ids calibre → type unique)
@@ -1317,6 +1819,22 @@
       const mapped = TYPE_ALIASES[type];
       return mapped && LIB[mapped] ? mapped : type;
     }
+    /** Photo face : I-ON / O-OFF si imageOff existe (aussi poussoir / bobine). */
+    function deviceImageSrc(def, item) {
+      if (!def || !def.image) return "";
+      if (!def.imageOff || !item) return def.image;
+      let on;
+      if (def.push) on = def.nc ? !item.pressed : !!item.pressed;
+      else if (hasCoil(def) && state.sim) on = def.latch ? !!item.closed : !!(item.coilOn || item.closed);
+      else on = item.closed !== false;
+      return on ? def.image : def.imageOff;
+    }
+    /** Bornes bobine : A1 + A2 (ou A2A/A2B sur certains relais ElectroDZ). */
+    function coilReturnIds(def) {
+      if (!def || !def.terminals) return [];
+      const ids = def.terminals.map((t) => t.id);
+      return ["A2", "A2A", "A2B"].filter((id) => ids.includes(id));
+    }
     function clampThermalIr(v, def) {
       const min = (def && def.irMin != null) ? def.irMin : 0.63;
       const max = (def && def.irMax != null) ? def.irMax : 40;
@@ -1336,12 +1854,17 @@
       return Number.isInteger(n) ? String(n) : String(Math.round(n * 100) / 100);
     }
     function migrateItemTypes() {
+      const drop = new Set();
       state.items.forEach((i) => {
         const old = i.type;
         const next = resolveLibType(i.type);
         if (next !== i.type) i.type = next;
         const def = LIB[i.type];
-        if (def && def.thermal) {
+        if (!def) {
+          drop.add(i.uid);
+          return;
+        }
+        if (def.thermal) {
           if (i.thermalIr == null && THERMAL_IR_FROM_TYPE[old] != null) {
             i.thermalIr = THERMAL_IR_FROM_TYPE[old];
           }
@@ -1349,6 +1872,12 @@
           else i.thermalIr = clampThermalIr(i.thermalIr, def);
         }
       });
+      if (drop.size) {
+        state.items = state.items.filter((i) => !drop.has(i.uid));
+        state.wires = (state.wires || []).filter((w) =>
+          !(drop.has(w.a && w.a.uid) || drop.has(w.b && w.b.uid)));
+        if (drop.has(state.selected)) state.selected = null;
+      }
     }
 
     // Déplacement libre X/Y : pas de snap rail (modules non verrouillés sur le DIN).
@@ -1401,6 +1930,7 @@
       if (!drag || !drag.group) return;
       const dx = nx - drag.x;
       const dy = ny - drag.y;
+      const gids = drag.group.groupIds || new Set(drag.group.items.map((s) => s.uid));
       drag.group.items.forEach((s) => {
         const it = find(s.uid);
         if (!it) return;
@@ -1410,10 +1940,32 @@
       drag.group.wires.forEach((ws) => {
         const w = state.wires.find((x) => x.id === ws.id);
         if (!w) return;
-        w.waypoints = ws.waypoints.map((p) => ({ x: p.x + dx, y: p.y + dy }));
+        const aIn = gids.has(w.a.uid);
+        const bIn = gids.has(w.b.uid);
+        const base = (ws.waypoints || []).map((p) => ({ x: p.x, y: p.y }));
+        if (aIn && bIn) {
+          w.waypoints = base.map((p) => ({ x: p.x + dx, y: p.y + dy }));
+        } else if (!base.length) {
+          w.waypoints = base;
+        } else {
+          w.waypoints = base.map((p, i) => {
+            const move = (aIn && (i === 0 || i === 1))
+              || (bIn && (i === base.length - 1 || i === base.length - 2));
+            return move ? { x: p.x + dx, y: p.y + dy } : { x: p.x, y: p.y };
+          });
+        }
       });
     }
     const MIN_SIZE = 30;
+    /** Mins au resize : rail plus large ; sinon générique 40×40. */
+    function resizeMinSize(item) {
+      if (isRail(item)) return { w: 120, h: 40 };
+      return { w: 40, h: 40 };
+    }
+    /** Tout composant placé peut être redimensionné (plus seulement din/rail). */
+    function canResizeItem(item) {
+      return !!(item && LIB[item.type]);
+    }
     /** Taille affichée : override item.w/h sinon def LIB. */
     function itemSize(item) {
       const def = LIB[item && item.type] || { w: 40, h: 40 };
@@ -1454,12 +2006,30 @@
     function rectsOverlap(a, b) {
       return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
     }
+    /** Composants solides (KNX inclus) — pas les rails (fond de montage). */
+    function isCollidableItem(item) {
+      const def = LIB[item && item.type];
+      return !!(def && def.kind !== "rail");
+    }
+    function itemOverlapsAny(item, x, y, excludeUids) {
+      if (!isCollidableItem(item)) return false;
+      const sz = itemSize(item);
+      const me = { x: x, y: y, w: sz.w, h: sz.h };
+      for (const other of state.items) {
+        if (other.uid === item.uid) continue;
+        if (excludeUids && excludeUids.has(other.uid)) continue;
+        if (!isCollidableItem(other)) continue;
+        const os = itemSize(other);
+        if (rectsOverlap(me, { x: other.x, y: other.y, w: os.w, h: os.h })) return true;
+      }
+      return false;
+    }
     /**
-     * Anti-chevauchement DIN : si overlap, pousse en X à côté du voisin
-     * (gauche/droite selon le côté le plus naturel). Y libre.
+     * Anti-chevauchement au lâcher : si overlap d’aires, pousse en X à côté
+     * (bord à bord = OK). Rails exclus. excludeUids = groupe rail en cours.
      */
-    function resolveDinX(item, x, y) {
-      if (!isDinModule(item)) return x;
+    function resolveDinX(item, x, y, excludeUids) {
+      if (!isCollidableItem(item)) return x;
       const sz = itemSize(item);
       let nx = x;
       for (let iter = 0; iter < 24; iter++) {
@@ -1467,7 +2037,9 @@
         let hit = null;
         let bestArea = 0;
         for (const other of state.items) {
-          if (other.uid === item.uid || !isDinModule(other)) continue;
+          if (other.uid === item.uid) continue;
+          if (excludeUids && excludeUids.has(other.uid)) continue;
+          if (!isCollidableItem(other)) continue;
           const os = itemSize(other);
           const them = { x: other.x, y: other.y, w: os.w, h: os.h };
           if (!rectsOverlap(me, them)) continue;
@@ -1487,6 +2059,17 @@
       }
       return nx;
     }
+    /** Applique anti-chevauchement au lâcher ; revert si encore empilé. */
+    function settleItemPlacement(item, startX, startY, excludeUids) {
+      if (!item || !isCollidableItem(item)) return;
+      const nx = resolveDinX(item, item.x, item.y, excludeUids);
+      if (itemOverlapsAny(item, nx, item.y, excludeUids)) {
+        item.x = startX;
+        item.y = startY;
+        return;
+      }
+      item.x = nx;
+    }
 
     const DIR = { top: [0, -1], bottom: [0, 1], left: [-1, 0], right: [1, 0] };
     const STUB = 28;
@@ -1494,7 +2077,7 @@
       mode: "select", sim: false, color: COLORS[1].c, section: 6,
       seq: 1, wireNo: 1, counts: {}, items: [], wires: [],
       selected: null, selectedWire: null, wireFrom: null, drag: null,
-      resize: null, wireDrag: null, preview: null,
+      resize: null, wireDrag: null, flukeTipDrag: null, preview: null,
       short: null, shortArmed: false,
       shortSince: null, fire: null,
       ladderOpen: null, /* null = auto si PLC ; true/false = forcé */
@@ -1506,6 +2089,9 @@
       knxBusValues: {}
     };
 
+    function syncDragLock() {
+      board.classList.toggle("is-dragging", !!(state.drag || state.resize || state.wireDrag));
+    }
 
     /* ========== ETS FORMATION (pédagogique, pas ETS officiel) ========== */
     const KNX_KEY_FNS = [
@@ -2316,9 +2902,10 @@
       L.needsTick = false;
     }
 
-    function elContact(addr, nc, active) {
+    function elContact(addr, nc, active, step) {
       const wrap = document.createElement("div");
       wrap.className = "ld-contact" + (active ? " on" : "");
+      wrap.title = "Clic = NO ↔ NC · double-clic = adresse I/Q";
       const sym = document.createElement("div");
       sym.className = "ld-sym";
       sym.textContent = nc ? "-|/|-" : "-| |-";
@@ -2326,12 +2913,30 @@
       lab.textContent = addr;
       wrap.appendChild(sym);
       wrap.appendChild(lab);
+      if (step) {
+        wrap.onclick = (ev) => {
+          ev.stopPropagation();
+          step.type = step.type === "no" ? "nc" : "no";
+          renderLadderPanel();
+          if (state.sim) render();
+        };
+        wrap.ondblclick = (ev) => {
+          ev.stopPropagation();
+          ev.preventDefault();
+          const addrs = ["I1","I2","I3","I4","I5","I6","I7","I8","Q1","Q2","Q3","Q4"];
+          const i = Math.max(0, addrs.indexOf(step.addr));
+          step.addr = addrs[(i + 1) % addrs.length];
+          renderLadderPanel();
+          if (state.sim) render();
+        };
+      }
       return wrap;
     }
 
-    function elCoil(addr, active) {
+    function elCoil(addr, active, step) {
       const wrap = document.createElement("div");
       wrap.className = "ld-coil" + (active ? " on" : "");
+      wrap.title = "Clic = changer bobine Q1…Q4";
       const sym = document.createElement("div");
       sym.className = "ld-sym";
       sym.textContent = "(  )";
@@ -2339,6 +2944,16 @@
       lab.textContent = addr;
       wrap.appendChild(sym);
       wrap.appendChild(lab);
+      if (step) {
+        wrap.onclick = (ev) => {
+          ev.stopPropagation();
+          const qs = ["Q1","Q2","Q3","Q4"];
+          const i = Math.max(0, qs.indexOf(step.addr));
+          step.addr = qs[(i + 1) % qs.length];
+          renderLadderPanel();
+          if (state.sim) render();
+        };
+      }
       return wrap;
     }
 
@@ -2361,25 +2976,46 @@
       return w;
     }
 
-    function appendSeriesRow(parent, nodes) {
+    function appendSeriesRow(parent, nodes, steps) {
       const row = document.createElement("div");
       row.className = "ladder-row";
       let powerSoFar = !!state.sim;
       row.appendChild(elWire(powerSoFar));
-      (nodes || []).forEach((n, idx) => {
-        if (n.kind === "contact") {
-          row.appendChild(elContact(n.addr, n.nc, n.active));
-          powerSoFar = !!n.active;
-          row.appendChild(elWire(powerSoFar));
-        } else if (n.kind === "ton") {
-          row.appendChild(elTon(n));
-          powerSoFar = !!n.q;
-          row.appendChild(elWire(powerSoFar));
-        } else if (n.kind === "coil") {
-          row.appendChild(elCoil(n.addr, n.active));
-          if (idx < nodes.length - 1) row.appendChild(elWire(n.active));
-        }
-      });
+      const list = steps && steps.length ? steps : null;
+      if (list) {
+        list.forEach((st, idx) => {
+          const n = (nodes && nodes[idx]) || {};
+          if (st.type === "no" || st.type === "nc") {
+            row.appendChild(elContact(st.addr, st.type === "nc", !!n.active, st));
+            powerSoFar = !!n.active;
+            row.appendChild(elWire(powerSoFar));
+          } else if (st.type === "ton") {
+            row.appendChild(elTon(Object.assign({
+              tid: st.tid, pt: st.pt, et: 0, q: false, inOn: false, active: false
+            }, n)));
+            powerSoFar = !!n.q;
+            row.appendChild(elWire(powerSoFar));
+          } else if (st.type === "coil") {
+            row.appendChild(elCoil(st.addr, !!n.active, st));
+            if (idx < list.length - 1) row.appendChild(elWire(!!n.active));
+          }
+        });
+      } else {
+        (nodes || []).forEach((n, idx) => {
+          if (n.kind === "contact") {
+            row.appendChild(elContact(n.addr, n.nc, n.active));
+            powerSoFar = !!n.active;
+            row.appendChild(elWire(powerSoFar));
+          } else if (n.kind === "ton") {
+            row.appendChild(elTon(n));
+            powerSoFar = !!n.q;
+            row.appendChild(elWire(powerSoFar));
+          } else if (n.kind === "coil") {
+            row.appendChild(elCoil(n.addr, n.active));
+            if (idx < nodes.length - 1) row.appendChild(elWire(n.active));
+          }
+        });
+      }
       parent.appendChild(row);
     }
 
@@ -2457,13 +3093,7 @@
           row.appendChild(elCoil(rung.coil.addr, !!h.power));
           net.appendChild(row);
         } else {
-          appendSeriesRow(net, h.nodes || rung.steps.map((st) => {
-            if (st.type === "no" || st.type === "nc")
-              return { kind: "contact", addr: st.addr, nc: st.type === "nc", active: false };
-            if (st.type === "ton")
-              return { kind: "ton", tid: st.tid, pt: st.pt, et: 0, q: false, active: false, inOn: false };
-            return { kind: "coil", addr: st.addr, active: false };
-          }));
+          appendSeriesRow(net, h.nodes || null, rung.steps);
         }
 
         card.appendChild(rail);
@@ -2544,6 +3174,7 @@
         w: it.w,
         h: it.h,
         closed: !!it.closed,
+        pressed: !!it.pressed,
         selPos: it.selPos == null ? null : it.selPos,
         thermalIr: it.thermalIr == null ? null : it.thermalIr
       };
@@ -2607,7 +3238,7 @@
       state.projectName = (data.name && String(data.name)) || "schema-swissdz";
       state.items = deepClone(data.items).map((it) => ({
         ...it,
-        pressed: false,
+        pressed: !!it.pressed,
         lit: false,
         coilOn: false,
         _coilPrev: false,
@@ -2638,6 +3269,7 @@
       historySuspended = false;
       updateHistoryButtons();
       syncLadderLayout();
+      syncDragLock();
       render();
     }
     function downloadProject() {
@@ -2666,17 +3298,10 @@
       reader.readAsText(file);
     }
     function tryRestoreAutosave() {
-      try {
-        const raw = localStorage.getItem(AUTOSAVE_KEY);
-        if (!raw) return false;
-        const data = JSON.parse(raw);
-        if (!data || !Array.isArray(data.items) || !Array.isArray(data.wires)) return false;
-        if (!data.items.length && !data.wires.length) return false;
-        applyProject(data, { pushHist: false });
-        return true;
-      } catch (_) {
-        return false;
-      }
+      /* Désactivé : le lien ouvre toujours un canevas vide.
+         Enregistrer / Ouvrir restent le seul moyen de recharger un schéma.
+         writeAutosave() continue d'écrire après édition (pas de restore au boot). */
+      return false;
     }
     function sanitizeWire(w) {
       return {
@@ -2734,7 +3359,7 @@
       historySuspended = true;
       state.items = deepClone(snap.items).map((it) => ({
         ...it,
-        pressed: false,
+        pressed: !!it.pressed,
         lit: false,
         coilOn: false,
         _coilPrev: false,
@@ -2760,6 +3385,7 @@
       state.wireDrag = null;
       historySuspended = false;
       updateHistoryButtons();
+      syncDragLock();
       render();
     }
     function undo() {
@@ -2807,11 +3433,63 @@
       }
       document.querySelectorAll(".swatch").forEach((n) => n.classList.toggle("on", n.dataset.c === active));
     }
-    document.getElementById("section").onchange = (ev) => { state.section = Number(ev.target.value); render(); };
+    function syncSectionSelect() {
+      const sel = document.getElementById("section");
+      if (!sel) return;
+      let v = state.section;
+      if (state.selectedWire) {
+        const w = state.wires.find((x) => x.id === state.selectedWire);
+        if (w && w.section != null) v = Number(w.section);
+      }
+      const s = String(v);
+      if (sel.value !== s) sel.value = s;
+    }
+    document.getElementById("section").onchange = (ev) => {
+      const val = Number(ev.target.value);
+      if (state.selectedWire) {
+        const w = state.wires.find((x) => x.id === state.selectedWire);
+        if (w) {
+          pushHistory();
+          w.section = val;
+          render();
+          return;
+        }
+      }
+      state.section = val;
+    };
+
+    /* Tap immédiat dans une zone scrollable (évite le 2e appui iOS). */
+    function bindInstantTap(scroller) {
+      if (!scroller) return;
+      let sx = 0, sy = 0, moved = false, btn = null;
+      scroller.addEventListener("touchstart", (e) => {
+        if (e.touches.length !== 1) { btn = null; return; }
+        const t = e.touches[0];
+        sx = t.clientX; sy = t.clientY; moved = false;
+        btn = e.target.closest("button, .swatch, .lib-tab, .item");
+      }, { passive: true });
+      scroller.addEventListener("touchmove", (e) => {
+        if (!btn || !e.touches[0]) return;
+        const t = e.touches[0];
+        if (Math.hypot(t.clientX - sx, t.clientY - sy) > 10) {
+          moved = true;
+          btn = null;
+        }
+      }, { passive: true });
+      scroller.addEventListener("touchend", (e) => {
+        if (!btn || moved) { btn = null; return; }
+        const el = btn;
+        btn = null;
+        e.preventDefault();
+        el.click();
+      }, { passive: false });
+    }
 
     const CAT_ORDER = [
       "Structure", "Alimentation", "Protection", "Différentiel",
-      "Commande", "Boutonnerie", "Éclairage / Prises", "Domotique KNX", "Moteur / Indus", "Borniers / Alim"
+      "Commande", "Boutonnerie", "Éclairage / Prises", "Domotique KNX", "Moteur / Indus", "Borniers / Alim",
+      "Appareils de mesure",
+      /* === ELECTRODZ_CAT_BEGIN === */ "ElectroDZ", /* === ELECTRODZ_CAT_END === */
     ];
     const ALIAS_IDS = new Set(["rail", "disj", "idr", "contacteur", "thermique_3ph", "moteur_3ph", "compteur_3pn"]);
     const cats = {};
@@ -2826,13 +3504,14 @@
       palette.innerHTML = "";
       const list = cats[activeCat] || [];
       list.forEach(([id, def]) => {
+        const locked = !isVipFree(id);
         const b = document.createElement("button");
         b.type = "button";
-        b.className = "item";
-        b.title = def.name;
+        b.className = "item" + (locked ? " vip-locked" : "");
+        b.title = locked ? (def.name + " — VIP requis") : def.name;
         const label = def.badge ? `${def.name}` : def.name;
         if (def.image) {
-          b.innerHTML = `<img alt="" src="${def.image}"><span>${label}</span>`;
+          b.innerHTML = `<img alt="" src="${def.thumb || def.image}"><span>${label}</span>`;
         } else if (def.kind === "rail") {
           b.innerHTML = `<span class="thumb rail-t">DIN</span><span>${def.name}</span>`;
         } else if (def.kind === "pe") {
@@ -2840,7 +3519,10 @@
         } else {
           b.innerHTML = `<span class="thumb">${(def.badge || def.prefix || "?").slice(0, 3)}</span><span>${def.name}</span>`;
         }
-        b.onclick = () => add(id);
+        b.onclick = () => {
+          if (!isVipFree(id)) { openVipGate(); return; }
+          add(id);
+        };
         palette.appendChild(b);
       });
     }
@@ -2866,6 +3548,32 @@
       libTabs.appendChild(tab);
     });
     renderPaletteItems();
+    syncVipUi();
+
+    function isMobileLayout() {
+      return window.matchMedia("(max-width: 800px)").matches;
+    }
+    function closeMobileLib() {
+      document.body.classList.remove("lib-open");
+      const t = document.getElementById("btnLibToggle");
+      if (t) t.setAttribute("aria-expanded", "false");
+    }
+    function toggleMobileLib() {
+      if (!isMobileLayout()) return;
+      const open = !document.body.classList.contains("lib-open");
+      document.body.classList.toggle("lib-open", open);
+      const t = document.getElementById("btnLibToggle");
+      if (t) t.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+    document.getElementById("btnLibToggle").onclick = () => toggleMobileLib();
+    document.getElementById("libBackdrop").onclick = () => closeMobileLib();
+    window.addEventListener("resize", () => {
+      if (!isMobileLayout()) closeMobileLib();
+    });
+    bindInstantTap(document.getElementById("topBar"));
+    bindInstantTap(document.getElementById("libTabs"));
+    bindInstantTap(document.getElementById("palette"));
+    bindInstantTap(document.querySelector(".header-top"));
 
     function nextTag(type) {
       const p = LIB[type].prefix;
@@ -2873,7 +3581,9 @@
       return p + state.counts[p];
     }
     function add(type) {
+      if (!isVipFree(type)) { openVipGate(); return; }
       const def = LIB[type];
+      if (!def) return;
       const n = state.items.length;
       pushHistory();
       const item = {
@@ -2882,8 +3592,9 @@
         tag: nextTag(type),
         x: 50 + (n % 4) * 170,
         y: 50 + Math.floor(n / 4) * 190,
-        /* Contacteurs / relais à bobine : ouverts par défaut (fermés si bobine alimentée). */
-        closed: !!(def.pair && !def.push && !hasCoil(def) && !def.latch && !def.phaseMonitor && !def.plc && !def.knxActuator && !def.knxPush && !def.knxShutter && !def.knxDimmer && !def.knxDali && !def.knxBinary),
+        /* Contacteurs / relais à bobine : ouverts par défaut (fermés si bobine alimentée).
+           ElectroDZ protections : startOpen (défaut OFF comme l’app Flutter). */
+        closed: def.startOpen ? false : !!(def.pair && !def.push && !hasCoil(def) && !def.latch && !def.phaseMonitor && !def.plc && !def.knxActuator && !def.knxPush && !def.knxShutter && !def.knxDimmer && !def.knxDali && !def.knxBinary),
         pressed: false,
         lit: false,
         coilOn: false,
@@ -2902,12 +3613,146 @@
       if (isKnxDevice(def)) ensureKnxProgram(item);
       state.selected = item.uid;
       if (state.etsOpen) renderEtsPanel();
+      closeMobileLib();
       render();
     }
     function find(uid) { return state.items.find((i) => i.uid === uid); }
+    /* Géométrie cordons Fluke — alignée sur oibt-trainer cable_wiring_state.dart */
+    const FLUKE_CABLES = [
+      { id: "L", color: "#E23A32", asset: "assets/fluke/cable_L.png", ax: 0.36, ay: 0.02, mark: "L1" },
+      { id: "N", color: "#2F6FE0", asset: "assets/fluke/cable_N.png", ax: 0.50, ay: 0.02, mark: "L3" },
+      { id: "PE", color: "#3CB04A", asset: "assets/fluke/cable_PE.png", ax: 0.64, ay: 0.02, mark: "L2" }
+    ];
+    const FLUKE_METAL = 0.96;
+    const FLUKE_LEAD = 0.055;
+    /* Sondes un peu plus grandes que oibt (36×74) pour lisibilité panel. */
+    const FLUKE_TIP_H = 0.62;
+    const FLUKE_TIP_ASPECT = 36 / 74;
+    /** Park : cordons qui pendent sous l’appareil (lisible sur le schéma panel). */
+    function flukeDefaultTips() {
+      return {
+        L: { nx: 0.22, ny: 1.20 },
+        N: { nx: 0.50, ny: 1.28 },
+        PE: { nx: 0.78, ny: 1.20 }
+      };
+    }
+    function flukeTipsOf(item) {
+      if (!item.flukeTips) item.flukeTips = flukeDefaultTips();
+      /* Anciennes poses « sur la face » → park cordons pendants (lisibles). */
+      const sample = item.flukeTips.N || item.flukeTips.L;
+      if (sample && sample.ny < 0.85) item.flukeTips = flukeDefaultTips();
+      return item.flukeTips;
+    }
     function termAbs(item, term) {
       const sz = itemSize(item);
-      return { x: item.x + term.nx * sz.w, y: item.y + term.ny * sz.h, direction: term.direction };
+      let nx = term.nx, ny = term.ny;
+      const def = LIB[item.type];
+      if (def && def.flukeMeter) {
+        const tip = flukeTipsOf(item)[term.id];
+        if (tip) { nx = tip.nx; ny = tip.ny; }
+      }
+      return { x: item.x + nx * sz.w, y: item.y + ny * sz.h, direction: term.direction };
+    }
+    const flukeLiveFrames = new Map();
+    function flukeParkEl() {
+      let park = document.getElementById("flukePark");
+      if (!park) {
+        park = document.createElement("div");
+        park.id = "flukePark";
+        document.body.appendChild(park);
+      }
+      return park;
+    }
+    function flukeMeterSrc() {
+      return "../oibt-trainer/meter-embed.html?embed=1&lang=fr&v=panel7#/meter";
+    }
+    function flukeLiveFrame(uid) {
+      let frame = flukeLiveFrames.get(uid);
+      if (!frame) {
+        frame = document.createElement("iframe");
+        frame.className = "fluke-live";
+        frame.title = "Fluke 1664 FC — testeur OIBT";
+        frame.setAttribute("allow", "fullscreen");
+        frame.setAttribute("scrolling", "no");
+        frame.src = flukeMeterSrc();
+        frame.addEventListener("load", () => {
+          try {
+            const doc = frame.contentDocument;
+            if (!doc) return;
+            const s = doc.createElement("style");
+            s.textContent = [
+              "html,body{margin:0!important;padding:0!important;background:transparent!important;overflow:hidden!important;}",
+              "flt-glass-pane,flt-scene-host,flutter-view{background:transparent!important;}",
+              "flt-scene-host canvas{background-color:transparent!important;}"
+            ].join("");
+            (doc.head || doc.documentElement).appendChild(s);
+          } catch (_) {}
+        });
+        flukeLiveFrames.set(uid, frame);
+      }
+      return frame;
+    }
+    function parkFlukeFrames() {
+      const park = flukeParkEl();
+      flukeLiveFrames.forEach((frame) => {
+        if (frame.parentNode !== park) park.appendChild(frame);
+      });
+    }
+    function releaseFlukeFrames() {
+      const live = new Set(
+        state.items.filter((i) => LIB[i.type] && LIB[i.type].flukeMeter).map((i) => i.uid)
+      );
+      flukeLiveFrames.forEach((frame, uid) => {
+        if (live.has(uid)) return;
+        frame.remove();
+        flukeLiveFrames.delete(uid);
+      });
+    }
+    function normalizeFlukeSize(item) {
+      if (!item || item.type !== "fluke_1664") return;
+      const def = LIB.fluke_1664;
+      const w = item.w || def.w, h = item.h || def.h;
+      /* Ancienne plaque large (prise + chrome) → boîtier + cordons seulement. */
+      if (h > w * 1.15 || w > 560 || h > 420 || Math.abs(w / h - def.w / def.h) > 0.35) {
+        item.w = def.w;
+        item.h = def.h;
+      }
+    }
+    function mountFlukeMeter(el, item) {
+      normalizeFlukeSize(item);
+      el.classList.add("fluke-meter");
+      el.title = "Fluke 1664 FC — poignée = déplacer · molette / TEST / F1–F4 dans l'appareil";
+      const handle = document.createElement("div");
+      handle.className = "fluke-drag-handle";
+      handle.title = "Glisser pour déplacer le Fluke";
+      handle.onpointerdown = (ev) => {
+        ev.stopPropagation();
+        if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
+        ev.preventDefault();
+        if (state.mode === "wire") return;
+        state.wireDrag = null;
+        state.selected = item.uid;
+        state.selectedWire = null;
+        const histKey = structuralKey(cloneEditableState());
+        pushHistory();
+        state.drag = {
+          uid: item.uid,
+          px: ev.clientX,
+          py: ev.clientY,
+          x: item.x,
+          y: item.y,
+          histKey,
+          pointerId: ev.pointerId
+        };
+        syncDragLock();
+        try { board.setPointerCapture(ev.pointerId); } catch (_) {}
+        render();
+      };
+      el.appendChild(handle);
+      const viewport = document.createElement("div");
+      viewport.className = "fluke-viewport";
+      viewport.appendChild(flukeLiveFrame(item.uid));
+      el.appendChild(viewport);
     }
     function endpoint(ref) {
       const item = find(ref.uid);
@@ -2926,7 +3771,10 @@
         const a = out[out.length - 1], b = raw[i], c = raw[i + 1];
         const colH = almostEq(a.y, b.y) && almostEq(b.y, c.y);
         const colV = almostEq(a.x, b.x) && almostEq(b.x, c.x);
-        if (!colH && !colV) out.push(b);
+        /* Aussi colinéaire oblique (évite les rebroussements). */
+        const cross = (b.x - a.x) * (c.y - b.y) - (b.y - a.y) * (c.x - b.x);
+        const colAny = Math.abs(cross) < 2.5;
+        if (!colH && !colV && !colAny) out.push(b);
       }
       out.push(raw[raw.length - 1]);
       return dedupePts(out);
@@ -2967,10 +3815,10 @@
     function wirePts(w) {
       const A = endpoint(w.a);
       const B = endpoint(w.b);
-      /* Édition : jamais re-router — bornes exactes + waypoints 100 % libres. */
+      /* Édition : waypoints libres (H/V ou oblique) — pas de forceOrtho (évite les replis). */
       if (w.waypoints && w.waypoints.length) {
         const mids = w.waypoints.map((p) => ({ x: p.x, y: p.y }));
-        return forceOrtho([{ x: A.x, y: A.y }, ...mids, { x: B.x, y: B.y }]);
+        return simplifyOrtho([{ x: A.x, y: A.y }, ...mids, { x: B.x, y: B.y }]);
       }
       return autoRoute(A, B);
     }
@@ -3020,69 +3868,149 @@
       const cleaned = simplifyOrtho(pts);
       w.waypoints = cleaned.slice(1, -1).map((p) => ({ x: p.x, y: p.y }));
     }
+    /** Snapshot positions de bornes (resize / follow fils). */
+    function snapshotItemTermEps(uid) {
+      const item = find(uid);
+      const def = item && LIB[item.type];
+      if (!item || !def || !def.terminals) return {};
+      const out = {};
+      def.terminals.forEach((t) => {
+        const p = termAbs(item, t);
+        out[t.id] = { x: p.x, y: p.y };
+      });
+      return out;
+    }
+    /**
+     * Au déplacement d'un composant : endpoint déjà via endpoint() ;
+     * déplace stub + coude adjacent (évite le U-turn Manhattan figé).
+     * Si les deux extrémités sont sur l'item → tous les waypoints.
+     */
+    function shiftWiresForItemDelta(uid, dx, dy) {
+      if ((!dx && !dy) || !uid) return;
+      state.wires.forEach((w) => {
+        const aHere = w.a && w.a.uid === uid;
+        const bHere = w.b && w.b.uid === uid;
+        if (!aHere && !bHere) return;
+        const pts = w.waypoints;
+        if (!pts || !pts.length) return;
+        if (aHere && bHere) {
+          w.waypoints = pts.map((p) => ({ x: p.x + dx, y: p.y + dy }));
+          return;
+        }
+        const nudge = (i) => { pts[i] = { x: pts[i].x + dx, y: pts[i].y + dy }; };
+        if (aHere) {
+          nudge(0);
+          if (pts.length > 1) nudge(1); /* coude juste après le stub */
+        }
+        if (bHere) {
+          nudge(pts.length - 1);
+          if (pts.length > 1) nudge(pts.length - 2);
+        }
+      });
+    }
+    /** Au resize : stub + coude adjacent suivent le delta de la borne. */
+    function followWiresAfterTermMove(uid, beforeEps) {
+      if (!beforeEps) return;
+      state.wires.forEach((w) => {
+        ["a", "b"].forEach((side) => {
+          const ref = w[side];
+          if (!ref || ref.uid !== uid) return;
+          const old = beforeEps[ref.term];
+          if (!old) return;
+          let neu;
+          try { neu = endpoint(ref); } catch (_) { return; }
+          const dx = neu.x - old.x;
+          const dy = neu.y - old.y;
+          if (!dx && !dy) return;
+          const pts = w.waypoints;
+          if (!pts || !pts.length) return;
+          const nudge = (i) => { pts[i] = { x: pts[i].x + dx, y: pts[i].y + dy }; };
+          if (side === "a") {
+            nudge(0);
+            if (pts.length > 1) nudge(1);
+          } else {
+            nudge(pts.length - 1);
+            if (pts.length > 1) nudge(pts.length - 2);
+          }
+        });
+      });
+    }
     function moveOrthoSegment(pts, segIndex, nx, ny) {
       const p = pts.map((q) => ({ x: q.x, y: q.y }));
       const i = segIndex;
-      if (i < 1 || i >= p.length - 2) return forceOrtho(p);
+      if (i < 1 || i >= p.length - 2) return simplifyOrtho(p);
       const a = p[i], b = p[i + 1];
       const horiz = almostEq(a.y, b.y);
       if (horiz) {
         p[i].y = ny;
         p[i + 1].y = ny;
-      } else {
+      } else if (almostEq(a.x, b.x)) {
         p[i].x = nx;
         p[i + 1].x = nx;
+      } else {
+        /* Segment déjà oblique : translation libre du couple. */
+        const dx = nx - a.x, dy = ny - a.y;
+        p[i].x += dx; p[i].y += dy;
+        p[i + 1].x += dx; p[i + 1].y += dy;
       }
       p[0] = { x: pts[0].x, y: pts[0].y };
       p[p.length - 1] = { x: pts[pts.length - 1].x, y: pts[pts.length - 1].y };
-      return forceOrtho(p);
+      return simplifyOrtho(p);
     }
-    function insertJog(pts, segIndex) {
+    /* Coin libre (oblique OK) — sans forceOrtho / sans jog qui se replie. */
+    function moveFreeCorner(pts, cornerIndex, x, y) {
+      const p = pts.map((q) => ({ x: q.x, y: q.y }));
+      if (cornerIndex <= 0 || cornerIndex >= p.length - 1) return simplifyOrtho(p);
+      p[cornerIndex] = { x, y };
+      p[0] = { x: pts[0].x, y: pts[0].y };
+      p[p.length - 1] = { x: pts[pts.length - 1].x, y: pts[pts.length - 1].y };
+      return simplifyOrtho(p);
+    }
+    function insertJog(pts, segIndex, x, y) {
       const i = segIndex;
       if (i < 0 || i >= pts.length - 1) return pts.map((q) => ({ x: q.x, y: q.y }));
       const a = pts[i], b = pts[i + 1];
-      const horiz = almostEq(a.y, b.y);
-      const off = 36;
+      const px = x != null ? x : (a.x + b.x) / 2;
+      const py = y != null ? y : (a.y + b.y) / 2;
       const left = pts.slice(0, i + 1).map((q) => ({ x: q.x, y: q.y }));
       const right = pts.slice(i + 1).map((q) => ({ x: q.x, y: q.y }));
-      if (horiz) {
-        const mid = (a.x + b.x) / 2;
-        const dir = a.y < 100 ? 1 : -1;
-        return forceOrtho([
-          ...left,
-          { x: mid, y: a.y },
-          { x: mid, y: a.y + off * dir },
-          { x: b.x, y: a.y + off * dir },
-          ...right
-        ]);
-      }
-      const mid = (a.y + b.y) / 2;
-      const dir = a.x < 100 ? 1 : -1;
-      return forceOrtho([
-        ...left,
-        { x: a.x, y: mid },
-        { x: a.x + off * dir, y: mid },
-        { x: a.x + off * dir, y: b.y },
-        ...right
-      ]);
+      /* Un seul point sur la courbe (pas d’aller-retour en U). */
+      return simplifyOrtho([...left, { x: px, y: py }, ...right]);
     }
+    /* Spline Catmull-Rom → cubiques SVG (tendue, peu d’overshoot). */
     function pathD(pts) {
-      /* Coudes Manhattan légèrement arrondis. */
-      const r = 10;
-      if (pts.length < 2) return "";
-      let d = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
-      for (let i = 1; i < pts.length - 1; i++) {
-        const prev = pts[i - 1], cur = pts[i], next = pts[i + 1];
-        const l1 = Math.hypot(cur.x - prev.x, cur.y - prev.y) || 1;
-        const l2 = Math.hypot(next.x - cur.x, next.y - cur.y) || 1;
-        const rr = Math.min(r, l1 / 2, l2 / 2);
-        const v1x = (cur.x - prev.x) / l1, v1y = (cur.y - prev.y) / l1;
-        const v2x = (next.x - cur.x) / l2, v2y = (next.y - cur.y) / l2;
-        d += ` L ${(cur.x - v1x * rr).toFixed(1)} ${(cur.y - v1y * rr).toFixed(1)}`;
-        d += ` Q ${cur.x.toFixed(1)} ${cur.y.toFixed(1)} ${(cur.x + v2x * rr).toFixed(1)} ${(cur.y + v2y * rr).toFixed(1)}`;
+      if (!pts || pts.length < 2) return "";
+      const p = pts.map((q) => ({ x: q.x, y: q.y }));
+      if (p.length === 2) {
+        return `M ${p[0].x.toFixed(1)} ${p[0].y.toFixed(1)} L ${p[1].x.toFixed(1)} ${p[1].y.toFixed(1)}`;
       }
-      const last = pts[pts.length - 1];
-      d += ` L ${last.x.toFixed(1)} ${last.y.toFixed(1)}`;
+      const tau = 0.45;
+      let d = `M ${p[0].x.toFixed(1)} ${p[0].y.toFixed(1)}`;
+      for (let i = 0; i < p.length - 1; i++) {
+        const p0 = p[Math.max(0, i - 1)];
+        const p1 = p[i];
+        const p2 = p[i + 1];
+        const p3 = p[Math.min(p.length - 1, i + 2)];
+        const segLen = Math.hypot(p2.x - p1.x, p2.y - p1.y) || 1;
+        const maxOff = segLen * 0.35;
+        let c1x = p1.x + (p2.x - p0.x) * (tau / 6);
+        let c1y = p1.y + (p2.y - p0.y) * (tau / 6);
+        let c2x = p2.x - (p3.x - p1.x) * (tau / 6);
+        let c2y = p2.y - (p3.y - p1.y) * (tau / 6);
+        const o1 = Math.hypot(c1x - p1.x, c1y - p1.y);
+        if (o1 > maxOff) {
+          const s = maxOff / o1;
+          c1x = p1.x + (c1x - p1.x) * s;
+          c1y = p1.y + (c1y - p1.y) * s;
+        }
+        const o2 = Math.hypot(c2x - p2.x, c2y - p2.y);
+        if (o2 > maxOff) {
+          const s = maxOff / o2;
+          c2x = p2.x + (c2x - p2.x) * s;
+          c2y = p2.y + (c2y - p2.y) * s;
+        }
+        d += ` C ${c1x.toFixed(1)} ${c1y.toFixed(1)} ${c2x.toFixed(1)} ${c2y.toFixed(1)} ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
+      }
       return d;
     }
     function midPoint(pts) {
@@ -3099,16 +4027,21 @@
       }
       return pts[Math.floor(pts.length / 2)];
     }
-    function wireWidth() {
-      if (state.section <= 1.5) return 3.2;
-      if (state.section <= 2.5) return 4.2;
+    function wireSectionOf(w) {
+      if (w && w.section != null && Number.isFinite(Number(w.section))) return Number(w.section);
+      return state.section;
+    }
+    function wireWidth(section) {
+      const s = section != null ? Number(section) : state.section;
+      if (s <= 1.5) return 3.2;
+      if (s <= 2.5) return 4.2;
       return 5.5;
     }
 
     function hasCoil(def) {
       if (!def || !def.terminals) return false;
       const ids = def.terminals.map((t) => t.id);
-      return ids.includes("A1") && ids.includes("A2");
+      return ids.includes("A1") && coilReturnIds(def).length > 0;
     }
 
     /* Web Audio : bip tant que le sonore est alimenté (X1/X2 sous L+N). */
@@ -3518,27 +4451,32 @@
       });
     }
 
+    /** Toutes les sources L/N du schéma (plusieurs compteurs = plusieurs réseaux). */
     function findSourceRoots(findp, key) {
-      let hotRoot = null, neuRoot = null, hotKey = null, neuKey = null;
+      const hotKeys = [];
+      const neuKeys = [];
       state.items.forEach((item) => {
         const def = LIB[item.type];
         if (!def) return;
-        if (def.kind === "phase" || isCompteurKind(def.kind)) {
+        const isSrc = !!(def.source || isCompteurKind(def.kind) || def.kind === "phase" || def.kind === "neutre");
+        if (def.kind === "phase" || isCompteurKind(def.kind) || (isSrc && compteurPhaseIds(def).length)) {
           const phaseId = compteurPhaseIds(def)[0];
-          if (phaseId) {
-            const k = key(item.uid, phaseId);
-            if (!hotRoot) { hotRoot = findp(k); hotKey = k; }
-          }
+          if (phaseId) hotKeys.push(key(item.uid, phaseId));
         }
-        if (def.kind === "neutre" || isCompteurKind(def.kind)) {
-          if (def.terminals.some((t) => t.id === "N")) {
-            const k = key(item.uid, "N");
-            if (!neuRoot) { neuRoot = findp(k); neuKey = k; }
-          }
+        if (def.kind === "neutre" || isCompteurKind(def.kind) || (isSrc && (def.terminals || []).some((t) => t.id === "N"))) {
+          if ((def.terminals || []).some((t) => t.id === "N")) neuKeys.push(key(item.uid, "N"));
         }
       });
-      return { hotRoot, neuRoot, hotKey, neuKey };
+      const hotRoots = new Set(hotKeys.map((k) => findp(k)));
+      const neuRoots = new Set(neuKeys.map((k) => findp(k)));
+      const hotKey = hotKeys[0] || null;
+      const neuKey = neuKeys[0] || null;
+      const hotRoot = hotKey ? findp(hotKey) : null;
+      const neuRoot = neuKey ? findp(neuKey) : null;
+      return { hotRoot, neuRoot, hotKey, neuKey, hotKeys, neuKeys, hotRoots, neuRoots };
     }
+    function rootIsHot(root, hotRoots) { return !!(hotRoots && hotRoots.has(root)); }
+    function rootIsNeu(root, neuRoots) { return !!(neuRoots && neuRoots.has(root)); }
 
     function simulate() {
       state.items.forEach((i) => { i.hot = {}; i.neu = {}; i.lit = false; i.coilOn = false; i.knxBusOk = false; });
@@ -3590,9 +4528,9 @@
 
       /* 2) Passes : bus, contacts, poussoirs, bobines, secondaires */
       for (let pass = 0; pass < 12; pass++) {
-        const roots = findSourceRoots(findp, key);
-        let { hotRoot, neuRoot, hotKey, neuKey } = roots;
-        if (!hotRoot || !neuRoot) return;
+        let roots = findSourceRoots(findp, key);
+        let { hotRoot, neuRoot, hotKey, neuKey, hotKeys, neuKeys, hotRoots, neuRoots } = roots;
+        if (!hotRoots.size || !neuRoots.size) return;
 
         /* Peigne / bus : toutes bornes en parallèle */
         state.items.forEach((item) => {
@@ -3608,15 +4546,18 @@
           if (!def || !def.secondary) return;
           const pL = findp(key(item.uid, "L"));
           const pN = findp(key(item.uid, "N"));
-          if (pL === hotRoot && pN === neuRoot && hotKey && neuKey) {
-            unite(key(item.uid, def.secondary[0]), hotKey);
-            unite(key(item.uid, def.secondary[1]), neuKey);
+          if (rootIsHot(pL, hotRoots) && rootIsNeu(pN, neuRoots) && hotKeys.length && neuKeys.length) {
+            const hk = hotKeys.find((k) => findp(k) === pL) || hotKey;
+            const nk = neuKeys.find((k) => findp(k) === pN) || neuKey;
+            unite(key(item.uid, def.secondary[0]), hk);
+            unite(key(item.uid, def.secondary[1]), nk);
           }
         });
 
         /* Recalc roots après bus/secondaires */
-        ({ hotRoot, neuRoot, hotKey, neuKey } = findSourceRoots(findp, key));
-        if (!hotRoot || !neuRoot) return;
+        roots = findSourceRoots(findp, key);
+        ({ hotRoot, neuRoot, hotKey, neuKey, hotKeys, neuKeys, hotRoots, neuRoots } = roots);
+        if (!hotRoots.size || !neuRoots.size) return;
 
         /* KNX : participant sur bus si KNX+ = hot et KNX− = neu (alim secondaire + câble BUS) ;
            poussoir bascule → canaux actionneur sur le même bus alimenté */
@@ -3625,7 +4566,8 @@
           if (!isKnxDevice(def)) return;
           const pP = findp(key(item.uid, "KNX+"));
           const pM = findp(key(item.uid, "KNX-"));
-          item.knxBusOk = (pP === hotRoot && pM === neuRoot) || (pP === neuRoot && pM === hotRoot);
+          item.knxBusOk = (rootIsHot(pP, hotRoots) && rootIsNeu(pM, neuRoots))
+            || (rootIsNeu(pP, neuRoots) && rootIsHot(pM, hotRoots));
           if (def.knxPsu) item.coilOn = !!item.knxBusOk;
         });
         const knxPushes = state.items.filter((i) => {
@@ -3675,14 +4617,15 @@
           if (def.plc) {
             const pL = findp(key(item.uid, "L"));
             const pN = findp(key(item.uid, "N"));
-            const powered = (pL === hotRoot && pN === neuRoot) || (pL === neuRoot && pN === hotRoot);
+            const powered = (rootIsHot(pL, hotRoots) && rootIsNeu(pN, neuRoots))
+              || (rootIsNeu(pL, neuRoots) && rootIsHot(pN, hotRoots));
             item.coilOn = powered;
             item.plcIn = {};
             item.plcOut = {};
             if (powered) {
               for (let n = 1; n <= 8; n++) {
                 const id = "I" + n;
-                if (findp(key(item.uid, id)) === hotRoot) item.plcIn[id] = true;
+                if (rootIsHot(findp(key(item.uid, id)), hotRoots)) item.plcIn[id] = true;
               }
             }
             return;
@@ -3704,17 +4647,30 @@
           const pairList = def.pairs || (def.pair ? [def.pair] : null);
           if (!pairList) return;
 
+          /* Borniers / junctions ElectroDZ : toujours conducteurs */
+          if (def.passthrough) {
+            pairList.forEach((pr) => unite(key(item.uid, pr[0]), key(item.uid, pr[1])));
+            return;
+          }
+
           let closed;
           if (def.push) {
             closed = def.nc ? !item.pressed : !!item.pressed;
           } else if (def.phaseMonitor) {
-            const nHot = ["L1", "L2", "L3"].filter((t) => findp(key(item.uid, t)) === hotRoot).length;
+            const nHot = ["L1", "L2", "L3"].filter((t) => rootIsHot(findp(key(item.uid, t)), hotRoots)).length;
             closed = nHot >= 2 || !!item.closed;
             item.coilOn = nHot >= 2;
           } else if (hasCoil(def)) {
             const a1 = findp(key(item.uid, "A1"));
-            const a2 = findp(key(item.uid, "A2"));
-            const coilOn = (a1 === hotRoot && a2 === neuRoot) || (a1 === neuRoot && a2 === hotRoot);
+            let coilOn = false;
+            for (const retId of coilReturnIds(def)) {
+              const a2 = findp(key(item.uid, retId));
+              if ((rootIsHot(a1, hotRoots) && rootIsNeu(a2, neuRoots))
+                || (rootIsNeu(a1, neuRoots) && rootIsHot(a2, hotRoots))) {
+                coilOn = true;
+                break;
+              }
+            }
             item.coilOn = coilOn;
             if (def.latch) {
               /* Télérupteur : front montant bobine → bascule contact */
@@ -3724,6 +4680,9 @@
             } else {
               closed = coilOn || !!item.closed;
             }
+          } else if (def.nc) {
+            /* Sélecteur / contact NC : item.closed = appareil « ON » → NC ouvert */
+            closed = !item.closed;
           } else {
             closed = !!item.closed;
           }
@@ -3740,17 +4699,25 @@
       }
 
       const roots = findSourceRoots(findp, key);
-      let { hotRoot, neuRoot, hotKey, neuKey } = roots;
-      if (!hotRoot || !neuRoot) {
+      let { hotRoot, neuRoot, hotKey, neuKey, hotKeys, neuKeys, hotRoots, neuRoots } = roots;
+      if (!hotRoots.size || !neuRoots.size) {
         state.shortArmed = false;
         updateFireAfterShortCleared();
         clearShortIfIdle();
         return;
       }
 
-      /* Court-circuit franc : L et N dans le même nœud (sans charge — les lampes n’unissent pas). */
-      if (hotKey && neuKey && findp(hotKey) === findp(neuKey)) {
-        const shortRoot = findp(hotKey);
+      /* Court-circuit franc : une phase source et un N source dans le même nœud. */
+      let shortRoot = null;
+      for (let hi = 0; hi < hotKeys.length && !shortRoot; hi++) {
+        for (let ni = 0; ni < neuKeys.length; ni++) {
+          if (findp(hotKeys[hi]) === findp(neuKeys[ni])) {
+            shortRoot = findp(hotKeys[hi]);
+            break;
+          }
+        }
+      }
+      if (shortRoot) {
         const loc = locateShortPoint(findp, key, shortRoot);
         triggerShortCircuit(loc);
         maybeIgniteFire(loc);
@@ -3771,7 +4738,7 @@
 
       function mark(uid, term) {
         const root = findp(key(uid, term));
-        return { hot: root === hotRoot, neu: root === neuRoot };
+        return { hot: rootIsHot(root, hotRoots), neu: rootIsNeu(root, neuRoots) };
       }
       state.items.forEach((item) => {
         const def = LIB[item.type];
@@ -3845,22 +4812,25 @@
       migrateKnxBusWires();
       const before = state.items.length;
       state.items = state.items.filter((i) => LIB[i.type]);
+      releaseFlukeFrames();
       if (state.items.length !== before) {
         const uids = new Set(state.items.map((i) => i.uid));
         state.wires = state.wires.filter((w) => uids.has(w.a.uid) && uids.has(w.b.uid));
       }
       simulate();
       syncBuzzers();
+      parkFlukeFrames();
       board.innerHTML = "";
       const svgWires = document.createElementNS("http://www.w3.org/2000/svg", "svg");
       svgWires.setAttribute("class", "wires");
-      const width = wireWidth();
       const NS = svgWires.namespaceURI;
 
       if (!state.items.length && !state.wires.length) {
         const hint = document.createElement("div");
         hint.className = "empty-hint";
-        hint.textContent = "Canevas vide — choisis un composant à gauche";
+        hint.textContent = window.matchMedia("(max-width: 800px)").matches
+          ? "Canevas vide — choisis un composant"
+          : "Canevas vide — choisis un composant à gauche";
         board.appendChild(hint);
       }
 
@@ -3881,6 +4851,8 @@
       /* Un seul tracé fil complet (devant modules) — pas de masque / double rendu. */
       const drawWire = (pts, color, live, id, liveN) => {
         if (!pts || pts.length < 2) return;
+        const wObj = id != null ? state.wires.find((x) => x.id === id) : null;
+        const width = wireWidth(wObj ? wireSectionOf(wObj) : state.section);
         const d = pathD(pts);
         const selected = id != null && state.selectedWire === id;
         const fault = id != null && state.wires.some((w) => w.id === id && w.fault);
@@ -3896,8 +4868,14 @@
           });
           hit.addEventListener("pointerdown", (ev) => {
             ev.stopPropagation();
+            if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
             ev.preventDefault();
             if (ev.button === 2) return;
+            state.drag = null;
+            state.resize = null;
+            state.selected = null;
+            state.selectedWire = id;
+            syncDragLock();
             if (ev.detail >= 2) {
               const w = state.wires.find((x) => x.id === id);
               if (!w) return;
@@ -3917,14 +4895,10 @@
                 const dist = Math.hypot(x - px, y - py);
                 if (dist < bestD) { bestD = dist; best = i; }
               }
-              bakeWaypoints(w, insertJog(cur, best));
-              state.selected = null;
-              state.selectedWire = id;
+              bakeWaypoints(w, insertJog(cur, best, x, y));
               render();
               return;
             }
-            state.selected = null;
-            state.selectedWire = id;
             render();
           });
           hit.addEventListener("contextmenu", (ev) => {
@@ -4007,43 +4981,125 @@
         });
 
         if (selected && state.mode === "select" && pts.length >= 2) {
-          for (let i = 0; i < pts.length - 1; i++) {
-            const a = pts[i], b = pts[i + 1];
-            const len = Math.hypot(b.x - a.x, b.y - a.y);
-            if (len < 12) continue;
-            const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
-            const horiz = almostEq(a.y, b.y);
-            const handle = document.createElementNS(NS, "rect");
+          /* Points bleus = waypoints internes (drag libre) ; croix rouge = supprimer. */
+          for (let i = 1; i < pts.length - 1; i++) {
+            const c = pts[i];
+            const handle = document.createElementNS(NS, "circle");
             handle.setAttribute("class", "whandle");
-            handle.setAttribute("x", String(mx - 5));
-            handle.setAttribute("y", String(my - 5));
-            handle.setAttribute("width", "10");
-            handle.setAttribute("height", "10");
-            handle.setAttribute("rx", "2");
-            handle.style.cursor = horiz ? "ns-resize" : "ew-resize";
+            handle.setAttribute("cx", String(c.x));
+            handle.setAttribute("cy", String(c.y));
+            handle.setAttribute("r", "6.5");
             handle.addEventListener("pointerdown", (ev) => {
               ev.stopPropagation();
+              if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
               ev.preventDefault();
               if (ev.button === 2) return;
               const w = state.wires.find((x) => x.id === id);
               if (!w) return;
+              state.selected = null;
+              state.selectedWire = id;
+              state.drag = null;
+              state.resize = null;
+              const histKey = structuralKey(cloneEditableState());
+              pushHistory();
+              state.wireDrag = {
+                id,
+                segIndex: -1,
+                freeCorner: i,
+                startPts: wirePts(w),
+                ox: ev.clientX,
+                oy: ev.clientY,
+                histKey
+              };
+              syncDragLock();
+            });
+            svgWires.appendChild(handle);
+
+            const dxOff = 14;
+            const del = document.createElementNS(NS, "circle");
+            del.setAttribute("class", "wdel");
+            del.setAttribute("cx", String(c.x + dxOff));
+            del.setAttribute("cy", String(c.y));
+            del.setAttribute("r", "6");
+            del.setAttribute("title", "Supprimer le point");
+            del.addEventListener("pointerdown", (ev) => {
+              ev.stopPropagation();
+              if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
+              ev.preventDefault();
+              if (ev.button === 2) return;
+              const w = state.wires.find((x) => x.id === id);
+              if (!w) return;
+              state.selected = null;
+              state.selectedWire = id;
+              state.drag = null;
+              pushHistory();
+              const cur = wirePts(w);
+              if (i <= 0 || i >= cur.length - 1) return;
+              const next = cur.filter((_, j) => j !== i).map((q) => ({ x: q.x, y: q.y }));
+              bakeWaypoints(w, next);
+              render();
+            });
+            svgWires.appendChild(del);
+            const x1 = document.createElementNS(NS, "path");
+            x1.setAttribute("class", "wdel-x");
+            const cx = c.x + dxOff, cy = c.y;
+            x1.setAttribute("d", `M ${cx - 2.2} ${cy - 2.2} L ${cx + 2.2} ${cy + 2.2} M ${cx + 2.2} ${cy - 2.2} L ${cx - 2.2} ${cy + 2.2}`);
+            svgWires.appendChild(x1);
+          }
+          /* Milieu de segment : translation (reste spline au rendu). */
+          for (let i = 0; i < pts.length - 1; i++) {
+            const a = pts[i], b = pts[i + 1];
+            const len = Math.hypot(b.x - a.x, b.y - a.y);
+            if (len < 28) continue;
+            const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+            const horiz = almostEq(a.y, b.y);
+            const vert = almostEq(a.x, b.x);
+            const handle = document.createElementNS(NS, "circle");
+            handle.setAttribute("class", "whandle");
+            handle.setAttribute("cx", String(mx));
+            handle.setAttribute("cy", String(my));
+            handle.setAttribute("r", "4.5");
+            handle.style.fill = "#93c5fd";
+            handle.style.cursor = horiz ? "ns-resize" : (vert ? "ew-resize" : "move");
+            handle.addEventListener("pointerdown", (ev) => {
+              ev.stopPropagation();
+              if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
+              ev.preventDefault();
+              if (ev.button === 2) return;
+              const w = state.wires.find((x) => x.id === id);
+              if (!w) return;
+              state.selected = null;
+              state.selectedWire = id;
+              state.drag = null;
+              state.resize = null;
               const histKey = structuralKey(cloneEditableState());
               pushHistory();
               let startPts = wirePts(w);
               let segIndex = i;
+              let freeCorner = null;
               if (segIndex === 0 || segIndex === startPts.length - 2) {
-                startPts = insertJog(startPts, segIndex);
-                segIndex = segIndex === 0 ? 2 : startPts.length - 3;
+                if (startPts.length === 2) {
+                  const mid = { x: (startPts[0].x + startPts[1].x) / 2, y: (startPts[0].y + startPts[1].y) / 2 };
+                  startPts = [startPts[0], mid, startPts[1]];
+                  bakeWaypoints(w, startPts);
+                }
+                freeCorner = segIndex === 0 ? 1 : startPts.length - 2;
+              } else if (!horiz && !vert) {
+                /* Segment oblique : nouveau point libre au milieu. */
+                startPts = insertJog(startPts, segIndex, mx, my);
                 bakeWaypoints(w, startPts);
+                freeCorner = segIndex + 1;
               }
               state.wireDrag = {
                 id,
                 segIndex,
+                freeCorner,
                 startPts,
                 ox: ev.clientX,
                 oy: ev.clientY,
                 histKey
               };
+              syncDragLock();
             });
             svgWires.appendChild(handle);
           }
@@ -4058,7 +5114,29 @@
         const el = document.createElement("div");
         el.className = "dev" + (state.selected === item.uid ? " sel" : "");
         el.dataset.uid = item.uid;
-        if (def.push && item.pressed) el.classList.add("is-pressed");
+        if (def.push && item.pressed && !def.fc) el.classList.add("is-pressed");
+        if (def.fc) {
+          el.classList.add("fc-dev");
+          if (item.pressed) el.classList.add("fc-on");
+          const arm = document.createElement("div");
+          arm.className = "fc-arm";
+          arm.setAttribute("aria-hidden", "true");
+          el.appendChild(arm);
+          const hit = document.createElement("div");
+          hit.className = "fc-lever-hit";
+          hit.title = item.pressed ? "Actionné (NO 13-14) — tap = repos" : "Repos (NC 11-12) — tap = actionner";
+          hit.setAttribute("aria-label", "Levier fin de course");
+          hit.onpointerdown = (ev) => {
+            ev.stopPropagation();
+            if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
+            ev.preventDefault();
+            pushHistory();
+            item.pressed = !item.pressed;
+            state.selected = item.uid;
+            render();
+          };
+          el.appendChild(hit);
+        }
         if (def.kind === "rail") {
           el.classList.add("rail");
           if (!def.image) el.classList.add("rail-body");
@@ -4068,10 +5146,12 @@
         el.style.top = item.y + "px";
         el.style.width = sz.w + "px";
         el.style.height = sz.h + "px";
-        if (def.image) {
+        if (def.flukeMeter) {
+          mountFlukeMeter(el, item, def);
+        } else if (def.image) {
           const img = document.createElement("img");
           img.alt = def.name;
-          img.src = def.image;
+          img.src = deviceImageSrc(def, item);
           el.appendChild(img);
         } else if (def.kind === "pe") {
           el.innerHTML = peSymbolSvg();
@@ -4319,11 +5399,51 @@
           });
         }
         if (def.selector) {
-          const sp = document.createElement("div");
-          sp.className = "sel-pos";
-          const lab = { man: "MAN", "0": "0", auto: "AUTO" };
-          sp.textContent = lab[item.selPos] || "0";
-          el.appendChild(sp);
+          const pos = item.selPos || "man";
+          const ang = (def.knobAngles && def.knobAngles[pos] != null) ? def.knobAngles[pos] : 0;
+          if (def.knobImage) {
+            const wrap = document.createElement("div");
+            wrap.className = "sel-knob-wrap";
+            wrap.setAttribute("aria-hidden", "true");
+            const kimg = document.createElement("img");
+            kimg.alt = "";
+            kimg.src = def.knobImage;
+            kimg.style.transform = "rotate(" + ang + "deg)";
+            wrap.appendChild(kimg);
+            el.appendChild(wrap);
+          } else {
+            const sp = document.createElement("div");
+            sp.className = "sel-pos";
+            const lab = { man: "MAN", "0": "0", auto: "AUTO" };
+            sp.textContent = lab[pos] || "0";
+            el.appendChild(sp);
+          }
+          const kh = document.createElement("div");
+          kh.className = "sel-knob-hit";
+          kh.title = "Clic = Man → 0 → Auto";
+          kh.setAttribute("aria-label", "Sélecteur " + ({ man: "Man", "0": "0", auto: "Auto" }[pos] || pos));
+          kh.onclick = (ev) => {
+            ev.stopPropagation();
+            pushHistory();
+            const order = ["man", "0", "auto"];
+            const i = order.indexOf(item.selPos || "man");
+            item.selPos = order[(i + 1) % order.length];
+            render();
+          };
+          el.appendChild(kh);
+        }
+        /* Levier photo I-ON ↔ O-OFF (SwissDz + ElectroDZ protections / sectionneurs) */
+        if (def.imageOff && !def.push && !hasCoil(def) && !def.passthrough) {
+          const lever = document.createElement("div");
+          lever.className = "lever-hit";
+          lever.setAttribute("aria-label", item.closed !== false ? "ON" : "OFF");
+          lever.onclick = (ev) => {
+            ev.stopPropagation();
+            pushHistory();
+            item.closed = !item.closed;
+            render();
+          };
+          el.appendChild(lever);
         }
         /* IDR : zone TEST = déclenchement (ouvre le différentiel) */
         if (def.prefix === "QI" && (def.pair || def.pairs)) {
@@ -4350,7 +5470,7 @@
           const irBadge = document.createElement("div");
           irBadge.className = "badge badge-ir";
           irBadge.textContent = "Ir " + formatIr(ir) + "A";
-          irBadge.title = "Double-clic ou clic = régler Ir (A)";
+          irBadge.title = "Clic = régler Ir (A)";
           irBadge.onclick = (ev) => {
             ev.stopPropagation();
             openSizeDialog(item);
@@ -4382,7 +5502,7 @@
             el.appendChild(d);
           });
         }
-        if ((def.pair || def.pairs || def.selector || def.vv) && !def.knxActuator && !def.knxPush && !def.knxShutter && !def.knxDimmer && !def.knxDali && !def.knxBinary) {
+        if ((def.pair || def.pairs || def.selector || def.vv) && !def.knxActuator && !def.knxPush && !def.knxShutter && !def.knxDimmer && !def.knxDali && !def.knxBinary && !def.fc && !def.passthrough) {
           const b = document.createElement("div");
           /* Pas de libellé Marche/Arrêt sur aucun composant — zone clic discrète seulement */
           let on = def.push ? item.pressed : item.closed;
@@ -4424,17 +5544,19 @@
           }
           el.appendChild(b);
         }
-        if (state.selected === item.uid && state.mode === "select") {
+        /* Poignées de taille : tous les composants placés (din, rail, boutonnerie, KNX, etc.) */
+        if (state.selected === item.uid && state.mode === "select" && canResizeItem(item)) {
           ["nw", "n", "ne", "e", "se", "s", "sw", "w"].forEach((dir) => {
             const h = document.createElement("div");
             h.className = "rhandle " + dir;
-            h.title = "Redimensionner";
+            h.title = "Tirer pour redimensionner";
             h.onpointerdown = (ev) => {
               ev.stopPropagation();
+              if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
               ev.preventDefault();
               state.selected = item.uid;
               state.selectedWire = null;
-              state.drag = null;
+              state.drag = null; /* priorité resize vs group-drag rail */
               const histKey = structuralKey(cloneEditableState());
               pushHistory();
               state.resize = {
@@ -4450,6 +5572,7 @@
                 histKey,
                 pointerId: ev.pointerId
               };
+              syncDragLock();
               try { board.setPointerCapture(ev.pointerId); } catch (_) {}
             };
             el.appendChild(h);
@@ -4459,10 +5582,32 @@
           if (ev.target.classList.contains("term")) return;
           if (ev.target.classList.contains("rhandle")) return;
           if (ev.target.classList.contains("badge")) return;
+          if (ev.target.classList.contains("lever-hit")) return;
+          if (ev.target.classList.contains("fc-lever-hit")) return;
+          if (ev.target.classList.contains("sel-knob-hit")) return;
           if (ev.target.classList.contains("knx-key")) return;
+          if (ev.target.classList.contains("fluke-drag-handle")) return;
+          if (ev.target.classList.contains("fluke-viewport") || ev.target.tagName === "IFRAME") return;
           if (state.mode === "wire") return;
+          ev.stopPropagation();
+          if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
+          ev.preventDefault();
+          state.wireDrag = null;
           state.selected = item.uid;
           state.selectedWire = null;
+          syncDragLock();
+          /* Fluke live : déplacer uniquement via la poignée (les clics vont à l'iframe). */
+          if (def.flukeMeter) {
+            render();
+            return;
+          }
+          /* Fin de course : bascule levier (latch), pas poussoir momentané */
+          if (def.fc) {
+            pushHistory();
+            item.pressed = !item.pressed;
+            render();
+            return;
+          }
           /* Poussoir : toujours enfoncer visuellement ; en sim = contact + pas de drag */
           if (def.push) {
             item.pressed = true;
@@ -4488,6 +5633,29 @@
             render();
             return;
           }
+          /* Hors sim : disj. photo — clic court sur le corps = I-ON/O-OFF (sinon drag) */
+          if (!state.sim && def.imageOff && (def.pair || def.pairs) && !def.push && !hasCoil(def)) {
+            const histKey = structuralKey(cloneEditableState());
+            pushHistory();
+            ev.preventDefault();
+            state.drag = {
+              uid: item.uid,
+              px: ev.clientX,
+              py: ev.clientY,
+              x: item.x,
+              y: item.y,
+              histKey,
+              pointerId: ev.pointerId,
+              pendingToggle: true
+            };
+            if (isRail(item)) {
+              state.drag.group = beginRailGroupDrag(item);
+            }
+            syncDragLock();
+            try { board.setPointerCapture(ev.pointerId); } catch (_) {}
+            render();
+            return;
+          }
           const histKey = structuralKey(cloneEditableState());
           pushHistory();
           /* Mobile : empêche le pan/scroll du board ; capture sur #board (survit au render) */
@@ -4504,17 +5672,15 @@
           if (isRail(item)) {
             state.drag.group = beginRailGroupDrag(item);
           }
+          syncDragLock();
           try { board.setPointerCapture(ev.pointerId); } catch (_) {}
           render();
         };
-        el.ondblclick = (ev) => {
-          if (ev.target.classList.contains("term") || ev.target.classList.contains("rhandle")) return;
+        board.appendChild(el);
+        el.addEventListener("contextmenu", (ev) => {
           ev.preventDefault();
           ev.stopPropagation();
-          state.drag = null;
-          openSizeDialog(item);
-        };
-        board.appendChild(el);
+        });
       });
 
       /* 2) Fils au-dessus des modules */
@@ -4652,6 +5818,7 @@
         }
       }
       syncColorSwatches();
+      syncSectionSelect();
       syncLadderLayout();
       if (ladderShouldShow()) renderLadderPanel();
       syncEtsLayout();
@@ -4748,6 +5915,7 @@
         a: state.wireFrom,
         b: bRef,
         color: wireColorForRefs(state.wireFrom, bRef),
+        section: state.section,
         live: false,
         waypoints: []
       };
@@ -4794,14 +5962,17 @@
           nx = state.resize.x + (state.resize.w - nw) / 2;
         }
       }
-      nw = Math.max(MIN_SIZE, nw);
-      nh = Math.max(MIN_SIZE, nh);
+      const mins = resizeMinSize(item);
+      nw = Math.max(mins.w, nw);
+      nh = Math.max(mins.h, nh);
       if (dir.includes("w")) nx = state.resize.x + state.resize.w - nw;
       if (dir.includes("n")) ny = state.resize.y + state.resize.h - nh;
+      const beforeEps = snapshotItemTermEps(item.uid);
       item.w = Math.round(nw);
       item.h = Math.round(nh);
       item.y = Math.max(8, ny);
       item.x = resolveDinX(item, Math.max(8, nx), item.y);
+      followWiresAfterTermMove(item.uid, beforeEps);
       render();
       return true;
     }
@@ -4810,19 +5981,25 @@
       const rect = board.getBoundingClientRect();
       const x = ev.clientX - rect.left + board.scrollLeft;
       const y = ev.clientY - rect.top + board.scrollTop;
+      if (state.wireDrag || state.resize || state.drag) {
+        if (ev.cancelable) ev.preventDefault();
+      }
       if (state.wireDrag || state.resize) return;
       if (state.drag) {
-        /* Empêche le scroll tactile pendant le drag module (pas de lock body) */
-        if (ev.cancelable) ev.preventDefault();
         const item = find(state.drag.uid);
         if (!item) return;
+        const moved = Math.hypot(ev.clientX - state.drag.px, ev.clientY - state.drag.py);
+        if (state.drag.pendingToggle && moved < 8) return;
+        if (state.drag.pendingToggle) state.drag.pendingToggle = false;
         const nx = Math.max(8, state.drag.x + (ev.clientX - state.drag.px));
         const ny = Math.max(8, state.drag.y + (ev.clientY - state.drag.py));
         if (state.drag.group) {
           applyRailGroupDrag(state.drag, nx, ny);
         } else {
+          const prevX = item.x, prevY = item.y;
           item.y = ny;
           item.x = resolveDinX(item, nx, ny);
+          shiftWiresForItemDelta(item.uid, item.x - prevX, item.y - prevY);
         }
         render();
         return;
@@ -4833,30 +6010,38 @@
         render();
       }
     });
-    /* touchmove non-passif : annule le pan iOS pendant drag/resize (sans lock body) */
+    /* touchmove non-passif : annule le pan iOS pendant drag composant / resize / fil */
     window.addEventListener("touchmove", (ev) => {
-      if (state.drag || state.resize) ev.preventDefault();
+      if (state.drag || state.resize || state.wireDrag) ev.preventDefault();
     }, { passive: false });
     window.addEventListener("pointermove", (ev) => {
       if (applyResizePointer(ev)) return;
       if (!state.wireDrag) return;
+      if (ev.cancelable) ev.preventDefault();
       const w = state.wires.find((x) => x.id === state.wireDrag.id);
       if (!w) return;
       const dx = ev.clientX - state.wireDrag.ox;
       const dy = ev.clientY - state.wireDrag.oy;
       const start = state.wireDrag.startPts;
-      const i = state.wireDrag.segIndex;
-      if (i < 0 || i >= start.length - 1) return;
-      const a = start[i], b = start[i + 1];
-      const horiz = almostEq(a.y, b.y);
-      const targetX = horiz ? a.x : a.x + dx;
-      const targetY = horiz ? a.y + dy : a.y;
-      bakeWaypoints(w, moveOrthoSegment(start, i, targetX, targetY));
+      if (state.wireDrag.freeCorner != null) {
+        const ci = state.wireDrag.freeCorner;
+        if (ci <= 0 || ci >= start.length - 1) return;
+        bakeWaypoints(w, moveFreeCorner(start, ci, start[ci].x + dx, start[ci].y + dy));
+      } else {
+        const i = state.wireDrag.segIndex;
+        if (i < 0 || i >= start.length - 1) return;
+        const a = start[i], b = start[i + 1];
+        const horiz = almostEq(a.y, b.y);
+        const targetX = horiz ? a.x : a.x + dx;
+        const targetY = horiz ? a.y + dy : (almostEq(a.x, b.x) ? a.y : a.y + dy);
+        bakeWaypoints(w, moveOrthoSegment(start, i, targetX, targetY));
+      }
       render();
     });
     window.addEventListener("pointerup", (ev) => {
       state.items.forEach((i) => {
-        if (LIB[i.type].push) i.pressed = false;
+        const d = LIB[i.type];
+        if (d && d.push && !d.fc) i.pressed = false;
       });
       const wasWireDrag = !!state.wireDrag;
       const wireHistKey = state.wireDrag && state.wireDrag.histKey;
@@ -4867,27 +6052,31 @@
         try { if (board.hasPointerCapture(captureId)) board.releasePointerCapture(captureId); } catch (_) {}
       }
       const dragged = state.drag && find(state.drag.uid);
-      if (dragged) {
+      const pendingToggle = !!(state.drag && state.drag.pendingToggle && dragged);
+      if (pendingToggle) {
+        dragged.closed = !dragged.closed;
+      } else if (dragged) {
         if (state.drag.group && state.drag.group.items) {
+          const ex = state.drag.group.groupIds || null;
           state.drag.group.items.forEach((s) => {
             const it = find(s.uid);
-            if (it && isDinModule(it)) {
-              it.x = resolveDinX(it, it.x, it.y);
-            }
+            if (!it || isRail(it)) return;
+            settleItemPlacement(it, s.x, s.y, ex);
           });
         } else {
-          dragged.x = resolveDinX(dragged, dragged.x, dragged.y);
+          settleItemPlacement(dragged, state.drag.x, state.drag.y, null);
         }
       }
       const resized = state.resize && find(state.resize.uid);
       if (resized) {
-        resized.x = resolveDinX(resized, resized.x, resized.y);
+        settleItemPlacement(resized, state.resize.x, state.resize.y, null);
       }
       const wasDrag = !!state.drag;
       const wasResize = !!state.resize;
       state.drag = null;
       state.resize = null;
       state.wireDrag = null;
+      syncDragLock();
       if (wasDrag) discardHistoryIfUnchanged(dragHistKey);
       if (wasResize) discardHistoryIfUnchanged(resizeHistKey);
       if (wasWireDrag) discardHistoryIfUnchanged(wireHistKey);
@@ -5020,6 +6209,11 @@
       state.selectedWire = null;
       render();
     });
+    board.addEventListener("contextmenu", (ev) => {
+      if (ev.target.closest(".dev, svg.wires, .term, .whandle, .wdel, .rhandle")) {
+        ev.preventDefault();
+      }
+    });
 
     function setMode(mode) {
       state.mode = mode;
@@ -5060,6 +6254,21 @@
       state.ladderOpen = !showing;
       syncLadderLayout();
     };
+    document.getElementById("btnVip").onclick = () => {
+      if (isVipUnlocked()) {
+        if (confirm("VIP déjà actif. Désactiver la version VIP ?")) {
+          setVipUnlocked(false);
+          renderPaletteItems();
+        }
+        return;
+      }
+      openVipGate();
+    };
+    document.getElementById("vipValidate").onclick = () => validateVipCode();
+    document.getElementById("vipClose").onclick = () => closeVipGate();
+    document.getElementById("vipCode").addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter") validateVipCode();
+    });
     document.getElementById("btnEts").onclick = () => {
       state.etsOpen = !state.etsOpen;
       syncEtsLayout();
@@ -5138,7 +6347,7 @@
     ensureLadder();
     syncLadderLayout();
     syncEtsLayout();
-    if (!tryRestoreAutosave()) render();
+    render(); /* canevas vide — pas de restore autosave au boot */
   </script>
 </body>
 </html>

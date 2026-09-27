@@ -39,14 +39,33 @@
     flutter-view, flt-glass-pane, flt-scene-host {
       touch-action: none;
     }
+    /* PanelWire embed #/meter : fond transparent (le canvas Flutter reste opaque). */
+    html.embed-meter, html.embed-meter body {
+      background: transparent !important;
+      overflow: hidden !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
   </style>
 </head>
 <body>
   <script>
+  (function () {
+    function syncEmbedMeterClass() {
+      var embed = /(?:^|[?&])embed=1(?:&|$)/.test(location.search || "");
+      var meter = (location.hash || "").toLowerCase().indexOf("/meter") !== -1;
+      document.documentElement.classList.toggle("embed-meter", embed && meter);
+      if (embed && meter) {
+        try { document.body.style.background = "transparent"; } catch (_) {}
+      }
+    }
+    syncEmbedMeterClass();
+    window.addEventListener("hashchange", syncEmbedMeterClass);
+  })();
   // Évite un vieux service worker seulement après une MAJ du trainer.
   // Le vider à CHAQUE visite forçait ~9 Mo de re-téléchargement (main.dart.js + CanvasKit).
   (function () {
-    var BUILD = "2026-09-17-meter-earth1";
+    var BUILD = "2026-09-28-meter-embed-device";
     var KEY = "oibt-trainer-sw-bust";
     var needBust = false;
     try { needBust = localStorage.getItem(KEY) !== BUILD; } catch (_) { needBust = true; }

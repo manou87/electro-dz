@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html class="embed-meter">
+<head>
+  <base href="/oibt-trainer/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Fluke 1664 — embed PanelWire">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>SwissDZ · Fluke 1664 (embed)</title>
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <style>
+    html.embed-meter, html.embed-meter body {
+      background: transparent !important;
+      overflow: hidden !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    flutter-view, flt-glass-pane, flt-scene-host {
+      touch-action: none;
+    }
+    /* Réduit la letterbox noire autour du canvas (recadrage panel côté parent). */
+    html.embed-meter flt-scene-host canvas {
+      background-color: transparent !important;
+    }
+  </style>
+</head>
+<body>
+  <script>
+  (function () {
+    var u = new URL(window.location.href);
+    if (!/(?:^|[?&])embed=1(?:&|$)/.test(u.search)) {
+      u.searchParams.set("embed", "1");
+    }
+    if ((u.hash || "").toLowerCase().indexOf("/meter") === -1) {
+      u.hash = "#/meter";
+    }
+    var target = u.pathname + "?" + u.searchParams.toString() + u.hash;
+    if (target !== window.location.pathname + window.location.search + window.location.hash) {
+      history.replaceState(null, "", target);
+    }
+    try { document.body.style.background = "transparent"; } catch (_) {}
+  })();
+  </script>
+  <script src="flutter_bootstrap.js?v=meter-embed-2" async></script>
+</body>
+</html>
