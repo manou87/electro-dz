@@ -33,13 +33,14 @@
       font-family:"Segoe UI", system-ui, sans-serif; overflow:hidden;
     }
     body { display:flex; flex-direction:column; }
-    header { flex:0 0 auto; background:#fff; border-bottom:1px solid var(--line); padding:6px 10px 8px; }
-    .header-top { display:flex; align-items:flex-end; gap:8px; min-width:0; }
-    .bar { display:flex; align-items:flex-end; gap:16px; flex-wrap:wrap; flex:1 1 auto; min-width:0; }
+    header { flex:0 0 auto; background:#fff; border-bottom:1px solid var(--line); padding:4px 10px; }
+    .header-top { display:flex; align-items:center; gap:8px; min-width:0; }
+    .bar { display:flex; align-items:center; gap:12px; flex-wrap:wrap; flex:1 1 auto; min-width:0; }
     /* Desktop : les wrappers s'effacent pour garder une seule ligne flex */
     .bar-row-1, .bar-row-2 { display:contents; }
-    .group { display:flex; flex-direction:column; align-items:center; gap:3px; flex:0 0 auto; }
-    .group b { font-size:9px; letter-spacing:.08em; color:#9ca3af; font-weight:700; }
+    .group { display:flex; flex-direction:column; align-items:center; gap:0; flex:0 0 auto; }
+    /* Labels PROJET / MODE / STYLE FIL retirés — titres via aria/title sur les boutons */
+    .group > b { display:none; }
     .row { display:flex; gap:4px; align-items:center; flex-wrap:nowrap; }
     .row button { flex:0 0 auto; white-space:nowrap; }
     .btn-lib-toggle { display:none; }
@@ -55,22 +56,29 @@
     button:disabled { opacity:.38; cursor:default; }
     button.btn-ico {
       display:inline-flex; align-items:center; justify-content:center;
-      width:36px; min-width:36px; height:34px; padding:6px;
+      width:36px; min-width:36px; height:36px; padding:6px;
     }
     button.btn-ico svg {
       width:18px; height:18px; display:block; flex:0 0 auto; pointer-events:none;
     }
     .play-fab .fab-ico { width:18px; height:18px; flex:0 0 auto; }
     .play-fab .fab-label { margin-left:8px; }
-    .swatches { display:flex; gap:4px; }
+    .swatches { display:flex; gap:5px; align-items:center; }
     .swatch {
-      width:16px; height:16px; border-radius:50%; border:1px solid #d1d5db; padding:0;
+      width:22px; height:22px; border-radius:50%; border:1px solid #d1d5db; padding:0;
       touch-action:manipulation; -webkit-tap-highlight-color:transparent;
     }
     .swatch.on { outline:2px solid #111; outline-offset:1px; }
     select {
-      border:1px solid #d1d5db; border-radius:6px; padding:4px 6px; font-size:12px; background:#fff;
+      border:1px solid #d1d5db; border-radius:8px; height:36px; padding:0 8px; font-size:12px;
+      background:#fff; line-height:1; box-sizing:border-box;
       touch-action:manipulation; -webkit-tap-highlight-color:transparent;
+    }
+    .bar-row-2 .row { align-items:center; }
+    .group-mode .btn-ico,
+    .group-style select,
+    .group-style .swatch {
+      /* hauteur unifiée ~36px sur la ligne MODE / STYLE */
     }
     main {
       flex:1 1 auto; min-height:0; display:flex; flex-direction:row;
@@ -120,6 +128,40 @@
       overflow:hidden;
     }
     .workspace #board { flex:1 1 auto; min-width:0; min-height:0; height:100%; }
+    .edz-props {
+      flex:0 0 280px; width:280px; max-width:42vw;
+      display:none; flex-direction:column; min-height:0;
+      background:#fff; border-left:1px solid var(--line); z-index:28;
+    }
+    .edz-props.open { display:flex; }
+    .edz-props-head {
+      flex:0 0 auto; padding:10px 12px 8px; border-bottom:1px solid #eef2f7;
+      display:flex; align-items:flex-start; justify-content:space-between; gap:8px;
+    }
+    .edz-props-head h2 { margin:0; font-size:11px; letter-spacing:.06em; color:#6b7280; }
+    .edz-props-head .edz-title { font-size:13px; font-weight:800; color:#0f172a; margin-top:4px; line-height:1.25; }
+    .edz-props-head button {
+      border:0; background:#f1f5f9; border-radius:8px; width:28px; height:28px;
+      cursor:pointer; font-size:16px; line-height:1; color:#64748b;
+    }
+    .edz-props-body {
+      flex:1 1 auto; min-height:0; overflow:auto; padding:10px 12px 16px;
+      font-size:12px; color:#334155; -webkit-overflow-scrolling:touch;
+    }
+    .edz-props-body .sec { margin:0 0 12px; }
+    .edz-props-body .sec h3 {
+      margin:0 0 6px; font-size:10px; letter-spacing:.07em; text-transform:uppercase;
+      color:#94a3b8; font-weight:800;
+    }
+    .edz-props-body .kv { display:flex; gap:8px; margin:3px 0; line-height:1.35; }
+    .edz-props-body .k { flex:0 0 96px; color:#64748b; }
+    .edz-props-body .v { flex:1 1 auto; word-break:break-word; font-weight:600; color:#0f172a; }
+    .edz-props-body .empty { color:#94a3b8; font-style:italic; }
+    .edz-props-body ul { margin:4px 0 0; padding-left:16px; }
+    .edz-props-body li { margin:2px 0; }
+    @media (max-width: 900px) {
+      .edz-props { position:absolute; right:0; top:0; bottom:0; max-width:min(320px,92vw); box-shadow:-8px 0 24px rgba(15,23,42,.12); }
+    }
     .play-fab { display:none; }
     @media (max-width: 1100px) {
       .lib-side { flex-basis:188px; width:188px; }
@@ -128,7 +170,7 @@
       .item > span:not(.thumb) { font-size:8px; max-width:100%; }
     }
     @media (max-width: 900px) {
-      header { padding:4px 6px 6px; }
+      header { padding:4px 6px; }
       /* Ladder / ETS : overlay — ne mange pas la hauteur du board */
       .ladder-panel, .ets-panel {
         position:absolute; top:0; right:0; bottom:0;
@@ -158,41 +200,51 @@
       .play-fab.on {
         background:#b91c1c;
       }
-      button.btn-ico {
-        width:44px; min-width:44px; height:44px; padding:10px;
+      /* PROJET : cibles tactiles un peu plus grandes */
+      .group-projet button.btn-ico {
+        width:40px; min-width:40px; height:40px; padding:8px;
       }
-      button.btn-ico svg { width:22px; height:22px; }
+      .group-projet button.btn-ico svg { width:20px; height:20px; }
+      /* MODE / STYLE : hauteur unifiée ~38px (évite main >> select >> pastilles) */
+      .bar-row-2 button.btn-ico,
+      .group-mode button.btn-ico {
+        width:38px; min-width:38px; height:38px; padding:7px;
+      }
+      .bar-row-2 button.btn-ico svg,
+      .group-mode button.btn-ico svg { width:20px; height:20px; }
+      .group-style select { height:38px; }
+      .group-style .swatch { width:24px; height:24px; }
     }
     /* Téléphone / tablette : 2 lignes (PROJET / MODE+STYLE) + biblio tiroir */
     @media (max-width: 800px) {
-      header { padding:4px 6px; }
-      .header-top { align-items:flex-start; gap:6px; }
+      header { padding:3px 6px; }
+      .header-top { align-items:center; gap:6px; }
       .bar {
         flex-direction:column;
         align-items:stretch;
         flex-wrap:nowrap;
         overflow:visible;
-        gap:6px;
+        gap:3px;
         padding-bottom:0;
         touch-action:manipulation;
       }
       .bar-row-1 {
         display:flex;
-        align-items:flex-end;
+        align-items:center;
         min-width:0;
         overflow-x:auto;
         overflow-y:hidden;
         -webkit-overflow-scrolling:touch;
         touch-action:pan-x;
-        gap:12px;
-        padding-bottom:2px;
+        gap:10px;
+        padding-bottom:0;
         scrollbar-width:thin;
       }
       .bar-row-2 {
         display:flex;
-        align-items:flex-end;
+        align-items:center;
         flex-wrap:wrap;
-        gap:10px 12px;
+        gap:6px 10px;
         min-width:0;
       }
       .group-projet {
@@ -204,11 +256,11 @@
         padding:7px 8px; font-size:11px;
       }
       .group-projet .row button.btn-ico {
-        padding:10px; font-size:inherit;
+        padding:8px; font-size:inherit;
       }
       .group { flex-shrink:0; }
-      .group-style { align-items:flex-start; }
-      .group-style .row { flex-wrap:wrap; }
+      .group-style { align-items:center; }
+      .group-style .row { flex-wrap:wrap; align-items:center; }
       .row { white-space:nowrap; }
       .group-style .row { white-space:normal; }
       .btn-lib-toggle {
@@ -1410,6 +1462,15 @@
       .vip-card { padding:18px 14px 14px; border-radius:14px; }
       .vip-actions { flex-direction:column; }
     }
+
+    /* Language toggle */
+    #btnLang {
+      font-size:11px; font-weight:800; letter-spacing:.04em;
+      min-width:64px; padding:7px 8px;
+      border:1px solid #cbd5e1; background:#f8fafc; color:#334155;
+    }
+    #btnLang:hover { background:#eef2ff; border-color:#94a3b8; }
+    #btnLang[data-lang="en"] { background:#dbeafe; color:#1d4ed8; border-color:#93c5fd; }
   </style>
 </head>
 <body>
@@ -1426,128 +1487,136 @@
         <div class="bar-row-1">
           <div class="group group-projet">
             <div class="row">
-              <button id="btnNew" type="button">Nouveau</button>
-              <button id="btnSave" type="button" title="Télécharger le schéma en JSON">Enregistrer</button>
-              <button id="btnOpen" type="button" title="Ouvrir un schéma JSON">Ouvrir</button>
+              <button id="btnNew" type="button" data-i18n="btnNew">Nouveau</button>
+              <button id="btnSave" type="button" data-i18n="btnSave" data-i18n-title="btnSaveTitle" title="Télécharger le schéma en JSON">Enregistrer</button>
+              <button id="btnOpen" type="button" data-i18n="btnOpen" data-i18n-title="btnOpenTitle" title="Ouvrir un schéma JSON">Ouvrir</button>
               <input id="fileOpen" type="file" accept="application/json,.json" hidden />
-              <button id="btnUndo" class="btn-ico" type="button" title="Annuler (Ctrl+Z / Cmd+Z)" aria-label="Annuler" disabled>
+              <button id="btnUndo" class="btn-ico" type="button" data-i18n-title="btnUndoTitle" data-i18n-aria="btnUndoAria" title="Annuler (Ctrl+Z / Cmd+Z)" aria-label="Annuler" disabled>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-4"/></svg>
               </button>
-              <button id="btnRedo" class="btn-ico" type="button" title="Rétablir (Ctrl+Shift+Z / Cmd+Shift+Z)" aria-label="Rétablir" disabled>
+              <button id="btnRedo" class="btn-ico" type="button" data-i18n-title="btnRedoTitle" data-i18n-aria="btnRedoAria" title="Rétablir (Ctrl+Shift+Z / Cmd+Shift+Z)" aria-label="Rétablir" disabled>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 14 5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h4"/></svg>
               </button>
-              <button id="btnDelete" class="btn-ico" type="button" title="Supprimer la sélection (Suppr.)" aria-label="Supprimer">
+              <button id="btnDelete" class="btn-ico" type="button" data-i18n-title="btnDeleteTitle" data-i18n-aria="btnDeleteAria" title="Supprimer la sélection (Suppr.)" aria-label="Supprimer">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4.8A1.8 1.8 0 0 1 9.8 3h4.4A1.8 1.8 0 0 1 16 4.8V6"/><path d="M19 6l-.9 13.2A2 2 0 0 1 16.1 21H7.9a2 2 0 0 1-2-1.8L5 6"/><path d="M10 11v6M14 11v6"/></svg>
               </button>
-              <button id="btnClearWires" type="button" title="Effacer tous les fils">Eff. fils</button>
-              <button id="btnPlay" class="btn-ico" type="button" title="Vérifier le courant" aria-label="Vérifier le courant">
+              <button id="btnClearWires" type="button" data-i18n="btnClearWires" data-i18n-title="btnClearWiresTitle" title="Effacer tous les fils">Eff. fils</button>
+              <button id="btnPlay" class="btn-ico" type="button" data-i18n-title="btnPlayTitle" data-i18n-aria="btnPlayAria" title="Vérifier le courant" aria-label="Vérifier le courant">
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19.2 12 8 5.2z"/></svg>
               </button>
-              <button id="btnLadder" type="button" title="Afficher / masquer l'éditeur Ladder (auto si PLC posé)">Ladder</button>
-              <button id="btnEts" type="button" title="ETS formation — adresses physiques, GA, objets (pas l'ETS officiel)">ETS formation</button>
-              <button id="btnVip" type="button" title="Version VIP — débloquer toute la bibliothèque">VIP</button>
+              <button id="btnLadder" type="button" data-i18n="btnLadder" data-i18n-title="btnLadderTitle" title="Afficher / masquer l'éditeur Ladder (auto si PLC posé)">Ladder</button>
+              <button id="btnEts" type="button" data-i18n="btnEts" data-i18n-title="btnEtsTitle" title="ETS formation — adresses physiques, GA, objets (pas l'ETS officiel)">ETS formation</button>
+              <button id="btnVip" type="button" data-i18n="btnVip" data-i18n-title="btnVipTitle" title="Version VIP — débloquer toute la bibliothèque">VIP</button>
+              <button id="btnLang" type="button" data-lang="fr" title="Langue / Language" aria-label="Changer de langue" aria-pressed="false">FR | EN</button>
             </div>
-            <b>PROJET</b>
           </div>
         </div>
         <div class="bar-row-2">
           <div class="group group-mode">
             <div class="row">
-              <button id="modeSelect" class="btn-ico active" type="button" title="Sélection / déplacer (main)" aria-label="Sélection">
+              <button id="modeSelect" class="btn-ico active" type="button" data-i18n-title="modeSelectTitle" data-i18n-aria="modeSelectAria" title="Sélection / déplacer (main)" aria-label="Sélection">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 13.2V6.6a1.6 1.6 0 0 1 3.2 0V12"/><path d="M11.2 11.6V5.4a1.6 1.6 0 0 1 3.2 0V12"/><path d="M14.4 12V7.2a1.6 1.6 0 0 1 3.2 0v6.4"/><path d="M17.6 12.4a1.6 1.6 0 0 1 3.2 0v3a6.2 6.2 0 0 1-6.2 6.2H13c-2.3 0-3.9-.9-5.1-2.4L5.4 16a1.7 1.7 0 0 1 2.6-2.2l1.6 1.5"/><path d="M5.2 15.2V11a1.6 1.6 0 0 1 3.2 0v2"/></svg>
               </button>
-              <button id="modeWire" class="btn-ico" type="button" title="Mode fil / câblage" aria-label="Fil">
+              <button id="modeWire" class="btn-ico" type="button" data-i18n-title="modeWireTitle" data-i18n-aria="modeWireAria" title="Mode fil / câblage" aria-label="Fil">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="12" r="2.6"/><circle cx="18.5" cy="12" r="2.6"/><path d="M8.1 12h7.8"/></svg>
               </button>
             </div>
-            <b>MODE</b>
           </div>
           <div class="group group-style">
             <div class="row">
-              <select id="section">
+              <select id="section" aria-label="Section du fil" title="Section du fil">
                 <option value="1.5">1,5 mm²</option>
                 <option value="2.5">2,5 mm²</option>
                 <option value="6" selected>6 mm²</option>
               </select>
-              <div class="swatches" id="colors"></div>
+              <div class="swatches" id="colors" role="group" aria-label="Couleur du fil"></div>
             </div>
-            <b>STYLE FIL</b>
           </div>
         </div>
       </div>
-      <button id="btnLibToggle" class="btn-lib-toggle" type="button" aria-expanded="false" aria-controls="libTop">Composants</button>
+      <button id="btnLibToggle" class="btn-lib-toggle" type="button" aria-expanded="false" aria-controls="libTop" data-i18n="btnLibToggle">Composants</button>
     </div>
   </header>
   <main>
     <div class="lib-backdrop" id="libBackdrop"></div>
-    <aside class="lib-side" id="libTop" aria-label="Bibliothèque">
+    <aside class="lib-side" id="libTop" data-i18n-aria="libAria" aria-label="Bibliothèque">
       <div class="lib-side-head">
-        <strong>COMPOSANTS</strong>
+        <strong data-i18n="libTitle">COMPOSANTS</strong>
         <div class="lib-tabs" id="libTabs" role="tablist"></div>
       </div>
       <div class="lib-items" id="palette" role="tabpanel"></div>
     </aside>
     <div id="workspace" class="workspace">
       <div id="board"></div>
-      <div class="board-zoom" role="group" aria-label="Zoom du schéma">
-        <button id="btnZoomIn" class="btn-ico" type="button" title="Zoom avant" aria-label="Zoom avant">
+      <div class="board-zoom" role="group" data-i18n-aria="zoomGroupAria" aria-label="Zoom du schéma">
+        <button id="btnZoomIn" class="btn-ico" type="button" data-i18n-title="zoomInTitle" data-i18n-aria="zoomInAria" title="Zoom avant" aria-label="Zoom avant">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
         </button>
-        <button id="btnZoomOut" class="btn-ico" type="button" title="Zoom arrière" aria-label="Zoom arrière">
+        <button id="btnZoomOut" class="btn-ico" type="button" data-i18n-title="zoomOutTitle" data-i18n-aria="zoomOutAria" title="Zoom arrière" aria-label="Zoom arrière">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/></svg>
         </button>
       </div>
-      <aside id="ladderPanel" class="ladder-panel" aria-label="Éditeur Ladder">
+      <aside id="ladderPanel" class="ladder-panel" data-i18n-aria="ladderAria" aria-label="Éditeur Ladder">
         <div class="ladder-head">
-          <h2>LADDER</h2>
-          <div id="ladderStatus" class="ladder-status off">Simulation arrêtée</div>
+          <h2 data-i18n="ladderTitle">LADDER</h2>
+          <div id="ladderStatus" class="ladder-status off" data-i18n="ladderSimOff">Simulation arrêtée</div>
           <div class="ladder-toolbar">
-            <button type="button" id="btnAddRung">+ Segment</button>
-            <button type="button" id="btnResetLadder" title="Recharger le programme pédagogique">Reset prog.</button>
-            <span class="hint">Clic contact = NO/NC · double-clic = adresse · clic bobine = Q</span>
+            <button type="button" id="btnAddRung" data-i18n="btnAddRung">+ Segment</button>
+            <button type="button" id="btnResetLadder" data-i18n="btnResetLadder" data-i18n-title="btnResetLadderTitle" title="Recharger le programme pédagogique">Reset prog.</button>
+            <span class="hint" data-i18n="ladderHint">Clic contact = NO/NC · double-clic = adresse · clic bobine = Q</span>
           </div>
         </div>
         <div id="ladderBody" class="ladder-body"></div>
       </aside>
-      <aside id="etsPanel" class="ets-panel" aria-label="ETS formation">
+      <aside id="etsPanel" class="ets-panel" data-i18n-aria="etsAria" aria-label="ETS formation">
         <div class="ets-head">
-          <h2>ETS FORMATION</h2>
-          <p class="ets-sub">Outil pédagogique SwissDz — même logique que l’ETS (adresses physiques, objets de communication, GA, liens). Ce n’est <b>pas</b> le logiciel ETS officiel KNX Association.</p>
-          <div id="etsTelegram" class="ets-telegram off">Bus : aucun télégramme</div>
+          <h2 data-i18n="etsTitle">ETS FORMATION</h2>
+          <p class="ets-sub" data-i18n="etsSub" data-i18n-html="1">Outil pédagogique SwissDz — même logique que l’ETS (adresses physiques, objets de communication, GA, liens). Ce n’est <b>pas</b> le logiciel ETS officiel KNX Association.</p>
+          <div id="etsTelegram" class="ets-telegram off" data-i18n="etsBusIdle">Bus : aucun télégramme</div>
           <div class="ets-toolbar">
-            <button type="button" id="btnEtsReset" title="Réinitialiser les adresses par défaut">Reset adresses</button>
-            <button type="button" id="btnEtsClose" title="Fermer">Fermer</button>
+            <button type="button" id="btnEtsReset" data-i18n="btnEtsReset" data-i18n-title="btnEtsResetTitle" title="Réinitialiser les adresses par défaut">Reset adresses</button>
+            <button type="button" id="btnEtsClose" data-i18n="btnEtsClose" data-i18n-title="btnEtsCloseTitle" title="Fermer">Fermer</button>
           </div>
         </div>
         <div id="etsBody" class="ets-body"></div>
+      </aside>
+      <aside id="edzProps" class="edz-props" data-i18n-aria="edzPropsAria" aria-label="Fiche composant ElectroDZ" hidden>
+        <div class="edz-props-head">
+          <div>
+            <h2 data-i18n="edzPropsTitle">FICHE COMPOSANT</h2>
+            <div class="edz-title" id="edzPropsTitle">—</div>
+          </div>
+          <button type="button" id="edzPropsClose" data-i18n-title="edzPropsCloseTitle" data-i18n-aria="edzPropsCloseAria" title="Fermer" aria-label="Fermer">×</button>
+        </div>
+        <div class="edz-props-body" id="edzPropsBody"></div>
       </aside>
     </div>
   </main>
   <div id="sizeModal" class="size-modal" aria-hidden="true">
     <div class="size-card" role="dialog" aria-labelledby="sizeModalTitle">
-      <h3 id="sizeModalTitle">Dimensions</h3>
+      <h3 id="sizeModalTitle" data-i18n="sizeTitle">Dimensions</h3>
       <p class="sub" id="sizeModalSub"></p>
       <div class="size-fields">
-        <label>Largeur (px)
+        <label data-i18n-label="sizeW">Largeur (px)
           <input id="sizeW" type="number" min="30" step="1" />
         </label>
-        <label>Hauteur (px)
+        <label data-i18n-label="sizeH">Hauteur (px)
           <input id="sizeH" type="number" min="30" step="1" />
         </label>
-        <label id="sizeIrWrap" hidden>Réglage Ir (A)
+        <label id="sizeIrWrap" hidden data-i18n-label="sizeIr">Réglage Ir (A)
           <input id="sizeIr" type="number" min="0.63" max="40" step="0.01" />
         </label>
       </div>
       <div class="size-actions">
-        <button type="button" id="sizeApply" class="primary">Appliquer</button>
-        <button type="button" id="sizeApplyAll" class="ghost" title="Copier ces dimensions sur tous les composants du même type">Appliquer aux autres</button>
-        <button type="button" id="sizeCancel" class="ghost">Annuler</button>
+        <button type="button" id="sizeApply" class="primary" data-i18n="sizeApply">Appliquer</button>
+        <button type="button" id="sizeApplyAll" class="ghost" data-i18n="sizeApplyAll" data-i18n-title="sizeApplyAllTitle" title="Copier ces dimensions sur tous les composants du même type">Appliquer aux autres</button>
+        <button type="button" id="sizeCancel" class="ghost" data-i18n="sizeCancel">Annuler</button>
       </div>
     </div>
   </div>
-  <button type="button" id="btnPlayFab" class="play-fab" title="Vérifier le courant" aria-label="Vérifier le courant">
+  <button type="button" id="btnPlayFab" class="play-fab" data-i18n-title="btnPlayTitle" data-i18n-aria="btnPlayAria" title="Vérifier le courant" aria-label="Vérifier le courant">
     <svg class="fab-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19.2 12 8 5.2z"/></svg>
-    <span class="fab-label">Vérifier</span>
+    <span class="fab-label" data-i18n="btnPlayShort">Vérifier</span>
   </button>
   <div id="vipGate" class="vip-gate" aria-hidden="true" role="dialog" aria-labelledby="vipTitle">
     <div class="vip-card">
@@ -1555,30 +1624,31 @@
         <div class="mark" aria-hidden="true"><img src="brand/logo-panelwire-icon.png" alt="" width="34" height="34" /></div>
         <div class="name">PanelWire <span>by SwissDZ</span></div>
       </div>
-      <h1 id="vipTitle">Version VIP</h1>
-      <p class="lead">La version libre couvre les bases. VIP débloque toute la bibliothèque professionnelle pour schémas complets.</p>
+      <h1 id="vipTitle" data-i18n="vipTitle">Version VIP</h1>
+      <p class="lead" data-i18n="vipLead">La version libre couvre les bases. VIP débloque toute la bibliothèque professionnelle pour schémas complets.</p>
       <ul class="vip-perks">
-        <li><span class="dot"></span><div><b>Protections &amp; différentiels</b>Disj. 3P/4P, IDR, SPD, sectionneurs, fusibles</div></li>
-        <li><span class="dot"></span><div><b>Domotique KNX &amp; commande</b>Actionneurs, poussoirs, présence, DALI, ETS formation</div></li>
-        <li><span class="dot"></span><div><b>Moteurs &amp; industrie</b>Contacteurs tri, thermique, PLC LOGO!, variateurs</div></li>
+        <li><span class="dot"></span><div><b data-i18n="vipPerk1Title">Protections &amp; différentiels</b><span data-i18n="vipPerk1Body">Disj. 3P/4P, IDR, SPD, sectionneurs, fusibles</span></div></li>
+        <li><span class="dot"></span><div><b data-i18n="vipPerk2Title">Domotique KNX &amp; commande</b><span data-i18n="vipPerk2Body">Actionneurs, poussoirs, présence, DALI, ETS formation</span></div></li>
+        <li><span class="dot"></span><div><b data-i18n="vipPerk3Title">Moteurs &amp; industrie</b><span data-i18n="vipPerk3Body">Contacteurs tri, thermique, PLC LOGO!, variateurs</span></div></li>
       </ul>
       <div class="vip-price">
-        <div class="tag">TARIF</div>
-        <div class="amt">Bientôt via achat in-app</div>
-        <div class="hint">Pas de paiement réel pour l’instant — simulation par code d’accès.</div>
+        <div class="tag" data-i18n="vipTarif">TARIF</div>
+        <div class="amt" data-i18n="vipPrice">Bientôt via achat in-app</div>
+        <div class="hint" data-i18n="vipPriceHint">Pas de paiement réel pour l’instant — simulation par code d’accès.</div>
       </div>
-      <p id="vipErr" class="vip-err" role="alert">Code incorrect. Réessaie.</p>
+      <p id="vipErr" class="vip-err" role="alert" data-i18n="vipErr">Code incorrect. Réessaie.</p>
       <div class="vip-form">
-        <label for="vipCode">Code d’accès</label>
-        <input id="vipCode" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Saisir le code VIP" />
+        <label for="vipCode" data-i18n="vipCodeLabel">Code d’accès</label>
+        <input id="vipCode" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" data-i18n-placeholder="vipCodePlaceholder" placeholder="Saisir le code VIP" />
       </div>
       <div class="vip-actions">
-        <button type="button" class="primary" id="vipValidate">Valider</button>
-        <button type="button" class="ghost" id="vipClose">Continuer en version libre</button>
+        <button type="button" class="primary" id="vipValidate" data-i18n="vipValidate">Valider</button>
+        <button type="button" class="ghost" id="vipClose" data-i18n="vipClose">Continuer en version libre</button>
       </div>
-      <p class="vip-demo">Démo test : <code>SWISSDZ-VIP</code></p>
+      <p class="vip-demo"><span data-i18n="vipDemo">Démo test :</span> <code>SWISSDZ-VIP</code></p>
     </div>
   </div>
+  <script src="i18n/panelwire-i18n.js"></script>
   <script>
     /* Assets pré-cadrés (photos studio trop larges → bandes). */
     const COLORS = [
@@ -1599,6 +1669,47 @@
     const COLOR_PE = "#c4d600";
     const COLOR_PE_STRIPE = "#008c45";
     const COLOR_KNX = "#009640"; /* gaine / câble bus KNX (vert) */
+
+
+    /* ========== i18n helpers ========== */
+    const I18N = (typeof window !== "undefined" && window.PanelWireI18n) ? window.PanelWireI18n : null;
+    function t(key, vars) { return I18N ? I18N.t(key, vars) : key; }
+    function libDisplayName(id, def) {
+      if (I18N) return I18N.componentName(id, def || LIB[id]);
+      return (def && def.name) || id;
+    }
+    function catDisplayName(cat) { return I18N ? I18N.catLabel(cat) : cat; }
+    function applySizeLabels() {
+      document.querySelectorAll("[data-i18n-label]").forEach((el) => {
+        const key = el.getAttribute("data-i18n-label");
+        if (!key) return;
+        const input = el.querySelector("input");
+        const txt = t(key);
+        if (!input) { el.textContent = txt; return; }
+        el.innerHTML = "";
+        el.appendChild(document.createTextNode(txt + " "));
+        el.appendChild(input);
+      });
+    }
+    function refreshLangUi() {
+      if (I18N) I18N.applyStaticDom();
+      applySizeLabels();
+      try { syncVipUi(); } catch (_) {}
+      try { syncSimButtons(); } catch (_) {}
+      try { syncColorSwatchTitles(); } catch (_) {}
+      try { refreshLibTabsLang(); } catch (_) {}
+      try { renderPaletteItems(); } catch (_) {}
+      try { renderLadderPanel(); } catch (_) {}
+      try { if (state.etsOpen) renderEtsPanel(); } catch (_) {}
+      try { render(); } catch (_) {}
+    }
+    function syncColorSwatchTitles() {
+      document.querySelectorAll("#colors .swatch").forEach((b) => {
+        const entry = COLORS.find((c) => c.c === b.dataset.c);
+        if (!entry) return;
+        b.title = I18N ? I18N.colorLabel(entry.name) : entry.name;
+      });
+    }
 
     /* ========== VIP (code d’accès, pas de paiement réel) ========== */
     const VIP_STORAGE_KEY = "swissdz-panel-vip";
@@ -1643,8 +1754,8 @@
       if (btn) {
         const on = isVipUnlocked();
         btn.classList.toggle("on", on);
-        btn.textContent = on ? "VIP ✓" : "VIP";
-        btn.title = on ? "Version VIP active — clic pour gérer" : "Débloquer la version VIP";
+        btn.textContent = on ? t("btnVipOn") : t("btnVip");
+        btn.title = on ? t("btnVipTitleOn") : t("btnVipTitle");
       }
     }
     function openVipGate() {
@@ -3084,13 +3195,13 @@
     function updateEtsTelegram() {
       const tel = document.getElementById("etsTelegram");
       if (!tel) return;
-      const t = state.knxLastTelegram;
-      if (t && state.sim) {
+      const tg = state.knxLastTelegram;
+      if (tg && state.sim) {
         tel.className = "ets-telegram";
-        tel.textContent = "Télégramme : " + t.ga + " = " + t.value + (t.src ? "  ← " + t.src : "");
+        tel.textContent = t("etsTelegram", { ga: tg.ga, value: tg.value }) + (tg.src ? "  ← " + tg.src : "");
       } else {
         tel.className = "ets-telegram off";
-        tel.textContent = state.sim ? "Bus : en attente de télégramme" : "Simulation arrêtée — lance « Vérifier »";
+        tel.textContent = state.sim ? t("etsBusWait") : t("ladderSimHint");
       }
     }
     function syncEtsLayout() {
@@ -3166,13 +3277,13 @@
       if (!body) return;
       state.items.forEach((it) => { if (isKnxDevice(LIB[it.type])) ensureKnxProgram(it); });
       if (tel) {
-        const t = state.knxLastTelegram;
-        if (t && state.sim) {
+        const tg = state.knxLastTelegram;
+        if (tg && state.sim) {
           tel.className = "ets-telegram";
-          tel.textContent = "Télégramme : " + t.ga + " = " + t.value + (t.src ? "  ← " + t.src : "");
+          tel.textContent = t("etsTelegram", { ga: tg.ga, value: tg.value }) + (tg.src ? "  ← " + tg.src : "");
         } else {
           tel.className = "ets-telegram off";
-          tel.textContent = state.sim ? "Bus : en attente de télégramme" : "Simulation arrêtée — lance « Vérifier »";
+          tel.textContent = state.sim ? t("etsBusWait") : t("ladderSimHint");
         }
       }
       body.innerHTML = "";
@@ -3186,7 +3297,7 @@
       }
       const listTitle = document.createElement("div");
       listTitle.className = "ets-section-title";
-      listTitle.textContent = "Participants / objets de communication";
+      listTitle.textContent = t("etsParticipants");
       body.appendChild(listTitle);
 
       modules.forEach((item) => {
@@ -3196,7 +3307,7 @@
         card.className = "ets-card";
         const title = document.createElement("div");
         title.className = "ets-card-title";
-        title.innerHTML = "<span><b>" + item.tag + "</b> — " + def.name.replace(" SwissDz", "") +
+        title.innerHTML = "<span><b>" + item.tag + "</b> — " + libDisplayName(item.type, def).replace(" SwissDz", "").replace(" SwissDz", "") +
           ' <span class="tag">' + (item.physAddr || "") + "</span></span>" +
           '<span class="bus-pill' + (item.knxBusOk ? " on" : "") + '">' + (item.knxBusOk ? "BUS OK" : "BUS —") + "</span>";
         card.appendChild(title);
@@ -3255,7 +3366,7 @@
             const p = item.knxShutterProg[n];
             const lab = document.createElement("div");
             lab.className = "ets-section-title";
-            lab.textContent = "Canal volet " + n;
+            lab.textContent = t("etsShutterCh", { n: n });
             cb.appendChild(lab);
             const grid = document.createElement("div");
             grid.className = "ets-ga-grid";
@@ -3348,7 +3459,7 @@
         if (def.knxIp) {
           const note = document.createElement("div");
           note.style.cssText = "font-size:10px;color:#64748b;margin-top:4px;";
-          note.textContent = "Coupleur IP : participant bus (adresse physique). Pas d’objet de com. simulé.";
+          note.textContent = t("etsIpNote");
           cb.appendChild(note);
         }
         card.appendChild(cb);
@@ -3357,7 +3468,7 @@
 
       const linksTitle = document.createElement("div");
       linksTitle.className = "ets-section-title";
-      linksTitle.textContent = "Tableau des liens (GA)";
+      linksTitle.textContent = t("etsLinks");
       body.appendChild(linksTitle);
       const links = collectKnxLinks();
       const table = document.createElement("table");
@@ -3724,14 +3835,14 @@
       if (status) {
         status.className = "ladder-status" + (state.sim ? "" : " off");
         status.textContent = state.sim
-          ? "Simulation active — lecture I/Q live"
-          : "Simulation arrêtée — lance « Vérifier »";
+          ? t("ladderSimOn")
+          : t("ladderSimHint");
       }
       body.innerHTML = "";
       if (!L.rungs.length) {
         const empty = document.createElement("div");
         empty.className = "ladder-empty";
-        empty.textContent = "Aucun segment — clique « + Segment ».";
+        empty.textContent = t("ladderEmpty");
         body.appendChild(empty);
         return;
       }
@@ -3989,7 +4100,7 @@
           applyProject(data, { pushHist: true });
           writeAutosave();
         } catch (err) {
-          alert("Impossible d'ouvrir ce fichier JSON.");
+          alert(t("alertBadJson"));
         }
       };
       reader.readAsText(file);
@@ -4106,7 +4217,7 @@
       b.className = "swatch" + (entry.c === state.color ? " on" : "");
       b.style.background = entry.c;
       b.dataset.c = entry.c;
-      b.title = entry.name;
+      b.title = I18N ? I18N.colorLabel(entry.name) : entry.name;
       b.onclick = () => {
         if (state.selectedWire) {
           const w = state.wires.find((x) => x.id === state.selectedWire);
@@ -4204,16 +4315,17 @@
         const b = document.createElement("button");
         b.type = "button";
         b.className = "item" + (locked ? " vip-locked" : "");
-        b.title = locked ? (def.name + " — VIP requis") : def.name;
-        const label = def.badge ? `${def.name}` : def.name;
+        const disp = libDisplayName(id, def);
+        b.title = locked ? (disp + " — " + t("vipRequired")) : disp;
+        const label = def.badge ? `${disp}` : disp;
         if (def.image) {
           b.innerHTML = `<img alt="" src="${def.thumb || def.image}"><span>${label}</span>`;
         } else if (def.kind === "rail") {
-          b.innerHTML = `<span class="thumb rail-t">DIN</span><span>${def.name}</span>`;
+          b.innerHTML = `<span class="thumb rail-t">DIN</span><span>${disp}</span>`;
         } else if (def.kind === "pe") {
-          b.innerHTML = `<span class="thumb" style="background:repeating-linear-gradient(-45deg,#c4d600 0 4px,#008c45 4px 8px);padding:2px">${peSymbolSvg()}</span><span>${def.name}</span>`;
+          b.innerHTML = `<span class="thumb" style="background:repeating-linear-gradient(-45deg,#c4d600 0 4px,#008c45 4px 8px);padding:2px">${peSymbolSvg()}</span><span>${disp}</span>`;
         } else {
-          b.innerHTML = `<span class="thumb">${(def.badge || def.prefix || "?").slice(0, 3)}</span><span>${def.name}</span>`;
+          b.innerHTML = `<span class="thumb">${(def.badge || def.prefix || "?").slice(0, 3)}</span><span>${disp}</span>`;
         }
         b.onclick = () => {
           if (!isVipFree(id)) { openVipGate(); return; }
@@ -4232,7 +4344,8 @@
       tab.className = "lib-tab" + (cat === activeCat ? " active" : "");
       tab.setAttribute("role", "tab");
       tab.setAttribute("aria-selected", cat === activeCat ? "true" : "false");
-      tab.textContent = cat;
+      tab.dataset.cat = cat;
+      tab.textContent = catDisplayName(cat);
       tab.onclick = () => {
         activeCat = cat;
         libTabs.querySelectorAll(".lib-tab").forEach((t) => {
@@ -4244,6 +4357,11 @@
       };
       libTabs.appendChild(tab);
     });
+    function refreshLibTabsLang() {
+      libTabs.querySelectorAll(".lib-tab").forEach((tab) => {
+        if (tab.dataset.cat) tab.textContent = catDisplayName(tab.dataset.cat);
+      });
+    }
     renderPaletteItems();
     syncVipUi();
 
@@ -4325,8 +4443,8 @@
       return raw.replace("<svg ", '<svg class="' + extraClass + '" ');
     }
     function syncSimButtons() {
-      const short = state.sim ? "Arrêter" : "Vérifier";
-      const label = state.sim ? "Arrêter la simulation" : "Vérifier le courant";
+      const short = state.sim ? t("btnStopShort") : t("btnPlayShort");
+      const label = state.sim ? t("btnStopTitle") : t("btnPlayTitle");
       const btn = document.getElementById("btnPlay");
       const fab = document.getElementById("btnPlayFab");
       if (btn) {
@@ -6002,6 +6120,142 @@
       pushFlukeEmbedVoltages();
     }
 
+    /* === Fiches ElectroDZ (details-catalog.json) === */
+    let edzDetailsCatalog = null;
+    let edzDetailsLoading = null;
+    function ensureEdzDetails() {
+      if (edzDetailsCatalog) return Promise.resolve(edzDetailsCatalog);
+      if (edzDetailsLoading) return edzDetailsLoading;
+      edzDetailsLoading = fetch("assets/electrodz/details-catalog.json")
+        .then((r) => (r.ok ? r.json() : null))
+        .then((j) => {
+          edzDetailsCatalog = (j && j.details) || {};
+          return edzDetailsCatalog;
+        })
+        .catch(() => {
+          edzDetailsCatalog = {};
+          return edzDetailsCatalog;
+        });
+      return edzDetailsLoading;
+    }
+    function edzKv(k, v) {
+      if (v == null || v === "") return "";
+      return `<div class="kv"><span class="k">${k}</span><span class="v">${String(v)}</span></div>`;
+    }
+    function edzSec(title, html) {
+      if (!html) return "";
+      return `<div class="sec"><h3>${title}</h3>${html}</div>`;
+    }
+    function renderEdzPropsBody(d) {
+      if (!d) return `<p class="empty">Pas de fiche détaillée pour ce type.</p>`;
+      const sim = d.simulation || {};
+      const phys = d.physical || {};
+      const dock = d.docking || {};
+      let html = "";
+      html += edzSec(
+        "Identité",
+        edzKv("Nom", d.name) +
+          edzKv("Catégorie", d.category) +
+          edzKv("Préfixe", d.tagPrefix) +
+          edzKv("Constructeur", d.manufacturer) +
+          edzKv("Modèle", d.model) +
+          edzKv("Id", d.id)
+      );
+      html += edzSec(
+        "Documentation",
+        edzKv("Doc", d.documentation) + edzKv("Recherche", d.research) + edzKv("Fichier", d.source)
+      );
+      html += edzSec(
+        "Physique",
+        edzKv("Largeur mm", phys.widthMm) +
+          edzKv("Hauteur mm", phys.heightMm) +
+          edzKv("Profondeur mm", phys.depthMm)
+      );
+      html += edzSec(
+        "Simulation",
+        edzKv("Type", sim.type) +
+          edzKv("Règle", sim.activationRule) +
+          edzKv("État défaut", sim.defaultState) +
+          edzKv("Tension", sim.voltage) +
+          edzKv("Courant A", sim.ratedCurrentA) +
+          edzKv("Courbe", sim.protectionCurve) +
+          edzKv("Timer", sim.timerDelay != null ? `${sim.timerDelay} (${sim.timerMode || ""})` : null) +
+          edzKv("Sons", sim.soundProfile) +
+          edzKv("États", (sim.states || []).join(", ")) +
+          edzKv("Limites", sim.modelLimitations)
+      );
+      if (d.motorConfig) {
+        const m = d.motorConfig;
+        html += edzSec(
+          "Moteur",
+          edzKv("Type", m.motorType || m.type) +
+            edzKv("Bornes", m.terminals) +
+            edzKv("Connexions", Array.isArray(m.availableConnections) ? m.availableConnections.join(", ") : null) +
+            edzKv("Défaut", m.defaultConnection)
+        );
+      }
+      html += edzSec(
+        "Docking",
+        edzKv("Mountable", dock.mountable != null ? String(dock.mountable) : null) +
+          edzKv("Attach", dock.attachType) +
+          edzKv("Z", dock.zLayer)
+      );
+      const flags = [
+        d.hasVfd ? "VFD" : null,
+        d.hasPlc ? "PLC" : null,
+        d.hasButtons ? "Boutons" : null,
+        d.hasRotary ? "Potards" : null,
+        d.hasScreen ? "Écran" : null,
+      ].filter(Boolean);
+      if (flags.length) html += edzSec("Options UI", edzKv("Présent", flags.join(", ")));
+      const terms = d.terminals || [];
+      if (terms.length) {
+        const lis = terms
+          .map((t) => {
+            const bits = [t.id, t.signal, t.role, t.documentedFunction].filter(Boolean);
+            return `<li>${bits.join(" · ")}</li>`;
+          })
+          .join("");
+        html += edzSec("Bornes", `<ul>${lis}</ul>`);
+      }
+      return html || `<p class="empty">Fiche vide.</p>`;
+    }
+    function updateEdzPropsPanel() {
+      const panel = document.getElementById("edzProps");
+      const title = document.getElementById("edzPropsTitle");
+      const body = document.getElementById("edzPropsBody");
+      if (!panel || !title || !body) return;
+      const item = state.selected && state.items.find((i) => i.uid === state.selected);
+      const typeId = item && item.type;
+      const isEdz = typeId && String(typeId).startsWith("edz_");
+      if (!isEdz) {
+        panel.classList.remove("open");
+        panel.hidden = true;
+        return;
+      }
+      panel.hidden = false;
+      panel.classList.add("open");
+      const lib = LIB[typeId] || {};
+      title.textContent = lib.name || typeId;
+      body.innerHTML = `<p class="empty">Chargement de la fiche…</p>`;
+      ensureEdzDetails().then((cat) => {
+        const still = state.selected && state.items.find((i) => i.uid === state.selected);
+        if (!still || still.type !== typeId) return;
+        body.innerHTML = renderEdzPropsBody(cat[typeId]);
+      });
+    }
+    const edzCloseBtn = document.getElementById("edzPropsClose");
+    if (edzCloseBtn) {
+      edzCloseBtn.addEventListener("click", () => {
+        const panel = document.getElementById("edzProps");
+        if (panel) {
+          panel.classList.remove("open");
+          panel.hidden = true;
+        }
+      });
+    }
+    ensureEdzDetails();
+
     function render() {
       /* Migre les anciens ids calibre, puis retire les types inconnus (ex. pastilles L/N). */
       migrateItemTypes();
@@ -6396,7 +6650,7 @@
           mountFlukeMeter(el, item, def);
         } else if (def.image) {
           const img = document.createElement("img");
-          img.alt = def.name;
+          img.alt = libDisplayName(item.type, def);
           img.src = deviceImageSrc(def, item);
           el.appendChild(img);
         } else if (def.kind === "pe") {
@@ -6417,7 +6671,7 @@
             const sens = item.motorDir < 0
               ? "sens antihoraire (2 phases inversées)"
               : "sens horaire";
-            el.title = (def.name || "Moteur") + " — en marche · " + sens;
+            el.title = (libDisplayName(item.type, def) || "Moteur") + " — " + t("motorRunning") + " · " + sens;
           }
         }
         if (item.lit && !def.plc) {
@@ -6522,7 +6776,7 @@
             const ga = prog ? prog.ga : "";
             btn.title = state.sim
               ? ("T" + k.id + " · " + fn + " · GA " + ga)
-              : "Lance « Vérifier » puis clique T" + k.id;
+              : t("knxNeedSimTap", { id: k.id });
             btn.setAttribute("aria-label", "Touche KNX T" + k.id);
             btn.onpointerdown = (ev) => {
               ev.stopPropagation();
@@ -6778,7 +7032,7 @@
           b.title = def.selector
             ? "Clic = Man → 0 → Auto"
             : def.push
-            ? (state.sim ? "Maintenir = contact fermé" : "Lance « Vérifier » puis maintiens le bouton")
+            ? (state.sim ? t("knxHold") : t("knxHoldNeedSim"))
             : hasCoil(def)
               ? (def.latch ? "Impulsion A1/A2 bascule le contact — clic = reset" : "Bobine A1/A2 en sim — clic = forcer ouvert/fermé")
               : "Clic = ouvrir/fermer — double-clic composant = dimensions";
@@ -7101,6 +7355,7 @@
       syncLadderLayout();
       if (ladderShouldShow()) renderLadderPanel();
       syncEtsLayout();
+      updateEdzPropsPanel();
       writeAutosave();
     }
 
@@ -7448,7 +7703,7 @@
       const def = LIB[item.type];
       const sz = itemSize(item);
       document.getElementById("sizeModalSub").textContent =
-        (item.tag || "") + " — " + (def && def.name ? def.name : item.type);
+        (item.tag || "") + " — " + (def ? libDisplayName(item.type, def) : item.type);
       sizeW.value = String(Math.round(sz.w));
       sizeH.value = String(Math.round(sz.h));
       const isThermal = !!(def && def.thermal);
@@ -7457,9 +7712,9 @@
         sizeIr.min = String(def.irMin != null ? def.irMin : 0.63);
         sizeIr.max = String(def.irMax != null ? def.irMax : 40);
         sizeIr.value = String(thermalIrOf(item));
-        document.getElementById("sizeModalTitle").textContent = "Dimensions / Ir";
+        document.getElementById("sizeModalTitle").textContent = t("sizeTitleIr");
       } else {
-        document.getElementById("sizeModalTitle").textContent = "Dimensions";
+        document.getElementById("sizeModalTitle").textContent = t("sizeTitle");
       }
       sizeModal.classList.add("open");
       sizeModal.setAttribute("aria-hidden", "false");
@@ -7582,7 +7837,7 @@
     };
     document.getElementById("btnVip").onclick = () => {
       if (isVipUnlocked()) {
-        if (confirm("VIP déjà actif. Désactiver la version VIP ?")) {
+        if (confirm(t("confirmVipOff"))) {
           setVipUnlocked(false);
           renderPaletteItems();
         }
@@ -7644,7 +7899,7 @@
     };
     document.getElementById("btnNew").onclick = () => {
       if (!state.items.length && !state.wires.length) return;
-      if (!confirm("Effacer le schéma et recommencer ?")) return;
+      if (!confirm(t("confirmNew"))) return;
       pushHistory();
       state.items = [];
       state.wires = [];
@@ -7673,6 +7928,22 @@
     syncLadderLayout();
     syncEtsLayout();
     render(); /* canevas vide — pas de restore autosave au boot */
+
+    /* i18n boot */
+    (function initLang() {
+      if (!I18N) return;
+      I18N.setLang(I18N.getLang());
+      const btn = document.getElementById("btnLang");
+      if (btn) {
+        btn.onclick = () => {
+          const next = I18N.getLang() === "en" ? "fr" : "en";
+          I18N.setLang(next);
+          refreshLangUi();
+        };
+      }
+      refreshLangUi();
+    })();
+
   </script>
 </body>
 </html>
