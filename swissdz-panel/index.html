@@ -684,10 +684,11 @@
     }
     .thumb .pe-symbol { width:22px; height:22px; display:block; }
     /* Halo sim : défaut générique ; lampe/voyants calés via LIB.glow {nx,ny,w,h} */
+    /* z-index > .dev img (1) : sinon l’allumage passe derrière la photo (bande noire / verre opaque) */
     .glow {
       position:absolute; inset:18% 18% 30%; border-radius:50%;
       background:radial-gradient(circle, rgba(253,224,71,.95), transparent 70%);
-      pointer-events:none; mix-blend-mode:screen;
+      pointer-events:none; mix-blend-mode:screen; z-index:2;
     }
     /* Lampe / voyants allumés : luminosité ≈ 200 % */
     .glow:not(.buzz):not(.motor) {
