@@ -542,9 +542,9 @@
       -webkit-user-select:none; user-select:none;
       -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent;
     }
-    /* Fluke 1664 FC — iframe OIBT live recadrée (appareil + cordons uniquement) */
+    /* Fluke 1664 FC — module standalone (appareil + LCD + cordons) */
     .dev.fluke-meter {
-      z-index:22; overflow:hidden; background:transparent !important;
+      z-index:22; overflow:visible; background:transparent !important;
       border-radius:0; cursor:default; touch-action:none;
       box-shadow:none; outline-color:#93c5fd;
     }
@@ -567,19 +567,12 @@
     }
     .dev.fluke-meter .fluke-viewport {
       position:absolute; inset:0;
-      overflow:hidden; background:transparent; pointer-events:auto;
-      /* Corps Fluke + cordons : coupe prise, bandeau « Sous tension », molette */
-      -webkit-clip-path: inset(1% 24% 15% 3% round 38%);
-      clip-path: inset(1% 24% 15% 3% round 38%);
+      overflow:visible; background:transparent; pointer-events:auto;
     }
     .dev.fluke-meter iframe.fluke-live {
-      /* Zoom + translation : letterbox OIBT + labels côté droit / bas */
-      position:absolute; left:-3%; top:-13%;
-      width:116%; height:132%;
+      position:absolute; inset:0;
+      width:100%; height:100%;
       border:0; background:transparent; pointer-events:auto;
-      mix-blend-mode:multiply;
-      transform: scale(1.14);
-      transform-origin: 46% 40%;
     }
     #board.mode-select .dev.fluke-meter { cursor:default; }
     .dev.fluke-meter .fluke-tips {
@@ -4331,7 +4324,14 @@
       return park;
     }
     function flukeMeterSrc() {
-      return "../oibt-trainer/meter-embed.html?embed=1&lang=fr&v=panel9#/meter";
+      /* Module HTML léger (appareil + LCD) — plus d’iframe Flutter OIBT. */
+      return "./fluke-standalone/index.html?embed=1&lang=fr&v=standalone1";
+    }
+    function flukeTipWired(item, tipId) {
+      return state.wires.some((w) =>
+        (w.a.uid === item.uid && w.a.term === tipId) ||
+        (w.b.uid === item.uid && w.b.term === tipId)
+      );
     }
     const FLUKE_TIP_SNAP = 34;
     function flukeTipLabel(id) {
@@ -4380,26 +4380,39 @@
       state.preview = null;
     }
     function pushFlukeEmbedVoltages() {
-      if (!state.sim) return;
       state.items.forEach((item) => {
         if (item.type !== "fluke_1664") return;
         const frame = flukeLiveFrames.get(item.uid);
         if (!frame || !frame.contentWindow) return;
-        const lHot = !!item.hot.L;
-        const lNeu = !!item.neu.L;
-        const nHot = !!item.hot.N;
-        const nNeu = !!item.neu.N;
-        const peHot = !!item.hot.PE;
+        const tips = flukeTipsOf(item);
+        const leads = {
+          L: flukeTipWired(item, "L"),
+          N: flukeTipWired(item, "N"),
+          PE: flukeTipWired(item, "PE")
+        };
         let ln = 0;
-        if ((lHot && nNeu) || (lNeu && nHot)) ln = 230;
         let lpe = 0;
-        if (lHot && !peHot) lpe = 230;
+        if (state.sim) {
+          const lHot = !!item.hot.L;
+          const lNeu = !!item.neu.L;
+          const nHot = !!item.hot.N;
+          const nNeu = !!item.neu.N;
+          const peHot = !!item.hot.PE;
+          if ((lHot && nNeu) || (lNeu && nHot)) ln = 230;
+          if (lHot && !peHot) lpe = 230;
+        }
         try {
           frame.contentWindow.postMessage({
-            type: "panelwire/fluke-measures",
+            type: "panelwire/fluke-state",
+            leads,
+            tips: {
+              L: { nx: tips.L.nx, ny: tips.L.ny },
+              N: { nx: tips.N.nx, ny: tips.N.ny },
+              PE: { nx: tips.PE.nx, ny: tips.PE.ny }
+            },
             ln,
             lpe,
-            sim: true
+            sim: !!state.sim
           }, "*");
         } catch (_) {}
       });
@@ -4409,27 +4422,24 @@
       if (!frame) {
         frame = document.createElement("iframe");
         frame.className = "fluke-live";
-        frame.title = "Fluke 1664 FC — testeur OIBT";
+        frame.title = "Fluke 1664 FC — SwissDZ";
         frame.setAttribute("allow", "fullscreen");
         frame.setAttribute("scrolling", "no");
         frame.src = flukeMeterSrc();
         frame.addEventListener("load", () => {
-          try {
-            const doc = frame.contentDocument;
-            if (!doc) return;
-            const s = doc.createElement("style");
-            s.textContent = [
-              "html,body{margin:0!important;padding:0!important;background:transparent!important;overflow:hidden!important;}",
-              "flt-glass-pane,flt-scene-host,flutter-view{background:transparent!important;}",
-              "flt-scene-host canvas{background-color:transparent!important;}"
-            ].join("");
-            (doc.head || doc.documentElement).appendChild(s);
-          } catch (_) {}
+          pushFlukeEmbedVoltages();
         });
         flukeLiveFrames.set(uid, frame);
       }
       return frame;
     }
+    window.addEventListener("message", (ev) => {
+      const d = ev.data;
+      if (!d || typeof d !== "object") return;
+      if (d.type === "fluke/ready") {
+        pushFlukeEmbedVoltages();
+      }
+    });
     function parkFlukeFrames() {
       const park = flukeParkEl();
       flukeLiveFrames.forEach((frame) => {
@@ -4459,7 +4469,7 @@
     function mountFlukeMeter(el, item) {
       normalizeFlukeSize(item);
       el.classList.add("fluke-meter");
-      el.title = "Fluke 1664 FC — poignée = déplacer · molette / TEST / F1–F4 dans l'appareil";
+      el.title = "Fluke 1664 FC — poignée = déplacer · tips L/N/PE = brancher · F1 = paire";
       const handle = document.createElement("div");
       handle.className = "fluke-drag-handle";
       handle.title = "Glisser pour déplacer le Fluke";
