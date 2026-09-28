@@ -35,9 +35,9 @@
     pairIdx: 0,
     leads: { L: false, N: false, PE: false },
     tips: {
-      L: { nx: 0.22, ny: 1.18 },
-      N: { nx: 0.50, ny: 1.26 },
-      PE: { nx: 0.78, ny: 1.18 }
+      L: { nx: 0.22, ny: 0.92 },
+      N: { nx: 0.50, ny: 0.98 },
+      PE: { nx: 0.78, ny: 0.92 }
     },
     ln: 0,
     lpe: 0,
