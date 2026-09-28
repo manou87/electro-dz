@@ -2226,20 +2226,28 @@
       if (!def || !def.terminals) return [];
       return ["L", "L1", "L2", "L3"].filter((id) => def.terminals.some((t) => t.id === id));
     }
-    /** Bornes stator moteur : U/V/W (ou U1/V1/W1) ou L/N mono. */
+    /** Bornes stator moteur : U/V/W (ou U1/V1/W1) ou L/N mono (moteurs déjà flaggés seulement). */
     function motorStatorTerms(def) {
       if (!def || !def.terminals) return null;
       const ids = def.terminals.map((t) => t.id);
       if (ids.includes("U") && ids.includes("V") && ids.includes("W")) return ["U", "V", "W"];
       if (ids.includes("U1") && ids.includes("V1") && ids.includes("W1")) return ["U1", "V1", "W1"];
-      if (ids.includes("L") && ids.includes("N")) return ["L", "N"];
+      /* L+N mono : utile pour moteur_1ph déjà motor:true — ne PAS s'en servir pour auto-flag
+         (sinon compteur / lampe / prises L+N deviennent motor → ventilo + mauvais glow). */
+      if (def.motor && ids.includes("L") && ids.includes("N")) return ["L", "N"];
       return null;
     }
-    /** Marque les moteurs ElectroDZ (photos) pour sim + son + rotation. */
+    /** Marque les vrais moteurs seulement (pas L+N générique : compteur, lampe, etc.). */
     Object.keys(LIB).forEach((id) => {
       const d = LIB[id];
       if (!d || d.motor) return;
-      if (motorStatorTerms(d)) {
+      if (isCompteurKind(d.kind)) return;
+      const looksLikeMotorId = /^(moteur|edz_motor)/i.test(id);
+      const ids = (d.terminals || []).map((t) => t.id);
+      const hasUVW =
+        (ids.includes("U") && ids.includes("V") && ids.includes("W")) ||
+        (ids.includes("U1") && ids.includes("V1") && ids.includes("W1"));
+      if (hasUVW || looksLikeMotorId) {
         d.motor = true;
         if (d.motorI == null) d.motorI = 8;
       }
