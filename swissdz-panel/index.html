@@ -238,9 +238,14 @@
       .bar-row-2 {
         display:flex;
         align-items:center;
-        flex-wrap:wrap;
-        gap:6px 10px;
+        flex-wrap:nowrap;
+        gap:8px;
         min-width:0;
+        overflow-x:auto;
+        overflow-y:hidden;
+        -webkit-overflow-scrolling:touch;
+        touch-action:pan-x;
+        scrollbar-width:thin;
       }
       .group-projet {
         position:sticky; left:0; z-index:2;
@@ -255,9 +260,9 @@
       }
       .group { flex-shrink:0; }
       .group-style { align-items:center; }
-      .group-style .row { flex-wrap:wrap; align-items:center; }
+      .group-style .row { flex-wrap:nowrap; align-items:center; }
       .row { white-space:nowrap; }
-      .group-style .row { white-space:normal; }
+      .group-style .row { white-space:nowrap; }
       .btn-lib-toggle {
         display:inline-flex; align-items:center; justify-content:center;
         flex:0 0 auto; white-space:nowrap;
