@@ -96,6 +96,7 @@
       overflow:hidden;
     }
     .workspace #board { flex:1 1 auto; min-width:0; min-height:0; height:100%; }
+    .play-fab { display:none; }
     @media (max-width: 900px) {
       header { padding:4px 6px 6px; }
       .lib-tab { padding:4px 8px; font-size:10px; }
@@ -111,6 +112,29 @@
         position:absolute; top:0; right:0; bottom:0;
         flex:none !important; width:min(320px, 92vw) !important; max-width:92vw !important;
         box-shadow:-8px 0 24px rgba(15,23,42,.18);
+      }
+      .play-fab {
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        position:fixed;
+        right:12px;
+        bottom:max(12px, env(safe-area-inset-bottom));
+        z-index:10050;
+        min-width:108px;
+        height:48px;
+        padding:0 16px;
+        border:none;
+        border-radius:12px;
+        background:#15803d;
+        color:#fff;
+        font:700 15px/1 system-ui, sans-serif;
+        box-shadow:0 4px 16px rgba(0,0,0,.28);
+        -webkit-tap-highlight-color:transparent;
+        touch-action:manipulation;
+      }
+      .play-fab.on {
+        background:#b91c1c;
       }
     }
     /* Téléphone / tablette étroite : barre glissable + biblio en tiroir */
@@ -1362,6 +1386,7 @@
       </div>
     </div>
   </div>
+  <button type="button" id="btnPlayFab" class="play-fab" aria-label="Vérifier le courant">Vérifier</button>
   <div id="vipGate" class="vip-gate" aria-hidden="true" role="dialog" aria-labelledby="vipTitle">
     <div class="vip-card">
       <div class="vip-brand">
@@ -3666,6 +3691,43 @@
       render();
     }
     function find(uid) { return state.items.find((i) => i.uid === uid); }
+    function tapSlopPx(ev) {
+      return (ev && (ev.pointerType === "touch" || ev.pointerType === "pen")) ? 28 : 8;
+    }
+    function syncSimButtons() {
+      const label = state.sim ? "Arrêter" : "Vérifier";
+      const btn = document.getElementById("btnPlay");
+      const fab = document.getElementById("btnPlayFab");
+      if (btn) {
+        btn.classList.toggle("on", state.sim);
+        btn.textContent = label;
+      }
+      if (fab) {
+        fab.classList.toggle("on", state.sim);
+        fab.textContent = label;
+      }
+    }
+    function toggleSim() {
+      state.sim = !state.sim;
+      syncSimButtons();
+      if (state.sim) {
+        ensureAudio();
+        resetLadderTimers();
+        startLadderLoop();
+        startKnxAnim();
+      } else {
+        stopLadderLoop();
+        stopKnxAnim();
+        stopAllBuzzers();
+        state.shortArmed = false;
+        state.short = null;
+        clearFireImmediate();
+        resetLadderTimers();
+        state.knxLastTelegram = null;
+      }
+      render();
+      if (state.etsOpen) renderEtsPanel();
+    }
     /* Géométrie cordons Fluke — alignée sur oibt-trainer cable_wiring_state.dart */
     const FLUKE_CABLES = [
       { id: "L", color: "#E23A32", asset: "assets/fluke/cable_L.png", ax: 0.36, ay: 0.02, mark: "L1" },
@@ -5600,12 +5662,21 @@
           const lever = document.createElement("div");
           lever.className = "lever-hit";
           lever.setAttribute("aria-label", item.closed !== false ? "ON" : "OFF");
-          lever.onclick = (ev) => {
+          lever.onpointerdown = (ev) => {
             ev.stopPropagation();
+            lever._tap = { x: ev.clientX, y: ev.clientY, id: ev.pointerId };
+          };
+          lever.onpointerup = (ev) => {
+            ev.stopPropagation();
+            const t = lever._tap;
+            lever._tap = null;
+            if (!t || t.id !== ev.pointerId) return;
+            if (Math.hypot(ev.clientX - t.x, ev.clientY - t.y) > tapSlopPx(ev)) return;
             pushHistory();
             item.closed = !item.closed;
             render();
           };
+          lever.onpointercancel = () => { lever._tap = null; };
           el.appendChild(lever);
         }
         /* IDR : zone TEST = déclenchement (ouvre le différentiel) */
@@ -5809,7 +5880,8 @@
               y: item.y,
               histKey,
               pointerId: ev.pointerId,
-              pendingToggle: true
+              pendingToggle: true,
+              tapSlop: tapSlopPx(ev)
             };
             if (isRail(item)) {
               state.drag.group = beginRailGroupDrag(item);
@@ -6169,7 +6241,7 @@
         const item = find(state.drag.uid);
         if (!item) return;
         const moved = Math.hypot(ev.clientX - state.drag.px, ev.clientY - state.drag.py);
-        if (state.drag.pendingToggle && moved < 8) return;
+        if (state.drag.pendingToggle && moved < (state.drag.tapSlop || 8)) return;
         if (state.drag.pendingToggle) state.drag.pendingToggle = false;
         const nx = Math.max(8, state.drag.x + (ev.clientX - state.drag.px));
         const ny = Math.max(8, state.drag.y + (ev.clientY - state.drag.py));
@@ -6434,28 +6506,8 @@
     }
     document.getElementById("modeSelect").onclick = () => setMode("select");
     document.getElementById("modeWire").onclick = () => setMode("wire");
-    document.getElementById("btnPlay").onclick = () => {
-      state.sim = !state.sim;
-      document.getElementById("btnPlay").classList.toggle("on", state.sim);
-      document.getElementById("btnPlay").textContent = state.sim ? "Arrêter" : "Vérifier";
-      if (state.sim) {
-        ensureAudio();
-        resetLadderTimers();
-        startLadderLoop();
-        startKnxAnim();
-      } else {
-        stopLadderLoop();
-        stopKnxAnim();
-        stopAllBuzzers();
-        state.shortArmed = false;
-        state.short = null;
-        clearFireImmediate();
-        resetLadderTimers();
-        state.knxLastTelegram = null;
-      }
-      render();
-      if (state.etsOpen) renderEtsPanel();
-    };
+    document.getElementById("btnPlay").onclick = () => toggleSim();
+    document.getElementById("btnPlayFab").onclick = () => toggleSim();
     document.getElementById("btnLadder").onclick = () => {
       const showing = ladderShouldShow();
       state.ladderOpen = !showing;
@@ -6544,8 +6596,7 @@
       stopLadderLoop();
       stopKnxAnim();
       resetLadderTimers();
-      document.getElementById("btnPlay").classList.remove("on");
-      document.getElementById("btnPlay").textContent = "Vérifier";
+      syncSimButtons();
       render();
       clearAutosave();
     };
