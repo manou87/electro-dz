@@ -50,6 +50,16 @@
     button:hover { background:#f3f4f6; }
     button.active { background:var(--blue); color:#fff; }
     button.on { background:#dbeafe; color:#1d4ed8; }
+    button:disabled { opacity:.38; cursor:default; }
+    button.btn-ico {
+      display:inline-flex; align-items:center; justify-content:center;
+      width:36px; min-width:36px; height:34px; padding:6px;
+    }
+    button.btn-ico svg {
+      width:18px; height:18px; display:block; flex:0 0 auto; pointer-events:none;
+    }
+    .play-fab .fab-ico { width:18px; height:18px; flex:0 0 auto; }
+    .play-fab .fab-label { margin-left:8px; }
     .swatches { display:flex; gap:4px; }
     .swatch {
       width:16px; height:16px; border-radius:50%; border:1px solid #d1d5db; padding:0;
@@ -136,6 +146,10 @@
       .play-fab.on {
         background:#b91c1c;
       }
+      button.btn-ico {
+        width:44px; min-width:44px; height:44px; padding:10px;
+      }
+      button.btn-ico svg { width:22px; height:22px; }
     }
     /* Téléphone / tablette étroite : barre glissable + biblio en tiroir */
     @media (max-width: 800px) {
@@ -159,6 +173,9 @@
       }
       .group-projet .row button {
         padding:7px 8px; font-size:11px;
+      }
+      .group-projet .row button.btn-ico {
+        padding:10px; font-size:inherit;
       }
       .group { flex-shrink:0; }
       .row { white-space:nowrap; }
@@ -1297,11 +1314,19 @@
             <button id="btnSave" type="button" title="Télécharger le schéma en JSON">Enregistrer</button>
             <button id="btnOpen" type="button" title="Ouvrir un schéma JSON">Ouvrir</button>
             <input id="fileOpen" type="file" accept="application/json,.json" hidden />
-            <button id="btnUndo" type="button" title="Annuler (Ctrl+Z / Cmd+Z)" disabled>Annuler</button>
-            <button id="btnRedo" type="button" title="Rétablir (Ctrl+Shift+Z / Cmd+Shift+Z)" disabled>Rétablir</button>
-            <button id="btnDelete" type="button" title="Supprimer la sélection (Suppr.)">Supprimer</button>
-            <button id="btnClearWires" type="button">Eff. fils</button>
-            <button id="btnPlay" type="button">Vérifier</button>
+            <button id="btnUndo" class="btn-ico" type="button" title="Annuler (Ctrl+Z / Cmd+Z)" aria-label="Annuler" disabled>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-4"/></svg>
+            </button>
+            <button id="btnRedo" class="btn-ico" type="button" title="Rétablir (Ctrl+Shift+Z / Cmd+Shift+Z)" aria-label="Rétablir" disabled>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 14 5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h4"/></svg>
+            </button>
+            <button id="btnDelete" class="btn-ico" type="button" title="Supprimer la sélection (Suppr.)" aria-label="Supprimer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4.8A1.8 1.8 0 0 1 9.8 3h4.4A1.8 1.8 0 0 1 16 4.8V6"/><path d="M19 6l-.9 13.2A2 2 0 0 1 16.1 21H7.9a2 2 0 0 1-2-1.8L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+            </button>
+            <button id="btnClearWires" type="button" title="Effacer tous les fils">Eff. fils</button>
+            <button id="btnPlay" class="btn-ico" type="button" title="Vérifier le courant" aria-label="Vérifier le courant">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19.2 12 8 5.2z"/></svg>
+            </button>
             <button id="btnLadder" type="button" title="Afficher / masquer l'éditeur Ladder (auto si PLC posé)">Ladder</button>
             <button id="btnEts" type="button" title="ETS formation — adresses physiques, GA, objets (pas l'ETS officiel)">ETS formation</button>
             <button id="btnVip" type="button" title="Version VIP — débloquer toute la bibliothèque">VIP</button>
@@ -1310,8 +1335,12 @@
         </div>
         <div class="group">
           <div class="row">
-            <button id="modeSelect" class="active" type="button">Sélection</button>
-            <button id="modeWire" type="button">Fil</button>
+            <button id="modeSelect" class="btn-ico active" type="button" title="Sélection / déplacer (main)" aria-label="Sélection">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 13.2V6.6a1.6 1.6 0 0 1 3.2 0V12"/><path d="M11.2 11.6V5.4a1.6 1.6 0 0 1 3.2 0V12"/><path d="M14.4 12V7.2a1.6 1.6 0 0 1 3.2 0v6.4"/><path d="M17.6 12.4a1.6 1.6 0 0 1 3.2 0v3a6.2 6.2 0 0 1-6.2 6.2H13c-2.3 0-3.9-.9-5.1-2.4L5.4 16a1.7 1.7 0 0 1 2.6-2.2l1.6 1.5"/><path d="M5.2 15.2V11a1.6 1.6 0 0 1 3.2 0v2"/></svg>
+            </button>
+            <button id="modeWire" class="btn-ico" type="button" title="Mode fil / câblage" aria-label="Fil">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="12" r="2.6"/><circle cx="18.5" cy="12" r="2.6"/><path d="M8.1 12h7.8"/></svg>
+            </button>
           </div>
           <b>MODE</b>
         </div>
@@ -1386,7 +1415,10 @@
       </div>
     </div>
   </div>
-  <button type="button" id="btnPlayFab" class="play-fab" aria-label="Vérifier le courant">Vérifier</button>
+  <button type="button" id="btnPlayFab" class="play-fab" title="Vérifier le courant" aria-label="Vérifier le courant">
+    <svg class="fab-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19.2 12 8 5.2z"/></svg>
+    <span class="fab-label">Vérifier</span>
+  </button>
   <div id="vipGate" class="vip-gate" aria-hidden="true" role="dialog" aria-labelledby="vipTitle">
     <div class="vip-card">
       <div class="vip-brand">
@@ -3694,17 +3726,29 @@
     function tapSlopPx(ev) {
       return (ev && (ev.pointerType === "touch" || ev.pointerType === "pen")) ? 28 : 8;
     }
+    const ICO_PLAY = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19.2 12 8 5.2z"/></svg>';
+    const ICO_STOP = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1.6"/></svg>';
+    function simIconHtml(extraClass) {
+      const raw = state.sim ? ICO_STOP : ICO_PLAY;
+      if (!extraClass) return raw;
+      return raw.replace("<svg ", '<svg class="' + extraClass + '" ');
+    }
     function syncSimButtons() {
-      const label = state.sim ? "Arrêter" : "Vérifier";
+      const short = state.sim ? "Arrêter" : "Vérifier";
+      const label = state.sim ? "Arrêter la simulation" : "Vérifier le courant";
       const btn = document.getElementById("btnPlay");
       const fab = document.getElementById("btnPlayFab");
       if (btn) {
         btn.classList.toggle("on", state.sim);
-        btn.textContent = label;
+        btn.title = label;
+        btn.setAttribute("aria-label", label);
+        btn.innerHTML = simIconHtml();
       }
       if (fab) {
         fab.classList.toggle("on", state.sim);
-        fab.textContent = label;
+        fab.title = label;
+        fab.setAttribute("aria-label", label);
+        fab.innerHTML = simIconHtml("fab-ico") + '<span class="fab-label">' + short + "</span>";
       }
     }
     function toggleSim() {
