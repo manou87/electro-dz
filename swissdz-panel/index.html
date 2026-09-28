@@ -127,6 +127,15 @@
         padding-bottom:2px;
         scrollbar-width:thin;
       }
+      /* Groupe PROJET toujours visible en premier (scroll ne le cache plus) */
+      .group-projet {
+        position:sticky; left:0; z-index:2;
+        background:#fff; padding-right:8px;
+        box-shadow:6px 0 8px -6px rgba(15,23,42,.2);
+      }
+      .group-projet .row button {
+        padding:7px 8px; font-size:11px;
+      }
       .group { flex-shrink:0; }
       .row { white-space:nowrap; }
       .btn-lib-toggle {
@@ -1258,7 +1267,7 @@
         </div>
       </div>
       <div class="bar" id="topBar">
-        <div class="group">
+        <div class="group group-projet">
           <div class="row">
             <button id="btnNew" type="button">Nouveau</button>
             <button id="btnSave" type="button" title="Télécharger le schéma en JSON">Enregistrer</button>
