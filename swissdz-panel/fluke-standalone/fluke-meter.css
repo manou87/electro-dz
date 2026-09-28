@@ -279,49 +279,46 @@ body.demo .device {
 }
 .tip {
   position: absolute;
-  width: 22px;
-  height: 38px;
-  margin: -4px 0 0 -11px;
+  width: 36px;
+  height: 74px;
+  margin: calc(-74px * 0.96) 0 0 -18px;
   pointer-events: auto;
   cursor: grab;
   touch-action: none;
-  border-radius: 6px 6px 11px 11px;
-  border: 1.5px solid rgba(15, 23, 42, 0.4);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35), inset 0 -8px 0 rgba(0, 0, 0, 0.12);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
   z-index: 7;
 }
-.tip::after {
-  content: attr(data-label);
-  position: absolute;
-  left: 50%;
-  top: 4px;
-  transform: translateX(-50%);
-  font-size: 8px;
-  font-weight: 900;
-  color: #fff;
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.45);
+.tip img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   pointer-events: none;
+  filter: drop-shadow(0 1px 2px rgba(15, 23, 42, 0.35));
 }
-.tip[data-id="L"] { background: linear-gradient(180deg, #f87171, #dc2626); }
-.tip[data-id="N"] { background: linear-gradient(180deg, #60a5fa, #2563eb); }
-.tip[data-id="PE"] {
-  background: repeating-linear-gradient(-45deg, #c4d600 0 4px, #008c45 4px 8px);
-}
-.tip[data-id="PE"]::after { color: #111; text-shadow: none; }
+.tip::after { display: none; }
+.tip[data-id="L"],
+.tip[data-id="N"],
+.tip[data-id="PE"] { background: transparent; }
 .tip:active, .tip.is-drag { cursor: grabbing; }
 .tip.is-connected {
   outline: 2px solid #22c55e;
   outline-offset: 1px;
+  border-radius: 4px;
 }
 .tip.is-near {
   outline: 2px solid #fbbf24;
   outline-offset: 1px;
+  border-radius: 4px;
 }
 
-/* Mode embed PanelWire : tips gérés par le parent (hit areas PanelWire) */
-body.embed-panel .tip {
-  opacity: 0;
-  pointer-events: none;
+/* Mode embed PanelWire : cordons + pointes dessinés sur le board (hors iframe) */
+body.embed-panel .cables,
+body.embed-panel .tips {
+  display: none !important;
 }
 body.demo .stage {
   background:

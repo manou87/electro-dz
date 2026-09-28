@@ -415,17 +415,38 @@
     }
     .knx-shutter {
       position:absolute; z-index:26; overflow:hidden; pointer-events:none;
-      border:1px solid rgba(71,85,105,.35); border-radius:4px; background:rgba(248,250,252,.55);
+      border:1.5px solid #64748b; border-radius:3px;
+      /* Opaque : masque le dessin fixe du PNG pour que l’anim soit lisible */
+      background:linear-gradient(180deg, #c7e0f5 0%, #e8f1f8 55%, #dbe7f0 100%);
       transform:translate(-50%,-50%);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);
     }
     .knx-shutter .slats {
-      position:absolute; left:8%; right:8%; top:0; height:100%;
+      position:absolute; left:6%; right:6%; top:0; height:100%;
       background:repeating-linear-gradient(
         to bottom,
-        rgba(71,85,105,.55) 0 5px,
-        rgba(148,163,184,.25) 5px 10px
+        #475569 0 4px,
+        #94a3b8 4px 5px,
+        #64748b 5px 9px,
+        #cbd5e1 9px 10px
       );
       transition: transform .08s linear;
+      will-change: transform;
+    }
+    .knx-shutter.moving::after {
+      content:""; position:absolute; left:50%; top:50%;
+      width:0; height:0; transform:translate(-50%,-50%);
+      border-left:5px solid transparent; border-right:5px solid transparent;
+      filter:drop-shadow(0 1px 1px rgba(0,0,0,.35));
+      z-index:2; pointer-events:none;
+    }
+    .knx-shutter.moving-up::after {
+      border-bottom:7px solid #16a34a; border-top:0;
+      margin-top:-10%;
+    }
+    .knx-shutter.moving-down::after {
+      border-top:7px solid #dc2626; border-bottom:0;
+      margin-top:10%;
     }
     .knx-dim-bar {
       position:absolute; z-index:26; height:8px; border-radius:4px;
@@ -542,9 +563,9 @@
       -webkit-user-select:none; user-select:none;
       -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent;
     }
-    /* Fluke 1664 FC — module standalone (appareil + LCD + cordons) */
+    /* Fluke 1664 FC — iframe = boîtier seul ; cordons/pointes sur le board (hors clip) */
     .dev.fluke-meter {
-      z-index:22; overflow:visible; background:transparent !important;
+      z-index:22; overflow:hidden; background:transparent !important;
       border-radius:0; cursor:default; touch-action:none;
       box-shadow:none; outline-color:#93c5fd;
     }
@@ -567,7 +588,7 @@
     }
     .dev.fluke-meter .fluke-viewport {
       position:absolute; inset:0;
-      overflow:visible; background:transparent; pointer-events:auto;
+      overflow:hidden; background:transparent; pointer-events:auto;
     }
     .dev.fluke-meter iframe.fluke-live {
       position:absolute; inset:0;
@@ -575,34 +596,33 @@
       border:0; background:transparent; pointer-events:auto;
     }
     #board.mode-select .dev.fluke-meter { cursor:default; }
-    .dev.fluke-meter .fluke-tips {
-      position:absolute; inset:0; pointer-events:none; z-index:8;
-    }
-    .dev.fluke-meter .fluke-tip {
-      position:absolute; width:20px; height:34px; margin:-2px 0 0 -10px;
+    /* Pointes style OIBT (assets cable_L/N/PE.png) — calque board, z > fils */
+    .fluke-probe {
+      position:absolute; z-index:45;
+      width:28px; height:58px;
+      margin:0; padding:0;
       pointer-events:auto; cursor:grab; touch-action:none;
-      border-radius:6px 6px 10px 10px;
-      box-shadow:0 1px 3px rgba(0,0,0,.35), inset 0 -6px 0 rgba(0,0,0,.12);
-      border:1.5px solid rgba(15,23,42,.35);
+      background:transparent; border:0; box-shadow:none;
+      -webkit-user-select:none; user-select:none;
     }
-    .dev.fluke-meter .fluke-tip::after {
-      content:attr(data-label);
-      position:absolute; left:50%; top:3px; transform:translateX(-50%);
-      font-size:7px; font-weight:900; color:#fff; text-shadow:0 1px 0 rgba(0,0,0,.45);
-      pointer-events:none;
+    .fluke-probe img {
+      position:static !important; inset:auto !important;
+      display:block; width:100%; height:100%;
+      object-fit:contain; pointer-events:none;
+      filter:drop-shadow(0 1px 2px rgba(15,23,42,.35));
     }
-    .dev.fluke-meter .fluke-tip[data-id="L"] { background:linear-gradient(180deg,#f87171,#dc2626); }
-    .dev.fluke-meter .fluke-tip[data-id="N"] { background:linear-gradient(180deg,#60a5fa,#2563eb); }
-    .dev.fluke-meter .fluke-tip[data-id="PE"] {
-      background:repeating-linear-gradient(-45deg,#c4d600 0 4px,#008c45 4px 8px);
+    .fluke-probe:active, .fluke-probe.is-drag { cursor:grabbing; }
+    .fluke-probe.snap-near {
+      outline:2px solid #fbbf24; outline-offset:1px; border-radius:4px;
     }
-    .dev.fluke-meter .fluke-tip[data-id="PE"]::after { color:#111; text-shadow:none; }
-    .dev.fluke-meter .fluke-tip:active { cursor:grabbing; }
-    .dev.fluke-meter .fluke-tip.snap-near {
-      outline:2px solid #fbbf24; outline-offset:1px;
+    .fluke-probe.is-wired {
+      outline:2px solid #22c55e; outline-offset:1px; border-radius:4px;
     }
-    #board.mode-wire .dev.fluke-meter .fluke-tip {
+    #board.mode-wire .fluke-probe {
       pointer-events:none; opacity:.35;
+    }
+    svg.wires path.fluke-lead {
+      pointer-events:none;
     }
     #flukePark { display:none !important; }
     /* Poussoir / AU enfoncé : la tête bouge sur la photo */
@@ -2735,11 +2755,12 @@
       return pref || "1.1.0";
     }
     function defaultKnxKeysProg() {
+      /* Défaut poussoir + actionneur volet : T1/T2 = canal 1, T3/T4 = canal 2 */
       return {
-        1: { fn: "switch", ga: "1/1/1" },
-        2: { fn: "switch", ga: "1/1/2" },
-        3: { fn: "up", ga: "1/2/1" },
-        4: { fn: "down", ga: "1/2/2" }
+        1: { fn: "up", ga: "1/2/1" },
+        2: { fn: "down", ga: "1/2/2" },
+        3: { fn: "up", ga: "1/2/4" },
+        4: { fn: "down", ga: "1/2/5" }
       };
     }
     function defaultKnxChProg() {
@@ -2953,6 +2974,27 @@
     function stopKnxAnim() {
       if (knxAnimRaf != null) { cancelAnimationFrame(knxAnimRaf); knxAnimRaf = null; }
     }
+    function knxClearShutterGa(item, n, which) {
+      const p = item.knxShutterProg && item.knxShutterProg[n];
+      if (!p || !state.knxBusValues) return;
+      const g = normGa(p[which]);
+      if (g) state.knxBusValues[g] = 0;
+    }
+    function paintKnxShutters() {
+      document.querySelectorAll(".knx-shutter").forEach((el) => {
+        const uid = el.dataset.uid;
+        const chN = Number(el.dataset.ch);
+        const it = find(uid);
+        if (!it || !it.knxShutter || !it.knxShutter[chN]) return;
+        const ch = it.knxShutter[chN];
+        const sl = el.querySelector(".slats");
+        if (sl) sl.style.transform = "translateY(" + ((ch.pos - 1) * 100) + "%)";
+        el.classList.toggle("moving", ch.dir === "up" || ch.dir === "down");
+        el.classList.toggle("moving-up", ch.dir === "up");
+        el.classList.toggle("moving-down", ch.dir === "down");
+        el.title = "Volet " + chN + " — " + ch.dir + " (" + Math.round(ch.pos * 100) + "%)";
+      });
+    }
     function startKnxAnim() {
       stopKnxAnim();
       knxAnimLast = performance.now();
@@ -2967,30 +3009,29 @@
           [1, 2].forEach((n) => {
             const ch = item.knxShutter[n];
             if (!ch) return;
-            const speed = 0.35;
+            /* Bouge si commande bus ; L/N alimentés accélèrent (sinon mouvement lent pédagogique) */
+            const powered = !!(item.hot && item.hot["L" + n] && item.neu && item.neu["N" + n]);
+            const speed = powered ? 0.42 : 0.22;
             if (ch.dir === "up") {
               const np = Math.max(0, ch.pos - speed * dt);
               if (np !== ch.pos) moved = true;
               ch.pos = np;
-              if (ch.pos <= 0) ch.dir = "stop";
+              if (ch.pos <= 0) {
+                ch.dir = "stop";
+                knxClearShutterGa(item, n, "gaUp");
+              }
             } else if (ch.dir === "down") {
               const np = Math.min(1, ch.pos + speed * dt);
               if (np !== ch.pos) moved = true;
               ch.pos = np;
-              if (ch.pos >= 1) ch.dir = "stop";
+              if (ch.pos >= 1) {
+                ch.dir = "stop";
+                knxClearShutterGa(item, n, "gaDown");
+              }
             }
           });
         });
-        if (moved) {
-          document.querySelectorAll(".knx-shutter").forEach((el) => {
-            const uid = el.dataset.uid;
-            const ch = Number(el.dataset.ch);
-            const it = find(uid);
-            if (!it || !it.knxShutter || !it.knxShutter[ch]) return;
-            const sl = el.querySelector(".slats");
-            if (sl) sl.style.transform = "translateY(" + ((it.knxShutter[ch].pos - 1) * 100) + "%)";
-          });
-        }
+        if (moved) paintKnxShutters();
         knxAnimRaf = requestAnimationFrame(tick);
       };
       knxAnimRaf = requestAnimationFrame(tick);
@@ -4277,41 +4318,104 @@
       render();
       if (state.etsOpen) renderEtsPanel();
     }
-    /* Géométrie cordons Fluke — alignée sur oibt-trainer cable_wiring_state.dart */
+    /* Géométrie cordons Fluke — alignée sur oibt-trainer ProbeGeometry / cable_*.png */
     const FLUKE_CABLES = [
       { id: "L", color: "#E23A32", asset: "assets/fluke/cable_L.png", ax: 0.36, ay: 0.02, mark: "L1" },
       { id: "N", color: "#2F6FE0", asset: "assets/fluke/cable_N.png", ax: 0.50, ay: 0.02, mark: "L3" },
       { id: "PE", color: "#3CB04A", asset: "assets/fluke/cable_PE.png", ax: 0.64, ay: 0.02, mark: "L2" }
     ];
+    /* Pointe métallique ≈ bas de l’asset (metalFrac oibt = 0.96). */
     const FLUKE_METAL = 0.96;
-    const FLUKE_LEAD = 0.055;
-    /* Sondes un peu plus grandes que oibt (36×74) pour lisibilité panel. */
-    const FLUKE_TIP_H = 0.62;
     const FLUKE_TIP_ASPECT = 36 / 74;
-    /** Park : cordons qui pendent sous l’appareil (lisible sur le schéma panel). */
+    /** Park : pointes qui pendent sous l’appareil (hors boîte .dev). */
     function flukeDefaultTips() {
       return {
-        L: { nx: 0.22, ny: 1.20 },
-        N: { nx: 0.50, ny: 1.28 },
-        PE: { nx: 0.78, ny: 1.20 }
+        L: { nx: 0.22, ny: 1.22 },
+        N: { nx: 0.50, ny: 1.32 },
+        PE: { nx: 0.78, ny: 1.22 }
       };
     }
     function flukeTipsOf(item) {
       if (!item.flukeTips) item.flukeTips = flukeDefaultTips();
-      /* Anciennes poses « sur la face » → park cordons pendants (lisibles). */
       const sample = item.flukeTips.N || item.flukeTips.L;
       if (sample && sample.ny < 0.85) item.flukeTips = flukeDefaultTips();
       return item.flukeTips;
     }
-    function termAbs(item, term) {
+    function flukeProbeSize(item) {
       const sz = itemSize(item);
-      let nx = term.nx, ny = term.ny;
+      const tipH = Math.max(44, Math.min(72, sz.h * 0.30));
+      return { tipW: tipH * FLUKE_TIP_ASPECT, tipH };
+    }
+    function flukeJackAbs(item, cab) {
+      const sz = itemSize(item);
+      return { x: item.x + cab.ax * sz.w, y: item.y + cab.ay * sz.h };
+    }
+    function flukeTipAbs(item, tipId) {
+      const sz = itemSize(item);
+      const tip = flukeTipsOf(item)[tipId] || flukeDefaultTips()[tipId];
+      return { x: item.x + tip.nx * sz.w, y: item.y + tip.ny * sz.h };
+    }
+    function rawTermAbs(item, term) {
+      const sz = itemSize(item);
+      return {
+        x: item.x + term.nx * sz.w,
+        y: item.y + term.ny * sz.h,
+        direction: term.direction
+      };
+    }
+    function termAbs(item, term) {
       const def = LIB[item.type];
       if (def && def.flukeMeter) {
         const tip = flukeTipsOf(item)[term.id];
-        if (tip) { nx = tip.nx; ny = tip.ny; }
+        if (tip) {
+          const sz = itemSize(item);
+          return {
+            x: item.x + tip.nx * sz.w,
+            y: item.y + tip.ny * sz.h,
+            direction: term.direction || "bottom"
+          };
+        }
       }
-      return { x: item.x + nx * sz.w, y: item.y + ny * sz.h, direction: term.direction };
+      return rawTermAbs(item, term);
+    }
+    function isFlukeMeterRef(ref) {
+      const it = find(ref.uid);
+      return !!(it && LIB[it.type] && LIB[it.type].flukeMeter);
+    }
+    /** Pointe collée sur la borne cible quand un fil Fluke est branché. */
+    function syncFlukeTipsFromWires(item) {
+      if (!item || !LIB[item.type] || !LIB[item.type].flukeMeter) return;
+      if (state.flukeTipDrag && state.flukeTipDrag.uid === item.uid) return;
+      const sz = itemSize(item);
+      const tips = flukeTipsOf(item);
+      FLUKE_CABLES.forEach((cab) => {
+        const w = state.wires.find((wire) =>
+          (wire.a.uid === item.uid && wire.a.term === cab.id) ||
+          (wire.b.uid === item.uid && wire.b.term === cab.id)
+        );
+        if (!w) return;
+        const other = (w.a.uid === item.uid && w.a.term === cab.id) ? w.b : w.a;
+        const otherItem = find(other.uid);
+        if (!otherItem || !LIB[otherItem.type]) return;
+        const term = LIB[otherItem.type].terminals.find((t) => t.id === other.term);
+        if (!term) return;
+        const p = rawTermAbs(otherItem, term);
+        tips[cab.id] = {
+          nx: (p.x - item.x) / sz.w,
+          ny: (p.y - item.y) / sz.h
+        };
+      });
+    }
+    function flukeLeadPathD(jack, tip, side) {
+      const bulge = Math.max(22, Math.abs(tip.y - jack.y) * 0.22);
+      const c1x = jack.x + side * Math.max(14, Math.abs(tip.x - jack.x) * 0.08);
+      const c1y = jack.y - 4;
+      const c2x = tip.x + side * 10;
+      const c2y = jack.y + bulge;
+      return "M " + jack.x.toFixed(1) + " " + jack.y.toFixed(1) +
+        " C " + c1x.toFixed(1) + " " + c1y.toFixed(1) + ", " +
+        c2x.toFixed(1) + " " + c2y.toFixed(1) + ", " +
+        tip.x.toFixed(1) + " " + tip.y.toFixed(1);
     }
     const flukeLiveFrames = new Map();
     function flukeParkEl() {
@@ -4324,8 +4428,8 @@
       return park;
     }
     function flukeMeterSrc() {
-      /* Module HTML léger (appareil + LCD) — plus d’iframe Flutter OIBT. */
-      return "./fluke-standalone/index.html?embed=1&lang=fr&v=standalone1";
+      /* Appareil + LCD (cordons dessinés sur le board PanelWire, hors iframe). */
+      return "./fluke-standalone/index.html?embed=1&lang=fr&v=probes2";
     }
     function flukeTipWired(item, tipId) {
       return state.wires.some((w) =>
@@ -4346,6 +4450,7 @@
       state.items.forEach((item) => {
         const def = LIB[item.type];
         if (!def || !def.terminals) return;
+        if (def.flukeMeter) return; /* snap sur bornes composants, pas sur soi-même */
         def.terminals.forEach((t) => {
           if (item.uid === skipUid && t.id === skipTerm) return;
           const p = termAbs(item, t);
@@ -4469,7 +4574,7 @@
     function mountFlukeMeter(el, item) {
       normalizeFlukeSize(item);
       el.classList.add("fluke-meter");
-      el.title = "Fluke 1664 FC — poignée = déplacer · tips L/N/PE = brancher · F1 = paire";
+      el.title = "Fluke 1664 FC — poignée = déplacer · pointes L/N/PE = mesurer · F1 = paire";
       const handle = document.createElement("div");
       handle.className = "fluke-drag-handle";
       handle.title = "Glisser pour déplacer le Fluke";
@@ -4501,48 +4606,108 @@
       viewport.className = "fluke-viewport";
       viewport.appendChild(flukeLiveFrame(item.uid));
       el.appendChild(viewport);
-      const tipsWrap = document.createElement("div");
-      tipsWrap.className = "fluke-tips";
-      tipsWrap.setAttribute("aria-hidden", "true");
-      FLUKE_CABLES.forEach((cab) => {
-        const tip = flukeTipsOf(item)[cab.id];
-        if (!tip) return;
-        const probe = document.createElement("div");
-        probe.className = "fluke-tip";
-        probe.dataset.id = cab.id;
-        probe.dataset.label = flukeTipLabel(cab.id);
-        probe.style.left = (tip.nx * 100) + "%";
-        probe.style.top = (tip.ny * 100) + "%";
-        probe.title = "Cordon " + cab.id + " — glisser vers une borne du tableau";
-        probe.onpointerdown = (ev) => {
-          ev.stopPropagation();
-          if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
-          ev.preventDefault();
-          if (state.mode === "wire") return;
-          state.wireFrom = null;
-          state.wireDrag = null;
-          state.selected = item.uid;
-          state.selectedWire = null;
-          const histKey = structuralKey(cloneEditableState());
-          pushHistory();
-          state.flukeTipDrag = {
-            uid: item.uid,
-            tip: cab.id,
-            px: ev.clientX,
-            py: ev.clientY,
-            histKey,
-            pointerId: ev.pointerId,
-            snap: null,
-            mx: 0,
-            my: 0
-          };
-          syncDragLock();
-          try { board.setPointerCapture(ev.pointerId); } catch (_) {}
-          render();
-        };
-        tipsWrap.appendChild(probe);
+      /* Pointes + fils : calque board (voir appendFlukeProbes) — pas dans l’iframe. */
+    }
+    function beginFlukeTipDrag(item, cab, ev) {
+      ev.stopPropagation();
+      if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
+      ev.preventDefault();
+      if (state.mode === "wire") return;
+      state.wireFrom = null;
+      state.wireDrag = null;
+      state.selected = item.uid;
+      state.selectedWire = null;
+      const histKey = structuralKey(cloneEditableState());
+      pushHistory();
+      const pt = boardPointFromClient(ev.clientX, ev.clientY);
+      state.flukeTipDrag = {
+        uid: item.uid,
+        tip: cab.id,
+        px: ev.clientX,
+        py: ev.clientY,
+        histKey,
+        pointerId: ev.pointerId,
+        snap: null,
+        mx: pt.x,
+        my: pt.y
+      };
+      syncDragLock();
+      try { board.setPointerCapture(ev.pointerId); } catch (_) {}
+      render();
+    }
+    function appendFlukeLeads(svg, NS) {
+      state.items.forEach((item) => {
+        if (!LIB[item.type] || !LIB[item.type].flukeMeter) return;
+        syncFlukeTipsFromWires(item);
+        FLUKE_CABLES.forEach((cab) => {
+          const jack = flukeJackAbs(item, cab);
+          let tipPt = flukeTipAbs(item, cab.id);
+          if (state.flukeTipDrag && state.flukeTipDrag.uid === item.uid && state.flukeTipDrag.tip === cab.id) {
+            tipPt = {
+              x: state.flukeTipDrag.mx || tipPt.x,
+              y: state.flukeTipDrag.my || tipPt.y
+            };
+          }
+          const side = cab.id === "L" ? -1 : cab.id === "PE" ? 1 : 0;
+          const d = flukeLeadPathD(jack, tipPt, side);
+          const shadow = document.createElementNS(NS, "path");
+          shadow.setAttribute("d", d);
+          shadow.setAttribute("class", "fluke-lead");
+          shadow.setAttribute("fill", "none");
+          shadow.setAttribute("stroke", "#0f172a");
+          shadow.setAttribute("stroke-width", "6.5");
+          shadow.setAttribute("stroke-linecap", "round");
+          shadow.setAttribute("opacity", "0.18");
+          svg.appendChild(shadow);
+          const path = document.createElementNS(NS, "path");
+          path.setAttribute("d", d);
+          path.setAttribute("class", "fluke-lead");
+          path.setAttribute("fill", "none");
+          path.setAttribute("stroke", cab.color);
+          path.setAttribute("stroke-width", "4.2");
+          path.setAttribute("stroke-linecap", "round");
+          path.setAttribute("opacity", "0.96");
+          svg.appendChild(path);
+        });
       });
-      el.appendChild(tipsWrap);
+    }
+    function appendFlukeProbes(world) {
+      state.items.forEach((item) => {
+        if (!LIB[item.type] || !LIB[item.type].flukeMeter) return;
+        syncFlukeTipsFromWires(item);
+        const probeSz = flukeProbeSize(item);
+        FLUKE_CABLES.forEach((cab) => {
+          let tipPt = flukeTipAbs(item, cab.id);
+          if (state.flukeTipDrag && state.flukeTipDrag.uid === item.uid && state.flukeTipDrag.tip === cab.id) {
+            tipPt = {
+              x: state.flukeTipDrag.mx || tipPt.x,
+              y: state.flukeTipDrag.my || tipPt.y
+            };
+          }
+          const probe = document.createElement("div");
+          probe.className = "fluke-probe";
+          probe.dataset.id = cab.id;
+          probe.dataset.uid = item.uid;
+          probe.title = "Pointe " + flukeTipLabel(cab.id) + " — glisser sur une borne pour mesurer";
+          probe.style.width = probeSz.tipW + "px";
+          probe.style.height = probeSz.tipH + "px";
+          /* Ancre = pointe métallique (bas asset), comme ProbeGeometry oibt. */
+          probe.style.left = (tipPt.x - probeSz.tipW / 2) + "px";
+          probe.style.top = (tipPt.y - probeSz.tipH * FLUKE_METAL) + "px";
+          if (flukeTipWired(item, cab.id)) probe.classList.add("is-wired");
+          if (state.flukeTipDrag && state.flukeTipDrag.uid === item.uid && state.flukeTipDrag.tip === cab.id) {
+            probe.classList.add("is-drag");
+            if (state.flukeTipDrag.snap) probe.classList.add("snap-near");
+          }
+          const img = document.createElement("img");
+          img.src = cab.asset;
+          img.alt = "Pointe " + cab.id;
+          img.draggable = false;
+          probe.appendChild(img);
+          probe.onpointerdown = (ev) => beginFlukeTipDrag(item, cab, ev);
+          world.appendChild(probe);
+        });
+      });
     }
     function endpoint(ref) {
       const item = find(ref.uid);
@@ -5593,6 +5758,19 @@
             return;
           }
 
+          /* KNX volet : L→U (montée) ou L→D (descente), jamais les deux */
+          if (def.knxShutter) {
+            if (item.knxBusOk && item.knxShutter) {
+              [1, 2].forEach((n) => {
+                const ch = item.knxShutter[n];
+                if (!ch) return;
+                if (ch.dir === "up") unite(key(item.uid, "L" + n), key(item.uid, "U" + n));
+                else if (ch.dir === "down") unite(key(item.uid, "L" + n), key(item.uid, "D" + n));
+              });
+            }
+            return;
+          }
+
           const pairList = def.pairs || (def.pair ? [def.pair] : null);
           if (!pairList) return;
 
@@ -6324,7 +6502,11 @@
           def.knxShutters.forEach((s) => {
             const ch = item.knxShutter && item.knxShutter[s.id];
             const wrap = document.createElement("div");
-            wrap.className = "knx-shutter";
+            const dir = ch ? ch.dir : "stop";
+            wrap.className = "knx-shutter"
+              + (dir === "up" || dir === "down" ? " moving" : "")
+              + (dir === "up" ? " moving-up" : "")
+              + (dir === "down" ? " moving-down" : "");
             wrap.dataset.uid = item.uid;
             wrap.dataset.ch = String(s.id);
             wrap.style.left = (s.nx * 100) + "%";
@@ -6336,7 +6518,7 @@
             const pos = ch ? ch.pos : 0.35;
             sl.style.transform = "translateY(" + ((pos - 1) * 100) + "%)";
             wrap.appendChild(sl);
-            wrap.title = "Volet " + s.id + " — " + (ch ? ch.dir : "stop") + " (" + Math.round((ch ? ch.pos : 0) * 100) + "%)";
+            wrap.title = "Volet " + s.id + " — " + dir + " (" + Math.round(pos * 100) + "%)";
             el.appendChild(wrap);
           });
         }
@@ -6716,7 +6898,11 @@
 
       /* 2) Fils au-dessus des modules */
       world.appendChild(svgWires);
+      /* Cordons Fluke (jack → pointe) hors clip iframe — avant les fils ortho. */
+      appendFlukeLeads(svgWires, NS);
       state.wires.forEach((w) => {
+        /* Connexion Fluke : fil électrique pour la sim, tracé = cordon fluke-lead. */
+        if (isFlukeMeterRef(w.a) || isFlukeMeterRef(w.b)) return;
         /* Bus KNX : forcer vert (y compris schémas anciens rouge/noir) */
         if (wireColorForRefs(w.a, w.b) === COLOR_KNX) w.color = COLOR_KNX;
         drawWire(wirePtsDraw(w), w.color, w.live, w.id, w.liveN);
@@ -6728,8 +6914,14 @@
           const cab = FLUKE_CABLES.find((c) => c.id === state.flukeTipDrag.tip);
           if (cab) pc = cab.color;
         }
-        drawWire(state.preview.pts, pc, false, null, false);
+        /* Pendant drag pointe Fluke : le cordon fluke-lead suit déjà — pas de preview ortho. */
+        if (!state.flukeTipDrag) {
+          drawWire(state.preview.pts, pc, false, null, false);
+        }
       }
+
+      /* 2b) Pointes Fluke (assets OIBT) au-dessus des fils */
+      appendFlukeProbes(world);
 
       /* 3) Pastilles bornes au premier plan */
       state.items.forEach((item) => {
@@ -7023,12 +7215,17 @@
         const fd = state.flukeTipDrag;
         fd.mx = x;
         fd.my = y;
-        const a = endpoint({ uid: fd.uid, term: fd.tip });
+        const item = find(fd.uid);
+        if (item) {
+          const sz = itemSize(item);
+          const tips = flukeTipsOf(item);
+          tips[fd.tip] = {
+            nx: (x - item.x) / sz.w,
+            ny: (y - item.y) / sz.h
+          };
+        }
         fd.snap = nearestPanelTerm(x, y, { skipUid: fd.uid, skipTerm: fd.tip });
-        const end = fd.snap
-          ? { x: fd.snap.x, y: fd.snap.y, direction: "bottom" }
-          : { x, y, direction: "bottom" };
-        state.preview = { pts: route(a, end) };
+        state.preview = { pts: [] };
         render();
         return;
       }
@@ -7109,17 +7306,35 @@
         const my = fd.my || pt.y;
         const moved = Math.hypot(ev.clientX - fd.px, ev.clientY - fd.py);
         const snap = fd.snap || nearestPanelTerm(mx, my, { skipUid: fd.uid, skipTerm: fd.tip });
+        const tipItem = find(fd.uid);
         state.flukeTipDrag = null;
         state.preview = null;
-        if (moved >= 6 && snap) {
+        if (moved >= 6 && snap && tipItem) {
+          const sz = itemSize(tipItem);
+          flukeTipsOf(tipItem)[fd.tip] = {
+            nx: (snap.x - tipItem.x) / sz.w,
+            ny: (snap.y - tipItem.y) / sz.h
+          };
           connectFlukeTipTo(fd.uid, fd.tip, { uid: snap.uid, term: snap.term });
-        } else if (moved < 6) {
+        } else if (moved < 6 && tipItem) {
           const before = state.wires.length;
           state.wires = state.wires.filter((w) => !(
             (w.a.uid === fd.uid && w.a.term === fd.tip) ||
             (w.b.uid === fd.uid && w.b.term === fd.tip)
           ));
-          if (state.wires.length === before) discardHistoryIfUnchanged(flukeTipHistKey);
+          if (state.wires.length !== before) {
+            flukeTipsOf(tipItem)[fd.tip] = flukeDefaultTips()[fd.tip];
+          } else {
+            discardHistoryIfUnchanged(flukeTipHistKey);
+          }
+        } else if (tipItem) {
+          /* Drop sans snap : garde la position libre (mesure libre) */
+          const sz = itemSize(tipItem);
+          flukeTipsOf(tipItem)[fd.tip] = {
+            nx: (mx - tipItem.x) / sz.w,
+            ny: (my - tipItem.y) / sz.h
+          };
+          discardHistoryIfUnchanged(flukeTipHistKey);
         } else {
           discardHistoryIfUnchanged(flukeTipHistKey);
         }
@@ -7287,7 +7502,7 @@
       render();
     });
     board.addEventListener("contextmenu", (ev) => {
-      if (ev.target.closest(".dev, svg.wires, .term, .whandle, .wdel, .rhandle")) {
+      if (ev.target.closest(".dev, svg.wires, .term, .whandle, .wdel, .rhandle, .fluke-probe")) {
         ev.preventDefault();
       }
     });

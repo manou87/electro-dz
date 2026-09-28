@@ -103,6 +103,11 @@
   }
 
   function paintCables() {
+    /* Embed PanelWire : fils tracés sur le board parent (évite le clip iframe). */
+    if (isEmbed) {
+      el.cables.innerHTML = "";
+      return;
+    }
     const stage = el.stage.getBoundingClientRect();
     const device = el.device.getBoundingClientRect();
     if (!stage.width || !device.width) return;
