@@ -4581,6 +4581,32 @@
         tip.x.toFixed(1) + " " + tip.y.toFixed(1);
     }
     const flukeLiveFrames = new Map();
+    /** Cache <img> par uid : render() wipe le board, sans cache les photos se rechargent (flicker). */
+    const deviceImgCache = new Map();
+    function releaseDeviceImgs() {
+      const live = new Set(state.items.map((i) => i.uid));
+      deviceImgCache.forEach((img, uid) => {
+        if (live.has(uid)) return;
+        img.remove();
+        deviceImgCache.delete(uid);
+      });
+    }
+    /** Réutilise le même nœud img ; ne change src que si ON/OFF / type (évite flash). */
+    function deviceFaceImg(item, def) {
+      const src = deviceImageSrc(def, item);
+      let img = deviceImgCache.get(item.uid);
+      if (!img || img.dataset.devType !== item.type) {
+        img = document.createElement("img");
+        img.decoding = "async";
+        img.draggable = false;
+        img.dataset.devType = item.type;
+        deviceImgCache.set(item.uid, img);
+      }
+      const alt = libDisplayName(item.type, def);
+      if (img.alt !== alt) img.alt = alt;
+      if (img.getAttribute("src") !== src) img.src = src;
+      return img;
+    }
     function flukeParkEl() {
       let park = document.getElementById("flukePark");
       if (!park) {
@@ -6263,6 +6289,7 @@
       const before = state.items.length;
       state.items = state.items.filter((i) => LIB[i.type]);
       releaseFlukeFrames();
+      releaseDeviceImgs();
       if (state.items.length !== before) {
         const uids = new Set(state.items.map((i) => i.uid));
         state.wires = state.wires.filter((w) => uids.has(w.a.uid) && uids.has(w.b.uid));
@@ -6649,10 +6676,7 @@
         if (def.flukeMeter) {
           mountFlukeMeter(el, item, def);
         } else if (def.image) {
-          const img = document.createElement("img");
-          img.alt = libDisplayName(item.type, def);
-          img.src = deviceImageSrc(def, item);
-          el.appendChild(img);
+          el.appendChild(deviceFaceImg(item, def));
         } else if (def.kind === "pe") {
           el.innerHTML = peSymbolSvg();
           el.title = "Mise à la terre PE";
