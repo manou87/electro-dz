@@ -1874,7 +1874,7 @@
       <p class="vip-demo"><span data-i18n="vipDemo">Démo test :</span> <code>SWISSDZ-VIP</code></p>
     </div>
   </div>
-  <script src="i18n/panelwire-i18n.js"></script>
+  <script src="i18n/panelwire-i18n.js?v=panel47"></script>
   <script>
     /* Assets pré-cadrés (photos studio trop larges → bandes). */
     const COLORS = [
@@ -6817,79 +6817,113 @@
       if (!html) return "";
       return `<div class="sec"><h3>${title}</h3>${html}</div>`;
     }
-    function renderEdzPropsBody(d) {
-      if (!d) return `<p class="empty">Pas de fiche détaillée pour ce type.</p>`;
+    function edzTr(raw) {
+      if (raw == null || raw === "") return raw;
+      if (I18N && typeof I18N.edzTranslate === "function") return I18N.edzTranslate(raw);
+      return raw;
+    }
+    function edzCat(raw) {
+      if (raw == null || raw === "") return raw;
+      if (I18N && typeof I18N.edzCatLabel === "function") return I18N.edzCatLabel(raw);
+      return raw;
+    }
+    function edzBoolLabel(v) {
+      if (v == null || v === "") return null;
+      if (typeof v === "boolean") return t(v ? "edzYes" : "edzNo");
+      const s = String(v).toLowerCase();
+      if (s === "true") return t("edzYes");
+      if (s === "false") return t("edzNo");
+      return edzTr(v);
+    }
+    function edzJoinTr(arr) {
+      if (!Array.isArray(arr) || !arr.length) return null;
+      return arr.map((x) => edzTr(x)).filter((x) => x != null && x !== "").join(", ");
+    }
+    function renderEdzPropsBody(d, typeId) {
+      if (!d) return `<p class="empty">${t("edzEmpty")}</p>`;
       const sim = d.simulation || {};
       const phys = d.physical || {};
       const dock = d.docking || {};
+      const displayName = typeId ? libDisplayName(typeId, LIB[typeId]) : (d.name || typeId);
       let html = "";
       html += edzSec(
-        "Identité",
-        edzKv("Nom", d.name) +
-          edzKv("Catégorie", d.category) +
-          edzKv("Préfixe", d.tagPrefix) +
-          edzKv("Constructeur", d.manufacturer) +
-          edzKv("Modèle", d.model) +
-          edzKv("Id", d.id)
+        t("edzSecIdentity"),
+        edzKv(t("edzKvName"), displayName) +
+          edzKv(t("edzKvCategory"), edzCat(d.category)) +
+          edzKv(t("edzKvPrefix"), d.tagPrefix) +
+          edzKv(t("edzKvManufacturer"), d.manufacturer) +
+          edzKv(t("edzKvModel"), d.model) +
+          edzKv(t("edzKvId"), d.id)
       );
       html += edzSec(
-        "Documentation",
-        edzKv("Doc", d.documentation) + edzKv("Recherche", d.research) + edzKv("Fichier", d.source)
+        t("edzSecDocs"),
+        edzKv(t("edzKvDoc"), edzTr(d.documentation)) +
+          edzKv(t("edzKvResearch"), d.research) +
+          edzKv(t("edzKvFile"), d.source)
       );
       html += edzSec(
-        "Physique",
-        edzKv("Largeur mm", phys.widthMm) +
-          edzKv("Hauteur mm", phys.heightMm) +
-          edzKv("Profondeur mm", phys.depthMm)
+        t("edzSecPhys"),
+        edzKv(t("edzKvWidthMm"), phys.widthMm) +
+          edzKv(t("edzKvHeightMm"), phys.heightMm) +
+          edzKv(t("edzKvDepthMm"), phys.depthMm)
       );
+      const timerTxt =
+        sim.timerDelay != null
+          ? `${sim.timerDelay}${sim.timerMode ? ` (${edzTr(sim.timerMode)})` : ""}`
+          : null;
       html += edzSec(
-        "Simulation",
-        edzKv("Type", sim.type) +
-          edzKv("Règle", sim.activationRule) +
-          edzKv("État défaut", sim.defaultState) +
-          edzKv("Tension", sim.voltage) +
-          edzKv("Courant A", sim.ratedCurrentA) +
-          edzKv("Courbe", sim.protectionCurve) +
-          edzKv("Timer", sim.timerDelay != null ? `${sim.timerDelay} (${sim.timerMode || ""})` : null) +
-          edzKv("Sons", sim.soundProfile) +
-          edzKv("États", (sim.states || []).join(", ")) +
-          edzKv("Limites", sim.modelLimitations)
+        t("edzSecSim"),
+        edzKv(t("edzKvType"), edzTr(sim.type)) +
+          edzKv(t("edzKvRule"), edzTr(sim.activationRule)) +
+          edzKv(t("edzKvDefaultState"), edzTr(sim.defaultState)) +
+          edzKv(t("edzKvVoltage"), sim.voltage) +
+          edzKv(t("edzKvCurrent"), sim.ratedCurrentA) +
+          edzKv(t("edzKvCurve"), sim.protectionCurve) +
+          edzKv(t("edzKvTimer"), timerTxt) +
+          edzKv(t("edzKvSounds"), edzTr(sim.soundProfile)) +
+          edzKv(t("edzKvStates"), edzJoinTr(sim.states)) +
+          edzKv(t("edzKvLimits"), edzTr(sim.modelLimitations))
       );
       if (d.motorConfig) {
         const m = d.motorConfig;
         html += edzSec(
-          "Moteur",
-          edzKv("Type", m.motorType || m.type) +
-            edzKv("Bornes", m.terminals) +
-            edzKv("Connexions", Array.isArray(m.availableConnections) ? m.availableConnections.join(", ") : null) +
-            edzKv("Défaut", m.defaultConnection)
+          t("edzSecMotor"),
+          edzKv(t("edzKvType"), edzTr(m.motorType || m.type)) +
+            edzKv(t("edzKvTerminals"), m.terminals) +
+            edzKv(t("edzKvConnections"), edzJoinTr(m.availableConnections)) +
+            edzKv(t("edzKvDefault"), edzTr(m.defaultConnection))
         );
       }
       html += edzSec(
-        "Docking",
-        edzKv("Mountable", dock.mountable != null ? String(dock.mountable) : null) +
-          edzKv("Attach", dock.attachType) +
-          edzKv("Z", dock.zLayer)
+        t("edzSecDock"),
+        edzKv(t("edzKvMountable"), edzBoolLabel(dock.mountable)) +
+          edzKv(t("edzKvAttach"), edzTr(dock.attachType)) +
+          edzKv(t("edzKvZ"), dock.zLayer)
       );
       const flags = [
         d.hasVfd ? "VFD" : null,
         d.hasPlc ? "PLC" : null,
-        d.hasButtons ? "Boutons" : null,
-        d.hasRotary ? "Potards" : null,
-        d.hasScreen ? "Écran" : null,
+        d.hasButtons ? t("edzFlagButtons") : null,
+        d.hasRotary ? t("edzFlagRotary") : null,
+        d.hasScreen ? t("edzFlagScreen") : null,
       ].filter(Boolean);
-      if (flags.length) html += edzSec("Options UI", edzKv("Présent", flags.join(", ")));
+      if (flags.length) html += edzSec(t("edzSecOpts"), edzKv(t("edzKvPresent"), flags.join(", ")));
       const terms = d.terminals || [];
       if (terms.length) {
         const lis = terms
-          .map((t) => {
-            const bits = [t.id, t.signal, t.role, t.documentedFunction].filter(Boolean);
+          .map((term) => {
+            const bits = [
+              term.id,
+              edzTr(term.signal),
+              edzTr(term.role),
+              edzTr(term.documentedFunction),
+            ].filter(Boolean);
             return `<li>${bits.join(" · ")}</li>`;
           })
           .join("");
-        html += edzSec("Bornes", `<ul>${lis}</ul>`);
+        html += edzSec(t("edzSecTerms"), `<ul>${lis}</ul>`);
       }
-      return html || `<p class="empty">Fiche vide.</p>`;
+      return html || `<p class="empty">${t("edzEmptySheet")}</p>`;
     }
     function updateEdzPropsPanel() {
       const panel = document.getElementById("edzProps");
@@ -6911,13 +6945,12 @@
       }
       panel.hidden = false;
       panel.classList.add("open");
-      const lib = LIB[typeId] || {};
-      title.textContent = lib.name || typeId;
-      body.innerHTML = `<p class="empty">Chargement de la fiche…</p>`;
+      title.textContent = libDisplayName(typeId, LIB[typeId]) || typeId;
+      body.innerHTML = `<p class="empty">${t("edzLoading")}</p>`;
       ensureEdzDetails().then((cat) => {
         const still = state.selected && state.items.find((i) => i.uid === state.selected);
         if (!still || still.type !== typeId || state.edzPropsUid !== state.selected) return;
-        body.innerHTML = renderEdzPropsBody(cat[typeId]);
+        body.innerHTML = renderEdzPropsBody(cat[typeId], typeId);
       });
     }
     const edzCloseBtn = document.getElementById("edzPropsClose");
