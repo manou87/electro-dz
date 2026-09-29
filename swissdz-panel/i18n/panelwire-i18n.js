@@ -99,8 +99,10 @@
       "confirmVipOff": "VIP déjà actif. Désactiver la version VIP ?",
       "confirmNew": "Effacer le schéma et recommencer ?",
       "alertBadJson": "Impossible d'ouvrir ce fichier JSON.",
-      "langTitle": "Langue / Language",
+      "langTitle": "Langue",
       "langAria": "Changer de langue",
+      "langFr": "Français",
+      "langEn": "Anglais",
       "motorRunning": "en marche",
       "ladderEmpty": "Aucun segment — clique « + Segment ».",
       "etsParticipants": "Participants / objets de communication",
@@ -208,8 +210,10 @@
       "confirmVipOff": "VIP already active. Disable VIP?",
       "confirmNew": "Clear the diagram and start over?",
       "alertBadJson": "Could not open this JSON file.",
-      "langTitle": "Language / Langue",
+      "langTitle": "Language",
       "langAria": "Change language",
+      "langFr": "French",
+      "langEn": "English",
       "motorRunning": "running",
       "ladderEmpty": "No rungs — click “+ Rung”.",
       "etsParticipants": "Devices / communication objects",
@@ -765,12 +769,20 @@
     });
     var btn = document.getElementById("btnLang");
     if (btn) {
-      btn.textContent = lang === "en" ? "EN | FR" : "FR | EN";
-      btn.setAttribute("aria-pressed", lang === "en" ? "true" : "false");
+      btn.textContent = lang === "en" ? "EN" : "FR";
+      btn.setAttribute("aria-expanded", "false");
       btn.title = t("langTitle");
       btn.setAttribute("aria-label", t("langAria"));
       btn.dataset.lang = lang;
     }
+    var menu = document.getElementById("langMenu");
+    if (menu) menu.classList.remove("open");
+    document.querySelectorAll("#langDropdown [data-set-lang]").forEach(function (opt) {
+      var code = opt.getAttribute("data-set-lang");
+      opt.setAttribute("aria-selected", code === lang ? "true" : "false");
+      if (code === "fr") opt.textContent = t("langFr");
+      else if (code === "en") opt.textContent = t("langEn");
+    });
   }
 
   g.PanelWireI18n = {
