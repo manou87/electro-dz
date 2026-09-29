@@ -816,13 +816,15 @@
     }
     .dev.source.phase { background:#fecaca; }
     .dev.source.neutre { background:#bfdbfe; }
-    /* Pastilles : L rouge · N bleu · PE jaune-vert · BUS KNX vert (1 câble = +/−) */
+    /* Pastilles : L rouge · N bleu · PE jaune-vert · BUS KNX vert (1 câble = +/−).
+       Taille de base ; le JS scale width/height/margin/font avec le resize composant. */
     .term {
       position:absolute; width:13px; height:13px; margin:-6.5px 0 0 -6.5px; border-radius:50%;
       background:rgba(225,29,46,.92); color:#fff; font-size:7px; font-weight:800;
       display:grid; place-items:center; z-index:60; cursor:crosshair; line-height:1;
       box-shadow:0 1px 2px rgba(0,0,0,.35);
       pointer-events:auto;
+      box-sizing:border-box;
     }
     .term.neu { background:#0088ce; }
     .term.pe {
@@ -2828,6 +2830,27 @@
         w: Number.isFinite(w) && w > 0 ? w : def.w,
         h: Number.isFinite(h) && h > 0 ? h : def.h
       };
+    }
+    /**
+     * Échelle visuelle pastille vs taille LIB.
+     * Positions restent en nx/ny (jamais 1−nx) → pas d’inversion L↔N au resize.
+     * Moyenne géométrique pour garder des pastilles rondes si stretch non uniforme.
+     */
+    function termVisualScale(item) {
+      const def = LIB[item && item.type] || { w: 80, h: 80 };
+      const sz = itemSize(item);
+      const sx = sz.w / Math.max(1, def.w);
+      const sy = sz.h / Math.max(1, def.h);
+      const s = Math.sqrt(Math.max(0, sx) * Math.max(0, sy));
+      if (!Number.isFinite(s) || s <= 0) return 1;
+      return Math.max(0.5, Math.min(3.2, s));
+    }
+    /** Diamètre pastille (px) : suit le scale composant. */
+    function termPadSize(item, opts) {
+      const knx = !!(opts && opts.knxbus);
+      const base = knx ? 16 : 13;
+      const px = Math.round(base * termVisualScale(item));
+      return Math.max(knx ? 10 : 8, Math.min(knx ? 42 : 36, px));
     }
     function clampSize(n) {
       const v = Math.round(Number(n));
@@ -5353,9 +5376,11 @@
     function termPadRadius(ref) {
       try {
         const item = find(ref.uid);
-        if (item && termRole(item.type, ref.term) === "knxbus") return 8;
+        if (!item) return 6.5;
+        const knx = termRole(item.type, ref.term) === "knxbus";
+        return termPadSize(item, { knxbus: knx }) / 2;
       } catch (_) {}
-      return 6.5; /* .term 13×13, centre = termAbs */
+      return 6.5;
     }
     /**
      * Décale l’extrémité sur le bord de la pastille selon l’approche
@@ -7635,7 +7660,7 @@
             neu: role === "n" || (item.neu[t.id] && role !== "knxbus" && role !== "pe"),
             pe: role === "pe",
             knxbus: role === "knxbus"
-          }));
+          }, item));
         });
       });
 
@@ -7779,7 +7804,7 @@
       return false;
     }
 
-    function makeTerm(x, y, uid, id, mark) {
+    function makeTerm(x, y, uid, id, mark, item) {
       const t = document.createElement("div");
       const pe = mark && mark.pe;
       const knxbus = mark && mark.knxbus;
@@ -7791,6 +7816,15 @@
         + (knxbus ? " knxbus" : "");
       t.style.left = x + "px";
       t.style.top = y + "px";
+      /* Scale pastille avec le composant (hitbox = taille visuelle). */
+      const pad = termPadSize(item, { knxbus });
+      const half = pad / 2;
+      t.style.width = pad + "px";
+      t.style.height = pad + "px";
+      t.style.margin = (-half) + "px 0 0 " + (-half) + "px";
+      const baseFs = (knxbus || pe) ? 6 : 7;
+      const fs = Math.max(5, Math.min(14, Math.round(baseFs * termVisualScale(item))));
+      t.style.fontSize = fs + "px";
       t.textContent = pe ? "PE" : knxbus ? "BUS" : (id.length > 2 ? id.slice(0, 2) : id);
       t.title = pe ? "PE — mise à la terre"
         : knxbus ? "BUS KNX — un câble vert (KNX+ et KNX−)"
@@ -7894,6 +7928,7 @@
         }
       }
       const mins = resizeMinSize(item);
+      /* Toujours positif : une largeur/hauteur négative miroirait L↔N via CSS. */
       nw = Math.max(mins.w, nw);
       nh = Math.max(mins.h, nh);
       if (dir.includes("w")) nx = state.resize.x + state.resize.w - nw;
@@ -7903,6 +7938,7 @@
       item.h = Math.round(nh);
       item.y = Math.max(8, ny);
       item.x = resolveDinX(item, Math.max(8, nx), item.y);
+      /* Bornes : positions via nx/ny * w/h (pas de 1−nx) → L reste L, N reste N. */
       followWiresAfterTermMove(item.uid, beforeEps);
       render();
       return true;
@@ -8135,7 +8171,9 @@
       if (!item) { closeSizeDialog(); return; }
       const { w, h } = readSizeInputs();
       pushHistory();
+      const beforeEps = snapshotItemTermEps(item.uid);
       applyItemSize(item, w, h);
+      followWiresAfterTermMove(item.uid, beforeEps);
       applyThermalIrFromDialog(item);
       closeSizeDialog();
       render();
@@ -8145,7 +8183,12 @@
       if (!item) { closeSizeDialog(); return; }
       const { w, h } = readSizeInputs();
       pushHistory();
+      const befores = {};
+      state.items.forEach((it) => {
+        if (it.type === item.type) befores[it.uid] = snapshotItemTermEps(it.uid);
+      });
       applySizeToSameType(item, w, h);
+      Object.keys(befores).forEach((uid) => followWiresAfterTermMove(uid, befores[uid]));
       applyThermalIrFromDialog(item);
       const def = LIB[item.type];
       if (def && def.thermal) {
