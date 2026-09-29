@@ -227,6 +227,61 @@
     @media (max-width: 900px) {
       .edz-props { position:absolute; right:0; top:0; bottom:0; max-width:min(320px,92vw); box-shadow:-8px 0 24px rgba(15,23,42,.12); }
     }
+
+    /* Menu contexte composant (appui long) */
+    .ctx-menu {
+      position:fixed; z-index:220; display:none;
+      left:0; top:0; max-width:min(280px,92vw);
+      filter:drop-shadow(0 10px 28px rgba(15,23,42,.22));
+    }
+    .ctx-menu.open { display:block; }
+    .ctx-menu-card {
+      background:#fff; border:1px solid #e2e8f0; border-radius:12px;
+      padding:6px; min-width:220px; max-height:min(72vh,520px); overflow:auto;
+      -webkit-overflow-scrolling:touch;
+    }
+    .ctx-menu button.ctx-btn {
+      display:flex; align-items:center; gap:8px; width:100%;
+      border:0; background:transparent; text-align:left;
+      padding:10px 12px; border-radius:8px; cursor:pointer;
+      font:600 13px/1.25 system-ui,sans-serif; color:#0f172a;
+      -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+    }
+    .ctx-menu button.ctx-btn:active { background:#f1f5f9; }
+    .ctx-menu button.ctx-btn.danger { color:#b91c1c; }
+    .ctx-menu button.ctx-btn.on { background:#eff6ff; color:#1d4ed8; }
+    .ctx-menu .ctx-sep { height:1px; background:#eef2f7; margin:4px 2px; }
+    .ctx-nudge {
+      padding:6px 8px 8px; border-top:1px solid #eef2f7; margin-top:2px;
+    }
+    .ctx-nudge-head {
+      display:flex; align-items:center; justify-content:space-between; gap:8px;
+      margin-bottom:8px; font:700 11px/1 system-ui,sans-serif; color:#64748b;
+      letter-spacing:.04em; text-transform:uppercase;
+    }
+    .ctx-steps { display:flex; gap:4px; align-items:center; }
+    .ctx-steps button {
+      border:1px solid #e2e8f0; background:#f8fafc; border-radius:7px;
+      min-width:28px; height:28px; padding:0 6px; cursor:pointer;
+      font:700 12px/1 system-ui,sans-serif; color:#334155;
+      -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+    }
+    .ctx-steps button.on { background:#0f172a; color:#fff; border-color:#0f172a; }
+    .ctx-pad {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:4px; max-width:148px; margin:0 auto;
+    }
+    .ctx-pad button {
+      border:1px solid #e2e8f0; background:#f8fafc; border-radius:8px;
+      height:36px; cursor:pointer; font:700 14px/1 system-ui,sans-serif; color:#0f172a;
+      -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+    }
+    .ctx-pad button:active { background:#e2e8f0; }
+    .ctx-pad .sp { visibility:hidden; pointer-events:none; }
+    .dev.locked::after {
+      content:"🔒"; position:absolute; top:2px; right:2px; z-index:80;
+      font-size:11px; line-height:1; pointer-events:none;
+      filter:drop-shadow(0 1px 1px rgba(15,23,42,.35));
+    }
     .play-fab { display:none; }
     @media (max-width: 1100px) {
       .lib-side { flex-basis:188px; width:188px; }
@@ -1752,6 +1807,39 @@
       </div>
     </div>
   </div>
+
+  <div id="ctxMenu" class="ctx-menu" aria-hidden="true" hidden>
+    <div class="ctx-menu-card" role="menu" aria-label="Actions composant">
+      <button type="button" class="ctx-btn" data-act="reset" role="menuitem">Reprendre sa place</button>
+      <button type="button" class="ctx-btn" data-act="size" role="menuitem">Taille…</button>
+      <button type="button" class="ctx-btn" data-act="rot" role="menuitem" id="ctxRotBtn">Rotation</button>
+      <button type="button" class="ctx-btn" data-act="lock" role="menuitem" id="ctxLockBtn">Cadenassé</button>
+      <button type="button" class="ctx-btn" data-act="dup" role="menuitem">Dupliquer</button>
+      <div class="ctx-sep"></div>
+      <button type="button" class="ctx-btn danger" data-act="del" role="menuitem">Supprimer</button>
+      <div class="ctx-nudge">
+        <div class="ctx-nudge-head">
+          <span>Déplacer</span>
+          <div class="ctx-steps" role="group" aria-label="Pas en mm">
+            <button type="button" data-act="step" data-mm="1">1</button>
+            <button type="button" data-act="step" data-mm="2">2</button>
+            <button type="button" data-act="step" data-mm="3">3</button>
+            <button type="button" data-act="stepPlus" title="Augmenter le pas">+</button>
+          </div>
+        </div>
+        <div class="ctx-pad" aria-label="Nudge mm">
+          <button type="button" class="sp" tabindex="-1" aria-hidden="true">·</button>
+          <button type="button" data-act="nudge" data-dx="0" data-dy="-1" title="Haut">↑</button>
+          <button type="button" class="sp" tabindex="-1" aria-hidden="true">·</button>
+          <button type="button" data-act="nudge" data-dx="-1" data-dy="0" title="Gauche">←</button>
+          <button type="button" data-act="nudge" data-dx="0" data-dy="1" title="Bas">↓</button>
+          <button type="button" data-act="nudge" data-dx="1" data-dy="0" title="Droite">→</button>
+        </div>
+        <div style="text-align:center;margin-top:4px;font:600 11px/1 system-ui,sans-serif;color:#94a3b8"><span id="ctxStepLabel">pas 1 mm</span></div>
+      </div>
+    </div>
+  </div>
+
   <button type="button" id="btnPlayFab" class="play-fab" data-i18n-title="btnPlayTitle" data-i18n-aria="btnPlayAria" title="Vérifier le courant" aria-label="Vérifier le courant">
     <svg class="fab-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19.2 12 8 5.2z"/></svg>
     <span class="fab-label" data-i18n="btnPlayShort">Vérifier</span>
@@ -4135,8 +4223,12 @@
         closed: !!it.closed,
         pressed: !!it.pressed,
         selPos: it.selPos == null ? null : it.selPos,
-        thermalIr: it.thermalIr == null ? null : it.thermalIr
+        thermalIr: it.thermalIr == null ? null : it.thermalIr,
+        locked: !!it.locked,
+        rot: Number.isFinite(Number(it.rot)) ? Number(it.rot) : 0
       };
+      if (it.prevX != null && Number.isFinite(Number(it.prevX))) out.prevX = Number(it.prevX);
+      if (it.prevY != null && Number.isFinite(Number(it.prevY))) out.prevY = Number(it.prevY);
       if (it.knxToggle && typeof it.knxToggle === "object") {
         out.knxToggle = { 1: !!it.knxToggle[1], 2: !!it.knxToggle[2], 3: !!it.knxToggle[3], 4: !!it.knxToggle[4] };
       }
@@ -4717,9 +4809,8 @@
       state.items.push(item);
       if (isKnxDevice(def)) ensureKnxProgram(item);
       state.selected = item.uid;
-      /* Desktop : ouvrir la fiche à la pose. Mobile : appui long ensuite. */
-      if (isEdzType(item.type) && !preferTouchPropsLongPress()) state.edzPropsUid = item.uid;
-      else if (state.edzPropsUid !== item.uid) state.edzPropsUid = null;
+      /* Pose : sélection seule — fiche via triple-clic, menu via appui long. */
+      if (state.edzPropsUid !== item.uid) state.edzPropsUid = null;
       if (state.etsOpen) renderEtsPanel();
       closeMobileLib();
       render();
@@ -4731,24 +4822,28 @@
     function isTouchLikePointer(ev) {
       return !!(ev && (ev.pointerType === "touch" || ev.pointerType === "pen"));
     }
-    function preferTouchPropsLongPress() {
-      try {
-        return window.matchMedia("(pointer: coarse)").matches
-          || window.matchMedia("(hover: none)").matches;
-      } catch (_) {
-        return false;
-      }
-    }
     function isEdzType(typeId) {
       return !!(typeId && String(typeId).startsWith("edz_"));
     }
-    const EDZ_PROPS_LONG_MS = 2000;
+    /* Appui long → menu contexte ; triple-clic/tap → fiche caractéristiques (EDZ). */
+    const ITEM_CTX_LONG_MS = 480;
+    const ITEM_TRIPLE_MS = 520;
+    const MM_TO_PX = 2;
     function clearEdzLongPress() {
       if (state._edzLongPressTimer) {
         clearTimeout(state._edzLongPressTimer);
         state._edzLongPressTimer = null;
       }
       state._edzLongPress = null;
+    }
+    function closeCtxMenu() {
+      const menu = document.getElementById("ctxMenu");
+      if (menu) {
+        menu.classList.remove("open");
+        menu.hidden = true;
+        menu.setAttribute("aria-hidden", "true");
+      }
+      state._ctxUid = null;
     }
     function closeEdzPropsPanel() {
       clearEdzLongPress();
@@ -4761,6 +4856,7 @@
     }
     function openEdzPropsFor(uid) {
       clearEdzLongPress();
+      closeCtxMenu();
       const item = uid && state.items.find((i) => i.uid === uid);
       if (!item || !isEdzType(item.type)) {
         closeEdzPropsPanel();
@@ -4770,19 +4866,171 @@
       state.selected = uid;
       state.selectedWire = null;
     }
-    /** Souris : ouvrir tout de suite. Touch/pen : appui long ~2 s (annulé si déplacement > slop). */
+    function itemRotDeg(item) {
+      const r = Number(item && item.rot);
+      return Number.isFinite(r) ? ((r % 360) + 360) % 360 : 0;
+    }
+    function rotatePointAround(px, py, cx, cy, deg) {
+      if (!deg) return { x: px, y: py };
+      const rad = (deg * Math.PI) / 180;
+      const cos = Math.cos(rad), sin = Math.sin(rad);
+      const dx = px - cx, dy = py - cy;
+      return { x: cx + dx * cos - dy * sin, y: cy + dx * sin + dy * cos };
+    }
+    function rotateDirection(dir, deg) {
+      const order = ["top", "right", "bottom", "left"];
+      const i = order.indexOf(dir);
+      if (i < 0) return dir;
+      const steps = ((Math.round((((deg % 360) + 360) % 360) / 90) % 4) + 4) % 4;
+      return order[(i + steps) % 4];
+    }
+    function syncCtxMenuUi(item) {
+      const lockBtn = document.getElementById("ctxLockBtn");
+      const rotBtn = document.getElementById("ctxRotBtn");
+      const stepLabel = document.getElementById("ctxStepLabel");
+      const mm = state._ctxNudgeMm || 1;
+      if (lockBtn) {
+        lockBtn.textContent = item && item.locked ? "Cadenassé ✓" : "Cadenassé";
+        lockBtn.classList.toggle("on", !!(item && item.locked));
+      }
+      if (rotBtn) rotBtn.textContent = "Rotation (" + itemRotDeg(item) + "°)";
+      if (stepLabel) stepLabel.textContent = "pas " + mm + " mm";
+      document.querySelectorAll("#ctxMenu [data-act=\"step\"]").forEach((b) => {
+        b.classList.toggle("on", Number(b.dataset.mm) === mm);
+      });
+      const resetBtn = document.querySelector('#ctxMenu [data-act="reset"]');
+      if (resetBtn) {
+        const can = !!(item && item.prevX != null && item.prevY != null
+          && (item.prevX !== item.x || item.prevY !== item.y));
+        resetBtn.disabled = !can;
+        resetBtn.style.opacity = can ? "1" : ".45";
+      }
+    }
+    function positionCtxMenu(clientX, clientY) {
+      const menu = document.getElementById("ctxMenu");
+      if (!menu) return;
+      menu.hidden = false;
+      menu.classList.add("open");
+      menu.setAttribute("aria-hidden", "false");
+      const pad = 8;
+      const vw = window.innerWidth || 320;
+      const vh = window.innerHeight || 480;
+      menu.style.left = "0px";
+      menu.style.top = "0px";
+      const rect = menu.getBoundingClientRect();
+      let x = (clientX != null ? clientX : vw / 2) + 8;
+      let y = (clientY != null ? clientY : vh / 2) + 8;
+      if (x + rect.width > vw - pad) x = Math.max(pad, vw - rect.width - pad);
+      if (y + rect.height > vh - pad) y = Math.max(pad, vh - rect.height - pad);
+      menu.style.left = Math.round(x) + "px";
+      menu.style.top = Math.round(y) + "px";
+    }
+    function openCtxMenuFor(uid, clientX, clientY) {
+      const item = uid && find(uid);
+      if (!item) { closeCtxMenu(); return; }
+      closeEdzPropsPanel();
+      state.selected = uid;
+      state.selectedWire = null;
+      state._ctxUid = uid;
+      if (!state._ctxNudgeMm) state._ctxNudgeMm = 1;
+      syncCtxMenuUi(item);
+      positionCtxMenu(clientX, clientY);
+    }
+    function rememberItemPrevPos(item, x, y) {
+      if (!item) return;
+      item.prevX = x;
+      item.prevY = y;
+    }
+    function resetItemPrevPos(item) {
+      if (!item || item.locked) return false;
+      if (item.prevX == null || item.prevY == null) return false;
+      if (item.prevX === item.x && item.prevY === item.y) return false;
+      pushHistory();
+      const ox = item.x, oy = item.y;
+      const nx = item.prevX, ny = item.prevY;
+      item.y = Math.max(8, ny);
+      item.x = resolveDinX(item, Math.max(8, nx), item.y);
+      shiftWiresForItemDelta(item.uid, item.x - ox, item.y - oy);
+      return true;
+    }
+    function nudgeItemByMm(item, dxMm, dyMm) {
+      if (!item || item.locked) return false;
+      const dx = Number(dxMm) * MM_TO_PX;
+      const dy = Number(dyMm) * MM_TO_PX;
+      if (!dx && !dy) return false;
+      pushHistory();
+      rememberItemPrevPos(item, item.x, item.y);
+      const ox = item.x, oy = item.y;
+      item.y = Math.max(8, item.y + dy);
+      item.x = resolveDinX(item, Math.max(8, item.x + dx), item.y);
+      shiftWiresForItemDelta(item.uid, item.x - ox, item.y - oy);
+      return true;
+    }
+    function rotateItemBy(item, deltaDeg) {
+      if (!item || item.locked) return false;
+      pushHistory();
+      const beforeEps = snapshotItemTermEps(item.uid);
+      item.rot = itemRotDeg(item) + deltaDeg;
+      followWiresAfterTermMove(item.uid, beforeEps);
+      return true;
+    }
+    function toggleItemLock(item) {
+      if (!item) return false;
+      pushHistory();
+      item.locked = !item.locked;
+      return true;
+    }
+    function duplicateItem(item) {
+      if (!item) return null;
+      const def = LIB[item.type];
+      if (!def) return null;
+      pushHistory();
+      const copy = deepClone(item);
+      copy.uid = "c" + (state.seq++);
+      copy.tag = nextTag(item.type);
+      copy.x = item.x + 28;
+      copy.y = item.y + 28;
+      copy.locked = false;
+      copy.prevX = null;
+      copy.prevY = null;
+      copy.hot = {};
+      copy.neu = {};
+      copy.lit = false;
+      copy.coilOn = false;
+      copy._coilPrev = false;
+      copy.y = snapToRailY(copy, copy.x, copy.y);
+      copy.x = resolveDinX(copy, copy.x, copy.y);
+      state.items.push(copy);
+      if (isKnxDevice(def)) ensureKnxProgram(copy);
+      state.selected = copy.uid;
+      state.edzPropsUid = null;
+      return copy;
+    }
+    function noteItemTap(item) {
+      if (!item) return;
+      const now = Date.now();
+      const tr = state._tripleTap;
+      if (tr && tr.uid === item.uid && (now - tr.t) <= ITEM_TRIPLE_MS) {
+        tr.count += 1;
+        tr.t = now;
+      } else {
+        state._tripleTap = { uid: item.uid, count: 1, t: now };
+      }
+      if (state._tripleTap.count >= 3) {
+        state._tripleTap = null;
+        if (isEdzType(item.type)) {
+          openEdzPropsFor(item.uid);
+          try { if (navigator.vibrate) navigator.vibrate(10); } catch (_) {}
+          render();
+        }
+      }
+    }
+    /** Appui long → menu contexte. Tap/drag simple = sélection. Triple-tap → fiche EDZ. */
     function armEdzPropsGesture(item, ev) {
       clearEdzLongPress();
-      if (!item || !isEdzType(item.type)) {
-        if (state.edzPropsUid && state.edzPropsUid !== (item && item.uid)) state.edzPropsUid = null;
-        return;
-      }
-      if (!isTouchLikePointer(ev)) {
-        state.edzPropsUid = item.uid;
-        return;
-      }
-      /* Touch : ne pas ouvrir au tap — préparer l’appui long. */
-      if (state.edzPropsUid !== item.uid) state.edzPropsUid = null;
+      state._ctxOpenedByHold = false;
+      if (!item) return;
+      if (state.edzPropsUid && state.edzPropsUid !== item.uid) state.edzPropsUid = null;
       const slop = tapSlopPx(ev);
       state._edzLongPress = {
         uid: item.uid,
@@ -4796,15 +5044,13 @@
         state._edzLongPressTimer = null;
         state._edzLongPress = null;
         if (!lp || state.selected !== lp.uid) return;
-        /* Annule le drag en cours pour ne pas déplacer pendant l’ouverture. */
         state.drag = null;
         syncDragLock();
-        openEdzPropsFor(lp.uid);
-        try {
-          if (navigator.vibrate) navigator.vibrate(12);
-        } catch (_) {}
+        state._ctxOpenedByHold = true;
+        openCtxMenuFor(lp.uid, lp.x, lp.y);
+        try { if (navigator.vibrate) navigator.vibrate(14); } catch (_) {}
         render();
-      }, EDZ_PROPS_LONG_MS);
+      }, ITEM_CTX_LONG_MS);
     }
     function noteEdzLongPressMove(ev) {
       const lp = state._edzLongPress;
@@ -4815,7 +5061,7 @@
         clearEdzLongPress();
         return false;
       }
-      return true; /* encore dans le slop : hold = candidat appui long */
+      return true;
     }
     const ICO_PLAY = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19.2 12 8 5.2z"/></svg>';
     const ICO_STOP = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1.6"/></svg>';
@@ -4910,18 +5156,28 @@
     }
     function termAbs(item, term) {
       const def = LIB[item.type];
+      let p;
       if (def && def.flukeMeter) {
         const tip = flukeTipsOf(item)[term.id];
         if (tip) {
           const sz = itemSize(item);
-          return {
+          p = {
             x: item.x + tip.nx * sz.w,
             y: item.y + tip.ny * sz.h,
             direction: term.direction || "bottom"
           };
         }
       }
-      return rawTermAbs(item, term);
+      if (!p) p = rawTermAbs(item, term);
+      const rot = itemRotDeg(item);
+      if (rot) {
+        const sz = itemSize(item);
+        const cx = item.x + sz.w / 2;
+        const cy = item.y + sz.h / 2;
+        const rp = rotatePointAround(p.x, p.y, cx, cy, rot);
+        p = { x: rp.x, y: rp.y, direction: rotateDirection(p.direction, rot) };
+      }
+      return p;
     }
     function isFlukeMeterRef(ref) {
       const it = find(ref.uid);
@@ -5157,6 +5413,7 @@
         state.wireDrag = null;
         state.selected = item.uid;
         state.selectedWire = null;
+        if (item.locked) { render(); return; }
         const histKey = structuralKey(cloneEditableState());
         pushHistory();
         state.drag = {
@@ -7031,10 +7288,15 @@
         el.className = "dev" + (state.selected === item.uid ? " sel" : "");
         el.dataset.uid = item.uid;
         if (isEdzType(item.type)) {
-          el.title = preferTouchPropsLongPress()
-            ? ((libDisplayName(item.type, def) || def.name || "") + " — appui long (~2 s) : caractéristiques")
-            : ((libDisplayName(item.type, def) || def.name || "") + " — clic : caractéristiques");
+          el.title = (libDisplayName(item.type, def) || def.name || "")
+            + " — triple-clic : caractéristiques · appui long : menu";
+        } else {
+          el.title = (libDisplayName(item.type, def) || def.name || item.tag || "")
+            + " — appui long : menu";
         }
+        const rotDeg = itemRotDeg(item);
+        if (rotDeg) el.style.transform = "rotate(" + rotDeg + "deg)";
+        if (item.locked) el.classList.add("locked");
         if (def.push && item.pressed && !def.fc) el.classList.add("is-pressed");
         if (def.fc) {
           el.classList.add("fc-dev");
@@ -7480,7 +7742,7 @@
           el.appendChild(b);
         }
         /* Poignées de taille : tous les composants placés (din, rail, boutonnerie, KNX, etc.) */
-        if (state.selected === item.uid && state.mode === "select" && canResizeItem(item)) {
+        if (state.selected === item.uid && state.mode === "select" && canResizeItem(item) && !item.locked) {
           ["nw", "n", "ne", "e", "se", "s", "sw", "w"].forEach((dir) => {
             const h = document.createElement("div");
             h.className = "rhandle " + dir;
@@ -7571,6 +7833,7 @@
           }
           /* Hors sim : disj. photo — clic court sur le corps = I-ON/O-OFF (sinon drag) */
           if (!state.sim && def.imageOff && (def.pair || def.pairs) && !def.push && !hasCoil(def)) {
+            if (item.locked) { render(); return; }
             const histKey = structuralKey(cloneEditableState());
             pushHistory();
             ev.preventDefault();
@@ -7593,6 +7856,7 @@
             render();
             return;
           }
+          if (item.locked) { render(); return; }
           const histKey = structuralKey(cloneEditableState());
           pushHistory();
           /* Mobile : empêche le pan/scroll du board ; capture sur #board (survit au render) */
@@ -7617,6 +7881,11 @@
         el.addEventListener("contextmenu", (ev) => {
           ev.preventDefault();
           ev.stopPropagation();
+          clearEdzLongPress();
+          state.drag = null;
+          syncDragLock();
+          openCtxMenuFor(item.uid, ev.clientX, ev.clientY);
+          render();
         });
       });
 
@@ -7972,7 +8241,7 @@
         const item = find(state.drag.uid);
         if (!item) return;
         const moved = Math.hypot(ev.clientX - state.drag.px, ev.clientY - state.drag.py);
-        /* Appui long caractéristiques : ne pas démarrer le drag tant que dans le slop. */
+        /* Appui long menu : ne pas démarrer le drag tant que dans le slop. */
         if (state._edzLongPress) {
           if (noteEdzLongPressMove(ev)) return;
         }
@@ -8029,6 +8298,8 @@
     });
     window.addEventListener("pointercancel", () => { clearEdzLongPress(); });
     window.addEventListener("pointerup", (ev) => {
+      const lpWas = state._edzLongPress;
+      const ctxByHold = !!state._ctxOpenedByHold;
       clearEdzLongPress();
       state.items.forEach((i) => {
         const d = LIB[i.type];
@@ -8043,6 +8314,12 @@
       const captureId = (state.drag && state.drag.pointerId)
         || (state.resize && state.resize.pointerId)
         || (state.flukeTipDrag && state.flukeTipDrag.pointerId);
+      const dragStartX = state.drag && state.drag.x;
+      const dragStartY = state.drag && state.drag.y;
+      const dragUidTap = state.drag && state.drag.uid;
+      const dragMoved = state.drag
+        ? Math.hypot(ev.clientX - state.drag.px, ev.clientY - state.drag.py)
+        : 999;
       if (state.flukeTipDrag) {
         const fd = state.flukeTipDrag;
         const pt = boardPointFromClient(ev.clientX, ev.clientY);
@@ -8087,10 +8364,10 @@
         try { if (board.hasPointerCapture(captureId)) board.releasePointerCapture(captureId); } catch (_) {}
       }
       const dragged = state.drag && find(state.drag.uid);
-      const pendingToggle = !!(state.drag && state.drag.pendingToggle && dragged);
+      const pendingToggle = !!(state.drag && state.drag.pendingToggle && dragged) && !ctxByHold;
       if (pendingToggle) {
         dragged.closed = !dragged.closed;
-      } else if (dragged) {
+      } else if (dragged && !ctxByHold) {
         if (state.drag.group && state.drag.group.items) {
           const ex = state.drag.group.groupIds || null;
           state.drag.group.items.forEach((s) => {
@@ -8101,7 +8378,24 @@
         } else {
           settleItemPlacement(dragged, state.drag.x, state.drag.y, null);
         }
+        if (dragged && dragStartX != null && (dragged.x !== dragStartX || dragged.y !== dragStartY)) {
+          rememberItemPrevPos(dragged, dragStartX, dragStartY);
+        }
       }
+      /* Tap court (sans menu) : compteur triple-clic pour la fiche EDZ. */
+      {
+        const tapUid = dragUidTap || (lpWas && lpWas.uid) || null;
+        const tapSlop = (lpWas && lpWas.slop) || tapSlopPx(ev);
+        const tapMoved = dragUidTap != null
+          ? dragMoved
+          : (lpWas ? Math.hypot(ev.clientX - lpWas.x, ev.clientY - lpWas.y) : 999);
+        if (!ctxByHold && !wasWireDrag && !wasFlukeTip && !state.resize
+            && tapUid && tapMoved < tapSlop) {
+          const tapped = find(tapUid);
+          if (tapped) noteItemTap(tapped);
+        }
+      }
+      state._ctxOpenedByHold = false;
       const resized = state.resize && find(state.resize.uid);
       if (resized) {
         settleItemPlacement(resized, state.resize.x, state.resize.y, null);
@@ -8118,6 +8412,86 @@
       if (state.sim || wasWireDrag || wasFlukeTip || wasDrag || wasResize) render();
       else writeAutosave();
     });
+
+
+    /* --- Menu contexte composant (appui long / clic droit) --- */
+    (function bindCtxMenu() {
+      const menu = document.getElementById("ctxMenu");
+      if (!menu) return;
+      menu.addEventListener("pointerdown", (ev) => { ev.stopPropagation(); });
+      menu.addEventListener("contextmenu", (ev) => { ev.preventDefault(); });
+      menu.addEventListener("click", (ev) => {
+        const btn = ev.target.closest("[data-act]");
+        if (!btn || !menu.contains(btn)) return;
+        ev.preventDefault();
+        ev.stopPropagation();
+        const act = btn.dataset.act;
+        const item = find(state._ctxUid || state.selected);
+        if (act === "step") {
+          state._ctxNudgeMm = Math.max(1, Math.min(3, Number(btn.dataset.mm) || 1));
+          syncCtxMenuUi(item);
+          return;
+        }
+        if (act === "stepPlus") {
+          const cur = state._ctxNudgeMm || 1;
+          state._ctxNudgeMm = cur >= 3 ? 1 : cur + 1;
+          syncCtxMenuUi(item);
+          return;
+        }
+        if (!item) { closeCtxMenu(); return; }
+        if (act === "nudge") {
+          const mm = state._ctxNudgeMm || 1;
+          const dx = Number(btn.dataset.dx || 0) * mm;
+          const dy = Number(btn.dataset.dy || 0) * mm;
+          if (nudgeItemByMm(item, dx, dy)) {
+            syncCtxMenuUi(item);
+            render();
+          }
+          return;
+        }
+        if (act === "reset") {
+          if (resetItemPrevPos(item)) { syncCtxMenuUi(item); render(); }
+          return;
+        }
+        if (act === "size") {
+          if (item.locked) return;
+          closeCtxMenu();
+          openSizeDialog(item);
+          return;
+        }
+        if (act === "rot") {
+          if (rotateItemBy(item, 90)) { syncCtxMenuUi(item); render(); }
+          return;
+        }
+        if (act === "lock") {
+          if (toggleItemLock(item)) { syncCtxMenuUi(item); render(); }
+          return;
+        }
+        if (act === "dup") {
+          closeCtxMenu();
+          duplicateItem(item);
+          render();
+          return;
+        }
+        if (act === "del") {
+          closeCtxMenu();
+          state.selected = item.uid;
+          deleteSelection();
+          return;
+        }
+      });
+      document.addEventListener("pointerdown", (ev) => {
+        if (!menu.classList.contains("open")) return;
+        if (menu.contains(ev.target)) return;
+        closeCtxMenu();
+      }, true);
+      window.addEventListener("keydown", (ev) => {
+        if (ev.key === "Escape" && menu.classList.contains("open")) {
+          closeCtxMenu();
+          ev.preventDefault();
+        }
+      });
+    })();
 
     /* --- Dialogue Largeur / Hauteur (double-clic) — + Ir si thermique --- */
     let sizeDialogUid = null;
@@ -8249,6 +8623,7 @@
       const t = ev.target;
       if (t !== board && t.id !== "boardWorld" && t.id !== "boardZoomSpacer" && !t.classList.contains("board-zoom-spacer")) return;
       clearEdzLongPress();
+      closeCtxMenu();
       state.selected = null;
       state.selectedWire = null;
       state.edzPropsUid = null;
