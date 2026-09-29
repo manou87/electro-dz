@@ -74,7 +74,55 @@
     }
     .play-fab .fab-ico { width:18px; height:18px; flex:0 0 auto; }
     .play-fab .fab-label { margin-left:8px; }
-    .swatches { display:flex; gap:5px; align-items:center; }
+    /* Sélecteurs section / couleur compacts : clic → popup */
+    .wire-pickers {
+      display:flex; align-items:center; gap:4px; flex:0 0 auto;
+    }
+    .section-picker, .color-picker { position:relative; flex:0 0 auto; }
+    .section-toggle, .color-toggle {
+      display:inline-flex; align-items:center; justify-content:center;
+      height:36px; padding:0; border:1px solid #d1d5db; border-radius:8px; background:#fff;
+      touch-action:manipulation; -webkit-tap-highlight-color:transparent;
+    }
+    .section-toggle {
+      gap:1px; min-width:44px; padding:0 7px; font-size:11px; font-weight:800; color:#1f2937;
+      letter-spacing:-.02em; white-space:nowrap;
+    }
+    .section-toggle .sec-unit {
+      font-size:8px; font-weight:700; color:#9ca3af; margin-left:1px;
+    }
+    .color-toggle { width:36px; min-width:36px; }
+    .section-toggle:hover, .color-toggle:hover { background:#f3f4f6; }
+    .section-picker.open .section-toggle,
+    .color-picker.open .color-toggle {
+      background:#eff6ff; border-color:#93c5fd;
+    }
+    .color-toggle-swatch {
+      width:18px; height:18px; border-radius:50%;
+      border:1px solid rgba(0,0,0,.18); box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);
+      background:#dc2626; flex:0 0 auto; pointer-events:none;
+    }
+    .section-dropdown, .swatches.color-dropdown {
+      display:none; position:absolute; top:calc(100% + 4px); left:0; z-index:90;
+      padding:6px; border-radius:10px; background:#fff; border:1px solid #e5e7eb;
+      box-shadow:0 8px 24px rgba(15,23,42,.14);
+    }
+    .section-dropdown {
+      grid-template-columns:repeat(3, minmax(52px, 1fr)); gap:4px; min-width:176px;
+    }
+    .swatches.color-dropdown {
+      grid-template-columns:repeat(5, 22px); gap:6px; align-items:center; justify-items:center;
+      padding:8px;
+    }
+    .section-picker.open .section-dropdown,
+    .color-picker.open .swatches.color-dropdown { display:grid; }
+    .section-opt {
+      border:1px solid #e5e7eb; border-radius:7px; background:#fff;
+      padding:7px 4px; font-size:11px; font-weight:750; color:#334155;
+      white-space:nowrap; touch-action:manipulation; -webkit-tap-highlight-color:transparent;
+    }
+    .section-opt:hover { background:#f3f4f6; }
+    .section-opt.on { background:#dbeafe; color:#1d4ed8; border-color:#93c5fd; }
     .swatch {
       width:22px; height:22px; border-radius:50%; border:1px solid #d1d5db; padding:0;
       touch-action:manipulation; -webkit-tap-highlight-color:transparent;
@@ -85,7 +133,9 @@
       background:#fff; line-height:1; box-sizing:border-box;
       touch-action:manipulation; -webkit-tap-highlight-color:transparent;
     }
-    .brand-tools .row { align-items:center; }
+    .brand-tools { gap:4px; }
+    .brand-tools .group { margin:0; }
+    .brand-tools .row { align-items:center; gap:4px; }
     main {
       flex:1 1 auto; min-height:0; display:flex; flex-direction:row;
       width:100%; position:relative;
@@ -218,8 +268,15 @@
       }
       .brand-tools button.btn-ico svg,
       .group-mode button.btn-ico svg { width:20px; height:20px; }
-      .group-style select { height:38px; }
+      .group-style .section-toggle,
+      .group-style .color-toggle { height:38px; }
+      .group-style .color-toggle { width:38px; min-width:38px; }
+      .group-style .section-toggle { min-width:48px; font-size:12px; }
+      .group-style .color-toggle-swatch { width:20px; height:20px; }
       .group-style .swatch { width:24px; height:24px; }
+      .group-style .swatches.color-dropdown {
+        grid-template-columns:repeat(5, 24px); gap:7px; padding:9px;
+      }
     }
     /* Téléphone / tablette : barre projet scrollable + biblio tiroir */
     @media (max-width: 800px) {
@@ -227,7 +284,7 @@
       .header-top { align-items:center; gap:6px; }
       .brand-cluster {
         flex:0 1 auto;
-        max-width:min(100%, 58vw);
+        max-width:min(100%, 72vw);
         overflow-x:auto;
         overflow-y:hidden;
         -webkit-overflow-scrolling:touch;
@@ -1529,13 +1586,34 @@
             </div>
           </div>
           <div class="group group-style">
-            <div class="row">
-              <select id="section" aria-label="Section du fil" title="Section du fil">
+            <div class="row wire-pickers">
+              <div class="section-picker" id="sectionPicker">
+                <button id="btnSection" class="section-toggle" type="button"
+                  title="Section du fil" aria-label="Section du fil"
+                  aria-haspopup="listbox" aria-expanded="false" aria-controls="sectionOpts">
+                  <span id="sectionToggleLabel">6</span><span class="sec-unit" aria-hidden="true">mm²</span>
+                </button>
+                <div class="section-dropdown" id="sectionOpts" role="listbox" aria-label="Section du fil"></div>
+              </div>
+              <select id="section" hidden aria-hidden="true" tabindex="-1">
+                <option value="0.25">0,25 mm²</option>
+                <option value="0.5">0,5 mm²</option>
+                <option value="0.75">0,75 mm²</option>
+                <option value="1">1 mm²</option>
                 <option value="1.5">1,5 mm²</option>
                 <option value="2.5">2,5 mm²</option>
+                <option value="4">4 mm²</option>
                 <option value="6" selected>6 mm²</option>
+                <option value="10">10 mm²</option>
               </select>
-              <div class="swatches" id="colors" role="group" aria-label="Couleur du fil"></div>
+              <div class="color-picker" id="colorPicker">
+                <button id="btnColor" class="color-toggle" type="button"
+                  title="Couleur du fil" aria-label="Couleur du fil"
+                  aria-haspopup="true" aria-expanded="false" aria-controls="colors">
+                  <span class="color-toggle-swatch" id="colorToggleSwatch" aria-hidden="true"></span>
+                </button>
+                <div class="swatches color-dropdown" id="colors" role="group" aria-label="Couleurs de fil"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -4243,6 +4321,119 @@
     const board = document.getElementById("board");
     const palette = document.getElementById("palette");
 
+    const SECTION_VALUES = [0.25, 0.5, 0.75, 1, 1.5, 2.5, 4, 6, 10];
+    function formatSectionLabel(v) {
+      const n = Number(v);
+      if (!Number.isFinite(n)) return String(v);
+      return String(n).replace(".", ",");
+    }
+    function closeWirePickers(except) {
+      if (except !== "color" && typeof window.__closeColorPicker === "function") window.__closeColorPicker();
+      if (except !== "section" && typeof window.__closeSectionPicker === "function") window.__closeSectionPicker();
+    }
+    (function initSectionPicker() {
+      const picker = document.getElementById("sectionPicker");
+      const btn = document.getElementById("btnSection");
+      const opts = document.getElementById("sectionOpts");
+      const sel = document.getElementById("section");
+      const closeSectionPicker = () => {
+        if (!picker || !btn) return;
+        picker.classList.remove("open");
+        btn.setAttribute("aria-expanded", "false");
+      };
+      const openSectionPicker = () => {
+        if (!picker || !btn) return;
+        closeWirePickers("section");
+        picker.classList.add("open");
+        btn.setAttribute("aria-expanded", "true");
+      };
+      if (opts) {
+        SECTION_VALUES.forEach((val) => {
+          const b = document.createElement("button");
+          b.type = "button";
+          b.className = "section-opt" + (val === (state.section || 6) ? " on" : "");
+          b.dataset.v = String(val);
+          b.setAttribute("role", "option");
+          b.textContent = formatSectionLabel(val) + " mm²";
+          b.title = formatSectionLabel(val) + " mm²";
+          b.onclick = (ev) => {
+            if (ev) ev.stopPropagation();
+            applySectionValue(val);
+            closeSectionPicker();
+          };
+          opts.appendChild(b);
+        });
+      }
+      if (btn && picker) {
+        btn.onclick = (ev) => {
+          ev.stopPropagation();
+          if (picker.classList.contains("open")) closeSectionPicker();
+          else openSectionPicker();
+        };
+      }
+      document.addEventListener("pointerdown", (ev) => {
+        if (!picker || !picker.classList.contains("open")) return;
+        if (picker.contains(ev.target)) return;
+        closeSectionPicker();
+      });
+      document.addEventListener("keydown", (ev) => {
+        if (ev.key === "Escape") closeSectionPicker();
+      });
+      if (sel) {
+        sel.onchange = (ev) => applySectionValue(Number(ev.target.value));
+      }
+      window.__closeSectionPicker = closeSectionPicker;
+    })();
+    function applySectionValue(val) {
+      const n = Number(val);
+      if (!Number.isFinite(n)) return;
+      if (state.selectedWire) {
+        const w = state.wires.find((x) => x.id === state.selectedWire);
+        if (w) {
+          if (Number(w.section) !== n) {
+            pushHistory();
+            w.section = n;
+            render();
+          } else {
+            syncSectionSelect();
+          }
+          return;
+        }
+      }
+      state.section = n;
+      syncSectionSelect();
+    }
+    (function initColorPicker() {
+      const picker = document.getElementById("colorPicker");
+      const btn = document.getElementById("btnColor");
+      const closeColorPicker = () => {
+        if (!picker || !btn) return;
+        picker.classList.remove("open");
+        btn.setAttribute("aria-expanded", "false");
+      };
+      const openColorPicker = () => {
+        if (!picker || !btn) return;
+        closeWirePickers("color");
+        picker.classList.add("open");
+        btn.setAttribute("aria-expanded", "true");
+      };
+      if (btn && picker) {
+        btn.onclick = (ev) => {
+          ev.stopPropagation();
+          if (picker.classList.contains("open")) closeColorPicker();
+          else openColorPicker();
+        };
+      }
+      document.addEventListener("pointerdown", (ev) => {
+        if (!picker || !picker.classList.contains("open")) return;
+        if (picker.contains(ev.target)) return;
+        closeColorPicker();
+      });
+      document.addEventListener("keydown", (ev) => {
+        if (ev.key === "Escape") closeColorPicker();
+      });
+      window.__closeColorPicker = closeColorPicker;
+    })();
     COLORS.forEach((entry) => {
       const b = document.createElement("button");
       b.type = "button";
@@ -4250,7 +4441,8 @@
       b.style.background = entry.c;
       b.dataset.c = entry.c;
       b.title = I18N ? I18N.colorLabel(entry.name) : entry.name;
-      b.onclick = () => {
+      b.onclick = (ev) => {
+        if (ev) ev.stopPropagation();
         if (state.selectedWire) {
           const w = state.wires.find((x) => x.id === state.selectedWire);
           if (w && w.color !== entry.c) {
@@ -4258,45 +4450,65 @@
             w.color = entry.c;
             render();
           }
+          if (typeof window.__closeColorPicker === "function") window.__closeColorPicker();
           return;
         }
         state.color = entry.c;
         syncColorSwatches();
+        if (typeof window.__closeColorPicker === "function") window.__closeColorPicker();
       };
       document.getElementById("colors").appendChild(b);
     });
+    syncColorSwatches();
+    syncSectionSelect();
     function syncColorSwatches() {
       let active = state.color;
       if (state.selectedWire) {
         const w = state.wires.find((x) => x.id === state.selectedWire);
         if (w) active = w.color;
       }
-      document.querySelectorAll(".swatch").forEach((n) => n.classList.toggle("on", n.dataset.c === active));
+      document.querySelectorAll("#colors .swatch").forEach((n) => n.classList.toggle("on", n.dataset.c === active));
+      const preview = document.getElementById("colorToggleSwatch");
+      if (preview) preview.style.background = active;
+      const btn = document.getElementById("btnColor");
+      if (btn) {
+        const entry = COLORS.find((c) => c.c === active);
+        const label = entry ? (I18N ? I18N.colorLabel(entry.name) : entry.name) : "Couleur du fil";
+        btn.title = label;
+        btn.setAttribute("aria-label", "Couleur du fil : " + label);
+      }
     }
     function syncSectionSelect() {
-      const sel = document.getElementById("section");
-      if (!sel) return;
       let v = state.section;
       if (state.selectedWire) {
         const w = state.wires.find((x) => x.id === state.selectedWire);
         if (w && w.section != null) v = Number(w.section);
       }
-      const s = String(v);
-      if (sel.value !== s) sel.value = s;
-    }
-    document.getElementById("section").onchange = (ev) => {
-      const val = Number(ev.target.value);
-      if (state.selectedWire) {
-        const w = state.wires.find((x) => x.id === state.selectedWire);
-        if (w) {
-          pushHistory();
-          w.section = val;
-          render();
-          return;
+      const n = Number(v);
+      const s = String(n);
+      const sel = document.getElementById("section");
+      if (sel && sel.value !== s) {
+        /* valeur hors liste (ancien schéma) → ajoute option temporaire */
+        if (![...sel.options].some((o) => o.value === s)) {
+          const opt = document.createElement("option");
+          opt.value = s;
+          opt.textContent = formatSectionLabel(n) + " mm²";
+          sel.appendChild(opt);
         }
+        sel.value = s;
       }
-      state.section = val;
-    };
+      document.querySelectorAll("#sectionOpts .section-opt").forEach((btn) => {
+        btn.classList.toggle("on", Number(btn.dataset.v) === n);
+      });
+      const lab = document.getElementById("sectionToggleLabel");
+      if (lab) lab.textContent = formatSectionLabel(n);
+      const btn = document.getElementById("btnSection");
+      if (btn) {
+        const t = formatSectionLabel(n) + " mm²";
+        btn.title = "Section du fil : " + t;
+        btn.setAttribute("aria-label", "Section du fil : " + t);
+      }
+    }
 
     /* Tap immédiat dans une zone scrollable (évite le 2e appui iOS). */
     function bindInstantTap(scroller) {
@@ -5254,9 +5466,13 @@
     }
     function wireWidth(section) {
       const s = section != null ? Number(section) : state.section;
+      if (s <= 0.5) return 2.0;
+      if (s <= 1) return 2.6;
       if (s <= 1.5) return 3.2;
       if (s <= 2.5) return 4.2;
-      return 5.5;
+      if (s <= 4) return 4.8;
+      if (s <= 6) return 5.5;
+      return 6.2;
     }
 
     function hasCoil(def) {
