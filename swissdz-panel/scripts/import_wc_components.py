@@ -117,6 +117,25 @@ CAT_MAP = {
     "Passive Components": "Borniers / Alim",
 }
 
+# Per-id overrides (WC "Power" was too broad for terminals / motor gear).
+CAT_ID_OVERRIDES = {
+    "edz_borne": "Borniers / Alim",
+    "edz_borne_2": "Borniers / Alim",
+    "edz_borne_3": "Borniers / Alim",
+    "edz_borne_l": "Borniers / Alim",
+    "edz_borne_l1": "Borniers / Alim",
+    "edz_borne_l2": "Borniers / Alim",
+    "edz_borne_l3": "Borniers / Alim",
+    "edz_borne_n": "Borniers / Alim",
+    "edz_borne_pe": "Borniers / Alim",
+    "edz_bornes_l_n": "Borniers / Alim",
+    "edz_bornes_l1_l2_l3_n": "Borniers / Alim",
+    "edz_bornes_l1_l2_l3": "Borniers / Alim",
+    "edz_contactor_0911": "Moteur / Indus",
+    "edz_guardamotor_24_32_a": "Moteur / Indus",
+    "edz_relé_térmico_23_32_a": "Moteur / Indus",
+}
+
 # Behaviors that conduct when device is ON / closed / energized (NO path).
 NO_BEHAVIORS = {
     "contact_no",
@@ -149,7 +168,9 @@ INACTIVE_DEFAULTS = {
 }
 
 
-def map_category(cat_src: str, badge: str | None) -> str:
+def map_category(cat_src: str, badge: str | None, key: str | None = None) -> str:
+    if key and key in CAT_ID_OVERRIDES:
+        return CAT_ID_OVERRIDES[key]
     if cat_src in CAT_MAP:
         return CAT_MAP[cat_src]
     # Fuzzy fallbacks from badge / category keywords
@@ -591,7 +612,7 @@ def import_all(src_dir: Path, out_assets: Path, skip_names: set[str]) -> tuple[l
         cat_src = localize(data.get("category"), "")
         manufacturer = localize(data.get("manufacturer"), "")
         badge = (cat_src or manufacturer or "")[:24] or None
-        cat = map_category(cat_src, badge)
+        cat = map_category(cat_src, badge, key)
 
         w, h = scale_wh(data.get("physical") or {}, graphics)
         terminals = convert_terminals(data.get("terminals") or [])
