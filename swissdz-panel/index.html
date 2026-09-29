@@ -46,6 +46,15 @@
     body { display:flex; flex-direction:column; }
     header { flex:0 0 auto; background:#fff; border-bottom:1px solid var(--line); padding:4px 10px; }
     .header-top { display:flex; align-items:center; gap:8px; min-width:0; }
+    /* Barre d’actions pouce : bas de l’écran (projet, undo, supprimer…) */
+    .toolbar-bottom {
+      flex:0 0 auto; background:#fff; border-top:1px solid var(--line);
+      padding:4px 10px; padding-bottom:max(4px, env(safe-area-inset-bottom));
+      z-index:40;
+    }
+    .toolbar-bottom-inner {
+      display:flex; align-items:center; gap:8px; min-width:0;
+    }
     .bar { display:flex; align-items:center; gap:12px; flex-wrap:wrap; flex:1 1 auto; min-width:0; }
     /* Desktop : wrapper projet en ligne flex */
     .bar-row-1 { display:contents; }
@@ -239,7 +248,8 @@
         justify-content:center;
         position:fixed;
         right:12px;
-        bottom:max(12px, env(safe-area-inset-bottom));
+        /* Au-dessus de la barre d’actions bas */
+        bottom:calc(56px + max(12px, env(safe-area-inset-bottom)));
         z-index:10050;
         min-width:108px;
         height:48px;
@@ -278,13 +288,13 @@
         grid-template-columns:repeat(5, 24px); gap:7px; padding:9px;
       }
     }
-    /* Téléphone / tablette : barre projet scrollable + biblio tiroir */
+    /* Téléphone / tablette : barre projet en bas (scroll) + biblio tiroir */
     @media (max-width: 800px) {
       header { padding:3px 6px; }
       .header-top { align-items:center; gap:6px; }
       .brand-cluster {
-        flex:0 1 auto;
-        max-width:min(100%, 72vw);
+        flex:1 1 auto;
+        max-width:100%;
         overflow-x:auto;
         overflow-y:hidden;
         -webkit-overflow-scrolling:touch;
@@ -292,6 +302,8 @@
         scrollbar-width:none;
       }
       .brand-cluster::-webkit-scrollbar { display:none; }
+      .toolbar-bottom { padding:3px 6px; padding-bottom:max(3px, env(safe-area-inset-bottom)); }
+      .toolbar-bottom-inner { gap:6px; }
       .bar {
         flex-direction:row;
         align-items:center;
@@ -353,6 +365,11 @@
       .lib-tabs { max-height:32vh; flex-direction:row; flex-wrap:wrap; gap:4px; }
       .lib-tab { width:auto; flex:0 0 auto; padding:6px 9px; font-size:10px; }
       .lib-items { grid-template-columns:1fr 1fr; padding:8px; gap:6px; }
+      /* Menus langue : s’ouvrent vers le haut depuis la barre bas */
+      .toolbar-bottom .lang-dropdown {
+        top:auto; bottom:calc(100% + 4px);
+        box-shadow:0 -8px 24px rgba(15,23,42,.14);
+      }
     }
     /* Ladder — style éditeur clair type Soft Comfort / LOGO! Soft */
     .ladder-panel {
@@ -1616,44 +1633,15 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="bar" id="topBar">
-        <div class="bar-row-1">
-          <div class="group group-projet">
-            <div class="row">
-              <button id="btnNew" type="button" data-i18n="btnNew">Nouveau</button>
-              <button id="btnSave" type="button" data-i18n="btnSave" data-i18n-title="btnSaveTitle" title="Télécharger le schéma en JSON">Enregistrer</button>
-              <button id="btnOpen" type="button" data-i18n="btnOpen" data-i18n-title="btnOpenTitle" title="Ouvrir un schéma JSON">Ouvrir</button>
-              <input id="fileOpen" type="file" accept="application/json,.json" hidden />
-              <button id="btnUndo" class="btn-ico" type="button" data-i18n-title="btnUndoTitle" data-i18n-aria="btnUndoAria" title="Annuler (Ctrl+Z / Cmd+Z)" aria-label="Annuler" disabled>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-4"/></svg>
-              </button>
-              <button id="btnRedo" class="btn-ico" type="button" data-i18n-title="btnRedoTitle" data-i18n-aria="btnRedoAria" title="Rétablir (Ctrl+Shift+Z / Cmd+Shift+Z)" aria-label="Rétablir" disabled>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 14 5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h4"/></svg>
-              </button>
-              <button id="btnDelete" class="btn-ico" type="button" data-i18n-title="btnDeleteTitle" data-i18n-aria="btnDeleteAria" title="Supprimer la sélection (Suppr.)" aria-label="Supprimer">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4.8A1.8 1.8 0 0 1 9.8 3h4.4A1.8 1.8 0 0 1 16 4.8V6"/><path d="M19 6l-.9 13.2A2 2 0 0 1 16.1 21H7.9a2 2 0 0 1-2-1.8L5 6"/><path d="M10 11v6M14 11v6"/></svg>
-              </button>
-              <button id="btnClearWires" type="button" data-i18n="btnClearWires" data-i18n-title="btnClearWiresTitle" title="Effacer tous les fils">Eff. fils</button>
-              <button id="btnPlay" class="btn-ico" type="button" data-i18n-title="btnPlayTitle" data-i18n-aria="btnPlayAria" title="Vérifier le courant" aria-label="Vérifier le courant">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19.2 12 8 5.2z"/></svg>
-              </button>
-              <button id="btnLadder" type="button" data-i18n="btnLadder" data-i18n-title="btnLadderTitle" title="Afficher / masquer l'éditeur Ladder (auto si PLC posé)">Ladder</button>
-              <button id="btnEts" type="button" data-i18n="btnEts" data-i18n-title="btnEtsTitle" title="ETS formation — adresses physiques, GA, objets (pas l'ETS officiel)">ETS formation</button>
-              <button id="btnVip" type="button" data-i18n="btnVip" data-i18n-title="btnVipTitle" title="Version VIP — débloquer toute la bibliothèque">VIP</button>
-              <div class="lang-menu" id="langMenu">
-                <button id="btnLang" type="button" data-lang="fr" title="Langue" aria-label="Changer de langue" aria-haspopup="listbox" aria-expanded="false" aria-controls="langDropdown">FR</button>
-                <div class="lang-dropdown" id="langDropdown" role="listbox" aria-labelledby="btnLang">
-                  <button type="button" role="option" data-set-lang="fr" aria-selected="true">Français</button>
-                  <button type="button" role="option" data-set-lang="en" aria-selected="false">Anglais</button>
-                </div>
-              </div>
+          <div class="lang-menu" id="langMenu">
+            <button id="btnLang" type="button" data-lang="fr" title="Langue" aria-label="Changer de langue" aria-haspopup="listbox" aria-expanded="false" aria-controls="langDropdown">FR</button>
+            <div class="lang-dropdown" id="langDropdown" role="listbox" aria-labelledby="btnLang">
+              <button type="button" role="option" data-set-lang="fr" aria-selected="true">Français</button>
+              <button type="button" role="option" data-set-lang="en" aria-selected="false">Anglais</button>
             </div>
           </div>
         </div>
       </div>
-      <button id="btnLibToggle" class="btn-lib-toggle" type="button" aria-expanded="false" aria-controls="libTop" data-i18n="btnLibToggle">Composants</button>
     </div>
   </header>
   <main>
@@ -2924,7 +2912,9 @@
       etsOpen: false,
       knxLastTelegram: null,
       knxBusValues: {},
-      boardZoom: 1
+      boardZoom: 1,
+      /* Fiche ElectroDZ : uid pour lequel le panneau est ouvert (null = fermé). */
+      edzPropsUid: null
     };
 
     const BOARD_ZOOM_MIN = 0.5;
@@ -4179,6 +4169,8 @@
       if (data.knx) state.knx = deepClone(data.knx);
       state.selected = null;
       state.selectedWire = null;
+      state.edzPropsUid = null;
+      clearEdzLongPress();
       state.wireFrom = null;
       state.preview = null;
       state.drag = null;
@@ -4296,6 +4288,8 @@
       const wireOk = snap.selectedWire && state.wires.some((w) => w.id === snap.selectedWire);
       state.selected = selOk ? snap.selected : null;
       state.selectedWire = wireOk ? snap.selectedWire : null;
+      state.edzPropsUid = null;
+      clearEdzLongPress();
       state.wireFrom = null;
       state.preview = null;
       state.drag = null;
@@ -4671,6 +4665,9 @@
       state.items.push(item);
       if (isKnxDevice(def)) ensureKnxProgram(item);
       state.selected = item.uid;
+      /* Desktop : ouvrir la fiche à la pose. Mobile : appui long ensuite. */
+      if (isEdzType(item.type) && !preferTouchPropsLongPress()) state.edzPropsUid = item.uid;
+      else if (state.edzPropsUid !== item.uid) state.edzPropsUid = null;
       if (state.etsOpen) renderEtsPanel();
       closeMobileLib();
       render();
@@ -4678,6 +4675,95 @@
     function find(uid) { return state.items.find((i) => i.uid === uid); }
     function tapSlopPx(ev) {
       return (ev && (ev.pointerType === "touch" || ev.pointerType === "pen")) ? 28 : 8;
+    }
+    function isTouchLikePointer(ev) {
+      return !!(ev && (ev.pointerType === "touch" || ev.pointerType === "pen"));
+    }
+    function preferTouchPropsLongPress() {
+      try {
+        return window.matchMedia("(pointer: coarse)").matches
+          || window.matchMedia("(hover: none)").matches;
+      } catch (_) {
+        return false;
+      }
+    }
+    function isEdzType(typeId) {
+      return !!(typeId && String(typeId).startsWith("edz_"));
+    }
+    const EDZ_PROPS_LONG_MS = 2000;
+    function clearEdzLongPress() {
+      if (state._edzLongPressTimer) {
+        clearTimeout(state._edzLongPressTimer);
+        state._edzLongPressTimer = null;
+      }
+      state._edzLongPress = null;
+    }
+    function closeEdzPropsPanel() {
+      clearEdzLongPress();
+      state.edzPropsUid = null;
+      const panel = document.getElementById("edzProps");
+      if (panel) {
+        panel.classList.remove("open");
+        panel.hidden = true;
+      }
+    }
+    function openEdzPropsFor(uid) {
+      clearEdzLongPress();
+      const item = uid && state.items.find((i) => i.uid === uid);
+      if (!item || !isEdzType(item.type)) {
+        closeEdzPropsPanel();
+        return;
+      }
+      state.edzPropsUid = uid;
+      state.selected = uid;
+      state.selectedWire = null;
+    }
+    /** Souris : ouvrir tout de suite. Touch/pen : appui long ~2 s (annulé si déplacement > slop). */
+    function armEdzPropsGesture(item, ev) {
+      clearEdzLongPress();
+      if (!item || !isEdzType(item.type)) {
+        if (state.edzPropsUid && state.edzPropsUid !== (item && item.uid)) state.edzPropsUid = null;
+        return;
+      }
+      if (!isTouchLikePointer(ev)) {
+        state.edzPropsUid = item.uid;
+        return;
+      }
+      /* Touch : ne pas ouvrir au tap — préparer l’appui long. */
+      if (state.edzPropsUid !== item.uid) state.edzPropsUid = null;
+      const slop = tapSlopPx(ev);
+      state._edzLongPress = {
+        uid: item.uid,
+        x: ev.clientX,
+        y: ev.clientY,
+        slop,
+        pointerId: ev.pointerId
+      };
+      state._edzLongPressTimer = setTimeout(() => {
+        const lp = state._edzLongPress;
+        state._edzLongPressTimer = null;
+        state._edzLongPress = null;
+        if (!lp || state.selected !== lp.uid) return;
+        /* Annule le drag en cours pour ne pas déplacer pendant l’ouverture. */
+        state.drag = null;
+        syncDragLock();
+        openEdzPropsFor(lp.uid);
+        try {
+          if (navigator.vibrate) navigator.vibrate(12);
+        } catch (_) {}
+        render();
+      }, EDZ_PROPS_LONG_MS);
+    }
+    function noteEdzLongPressMove(ev) {
+      const lp = state._edzLongPress;
+      if (!lp) return false;
+      if (lp.pointerId != null && ev.pointerId != null && lp.pointerId !== ev.pointerId) return !!lp;
+      const moved = Math.hypot(ev.clientX - lp.x, ev.clientY - lp.y);
+      if (moved > (lp.slop || 28)) {
+        clearEdzLongPress();
+        return false;
+      }
+      return true; /* encore dans le slop : hold = candidat appui long */
     }
     const ICO_PLAY = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19.2 12 8 5.2z"/></svg>';
     const ICO_STOP = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1.6"/></svg>';
@@ -6501,8 +6587,13 @@
       if (!panel || !title || !body) return;
       const item = state.selected && state.items.find((i) => i.uid === state.selected);
       const typeId = item && item.type;
-      const isEdz = typeId && String(typeId).startsWith("edz_");
-      if (!isEdz) {
+      const isEdz = isEdzType(typeId);
+      /* Ouverture explicite (clic souris ou appui long tactile) — pas au simple tap/drag mobile. */
+      const wantOpen = !!(isEdz && state.edzPropsUid && state.edzPropsUid === state.selected);
+      if (!wantOpen) {
+        if (state.edzPropsUid && (!item || state.edzPropsUid !== state.selected || !isEdz)) {
+          state.edzPropsUid = null;
+        }
         panel.classList.remove("open");
         panel.hidden = true;
         return;
@@ -6514,18 +6605,14 @@
       body.innerHTML = `<p class="empty">Chargement de la fiche…</p>`;
       ensureEdzDetails().then((cat) => {
         const still = state.selected && state.items.find((i) => i.uid === state.selected);
-        if (!still || still.type !== typeId) return;
+        if (!still || still.type !== typeId || state.edzPropsUid !== state.selected) return;
         body.innerHTML = renderEdzPropsBody(cat[typeId]);
       });
     }
     const edzCloseBtn = document.getElementById("edzPropsClose");
     if (edzCloseBtn) {
       edzCloseBtn.addEventListener("click", () => {
-        const panel = document.getElementById("edzProps");
-        if (panel) {
-          panel.classList.remove("open");
-          panel.hidden = true;
-        }
+        closeEdzPropsPanel();
       });
     }
     ensureEdzDetails();
@@ -6889,6 +6976,11 @@
         const el = document.createElement("div");
         el.className = "dev" + (state.selected === item.uid ? " sel" : "");
         el.dataset.uid = item.uid;
+        if (isEdzType(item.type)) {
+          el.title = preferTouchPropsLongPress()
+            ? ((libDisplayName(item.type, def) || def.name || "") + " — appui long (~2 s) : caractéristiques")
+            : ((libDisplayName(item.type, def) || def.name || "") + " — clic : caractéristiques");
+        }
         if (def.push && item.pressed && !def.fc) el.classList.add("is-pressed");
         if (def.fc) {
           el.classList.add("fc-dev");
@@ -7384,6 +7476,7 @@
           state.wireDrag = null;
           state.selected = item.uid;
           state.selectedWire = null;
+          armEdzPropsGesture(item, ev);
           syncDragLock();
           /* Fluke live : déplacer uniquement via la poignée (les clics vont à l'iframe). */
           if (def.flukeMeter) {
@@ -7649,6 +7742,8 @@
         state.wires = state.wires.filter((w) => w.a.uid !== uid && w.b.uid !== uid);
         state.items = state.items.filter((i) => i.uid !== uid);
         state.selected = null;
+        if (state.edzPropsUid === uid) state.edzPropsUid = null;
+        clearEdzLongPress();
         render();
         return true;
       }
@@ -7812,6 +7907,10 @@
         const item = find(state.drag.uid);
         if (!item) return;
         const moved = Math.hypot(ev.clientX - state.drag.px, ev.clientY - state.drag.py);
+        /* Appui long caractéristiques : ne pas démarrer le drag tant que dans le slop. */
+        if (state._edzLongPress) {
+          if (noteEdzLongPressMove(ev)) return;
+        }
         if (state.drag.pendingToggle && moved < (state.drag.tapSlop || 8)) return;
         if (state.drag.pendingToggle) state.drag.pendingToggle = false;
         const dlt = boardDeltaFromScreen(ev.clientX - state.drag.px, ev.clientY - state.drag.py);
@@ -7863,7 +7962,9 @@
       }
       render();
     });
+    window.addEventListener("pointercancel", () => { clearEdzLongPress(); });
     window.addEventListener("pointerup", (ev) => {
+      clearEdzLongPress();
       state.items.forEach((i) => {
         const d = LIB[i.type];
         if (d && d.push && !d.fc) i.pressed = false;
@@ -8075,8 +8176,10 @@
     board.addEventListener("pointerdown", (ev) => {
       const t = ev.target;
       if (t !== board && t.id !== "boardWorld" && t.id !== "boardZoomSpacer" && !t.classList.contains("board-zoom-spacer")) return;
+      clearEdzLongPress();
       state.selected = null;
       state.selectedWire = null;
+      state.edzPropsUid = null;
       render();
     });
     board.addEventListener("contextmenu", (ev) => {
@@ -8180,6 +8283,8 @@
       state.sim = false;
       state.selected = null;
       state.selectedWire = null;
+      state.edzPropsUid = null;
+      clearEdzLongPress();
       state.wireFrom = null;
       state.preview = null;
       state.ladderOpen = null;
