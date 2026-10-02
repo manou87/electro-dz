@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="brand/logo-panelwire-icon.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="inject-20261002-r1" />
+  <meta name="swissdz-rev" content="parafoudres-r1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -3584,7 +3584,7 @@
       </div>
     </div>
   </div>
-  <script src="i18n/panelwire-i18n.js?v=inject-20261002-r1"></script>
+  <script src="i18n/panelwire-i18n.js?v=parafoudres-r1"></script>
   <script>
     /* Assets pré-cadrés (photos studio trop larges → bandes). */
     const COLORS = [
@@ -4384,7 +4384,7 @@
       /* Retirés de la lib UI (photo beige C16 3P/4P) — defs conservées pour schémas déjà ouverts. */
       disj3p: {name:"Disj. 3P SwissDz",prefix:"QF",cat:"Disjoncteurs modulaires",hideFromLib:true,w:129,h:172,din:true,image:"assets/disj-3p-swissdz.png",badge:"3P",iec:"QF",terminals:[{id:"1",nx:0.23,ny:0.12,direction:"top"},{id:"2",nx:0.22,ny:0.87,direction:"bottom"},{id:"3",nx:0.5,ny:0.12,direction:"top"},{id:"4",nx:0.49,ny:0.87,direction:"bottom"},{id:"5",nx:0.78,ny:0.12,direction:"top"},{id:"6",nx:0.78,ny:0.87,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"]]},
       disj4p: {name:"Disj. 4P SwissDz",prefix:"QF",cat:"Disjoncteurs modulaires",hideFromLib:true,w:169,h:172,din:true,image:"assets/disj-4p-on.png",imageOff:"assets/disj-4p-off.png",badge:"4P",iec:"QF",terminals:[{id:"1",nx:0.1263,ny:0.11,direction:"top"},{id:"2",nx:0.1263,ny:0.87,direction:"bottom"},{id:"3",nx:0.3702,ny:0.11,direction:"top"},{id:"4",nx:0.3702,ny:0.86,direction:"bottom"},{id:"5",nx:0.614,ny:0.11,direction:"top"},{id:"6",nx:0.614,ny:0.87,direction:"bottom"},{id:"7",nx:0.8375,ny:0.11,direction:"top"},{id:"8",nx:0.8375,ny:0.87,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]]},
-      spd: {name:"Parafoudre SPD SwissDz",prefix:"FV",cat:"Disjoncteurs modulaires",w:84,h:172,din:true,image:"assets/spd-swissdz.png",badge:"SPD",iec:"FV",terminals:[{id:"1",nx:0.3422,ny:0.0982,direction:"top"},{id:"2",nx:0.7421,ny:0.0982,direction:"top"},{id:"PE",nx:0.5155,ny:0.8952,direction:"bottom"}]},
+      spd: {name:"Parafoudre SPD SwissDz",prefix:"FV",cat:"Parafoudres",w:84,h:172,din:true,image:"assets/spd-swissdz.png",badge:"SPD",iec:"FV",terminals:[{id:"1",nx:0.3422,ny:0.0982,direction:"top"},{id:"2",nx:0.7421,ny:0.0982,direction:"top"},{id:"PE",nx:0.5155,ny:0.8952,direction:"bottom"}]},
       sectionneur3p: {name:"Sectionneur 3P SwissDz",prefix:"QS",cat:"Sectionneurs",w:123,h:172,din:true,image:"assets/sectionneur-3p-on.png",imageOff:"assets/sectionneur-3p-off.png",badge:"3P",iec:"QS",terminals:[{id:"1",nx:0.1463,ny:0.1081,direction:"top"},{id:"2",nx:0.1782,ny:0.9038,direction:"bottom"},{id:"3",nx:0.5075,ny:0.1081,direction:"top"},{id:"4",nx:0.4756,ny:0.8937,direction:"bottom"},{id:"5",nx:0.8475,ny:0.1081,direction:"top"},{id:"6",nx:0.8156,ny:0.9038,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"]]},
       /* Même photo que le Disj 2P C16 beige — retiré de la lib UI. */
       fusible_gG: {name:"Porte-fusible 1P+N gG SwissDz",prefix:"FU",cat:"Sectionneurs",hideFromLib:true,w:83,h:172,din:true,image:"assets/disj-2p-swissdz.png",badge:"gG",iec:"FU",terminals:[{id:"1",nx:0.2321,ny:0.1173,direction:"top"},{id:"2",nx:0.2321,ny:0.8525,direction:"bottom"},{id:"3",nx:0.7369,ny:0.1173,direction:"top"},{id:"4",nx:0.7609,ny:0.8525,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"]]},
@@ -4559,15 +4559,8 @@
         {id:"PE",nx:0.72,ny:-0.42,direction:"top"}
       ]},
       /* Photovoltaïque — faces SVG locales (pas de photos web). Catégorie dédiée.
+         Ordre lib : panneaux → dispositifs → supports (ordre d’insertion = ordre grille).
          Supports : rectangles à la taille exacte d'un module (150×233), écart 10 px. */
-      pv_support_1: {name:"Support PV 1 panneau",nameEn:"PV support 1 module",prefix:"X",cat:"Photovoltaïque",w:150,h:233,image:"assets/pv/support-1.svg?v=pv-support",badge:"×1",pvSupport:true,pvCols:1,pvRows:1,terminals:[]},
-      pv_support_2: {name:"Support PV 2 panneaux",nameEn:"PV support 2 modules",prefix:"X",cat:"Photovoltaïque",w:310,h:233,image:"assets/pv/support-2.svg?v=pv-support",badge:"×2",pvSupport:true,pvCols:2,pvRows:1,terminals:[]},
-      pv_support_4: {name:"Support PV 4 panneaux",nameEn:"PV support 4 modules",prefix:"X",cat:"Photovoltaïque",w:310,h:476,image:"assets/pv/support-4.svg?v=pv-support",badge:"×4",pvSupport:true,pvCols:2,pvRows:2,terminals:[]},
-      pv_support_6: {name:"Support PV 6 panneaux",nameEn:"PV support 6 modules",prefix:"X",cat:"Photovoltaïque",w:470,h:476,image:"assets/pv/support-6.svg?v=pv-support",badge:"×6",pvSupport:true,pvCols:3,pvRows:2,terminals:[]},
-      pv_support_8: {name:"Support PV 8 panneaux",nameEn:"PV support 8 modules",prefix:"X",cat:"Photovoltaïque",w:630,h:476,image:"assets/pv/support-8.svg?v=pv-support",badge:"×8",pvSupport:true,pvCols:4,pvRows:2,terminals:[]},
-      pv_support_10: {name:"Support PV 10 panneaux",nameEn:"PV support 10 modules",prefix:"X",cat:"Photovoltaïque",w:790,h:476,image:"assets/pv/support-10.svg?v=pv-support",badge:"×10",pvSupport:true,pvCols:5,pvRows:2,terminals:[]},
-      pv_support_20: {name:"Support PV 20 panneaux",nameEn:"PV support 20 modules",prefix:"X",cat:"Photovoltaïque",w:790,h:962,image:"assets/pv/support-20.svg?v=pv-support",badge:"×20",pvSupport:true,pvCols:5,pvRows:4,terminals:[]},
-      pv_rail: {name:"Support PV 1 panneau",nameEn:"PV support 1 module",prefix:"X",cat:"Photovoltaïque",hideFromLib:true,w:150,h:233,image:"assets/pv/support-1.svg?v=pv-support",badge:"×1",pvSupport:true,pvCols:1,pvRows:1,terminals:[]},
       pv_panel_400: {name:"Panneau photovoltaïque 400 W",nameEn:"Photovoltaic module 400 W",prefix:"PV",cat:"Photovoltaïque",w:150,h:233,image:"assets/pv/panel-400.svg?v=pv-bords",badge:"400 W",pvModule:true,watt:400,terminals:[{id:"DC+",nx:0.43,ny:0.94,direction:"bottom"},{id:"DC-",nx:0.58,ny:0.94,direction:"bottom"}]},
       pv_panel_450: {name:"Panneau photovoltaïque 450 W",nameEn:"Photovoltaic module 450 W",prefix:"PV",cat:"Photovoltaïque",w:150,h:233,image:"assets/pv/panel-450.svg?v=pv-bords",badge:"450 W",pvModule:true,watt:450,terminals:[{id:"DC+",nx:0.43,ny:0.94,direction:"bottom"},{id:"DC-",nx:0.58,ny:0.94,direction:"bottom"}]},
       pv_panel_550: {name:"Panneau photovoltaïque 550 W",nameEn:"Photovoltaic module 550 W",prefix:"PV",cat:"Photovoltaïque",w:150,h:233,image:"assets/pv/panel-550.svg?v=pv-bords",badge:"550 W",pvModule:true,watt:550,terminals:[{id:"DC+",nx:0.43,ny:0.94,direction:"bottom"},{id:"DC-",nx:0.58,ny:0.94,direction:"bottom"}]},
@@ -4577,7 +4570,7 @@
       pv_h4_f: {name:"Connecteur H4 femelle",nameEn:"H4 female connector",prefix:"X",cat:"Photovoltaïque",w:120,h:48,image:"assets/pv/h4-f.svg?v=pv1",badge:"H4 ♀",terminals:[{id:"C",nx:0.08,ny:0.50,direction:"left"},{id:"P",nx:0.90,ny:0.50,direction:"right"}],pair:["C","P"],pairs:[["C","P"]]},
       pv_cable_plus: {name:"Câble PV rouge (DC+)",nameEn:"PV cable red (DC+)",prefix:"W",cat:"Photovoltaïque",w:160,h:86,image:"assets/pv/cable-plus.svg?v=pv1",badge:"DC+",pvCable:true,pvPolarity:"plus",lengthM:10,terminals:[{id:"A",nx:0.08,ny:0.47,direction:"left"},{id:"B",nx:0.90,ny:0.47,direction:"right"}],pair:["A","B"],pairs:[["A","B"]]},
       pv_cable_minus: {name:"Câble PV noir (DC−)",nameEn:"PV cable black (DC−)",prefix:"W",cat:"Photovoltaïque",w:160,h:86,image:"assets/pv/cable-minus.svg?v=pv1",badge:"DC−",pvCable:true,pvPolarity:"minus",lengthM:10,terminals:[{id:"A",nx:0.08,ny:0.47,direction:"left"},{id:"B",nx:0.90,ny:0.47,direction:"right"}],pair:["A","B"],pairs:[["A","B"]]},
-      pv_coffret_dc: {name:"Coffret DC parafoudre + terre PLUS/MOINS",nameEn:"DC combiner SPD + PLUS/MINUS earth",prefix:"FV",cat:"Photovoltaïque",w:240,h:154,image:"assets/pv/combiner.svg?v=pv1",badge:"DC",terminals:[{id:"PV+",nx:0.129,ny:0.878,direction:"bottom"},{id:"PV-",nx:0.257,ny:0.878,direction:"bottom"},{id:"PE",nx:0.50,ny:0.878,direction:"bottom"},{id:"PLUS",nx:0.671,ny:0.878,direction:"bottom"},{id:"MOINS",nx:0.843,ny:0.878,direction:"bottom"},{id:"OUT+",nx:0.957,ny:0.256,direction:"right"},{id:"OUT-",nx:0.957,ny:0.40,direction:"right"}],pairs:[["PV+","OUT+"],["PV-","OUT-"]]},
+      pv_coffret_dc: {name:"Coffret DC parafoudre + terre PLUS/MOINS",nameEn:"DC combiner SPD + PLUS/MINUS earth",prefix:"FV",cat:"Parafoudres",w:240,h:154,image:"assets/pv/combiner.svg?v=pv1",badge:"DC",terminals:[{id:"PV+",nx:0.129,ny:0.878,direction:"bottom"},{id:"PV-",nx:0.257,ny:0.878,direction:"bottom"},{id:"PE",nx:0.50,ny:0.878,direction:"bottom"},{id:"PLUS",nx:0.671,ny:0.878,direction:"bottom"},{id:"MOINS",nx:0.843,ny:0.878,direction:"bottom"},{id:"OUT+",nx:0.957,ny:0.256,direction:"right"},{id:"OUT-",nx:0.957,ny:0.40,direction:"right"}],pairs:[["PV+","OUT+"],["PV-","OUT-"]]},
       pv_inv_sun2000_3: {name:"Huawei SUN2000-3KTL",nameEn:"Huawei SUN2000-3KTL",prefix:"INV",cat:"Photovoltaïque",w:140,h:192,image:"assets/pv/inv-huawei-3.svg?v=pv-affiches",badge:"3 kW",pvInverter:true,kw:3,terminals:[{id:"PV+",nx:0.175,ny:0.927,direction:"bottom"},{id:"PV-",nx:0.325,ny:0.927,direction:"bottom"},{id:"L",nx:0.525,ny:0.927,direction:"bottom"},{id:"N",nx:0.675,ny:0.927,direction:"bottom"},{id:"PE",nx:0.825,ny:0.927,direction:"bottom"}]},
       pv_inv_sun2000_5: {name:"Huawei SUN2000-5KTL",nameEn:"Huawei SUN2000-5KTL",prefix:"INV",cat:"Photovoltaïque",w:140,h:192,image:"assets/pv/inv-huawei-5.svg?v=pv-affiches",badge:"5 kW",pvInverter:true,kw:5,terminals:[{id:"PV+",nx:0.175,ny:0.927,direction:"bottom"},{id:"PV-",nx:0.325,ny:0.927,direction:"bottom"},{id:"L",nx:0.525,ny:0.927,direction:"bottom"},{id:"N",nx:0.675,ny:0.927,direction:"bottom"},{id:"PE",nx:0.825,ny:0.927,direction:"bottom"}]},
       pv_inv_sun2000_8: {name:"Huawei SUN2000-8KTL",nameEn:"Huawei SUN2000-8KTL",prefix:"INV",cat:"Photovoltaïque",w:140,h:192,image:"assets/pv/inv-huawei-8.svg?v=pv-affiches",badge:"8 kW",pvInverter:true,kw:8,terminals:[{id:"PV+",nx:0.175,ny:0.927,direction:"bottom"},{id:"PV-",nx:0.325,ny:0.927,direction:"bottom"},{id:"L",nx:0.525,ny:0.927,direction:"bottom"},{id:"N",nx:0.675,ny:0.927,direction:"bottom"},{id:"PE",nx:0.825,ny:0.927,direction:"bottom"}]},
@@ -4586,7 +4579,15 @@
       pv_inv_sma: {name:"SMA Sunny Boy 5.0",nameEn:"SMA Sunny Boy 5.0",prefix:"INV",cat:"Photovoltaïque",w:140,h:192,image:"assets/pv/inv-sma.svg?v=pv-affiches",badge:"5 kW",pvInverter:true,kw:5,terminals:[{id:"PV+",nx:0.175,ny:0.927,direction:"bottom"},{id:"PV-",nx:0.325,ny:0.927,direction:"bottom"},{id:"L",nx:0.525,ny:0.927,direction:"bottom"},{id:"N",nx:0.675,ny:0.927,direction:"bottom"},{id:"PE",nx:0.825,ny:0.927,direction:"bottom"}]},
       pv_compteur_bidi: {name:"Compteur bidirectionnel on-grid",nameEn:"Bidirectional on-grid meter",prefix:"P",cat:"Photovoltaïque",w:132,h:174,image:"assets/pv/meter-bidi.svg?v=pv-affiches",badge:"↔",iec:"P",kind:"compteurBidi",source:true,terminals:[{id:"L↓",nx:0.30,ny:0.105,direction:"top"},{id:"N↓",nx:0.70,ny:0.105,direction:"top"},{id:"L↑",nx:0.30,ny:0.933,direction:"bottom"},{id:"N↑",nx:0.70,ny:0.933,direction:"bottom"}],pair:["L↓","L↑"],pairs:[["L↓","L↑"],["N↓","N↑"]],bridges:[["L↓","L↑"],["N↓","N↑"]]},
       pv_sectionneur_dc: {name:"Sectionneur DC rotatif",nameEn:"DC rotary isolator",prefix:"QS",cat:"Photovoltaïque",w:168,h:218,image:"assets/pv/isolateur-dc.svg?v=pv-rot",imageOff:"assets/pv/isolateur-dc-off.svg?v=pv-rot",badge:"DC",iec:"QS",terminals:[{id:"PV+",sym:"+",nx:0.32,ny:0.062,direction:"top"},{id:"PV−",sym:"−",nx:0.68,ny:0.062,direction:"top"},{id:"INV+",sym:"+",nx:0.32,ny:0.938,direction:"bottom"},{id:"INV−",sym:"−",nx:0.68,ny:0.938,direction:"bottom"}],pair:["PV+","INV+"],pairs:[["PV+","INV+"],["PV−","INV−"]]},
-/* === ELECTRODZ_LIB_BEGIN (generated — do not edit by hand) === */
+      pv_support_1: {name:"Support PV 1 panneau",nameEn:"PV support 1 module",prefix:"X",cat:"Photovoltaïque",w:150,h:233,image:"assets/pv/support-1.svg?v=pv-support",badge:"×1",pvSupport:true,pvCols:1,pvRows:1,terminals:[]},
+      pv_support_2: {name:"Support PV 2 panneaux",nameEn:"PV support 2 modules",prefix:"X",cat:"Photovoltaïque",w:310,h:233,image:"assets/pv/support-2.svg?v=pv-support",badge:"×2",pvSupport:true,pvCols:2,pvRows:1,terminals:[]},
+      pv_support_4: {name:"Support PV 4 panneaux",nameEn:"PV support 4 modules",prefix:"X",cat:"Photovoltaïque",w:310,h:476,image:"assets/pv/support-4.svg?v=pv-support",badge:"×4",pvSupport:true,pvCols:2,pvRows:2,terminals:[]},
+      pv_support_6: {name:"Support PV 6 panneaux",nameEn:"PV support 6 modules",prefix:"X",cat:"Photovoltaïque",w:470,h:476,image:"assets/pv/support-6.svg?v=pv-support",badge:"×6",pvSupport:true,pvCols:3,pvRows:2,terminals:[]},
+      pv_support_8: {name:"Support PV 8 panneaux",nameEn:"PV support 8 modules",prefix:"X",cat:"Photovoltaïque",w:630,h:476,image:"assets/pv/support-8.svg?v=pv-support",badge:"×8",pvSupport:true,pvCols:4,pvRows:2,terminals:[]},
+      pv_support_10: {name:"Support PV 10 panneaux",nameEn:"PV support 10 modules",prefix:"X",cat:"Photovoltaïque",w:790,h:476,image:"assets/pv/support-10.svg?v=pv-support",badge:"×10",pvSupport:true,pvCols:5,pvRows:2,terminals:[]},
+      pv_support_20: {name:"Support PV 20 panneaux",nameEn:"PV support 20 modules",prefix:"X",cat:"Photovoltaïque",w:790,h:962,image:"assets/pv/support-20.svg?v=pv-support",badge:"×20",pvSupport:true,pvCols:5,pvRows:4,terminals:[]},
+      pv_rail: {name:"Support PV 1 panneau",nameEn:"PV support 1 module",prefix:"X",cat:"Photovoltaïque",hideFromLib:true,w:150,h:233,image:"assets/pv/support-1.svg?v=pv-support",badge:"×1",pvSupport:true,pvCols:1,pvRows:1,terminals:[]},
+      /* === ELECTRODZ_LIB_BEGIN (generated — do not edit by hand) === */
       edz_c_3_pole_mcb: {name:"3 pole mcb",prefix:"QF",cat:"Disjoncteurs modulaires",w:108,h:170,image:"assets/electrodz/c_3_pole_mcb.png",imageOff:"assets/electrodz/c_3_pole_mcb_off.png",badge:"Protection",din:true,startOpen:true,terminals:[{id:"1",nx:0.2623,ny:0.197,direction:"top"},{id:"3",nx:0.4766,ny:0.1905,direction:"top"},{id:"5",nx:0.685,ny:0.1931,direction:"top"},{id:"2",nx:0.2604,ny:0.8602,direction:"bottom"},{id:"4",nx:0.4766,ny:0.8602,direction:"bottom"},{id:"6",nx:0.7006,ny:0.8589,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"]],pair:["1","2"]},
       edz_abb_a30_30_10: {name:"ABB A30-30-10",prefix:"KM",cat:"Contacteurs",w:108,h:180,image:"assets/electrodz/abb_a30_30_10.png",imageOff:"assets/electrodz/abb_a30_30_10_off.png",badge:"AC Contactor",din:true,startOpen:true,terminals:[{id:"1",nx:0.134,ny:0.325,direction:"top"},{id:"2",nx:0.134,ny:0.882,direction:"bottom"},{id:"3",nx:0.372,ny:0.325,direction:"top"},{id:"4",nx:0.372,ny:0.882,direction:"bottom"},{id:"5",nx:0.627,ny:0.325,direction:"top"},{id:"6",nx:0.627,ny:0.882,direction:"bottom"},{id:"A1",nx:0.225,ny:0.087,direction:"top"},{id:"A2",nx:0.768,ny:0.087,direction:"top"},{id:"13",nx:0.862,ny:0.325,direction:"top"},{id:"14",nx:0.862,ny:0.882,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"],["13","14"]],pair:["1","2"]},
       edz_abb_a75_30: {name:"ABB A75-30-00",prefix:"KM",cat:"Contacteurs",w:140,h:220,image:"assets/electrodz/abb_a75_30.png",imageOff:"assets/electrodz/abb_a75_30_off.png",badge:"AC Contactor",din:true,startOpen:true,terminals:[{id:"1",nx:0.174,ny:0.323,direction:"top"},{id:"2",nx:0.174,ny:0.88,direction:"bottom"},{id:"3",nx:0.5,ny:0.323,direction:"top"},{id:"4",nx:0.5,ny:0.88,direction:"bottom"},{id:"5",nx:0.824,ny:0.323,direction:"top"},{id:"6",nx:0.824,ny:0.88,direction:"bottom"},{id:"A1",nx:0.238,ny:0.13,direction:"top"},{id:"A2",nx:0.773,ny:0.13,direction:"top"}],pairs:[["1","2"],["3","4"],["5","6"]],pair:["1","2"]},
@@ -10128,6 +10129,7 @@
       "Inverseurs de source",
       "Relais tension / phases",
       "Différentiel",
+      "Parafoudres",
       "Commande",
       "Contacteurs",
       "Relais thermiques",
@@ -17452,7 +17454,7 @@
     });
 
     if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
-      navigator.serviceWorker.register("sw-pwire.js?v=inject-20261002-r1").catch(function () {});
+      navigator.serviceWorker.register("sw-pwire.js?v=parafoudres-r1").catch(function () {});
     }
     if ("launchQueue" in window && window.launchQueue && typeof window.launchQueue.setConsumer === "function") {
       window.launchQueue.setConsumer(function (params) {
