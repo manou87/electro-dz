@@ -5,7 +5,7 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Fluke 1664 — embed PanelWire">
+  <meta name="description" content="Fluke 1664 — embed PanelWire (face trainer authentique)">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
 
   <meta name="mobile-web-app-capable" content="yes">
@@ -15,26 +15,21 @@
   <style>
     html.embed-meter, html.embed-meter body {
       background: transparent !important;
+      background-color: transparent !important;
       overflow: hidden !important;
       margin: 0 !important;
       padding: 0 !important;
     }
-    flutter-view, flt-glass-pane, flt-scene-host {
+    flutter-view, flt-glass-pane, flt-scene-host, flt-canvas-container {
+      background: transparent !important;
+      background-color: transparent !important;
       touch-action: none;
     }
-    /* Réduit la letterbox noire autour du canvas (recadrage panel côté parent). */
-    html.embed-meter flt-scene-host canvas {
+    html.embed-meter flt-scene-host canvas,
+    html.embed-meter canvas {
+      background: transparent !important;
       background-color: transparent !important;
     }
-    #panelwire-measures {
-      position: fixed; right: 6px; bottom: 6px; z-index: 99999;
-      font: 600 11px/1.35 system-ui, sans-serif; color: #0f172a;
-      background: rgba(255,255,255,.88); border: 1px solid rgba(148,163,184,.55);
-      border-radius: 8px; padding: 6px 8px; pointer-events: none;
-      box-shadow: 0 2px 8px rgba(15,23,42,.12);
-      display: none;
-    }
-    #panelwire-measures.on { display: block; }
   </style>
 </head>
 <body>
@@ -51,23 +46,108 @@
     if (target !== window.location.pathname + window.location.search + window.location.hash) {
       history.replaceState(null, "", target);
     }
-    try { document.body.style.background = "transparent"; } catch (_) {}
+    try {
+      document.documentElement.style.background = "transparent";
+      document.body.style.background = "transparent";
+    } catch (_) {}
   })();
   </script>
-  <div id="panelwire-measures" aria-live="polite"></div>
+  <!--
+    Pont WireLab → Flutter (vrai LCD, pas d’overlay peint).
+    - V~ : volts LN / LPE / NPE depuis le plan.
+    - RISO live (≥30 V entre pointes) : prétest refuse (U>30V — RISO inhibé).
+    - RISO mort (0 V) : MΩ ouvert honnête (>∞ / haut) si tips OK ; pas de modèle de défaut
+      d’isolement dans le plan pour l’instant (riso optionnel dans le payload).
+  -->
   <script>
   (function () {
-    var hud = document.getElementById("panelwire-measures");
+    window.__wirelabFluke = {
+      L: false, N: false, PE: false,
+      volts: { LN: 0, LPE: 0, NPE: 0 },
+      maxV: 0,
+      live: false,
+      riso: null,
+      sim: false
+    };
+    function applyMsg(d) {
+      if (!d || typeof d !== "object") return false;
+      var t = d.type;
+      if (t !== "wirelab-fluke-leads" && t !== "panelwire/fluke-state" && t !== "panelwire/fluke-measures") {
+        return false;
+      }
+      var wl = window.__wirelabFluke;
+      if (d.L != null || d.N != null || d.PE != null) {
+        if (d.L != null) wl.L = !!d.L;
+        if (d.N != null) wl.N = !!d.N;
+        if (d.PE != null) wl.PE = !!d.PE;
+      }
+      if (d.leads && typeof d.leads === "object") {
+        wl.L = !!d.leads.L;
+        wl.N = !!d.leads.N;
+        wl.PE = !!d.leads.PE;
+      }
+      var v = d.volts;
+      if (v && typeof v === "object") {
+        if (v.LN != null) wl.volts.LN = +v.LN || 0;
+        if (v.LPE != null) wl.volts.LPE = +v.LPE || 0;
+        if (v.NPE != null) wl.volts.NPE = +v.NPE || 0;
+      }
+      if (d.ln != null) wl.volts.LN = +d.ln || 0;
+      if (d.lpe != null) wl.volts.LPE = +d.lpe || 0;
+      if (d.npe != null) wl.volts.NPE = +d.npe || 0;
+      wl.maxV = Math.max(wl.volts.LN, wl.volts.LPE, wl.volts.NPE);
+      if (d.maxV != null) wl.maxV = Math.max(wl.maxV, +d.maxV || 0);
+      wl.live = !!d.live || wl.maxV >= 30;
+      if (d.riso != null && isFinite(+d.riso)) wl.riso = +d.riso;
+      else if (d.riso === null) wl.riso = null;
+      else if (!wl.live && (wl.L || wl.N || wl.PE)) wl.riso = null; /* moteur → ∞ ouvert */
+      if (d.sim != null) wl.sim = !!d.sim;
+      return true;
+    }
+    function refreshMeter() {
+      var m = window.__wirelabFlukeMeter;
+      if (!m) return;
+      try {
+        if (typeof m.mE === "function") m.mE();
+      } catch (_) {}
+    }
     window.addEventListener("message", function (ev) {
-      var d = ev.data;
-      if (!d || d.type !== "panelwire/fluke-measures") return;
-      if (!hud) return;
-      if (!d.sim) { hud.classList.remove("on"); return; }
-      hud.classList.add("on");
-      hud.textContent = "PanelWire · L–N " + (d.ln || 0) + " V · L–PE " + (d.lpe || 0) + " V";
+      if (!applyMsg(ev && ev.data)) return;
+      refreshMeter();
     });
+    /* Si le parent a déjà posté avant le boot Flutter. */
+    var tries = 0;
+    var boot = setInterval(function () {
+      tries++;
+      if (window.__wirelabFlukeMeter || tries > 80) {
+        clearInterval(boot);
+        refreshMeter();
+      }
+    }, 250);
   })();
   </script>
-  <script src="flutter_bootstrap.js?v=meter-embed-3" async></script>
+  <!-- Un seul canvas Flutter — pas de miroir alpha (évite le ghosting double Fluke). -->
+  <script>
+  (function () {
+    function paintHost(root) {
+      if (!root || root.getElementById("fluke-embed-trans")) return;
+      var s = document.createElement("style");
+      s.id = "fluke-embed-trans";
+      s.textContent = "flt-scene-host,flt-canvas-container,canvas{background:transparent!important;background-color:transparent!important}";
+      try { root.appendChild(s); } catch (_) {}
+    }
+    function scan() {
+      document.querySelectorAll("flt-glass-pane").forEach(function (g) {
+        paintHost(g.shadowRoot);
+      });
+    }
+    var mo = new MutationObserver(scan);
+    mo.observe(document.documentElement, { childList: true, subtree: true });
+    scan();
+    setTimeout(scan, 400);
+    setTimeout(scan, 1500);
+  })();
+  </script>
+  <script src="flutter_bootstrap.js?v=fluke-riso" async></script>
 </body>
 </html>

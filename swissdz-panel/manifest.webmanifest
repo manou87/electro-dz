@@ -1,23 +1,23 @@
 {
   "id": "/swissdz-panel/",
-  "name": "PanelWire by SwissDZ",
-  "short_name": "PanelWire",
-  "description": "Schémas de tableaux électriques — documents .pwire",
+  "name": "WireLab Pro by SwissDZ",
+  "short_name": "WireLab Pro",
+  "description": "Schémas de tableaux électriques — documents .wirelab",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f8fafc",
-  "theme_color": "#0f172a",
+  "background_color": "#2A2F38",
+  "theme_color": "#2A2F38",
   "lang": "fr",
   "icons": [
     {
-      "src": "brand/logo-panelwire-icon.png",
+      "src": "brand/logo-wirelab-pro-icon.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "brand/logo-panelwire-icon.png",
+      "src": "brand/logo-wirelab-pro-icon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
@@ -27,6 +27,8 @@
     {
       "action": "./index.html",
       "accept": {
+        "application/octet-stream": [".wirelab"],
+        "application/x-wirelab": [".wirelab"],
         "text/html": [".pwire"],
         "application/x-panelwire": [".pwire"],
         "application/json": [".json"]

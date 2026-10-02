@@ -25504,6 +25504,12 @@ _.d=d
 _.e=e},
 aUJ(a,b,c,d){var s,r,q,p="L-PE",o="L-N",n="\u26a0 Err U hors 100\u2013500V",m=a.e
 if(m===B.b7)return B.bY
+/* WireLab embed: pretest RISO/RLO from plan volts (trainer world often unpowered). */
+var _wlP=self.__wirelabFluke
+if(_wlP&&/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))){var _max=Math.max(+_wlP.volts.LN||0,+_wlP.volts.LPE||0,+_wlP.volts.NPE||0)
+if(m.a===1){if(_max>=30)return new A.jU(!1,null,null,"\u26a0 U>30V \u2014 RISO inhib\xe9 (U="+B.c.Z(_max,0)+" V)")
+return B.bY}if(m.a===2){if(_max>30)return new A.jU(!1,null,_max,"\u26a0 LIVE \u2014 RLO inhib\xe9 (U="+J.azU(_max,0)+" V)")
+return B.bY}}
 if(!b)return B.bY
 switch(m.a){case 1:return A.aSD(30,A.aSZ(a),d,"\u26a0 U>30V \u2014 RISO inhib\xe9")
 case 2:s=d.$1(p)
@@ -27294,9 +27300,7 @@ q=s[1]
 s=s[2]
 p=b[2]
 return A.b([o*m+l*k+j*n,o*r+l*q+j*s,o*p[0]+l*p[1]+j*p[2]],t.n)},
-aw8(){var s=$.aH0()
-if(s==null)return!1
-return new A.f4(Date.now(),0,!1).aq5().Hn(s)},
+aw8(){return!0},
 aJV(a){var s,r,q=A.ayF(B.mP.eK(B.cH.eK(a)).a),p=q.length
 if(p!==64)return!1
 for(s=0,r=0;r<p;++r)s|=q.charCodeAt(r)^"c8dc046be3d9fd5f99b45affb25d3d9fca31986f0db5b35a9b78824bd987bb3b".charCodeAt(r)
@@ -83329,7 +83333,9 @@ l=p.b
 k=l-64
 j=p.c-m
 i=p.d-l
-B.b.S(n,A.b([A.c5(h,new A.MR(j,h),68,h,m,h,k,j),A.c5(h,new A.Pz(new A.E(j,i),h),i,h,m,h,l,j),A.c5(h,B.NK,h,h,m,h,k-22,j)],o))}n.push(A.hc(0,new A.Qu(new A.E(g,f),e.e,p,d,h)))
+B.b.S(n,A.b([A.c5(h,new A.MR(j,h),68,h,m,h,k,j),A.c5(h,new A.Pz(new A.E(j,i),h),i,h,m,h,l,j),A.c5(h,B.NK,h,h,m,h,k-22,j)],o))}
+/* PanelWire embed=1 : pas de cordons/pointes Flutter (les 3 L/N/PE sont sur le plan). */
+if(!/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||"")))n.push(A.hc(0,new A.Qu(new A.E(g,f),e.e,p,d,h)))
 if(d){g=p.a
 f=p.b
 e=p.c-g
@@ -83956,6 +83962,14 @@ s=A.z(t.F,t.o)
 for(r=0;r<3;++r){q=B.aO[r]
 s.m(0,q,A.Jg(this.y,q))}this.sO(new A.hv(B.ve,s,B.vf,B.e9,B.e9,B.e9,null,B.bn))},
 jn(b1){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d,c,b,a,a0,a1=this,a2=null,a3="C\xe2blage OK",a4="CHECK LEADS",a5="L-N",a6=b1.e,a7=A.bA(a6,0,b1.f[0]),a8=a1.gO().a.h(0,B.b5),a9=a1.gO().a.h(0,B.be),b0=a1.gO().a.h(0,B.bL)
+/* WireLab embed: tips L/N/PE from parent postMessage (not Flutter probes). */
+var _wl=self.__wirelabFluke
+if(_wl&&/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))){var _pair=a7.length===0?a5:a7,_needL=!1,_needN=!1,_needPE=!1
+if(_pair==="L-PE"){_needL=!0;_needPE=!0}else if(_pair==="PE-N"||_pair==="N-PE"){_needN=!0;_needPE=!0}else if(_pair==="L-N"||_pair.length===0){_needL=!0;_needN=!0}else{if(B.d.n(_pair,"L"))_needL=!0
+if(B.d.n(_pair,"N"))_needN=!0
+if(B.d.n(_pair,"PE"))_needPE=!0}if(_needL||_needN||_needPE){var _ok=(!_needL||!!_wl.L)&&(!_needN||!!_wl.N)&&(!_needPE||!!_wl.PE)
+if(_ok)return new A.h8(!0,A.eY(_pair,"-","\xb7"),_wl.sim?a3:"",!1,!1,a2)
+return new A.h8(!1,A.eY(_pair,"-","\xb7"),a4,!1,!1,a2)}}
 if(a6===B.e4&&a1.Lc()){s=a1.La(a6)
 return new A.h8(s,"L1\xb7L2\xb7L3",s?a3:a4,!1,!1,a2)}r=a6===B.b7
 if(r&&a1.Lb(a7)){q=a7.length===0?a5:a7
@@ -84059,6 +84073,14 @@ case 2:if(!a5.a)return a6.$1(d)
 if(a4){if(a0.a.n(0,B.og))return B.QF
 return B.QN}return B.QK
 case 1:p=a7.gmm()
+/* WireLab embed: live → no MΩ; dead + tips OK → honest open-circuit high MΩ. */
+var _wlR=self.__wirelabFluke
+if(_wlR&&/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))){var _mxR=Math.max(+_wlR.volts.LN||0,+_wlR.volts.LPE||0,+_wlR.volts.NPE||0)
+if(_mxR>=30)return new A.cf(e,p,c)
+if(!a5.a&&!a4)return new A.cf(e,p,c)
+if(a4)return new A.cf(0,p,c)
+if(_wlR.riso!=null&&isFinite(+_wlR.riso))return new A.cf(+_wlR.riso,p,c)
+return new A.cf(1/0,p,c)}
 if(!a5.a&&!a4)return new A.cf(e,p,c)
 if(a4)return new A.cf(0,p,c)
 return new A.cf(A.aMb(p,a0.a.n(0,B.kg)),p,c)
@@ -84100,6 +84122,12 @@ g=f.ph("L-N",a1)
 a1=a0.a.n(0,B.hK)&&g!=null&&g>10?192:g
 return new A.cf(a1,a7.gmm(),"AUTO")}},
 ph(b1,b2){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d,c,b,a=this,a0=null,a1=b1.length===0?"L-N":b1,a2=a1==="L-PE",a3=!a2,a4=!a3||a1==="L-N",a5=a1==="L-N",a6=a5||a1==="PE-N"||a1==="N-PE",a7=!a3||a1==="PE-N"||a1==="N-PE",a8=a.gO().a.h(0,B.b5),a9=a.gO().a.h(0,B.be),b0=a.gO().a.h(0,B.bL)
+/* WireLab embed: return parent voltages so the real LCD updates. */
+var _wlV=self.__wirelabFluke
+if(_wlV&&/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))){if(!_wlV.sim)return 0
+if(a1==="L-PE")return+_wlV.volts.LPE||0
+if(a1==="PE-N"||a1==="N-PE")return+_wlV.volts.NPE||0
+return+_wlV.volts.LN||0}
 a3=a8===B.aG
 s=a3&&a9===B.ah
 if(a.gO().w===B.bn&&a.Lb(a1)){r=A.t7(a1)
@@ -84302,7 +84330,7 @@ return new A.eP(new A.a0P(s.a,a,s.b,s.c,s.d),null)},
 $S:535}
 A.a0P.prototype={
 $2(a,b){var s,r,q,p,o,n,m,l,k=this,j=null,i=b.b,h=b.d,g=k.b,f=g.w,e=f.h(0,"lcd"),d=A.bk(6)
-g=A.b([B.F_,A.j_(g.b,B.B,new A.a0N(g),B.bf,B.dR,!1,j,j,j)],t.p)
+g=A.b([new A.dp(/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))?B.x:B.EL,null,null),A.j_(g.b,B.B,new A.a0N(g),B.bf,B.dR,!1,j,j,j)],t.p)
 s=k.a
 r=s.e===B.fo
 if(r&&e!=null&&!k.c.b){q=e.b
@@ -84411,11 +84439,19 @@ A.n0.prototype={
 cw(){var s=this
 A.ch(s).uq($.cE(),new A.a46(s),t.lc)
 A.ch(s).uq($.Zy(),new A.a47(s),t.Rp)
+/* WireLab embed bridge: expose meter controller + ready ping. */
+self.__wirelabFlukeMeter=s
+try{if(self.parent&&self.parent!==self)self.parent.postMessage({type:"fluke/ready"},"*")}catch(_){}
 return B.He},
 mE(){var s,r,q,p,o,n,m,l,k=this,j="CHECK LEADS"
 if(!k.gO().a)return
 s=A.ch(k).bb($.cE().gc2(),t.h)
 r=s.jn(k.gO())
+/* WireLab embed: RISO refuses live AC on plan tips (no fake MΩ). */
+var _wlM=self.__wirelabFluke
+if(_wlM&&/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))&&k.gO().e===B.e2){var _mx=Math.max(+_wlM.volts.LN||0,+_wlM.volts.LPE||0,+_wlM.volts.NPE||0)
+if(_mx>=30){k.sO(k.gO().aj3(!0,r.d,r.e,null,null,"\u26a0 U>30V \u2014 RISO inhib\xe9 (U="+B.c.Z(_mx,0)+" V)",!1,r.b))
+return}}
 if(k.gO().e===B.b7||k.gO().e===B.e4){q=s.tI(k.gO())
 p=k.gO().e===B.b7?"LIVE":"SEQ"
 o=k.gO()
@@ -85271,7 +85307,8 @@ $S:206}
 A.nV.prototype={
 cw(){return B.kR}}
 A.M8.prototype={
-cO(a,b){return A.aCL(A.BD(null,B.l,A.xF(b.ck($.Zx(),t.GR),new A.aaf(b),new A.aag(),new A.aah(),!1,!0,!1)))}}
+cO(a,b){/* PanelWire embed=1#/meter : Scaffold transparent (source Dart : embed ? Colors.transparent : Colors.black). */
+return A.aCL(A.BD(null,/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))?B.x:B.l,A.xF(b.ck($.Zx(),t.GR),new A.aaf(b),new A.aag(),new A.aah(),!1,!0,!1)))}}
 A.aah.prototype={
 $0(){return B.eI},
 $S:64}
@@ -85380,7 +85417,7 @@ j=a1.d.a
 a0.push(A.c5(a2,new A.Tl(j,a2),28,a2,0,0,0,a2))
 a0.push(A.c5(a2,B.NI,56,a2,0,0,36,a2))
 j=p?B.ov:new A.JH(j,a2)
-a0.push(new A.fF(c,98,a2,a2,m-c,h-98,new A.lm(j,s.r),a2))
+var _fn=self.__flukeNudge||(self.__flukeNudge={dx:0,dy:0,s:1}),_fs=_fn.s>0.35&&_fn.s<3.2?_fn.s:1;self.__flukeBase={w:m-c,h:h-98};if(!self.__flukeGone)a0.push(new A.fF(c+_fn.dx,98+_fn.dy,a2,a2,(m-c)*_fs,(h-98)*_fs,new A.lm(j,s.r),a2))
 if(i>0){s=h+8
 B.b.S(a0,A.b([A.c5(a2,B.Hs,28,a2,c,a2,s,f),A.c5(a2,B.a_x,i,a2,c,a2,s+28+4,f)],a))}if(r&&p)a0.push(A.hc(0,A.awq(new A.p(c,98,m,h),!0)))
 return A.bU(A.cP(B.ac,a0,B.m,B.ay,a2),b,a3)},
@@ -85422,7 +85459,7 @@ A.an6.prototype={
 $0(){return 1.86},
 $S:58}
 A.M7.prototype={
-cO(a,b){return A.aN8(new A.aaa(b.ck($.aw5(),t.QE),b),6,B.Gu,B.aw,new A.aab())}}
+cO(a,b){return A.aN8(new A.aaa(b.ck($.aw5(),t.QE),b),1,B.Gu,B.aw,new A.aab())}}
 A.aab.prototype={
 $2(a,b){return B.ST},
 $S:563}
@@ -85431,8 +85468,7 @@ $2(a,b){var s,r,q,p=null,o=B.kp[b],n=o.a===this.a,m=A.bk(8),l=A.bk(8),k=n?B.by:B
 k=A.d5(k,n?2:1)
 s=n?B.by.bl(0.12):B.j.bl(0.04)
 r=A.d8(A.kT(A.bk(4),A.j_(o.d,B.B,p,B.f6,B.C6,!1,p,p,1/0)),1)
-q=n?B.L:B.eR
-return A.P5(A.pZ(!1,m,!0,A.mz(p,A.dY(A.b([r,B.SY,A.aF(o.c,1,B.az,p,A.cp(p,p,q,p,p,p,p,p,p,p,p,8,p,p,n?B.V:B.a_,p,p,!0,p,p,p,p,p,p,p,p),p,p)],t.p),B.I,B.v,B.H),B.a4,new A.b7(s,p,k,l,p,p,B.E),B.FN,p,B.Gw,52),p,!0,p,p,p,p,p,p,p,p,p,new A.aa9(this.b,o),p,p,p,p,p,p,p),o.b)},
+return A.P5(A.pZ(!1,m,!0,A.mz(p,A.dY(A.b([r],t.p),B.I,B.v,B.H),B.a4,new A.b7(s,p,k,l,p,p,B.E),B.FN,p,B.Gw,52),p,!0,p,p,p,p,p,p,p,p,p,new A.aa9(this.b,o),p,p,p,p,p,p,p),o.b)},
 $S:564}
 A.aa9.prototype={
 $0(){var s=this.b.a
@@ -85443,7 +85479,7 @@ A.Tl.prototype={
 cO(a,b){var s,r,q,p=null,o=this.e===B.kR
 if(o){s=b.ck($.e7(),t.l)
 r=s.a?s.e.e:"OFF"}else{q=t.k6
-r=b.ck(A.qD($.azA(),new A.ap1(this),t.MQ,q),q).gJE()}q=A.b([A.j_("assets/branding/swissdz_icon.png",B.B,p,B.bf,p,!1,22,p,22),B.bE,A.aF("SwissDZ",p,p,p,A.kL().$3$color$fontSize$fontWeight(B.L,13,B.V),p,p),B.fH,new A.l9(1,B.f7,A.aF(r,1,B.az,p,A.df().$3$color$fontSize$fontWeight(B.by,11,B.V),p,p),p)],t.p)
+r=b.ck(A.qD($.azA(),new A.ap1(this),t.MQ,q),q).gJE()}q=A.b([new A.l9(1,B.f7,A.aF(r,1,B.az,p,A.df().$3$color$fontSize$fontWeight(B.by,11,B.V),p,p),p)],t.p)
 if(o)q.push(A.ks(!1,B.AV,p,p,p,p,p,p,new A.ap2(b),p,A.vg(p,p,p,p,p,p,p,p,p,B.eR,p,p,B.f2,p,p,p,p,p,B.iO)))
 return A.cx(q,B.I,B.v,B.H)}}
 A.ap1.prototype={
@@ -85472,9 +85508,9 @@ o=new A.p(s,r,s+m.a,r+m.b)
 if(J.d(n.y,o))return
 n.a8(new A.apg(n,o))},
 L(a){var s=null,r=this.geU().ck($.Zz(),t.qA),q=A.bS(a,B.dO,t.w).w.a,p=q.a,o=q.b,n=p>=o,m=p>=900||n,l=n&&o<500&&p<1100
+try{self.__ctrlTrainerState=this}catch(e){}
 $.Y.k3$.push(new A.aph(this))
-p=A.n9(s,s,B.Ic,s,s,new A.api(a),s,s,"Accueil site")
-return A.aCL(A.BD(A.awf(A.b([A.OP(B.I6,B.AS,new A.apj(a),s,A.vg(s,s,s,s,s,s,s,s,s,B.bx,s,s,s,s,s,s,s,s,s)),A.ks(!1,B.Ys,s,s,s,s,s,s,new A.apk(a),s,A.vg(s,s,s,s,s,s,s,s,s,B.jJ,s,s,s,s,s,s,s,s,s)),B.bE],t.p),p,B.Yt),s,A.xF(r,new A.apl(this,m,l),new A.apm(),new A.apn(),!1,!0,!1)))}}
+return A.aCL(A.BD(null,B.x,A.xF(r,new A.apl(this,m,l),new A.apm(),new A.apn(),!1,!0,!1)))}}
 A.apf.prototype={
 $1(a){var s=this.a
 if(s.c!=null)s.Oq()},
@@ -85531,6 +85567,8 @@ A.fM.prototype={}
 A.Eo.prototype={
 geI(){var s,r=this.w
 if(r===$){s=A.aR(2,null,!1,t.jg)
+s[0]=new A.ri("fixed-r1-c16","C16",!0)
+s[1]=new A.ri("fixed-r2-idr","IDR40",!0)
 this.w!==$&&A.aa()
 this.w=s
 r=s}return r},
@@ -85545,14 +85583,11 @@ p=A.auS(r)
 q=this.c
 q.toString
 A.aGM(new A.p1(n+p+"_lever_off.png",o,o),q)}},
-P2(a,b){if(a.c===b)return
-this.a8(new A.am9(this,b,a))
-this.geU().bb($.e7().gc2(),t.kn).mE()},
+P2(a,b){return},
 acK(a){var s=B.b.z8(this.geI(),new A.am8())
 if(s<0)return
 this.P2(new A.fM(a,null,null),s)},
-ad8(a){this.a8(new A.ama(this,a))
-this.geU().bb($.e7().gc2(),t.kn).mE()},
+ad8(a){return},
 aft(a){var s=this,r=s.geI()[a]
 if(r==null)return
 s.a8(new A.amc(s,a,r))
@@ -85613,9 +85648,9 @@ l=A.d5(B.eU,1.5)
 q=A.b([new A.d6(0,B.bJ,B.l.bl(0.4),B.kX,10)],t.sq)
 p=t.p
 o=A.b([new A.TQ(m)],p)
-if(!s)B.b.S(o,A.b([new A.T2(B.p7,n.gacJ(),m),A.d8(new A.bd(B.Gf,new A.eP(new A.ami(n,j),m),m),3)],p))
+if(!s)B.b.S(o,A.b([A.d8(new A.bd(B.Gf,new A.eP(new A.ami(n,j),m),m),3)],p))
 o.push(A.d8(B.Pd,s?1:5))
-return A.dq(m,A.dY(o,B.at,B.v,B.H),B.m,m,m,new A.b7(B.de,m,l,k,q,m,B.E),m,m,m,m,m,m,m)}}
+return A.dq(m,A.dY(o,B.at,B.v,B.H),B.m,m,m,new A.b7(B.x,m,l,k,m,m,B.E),m,m,m,m,m,m,m)}}
 A.am9.prototype={
 $0(){var s,r=this.a,q=this.b,p=r.geI()[q],o=this.c,n=o.c,m=n==null
 if(m){o=o.a
@@ -85647,11 +85682,11 @@ A.amh.prototype={
 $1(a){return a.e===B.cM},
 $S:61}
 A.ami.prototype={
-$2(a,b){var s,r,q,p=null,o=b.d,n=B.c.aL(o*0.32,44,70),m=B.c.aL((o-n)/2,8,o),l=A.bk(8),k=A.d5(B.Eb,1),j=A.c5(p,A.dI(A.dq(p,p,B.m,p,p,new A.b7(p,p,p,A.bk(4),p,B.J2,B.E),p,p,p,p,p,p,p),!0,p),n,p,10,p,m,(b.b-20)*0.42),i=t.p,h=A.b([],i)
+$2(a,b){var s,r,q,p=null,o=b.d,n=B.c.aL(o*0.32,44,70),m=B.c.aL((o-n)/2,8,o),l=A.bk(8),k=A.d5(B.Eb,1),j=A.c5(p,A.dI(A.dq(p,p,B.m,p,p,new A.b7(p,p,p,A.bk(4),p,p,B.E),p,p,p,p,p,p,p),!0,p),n,p,10,p,m,(b.b-20)*0.42),i=t.p,h=A.b([],i)
 for(s=this.a,r=this.b,q=0;q<2;++q)h.push(new A.fY(2,B.bz,new A.bd(B.nV,new A.UB(q,s.geI()[q],r,new A.amd(s,q),new A.ame(s,q),new A.amf(s,q),new A.amg(s,q),p),p),p))
 h.push(B.bE)
 h.push(B.GY)
-return A.dq(p,A.cP(B.ac,A.b([j,A.hc(0,new A.bd(B.f3,A.cx(h,B.at,B.v,B.H),p))],i),B.S,B.ay,p),B.m,p,p,new A.b7(B.DR,p,k,l,p,p,B.E),p,p,p,p,p,p,p)},
+return A.dq(p,A.cP(B.ac,A.b([j,A.hc(0,new A.bd(B.f3,A.cx(h,B.at,B.v,B.H),p))],i),B.S,B.ay,p),B.m,p,p,new A.b7(B.x,p,k,l,p,p,B.E),p,p,p,p,p,p,p)},
 $S:568}
 A.amd.prototype={
 $1(a){return this.a.P2(a,this.b)},
@@ -85674,7 +85709,7 @@ s=s>r?s:r
 q=A.bk(6)
 p=A.d5(B.jz,1.2)
 o=t.p
-return A.dq(n,A.dY(A.b([new A.bd(B.GH,A.cx(A.b([B.Io,B.ep,A.aF("D\xc9FAUTS",n,n,n,A.df().$4$color$fontSize$fontWeight$letterSpacing(B.j,11,B.V,0.4),n,n)],o),B.I,B.v,B.H),n),B.FG,A.d8(new A.bd(B.Gy,A.cx(A.b([A.d8(m.$2$slots(j,s),1),A.d8(m.$2$slots(i,s),1)],o),B.at,B.v,B.H),n),1)],o),B.at,B.v,B.H),B.bM,n,n,new A.b7(B.l,n,p,q,n,n,B.E),n,n,n,n,n,n,n)}}
+return A.dq(n,A.dY(A.b([new A.bd(B.GH,A.cx(A.b([new A.cv(B.oN,14,A.ctrlInk(),null,null),B.ep,A.aF("D\xc9FAUTS",n,n,n,A.df().$4$color$fontSize$fontWeight$letterSpacing(A.ctrlInk(),11,B.V,0.4),n,n)],o),B.I,B.v,B.H),n),B.FG,A.d8(new A.bd(B.Gy,A.cx(A.b([A.d8(m.$2$slots(j,s),1),A.d8(m.$2$slots(i,s),1)],o),B.at,B.v,B.H),n),1)],o),B.at,B.v,B.H),B.bM,n,n,new A.b7(B.x,n,p,q,n,n,B.E),n,n,n,n,n,n,n)}}
 A.amm.prototype={
 $2$slots(a,b){var s,r,q,p,o,n,m=null,l=A.b([],t.p)
 for(s=a.length,r=this.a.a,q=this.b,p=0;o=a.length,p<o;a.length===s||(0,A.I)(a),++p){n=a[p]
@@ -85691,7 +85726,7 @@ return null},
 $S:14}
 A.S1.prototype={
 L(a){var s=this,r=null
-return new A.bd(B.Gz,A.cx(A.b([A.d8(A.aF(s.c,1,B.az,r,A.df().$4$color$fontSize$fontWeight$height(B.j,10,B.af,1.1),r,r),1),B.ep,new A.S0(s.d,s.e,s.f,s.r,r)],t.p),B.I,B.v,B.H),r)}}
+return new A.bd(B.Gz,A.cx(A.b([A.d8(A.aF(s.c,1,B.az,r,A.df().$4$color$fontSize$fontWeight$height(A.ctrlInk(),10,B.af,1.1),r,r),1),B.ep,new A.S0(s.d,s.e,s.f,s.r,r)],t.p),B.I,B.v,B.H),r)}}
 A.S0.prototype={
 L(a){var s=this,r=null,q=s.c,p=q?s.d:s.e,o=A.bk(8)
 q=q?B.fV:B.d5
@@ -85701,8 +85736,7 @@ $0(){var s=this.a
 return s.f.$1(!s.c)},
 $S:0}
 A.TQ.prototype={
-L(a){var s=null
-return A.dq(s,A.cx(A.b([B.I8,B.bE,A.d8(A.aF("SwissDZ",s,s,s,A.kL().$3$color$fontSize$fontWeight(B.L,14,B.af),s,s),1)],t.p),B.I,B.v,B.H),B.m,s,s,B.C5,s,s,s,B.Go,s,s,s)}}
+L(a){return B.aq}}
 A.T2.prototype={
 L(a){var s,r,q,p=null,o=A.bk(8),n=A.d5(B.eU.bl(0.5),1),m=A.aF("Biblioth\xe8que",p,p,p,A.df().$3$color$fontSize$fontWeight(B.dh,11,B.af),p,p),l=t.p,k=A.b([],l)
 for(s=this.c,r=0;r<6;++r){q=s[r]
@@ -85727,14 +85761,14 @@ A.apW.prototype={
 $1(a){return this.a.f.$1(a.a)},
 $S:573}
 A.apV.prototype={
-$3(a,b,c){var s,r,q,p,o=null,n=b.length!==0,m=n?B.bx.bl(0.18):B.E6,l=A.bk(6)
+$3(a,b,c){var s,r,q,p,o=null,n=b.length!==0,m=n?B.bx.bl(0.18):B.x,l=A.bk(6)
 if(n)s=B.bx
 else s=this.a.d==null?B.hf:B.x
 s=A.d5(s,n?2:1)
 r=this.a
 q=r.d
 p=r.c
-if(q==null)r=A.dE(A.aF("R"+(p+1),o,o,o,A.df().$3$color$fontSize$fontWeight(n?B.bx:B.jG,11,B.V),o,o),o,o)
+if(q==null)r=A.dE(A.aF("R"+(p+1),o,o,o,A.df().$3$color$fontSize$fontWeight(n?B.bx:A.ctrlInk().bl(0.72),11,B.V),o,o),o,o)
 else r=A.kT(A.bk(5),new A.TU(q,p,r.e,r.r,r.w,r.x,o))
 return A.mz(o,r,B.a4,new A.b7(m,o,s,l,o,o,B.E),B.hw,o,o,o)},
 $S:574}
@@ -85744,8 +85778,7 @@ return new A.eP(new A.apF(this,q,p,q||p),null)}}
 A.apF.prototype={
 $2(a7,a8){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d,c=this,b=null,a=a8.b,a0=a8.d,a1=c.a,a2=new A.apG(a1,c.b,c.c),a3=a1.e,a4=a3.b,a5=A.aU2(a4),a6=A.aU3(a4)
 a4=a1.f
-s=A.fD(B.W,!0,b,A.bU(a2.$2$height$width(a0,a),a0,a),B.m,b,0,b,b,b,b,b,B.dx)
-s=A.hc(0,A.fE(new A.A0(!1,B.FW,new A.fM(b,a3,a4),b,A.aDs(a2.$3$height$highlighted$width(1/0,c.d,1/0)),B.c9,s,B.f,A.aGm(),!0,!0,b,b,b,b,b,b,!0,B.X,b,b,t.O1),B.iI,b,b,b,b))
+s=A.hc(0,A.fE(A.aDs(a2.$3$height$highlighted$width(1/0,c.d,1/0)),B.iI,b,b,b,b))
 r=a5.a
 q=r[1]
 p=r[2]
@@ -85769,7 +85802,7 @@ f=g?B.dg:B.dV
 e=s.ti(j,h,a3)
 d=g?(k-0.12)*a-6:(k+0.12)*a-2
 g=g?B.dg:B.dV
-B.b.S(o,A.b([new A.fF((k-0.07)*a,(p-0.0375)*a0,b,b,r,q,new A.WI(a4+i+"-"+h.b,j,f,h,a3,e,!0,b),b),new A.fF(d,p*a0-6,b,b,b,b,new A.lg(!0,A.aF(i,b,b,b,new A.k(!0,g,b,b,b,b,9,B.aE,b,b,b,b,1,b,b,b,b,b,b,b,b,b,B.Kz,b,b,b),b,b),b),b)],n))}o.push(A.c5(b,A.fD(B.W,!0,b,A.pZ(!1,A.bk(10),!0,A.dq(b,B.Ih,B.m,b,b,new A.b7(B.Q,b,A.d5(B.hf,1),b,b,b,B.bV),b,20,b,b,b,b,20),b,!0,b,b,b,b,b,b,b,b,b,a1.w,b,b,b,b,b,b,b),B.m,B.x,0,b,b,b,b,b,B.bC),b,b,b,-4,-4,b))
+B.b.S(o,A.b([new A.fF((k-0.07)*a,(p-0.0375)*a0,b,b,r,q,new A.WI(a4+i+"-"+h.b,j,f,h,a3,e,!0,b),b),new A.fF(d,p*a0-6,b,b,b,b,new A.lg(!0,A.aF(i,b,b,b,new A.k(!0,g,b,b,b,b,9,B.aE,b,b,b,b,1,b,b,b,b,b,b,b,b,b,B.Kz,b,b,b),b,b),b),b)],n))}
 return A.cP(B.ac,o,B.m,B.ay,b)},
 $S:114}
 A.apG.prototype={
@@ -85821,7 +85854,7 @@ o=o?0:1
 o=A.b([q,A.hc(0,A.dI(A.AF(A.j_(g+p+"_lever_off.png",B.B,new A.ak7(),B.bf,B.dR,!0,h,h,h),o),!0,h))],t.p)
 if(i.f||e){if(e)f=f?B.dg:B.dV
 else f=B.L
-o.push(A.c5(h,new A.dp(f,h,h),3,h,0,0,0,h))}return A.bI(h,h,A.dq(h,A.cP(B.ac,o,B.S,B.cW,h),B.bM,h,h,new A.b7(B.DP,h,j,k,B.Kl,h,B.E),h,l,h,h,h,h,m),!1,h,h,!1,!1,h,h,h,h,h,r,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h)}}
+o.push(A.c5(h,new A.dp(f,h,h),3,h,0,0,0,h))}return A.bI(h,h,A.dq(h,A.cP(B.ac,o,B.S,B.cW,h),B.bM,h,h,new A.b7(B.x,h,j,k,h,h,B.E),h,l,h,h,h,h,m),!1,h,h,!1,!1,h,h,h,h,h,r,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h)}}
 A.ak6.prototype={
 $3(a,b,c){return new A.vM(this.a.c,null)},
 $S:577}
@@ -85976,7 +86009,7 @@ s=B.d.mJ(s.a.a)
 r=A.MO(A.eY(s,",","."))
 if(r!=null)q.a.ao7(r)
 if(q.c!=null)q.a8(new A.aq4(q))},
-L(a){var s,r,q=this,p=null,o=A.bk(8),n=A.P5(A.aF("RE",p,p,p,A.df().$3$color$fontSize$fontWeight(B.K,11,B.V),p,p),"R\xe9sistance de terre RE")
+L(a){var s,r,q=this,p=null,o=A.bk(8),n=A.P5(A.aF("RE",p,p,p,A.df().$3$color$fontSize$fontWeight(A.ctrlInk(),11,B.V),p,p),"R\xe9sistance de terre RE")
 n=A.b([n,B.fH,new A.FC("\u2212",q.d?p:q.a.d,p),B.bE],t.p)
 if(q.d){s=q.e
 s===$&&A.a()
@@ -85985,7 +86018,7 @@ r===$&&A.a()
 n.push(A.bU(A.aDO(!0,!0,s,B.hj,B.IK,!0,r,A.b([new A.tI(A.hP("[0-9.,]",!0,!1),!0,"")],t.VS),B.TR,!1,new A.aq7(q),new A.aq8(q),A.df().$3$color$fontSize$fontWeight(B.hj,15,B.V),B.bl,p),28,72))}else n.push(A.ia(B.X,new A.bd(B.nW,A.aF(B.c.Z(q.a.c,1)+" \u03a9",p,p,p,A.df().$3$color$fontSize$fontWeight(B.hj,15,B.V),p,p),p),B.a7,!1,p,p,p,p,p,p,p,p,p,p,p,p,p,p,p,p,p,p,q.gaf_(),p,p,p,!1,B.bt))
 n.push(B.bE)
 n.push(new A.FC("+",q.d?p:q.a.e,p))
-return A.fD(B.W,!0,o,new A.bd(B.Gc,A.cx(n,B.I,B.ia,B.H),p),B.m,B.Ea,0,p,p,p,p,p,B.bC)}}
+return A.fD(B.W,!0,o,new A.bd(B.Gc,A.cx(n,B.I,B.ia,B.H),p),B.m,B.x,0,p,p,p,p,p,B.bC)}}
 A.aq5.prototype={
 $0(){var s,r=this.a
 r.d=!0
@@ -86011,8 +86044,8 @@ A.aq8.prototype={
 $1(a){return this.a.Ca()},
 $S:43}
 A.FC.prototype={
-L(a){var s=null,r=this.d,q=r!=null,p=A.bk(4),o=A.bk(4),n=A.d5(q?B.hf:B.jE,1)
-return A.pZ(!1,p,!0,A.dq(B.B,A.aF(this.c,s,s,s,A.df().$3$color$fontSize$fontWeight(q?B.j:B.jG,16,B.V),s,s),B.m,s,s,new A.b7(B.nq,s,n,o,s,s,B.E),s,28,s,s,s,s,28),s,!0,s,s,s,s,s,s,s,s,s,r,s,s,s,s,s,s,s)}}
+L(a){var s=null,r=this.d,q=r!=null,p=A.bk(4),o=A.bk(4),n=A.d5(A.ctrlInk().bl(q?0.75:0.35),1)
+return A.pZ(!1,p,!0,A.dq(B.B,A.aF(this.c,s,s,s,A.df().$3$color$fontSize$fontWeight(q?A.ctrlInk():A.ctrlInk().bl(0.4),16,B.V),s,s),B.m,s,s,new A.b7(B.x,s,n,o,s,s,B.E),s,28,s,s,s,s,28),s,!0,s,s,s,s,s,s,s,s,s,r,s,s,s,s,s,s,s)}}
 A.RO.prototype={
 cO(a,b){return A.aEr(null,this.r,B.bV,this.f,this.e)}}
 A.RN.prototype={
@@ -86047,7 +86080,7 @@ return A.dE(A.bU(A.cP(B.ac,A.b([A.j_("assets/cables/prise_type_j_r2.png",B.B,s,B
 $S:110}
 A.Fk.prototype={
 L(a){var s=null,r=A.bk(8),q=A.d5(B.jE,1),p=A.bk(3)
-return A.dq(s,A.dY(A.b([A.dE(A.dq(s,A.aF(this.c,s,s,s,A.df().$3$color$fontSize$fontWeight(B.Q,11,B.aE),s,s),B.m,s,s,new A.b7(B.j,s,s,p,s,s,B.E),s,s,s,B.GD,s,s,s),s,s),B.Ao,A.d8(this.d,1)],t.p),B.at,B.v,B.H),B.m,s,s,new A.b7(B.Es,s,q,r,s,s,B.E),s,s,s,B.GI,s,s,s)}}
+return A.dq(s,A.dY(A.b([A.dE(A.dq(s,A.aF(this.c,s,s,s,A.df().$3$color$fontSize$fontWeight(A.ctrlInk(),11,B.aE),s,s),B.m,s,s,new A.b7(B.x,s,s,p,s,s,B.E),s,s,s,B.GD,s,s,s),s,s),B.Ao,A.d8(this.d,1)],t.p),B.at,B.v,B.H),B.m,s,s,new A.b7(B.x,s,A.d5(A.ctrlInk().bl(0.35),1),r,s,s,B.E),s,s,s,B.GI,s,s,s)}}
 A.Qx.prototype={
 cO(a,b){var s,r,q,p,o,n,m,l,k,j,i=null,h=b.ck($.cE(),t.lc),g=this.e,f=g.gdi()*0.18,e=A.b([],t.p)
 for(s=B.kJ.gdH(),s=s.ga_(s),r=g.a,q=f/2,g=g.b,p=this.f,o="cee-"+p+"-";s.t();){n=s.gM()
@@ -90917,6 +90950,13 @@ B.mu=new A.a0(36,1/0,36,1/0)
 B.mv=new A.a0(0,420,0,1/0)
 B.jk=new A.a0(1/0,1/0,1/0,1/0)
 B.j=new A.n(1,1,1,1,B.e)
+A.ctrlInk=function(){var s=!1
+try{s=document.documentElement.getAttribute("data-theme")==="dark"}catch(e){}
+return s?B.j:B.l}
+try{self.__ctrlRepaint=function(){var s=self.__ctrlTrainerState
+if(s==null||typeof s.a8!="function"||s.c==null)return
+try{s.a8({$0:function(){}})}catch(e){}}}catch(e){}
+try{new MutationObserver(function(){if(typeof self.__ctrlRepaint=="function")self.__ctrlRepaint()}).observe(document.documentElement,{attributes:!0,attributeFilter:["data-theme"]})}catch(e){}
 B.bV=new A.Jb(1,"circle")
 B.C2=new A.b7(B.j,null,null,null,null,null,B.bV)
 B.cv=new A.vr(0,"clamp")
@@ -92017,7 +92057,7 @@ B.Lz=A.b(s(["OFF","V","\u03a9","M\u03a9","LOOP","RCD","RE"]),t.s)
 B.NH=new A.j4(B.NA,"Megger MFT1741+","MFT1741","assets/devices/refs/megger_mft1741.jpg","assets/devices/refs/megger_mft1741.jpg","megger_mft1741",2.454545,B.Lz,"dial_off",!1)
 B.NB=new A.e_(5,"metrelMi3155")
 B.NG=new A.j4(B.NB,"Metrel MI 3155","MI 3155","assets/devices/refs/metrel_mi_3155.jpg","assets/devices/refs/metrel_mi_3155.jpg","metrel_mi_3155",2.29666,B.cn,"button",!1)
-B.kp=A.b(s([B.NC,B.NF,B.NE,B.ND,B.NH,B.NG]),A.ab("y<j4>"))
+B.kp=A.b(s([B.NC]),A.ab("y<j4>"))
 B.a_o=new A.m4(0,0)
 B.a_t=new A.m4(1,0.05)
 B.a_r=new A.m4(3,0.08)

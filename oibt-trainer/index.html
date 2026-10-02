@@ -36,8 +36,13 @@
   <!-- Pinch navigateur souvent bloqué par CanvasKit ; zoom in-app via InteractiveViewer.
        touch-action: none laisse Flutter recevoir le multi-touch pour le pinch in-app. -->
   <style>
-    flutter-view, flt-glass-pane, flt-scene-host {
+    html, body {
+      background: transparent;
+      margin: 0;
+    }
+    flutter-view, flt-glass-pane, flt-scene-host, canvas {
       touch-action: none;
+      background: transparent !important;
     }
     /* PanelWire embed #/meter : fond transparent (le canvas Flutter reste opaque). */
     html.embed-meter, html.embed-meter body {

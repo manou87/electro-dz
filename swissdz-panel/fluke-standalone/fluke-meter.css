@@ -47,6 +47,18 @@ body.demo .device {
   object-fit: fill;
   pointer-events: none;
 }
+.fluke-brand {
+  position: absolute;
+  left: 17.2%;
+  top: 67.6%;
+  width: 14%;
+  height: 15.5%;
+  object-fit: contain;
+  object-position: center;
+  pointer-events: none;
+  z-index: 6;
+  background: transparent;
+}
 
 .brand-chip {
   position: absolute;
