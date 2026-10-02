@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="brand/logo-panelwire-icon.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="touch-chrome-r2" />
+  <meta name="swissdz-rev" content="pinch-board-r3" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -1258,11 +1258,11 @@
       height:100%; min-height:0;
       -webkit-user-select:none; user-select:none;
       -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent;
-      /* pan 1 doigt OK ; pinch navigateur off → zoom géré en JS */
-      touch-action:pan-x pan-y;
+      /* none : le navigateur ne vole plus le pinch ; pan 1 doigt + zoom = JS */
+      touch-action:none;
     }
-    /* Pendant pinch 2 doigts : aucun geste navigateur (page zoom / scroll). */
-    #board.is-pinching { touch-action:none; overflow:hidden; }
+    #board *, #boardZoomSpacer, #boardWorld { touch-action:none; }
+    #board.is-pinching { overflow:hidden; }
     /* Zoom simulation : spacer = zone scrollable visuelle ; world = contenu scale(orig. top-left) */
     #boardZoomSpacer {
       position:relative; flex:0 0 auto;
@@ -15771,13 +15771,14 @@
       );
     }
     function boardPinchPointOnCanvas(clientX, clientY) {
-      /* Géométrie du plan d’abord (fiable au doigt) — elementFromPoint seul échoue trop souvent. */
       const rect = board.getBoundingClientRect();
       if (clientX < rect.left || clientX > rect.right || clientY < rect.top || clientY > rect.bottom) {
         return false;
       }
-      const el = document.elementFromPoint(clientX, clientY);
-      if (el && boardPinchUiBlocked(el)) return false;
+      try {
+        const el = document.elementFromPoint(clientX, clientY);
+        if (el && boardPinchUiBlocked(el)) return false;
+      } catch (_) { /* WebView : elementFromPoint parfois indisponible → géométrie seule. */ }
       return true;
     }
     function boardTouchDist(a, b) {
@@ -15809,7 +15810,7 @@
         return false;
       }
       const dist = boardTouchDist(a, b);
-      if (!(dist > 10)) return false;
+      if (!(dist > 8)) return false;
       cancelBoardOpsForPinch();
       const mid = boardTouchMid(a, b);
       boardTouchPinch = {
@@ -15878,22 +15879,29 @@
       if (boardTouchPinch) return;
       const scale = Number(ev.scale);
       if (!Number.isFinite(scale) || scale <= 0) return;
-      setBoardZoomAt(boardPinchZ * scale, ev.clientX, ev.clientY);
+      const cx = Number.isFinite(ev.clientX) ? ev.clientX : (board.getBoundingClientRect().left + board.clientWidth / 2);
+      const cy = Number.isFinite(ev.clientY) ? ev.clientY : (board.getBoundingClientRect().top + board.clientHeight / 2);
+      setBoardZoomAt(boardPinchZ * scale, cx, cy);
     }, { passive: false });
     board.addEventListener("gestureend", () => {
       if (boardTouchPinch) return;
       boardGesturePinch = false;
     });
-    /* Pinch 2 doigts (Android / Chrome / WebView Expo / iOS) : zoom autour du milieu des doigts.
-       Capture sur window : si le 1er doigt est hors board puis le 2e sur le plan, on récupère quand même. */
+    /* Pinch 2 doigts : écoute UNIQUEMENT sur #board (passive:false). Pas de preventDefault global document. */
     function boardPinchTouchHandler(ev) {
-      if (ev.touches.length < 2) {
-        if (boardTouchPinch && (ev.type === "touchend" || ev.type === "touchcancel")) {
-          if (ev.touches.length < 2) endBoardTouchPinch();
-        }
+      if (boardPinchUiBlocked(ev.target)) {
+        if (boardTouchPinch) endBoardTouchPinch();
         return;
       }
-      if (boardPinchUiBlocked(ev.target)) return;
+      if (ev.type === "touchcancel") {
+        if (boardTouchPinch) endBoardTouchPinch();
+        return;
+      }
+      if (ev.type === "touchend") {
+        if (boardTouchPinch && ev.touches.length < 2) endBoardTouchPinch();
+        return;
+      }
+      if (ev.touches.length < 2) return;
       if (!boardTouchPinch) {
         if (!beginBoardTouchPinch(ev)) return;
         if (ev.cancelable) ev.preventDefault();
@@ -15901,42 +15909,14 @@
       }
       if (moveBoardTouchPinch(ev) && ev.cancelable) ev.preventDefault();
     }
-    window.addEventListener("touchstart", boardPinchTouchHandler, { passive: false, capture: true });
-    window.addEventListener("touchmove", boardPinchTouchHandler, { passive: false, capture: true });
-    window.addEventListener("touchend", boardPinchTouchHandler, { passive: true, capture: true });
-    window.addEventListener("touchcancel", boardPinchTouchHandler, { passive: true, capture: true });
-    /* Conservé sur #board pour Safari gesture* / cible directe. */
-    board.addEventListener("touchstart", (ev) => {
-      if (ev.touches.length < 2) return;
-      if (boardPinchUiBlocked(ev.target)) return;
-      if (boardTouchPinch) return;
-      if (!beginBoardTouchPinch(ev)) return;
-      if (ev.cancelable) ev.preventDefault();
-    }, { passive: false, capture: true });
-    board.addEventListener("touchmove", (ev) => {
-      if (!boardTouchPinch) {
-        if (ev.touches.length === 2 && !boardPinchUiBlocked(ev.target) && beginBoardTouchPinch(ev)) {
-          if (ev.cancelable) ev.preventDefault();
-        }
-        return;
-      }
-      if (ev.touches.length < 2) {
-        endBoardTouchPinch();
-        return;
-      }
-      if (moveBoardTouchPinch(ev) && ev.cancelable) ev.preventDefault();
-    }, { passive: false, capture: true });
-    board.addEventListener("touchend", (ev) => {
-      if (!boardTouchPinch) return;
-      if (ev.touches.length < 2) endBoardTouchPinch();
-    }, { passive: true, capture: true });
-    board.addEventListener("touchcancel", () => {
-      if (boardTouchPinch) endBoardTouchPinch();
-    }, { passive: true, capture: true });
-    /* Clic molette (partout) OU clic gauche sur le vide du plan + glisser : pan.
+    board.addEventListener("touchstart", boardPinchTouchHandler, { passive: false, capture: true });
+    board.addEventListener("touchmove", boardPinchTouchHandler, { passive: false, capture: true });
+    board.addEventListener("touchend", boardPinchTouchHandler, { passive: false, capture: true });
+    board.addEventListener("touchcancel", boardPinchTouchHandler, { passive: false, capture: true });
+    /* Clic molette (partout) OU clic gauche / 1 doigt sur le vide du plan + glisser : pan.
        Pas de pan gauche sur borne / composant / Fluke. Zoom molette inchangé. */
     function boardMidPanBlocked() {
-      return !!(state.drag || state.resize || state.wireDrag || state.flukeTipDrag || state.proxRangeDrag);
+      return !!(state.drag || state.resize || state.wireDrag || state.flukeTipDrag || state.proxRangeDrag || boardTouchPinch);
     }
     function boardPanEmptyTarget(t) {
       return !!(t && (t === board || t.id === "boardWorld" || t.id === "boardZoomSpacer"
@@ -15951,9 +15931,13 @@
       try { if (board.hasPointerCapture(pid)) board.releasePointerCapture(pid); } catch (_) {}
     }
     board.addEventListener("pointerdown", (ev) => {
-      if (ev.pointerType === "touch") return;
+      /* Touch : pan 1 doigt sur le vide seulement (touch-action:none → plus de scroll natif). */
+      if (ev.pointerType === "touch") {
+        if (!(ev.isPrimary && boardPanEmptyTarget(ev.target))) return;
+        if (boardTouchPinch) return;
+      }
       const isMid = ev.button === 1;
-      const isLeftEmpty = ev.button === 0 && boardPanEmptyTarget(ev.target);
+      const isLeftEmpty = (ev.button === 0 || ev.pointerType === "touch") && boardPanEmptyTarget(ev.target);
       if (!isMid && !isLeftEmpty) return;
       if (boardMidPanBlocked()) return;
       /* Priorité : accroche fil→borne (ne pas voler le clic au pan / stopPropagation). */
@@ -15969,7 +15953,7 @@
       }
       ev.preventDefault();
       ev.stopPropagation();
-      /* Gauche sur le vide : désélectionner (pas de wireSnap ici). */
+      /* Gauche / doigt sur le vide : désélectionner (pas de wireSnap ici). */
       if (isLeftEmpty) {
         clearEdzLongPress();
         closeCtxMenu();
@@ -16755,7 +16739,7 @@
     });
 
     if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
-      navigator.serviceWorker.register("sw-pwire.js?v=tags76").catch(function () {});
+      navigator.serviceWorker.register("sw-pwire.js?v=pinch-r3").catch(function () {});
     }
     if ("launchQueue" in window && window.launchQueue && typeof window.launchQueue.setConsumer === "function") {
       window.launchQueue.setConsumer(function (params) {
