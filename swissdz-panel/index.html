@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="brand/logo-panelwire-icon.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="pinch-board-r4" />
+  <meta name="swissdz-rev" content="cats-split-r2" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -3564,7 +3564,7 @@
       </div>
     </div>
   </div>
-  <script src="i18n/panelwire-i18n.js?v=20261002-cats-split-r1"></script>
+  <script src="i18n/panelwire-i18n.js?v=20261002-cats-split-r2"></script>
   <script>
     /* Assets pré-cadrés (photos studio trop larges → bandes). */
     const COLORS = [
@@ -17311,7 +17311,7 @@
     });
 
     if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
-      navigator.serviceWorker.register("sw-pwire.js?v=pinch-board-r4").catch(function () {});
+      navigator.serviceWorker.register("sw-pwire.js?v=cats-split-r2").catch(function () {});
     }
     if ("launchQueue" in window && window.launchQueue && typeof window.launchQueue.setConsumer === "function") {
       window.launchQueue.setConsumer(function (params) {
