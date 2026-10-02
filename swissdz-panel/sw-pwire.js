@@ -1,4 +1,4 @@
-/* Service worker minimal : installe WireLab comme application (ouverture des .pwire). v=20261002-chrome-menus-r5 */
+/* Service worker minimal : installe WireLab comme application (ouverture des .pwire). v=20261002-lib-xy-r1 */
 self.addEventListener("install", function (ev) {
   self.skipWaiting();
 });

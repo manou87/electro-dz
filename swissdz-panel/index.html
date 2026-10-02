@@ -329,7 +329,7 @@
       width:100%; position:relative;
     }
     h2 { margin:0 0 8px; font-size:11px; letter-spacing:.06em; color:#6b7280; }
-    /* Biblio à gauche — catégories + grille verticale */
+    /* Biblio à gauche — liste catégories (composants en liste texte à la demande) */
     .lib-side {
       grid-area:lib;
       min-height:0; min-width:0; width:auto; max-width:none;
@@ -337,8 +337,13 @@
       background:var(--surface); border-right:1px solid var(--line); z-index:30;
     }
     .lib-side-head {
-      flex:0 0 auto; padding:4px 8px 2px;
+      flex:1 1 auto; min-height:0; padding:4px 8px 2px;
       border-bottom:1px solid #eef2f7;
+      display:flex; flex-direction:column;
+    }
+    .lib-side.lib-cat-open .lib-side-head,
+    .lib-side.show-examples .lib-side-head {
+      flex:0 0 auto;
     }
     .lib-search-row {
       display:flex; align-items:center; gap:4px;
@@ -371,8 +376,12 @@
     .lib-tabs {
       display:flex; flex-direction:column; gap:2px;
       overflow-x:hidden; overflow-y:auto;
-      max-height:38vh; padding:0 0 6px;
+      flex:1 1 auto; min-height:0; max-height:none; padding:0 0 6px;
       -webkit-overflow-scrolling:touch; scrollbar-width:thin;
+    }
+    .lib-tab.lib-tab-examples {
+      margin-top:4px; border-top:1px solid var(--line); border-radius:0 0 8px 8px;
+      padding-top:10px;
     }
     .lib-tab {
       display:flex; align-items:center; justify-content:space-between; gap:8px;
@@ -399,9 +408,9 @@
     .lib-tab.active .lib-count { color:var(--blue); }
     .lib-items {
       flex:1 1 auto; min-height:0;
-      display:grid; grid-template-columns:1fr 1fr; gap:6px; align-content:start;
+      display:flex; flex-direction:column; gap:1px; align-content:start;
       overflow-x:hidden; overflow-y:auto;
-      padding:8px; height:auto; max-height:none;
+      padding:4px 6px 8px; height:auto; max-height:none;
       -webkit-overflow-scrolling:touch; scrollbar-width:thin;
     }
     .workspace {
@@ -574,7 +583,7 @@
     .play-fab { display:none !important; }
     @media (max-width: 1100px) {
       .app-shell { grid-template-columns:240px minmax(0,1fr); }
-      .item { padding:4px 5px; min-width:0; max-width:none; }
+      .item { padding:6px 8px; min-width:0; max-width:none; }
       .item img, .item .thumb { width:50%; height:auto; max-height:52px; flex:0 0 auto; }
       .item > span:not(.thumb) { font-size:8px; max-width:100%; }
     }
@@ -736,7 +745,7 @@
       }
       .lib-tabs { max-height:32vh; flex-direction:row; flex-wrap:wrap; gap:4px; }
       .lib-tab { width:auto; flex:0 0 auto; padding:6px 9px; font-size:10px; }
-      .lib-items { grid-template-columns:1fr 1fr; padding:8px; gap:6px; }
+      .lib-items { padding:6px; gap:1px; }
       .workspace { min-width:0; width:100%; overflow:hidden; }
       .board-zoom {
         left:8px;
@@ -777,12 +786,12 @@
       }
       .lib-tab { width:auto; flex:0 0 auto; padding:6px 9px; font-size:10px; white-space:nowrap; }
       .lib-items {
-        grid-template-columns:1fr 1fr 1fr;
+        /* list mode */
         padding:8px; gap:6px;
       }
-      .item { padding:5px 3px; }
+      .item { padding:6px 8px; }
       .item img, .item .thumb { width:50%; max-height:48px; }
-      .item > span:not(.thumb) { font-size:8px; }
+      .item > span:not(.thumb) { font-size:11px; }
     }
     /* Classe JS (matchMedia / Expo phone) — même layout si le WebView retarde le media query. */
     html.pw-lib-bottom .btn-lib-toggle {
@@ -830,7 +839,7 @@
       flex-direction:row !important; flex-wrap:nowrap !important; gap:4px !important;
       max-height:none !important; overflow-x:auto !important; overflow-y:hidden !important;
     }
-    html.pw-lib-bottom .lib-items { grid-template-columns:1fr 1fr 1fr !important; }
+    html.pw-lib-bottom .lib-items { gap:1px !important; }
     html.pw-lib-bottom .workspace { min-width:0; width:100%; overflow:hidden; }
     html.pw-lib-bottom .app-shell {
       grid-template-columns:minmax(0,auto) minmax(0,1fr);
@@ -1228,30 +1237,23 @@
     .knx-bin-hit.on { border-color:rgba(34,197,94,.75); background:rgba(34,197,94,.2); }
 
     .item {
-      display:flex; flex-direction:column; gap:3px; align-items:center; justify-content:center;
-      width:100%; min-width:0; max-width:none; text-align:center;
-      margin:0; border:1px solid #eef2f7; border-radius:10px; padding:6px 4px;
-      background:#fafbfc; cursor:pointer;
+      display:flex; flex-direction:row; gap:6px; align-items:center; justify-content:flex-start;
+      width:100%; min-width:0; max-width:none; text-align:left;
+      margin:0; border:0; border-radius:6px; padding:6px 8px;
+      background:transparent; cursor:pointer;
       touch-action:manipulation; -webkit-tap-highlight-color:transparent;
     }
-    .item:hover { border-color:#bfdbfe; background:#f8fbff; }
+    .item:hover { border-color:transparent; background:#f1f5f9; }
     .item > span:not(.thumb) {
-      font-size:9px; font-weight:650; color:#475569; line-height:1.15;
+      font-size:11px; font-weight:650; color:#334155; line-height:1.25;
       max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+      flex:1 1 auto; min-width:0;
     }
-    /* Miniatures biblio ≈ 50 % de l’ancienne taille pleine. Platines encore plus petites. */
-    .item img, .item .thumb {
-      width:50%; height:auto; min-height:0; max-height:56px;
-      aspect-ratio:auto; margin:4px auto 2px;
-      flex:0 0 auto; object-fit:contain;
-      background:transparent; border-radius:8px;
+    /* Liste compacte : pas de miniatures (évite la grille photos ouverte pendant le travail). */
+    .item img, .item .thumb, .item .fluke-lib-face {
+      display:none !important;
     }
-    .item.item-platine img, .item.item-platine .thumb {
-      width:42%; max-height:40px;
-    }
-    @media (max-width: 900px), ((max-width: 1024px) and (max-height: 520px)), ((hover: none) and (pointer: coarse)) {
-      .item img, .item .thumb { width:50%; max-height:52px; }
-    }
+    .item.item-platine img, .item.item-platine .thumb { display:none !important; }
     .item .thumb {
       display:grid; place-items:center; font-size:11px; font-weight:800; color:#111;
     }
@@ -1282,6 +1284,26 @@
       transform-origin:0 0;
       will-change:transform;
     }
+    #boardWorld { overflow:visible; }
+
+    /* Référentiel X/Y discret (repères de placement / cotes) */
+    .board-coords {
+      position:absolute; left:0; top:0; width:100%; height:100%;
+      pointer-events:none; z-index:0; overflow:visible;
+    }
+    .board-coords .axis { stroke:rgba(100,116,139,.45); stroke-width:1.25; }
+    .board-coords .tick { stroke:rgba(100,116,139,.28); stroke-width:1; }
+    .board-coords .grid-minor { stroke:rgba(148,163,184,.12); stroke-width:1; }
+    .board-coords .lbl {
+      fill:rgba(100,116,139,.7); font:600 10px/1 ui-sans-serif,system-ui,sans-serif;
+      user-select:none;
+    }
+    .board-coords .origin-lbl { fill:rgba(37,99,235,.75); font-weight:800; }
+    html[data-theme="dark"] .board-coords .axis { stroke:rgba(148,163,184,.5); }
+    html[data-theme="dark"] .board-coords .tick { stroke:rgba(148,163,184,.35); }
+    html[data-theme="dark"] .board-coords .grid-minor { stroke:rgba(148,163,184,.1); }
+    html[data-theme="dark"] .board-coords .lbl { fill:rgba(148,163,184,.75); }
+
     .board-zoom {
       position:absolute; left:10px; bottom:10px; z-index:55;
       display:flex; flex-direction:column; gap:6px;
@@ -1786,8 +1808,15 @@
     }
     .lib-side.show-examples .lib-examples { display:flex !important; }
     .lib-side.show-examples .lib-items,
-    .lib-side.show-examples .lib-tabs,
     .lib-side.show-examples .lib-side-head > strong { display:none; }
+    /* Onglets catégories + Installations restent visibles pour revenir */
+    .lib-side.show-examples .lib-tabs {
+      display:flex !important; flex:0 0 auto; max-height:36vh;
+    }
+    /* Mode travail : catégories seules ; composants (liste texte) seulement si .lib-cat-open */
+    .lib-side:not(.lib-cat-open):not(.show-examples) .lib-items { display:none; }
+    .lib-side.lib-cat-open .lib-tabs { flex:0 0 auto; max-height:42vh; }
+    .lib-install-btn { display:none !important; }
     .lib-examples-hint { display:none; }
     .lib-examples .example-tile { padding:5px 5px 7px; margin:0 0 7px; }
     .lib-examples .example-tile strong { font-size:11px; }
@@ -2249,14 +2278,14 @@
     }
     svg.wires {
       position:absolute; inset:0; width:100%; height:100%; overflow:visible;
-      pointer-events:none; min-width:1600px; min-height:1000px; z-index:40;
+      pointer-events:none; min-width:2000px; min-height:1400px; z-index:40;
       -webkit-user-select:none; user-select:none;
       -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent;
     }
     /* Faisceau capteur prox / photo : secteur depuis le nez, sous les fils */
     svg.prox-beams {
       position:absolute; inset:0; width:100%; height:100%; overflow:visible;
-      pointer-events:none; min-width:1600px; min-height:1000px; z-index:28;
+      pointer-events:none; min-width:2000px; min-height:1400px; z-index:28;
     }
     svg.prox-beams .prox-cone {
       stroke-linejoin:round; stroke-linecap:round;
@@ -2554,9 +2583,9 @@
     html[data-theme="dark"] .lib-tab.active .lib-count { color:#93c5fd; }
     html[data-theme="dark"] .lib-section { color:var(--muted); }
     html[data-theme="dark"] .item {
-      background:#0f172a; border-color:#1e293b;
+      background:transparent; border-color:transparent;
     }
-    html[data-theme="dark"] .item:hover { border-color:#3b82f6; background:#172554; }
+    html[data-theme="dark"] .item:hover { border-color:transparent; background:var(--hover); }
     html[data-theme="dark"] .item > span:not(.thumb) { color:#cbd5e1; }
     html[data-theme="dark"] .item .thumb { color:#e2e8f0; }
     html[data-theme="dark"] .empty-hint { color:#64748b; }
@@ -3255,10 +3284,10 @@
         </div>
         <div id="etsBody" class="ets-body"></div>
       </aside>
-      <aside id="edzProps" class="edz-props" data-i18n-aria="edzPropsAria" aria-label="Fiche composant ElectroDZ" hidden>
+      <aside id="edzProps" class="edz-props" data-i18n-aria="edzPropsAria" aria-label="Information ElectroDZ" hidden>
         <div class="edz-props-head">
           <div>
-            <h2 data-i18n="edzPropsTitle">FICHE COMPOSANT</h2>
+            <h2 data-i18n="edzPropsTitle">INFORMATION</h2>
             <div class="edz-title" id="edzPropsTitle">—</div>
           </div>
           <button type="button" id="edzPropsClose" data-i18n-title="edzPropsCloseTitle" data-i18n-aria="edzPropsCloseAria" title="Fermer" aria-label="Fermer">×</button>
@@ -3349,7 +3378,7 @@
 
   <div id="ctxMenu" class="ctx-menu" aria-hidden="true" hidden>
     <div class="ctx-menu-card" role="menu" aria-label="Actions composant">
-      <button type="button" class="ctx-btn" data-act="sheet" role="menuitem" id="ctxSheetBtn" data-i18n="ctxSheet">Fiche composant</button>
+      <button type="button" class="ctx-btn" data-act="sheet" role="menuitem" id="ctxSheetBtn" data-i18n="ctxSheet">Information</button>
       <button type="button" class="ctx-btn" data-act="ladder" role="menuitem" id="ctxLadderBtn" hidden data-i18n="ctxLadder">Programmer Ladder</button>
       <div class="ctx-sep" id="ctxSheetSep"></div>
       <button type="button" class="ctx-btn" data-act="reset" role="menuitem">Reprendre sa place</button>
@@ -3513,7 +3542,7 @@
       </div>
     </div>
   </div>
-  <script src="i18n/panelwire-i18n.js?v=plc-ladder"></script>
+  <script src="i18n/panelwire-i18n.js?v=lib-xy-r1"></script>
   <script>
     /* Assets pré-cadrés (photos studio trop larges → bandes). */
     const COLORS = [
@@ -5357,13 +5386,13 @@
         const hx = ht ? Number(ht.nx) * ks.w : ks.w;
         const gx = gt ? Number(gt.nx) * fs.w : 0;
         return {
-          x: Math.max(8, km.x + hx - gx),
-          y: Math.max(8, km.y + (ks.h - fs.h) / 2)
+          x: Math.max(0, km.x + hx - gx),
+          y: Math.max(0, km.y + (ks.h - fs.h) / 2)
         };
       }
       return {
-        x: Math.max(8, km.x + (ks.w - fs.w) / 2),
-        y: Math.max(8, km.y + ks.h - KM_FR_CLIP_OVERLAP)
+        x: Math.max(0, km.x + (ks.w - fs.w) / 2),
+        y: Math.max(0, km.y + ks.h - KM_FR_CLIP_OVERLAP)
       };
     }
     function attachFrUnderKm(km, fr) {
@@ -5515,8 +5544,8 @@
       drag.group.items.forEach((s) => {
         const it = find(s.uid);
         if (!it) return;
-        it.x = Math.max(8, s.x + dx);
-        it.y = Math.max(8, s.y + dy);
+        it.x = Math.max(0, s.x + dx);
+        it.y = Math.max(0, s.y + dy);
       });
       drag.group.wires.forEach((ws) => {
         const w = state.wires.find((x) => x.id === ws.id);
@@ -5992,7 +6021,7 @@
         const myCx = nx + sz.w / 2;
         const hitCx = hit.x + hit.w / 2;
         nx = myCx >= hitCx ? hit.x + hit.w : hit.x - sz.w;
-        nx = Math.max(8, nx);
+        nx = Math.max(0, nx);
       }
       return nx;
     }
@@ -6108,7 +6137,7 @@
       }
       if (bestX != null) nx = bestX;
       if (bestY != null) ny = bestY;
-      return { x: Math.max(8, nx), y: Math.max(8, ny) };
+      return { x: Math.max(0, nx), y: Math.max(0, ny) };
     }
 
     function collectAlignGuides(item) {
@@ -6273,8 +6302,8 @@
     const BOARD_ZOOM_ABS_MIN = 0.08;
     const BOARD_ZOOM_MAX = 5;
     const BOARD_ZOOM_STEP = 1.15;
-    const BOARD_WORLD_W = 1600;
-    const BOARD_WORLD_H = 1000;
+    const BOARD_WORLD_W = 2000;
+    const BOARD_WORLD_H = 1400;
     /* Marge autour du plan : pan (molette ou clic gauche sur le vide) dans les 4 sens. */
     const BOARD_PAN_PAD = 2400;
     let boardOriginReady = false;
@@ -8867,6 +8896,7 @@
       const lib = document.getElementById("libTop");
       const pane = document.getElementById("libExamples");
       const btn = document.getElementById("btnLibExamples");
+      const tab = document.getElementById("btnLibExamplesTab");
       const show = !!state.examplesOpen;
       if (lib) lib.classList.toggle("show-examples", show);
       if (pane) pane.hidden = !show;
@@ -8874,6 +8904,12 @@
         btn.classList.toggle("on", show);
         btn.setAttribute("aria-pressed", show ? "true" : "false");
       }
+      if (tab) {
+        tab.classList.toggle("active", show);
+        tab.setAttribute("aria-selected", show ? "true" : "false");
+      }
+      if (show) activeCat = null;
+      try { syncLibCatOpenClass(); } catch (_) {}
       const ws = document.getElementById("workspace");
       if (ws) ws.classList.remove("has-examples");
     }
@@ -9861,7 +9897,7 @@
       (cats[def.cat] = cats[def.cat] || []).push([id, def]);
     });
     const libTabs = document.getElementById("libTabs");
-    let activeCat = CAT_ORDER.find((c) => cats[c] && cats[c].length) || CAT_ORDER[0];
+    let activeCat = null; /* null = sidebar compacte : catégories seules, pas de liste composants */
     let libSearchQuery = "";
 
     function allLibEntries() {
@@ -9915,11 +9951,11 @@
       });
       const allEl = document.getElementById("libCountAll");
       if (allEl) allEl.textContent = String(total);
-      const exEl = document.getElementById("libCountExamples");
-      if (exEl) {
-        try { exEl.textContent = String(exampleCatalog().length); }
-        catch (_) { exEl.textContent = ""; }
-      }
+      const nEx = (() => { try { return String(exampleCatalog().length); } catch (_) { return ""; } })();
+      ["libCountExamples", "libCountExamplesTab"].forEach((id) => {
+        const exEl = document.getElementById(id);
+        if (exEl) exEl.textContent = nEx;
+      });
     }
     function appendPaletteItem(id, def) {
       const locked = !isTypeUnlocked(id);
@@ -9929,30 +9965,9 @@
       b.className = "item" + (platine ? " item-platine" : "") + (locked ? " tier-locked" : "");
       const disp = libDisplayName(id, def);
       b.title = locked ? (disp + " — " + t("tierRequired")) : disp;
-      const label = def.badge ? `${disp}` : disp;
-      if (def.flukeMeter) {
-        const face = document.createElement("span");
-        face.className = "fluke-lib-face";
-        appendFlukeFace(face);
-        const cap = document.createElement("span");
-        cap.textContent = label;
-        b.appendChild(face);
-        b.appendChild(cap);
-      } else if (def.image) {
-        b.innerHTML = `<img alt="" src="${def.thumb || def.image}"><span>${label}</span>`;
-      } else if (def.kind === "barrette") {
-        const n = def.holes || 2;
-        const holes = Array.from({ length: n }, () => "<i></i>").join("");
-        b.innerHTML = `<span class="thumb barrette-t">${holes}</span><span>${disp}</span>`;
-      } else if (def.kind === "rail") {
-        b.innerHTML = `<span class="thumb rail-t">DIN</span><span>${disp}</span>`;
-      } else if (def.kind === "pe") {
-        b.innerHTML = `<span class="thumb" style="background:repeating-linear-gradient(-45deg,#c4d600 0 4px,#008c45 4px 8px);padding:2px">${peSymbolSvg()}</span><span>${disp}</span>`;
-      } else if (def.pumpWell) {
-        b.innerHTML = `<span class="thumb" style="background:#e2e8f0;padding:1px">${pumpWellFaceSvg()}</span><span>${disp}</span>`;
-      } else {
-        b.innerHTML = `<span class="thumb">${(def.badge || def.prefix || "?").slice(0, 3)}</span><span>${disp}</span>`;
-      }
+      const cap = document.createElement("span");
+      cap.textContent = disp;
+      b.appendChild(cap);
       b.onclick = () => {
         if (!isTypeUnlocked(id)) { openTierGate(); return; }
         add(id);
@@ -9973,21 +9988,46 @@
       h.appendChild(count);
       palette.appendChild(h);
     }
+    function syncLibCatOpenClass() {
+      const lib = document.getElementById("libTop");
+      if (!lib) return;
+      const q = libQuery();
+      const open = !!q || (!!activeCat && !state.examplesOpen);
+      lib.classList.toggle("lib-cat-open", open);
+    }
+    function renderAllLibSections() {
+      libOrderedCats().forEach((cat) => {
+        const list = libCatVisibleEntries(cat);
+        if (!list.length) return;
+        appendPaletteSection(cat, list.length);
+        list.forEach(([id, def]) => appendPaletteItem(id, def));
+      });
+    }
     function renderPaletteItems() {
       palette.innerHTML = "";
       const q = libQuery();
       if (q) {
-        libOrderedCats().forEach((cat) => {
-          const list = libCatVisibleEntries(cat);
-          if (!list.length) return;
-          appendPaletteSection(cat, list.length);
-          list.forEach(([id, def]) => appendPaletteItem(id, def));
-        });
+        renderAllLibSections();
         updateLibCounts();
+        syncLibCatOpenClass();
         return;
       }
-      (cats[activeCat] || []).forEach(([id, def]) => appendPaletteItem(id, def));
+      if (!activeCat) {
+        updateLibCounts();
+        syncLibCatOpenClass();
+        return;
+      }
+      if (activeCat === "*") {
+        renderAllLibSections();
+        updateLibCounts();
+        syncLibCatOpenClass();
+        return;
+      }
+      const list = cats[activeCat] || [];
+      appendPaletteSection(activeCat, list.length);
+      list.forEach(([id, def]) => appendPaletteItem(id, def));
       updateLibCounts();
+      syncLibCatOpenClass();
     }
 
     CAT_ORDER.forEach((cat) => {
@@ -9995,9 +10035,9 @@
       if (!list || !list.length) return;
       const tab = document.createElement("button");
       tab.type = "button";
-      tab.className = "lib-tab" + (cat === activeCat ? " active" : "");
+      tab.className = "lib-tab";
       tab.setAttribute("role", "tab");
-      tab.setAttribute("aria-selected", cat === activeCat ? "true" : "false");
+      tab.setAttribute("aria-selected", "false");
       tab.dataset.cat = cat;
       const lab = document.createElement("span");
       lab.className = "lib-tab-label";
@@ -10013,25 +10053,88 @@
           state.examplesOpen = false;
           syncExamplesLayout();
         }
-        activeCat = cat;
+        if (activeCat === cat) {
+          activeCat = null;
+        } else {
+          activeCat = cat;
+        }
         libTabs.querySelectorAll(".lib-tab").forEach((t) => {
-          const on = t === tab;
-          t.classList.toggle("active", on);
+          const on = t.dataset.cat && t.dataset.cat === activeCat && !t.dataset.examples;
+          t.classList.toggle("active", !!on);
           t.setAttribute("aria-selected", on ? "true" : "false");
         });
         renderPaletteItems();
       };
       libTabs.appendChild(tab);
     });
+    (function appendExamplesTab() {
+      const existing = document.getElementById("btnLibExamples");
+      const tab = document.createElement("button");
+      tab.type = "button";
+      tab.className = "lib-tab lib-tab-examples";
+      tab.setAttribute("role", "tab");
+      tab.setAttribute("aria-selected", "false");
+      tab.dataset.examples = "1";
+      tab.id = "btnLibExamplesTab";
+      const lab = document.createElement("span");
+      lab.className = "lib-tab-label";
+      lab.setAttribute("data-i18n", "exPanelTitle");
+      lab.textContent = (existing && existing.querySelector("[data-i18n]") && existing.querySelector("[data-i18n]").textContent) || "Installations prédéfinies";
+      tab.appendChild(lab);
+      const count = document.createElement("span");
+      count.className = "lib-count";
+      count.id = "libCountExamplesTab";
+      count.setAttribute("aria-hidden", "true");
+      const srcCount = document.getElementById("libCountExamples");
+      if (srcCount) count.textContent = srcCount.textContent;
+      tab.appendChild(count);
+      tab.title = existing ? (existing.getAttribute("title") || "") : "";
+      tab.onclick = () => {
+        activeCat = null;
+        libTabs.querySelectorAll(".lib-tab").forEach((t) => {
+          const on = t === tab;
+          t.classList.toggle("active", on);
+          t.setAttribute("aria-selected", on ? "true" : "false");
+        });
+        toggleLibExamples();
+        syncLibCatOpenClass();
+      };
+      libTabs.appendChild(tab);
+      if (existing) {
+        existing.setAttribute("aria-hidden", "true");
+        existing.tabIndex = -1;
+      }
+    })();
     function refreshLibTabsLang() {
       libTabs.querySelectorAll(".lib-tab").forEach((tab) => {
         const lab = tab.querySelector(".lib-tab-label");
-        if (lab && tab.dataset.cat) lab.textContent = catDisplayName(tab.dataset.cat);
+        if (!lab) return;
+        if (tab.dataset.cat) lab.textContent = catDisplayName(tab.dataset.cat);
+        else if (tab.dataset.examples && typeof t === "function") lab.textContent = t("exPanelTitle");
       });
       updateLibCounts();
     }
     renderPaletteItems();
     syncVipUi();
+    (function bindLibTitleAll() {
+      const title = document.querySelector("#libTop .lib-side-head > strong");
+      if (!title || title.dataset.boundAll) return;
+      title.dataset.boundAll = "1";
+      title.style.cursor = "pointer";
+      title.title = "Afficher toutes les sections en liste";
+      title.addEventListener("click", () => {
+        if (state.examplesOpen) {
+          state.examplesOpen = false;
+          syncExamplesLayout();
+        }
+        activeCat = (activeCat === "*") ? null : "*";
+        libTabs.querySelectorAll(".lib-tab").forEach((t) => {
+          t.classList.remove("active");
+          t.setAttribute("aria-selected", "false");
+        });
+        renderPaletteItems();
+      });
+    })();
 
     function isMobileLayout() {
       return window.matchMedia("(max-width: 900px), ((max-width: 1024px) and (max-height: 520px))").matches
@@ -10173,8 +10276,8 @@
           }
         }
       }
-      item.x = Math.max(8, x0);
-      item.y = Math.max(8, y0);
+      item.x = Math.max(0, x0);
+      item.y = Math.max(0, y0);
     }
     function nextTag(type) {
       const p = LIB[type].prefix;
@@ -10843,8 +10946,8 @@
       pushHistory();
       const ox = item.x, oy = item.y;
       const nx = item.prevX, ny = item.prevY;
-      item.y = Math.max(8, ny);
-      item.x = resolveDinX(item, Math.max(8, nx), item.y);
+      item.y = Math.max(0, ny);
+      item.x = resolveDinX(item, Math.max(0, nx), item.y);
       shiftWiresForItemDelta(item.uid, item.x - ox, item.y - oy);
       return true;
     }
@@ -10856,8 +10959,8 @@
       pushHistory();
       rememberItemPrevPos(item, item.x, item.y);
       const ox = item.x, oy = item.y;
-      item.y = Math.max(8, item.y + dy);
-      item.x = resolveDinX(item, Math.max(8, item.x + dx), item.y);
+      item.y = Math.max(0, item.y + dy);
+      item.x = resolveDinX(item, Math.max(0, item.x + dx), item.y);
       shiftWiresForItemDelta(item.uid, item.x - ox, item.y - oy);
       return true;
     }
@@ -10960,7 +11063,7 @@
         state.drag = null;
         syncDragLock();
         state._ctxOpenedByHold = true;
-        /* Pas d’ouverture auto de la fiche : menu → « Fiche composant ». */
+        /* Pas d’ouverture auto : menu → « Information ». */
         openCtxMenuFor(lp.uid, lp.x, lp.y);
         try { if (navigator.vibrate) navigator.vibrate(14); } catch (_) {}
         render();
@@ -13476,6 +13579,43 @@
       svgWires.setAttribute("class", "wires");
       const NS = svgWires.namespaceURI;
 
+      (function drawBoardCoords() {
+        const step = 100;
+        const w = BOARD_WORLD_W;
+        const h = BOARD_WORLD_H;
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("class", "board-coords");
+        svg.setAttribute("width", String(w));
+        svg.setAttribute("height", String(h));
+        svg.setAttribute("viewBox", "0 0 " + w + " " + h);
+        svg.setAttribute("aria-hidden", "true");
+        const add = (tag, attrs, text) => {
+          const el = document.createElementNS(svg.namespaceURI, tag);
+          Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, String(v)));
+          if (text != null) el.textContent = text;
+          svg.appendChild(el);
+          return el;
+        };
+        for (let x = step; x < w; x += step) {
+          add("line", { class: "grid-minor", x1: x, y1: 0, x2: x, y2: h });
+        }
+        for (let y = step; y < h; y += step) {
+          add("line", { class: "grid-minor", x1: 0, y1: y, x2: w, y2: y });
+        }
+        add("line", { class: "axis", x1: 0, y1: 0, x2: w, y2: 0 });
+        add("line", { class: "axis", x1: 0, y1: 0, x2: 0, y2: h });
+        for (let x = 0; x <= w; x += step) {
+          add("line", { class: "tick", x1: x, y1: 0, x2: x, y2: 8 });
+          if (x > 0) add("text", { class: "lbl", x: x + 2, y: 14 }, "X" + x);
+        }
+        for (let y = 0; y <= h; y += step) {
+          add("line", { class: "tick", x1: 0, y1: y, x2: 8, y2: y });
+          if (y > 0) add("text", { class: "lbl", x: 10, y: y + 3 }, "Y" + y);
+        }
+        add("text", { class: "lbl origin-lbl", x: 10, y: 14 }, "0");
+        world.appendChild(svg);
+      })();
+
       if (!state.items.length && !state.wires.length) {
         const hint = document.createElement("div");
         hint.className = "empty-hint";
@@ -15145,8 +15285,8 @@
       const beforeEps = snapshotItemTermEps(item.uid);
       item.w = Math.round(nw);
       item.h = Math.round(nh);
-      item.y = Math.max(8, ny);
-      item.x = resolveDinX(item, Math.max(8, nx), item.y);
+      item.y = Math.max(0, ny);
+      item.x = resolveDinX(item, Math.max(0, nx), item.y);
       if (isPvSupportItem(item)) refitPvModules(item);
       else if (isPvModuleItem(item)) {
         delete item.pvHost;
@@ -15193,8 +15333,8 @@
         if (state.drag.pendingToggle && moved < (state.drag.tapSlop || 8)) return;
         if (state.drag.pendingToggle) state.drag.pendingToggle = false;
         const dlt = boardDeltaFromScreen(ev.clientX - state.drag.px, ev.clientY - state.drag.py);
-        const nx = Math.max(8, state.drag.x + dlt.x);
-        const ny = Math.max(8, state.drag.y + dlt.y);
+        const nx = Math.max(0, state.drag.x + dlt.x);
+        const ny = Math.max(0, state.drag.y + dlt.y);
         if (state.drag.group) {
           applyRailGroupDrag(state.drag, nx, ny);
         } else if (isFrClipType(item.type)) {
@@ -15213,8 +15353,8 @@
         } else if (isPvSupportItem(item)) {
           adoptPvModules(item);
           const s = snapPvSupports(item, nx, ny);
-          item.x = Math.max(8, s.x);
-          item.y = Math.max(8, s.y);
+          item.x = Math.max(0, s.x);
+          item.y = Math.max(0, s.y);
           refitPvModules(item);
         } else if (isPvModuleItem(item)) {
           const before = snapshotItemTermEps(item.uid);
@@ -15233,7 +15373,7 @@
           flukeTipsOf(item);
           const soft = applySoftAlign(item, nx, ny);
           item.y = soft.y;
-          item.x = Math.max(8, soft.x);
+          item.x = Math.max(0, soft.x);
           /* Pas de shiftWires : bornes = pointes absolues, inchangées. */
         } else {
           const prevX = item.x, prevY = item.y;
@@ -15437,8 +15577,8 @@
         } else if (isPvSupportItem(dragged)) {
           adoptPvModules(dragged);
           const s = snapPvSupports(dragged, dragged.x, dragged.y);
-          dragged.x = Math.max(8, s.x);
-          dragged.y = Math.max(8, s.y);
+          dragged.x = Math.max(0, s.x);
+          dragged.y = Math.max(0, s.y);
           refitPvModules(dragged);
         } else if (isPvModuleItem(dragged)) {
           const before = snapshotItemTermEps(dragged.uid);
