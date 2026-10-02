@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="brand/logo-panelwire-icon.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="pinch-board-r4" />
+  <meta name="swissdz-rev" content="plan-xy-only-r1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -3400,7 +3400,7 @@
 
   <div id="ctxMenu" class="ctx-menu" aria-hidden="true" hidden>
     <div class="ctx-menu-card" role="menu" aria-label="Actions composant">
-      <button type="button" class="ctx-btn" data-act="sheet" role="menuitem" id="ctxSheetBtn" data-i18n="ctxSheet">Information</button>
+      <button type="button" class="ctx-btn" data-act="sheet" role="menuitem" id="ctxSheetBtn" data-i18n="ctxSheet">Fiche composant</button>
       <button type="button" class="ctx-btn" data-act="ladder" role="menuitem" id="ctxLadderBtn" hidden data-i18n="ctxLadder">Programmer Ladder</button>
       <div class="ctx-sep" id="ctxSheetSep"></div>
       <button type="button" class="ctx-btn" data-act="reset" role="menuitem">Reprendre sa place</button>
@@ -10999,7 +10999,10 @@
       if (sheetBtn) {
         sheetBtn.hidden = !canSheet;
         sheetBtn.setAttribute("aria-hidden", canSheet ? "false" : "true");
-        sheetBtn.textContent = t("ctxSheet");
+        /* Lampes / voyants : libellé « Lumière… » (réglages d’hier) ; sinon fiche. */
+        const lampTune = !!(item && isTunableLamp(LIB[item.type]));
+        sheetBtn.textContent = lampTune ? t("ctxLampLight") : t("ctxSheet");
+        sheetBtn.setAttribute("data-i18n", lampTune ? "ctxLampLight" : "ctxSheet");
       }
       if (ladderBtn) {
         ladderBtn.hidden = !canLadder;
@@ -17297,7 +17300,7 @@
     });
 
     if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
-      navigator.serviceWorker.register("sw-pwire.js?v=pinch-board-r4").catch(function () {});
+      navigator.serviceWorker.register("sw-pwire.js?v=plan-xy-only-r1").catch(function () {});
     }
     if ("launchQueue" in window && window.launchQueue && typeof window.launchQueue.setConsumer === "function") {
       window.launchQueue.setConsumer(function (params) {
