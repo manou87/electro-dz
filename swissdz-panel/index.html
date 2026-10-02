@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="brand/logo-panelwire-icon.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="play-beside-r6" />
+  <meta name="swissdz-rev" content="plan-unifie-r1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -1264,9 +1264,8 @@
     .item .thumb.n { background:#bfdbfe; }
     #board {
       position:relative; overflow:auto;
+      /* Fond uni seul : la grille points vit dans #boardWorld (pan/zoom unifié). */
       background-color:var(--board);
-      background-image:radial-gradient(var(--board-dot) 1.1px, transparent 1.1px);
-      background-size:22px 22px;
       height:100%; min-height:0;
       -webkit-user-select:none; user-select:none;
       -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent;
@@ -1283,6 +1282,10 @@
       position:absolute; left:0; top:0;
       transform-origin:0 0;
       will-change:transform;
+      /* Grille points + axes SVG + composants : un seul plan transformé */
+      background-color:var(--board);
+      background-image:radial-gradient(var(--board-dot) 1.1px, transparent 1.1px);
+      background-size:22px 22px;
     }
     #boardWorld { overflow:visible; }
 
@@ -17076,7 +17079,7 @@
     });
 
     if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
-      navigator.serviceWorker.register("sw-pwire.js?v=play-beside-r6").catch(function () {});
+      navigator.serviceWorker.register("sw-pwire.js?v=plan-unifie-r1").catch(function () {});
     }
     if ("launchQueue" in window && window.launchQueue && typeof window.launchQueue.setConsumer === "function") {
       window.launchQueue.setConsumer(function (params) {
