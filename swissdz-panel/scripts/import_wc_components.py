@@ -45,31 +45,32 @@ CAT_MARKER_END = "/* === ELECTRODZ_CAT_END === */"
 CAT_MAP = {
     "Structure": "Structure",
     "Power": "Alimentation",
-    "Protection": "Protection",
-    "Mcb": "Protection",
-    "Miniature Circuit Breaker": "Protection",
-    "1P+N Miniature Circuit Breaker": "Protection",
-    "DC Miniature Circuit Breaker": "Protection",
-    "High-Current Modular Breaker": "Protection",
-    "4-Pole Circuit Breaker": "Protection",
-    "Mccb": "Protection",
-    "MCCB": "Protection",
-    "Moulded Case Circuit Breaker": "Protection",
-    "4-Pole Moulded Case Circuit Breaker": "Protection",
-    "Switch Disconnector": "Protection",
-    "Transfer Switch": "Protection",
-    "Voltage and Phase Relay": "Protection",
-    "Phase Sequence and Failure Relay": "Protection",
-    "Single-phase Voltage Monitoring Relay": "Protection",
-    "Phase Sequence Relay": "Protection",
-    "Phase Protection Relay": "Protection",
-    "Voltage Monitoring Relay": "Protection",
-    "Single-Phase Voltage Relay": "Protection",
-    "Three-Phase Voltage Relay": "Protection",
-    "Digital Phase Failure Relay": "Protection",
+    # Protection split
+    "Protection": "Disjoncteurs modulaires",
+    "Mcb": "Disjoncteurs modulaires",
+    "Miniature Circuit Breaker": "Disjoncteurs modulaires",
+    "1P+N Miniature Circuit Breaker": "Disjoncteurs modulaires",
+    "DC Miniature Circuit Breaker": "Disjoncteurs modulaires",
+    "High-Current Modular Breaker": "Disjoncteurs modulaires",
+    "4-Pole Circuit Breaker": "Disjoncteurs modulaires",
+    "Mccb": "Disjoncteurs boîtier moulé",
+    "MCCB": "Disjoncteurs boîtier moulé",
+    "Moulded Case Circuit Breaker": "Disjoncteurs boîtier moulé",
+    "4-Pole Moulded Case Circuit Breaker": "Disjoncteurs boîtier moulé",
+    "Switch Disconnector": "Sectionneurs",
+    "Transfer Switch": "Inverseurs de source",
+    "Voltage and Phase Relay": "Relais tension / phases",
+    "Phase Sequence and Failure Relay": "Relais tension / phases",
+    "Single-phase Voltage Monitoring Relay": "Relais tension / phases",
+    "Phase Sequence Relay": "Relais tension / phases",
+    "Phase Protection Relay": "Relais tension / phases",
+    "Voltage Monitoring Relay": "Relais tension / phases",
+    "Single-Phase Voltage Relay": "Relais tension / phases",
+    "Three-Phase Voltage Relay": "Relais tension / phases",
+    "Digital Phase Failure Relay": "Relais tension / phases",
     "Rccb Rcbo": "Différentiel",
     "Control": "Commande",
-    "Auxiliary Contact": "Commande",
+    "Auxiliary Contact": "Auxiliaires",
     "Timers": "Commande",
     "Timer": "Commande",
     "Electronic On-delay Timer": "Commande",
@@ -77,11 +78,11 @@ CAT_MAP = {
     "Timer Relay": "Commande",
     "On/Off-Delay Timer": "Commande",
     "On-Delay Timer": "Commande",
-    "Interface Relay": "Commande",
-    "Relay": "Commande",
-    "3-Changeover Plug-In Relay": "Commande",
-    "4-Changeover Plug-In Relay": "Commande",
-    "Control Relays": "Commande",
+    "Interface Relay": "Relais",
+    "Relay": "Relais",
+    "3-Changeover Plug-In Relay": "Relais",
+    "4-Changeover Plug-In Relay": "Relais",
+    "Control Relays": "Relais",
     "Buzzer": "Boutonnerie",
     "Pilot Lamp": "Boutonnerie",
     "Signaling": "Boutonnerie",
@@ -91,17 +92,17 @@ CAT_MAP = {
     "Emergency Stop": "Boutonnerie",
     "Push Button": "Boutonnerie",
     "Safety": "Boutonnerie",
-    "AC Contactor": "Moteur / Indus",
-    "Contactor": "Moteur / Indus",
-    "Contactors": "Moteur / Indus",
-    "4-Pole Contactor": "Moteur / Indus",
-    "Motor Protection Breaker": "Moteur / Indus",
-    "Motor Protection Circuit Breaker": "Moteur / Indus",
-    "Overload Relay": "Moteur / Indus",
-    "Motors": "Moteur / Indus",
-    "PLC": "Moteur / Indus",
-    "Actuators": "Moteur / Indus",
-    "Generic items": "Moteur / Indus",
+    "AC Contactor": "Contacteurs",
+    "Contactor": "Contacteurs",
+    "Contactors": "Contacteurs",
+    "4-Pole Contactor": "Contacteurs",
+    "Motor Protection Breaker": "Relais thermiques",
+    "Motor Protection Circuit Breaker": "Relais thermiques",
+    "Overload Relay": "Relais thermiques",
+    "Motors": "Moteurs",
+    "PLC": "PLC",
+    "Actuators": "Moteurs",
+    "Generic items": "Divers",
     "Drives": "Variateurs",
     "Screen Meter": "Mesure",
     "Meters & Instruments": "Mesure",
@@ -131,9 +132,9 @@ CAT_ID_OVERRIDES = {
     "edz_bornes_l_n": "Borniers / Alim",
     "edz_bornes_l1_l2_l3_n": "Borniers / Alim",
     "edz_bornes_l1_l2_l3": "Borniers / Alim",
-    "edz_contactor_0911": "Moteur / Indus",
-    "edz_guardamotor_24_32_a": "Moteur / Indus",
-    "edz_relé_térmico_23_32_a": "Moteur / Indus",
+    "edz_contactor_0911": "Contacteurs",
+    "edz_guardamotor_24_32_a": "Relais thermiques",
+    "edz_relé_térmico_23_32_a": "Relais thermiques",
 }
 
 # Behaviors that conduct when device is ON / closed / energized (NO path).
@@ -175,15 +176,33 @@ def map_category(cat_src: str, badge: str | None, key: str | None = None) -> str
         return CAT_MAP[cat_src]
     # Fuzzy fallbacks from badge / category keywords
     blob = f"{cat_src} {badge or ''}".lower()
-    if any(k in blob for k in ("mcb", "mccb", "breaker", "disconnector", "protection", "phase")):
-        return "Protection"
+    if any(k in blob for k in ("mccb", "moulded")):
+        return "Disjoncteurs boîtier moulé"
+    if any(k in blob for k in ("transfer", "changeover")):
+        return "Inverseurs de source"
+    if any(k in blob for k in ("disconnector", "sectionneur")):
+        return "Sectionneurs"
+    if any(k in blob for k in ("phase", "voltage")) and "relay" in blob:
+        return "Relais tension / phases"
+    if any(k in blob for k in ("mcb", "breaker", "protection")):
+        return "Disjoncteurs modulaires"
     if any(k in blob for k in ("rccb", "rcbo", "diff")):
         return "Différentiel"
-    if any(k in blob for k in ("contactor", "motor", "plc", "overload", "thermal")):
-        return "Moteur / Indus"
+    if any(k in blob for k in ("contactor",)):
+        return "Contacteurs"
+    if any(k in blob for k in ("overload", "thermal", "guardamotor", "mpcb")):
+        return "Relais thermiques"
+    if any(k in blob for k in ("motor", "actuator")):
+        return "Moteurs"
+    if "plc" in blob:
+        return "PLC"
     if any(k in blob for k in ("lamp", "buzzer", "button", "selector", "push", "emergency", "signal")):
         return "Boutonnerie"
-    if any(k in blob for k in ("timer", "relay", "aux", "control")):
+    if "aux" in blob:
+        return "Auxiliaires"
+    if any(k in blob for k in ("relay",)) and "timer" not in blob:
+        return "Relais"
+    if any(k in blob for k in ("timer", "control")):
         return "Commande"
     if any(k in blob for k in ("meter", "volt", "amp", "freq")):
         return "Mesure"
