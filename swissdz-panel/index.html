@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="brand/logo-panelwire-icon.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="snap-tel-oui" />
+  <meta name="swissdz-rev" content="tap-chrome-ok" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -178,8 +178,9 @@
       grid-area:head;
       display:flex; align-items:center;
       flex:0 0 auto; background:var(--surface); border-bottom:1px solid var(--line); padding:2px 10px;
-      position:relative; z-index:80; overflow:visible; min-height:0;
+      position:relative; z-index:120; overflow:visible; min-height:0;
       isolation:isolate;
+      pointer-events:auto;
     }
     .header-top { display:flex; align-items:center; gap:6px; min-width:0; overflow:visible; }
     /* Barre d’actions pouce : bas de l’écran (projet, undo, supprimer…) */
@@ -187,7 +188,8 @@
       grid-area:foot;
       flex:0 0 auto; background:var(--surface); border-top:1px solid var(--line);
       padding:2px 10px;
-      z-index:40; min-height:0;
+      position:relative; z-index:120; min-height:0;
+      pointer-events:auto;
     }
     .toolbar-bottom-inner {
       display:flex; align-items:center; gap:8px; min-width:0;
@@ -577,16 +579,16 @@
       }
       /* PROJET : un peu plus petits (Composants reste à gauche, prioritaire) */
       .toolbar-bottom .group-projet button.btn-ico {
-        width:34px; min-width:34px; height:34px; padding:5px;
+        width:44px; min-width:44px; height:44px; padding:8px;
       }
-      .toolbar-bottom .group-projet button.btn-ico svg { width:17px; height:17px; }
+      .toolbar-bottom .group-projet button.btn-ico svg { width:20px; height:20px; }
       .toolbar-bottom .group-projet #btnPlay.btn-ico {
-        width:34px; min-width:34px; max-width:34px; height:34px; padding:5px;
+        width:48px; min-width:48px; max-width:48px; height:48px; padding:8px;
       }
-      .toolbar-bottom .group-projet #btnPlay.btn-ico svg { width:17px; height:17px; }
+      .toolbar-bottom .group-projet #btnPlay.btn-ico svg { width:22px; height:22px; }
       .toolbar-bottom .group-projet #btnClearWires {
-        width:34px; min-width:34px; max-width:34px; height:34px;
-        padding:1px 2px; font-size:8px; line-height:1.05; white-space:normal;
+        width:44px; min-width:44px; max-width:44px; height:44px;
+        padding:2px 3px; font-size:9px; line-height:1.05; white-space:normal;
       }
       /* MODE / STYLE (à côté du titre) : hauteur unifiée ~38px */
       .brand-tools button.btn-ico,
@@ -703,8 +705,15 @@
         transition:transform .2s ease;
         box-shadow:8px 0 28px rgba(15,23,42,.2);
         border-right:1px solid var(--line);
+        /* Fermé : ne vole plus les taps du header / footer (hit-test suit le transform). */
+        pointer-events:none;
+        visibility:hidden;
       }
-      body.lib-open .lib-side { transform:translateX(0); }
+      body.lib-open .lib-side {
+        transform:translateX(0);
+        pointer-events:auto;
+        visibility:visible;
+      }
       .lib-tabs { max-height:32vh; flex-direction:row; flex-wrap:wrap; gap:4px; }
       .lib-tab { width:auto; flex:0 0 auto; padding:6px 9px; font-size:10px; }
       .lib-items { grid-template-columns:1fr 1fr; padding:8px; gap:6px; }
@@ -732,8 +741,14 @@
         border-radius:16px 16px 0 0;
         box-shadow:0 -10px 32px rgba(15,23,42,.28);
         overflow:hidden;
+        pointer-events:none;
+        visibility:hidden;
       }
-      body.lib-open .lib-side { transform:translate(-50%, 0); }
+      body.lib-open .lib-side {
+        transform:translate(-50%, 0);
+        pointer-events:auto;
+        visibility:visible;
+      }
       .lib-side-head { padding:8px 10px 4px; }
       .lib-tabs {
         flex-direction:row; flex-wrap:nowrap; gap:4px;
@@ -783,8 +798,14 @@
       border-radius:16px 16px 0 0 !important;
       box-shadow:0 -10px 32px rgba(15,23,42,.28) !important;
       overflow:hidden !important;
+      pointer-events:none !important;
+      visibility:hidden !important;
     }
-    html.pw-lib-bottom body.lib-open .lib-side { transform:translate(-50%, 0) !important; }
+    html.pw-lib-bottom body.lib-open .lib-side {
+      transform:translate(-50%, 0) !important;
+      pointer-events:auto !important;
+      visibility:visible !important;
+    }
     html.pw-lib-bottom .lib-tabs {
       flex-direction:row !important; flex-wrap:nowrap !important; gap:4px !important;
       max-height:none !important; overflow-x:auto !important; overflow-y:hidden !important;
@@ -815,7 +836,10 @@
       .toolbar-bottom .group-projet button.btn-ico,
       .toolbar-bottom .group-projet #btnClearWires,
       .toolbar-bottom .group-projet #btnPlay.btn-ico {
-        width:32px; min-width:32px; max-width:32px; height:32px; padding:2px;
+        width:44px; min-width:44px; max-width:44px; height:44px; padding:6px;
+      }
+      .toolbar-bottom .group-projet #btnPlay.btn-ico {
+        width:48px; min-width:48px; max-width:48px; height:48px;
       }
     }
     /* Ladder — style éditeur clair type Soft Comfort / LOGO! Soft */
@@ -1227,6 +1251,8 @@
       /* pan 1 doigt OK ; pinch navigateur off → zoom géré en JS */
       touch-action:pan-x pan-y;
     }
+    /* Pendant pinch 2 doigts : aucun geste navigateur (page zoom / scroll). */
+    #board.is-pinching { touch-action:none; overflow:hidden; }
     /* Zoom simulation : spacer = zone scrollable visuelle ; world = contenu scale(orig. top-left) */
     #boardZoomSpacer {
       position:relative; flex:0 0 auto;
@@ -9650,16 +9676,17 @@
     function bindInstantTap(scroller) {
       if (!scroller) return;
       let sx = 0, sy = 0, moved = false, btn = null;
+      const hitSel = "button, .swatch, .lib-tab, .item, [role='menuitem'], [role='option'], [data-set-lang]";
       scroller.addEventListener("touchstart", (e) => {
         if (e.touches.length !== 1) { btn = null; return; }
         const t = e.touches[0];
         sx = t.clientX; sy = t.clientY; moved = false;
-        btn = e.target.closest("button, .swatch, .lib-tab, .item");
+        btn = e.target.closest ? e.target.closest(hitSel) : null;
       }, { passive: true });
       scroller.addEventListener("touchmove", (e) => {
         if (!btn || !e.touches[0]) return;
         const t = e.touches[0];
-        if (Math.hypot(t.clientX - sx, t.clientY - sy) > 10) {
+        if (Math.hypot(t.clientX - sx, t.clientY - sy) > 12) {
           moved = true;
           btn = null;
         }
@@ -9668,8 +9695,8 @@
         if (!btn || moved) { btn = null; return; }
         const el = btn;
         btn = null;
-        e.preventDefault();
-        el.click();
+        if (e.cancelable) e.preventDefault();
+        try { el.click(); } catch (_) {}
       }, { passive: false });
     }
 
@@ -9936,6 +9963,9 @@
     bindInstantTap(document.getElementById("libTabs"));
     bindInstantTap(document.getElementById("palette"));
     bindInstantTap(document.querySelector(".toolbar-bottom"));
+    bindInstantTap(document.querySelector("header"));
+    bindInstantTap(document.querySelector(".brand-col"));
+    bindInstantTap(document.getElementById("btnPlayFab"));
 
     function viewCenterWorld() {
       const z = boardZoom();
@@ -15050,9 +15080,18 @@
         render();
       }
     });
-    /* touchmove non-passif : annule le pan iOS pendant drag composant / resize / fil / pinch */
+    /* touchmove non-passif : annule le pan iOS pendant drag composant / resize / fil / pinch
+       UNIQUEMENT si le doigt est sur le plan — jamais sur header / footer / menus. */
     let boardTouchPinch = null;
+    function touchEventOnBoard(ev) {
+      const t = ev.target;
+      if (!t) return false;
+      if (t === board || (board.contains && board.contains(t))) return true;
+      if (typeof t.closest === "function" && t.closest("#board")) return true;
+      return false;
+    }
     window.addEventListener("touchmove", (ev) => {
+      if (!touchEventOnBoard(ev)) return;
       if (boardTouchPinch || state.drag || state.resize || state.wireDrag || state.flukeTipDrag || state.proxRangeDrag) {
         if (ev.cancelable) ev.preventDefault();
       }
@@ -15724,13 +15763,32 @@
       if (!(dist > 10)) return false;
       cancelBoardOpsForPinch();
       const mid = boardTouchMid(a, b);
-      boardTouchPinch = { dist0: dist, z0: boardZoom(), midX: mid.x, midY: mid.y };
+      boardTouchPinch = {
+        dist0: dist,
+        z0: boardZoom(),
+        midX: mid.x,
+        midY: mid.y,
+        idA: a.identifier,
+        idB: b.identifier
+      };
       boardGesturePinch = true;
+      board.classList.add("is-pinching");
       return true;
+    }
+    function boardTouchById(list, id) {
+      for (let i = 0; i < list.length; i++) {
+        if (list[i].identifier === id) return list[i];
+      }
+      return null;
     }
     function moveBoardTouchPinch(ev) {
       if (!boardTouchPinch || ev.touches.length < 2) return false;
-      const a = ev.touches[0], b = ev.touches[1];
+      let a = boardTouchById(ev.touches, boardTouchPinch.idA);
+      let b = boardTouchById(ev.touches, boardTouchPinch.idB);
+      if (!a || !b) {
+        a = ev.touches[0];
+        b = ev.touches[1];
+      }
       const dist = boardTouchDist(a, b);
       if (!(dist > 0) || !(boardTouchPinch.dist0 > 0)) return true;
       const mid = boardTouchMid(a, b);
@@ -15741,6 +15799,7 @@
     function endBoardTouchPinch() {
       boardTouchPinch = null;
       boardGesturePinch = false;
+      board.classList.remove("is-pinching");
     }
     board.addEventListener("wheel", (ev) => {
       if (!boardWheelOnCanvas(ev)) return;
@@ -16625,7 +16684,7 @@
     });
 
     if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
-      navigator.serviceWorker.register("sw-pwire.js?v=tags74").catch(function () {});
+      navigator.serviceWorker.register("sw-pwire.js?v=tags75").catch(function () {});
     }
     if ("launchQueue" in window && window.launchQueue && typeof window.launchQueue.setConsumer === "function") {
       window.launchQueue.setConsumer(function (params) {
