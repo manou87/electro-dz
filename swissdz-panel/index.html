@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="brand/logo-panelwire-icon.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="plan-xy-only-r1" />
+  <meta name="swissdz-rev" content="pinch-board-r4" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -11236,7 +11236,10 @@
       } else {
         state._tripleTap = { uid: item.uid, count: 1, t: now };
       }
-      if (state._tripleTap.count >= 3) {
+      const def = LIB[item.type];
+      /* Lampes / voyants : double-tap ouvre la fiche Lumière (comme hier). Autres : triple-tap. */
+      const need = isTunableLamp(def) ? 2 : 3;
+      if (state._tripleTap.count >= need) {
         state._tripleTap = null;
         openEdzPropsFor(item.uid);
         try { if (navigator.vibrate) navigator.vibrate(10); } catch (_) {}
@@ -11265,7 +11268,7 @@
         state.drag = null;
         syncDragLock();
         state._ctxOpenedByHold = true;
-        /* Pas d’ouverture auto : menu → « Information ». */
+        /* Pas d’ouverture auto : menu → « Lumière… » (lampes) ou « Fiche composant ». */
         openCtxMenuFor(lp.uid, lp.x, lp.y);
         try { if (navigator.vibrate) navigator.vibrate(14); } catch (_) {}
         render();
@@ -13723,6 +13726,10 @@
       body.innerHTML = renderLibPropsBody(typeId);
       bindLampTune(body);
       positionEdzPropsNear(item.uid);
+      const lampSec = body.querySelector(".lamp-tune");
+      if (lampSec) {
+        try { lampSec.scrollIntoView({ block: "nearest", behavior: "smooth" }); } catch (_) {}
+      }
       if (!isEdzType(typeId)) return;
       ensureEdzDetails().then((cat) => {
         const still = state.selected && state.items.find((i) => i.uid === state.selected);
@@ -13730,6 +13737,10 @@
         if (cat && cat[typeId]) body.innerHTML = renderEdzPropsBody(cat[typeId], typeId);
         bindLampTune(body);
         positionEdzPropsNear(still.uid);
+        const lampSec2 = body.querySelector(".lamp-tune");
+        if (lampSec2) {
+          try { lampSec2.scrollIntoView({ block: "nearest", behavior: "smooth" }); } catch (_) {}
+        }
       });
     }
     const edzCloseBtn = document.getElementById("edzPropsClose");
@@ -17300,7 +17311,7 @@
     });
 
     if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
-      navigator.serviceWorker.register("sw-pwire.js?v=plan-xy-only-r1").catch(function () {});
+      navigator.serviceWorker.register("sw-pwire.js?v=pinch-board-r4").catch(function () {});
     }
     if ("launchQueue" in window && window.launchQueue && typeof window.launchQueue.setConsumer === "function") {
       window.launchQueue.setConsumer(function (params) {
