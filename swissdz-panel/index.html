@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="brand/logo-panelwire-icon.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="cats-split-r2" />
+  <meta name="swissdz-rev" content="plan-xy-zoomout-r1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -1297,22 +1297,25 @@
     /* Zoom simulation : spacer = zone scrollable visuelle ; world = contenu scale(orig. top-left) */
     #boardZoomSpacer {
       position:relative; flex:0 0 auto;
+      /* Même teinte que le plan : pas de « 2e fond » dans la marge de pan. */
+      background-color:var(--board);
     }
     #boardWorld {
       position:absolute; left:0; top:0;
       transform-origin:0 0;
       will-change:transform;
-      /* Un seul plan : fond uni + SVG axes X/Y (.board-coords) + composants (même transform). */
-      background-color:var(--board);
+      /* Fond transparent : le plan visible = SVG .board-coords (étendu au dézoom). */
+      background-color:transparent;
       background-image:none;
+      overflow:visible;
     }
-    #boardWorld { overflow:visible; }
 
-    /* Référentiel X/Y discret (repères de placement / cotes) */
+    /* Référentiel X/Y discret (repères de placement / cotes) — étendu hors 0…W/H au dézoom */
     .board-coords {
-      position:absolute; left:0; top:0; width:100%; height:100%;
+      position:absolute; left:0; top:0;
       pointer-events:none; z-index:0; overflow:visible;
     }
+    .board-coords .plane-fill { fill:var(--board); }
     .board-coords .axis { stroke:rgba(100,116,139,.45); stroke-width:1.25; }
     .board-coords .tick { stroke:rgba(100,116,139,.28); stroke-width:1; }
     .board-coords .grid-minor { stroke:rgba(148,163,184,.12); stroke-width:1; }
@@ -6328,11 +6331,83 @@
     const BOARD_WORLD_H = 1400;
     /* Marge autour du plan : pan (molette ou clic gauche sur le vide) dans les 4 sens. */
     const BOARD_PAN_PAD = 2400;
+    const BOARD_COORDS_STEP = 100;
     let boardOriginReady = false;
+    let boardCoordsExtentKey = "";
 
     function boardZoom() {
       const z = Number(state.boardZoom);
       return Number.isFinite(z) && z > 0 ? z : 1;
+    }
+    /* Étendue X/Y en unités world pour couvrir toute la marge de pan (évite le « carton » au dézoom). */
+    function boardCoordsExtent() {
+      const z = Math.max(boardZoom(), BOARD_ZOOM_ABS_MIN);
+      const raw = Math.ceil(BOARD_PAN_PAD / z) + BOARD_COORDS_STEP * 2;
+      /* Buckets : évite de reconstruire le SVG à chaque pixel de pinch. */
+      const bucket = BOARD_COORDS_STEP * 5;
+      const ext = Math.ceil(raw / bucket) * bucket;
+      return {
+        x0: -ext,
+        y0: -ext,
+        x1: BOARD_WORLD_W + ext,
+        y1: BOARD_WORLD_H + ext
+      };
+    }
+    function syncBoardCoords(worldEl) {
+      const world = worldEl || document.getElementById("boardWorld");
+      if (!world) return;
+      const { x0, y0, x1, y1 } = boardCoordsExtent();
+      const key = x0 + ":" + y0 + ":" + x1 + ":" + y1;
+      let svg = world.querySelector("svg.board-coords");
+      if (svg && boardCoordsExtentKey === key) return;
+      boardCoordsExtentKey = key;
+      const w = x1 - x0;
+      const h = y1 - y0;
+      const step = BOARD_COORDS_STEP;
+      if (!svg) {
+        svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("class", "board-coords");
+        svg.setAttribute("aria-hidden", "true");
+        world.insertBefore(svg, world.firstChild);
+      } else {
+        while (svg.firstChild) svg.removeChild(svg.firstChild);
+        if (world.firstChild !== svg) world.insertBefore(svg, world.firstChild);
+      }
+      svg.setAttribute("width", String(w));
+      svg.setAttribute("height", String(h));
+      svg.setAttribute("viewBox", x0 + " " + y0 + " " + w + " " + h);
+      svg.style.left = x0 + "px";
+      svg.style.top = y0 + "px";
+      svg.style.width = w + "px";
+      svg.style.height = h + "px";
+      const add = (tag, attrs, text) => {
+        const el = document.createElementNS(svg.namespaceURI, tag);
+        Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, String(v)));
+        if (text != null) el.textContent = text;
+        svg.appendChild(el);
+        return el;
+      };
+      /* Fond unique du plan (même couleur que #board / spacer) — pas de rectangle « feuille » distinct. */
+      add("rect", { class: "plane-fill", x: x0, y: y0, width: w, height: h });
+      for (let x = x0; x <= x1; x += step) {
+        if (x === 0) continue;
+        add("line", { class: "grid-minor", x1: x, y1: y0, x2: x, y2: y1 });
+      }
+      for (let y = y0; y <= y1; y += step) {
+        if (y === 0) continue;
+        add("line", { class: "grid-minor", x1: x0, y1: y, x2: x1, y2: y });
+      }
+      add("line", { class: "axis", x1: x0, y1: 0, x2: x1, y2: 0 });
+      add("line", { class: "axis", x1: 0, y1: y0, x2: 0, y2: y1 });
+      for (let x = x0; x <= x1; x += step) {
+        add("line", { class: "tick", x1: x, y1: 0, x2: x, y2: 8 });
+        if (x !== 0) add("text", { class: "lbl", x: x + 2, y: 14 }, "X" + x);
+      }
+      for (let y = y0; y <= y1; y += step) {
+        add("line", { class: "tick", x1: 0, y1: y, x2: 8, y2: y });
+        if (y !== 0) add("text", { class: "lbl", x: 10, y: y + 3 }, "Y" + y);
+      }
+      add("text", { class: "lbl origin-lbl", x: 10, y: 14 }, "0");
     }
     function applyBoardZoomStyles() {
       const z = boardZoom();
@@ -6349,6 +6424,7 @@
         world.style.width = BOARD_WORLD_W + "px";
         world.style.height = BOARD_WORLD_H + "px";
         world.style.transform = "scale(" + z + ")";
+        syncBoardCoords(world);
       }
       if (spacer && !boardOriginReady) {
         boardOriginReady = true;
@@ -13792,42 +13868,8 @@
       svgWires.setAttribute("class", "wires");
       const NS = svgWires.namespaceURI;
 
-      (function drawBoardCoords() {
-        const step = 100;
-        const w = BOARD_WORLD_W;
-        const h = BOARD_WORLD_H;
-        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        svg.setAttribute("class", "board-coords");
-        svg.setAttribute("width", String(w));
-        svg.setAttribute("height", String(h));
-        svg.setAttribute("viewBox", "0 0 " + w + " " + h);
-        svg.setAttribute("aria-hidden", "true");
-        const add = (tag, attrs, text) => {
-          const el = document.createElementNS(svg.namespaceURI, tag);
-          Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, String(v)));
-          if (text != null) el.textContent = text;
-          svg.appendChild(el);
-          return el;
-        };
-        for (let x = step; x < w; x += step) {
-          add("line", { class: "grid-minor", x1: x, y1: 0, x2: x, y2: h });
-        }
-        for (let y = step; y < h; y += step) {
-          add("line", { class: "grid-minor", x1: 0, y1: y, x2: w, y2: y });
-        }
-        add("line", { class: "axis", x1: 0, y1: 0, x2: w, y2: 0 });
-        add("line", { class: "axis", x1: 0, y1: 0, x2: 0, y2: h });
-        for (let x = 0; x <= w; x += step) {
-          add("line", { class: "tick", x1: x, y1: 0, x2: x, y2: 8 });
-          if (x > 0) add("text", { class: "lbl", x: x + 2, y: 14 }, "X" + x);
-        }
-        for (let y = 0; y <= h; y += step) {
-          add("line", { class: "tick", x1: 0, y1: y, x2: 8, y2: y });
-          if (y > 0) add("text", { class: "lbl", x: 10, y: y + 3 }, "Y" + y);
-        }
-        add("text", { class: "lbl origin-lbl", x: 10, y: 14 }, "0");
-        world.appendChild(svg);
-      })();
+      boardCoordsExtentKey = "";
+      syncBoardCoords(world);
 
       if (!state.items.length && !state.wires.length) {
         const hint = document.createElement("div");
@@ -17311,7 +17353,7 @@
     });
 
     if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
-      navigator.serviceWorker.register("sw-pwire.js?v=cats-split-r2").catch(function () {});
+      navigator.serviceWorker.register("sw-pwire.js?v=plan-xy-zoomout-r1").catch(function () {});
     }
     if ("launchQueue" in window && window.launchQueue && typeof window.launchQueue.setConsumer === "function") {
       window.launchQueue.setConsumer(function (params) {
