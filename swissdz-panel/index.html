@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="brand/logo-panelwire-icon.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="plan-xy-zoomout-r1" />
+  <meta name="swissdz-rev" content="plan-xy-zoomout-r2" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -1292,7 +1292,7 @@
       -webkit-overflow-scrolling:auto;
       overscroll-behavior:contain;
     }
-    #board *, #boardZoomSpacer, #boardWorld { touch-action:none; }
+    #board *, #boardZoomSpacer, #boardCoordsHost, #boardWorld { touch-action:none; }
     #board.is-pinching { overflow:hidden; }
     /* Zoom simulation : spacer = zone scrollable visuelle ; world = contenu scale(orig. top-left) */
     #boardZoomSpacer {
@@ -1300,27 +1300,35 @@
       /* Même teinte que le plan : pas de « 2e fond » dans la marge de pan. */
       background-color:var(--board);
     }
+    /* Grille X/Y hors de #boardWorld : le scale() clippe overflow, donc taille en px spacer. */
+    #boardCoordsHost {
+      position:absolute; left:0; top:0;
+      pointer-events:none; z-index:0;
+      overflow:hidden;
+      background-color:var(--board);
+    }
     #boardWorld {
       position:absolute; left:0; top:0;
       transform-origin:0 0;
       will-change:transform;
-      /* Fond transparent : le plan visible = SVG .board-coords (étendu au dézoom). */
       background-color:transparent;
       background-image:none;
       overflow:visible;
+      z-index:1;
     }
 
-    /* Référentiel X/Y discret (repères de placement / cotes) — étendu hors 0…W/H au dézoom */
+    /* Référentiel X/Y discret (repères de placement / cotes) */
     .board-coords {
-      position:absolute; left:0; top:0;
+      position:absolute; left:0; top:0; width:100%; height:100%;
       pointer-events:none; z-index:0; overflow:visible;
+      display:block;
     }
     .board-coords .plane-fill { fill:var(--board); }
     .board-coords .axis { stroke:rgba(100,116,139,.45); stroke-width:1.25; }
     .board-coords .tick { stroke:rgba(100,116,139,.28); stroke-width:1; }
     .board-coords .grid-minor { stroke:rgba(148,163,184,.12); stroke-width:1; }
     .board-coords .lbl {
-      fill:rgba(100,116,139,.7); font:600 10px/1 ui-sans-serif,system-ui,sans-serif;
+      fill:rgba(100,116,139,.7); font-weight:600; font-family:ui-sans-serif,system-ui,sans-serif;
       user-select:none;
     }
     .board-coords .origin-lbl { fill:rgba(37,99,235,.75); font-weight:800; }
@@ -6353,12 +6361,28 @@
         y1: BOARD_WORLD_H + ext
       };
     }
-    function syncBoardCoords(worldEl) {
-      const world = worldEl || document.getElementById("boardWorld");
-      if (!world) return;
+    function syncBoardCoords() {
+      const spacer = document.getElementById("boardZoomSpacer");
+      const world = document.getElementById("boardWorld");
+      if (!spacer || !world) return;
+      const z = boardZoom();
+      const pad = BOARD_PAN_PAD;
       const { x0, y0, x1, y1 } = boardCoordsExtent();
-      const key = x0 + ":" + y0 + ":" + x1 + ":" + y1;
-      let svg = world.querySelector("svg.board-coords");
+      const key = x0 + ":" + y0 + ":" + x1 + ":" + y1 + ":" + z.toFixed(4);
+      let host = document.getElementById("boardCoordsHost");
+      if (!host) {
+        host = document.createElement("div");
+        host.id = "boardCoordsHost";
+        spacer.insertBefore(host, world);
+      } else if (host.parentNode !== spacer) {
+        spacer.insertBefore(host, world);
+      }
+      /* Taille en px spacer (pas de scale) : évite le clip overflow des calques transformés. */
+      host.style.left = Math.round(pad + x0 * z) + "px";
+      host.style.top = Math.round(pad + y0 * z) + "px";
+      host.style.width = Math.round((x1 - x0) * z) + "px";
+      host.style.height = Math.round((y1 - y0) * z) + "px";
+      let svg = host.querySelector("svg.board-coords");
       if (svg && boardCoordsExtentKey === key) return;
       boardCoordsExtentKey = key;
       const w = x1 - x0;
@@ -6368,18 +6392,14 @@
         svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         svg.setAttribute("class", "board-coords");
         svg.setAttribute("aria-hidden", "true");
-        world.insertBefore(svg, world.firstChild);
+        host.appendChild(svg);
       } else {
         while (svg.firstChild) svg.removeChild(svg.firstChild);
-        if (world.firstChild !== svg) world.insertBefore(svg, world.firstChild);
       }
-      svg.setAttribute("width", String(w));
-      svg.setAttribute("height", String(h));
+      svg.setAttribute("width", "100%");
+      svg.setAttribute("height", "100%");
       svg.setAttribute("viewBox", x0 + " " + y0 + " " + w + " " + h);
-      svg.style.left = x0 + "px";
-      svg.style.top = y0 + "px";
-      svg.style.width = w + "px";
-      svg.style.height = h + "px";
+      svg.setAttribute("preserveAspectRatio", "none");
       const add = (tag, attrs, text) => {
         const el = document.createElementNS(svg.namespaceURI, tag);
         Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, String(v)));
@@ -6387,7 +6407,6 @@
         svg.appendChild(el);
         return el;
       };
-      /* Fond unique du plan (même couleur que #board / spacer) — pas de rectangle « feuille » distinct. */
       add("rect", { class: "plane-fill", x: x0, y: y0, width: w, height: h });
       for (let x = x0; x <= x1; x += step) {
         if (x === 0) continue;
@@ -6399,15 +6418,19 @@
       }
       add("line", { class: "axis", x1: x0, y1: 0, x2: x1, y2: 0 });
       add("line", { class: "axis", x1: 0, y1: y0, x2: 0, y2: y1 });
+      /* Labels : taille en unités world pour ~11px écran quel que soit le zoom. */
+      const fs = 11 / Math.max(z, 0.08);
+      const tick = 8 / Math.max(z, 0.08);
+      const lblOff = 2 / Math.max(z, 0.08);
       for (let x = x0; x <= x1; x += step) {
-        add("line", { class: "tick", x1: x, y1: 0, x2: x, y2: 8 });
-        if (x !== 0) add("text", { class: "lbl", x: x + 2, y: 14 }, "X" + x);
+        add("line", { class: "tick", x1: x, y1: 0, x2: x, y2: tick });
+        if (x !== 0) add("text", { class: "lbl", x: x + lblOff, y: tick + fs * 0.35, "font-size": fs }, "X" + x);
       }
       for (let y = y0; y <= y1; y += step) {
-        add("line", { class: "tick", x1: 0, y1: y, x2: 8, y2: y });
-        if (y !== 0) add("text", { class: "lbl", x: 10, y: y + 3 }, "Y" + y);
+        add("line", { class: "tick", x1: 0, y1: y, x2: tick, y2: y });
+        if (y !== 0) add("text", { class: "lbl", x: tick + lblOff, y: y + fs * 0.35, "font-size": fs }, "Y" + y);
       }
-      add("text", { class: "lbl origin-lbl", x: 10, y: 14 }, "0");
+      add("text", { class: "lbl origin-lbl", x: tick + lblOff, y: tick + fs * 0.35, "font-size": fs }, "0");
     }
     function applyBoardZoomStyles() {
       const z = boardZoom();
@@ -6424,8 +6447,8 @@
         world.style.width = BOARD_WORLD_W + "px";
         world.style.height = BOARD_WORLD_H + "px";
         world.style.transform = "scale(" + z + ")";
-        syncBoardCoords(world);
       }
+      syncBoardCoords();
       if (spacer && !boardOriginReady) {
         boardOriginReady = true;
         board.scrollLeft = pad;
@@ -13845,10 +13868,14 @@
       syncPumpWaterSounds();
       let spacer = document.getElementById("boardZoomSpacer");
       let world = document.getElementById("boardWorld");
+      let coordsHost = document.getElementById("boardCoordsHost");
       if (flukeHosts.size && spacer && world && spacer.parentNode === board && world.parentNode === spacer) {
         /* Garde l’hôte Fluke (iframe vivant) : sinon le moteur redémarre à chaque clic. */
         Array.from(board.childNodes).forEach((n) => { if (n !== spacer) n.remove(); });
-        Array.from(spacer.childNodes).forEach((n) => { if (n !== world) n.remove(); });
+        Array.from(spacer.childNodes).forEach((n) => {
+          if (n === world || n === coordsHost) return;
+          n.remove();
+        });
         Array.from(world.childNodes).forEach((n) => {
           if (n.nodeType === 1 && n.dataset && flukeHosts.get(n.dataset.uid) === n) return;
           n.remove();
@@ -13861,6 +13888,9 @@
         spacer.className = "board-zoom-spacer";
         world = document.createElement("div");
         world.id = "boardWorld";
+        coordsHost = document.createElement("div");
+        coordsHost.id = "boardCoordsHost";
+        spacer.appendChild(coordsHost);
         spacer.appendChild(world);
         board.appendChild(spacer);
       }
@@ -13869,7 +13899,7 @@
       const NS = svgWires.namespaceURI;
 
       boardCoordsExtentKey = "";
-      syncBoardCoords(world);
+      syncBoardCoords();
 
       if (!state.items.length && !state.wires.length) {
         const hint = document.createElement("div");
@@ -16217,7 +16247,7 @@
 
     board.addEventListener("pointerdown", (ev) => {
       const t = ev.target;
-      if (t !== board && t.id !== "boardWorld" && t.id !== "boardZoomSpacer" && !t.classList.contains("board-zoom-spacer")) return;
+      if (t !== board && t.id !== "boardWorld" && t.id !== "boardZoomSpacer" && t.id !== "boardCoordsHost" && !t.classList.contains("board-zoom-spacer")) return;
       clearEdzLongPress();
       closeCtxMenu();
       closeWireOpt();
@@ -16522,7 +16552,7 @@
     }
     function boardPanEmptyTarget(t) {
       return !!(t && (t === board || t.id === "boardWorld" || t.id === "boardZoomSpacer"
-        || (t.classList && t.classList.contains("board-zoom-spacer"))));
+        || t.id === "boardCoordsHost" || (t.classList && t.classList.contains("board-zoom-spacer"))));
     }
     function endBoardMidPan(ev) {
       if (!boardMidPan) return;
@@ -17353,7 +17383,7 @@
     });
 
     if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
-      navigator.serviceWorker.register("sw-pwire.js?v=plan-xy-zoomout-r1").catch(function () {});
+      navigator.serviceWorker.register("sw-pwire.js?v=plan-xy-zoomout-r2").catch(function () {});
     }
     if ("launchQueue" in window && window.launchQueue && typeof window.launchQueue.setConsumer === "function") {
       window.launchQueue.setConsumer(function (params) {
