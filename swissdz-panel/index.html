@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="brand/logo-panelwire-icon.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="tap-chrome-ok" />
+  <meta name="swissdz-rev" content="touch-chrome-r2" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -193,6 +193,10 @@
     }
     .toolbar-bottom-inner {
       display:flex; align-items:center; gap:8px; min-width:0;
+    }
+    /* Play épinglé hors du .bar scrollable (sinon hors écran sur téléphone). */
+    .foot-pin-play {
+      display:flex; align-items:center; flex:0 0 auto; z-index:5;
     }
     .bar { display:flex; align-items:center; gap:12px; flex-wrap:wrap; flex:1 1 auto; min-width:0; }
     /* Desktop : wrapper projet en ligne flex */
@@ -629,10 +633,16 @@
       .toolbar-bottom-inner { gap:6px; min-width:0; }
       .lib-foot-tools {
         display:flex; align-items:center; gap:4px;
-        flex:0 0 auto; z-index:3;
+        flex:0 0 auto; z-index:5;
         background:var(--page); padding-right:4px;
       }
+      .foot-pin-play {
+        display:flex; align-items:center; flex:0 0 auto; z-index:5;
+        background:var(--page); padding-left:4px;
+      }
       .bar {
+        flex:1 1 auto;
+        min-width:0;
         flex-direction:row;
         align-items:center;
         flex-wrap:nowrap;
@@ -3268,12 +3278,14 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4.8A1.8 1.8 0 0 1 9.8 3h4.4A1.8 1.8 0 0 1 16 4.8V6"/><path d="M19 6l-.9 13.2A2 2 0 0 1 16.1 21H7.9a2 2 0 0 1-2-1.8L5 6"/><path d="M10 11v6M14 11v6"/></svg>
               </button>
               <button id="btnClearWires" type="button" data-i18n="btnClearWires" data-i18n-title="btnClearWiresTitle" title="Effacer tous les fils">Eff. fils</button>
-              <button id="btnPlay" class="btn-ico" type="button" data-i18n-title="btnPlayTitle" data-i18n-aria="btnPlayAria" title="Vérifier le courant" aria-label="Vérifier le courant">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19.2 12 8 5.2z"/></svg>
-              </button>
             </div>
           </div>
         </div>
+      </div>
+      <div class="foot-pin-play">
+        <button id="btnPlay" class="btn-ico" type="button" data-i18n-title="btnPlayTitle" data-i18n-aria="btnPlayAria" title="Vérifier le courant" aria-label="Vérifier le courant">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19.2 12 8 5.2z"/></svg>
+        </button>
       </div>
     </div>
   </footer>
@@ -8878,7 +8890,21 @@
     function schemBlockEvent(ev) {
       if (!schemSession) return;
       const tgt = ev.target;
-      if (tgt && tgt.closest && tgt.closest("#schemView, .board-zoom")) return;
+      /* Schéma verrouillé : laisser le chrome UI + zoom boutons/pinch + panneau schéma. */
+      if (tgt && tgt.closest && tgt.closest(
+        "#schemView, .board-zoom, .brand-col, header, footer.toolbar-bottom, .play-fab,"
+        + " #btnPlay, #btnPlayFab, #btnLang, #langMenu, #brandMenu, #brandDropdown, #langDropdown,"
+        + " .lib-foot-tools, .foot-pin-play, #btnLibToggle, #vipGate, .modal, #sizeModal"
+      )) return;
+      /* Pinch 2 doigts : ne jamais bloquer (zoom plan). */
+      if (ev.type && ev.type.indexOf("touch") === 0) {
+        const touches = ev.touches || [];
+        if (touches.length >= 2) return;
+        const boardEl = document.getElementById("board");
+        if (tgt && boardEl && (tgt === boardEl || (boardEl.contains && boardEl.contains(tgt)))) {
+          if (ev.type === "touchmove") return;
+        }
+      }
       ev.preventDefault();
       ev.stopPropagation();
       if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
@@ -9903,6 +9929,7 @@
     }
     function syncPhoneLibSheetClass() {
       document.documentElement.classList.toggle("pw-lib-bottom", isPhoneLibSheet());
+      try { syncLibInert(); } catch (_) {}
     }
     syncPhoneLibSheetClass();
     try {
@@ -9915,6 +9942,7 @@
       document.body.classList.remove("lib-open");
       const t = document.getElementById("btnLibToggle");
       if (t) t.setAttribute("aria-expanded", "false");
+      syncLibInert();
     }
     function toggleMobileLib() {
       if (!isMobileLayout()) return;
@@ -9922,6 +9950,20 @@
       document.body.classList.toggle("lib-open", open);
       const t = document.getElementById("btnLibToggle");
       if (t) t.setAttribute("aria-expanded", open ? "true" : "false");
+      syncLibInert();
+    }
+    function syncLibInert() {
+      const lib = document.getElementById("libTop");
+      if (!lib) return;
+      /* Tiroir fermé : inert = plus aucun hit-test (iOS/WebView inclus), en plus de pointer-events. */
+      const drawer = isMobileLayout() || document.documentElement.classList.contains("pw-lib-bottom");
+      if (drawer && !document.body.classList.contains("lib-open")) {
+        lib.setAttribute("inert", "");
+        lib.setAttribute("aria-hidden", "true");
+      } else {
+        lib.removeAttribute("inert");
+        lib.removeAttribute("aria-hidden");
+      }
     }
     function openLibCat(cat) {
       const tab = libTabs && libTabs.querySelector('.lib-tab[data-cat="' + cat + '"]');
@@ -9930,6 +9972,7 @@
         document.body.classList.add("lib-open");
         const t = document.getElementById("btnLibToggle");
         if (t) t.setAttribute("aria-expanded", "true");
+        syncLibInert();
       }
     }
     document.getElementById("btnLibToggle").onclick = () => toggleMobileLib();
@@ -9966,6 +10009,7 @@
     bindInstantTap(document.querySelector("header"));
     bindInstantTap(document.querySelector(".brand-col"));
     bindInstantTap(document.getElementById("btnPlayFab"));
+    try { syncLibInert(); } catch (_) {}
 
     function viewCenterWorld() {
       const z = boardZoom();
@@ -15721,14 +15765,19 @@
     function boardPinchUiBlocked(el) {
       if (!el || !el.closest) return false;
       return !!el.closest(
-        ".lib-side, #libTop, .lib-backdrop, footer.toolbar-bottom, header, .board-zoom,"
-        + " .modal, #ctxMenu, #wireOpt, #vipGate, .vip-overlay, #sizeModal, #ladderPanel, #etsPanel"
+        ".lib-side, #libTop, .lib-backdrop, footer.toolbar-bottom, header, .brand-col, .board-zoom,"
+        + " .modal, #ctxMenu, #wireOpt, #vipGate, .vip-overlay, #sizeModal, #ladderPanel, #etsPanel,"
+        + " .play-fab, .foot-pin-play, .lib-foot-tools"
       );
     }
     function boardPinchPointOnCanvas(clientX, clientY) {
+      /* Géométrie du plan d’abord (fiable au doigt) — elementFromPoint seul échoue trop souvent. */
+      const rect = board.getBoundingClientRect();
+      if (clientX < rect.left || clientX > rect.right || clientY < rect.top || clientY > rect.bottom) {
+        return false;
+      }
       const el = document.elementFromPoint(clientX, clientY);
-      if (!el || !board.contains(el)) return false;
-      if (boardPinchUiBlocked(el)) return false;
+      if (el && boardPinchUiBlocked(el)) return false;
       return true;
     }
     function boardTouchDist(a, b) {
@@ -15835,10 +15884,32 @@
       if (boardTouchPinch) return;
       boardGesturePinch = false;
     });
-    /* Pinch 2 doigts (Android / Chrome / WebView Expo) : zoom autour du milieu des doigts. */
+    /* Pinch 2 doigts (Android / Chrome / WebView Expo / iOS) : zoom autour du milieu des doigts.
+       Capture sur window : si le 1er doigt est hors board puis le 2e sur le plan, on récupère quand même. */
+    function boardPinchTouchHandler(ev) {
+      if (ev.touches.length < 2) {
+        if (boardTouchPinch && (ev.type === "touchend" || ev.type === "touchcancel")) {
+          if (ev.touches.length < 2) endBoardTouchPinch();
+        }
+        return;
+      }
+      if (boardPinchUiBlocked(ev.target)) return;
+      if (!boardTouchPinch) {
+        if (!beginBoardTouchPinch(ev)) return;
+        if (ev.cancelable) ev.preventDefault();
+        return;
+      }
+      if (moveBoardTouchPinch(ev) && ev.cancelable) ev.preventDefault();
+    }
+    window.addEventListener("touchstart", boardPinchTouchHandler, { passive: false, capture: true });
+    window.addEventListener("touchmove", boardPinchTouchHandler, { passive: false, capture: true });
+    window.addEventListener("touchend", boardPinchTouchHandler, { passive: true, capture: true });
+    window.addEventListener("touchcancel", boardPinchTouchHandler, { passive: true, capture: true });
+    /* Conservé sur #board pour Safari gesture* / cible directe. */
     board.addEventListener("touchstart", (ev) => {
       if (ev.touches.length < 2) return;
       if (boardPinchUiBlocked(ev.target)) return;
+      if (boardTouchPinch) return;
       if (!beginBoardTouchPinch(ev)) return;
       if (ev.cancelable) ev.preventDefault();
     }, { passive: false, capture: true });
@@ -16684,7 +16755,7 @@
     });
 
     if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
-      navigator.serviceWorker.register("sw-pwire.js?v=tags75").catch(function () {});
+      navigator.serviceWorker.register("sw-pwire.js?v=tags76").catch(function () {});
     }
     if ("launchQueue" in window && window.launchQueue && typeof window.launchQueue.setConsumer === "function") {
       window.launchQueue.setConsumer(function (params) {
