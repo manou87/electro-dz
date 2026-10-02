@@ -1,4 +1,4 @@
-/* Service worker minimal : installe WireLab comme application (ouverture des .pwire). v=20261002-pinch-board-r4 */
+/* Service worker minimal : installe WireLab comme application (ouverture des .pwire). v=plan-xy-only-r1 */
 self.addEventListener("install", function (ev) {
   self.skipWaiting();
 });
