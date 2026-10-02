@@ -1,4 +1,4 @@
-/* Service worker minimal : installe WireLab comme application (ouverture des .pwire). v=20260930 */
+/* Service worker minimal : installe WireLab comme application (ouverture des .pwire). v=20261002-snap-tel */
 self.addEventListener("install", function (ev) {
   self.skipWaiting();
 });

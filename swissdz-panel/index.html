@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="brand/logo-panelwire-icon.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="zoom-doigts" />
+  <meta name="swissdz-rev" content="snap-tel-oui" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -1506,6 +1506,29 @@
       box-shadow:0 0 0 3px #fff, 0 0 0 7px rgba(34,197,94,.95);
       transform:scale(1.38);
       z-index:73;
+    }
+    /* Téléphone : confirmation claire OUI (accroché) / NON (pas accroché) */
+    .term.snap-ok {
+      box-shadow:0 0 0 3px #fff, 0 0 0 8px rgba(22,163,74,1), 0 0 18px rgba(34,197,94,.85);
+      transform:scale(1.55);
+      z-index:74;
+      animation: snapOkPulse .5s ease-out 1;
+    }
+    .term.snap-miss {
+      box-shadow:0 0 0 3px #fff, 0 0 0 8px rgba(220,38,38,.95);
+      transform:scale(1.4);
+      z-index:74;
+      animation: snapMissPulse .45s ease-out 1;
+    }
+    @keyframes snapOkPulse {
+      0% { transform:scale(1.15); }
+      40% { transform:scale(1.65); }
+      100% { transform:scale(1.55); }
+    }
+    @keyframes snapMissPulse {
+      0%,100% { transform:scale(1.35); }
+      30% { transform:scale(1.55) translateX(-2px); }
+      60% { transform:scale(1.45) translateX(2px); }
     }
     svg.wires path.wire-preview-glow {
       pointer-events:none; stroke-linecap:round; stroke-linejoin:round;
@@ -6084,13 +6107,16 @@
     const DIR = { top: [0, -1], bottom: [0, 1], left: [-1, 0], right: [1, 0] };
     /* Sortie droite : embout + jeu + bandelette, puis coude arrondi (R 24). */
     const STUB = 70;
-    /* Rayon d’accroche fil→borne (px plan). Touch/APK : un peu plus large que souris. */
+    /* Rayon d’accroche fil→borne (px plan). PC inchangé ; tactile = rayon plus serré + hystérésis. */
     const WIRE_SNAP_DIST = 56;
+    const WIRE_SNAP_DIST_TOUCH = 34;
+    const WIRE_SNAP_TOUCH_HYST = 14;
     const state = {
       mode: "select", sim: false, color: COLORS[1].c, section: 6,
       seq: 1, wireNo: 1, counts: {}, items: [], wires: [],
       selected: null, selectedIds: [], selectedWire: null, wireOpt: null, selectedBar: null, wireFrom: null, drag: null,
       resize: null, wireDrag: null, flukeTipDrag: null, preview: null, wireSnap: null,
+      wirePadFlash: null,
       short: null, shortArmed: false,
       shortSince: null, fire: null,
       ladderOpen: null, /* null = auto si PLC ; true/false = forcé */
@@ -11071,11 +11097,105 @@
           const d = Math.hypot(p.x - x, p.y - y);
           if (d < bestD) {
             bestD = d;
-            best = { uid: item.uid, term: t.id, x: p.x, y: p.y };
+            best = { uid: item.uid, term: t.id, x: p.x, y: p.y, d: bestD };
           }
         });
       });
       return best;
+    }
+    /** Liste bornes proches (hors Fluke), triées par distance doigt→pastille. */
+    function listPanelTermsNear(x, y, skipUid, skipTerm) {
+      const out = [];
+      state.items.forEach((item) => {
+        const def = LIB[item.type];
+        if (!def || !def.terminals || def.flukeMeter) return;
+        def.terminals.forEach((t) => {
+          if (item.uid === skipUid && t.id === skipTerm) return;
+          const p = termAbs(item, t);
+          out.push({ uid: item.uid, term: t.id, x: p.x, y: p.y, d: Math.hypot(p.x - x, p.y - y) });
+        });
+      });
+      out.sort((a, b) => a.d - b.d);
+      return out;
+    }
+    /** Rayon tactile : plus serré si pastilles denses (évite le vol voisin L/N). */
+    function wireSnapTouchRadius(x, y, skipUid, skipTerm) {
+      let maxD = WIRE_SNAP_DIST_TOUCH;
+      const near = listPanelTermsNear(x, y, skipUid, skipTerm);
+      if (near.length >= 2) {
+        const gap = Math.hypot(near[0].x - near[1].x, near[0].y - near[1].y);
+        if (gap < 52) maxD = Math.min(maxD, Math.max(16, gap * 0.52));
+      }
+      return maxD;
+    }
+    /**
+     * Snap fil tactile : point doigt prioritaire, hystérésis anti-saut, rayon dense serré.
+     * sticky = pastille déjà visée (preview) ; commit = sticky null pour coller au doigt.
+     */
+    function pickWireSnapTouch(x, y, opts) {
+      const skipUid = opts && opts.skipUid;
+      const skipTerm = opts && opts.skipTerm;
+      const sticky = opts && opts.sticky;
+      const near = listPanelTermsNear(x, y, skipUid, skipTerm);
+      if (!near.length) return null;
+      const maxD = wireSnapTouchRadius(x, y, skipUid, skipTerm);
+      if (sticky) {
+        const st = near.find((n) => n.uid === sticky.uid && n.term === sticky.term);
+        if (st && st.d <= maxD + WIRE_SNAP_TOUCH_HYST) {
+          const rival = near[0];
+          if (rival.uid === st.uid && rival.term === st.term) return st;
+          /* Ne change que si le rival est nettement plus près (anti-saut). */
+          if (rival.d + WIRE_SNAP_TOUCH_HYST < st.d && rival.d <= maxD) return rival;
+          return st;
+        }
+      }
+      return near[0].d <= maxD ? near[0] : null;
+    }
+    function clearWirePadFlashTimer() {
+      if (state._wirePadFlashTimer) {
+        clearTimeout(state._wirePadFlashTimer);
+        state._wirePadFlashTimer = null;
+      }
+    }
+    /** Feedback téléphone : OUI (vert) / NON (rouge) sur la pastille. */
+    function flashWirePad(kind, ref) {
+      clearWirePadFlashTimer();
+      if (!ref || !ref.uid || !ref.term) {
+        state.wirePadFlash = null;
+        return;
+      }
+      state.wirePadFlash = { uid: ref.uid, term: ref.term, kind: kind === "ok" ? "ok" : "miss" };
+      try {
+        if (navigator.vibrate) navigator.vibrate(kind === "ok" ? 14 : [10, 35, 10]);
+      } catch (_) {}
+      state._wirePadFlashTimer = setTimeout(() => {
+        state.wirePadFlash = null;
+        state._wirePadFlashTimer = null;
+        render();
+      }, kind === "ok" ? 520 : 420);
+    }
+    function flashWireSnapMissAt(x, y) {
+      const skipUid = state.wireFrom && state.wireFrom.uid;
+      const skipTerm = state.wireFrom && state.wireFrom.term;
+      const near = listPanelTermsNear(x, y, skipUid, skipTerm);
+      if (near.length && near[0].d <= 90) {
+        flashWirePad("miss", near[0]);
+        return;
+      }
+      if (state.wireFrom) flashWirePad("miss", state.wireFrom);
+    }
+    /** Résout l’accroche au pointerdown : tactile = doigt ; PC = inchangé. */
+    function resolveWireSnapCommit(pt, ev) {
+      if (!state.wireFrom || !pt) return null;
+      const skip = { skipUid: state.wireFrom.uid, skipTerm: state.wireFrom.term };
+      if (isTouchLikePointer(ev)) {
+        return pickWireSnapTouch(pt.x, pt.y, skip); /* pas de wireSnap sticky : priorite doigt */
+      }
+      return state.wireSnap || nearestPanelTerm(pt.x, pt.y, {
+        maxDist: WIRE_SNAP_DIST,
+        skipUid: skip.skipUid,
+        skipTerm: skip.skipTerm
+      });
     }
     function connectFlukeTipTo(flukeUid, tipId, bRef) {
       if (flukeUid === bRef.uid && tipId === bRef.term) return;
@@ -11535,18 +11655,25 @@
       state.preview = null;
       state.wireSnap = null;
     }
-    function updateWirePreview(x, y) {
+    function updateWirePreview(x, y, opts) {
       if (!state.wireFrom) {
         state.preview = null;
         state.wireSnap = null;
         return;
       }
       const a = endpoint(state.wireFrom);
-      const snap = nearestPanelTerm(x, y, {
-        maxDist: WIRE_SNAP_DIST,
-        skipUid: state.wireFrom.uid,
-        skipTerm: state.wireFrom.term
-      });
+      const touch = !!(opts && opts.touch);
+      const snap = touch
+        ? pickWireSnapTouch(x, y, {
+            skipUid: state.wireFrom.uid,
+            skipTerm: state.wireFrom.term,
+            sticky: state.wireSnap
+          })
+        : nearestPanelTerm(x, y, {
+            maxDist: WIRE_SNAP_DIST,
+            skipUid: state.wireFrom.uid,
+            skipTerm: state.wireFrom.term
+          });
       state.wireSnap = snap;
       if (snap) {
         state.preview = { pts: autoRoute(a, endpoint({ uid: snap.uid, term: snap.term })) };
@@ -14290,16 +14417,18 @@
           if (state.mode === "wire") {
             if (state.wireFrom) {
               const pt = boardPointFromClient(ev.clientX, ev.clientY);
-              const snap = state.wireSnap || nearestPanelTerm(pt.x, pt.y, {
-                maxDist: WIRE_SNAP_DIST,
-                skipUid: state.wireFrom.uid,
-                skipTerm: state.wireFrom.term
-              });
+              const snap = resolveWireSnapCommit(pt, ev);
               if (snap) {
                 ev.stopPropagation();
                 if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
                 ev.preventDefault();
-                onTerm(snap.uid, snap.term);
+                onTerm(snap.uid, snap.term, { touch: isTouchLikePointer(ev) });
+              } else if (isTouchLikePointer(ev)) {
+                ev.stopPropagation();
+                if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
+                ev.preventDefault();
+                flashWireSnapMissAt(pt.x, pt.y);
+                render();
               }
             }
             return;
@@ -14701,11 +14830,14 @@
       if (state.wireSnap && state.wireSnap.uid === uid && state.wireSnap.term === id) {
         t.classList.add("snap-aim");
       }
+      if (state.wirePadFlash && state.wirePadFlash.uid === uid && state.wirePadFlash.term === id) {
+        t.classList.add(state.wirePadFlash.kind === "ok" ? "snap-ok" : "snap-miss");
+      }
       t.onpointerdown = (ev) => {
         ev.stopPropagation();
         ev.preventDefault();
         if (state.mode === "wire") {
-          onTerm(uid, id);
+          onTerm(uid, id, { touch: isTouchLikePointer(ev) });
           return;
         }
         // Mode Select : clic borne = décrocher tous les fils de cette borne
@@ -14724,7 +14856,8 @@
       return t;
     }
 
-    function onTerm(uid, id) {
+    function onTerm(uid, id, opts) {
+      const touch = !!(opts && opts.touch);
       if (!state.wireFrom) {
         state.wireFrom = { uid, term: id };
         state.wireSnap = null;
@@ -14743,6 +14876,7 @@
       }
       if (state.wireFrom.uid === uid && state.wireFrom.term === id) {
         clearWireDraft();
+        if (touch) flashWirePad("miss", { uid, term: id });
         render();
         return;
       }
@@ -14762,6 +14896,7 @@
       bakeWaypoints(w, autoRoute(endpoint(w.a), endpoint(w.b)));
       state.wires.push(w);
       clearWireDraft();
+      if (touch) flashWirePad("ok", bRef);
       render();
     }
 
@@ -14911,7 +15046,7 @@
         return;
       }
       if (state.mode === "wire" && state.wireFrom) {
-        updateWirePreview(x, y);
+        updateWirePreview(x, y, { touch: isTouchLikePointer(ev) });
         render();
       }
     });
@@ -15483,19 +15618,16 @@
       closeCtxMenu();
       closeWireOpt();
       clearWireHold();
-      if (state.mode === "wire" && state.wireFrom && state.wireSnap) {
-        onTerm(state.wireSnap.uid, state.wireSnap.term);
-        return;
-      }
       if (state.mode === "wire" && state.wireFrom) {
         const pt = boardPointFromClient(ev.clientX, ev.clientY);
-        const snap = nearestPanelTerm(pt.x, pt.y, {
-          maxDist: WIRE_SNAP_DIST,
-          skipUid: state.wireFrom.uid,
-          skipTerm: state.wireFrom.term
-        });
+        const snap = resolveWireSnapCommit(pt, ev);
         if (snap) {
-          onTerm(snap.uid, snap.term);
+          onTerm(snap.uid, snap.term, { touch: isTouchLikePointer(ev) });
+          return;
+        }
+        if (isTouchLikePointer(ev)) {
+          flashWireSnapMissAt(pt.x, pt.y);
+          render();
           return;
         }
       }
@@ -15697,15 +15829,11 @@
       /* Priorité : accroche fil→borne (ne pas voler le clic au pan / stopPropagation). */
       if (isLeftEmpty && state.mode === "wire" && state.wireFrom) {
         const pt = boardPointFromClient(ev.clientX, ev.clientY);
-        const snap = state.wireSnap || nearestPanelTerm(pt.x, pt.y, {
-          maxDist: WIRE_SNAP_DIST,
-          skipUid: state.wireFrom.uid,
-          skipTerm: state.wireFrom.term
-        });
+        const snap = resolveWireSnapCommit(pt, ev);
         if (snap) {
           ev.preventDefault();
           ev.stopPropagation();
-          onTerm(snap.uid, snap.term);
+          onTerm(snap.uid, snap.term, { touch: isTouchLikePointer(ev) });
           return;
         }
       }
@@ -16497,7 +16625,7 @@
     });
 
     if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
-      navigator.serviceWorker.register("sw-pwire.js?v=tags73").catch(function () {});
+      navigator.serviceWorker.register("sw-pwire.js?v=tags74").catch(function () {});
     }
     if ("launchQueue" in window && window.launchQueue && typeof window.launchQueue.setConsumer === "function") {
       window.launchQueue.setConsumer(function (params) {
