@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="brand/logo-panelwire-icon.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="plan-xy-zoomout-r2" />
+  <meta name="swissdz-rev" content="plan-xy-zoomout-r3" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -1324,9 +1324,9 @@
       display:block;
     }
     .board-coords .plane-fill { fill:var(--board); }
-    .board-coords .axis { stroke:rgba(100,116,139,.45); stroke-width:1.25; }
-    .board-coords .tick { stroke:rgba(100,116,139,.28); stroke-width:1; }
-    .board-coords .grid-minor { stroke:rgba(148,163,184,.12); stroke-width:1; }
+    .board-coords .axis { stroke:rgba(100,116,139,.45); stroke-width:1.25px; }
+    .board-coords .tick { stroke:rgba(100,116,139,.28); stroke-width:1px; }
+    .board-coords .grid-minor { stroke:rgba(148,163,184,.14); stroke-width:1px; }
     .board-coords .lbl {
       fill:rgba(100,116,139,.7); font-weight:600; font-family:ui-sans-serif,system-ui,sans-serif;
       user-select:none;
@@ -6365,10 +6365,19 @@
       const spacer = document.getElementById("boardZoomSpacer");
       const world = document.getElementById("boardWorld");
       if (!spacer || !world) return;
-      const z = boardZoom();
+      const z = Math.max(boardZoom(), BOARD_ZOOM_ABS_MIN);
       const pad = BOARD_PAN_PAD;
       const { x0, y0, x1, y1 } = boardCoordsExtent();
-      const key = x0 + ":" + y0 + ":" + x1 + ":" + y1 + ":" + z.toFixed(4);
+      /* Espacement labels à l’écran (~56px) : évite la bande illisible au dézoom. */
+      const labelStep = Math.max(
+        BOARD_COORDS_STEP,
+        Math.ceil(56 / z / BOARD_COORDS_STEP) * BOARD_COORDS_STEP
+      );
+      const gridStep = Math.max(
+        BOARD_COORDS_STEP,
+        Math.ceil(14 / z / BOARD_COORDS_STEP) * BOARD_COORDS_STEP
+      );
+      const key = [x0, y0, x1, y1, labelStep, gridStep, z.toFixed(3)].join(":");
       let host = document.getElementById("boardCoordsHost");
       if (!host) {
         host = document.createElement("div");
@@ -6377,17 +6386,23 @@
       } else if (host.parentNode !== spacer) {
         spacer.insertBefore(host, world);
       }
-      /* Taille en px spacer (pas de scale) : évite le clip overflow des calques transformés. */
+      /* Un seul SVG coords dans tout le board — purge les fantômes (ex. ancien dans #boardWorld). */
+      document.querySelectorAll("svg.board-coords").forEach((el) => {
+        if (el.parentNode !== host) el.remove();
+      });
+      while (host.childNodes.length > 1) host.removeChild(host.lastChild);
+
       host.style.left = Math.round(pad + x0 * z) + "px";
       host.style.top = Math.round(pad + y0 * z) + "px";
       host.style.width = Math.round((x1 - x0) * z) + "px";
       host.style.height = Math.round((y1 - y0) * z) + "px";
+
       let svg = host.querySelector("svg.board-coords");
       if (svg && boardCoordsExtentKey === key) return;
       boardCoordsExtentKey = key;
+
       const w = x1 - x0;
       const h = y1 - y0;
-      const step = BOARD_COORDS_STEP;
       if (!svg) {
         svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         svg.setAttribute("class", "board-coords");
@@ -6400,6 +6415,7 @@
       svg.setAttribute("height", "100%");
       svg.setAttribute("viewBox", x0 + " " + y0 + " " + w + " " + h);
       svg.setAttribute("preserveAspectRatio", "none");
+
       const add = (tag, attrs, text) => {
         const el = document.createElementNS(svg.namespaceURI, tag);
         Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, String(v)));
@@ -6407,30 +6423,45 @@
         svg.appendChild(el);
         return el;
       };
+      /* Épaisseurs via CSS (px écran). Tailles texte en unités world → ~11px. */
+      const fs = 11 / z;
+      const tickLen = 8 / z;
+      const lblOff = 3 / z;
+
       add("rect", { class: "plane-fill", x: x0, y: y0, width: w, height: h });
-      for (let x = x0; x <= x1; x += step) {
+      for (let x = Math.ceil(x0 / gridStep) * gridStep; x <= x1; x += gridStep) {
         if (x === 0) continue;
         add("line", { class: "grid-minor", x1: x, y1: y0, x2: x, y2: y1 });
       }
-      for (let y = y0; y <= y1; y += step) {
+      for (let y = Math.ceil(y0 / gridStep) * gridStep; y <= y1; y += gridStep) {
         if (y === 0) continue;
         add("line", { class: "grid-minor", x1: x0, y1: y, x2: x1, y2: y });
       }
       add("line", { class: "axis", x1: x0, y1: 0, x2: x1, y2: 0 });
       add("line", { class: "axis", x1: 0, y1: y0, x2: 0, y2: y1 });
-      /* Labels : taille en unités world pour ~11px écran quel que soit le zoom. */
-      const fs = 11 / Math.max(z, 0.08);
-      const tick = 8 / Math.max(z, 0.08);
-      const lblOff = 2 / Math.max(z, 0.08);
-      for (let x = x0; x <= x1; x += step) {
-        add("line", { class: "tick", x1: x, y1: 0, x2: x, y2: tick });
-        if (x !== 0) add("text", { class: "lbl", x: x + lblOff, y: tick + fs * 0.35, "font-size": fs }, "X" + x);
+
+      for (let x = Math.ceil(x0 / labelStep) * labelStep; x <= x1; x += labelStep) {
+        add("line", { class: "tick", x1: x, y1: 0, x2: x, y2: tickLen });
+        if (x !== 0) {
+          add("text", {
+            class: "lbl", x: x + lblOff, y: tickLen + fs * 0.9,
+            "font-size": fs, "font-weight": 600
+          }, "X" + x);
+        }
       }
-      for (let y = y0; y <= y1; y += step) {
-        add("line", { class: "tick", x1: 0, y1: y, x2: tick, y2: y });
-        if (y !== 0) add("text", { class: "lbl", x: tick + lblOff, y: y + fs * 0.35, "font-size": fs }, "Y" + y);
+      for (let y = Math.ceil(y0 / labelStep) * labelStep; y <= y1; y += labelStep) {
+        add("line", { class: "tick", x1: 0, y1: y, x2: tickLen, y2: y });
+        if (y !== 0) {
+          add("text", {
+            class: "lbl", x: tickLen + lblOff, y: y + fs * 0.35,
+            "font-size": fs, "font-weight": 600
+          }, "Y" + y);
+        }
       }
-      add("text", { class: "lbl origin-lbl", x: tick + lblOff, y: tick + fs * 0.35, "font-size": fs }, "0");
+      add("text", {
+        class: "lbl origin-lbl", x: tickLen + lblOff, y: tickLen + fs * 0.9,
+        "font-size": fs, "font-weight": 800
+      }, "0");
     }
     function applyBoardZoomStyles() {
       const z = boardZoom();
@@ -17383,7 +17414,7 @@
     });
 
     if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
-      navigator.serviceWorker.register("sw-pwire.js?v=plan-xy-zoomout-r2").catch(function () {});
+      navigator.serviceWorker.register("sw-pwire.js?v=plan-xy-zoomout-r3").catch(function () {});
     }
     if ("launchQueue" in window && window.launchQueue && typeof window.launchQueue.setConsumer === "function") {
       window.launchQueue.setConsumer(function (params) {
