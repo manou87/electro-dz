@@ -1,10 +1,12 @@
 name: Deploy site to GitHub Pages
 
-# Le site est publié automatiquement par « pages build and deployment » (source : branche main).
-# Ce workflow Actions échouait car l’artifact dépasse 1 Go (PDF + simulateur).
-# Conservé en déclenchement manuel uniquement, si besoin plus tard.
+# Artifact Pages limité à ~1 Go. On exclut pdf/ + data/ (trop lourds) pour
+# republier le site + swissdz-panel. Miroir de secours :
+# https://cdn.jsdelivr.net/gh/manou87/electro-dz@main/swissdz-panel/
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -14,7 +16,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   deploy:
@@ -25,7 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
-      - name: Préparer l’artifact (sans outils dev)
+      - name: Préparer l’artifact (<1 Go, sans pdf/data)
         run: |
           mkdir -p _site
           rsync -a \
@@ -35,8 +37,21 @@ jobs:
             --exclude='node_modules' \
             --exclude='scripts' \
             --exclude='supabase' \
+            --exclude='pdf' \
+            --exclude='data' \
+            --exclude='swissdz-panel/backups' \
+            --exclude='swissdz-panel/assets/electrodz/_pre_swissdz_brand_backup' \
+            --exclude='.github-token.local' \
+            --exclude='.supabase-access-token' \
+            --exclude='.DS_Store' \
             ./ _site/
+          # Domaine custom (si absent du dépôt)
+          if [ ! -f _site/CNAME ]; then
+            echo 'electro-dz.com' > _site/CNAME
+          fi
+          touch _site/.nojekyll
           du -sh _site
+          find _site -type f | wc -l
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

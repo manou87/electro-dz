@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="brand/logo-panelwire-icon.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="plan-xy-zoomout-r3" />
+  <meta name="swissdz-rev" content="inject-20261002-r1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -1317,25 +1317,33 @@
       z-index:1;
     }
 
-    /* Référentiel X/Y discret (repères de placement / cotes) */
+    /* Grille discrète (style Eduvolt) — pas de cadre ni labels X/Y sur le plan */
     .board-coords {
       position:absolute; left:0; top:0; width:100%; height:100%;
       pointer-events:none; z-index:0; overflow:visible;
       display:block;
     }
     .board-coords .plane-fill { fill:var(--board); }
-    .board-coords .axis { stroke:rgba(100,116,139,.45); stroke-width:1.25px; }
-    .board-coords .tick { stroke:rgba(100,116,139,.28); stroke-width:1px; }
-    .board-coords .grid-minor { stroke:rgba(148,163,184,.14); stroke-width:1px; }
-    .board-coords .lbl {
-      fill:rgba(100,116,139,.7); font-weight:600; font-family:ui-sans-serif,system-ui,sans-serif;
+    .board-coords .grid-minor { stroke:rgba(148,163,184,.16); stroke-width:1px; }
+    html[data-theme="dark"] .board-coords .grid-minor { stroke:rgba(148,163,184,.11); }
+
+    /* Readout XY discret en bas (pointe souris / doigt) */
+    .board-xy-readout {
+      position:absolute; left:50%; bottom:10px; z-index:54;
+      transform:translateX(-50%);
+      pointer-events:none;
+      font:500 11px/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      letter-spacing:.02em;
+      color:rgba(100,116,139,.55);
+      white-space:nowrap;
       user-select:none;
+      text-shadow:0 0 6px var(--board);
     }
-    .board-coords .origin-lbl { fill:rgba(37,99,235,.75); font-weight:800; }
-    html[data-theme="dark"] .board-coords .axis { stroke:rgba(148,163,184,.5); }
-    html[data-theme="dark"] .board-coords .tick { stroke:rgba(148,163,184,.35); }
-    html[data-theme="dark"] .board-coords .grid-minor { stroke:rgba(148,163,184,.1); }
-    html[data-theme="dark"] .board-coords .lbl { fill:rgba(148,163,184,.75); }
+    html[data-theme="dark"] .board-xy-readout { color:rgba(148,163,184,.45); }
+    .board-xy-readout:empty, .board-xy-readout.is-idle { opacity:.35; }
+    @media (max-width: 900px), ((max-width: 1024px) and (max-height: 520px)) {
+      .board-xy-readout { bottom:8px; font-size:10px; }
+    }
 
     .board-zoom {
       position:absolute; left:10px; bottom:10px; z-index:55;
@@ -3272,6 +3280,7 @@
         </div>
       </aside>
       <div id="board"></div>
+      <div id="boardXyReadout" class="board-xy-readout is-idle" aria-live="polite" data-i18n-aria="boardXyAria" aria-label="Coordonnées du pointeur">X: —  Y: —</div>
       <div class="board-zoom" role="group" data-i18n-aria="zoomGroupAria" aria-label="Zoom du schéma">
         <button id="btnZoomIn" class="btn-ico" type="button" data-i18n-title="zoomInTitle" data-i18n-aria="zoomInAria" title="Zoom avant" aria-label="Zoom avant">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
@@ -3575,7 +3584,7 @@
       </div>
     </div>
   </div>
-  <script src="i18n/panelwire-i18n.js?v=20261002-cats-split-r2"></script>
+  <script src="i18n/panelwire-i18n.js?v=inject-20261002-r1"></script>
   <script>
     /* Assets pré-cadrés (photos studio trop larges → bandes). */
     const COLORS = [
@@ -6368,16 +6377,12 @@
       const z = Math.max(boardZoom(), BOARD_ZOOM_ABS_MIN);
       const pad = BOARD_PAN_PAD;
       const { x0, y0, x1, y1 } = boardCoordsExtent();
-      /* Espacement labels à l’écran (~56px) : évite la bande illisible au dézoom. */
-      const labelStep = Math.max(
-        BOARD_COORDS_STEP,
-        Math.ceil(56 / z / BOARD_COORDS_STEP) * BOARD_COORDS_STEP
-      );
+      /* Pas de labels sur le plan : grille seule (pas de doublons au dézoom). */
       const gridStep = Math.max(
         BOARD_COORDS_STEP,
         Math.ceil(14 / z / BOARD_COORDS_STEP) * BOARD_COORDS_STEP
       );
-      const key = [x0, y0, x1, y1, labelStep, gridStep, z.toFixed(3)].join(":");
+      const key = [x0, y0, x1, y1, gridStep, z.toFixed(3)].join(":");
       let host = document.getElementById("boardCoordsHost");
       if (!host) {
         host = document.createElement("div");
@@ -6416,52 +6421,43 @@
       svg.setAttribute("viewBox", x0 + " " + y0 + " " + w + " " + h);
       svg.setAttribute("preserveAspectRatio", "none");
 
-      const add = (tag, attrs, text) => {
+      const add = (tag, attrs) => {
         const el = document.createElementNS(svg.namespaceURI, tag);
         Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, String(v)));
-        if (text != null) el.textContent = text;
         svg.appendChild(el);
         return el;
       };
-      /* Épaisseurs via CSS (px écran). Tailles texte en unités world → ~11px. */
-      const fs = 11 / z;
-      const tickLen = 8 / z;
-      const lblOff = 3 / z;
 
       add("rect", { class: "plane-fill", x: x0, y: y0, width: w, height: h });
       for (let x = Math.ceil(x0 / gridStep) * gridStep; x <= x1; x += gridStep) {
-        if (x === 0) continue;
         add("line", { class: "grid-minor", x1: x, y1: y0, x2: x, y2: y1 });
       }
       for (let y = Math.ceil(y0 / gridStep) * gridStep; y <= y1; y += gridStep) {
-        if (y === 0) continue;
         add("line", { class: "grid-minor", x1: x0, y1: y, x2: x1, y2: y });
       }
-      add("line", { class: "axis", x1: x0, y1: 0, x2: x1, y2: 0 });
-      add("line", { class: "axis", x1: 0, y1: y0, x2: 0, y2: y1 });
-
-      for (let x = Math.ceil(x0 / labelStep) * labelStep; x <= x1; x += labelStep) {
-        add("line", { class: "tick", x1: x, y1: 0, x2: x, y2: tickLen });
-        if (x !== 0) {
-          add("text", {
-            class: "lbl", x: x + lblOff, y: tickLen + fs * 0.9,
-            "font-size": fs, "font-weight": 600
-          }, "X" + x);
-        }
+    }
+    function formatBoardXyReadout(x, y) {
+      const xi = Math.round(x);
+      const yi = Math.round(y);
+      if (I18N && typeof I18N.t === "function") {
+        return I18N.t("boardXyReadout", { x: xi, y: yi });
       }
-      for (let y = Math.ceil(y0 / labelStep) * labelStep; y <= y1; y += labelStep) {
-        add("line", { class: "tick", x1: 0, y1: y, x2: tickLen, y2: y });
-        if (y !== 0) {
-          add("text", {
-            class: "lbl", x: tickLen + lblOff, y: y + fs * 0.35,
-            "font-size": fs, "font-weight": 600
-          }, "Y" + y);
-        }
-      }
-      add("text", {
-        class: "lbl origin-lbl", x: tickLen + lblOff, y: tickLen + fs * 0.9,
-        "font-size": fs, "font-weight": 800
-      }, "0");
+      return "X: " + xi + "  Y: " + yi;
+    }
+    function setBoardXyReadoutIdle() {
+      const el = document.getElementById("boardXyReadout");
+      if (!el) return;
+      el.classList.add("is-idle");
+      el.textContent = I18N && typeof I18N.t === "function"
+        ? I18N.t("boardXyIdle")
+        : "X: —  Y: —";
+    }
+    function updateBoardXyReadout(clientX, clientY) {
+      const el = document.getElementById("boardXyReadout");
+      if (!el || clientX == null || clientY == null) return;
+      const pt = boardPointFromClient(clientX, clientY);
+      el.classList.remove("is-idle");
+      el.textContent = formatBoardXyReadout(pt.x, pt.y);
     }
     function applyBoardZoomStyles() {
       const z = boardZoom();
@@ -8409,6 +8405,12 @@
       if (!root) return;
       const uid = item.uid;
       const liveLamp = () => state.items.find((i) => i.uid === uid);
+      /* Isoler la fiche lumière du board (Play / pan / sélection). */
+      root.addEventListener("pointerdown", (ev) => {
+        ev.stopPropagation();
+        if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
+      });
+      root.addEventListener("click", (ev) => ev.stopPropagation());
       const range = root.querySelector("[data-lamp-bright]");
       const val = root.querySelector(".lamp-bright-val");
       if (range) {
@@ -13848,10 +13850,26 @@
         }
         panel.classList.remove("open");
         panel.hidden = true;
+        delete panel.dataset.propsUid;
+        delete panel.dataset.propsType;
         return;
       }
       panel.hidden = false;
       panel.classList.add("open");
+      /* Pendant Play, render() tourne souvent : ne pas reconstruire la fiche (sinon slider/couleur gelés). */
+      const sameSheet = panel.dataset.propsUid === item.uid
+        && panel.dataset.propsType === typeId
+        && !!body.querySelector(".lamp-tune, .sec, .kv, .empty");
+      if (sameSheet) {
+        positionEdzPropsNear(item.uid);
+        if (isTunableLamp(LIB[typeId])) {
+          const preview = body.querySelector(".lamp-preview-glow");
+          if (preview) applyLampGlowStyle(preview, item);
+        }
+        return;
+      }
+      panel.dataset.propsUid = item.uid;
+      panel.dataset.propsType = typeId;
       title.textContent = libDisplayName(typeId, LIB[typeId]) || typeId;
       body.innerHTML = renderLibPropsBody(typeId);
       bindLampTune(body);
@@ -13864,6 +13882,11 @@
       ensureEdzDetails().then((cat) => {
         const still = state.selected && state.items.find((i) => i.uid === state.selected);
         if (!still || still.type !== typeId || state.edzPropsUid !== state.selected) return;
+        /* Ne pas écraser les contrôles lumière si déjà ouverts (Play / interaction en cours). */
+        if (body.querySelector(".lamp-tune") && panel.dataset.propsUid === still.uid) {
+          positionEdzPropsNear(still.uid);
+          return;
+        }
         if (cat && cat[typeId]) body.innerHTML = renderEdzPropsBody(cat[typeId], typeId);
         bindLampTune(body);
         positionEdzPropsNear(still.uid);
@@ -16327,6 +16350,21 @@
     document.getElementById("modeWire").onclick = () => setMode("wire");
     document.getElementById("btnZoomIn").onclick = () => bumpBoardZoom(1);
     document.getElementById("btnZoomOut").onclick = () => bumpBoardZoom(-1);
+    /* Readout XY discret (Eduvolt) : suit souris / doigt, repère plan. */
+    (function bindBoardXyReadout() {
+      setBoardXyReadoutIdle();
+      const onMove = (ev) => {
+        if (ev.pointerType === "touch" && typeof ev.isPrimary === "boolean" && !ev.isPrimary) return;
+        updateBoardXyReadout(ev.clientX, ev.clientY);
+      };
+      board.addEventListener("pointermove", onMove, { capture: true, passive: true });
+      board.addEventListener("pointerdown", onMove, { capture: true, passive: true });
+      board.addEventListener("pointerleave", () => {
+        if (board.classList.contains("is-panning") || board.classList.contains("is-dragging")
+            || board.classList.contains("is-pinching")) return;
+        setBoardXyReadoutIdle();
+      });
+    })();
     /* Molette / pincement : zoom vers le curseur (ou milieu des doigts), seulement sur le plan. */
     let boardGesturePinch = false;
     let boardPinchZ = 1;
@@ -17414,7 +17452,7 @@
     });
 
     if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
-      navigator.serviceWorker.register("sw-pwire.js?v=plan-xy-zoomout-r3").catch(function () {});
+      navigator.serviceWorker.register("sw-pwire.js?v=inject-20261002-r1").catch(function () {});
     }
     if ("launchQueue" in window && window.launchQueue && typeof window.launchQueue.setConsumer === "function") {
       window.launchQueue.setConsumer(function (params) {
