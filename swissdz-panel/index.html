@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="brand/logo-panelwire-icon.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="lib-photos-r1" />
+  <meta name="swissdz-rev" content="lib-acc-r1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -329,7 +329,7 @@
       width:100%; position:relative;
     }
     h2 { margin:0 0 8px; font-size:11px; letter-spacing:.06em; color:#6b7280; }
-    /* Biblio à gauche — catégories au repos ; grille photos au clic section */
+    /* Biblio à gauche — accordéon : miniatures sous la section cliquée */
     .lib-side {
       grid-area:lib;
       min-height:0; min-width:0; width:auto; max-width:none;
@@ -343,7 +343,7 @@
     }
     .lib-side.lib-cat-open .lib-side-head,
     .lib-side.show-examples .lib-side-head {
-      flex:0 0 auto;
+      flex:1 1 auto; min-height:0;
     }
     .lib-search-row {
       display:flex; align-items:center; gap:4px;
@@ -406,12 +406,21 @@
       background:#eff6ff; color:var(--blue); border-color:#bfdbfe;
     }
     .lib-tab.active .lib-count { color:var(--blue); }
-    .lib-items {
-      flex:1 1 auto; min-height:0;
+    /* Zone grille hors accordéon (legacy) — masquée ; panneaux .lib-acc-panel dans #libTabs */
+    .lib-side > .lib-items {
+      display:none !important;
+    }
+    .lib-items, .lib-tabs .lib-acc-panel.lib-items {
+      flex:0 0 auto; min-height:0;
       display:grid; grid-template-columns:1fr 1fr; gap:6px; align-content:start;
-      overflow-x:hidden; overflow-y:auto;
-      padding:8px; height:auto; max-height:none;
+      overflow:visible;
+      padding:6px 4px 10px; height:auto; max-height:none;
+      width:100%; box-sizing:border-box;
       -webkit-overflow-scrolling:touch; scrollbar-width:thin;
+    }
+    .lib-tabs .lib-acc-panel {
+      border-bottom:1px solid #eef2f7;
+      margin:0 0 2px;
     }
     .workspace {
       grid-area:work;
@@ -743,9 +752,9 @@
         pointer-events:auto;
         visibility:visible;
       }
-      .lib-tabs { max-height:32vh; flex-direction:row; flex-wrap:wrap; gap:4px; }
-      .lib-tab { width:auto; flex:0 0 auto; padding:6px 9px; font-size:10px; }
-      .lib-items { grid-template-columns:1fr 1fr; padding:8px; gap:6px; }
+      .lib-tabs { max-height:none; flex-direction:column; flex-wrap:nowrap; gap:2px; overflow-x:hidden; overflow-y:auto; }
+      .lib-tab { width:100%; flex:0 0 auto; padding:7px 10px; font-size:11px; }
+      .lib-tabs .lib-acc-panel.lib-items { grid-template-columns:1fr 1fr; padding:6px 4px 10px; gap:6px; }
       .workspace { min-width:0; width:100%; overflow:hidden; }
       .board-zoom {
         left:8px;
@@ -780,14 +789,14 @@
       }
       .lib-side-head { padding:8px 10px 4px; }
       .lib-tabs {
-        flex-direction:row; flex-wrap:nowrap; gap:4px;
-        max-height:none; overflow-x:auto; overflow-y:hidden;
+        flex-direction:column; flex-wrap:nowrap; gap:2px;
+        max-height:none; overflow-x:hidden; overflow-y:auto;
         padding:0 0 6px; -webkit-overflow-scrolling:touch;
       }
-      .lib-tab { width:auto; flex:0 0 auto; padding:6px 9px; font-size:10px; white-space:nowrap; }
-      .lib-items {
+      .lib-tab { width:100%; flex:0 0 auto; padding:7px 10px; font-size:11px; white-space:nowrap; }
+      .lib-tabs .lib-acc-panel.lib-items {
         grid-template-columns:1fr 1fr 1fr;
-        padding:8px; gap:6px;
+        padding:6px 4px 10px; gap:6px;
       }
       .item { padding:6px 4px; }
       .item img, .item .thumb { width:50%; max-height:48px; }
@@ -836,10 +845,11 @@
       visibility:visible !important;
     }
     html.pw-lib-bottom .lib-tabs {
-      flex-direction:row !important; flex-wrap:nowrap !important; gap:4px !important;
-      max-height:none !important; overflow-x:auto !important; overflow-y:hidden !important;
+      flex-direction:column !important; flex-wrap:nowrap !important; gap:2px !important;
+      max-height:none !important; overflow-x:hidden !important; overflow-y:auto !important;
     }
-    html.pw-lib-bottom .lib-items { grid-template-columns:1fr 1fr 1fr !important; gap:6px !important; }
+    html.pw-lib-bottom .lib-tab { width:100% !important; }
+    html.pw-lib-bottom .lib-tabs .lib-acc-panel.lib-items { grid-template-columns:1fr 1fr 1fr !important; gap:6px !important; }
     html.pw-lib-bottom .workspace { min-width:0; width:100%; overflow:hidden; }
     html.pw-lib-bottom .app-shell {
       grid-template-columns:minmax(0,auto) minmax(0,1fr);
@@ -1812,20 +1822,20 @@
       background:var(--on-bg); color:var(--on-text); border-color:#bfdbfe;
     }
     .lib-examples {
-      display:none; flex-direction:column; flex:1 1 auto; min-height:0;
-      overflow-x:hidden; overflow-y:auto; padding:6px 8px 12px;
+      display:none; flex-direction:column; flex:0 0 auto; min-height:0;
+      overflow:visible; padding:6px 8px 12px;
       -webkit-overflow-scrolling:touch; scrollbar-width:thin;
     }
-    .lib-side.show-examples .lib-examples { display:flex !important; }
-    .lib-side.show-examples .lib-items,
+    .lib-side.show-examples .lib-examples,
+    .lib-tabs .lib-examples.lib-acc-panel { display:flex !important; }
     .lib-side.show-examples .lib-side-head > strong { display:none; }
     /* Onglets catégories + Installations restent visibles pour revenir */
     .lib-side.show-examples .lib-tabs {
-      display:flex !important; flex:0 0 auto; max-height:36vh;
+      display:flex !important; flex:1 1 auto; max-height:none; min-height:0;
     }
-    /* Mode travail : catégories seules ; grille photos seulement si .lib-cat-open */
-    .lib-side:not(.lib-cat-open):not(.show-examples) .lib-items { display:none; }
-    .lib-side.lib-cat-open .lib-tabs { flex:0 0 auto; max-height:42vh; }
+    /* Mode travail : catégories seules ; grille photos en accordéon sous la section (.lib-acc-panel) */
+    .lib-side:not(.lib-cat-open):not(.show-examples) .lib-tabs .lib-acc-panel { display:none; }
+    .lib-side.lib-cat-open .lib-tabs { flex:1 1 auto; max-height:none; min-height:0; }
     .lib-install-btn { display:none !important; }
     .lib-examples-hint { display:none; }
     .lib-examples .example-tile { padding:5px 5px 7px; margin:0 0 7px; }
@@ -3552,7 +3562,7 @@
       </div>
     </div>
   </div>
-  <script src="i18n/panelwire-i18n.js?v=20261002-lib-photos-r1"></script>
+  <script src="i18n/panelwire-i18n.js?v=20261002-lib-acc-r1"></script>
   <script>
     /* Assets pré-cadrés (photos studio trop larges → bandes). */
     const COLORS = [
@@ -8967,7 +8977,6 @@
       const tab = document.getElementById("btnLibExamplesTab");
       const show = !!state.examplesOpen;
       if (lib) lib.classList.toggle("show-examples", show);
-      if (pane) pane.hidden = !show;
       if (btn) {
         btn.classList.toggle("on", show);
         btn.setAttribute("aria-pressed", show ? "true" : "false");
@@ -8976,7 +8985,27 @@
         tab.classList.toggle("active", show);
         tab.setAttribute("aria-selected", show ? "true" : "false");
       }
-      if (show) activeCat = null;
+      if (show) {
+        activeCat = null;
+        try { clearLibAccPanels(); } catch (_) {}
+        if (pane && tab && libTabs) {
+          pane.classList.add("lib-acc-panel");
+          tab.insertAdjacentElement("afterend", pane);
+          pane.hidden = false;
+          try { tab.scrollIntoView({ block: "nearest", behavior: "smooth" }); } catch (_) {}
+        } else if (pane) {
+          pane.hidden = false;
+        }
+      } else if (pane) {
+        pane.hidden = true;
+        pane.classList.remove("lib-acc-panel");
+        const installBtn = document.getElementById("btnLibExamples");
+        if (lib && installBtn && pane.parentElement !== lib) {
+          lib.insertBefore(pane, installBtn);
+        } else if (lib && pane.parentElement !== lib) {
+          lib.appendChild(pane);
+        }
+      }
       try { syncLibCatOpenClass(); } catch (_) {}
       const ws = document.getElementById("workspace");
       if (ws) ws.classList.remove("has-examples");
@@ -10025,7 +10054,9 @@
         if (exEl) exEl.textContent = nEx;
       });
     }
-    function appendPaletteItem(id, def) {
+    function appendPaletteItem(id, def, host) {
+      const target = host || palette;
+      if (!target) return;
       const locked = !isTypeUnlocked(id);
       const b = document.createElement("button");
       b.type = "button";
@@ -10062,9 +10093,11 @@
         add(id);
         closeMobileLib();
       };
-      palette.appendChild(b);
+      target.appendChild(b);
     }
-    function appendPaletteSection(cat, n) {
+    function appendPaletteSection(cat, n, host) {
+      const target = host || palette;
+      if (!target) return;
       const h = document.createElement("div");
       h.className = "lib-section";
       const name = document.createElement("span");
@@ -10075,7 +10108,33 @@
       count.className = "lib-count";
       count.textContent = String(n);
       h.appendChild(count);
-      palette.appendChild(h);
+      target.appendChild(h);
+    }
+    function clearLibAccPanels() {
+      if (!libTabs) return;
+      libTabs.querySelectorAll(".lib-acc-panel").forEach((el) => {
+        if (el.id === "libExamples") {
+          el.classList.remove("lib-acc-panel");
+          el.hidden = true;
+          const lib = document.getElementById("libTop");
+          const installBtn = document.getElementById("btnLibExamples");
+          if (lib && installBtn) lib.insertBefore(el, installBtn);
+          else if (lib) lib.appendChild(el);
+          return;
+        }
+        el.remove();
+      });
+      if (palette) palette.innerHTML = "";
+    }
+    function makeLibAccPanel() {
+      const panel = document.createElement("div");
+      panel.className = "lib-items lib-acc-panel";
+      panel.setAttribute("role", "tabpanel");
+      return panel;
+    }
+    function insertAccPanelAfterTab(tab, panel) {
+      if (!tab || !panel) return;
+      tab.insertAdjacentElement("afterend", panel);
     }
     function syncLibCatOpenClass() {
       const lib = document.getElementById("libTop");
@@ -10084,37 +10143,74 @@
       const open = !!q || (!!activeCat && !state.examplesOpen);
       lib.classList.toggle("lib-cat-open", open);
     }
+    function renderCatAccPanel(cat, list) {
+      const tab = libTabs && libTabs.querySelector('.lib-tab[data-cat="' + cat + '"]');
+      if (!tab || !list || !list.length) return null;
+      const panel = makeLibAccPanel();
+      panel.dataset.cat = cat;
+      list.forEach(([id, def]) => appendPaletteItem(id, def, panel));
+      insertAccPanelAfterTab(tab, panel);
+      return panel;
+    }
+    function syncLibTabActive() {
+      if (!libTabs) return;
+      const q = libQuery();
+      libTabs.querySelectorAll(".lib-tab").forEach((t) => {
+        if (t.dataset.examples) {
+          const on = !!state.examplesOpen;
+          t.classList.toggle("active", on);
+          t.setAttribute("aria-selected", on ? "true" : "false");
+          return;
+        }
+        const cat = t.dataset.cat;
+        let on = false;
+        if (!state.examplesOpen && cat) {
+          if (q) on = libCatVisibleEntries(cat).length > 0;
+          else if (activeCat === "*") on = libCatVisibleEntries(cat).length > 0;
+          else on = activeCat === cat;
+        }
+        t.classList.toggle("active", on);
+        t.setAttribute("aria-selected", on ? "true" : "false");
+      });
+    }
     function renderAllLibSections() {
+      clearLibAccPanels();
       libOrderedCats().forEach((cat) => {
         const list = libCatVisibleEntries(cat);
         if (!list.length) return;
-        appendPaletteSection(cat, list.length);
-        list.forEach(([id, def]) => appendPaletteItem(id, def));
+        renderCatAccPanel(cat, list);
       });
     }
     function renderPaletteItems() {
-      palette.innerHTML = "";
+      clearLibAccPanels();
       const q = libQuery();
       if (q) {
         renderAllLibSections();
+        syncLibTabActive();
         updateLibCounts();
         syncLibCatOpenClass();
         return;
       }
       if (!activeCat) {
+        syncLibTabActive();
         updateLibCounts();
         syncLibCatOpenClass();
         return;
       }
       if (activeCat === "*") {
         renderAllLibSections();
+        syncLibTabActive();
         updateLibCounts();
         syncLibCatOpenClass();
         return;
       }
-      const list = cats[activeCat] || [];
-      appendPaletteSection(activeCat, list.length);
-      list.forEach(([id, def]) => appendPaletteItem(id, def));
+      const list = libCatVisibleEntries(activeCat);
+      const panel = renderCatAccPanel(activeCat, list);
+      if (panel) {
+        const tab = libTabs.querySelector('.lib-tab[data-cat="' + activeCat + '"]');
+        try { if (tab) tab.scrollIntoView({ block: "nearest", behavior: "smooth" }); } catch (_) {}
+      }
+      syncLibTabActive();
       updateLibCounts();
       syncLibCatOpenClass();
     }
@@ -10147,11 +10243,6 @@
         } else {
           activeCat = cat;
         }
-        libTabs.querySelectorAll(".lib-tab").forEach((t) => {
-          const on = t.dataset.cat && t.dataset.cat === activeCat && !t.dataset.examples;
-          t.classList.toggle("active", !!on);
-          t.setAttribute("aria-selected", on ? "true" : "false");
-        });
         renderPaletteItems();
       };
       libTabs.appendChild(tab);
@@ -10180,12 +10271,8 @@
       tab.title = existing ? (existing.getAttribute("title") || "") : "";
       tab.onclick = () => {
         activeCat = null;
-        libTabs.querySelectorAll(".lib-tab").forEach((t) => {
-          const on = t === tab;
-          t.classList.toggle("active", on);
-          t.setAttribute("aria-selected", on ? "true" : "false");
-        });
         toggleLibExamples();
+        syncLibTabActive();
         syncLibCatOpenClass();
       };
       libTabs.appendChild(tab);
@@ -10217,10 +10304,6 @@
           syncExamplesLayout();
         }
         activeCat = (activeCat === "*") ? null : "*";
-        libTabs.querySelectorAll(".lib-tab").forEach((t) => {
-          t.classList.remove("active");
-          t.setAttribute("aria-selected", "false");
-        });
         renderPaletteItems();
       });
     })();
@@ -10320,6 +10403,7 @@
     bindInstantTap(document.getElementById("topBar"));
     bindInstantTap(document.getElementById("libTabs"));
     bindInstantTap(document.getElementById("palette"));
+    bindInstantTap(document.getElementById("libExamples"));
     bindInstantTap(document.querySelector(".toolbar-bottom"));
     bindInstantTap(document.querySelector("header"));
     bindInstantTap(document.querySelector(".brand-col"));
@@ -17107,7 +17191,7 @@
     });
 
     if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
-      navigator.serviceWorker.register("sw-pwire.js?v=lib-photos-r1").catch(function () {});
+      navigator.serviceWorker.register("sw-pwire.js?v=lib-acc-r1").catch(function () {});
     }
     if ("launchQueue" in window && window.launchQueue && typeof window.launchQueue.setConsumer === "function") {
       window.launchQueue.setConsumer(function (params) {
