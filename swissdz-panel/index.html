@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="brand/logo-panelwire-icon.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="parafoudres-r1" />
+  <meta name="swissdz-rev" content="bout-relais-r1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -3584,7 +3584,7 @@
       </div>
     </div>
   </div>
-  <script src="i18n/panelwire-i18n.js?v=parafoudres-r1"></script>
+  <script src="i18n/panelwire-i18n.js?v=free-cats-vfd-r1"></script>
   <script>
     /* Assets pré-cadrés (photos studio trop larges → bandes). */
     const COLORS = [
@@ -3692,7 +3692,7 @@
       gold_month: "wirelab_gold_month",
       gold_year: "wirelab_gold_year"
     };
-    /* Free : installation de base (pas Fluke / PV / VFD / kit Siemens complet). */
+    /* Free : base + Boutonnerie/Éclairage/VFD/Mesure/Borniers + moteurs SwissDz + capteurs demandés (voir TIER_FREE_CATS). */
     const TIER_FREE_TYPES = new Set([
       "compteur_sonelgaz",
       "disj1pn", "disj", "agcp_principal",
@@ -3844,7 +3844,10 @@
 
     function isKnxBusTerm(termId) {
       const id = String(termId || "");
-      return id === "BUS" || id === "KNX+" || id === "KNX-" || id === "KNX−";
+      if (id === "BUS" || id === "KNX+" || id === "KNX-" || id === "KNX−") return true;
+      /* Hager TXA116 etc. : sorties bus C1/C2 (+/−) = même pastille pédagogique BUS */
+      if (/^C[12]([+\-−])?$/i.test(id)) return true;
+      return false;
     }
     function isKnxDevice(def) {
       return !!(def && (def.knxPsu || def.knxPush || def.knxActuator || def.knxShutter
@@ -3854,7 +3857,7 @@
     function termRole(type, termId) {
       const id = String(termId || "");
       if (id === "PE" || /^PE\b/i.test(id)) return "pe";
-      if (id === "BUS" || id === "KNX+" || id === "KNX-" || id === "KNX−") return "knxbus";
+      if (id === "BUS" || id === "KNX+" || id === "KNX-" || id === "KNX−" || /^C[12]([+\-−])?$/i.test(id)) return "knxbus";
       if (id === "N" || id === "N'" || id === "N↓" || id === "N↑" || id === "0V" || id === "N1" || id === "N2" || /^N\d*$/i.test(id) || /^N['′]?$/i.test(id)) return "n";
       const def = LIB[type];
       /* PV : borne + → fil rouge, borne − → fil noir (jamais bleu). */
@@ -4404,8 +4407,8 @@
       voyant: {name:"Voyant vert 230V SwissDz",prefix:"HL",cat:"Boutonnerie",w:77,h:92,image:"assets/voyant-swissdz.png",badge:"V",iec:"HL",lamp:true,glow:{nx:0.30,ny:0.20,w:0.40,h:0.32},terminals:[{id:"X1",nx:0.2992,ny:0.7599,direction:"bottom"},{id:"X2",nx:0.6828,ny:0.7417,direction:"bottom"}]},
       voyantRouge: {name:"Voyant rouge 230V SwissDz",prefix:"HL",cat:"Boutonnerie",w:85,h:100,image:"assets/voyant-rouge-swissdz.png",badge:"R",iec:"HL",lamp:true,glow:{nx:0.28,ny:0.32,w:0.40,h:0.34},terminals:[{id:"X1",nx:0.2739,ny:0.8022,direction:"bottom"},{id:"X2",nx:0.7153,ny:0.8022,direction:"bottom"}]},
       voyantOrange: {name:"Voyant orange 230V SwissDz",prefix:"HL",cat:"Boutonnerie",w:78,h:92,image:"assets/voyant-orange-swissdz.png",badge:"O",iec:"HL",lamp:true,glow:{nx:0.30,ny:0.20,w:0.40,h:0.32},terminals:[{id:"X1",nx:0.3734,ny:0.7957,direction:"bottom"},{id:"X2",nx:0.7631,ny:0.7957,direction:"bottom"}]},
-      lampe: {name:"Lampe SwissDz",prefix:"HL",cat:"Éclairage / Prises",w:53,h:111,image:"assets/lampe.png",iec:"HL",lamp:true,glow:{nx:0.10,ny:0.58,w:0.80,h:0.36,verre:true},terminals:[{id:"L",nx:0.3841,ny:0.12,direction:"top"},{id:"N",nx:0.7533,ny:0.12,direction:"top"}]},
-      transfo_sonnerie: {name:"Transfo sonnerie SwissDz",prefix:"T",cat:"Éclairage / Prises",w:54,h:172,din:true,image:"assets/transfo-sonnerie-swissdz.png",badge:"8V",iec:"T",secondary:["8V","0V"],terminals:[{id:"L",nx:0.2962,ny:0.1069,direction:"top"},{id:"N",nx:0.7038,ny:0.1069,direction:"top"},{id:"8V",nx:0.2962,ny:0.8931,direction:"bottom"},{id:"0V",nx:0.7038,ny:0.8931,direction:"bottom"}]},
+      lampe: {name:"Lampe SwissDz",prefix:"HL",cat:"Éclairage",w:53,h:111,image:"assets/lampe.png",iec:"HL",lamp:true,glow:{nx:0.10,ny:0.58,w:0.80,h:0.36,verre:true},terminals:[{id:"L",nx:0.3841,ny:0.12,direction:"top"},{id:"N",nx:0.7533,ny:0.12,direction:"top"}]},
+      transfo_sonnerie: {name:"Transfo sonnerie SwissDz",prefix:"T",cat:"Transformateurs",w:54,h:172,din:true,image:"assets/transfo-sonnerie-swissdz.png",badge:"8V",iec:"T",secondary:["8V","0V"],terminals:[{id:"L",nx:0.2962,ny:0.1069,direction:"top"},{id:"N",nx:0.7038,ny:0.1069,direction:"top"},{id:"8V",nx:0.2962,ny:0.8931,direction:"bottom"},{id:"0V",nx:0.7038,ny:0.8931,direction:"bottom"}]},
       /* KM mono / tri : un seul de chaque (pas de calibres). Photo SwissDz existante. */
       contacteur_1ph: {name:"Contacteur monophasé SwissDz",prefix:"KM",cat:"Contacteurs",w:99,h:172,din:true,image:"assets/contacteur-swissdz.png",badge:"1~",iec:"KM",terminals:[{id:"1",nx:0.1984,ny:0.1623,direction:"top"},{id:"3",nx:0.8203,ny:0.1623,direction:"top"},{id:"A1",nx:-0.0,ny:0.3245,direction:"left"},{id:"A2",nx:0.9526,ny:0.3245,direction:"right"},{id:"2",nx:0.172,ny:0.8315,direction:"bottom"},{id:"4",nx:0.7806,ny:0.8315,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"]]},
       contacteur_3ph: {name:"Contacteur triphasé SwissDz",prefix:"KM",cat:"Contacteurs",w:99,h:172,din:true,image:"assets/contacteur-swissdz.png",badge:"3~",iec:"KM",terminals:[{id:"1",nx:0.1984,ny:0.1623,direction:"top"},{id:"3",nx:0.5027,ny:0.1623,direction:"top"},{id:"5",nx:0.8203,ny:0.1623,direction:"top"},{id:"A1",nx:-0.0,ny:0.3245,direction:"left"},{id:"A2",nx:0.9526,ny:0.3245,direction:"right"},{id:"2",nx:0.172,ny:0.8315,direction:"bottom"},{id:"4",nx:0.4894,ny:0.8315,direction:"bottom"},{id:"6",nx:0.7806,ny:0.8315,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"]]},
@@ -4415,7 +4418,7 @@
       moteur: {name:"Moteur triphasé SwissDz",prefix:"M",cat:"Moteurs",w:145,h:199,image:"assets/moteur-swissdz.png",iec:"M",motor:true,motorI:10,volt:400,terminals:[{id:"U",nx:0.3296,ny:0.147,direction:"top"},{id:"V",nx:0.499,ny:0.146,direction:"top"},{id:"W",nx:0.6646,ny:0.1492,direction:"top"},{id:"PE",nx:0.830,ny:0.148,direction:"top"}]},
       /* Charge moteur 3~ pédagogique : U/V/W/PE + refoulement d'eau (SVG SwissDz, pas WiriLab). */
       pompe_forage: {name:"Pompe de forage SwissDz 3~",nameEn:"Borehole pump SwissDz 3~",prefix:"M",cat:"Moteurs",w:140,h:280,iec:"M",motor:true,pumpWell:true,motorI:8,volt:400,badge:"3~",terminals:[{id:"U",nx:0.229,ny:0.064,direction:"top"},{id:"V",nx:0.400,ny:0.064,direction:"top"},{id:"W",nx:0.571,ny:0.064,direction:"top"},{id:"PE",nx:0.743,ny:0.064,direction:"top"}]},
-      vsd: {name:"Variateur de vitesse SwissDz",prefix:"U",cat:"Variateurs",w:94,h:172,din:true,image:"assets/vsd-swissdz.png",iec:"U",terminals:[{id:"L1",nx:0.1844,ny:0.1037,direction:"top"},{id:"L2",nx:0.5118,ny:0.1037,direction:"top"},{id:"L3",nx:0.8107,ny:0.1037,direction:"top"},{id:"U",nx:0.1844,ny:0.8985,direction:"bottom"},{id:"V",nx:0.5118,ny:0.8985,direction:"bottom"},{id:"W",nx:0.8249,ny:0.8985,direction:"bottom"}],pair:["L1","U"],pairs:[["L1","U"],["L2","V"],["L3","W"]]},
+      vsd: {name:"Variateur de vitesse SwissDz",prefix:"U",cat:"Variateur de vitesse",w:94,h:172,din:true,image:"assets/vsd-swissdz.png",iec:"U",terminals:[{id:"L1",nx:0.1844,ny:0.1037,direction:"top"},{id:"L2",nx:0.5118,ny:0.1037,direction:"top"},{id:"L3",nx:0.8107,ny:0.1037,direction:"top"},{id:"U",nx:0.1844,ny:0.8985,direction:"bottom"},{id:"V",nx:0.5118,ny:0.8985,direction:"bottom"},{id:"W",nx:0.8249,ny:0.8985,direction:"bottom"}],pair:["L1","U"],pairs:[["L1","U"],["L2","V"],["L3","W"]]},
       /* Face avant complète Siemens LOGO! 8 (vue orthogonale) — source : assets/PLC-PHOTO-SOURCE.md
          Sim : L+N → LCD ON ; Ix au potentiel L → highlight Ix ; sorties Qi pilotées par le Ladder (pas de map fixe I→Q).
          Bornes : L/N/I1–I8 haut ; Qi.1/Qi.2 = paire de vis bas (contact sec relais quand Ladder active Qi). w/h = ratio image entière. */
@@ -4481,8 +4484,8 @@
       fin_course: {name:"Fin de course SwissDz",prefix:"S",cat:"Commande",hideFromLib:true,w:85,h:110,image:"assets/fin-course-swissdz.png",badge:"SQ",iec:"S",fc:true,push:true,terminals:[{id:"11",nx:0.2003,ny:0.5459,direction:"left"},{id:"12",nx:0.8366,ny:0.5459,direction:"right"},{id:"13",nx:0.2003,ny:0.7003,direction:"left"},{id:"14",nx:0.8366,ny:0.7003,direction:"right"}],pair:["11","12"],pairs:[["11","12"]]},
       temporisateur: {name:"Temporisateur TON/TOF SwissDz",prefix:"KT",cat:"Commande",w:46,h:172,din:true,image:"assets/temporisateur-swissdz.png",badge:"TON",iec:"KT",terminals:[{id:"A1",nx:0.4156,ny:0.117,direction:"top"},{id:"A2",nx:0.5844,ny:0.117,direction:"top"},{id:"15",nx:0.4156,ny:0.9059,direction:"bottom"},{id:"18",nx:0.5844,ny:0.9059,direction:"bottom"}],pair:["15","18"],pairs:[["15","18"]]},
       detecteur: {name:"Détecteur de présence SwissDz",prefix:"B",cat:"Commande",w:100,h:100,image:"assets/detecteur-swissdz.png",badge:"PIR",iec:"B",push:true,terminals:[{id:"L",nx:0.2973,ny:0.8822,direction:"bottom"},{id:"N",nx:0.4995,ny:0.8822,direction:"bottom"},{id:"1",nx:0.7017,ny:0.8822,direction:"bottom"}],pair:["L","1"],pairs:[["L","1"]]},
-      variateur_eclairage: {name:"Variateur éclairage SwissDz",prefix:"T",cat:"Éclairage / Prises",w:100,h:100,image:"assets/variateur-eclairage-swissdz.png",badge:"DIM",iec:"T",terminals:[{id:"L",nx:0.3474,ny:0.8559,direction:"bottom"},{id:"1",nx:0.6526,ny:0.8559,direction:"bottom"}],pair:["L","1"],pairs:[["L","1"]]},
-      softstarter: {name:"Démarreur progressif SwissDz",prefix:"U",cat:"Variateurs",w:95,h:172,din:true,image:"assets/softstarter-swissdz.png",badge:"SS",iec:"U",terminals:[{id:"L1",nx:0.2024,ny:0.1146,direction:"top"},{id:"L2",nx:0.4795,ny:0.1146,direction:"top"},{id:"L3",nx:0.8387,ny:0.1146,direction:"top"},{id:"T1",nx:0.2024,ny:0.9057,direction:"bottom"},{id:"T2",nx:0.5205,ny:0.9057,direction:"bottom"},{id:"T3",nx:0.8387,ny:0.9057,direction:"bottom"}],pair:["L1","T1"],pairs:[["L1","T1"],["L2","T2"],["L3","T3"]]},
+      variateur_eclairage: {name:"Variateur éclairage SwissDz",prefix:"T",cat:"Boutonnerie",w:100,h:100,image:"assets/variateur-eclairage-swissdz.png",badge:"DIM",iec:"T",terminals:[{id:"L",nx:0.3474,ny:0.8559,direction:"bottom"},{id:"1",nx:0.6526,ny:0.8559,direction:"bottom"}],pair:["L","1"],pairs:[["L","1"]]},
+      softstarter: {name:"Démarreur progressif SwissDz",prefix:"U",cat:"Variateur de vitesse",w:95,h:172,din:true,image:"assets/softstarter-swissdz.png",badge:"SS",iec:"U",terminals:[{id:"L1",nx:0.2024,ny:0.1146,direction:"top"},{id:"L2",nx:0.4795,ny:0.1146,direction:"top"},{id:"L3",nx:0.8387,ny:0.1146,direction:"top"},{id:"T1",nx:0.2024,ny:0.9057,direction:"bottom"},{id:"T2",nx:0.5205,ny:0.9057,direction:"bottom"},{id:"T3",nx:0.8387,ny:0.9057,direction:"bottom"}],pair:["L1","T1"],pairs:[["L1","T1"],["L2","T2"],["L3","T3"]]},
       relais_phase: {name:"Relais contrôle de phase SwissDz",prefix:"K",cat:"Relais tension / phases",w:67,h:172,din:true,image:"assets/relais-phase-swissdz.png",badge:"L1-2-3",iec:"K",phaseMonitor:true,terminals:[{id:"L1",nx:0.2719,ny:0.1207,direction:"top"},{id:"L2",nx:0.5,ny:0.1207,direction:"top"},{id:"L3",nx:0.7281,ny:0.1207,direction:"top"},{id:"11",nx:0.3237,ny:0.8653,direction:"bottom"},{id:"14",nx:0.6763,ny:0.8653,direction:"bottom"}],pair:["11","14"],pairs:[["11","14"]]},
       contacteur_aux: {name:"Contacteur auxiliaire SwissDz",prefix:"KA",cat:"Contacteurs",w:99,h:172,din:true,image:"assets/contacteur-aux-swissdz.png",badge:"AUX",iec:"KA",terminals:[{id:"A1",nx:0.003,ny:0.3225,direction:"left"},{id:"A2",nx:0.9527,ny:0.3225,direction:"right"},{id:"13",nx:0.2009,ny:0.1613,direction:"top"},{id:"14",nx:0.5042,ny:0.1613,direction:"top"},{id:"21",nx:0.8208,ny:0.1613,direction:"top"},{id:"22",nx:0.1745,ny:0.8265,direction:"bottom"},{id:"23",nx:0.4911,ny:0.8265,direction:"bottom"},{id:"24",nx:0.7813,ny:0.8265,direction:"bottom"}],pair:["13","22"],pairs:[["13","22"],["14","23"],["21","24"]]},
       moteur_1ph: {name:"Moteur monophasé 230V SwissDz",prefix:"M",cat:"Moteurs",w:135,h:185,image:"assets/moteur-1ph-swissdz.png",badge:"230V",iec:"M",motor:true,motorI:6,volt:230,terminals:[{id:"L",nx:0.3932,ny:0.1486,direction:"top"},{id:"N",nx:0.5521,ny:0.1486,direction:"top"},{id:"PE",nx:0.7111,ny:0.1486,direction:"top"}]},
@@ -4497,6 +4500,12 @@
       knx_alim: {name:"Alimentation KNX SwissDz 30 V DC",prefix:"G",cat:"Domotique KNX",w:68,h:170,din:true,image:"assets/knx-alim-swissdz.png",badge:"KNX",iec:"G",knxPsu:true,secondary:["KNX+","KNX-"],busLed:{nx:0.50,ny:0.40},terminals:[
         {id:"L",nx:0.30,ny:0.12,direction:"top"},{id:"N",nx:0.70,ny:0.12,direction:"top"},
         {id:"BUS",nx:0.50,ny:0.926,direction:"bottom"}
+      ]},
+      /* Hager TXA116 — alim bus KNX 2×30 V TBTS 320 mA, 4 modules DIN (72 mm). Face SVG orthogonale (pipeline PLC). */
+      edz_hager_txa116: {name:"Hager TXA116 alim. bus 2×30 V KNX",nameEn:"Hager TXA116 KNX bus PSU 2×30 V",prefix:"G",cat:"Domotique KNX",w:72,h:90,din:true,image:"assets/hager-txa116-front.svg?v=txa116-2d",badge:"TXA116",iec:"G",knxPsu:true,secondary:["KNX+","KNX-"],bridges:[["KNX+","C1+"],["KNX+","C2+"],["KNX-","C1-"],["KNX-","C2-"]],busLed:{nx:0.55,ny:0.42},terminals:[
+        {id:"L",nx:0.1944,ny:0.1111,direction:"top"},{id:"N",nx:0.3611,ny:0.1111,direction:"top"},{id:"PE",nx:0.5278,ny:0.1111,direction:"top"},
+        {id:"C1-",nx:0.1667,ny:0.8944,direction:"bottom"},{id:"C1+",nx:0.3056,ny:0.8944,direction:"bottom"},
+        {id:"C2-",nx:0.6944,ny:0.8944,direction:"bottom"},{id:"C2+",nx:0.8333,ny:0.8944,direction:"bottom"}
       ]},
       knx_poussoir: {name:"Poussoir KNX SwissDz 4 touches",prefix:"S",cat:"Domotique KNX",w:90,h:155,image:"assets/knx-poussoir-4t-swissdz.png",badge:"4T",iec:"S",knxPush:true,busLed:{nx:0.50,ny:0.16},knxKeys:[
         {id:1,nx:0.306,ny:0.347,nw:0.306,nh:0.177},{id:2,nx:0.694,ny:0.347,nw:0.306,nh:0.177},
@@ -4739,7 +4748,7 @@
       edz_entes_gkrc_m2: {name:"ENTES GKRC-M2",prefix:"KV",cat:"Relais tension / phases",w:72,h:180,image:"assets/electrodz/entes_gkrc_m2.png",badge:"Single-phase Voltage Mon",din:true,startOpen:true,terminals:[{id:"1",nx:0.179,ny:0.09,direction:"top"},{id:"2",nx:0.387,ny:0.09,direction:"top"},{id:"3",nx:0.597,ny:0.09,direction:"top"},{id:"N",nx:0.175,ny:0.926,direction:"bottom"},{id:"L",nx:0.387,ny:0.926,direction:"bottom"}],pairs:[["2","3"]],pair:["2","3"],pairsNc:[["2","1"]]},
       edz_fuf_jsz3_st3: {name:"FUF JSZ3/ST3 Timer + Octal Socket",prefix:"KT",cat:"Commande",w:100,h:150,image:"assets/electrodz/fuf_jsz3_st3.png",imageOff:"assets/electrodz/fuf_jsz3_st3_off.png",badge:"DPDT On-Delay Timer",din:true,startOpen:true,terminals:[{id:"1",nx:0.12,ny:0.88,direction:"bottom"},{id:"2",nx:0.26,ny:0.93,direction:"bottom"},{id:"3",nx:0.4,ny:0.88,direction:"bottom"},{id:"4",nx:0.54,ny:0.93,direction:"bottom"},{id:"5",nx:0.68,ny:0.93,direction:"bottom"},{id:"6",nx:0.82,ny:0.88,direction:"bottom"},{id:"7",nx:0.68,ny:0.07,direction:"top"},{id:"8",nx:0.32,ny:0.07,direction:"top"}],pairs:[["1","3"],["8","6"]],pair:["1","3"],pairsNc:[["1","4"],["8","5"]]},
       edz_fendare_601382200040: {name:"Fendare / Finder-compatible 60.13 + 90.23 Socket",prefix:"KA",cat:"Commande",w:76,h:132,image:"assets/electrodz/fendare_601382200040.png",imageOff:"assets/electrodz/fendare_601382200040_off.png",badge:"3-Changeover Plug-In Rel",din:true,startOpen:true,terminals:[{id:"11",nx:0.15,ny:0.88,direction:"bottom"},{id:"A1",nx:0.3,ny:0.88,direction:"bottom"},{id:"14",nx:0.45,ny:0.88,direction:"bottom"},{id:"12",nx:0.6,ny:0.88,direction:"bottom"},{id:"22",nx:0.76,ny:0.88,direction:"bottom"},{id:"21",nx:0.18,ny:0.1,direction:"top"},{id:"24",nx:0.34,ny:0.1,direction:"top"},{id:"32",nx:0.5,ny:0.1,direction:"top"},{id:"34",nx:0.66,ny:0.1,direction:"top"},{id:"A2",nx:0.82,ny:0.1,direction:"top"},{id:"31",nx:0.9,ny:0.5,direction:"right"}],pairs:[["11","14"],["21","24"],["31","34"]],pair:["11","14"],pairsNc:[["11","12"],["21","22"],["31","32"]]},
-      edz_foco_led: {name:"LED Lamp",prefix:"HL",cat:"Éclairage / Prises",w:97,h:170,image:"assets/electrodz/foco_led.png",imageOff:"assets/electrodz/foco_led_off.png",badge:"Generic items",lamp:true,terminals:[{id:"F",nx:0.5,ny:1.0,direction:"bottom"},{id:"N",nx:0.2765,ny:0.8844,direction:"left"}]},
+      edz_foco_led: {name:"LED Lamp",prefix:"HL",cat:"Éclairage",w:97,h:170,image:"assets/electrodz/foco_led.png",imageOff:"assets/electrodz/foco_led_off.png",badge:"Generic items",lamp:true,terminals:[{id:"F",nx:0.5,ny:1.0,direction:"bottom"},{id:"N",nx:0.2765,ny:0.8844,direction:"left"}]},
       edz_fotocelda_crepuscular: {name:"Photocell (dusk-to-dawn)",prefix:"BL",cat:"Commande",w:94,h:170,image:"assets/electrodz/fotocelda_crepuscular.png",badge:"Control",startOpen:true,prox:true,proxNose:{nx:0.50,ny:0.16},proxHeading:-90,terminals:[{id:"N",nx:0.1953,ny:1.0,direction:"bottom"},{id:"L",nx:0.3692,ny:1.0,direction:"bottom"},{id:"R",nx:0.5465,ny:1.0,direction:"bottom"}],pairs:[["L","R"]],pair:["L","R"]},
       edz_generic_distribution_100a: {name:"Generic 4-Pole 100 A Barrier Block",prefix:"X",cat:"Borniers / Alim",w:272,h:108,image:"assets/electrodz/generic_distribution_100a.png",badge:"Barrier Terminal Block",din:true,passthrough:true,terminals:[{id:"1",nx:0.125,ny:0.08,direction:"top"},{id:"2",nx:0.125,ny:0.92,direction:"bottom"},{id:"3",nx:0.375,ny:0.08,direction:"top"},{id:"4",nx:0.375,ny:0.92,direction:"bottom"},{id:"5",nx:0.625,ny:0.08,direction:"top"},{id:"6",nx:0.625,ny:0.92,direction:"bottom"},{id:"7",nx:0.875,ny:0.08,direction:"top"},{id:"8",nx:0.875,ny:0.92,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]],pair:["1","2"]},
       edz_generic_distribution_150a: {name:"Generic 4-Pole 150 A Barrier Block",prefix:"X",cat:"Borniers / Alim",w:280,h:121,image:"assets/electrodz/generic_distribution_150a.png",badge:"Barrier Terminal Block",din:true,passthrough:true,terminals:[{id:"1",nx:0.125,ny:0.08,direction:"top"},{id:"2",nx:0.125,ny:0.92,direction:"bottom"},{id:"3",nx:0.375,ny:0.08,direction:"top"},{id:"4",nx:0.375,ny:0.92,direction:"bottom"},{id:"5",nx:0.625,ny:0.08,direction:"top"},{id:"6",nx:0.625,ny:0.92,direction:"bottom"},{id:"7",nx:0.875,ny:0.08,direction:"top"},{id:"8",nx:0.875,ny:0.92,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]],pair:["1","2"]},
@@ -4770,8 +4779,8 @@
       edz_metess_mpd_21_relay: {name:"METESS MPD-21",prefix:"K",cat:"Relais tension / phases",w:46,h:164,image:"assets/electrodz/metess_mpd_21_relay.png",imageOff:"assets/electrodz/metess_mpd_21_relay_off.png",badge:"Phase Protection Relay",din:true,startOpen:true,terminals:[{id:"16",nx:0.2,ny:0.09,direction:"top"},{id:"15",nx:0.4,ny:0.09,direction:"top"},{id:"18",nx:0.6,ny:0.09,direction:"top"},{id:"L1",nx:0.2,ny:0.91,direction:"bottom"},{id:"L2",nx:0.4,ny:0.91,direction:"bottom"},{id:"L3",nx:0.6,ny:0.91,direction:"bottom"},{id:"N",nx:0.8,ny:0.91,direction:"bottom"}],pairs:[["15","18"]],pair:["15","18"],pairsNc:[["15","16"]]},
       edz_metess_mtd_60_timer: {name:"METESS MTD-60",prefix:"KT",cat:"Commande",w:46,h:164,image:"assets/electrodz/metess_mtd_60_timer.png",imageOff:"assets/electrodz/metess_mtd_60_timer_off.png",badge:"Timer Relay",din:true,startOpen:true,terminals:[{id:"16",nx:0.2,ny:0.09,direction:"top"},{id:"15",nx:0.4,ny:0.09,direction:"top"},{id:"18",nx:0.6,ny:0.09,direction:"top"},{id:"A1",nx:0.2,ny:0.91,direction:"bottom"},{id:"A2",nx:0.4,ny:0.91,direction:"bottom"},{id:"A3",nx:0.6,ny:0.91,direction:"bottom"},{id:"A4",nx:0.8,ny:0.91,direction:"bottom"}],pairs:[["15","18"]],pair:["15","18"],pairsNc:[["15","16"]]},
       edz_metess_mvd25: {name:"METESS MVD-25",prefix:"K",cat:"Relais tension / phases",w:46,h:164,image:"assets/electrodz/metess_mvd25.png",imageOff:"assets/electrodz/metess_mvd25_off.png",badge:"Voltage Monitoring Relay",din:true,startOpen:true,terminals:[{id:"16",nx:0.2,ny:0.09,direction:"top"},{id:"15",nx:0.4,ny:0.09,direction:"top"},{id:"18",nx:0.6,ny:0.09,direction:"top"},{id:"L1",nx:0.2,ny:0.91,direction:"bottom"},{id:"L2",nx:0.4,ny:0.91,direction:"bottom"},{id:"L3",nx:0.6,ny:0.91,direction:"bottom"},{id:"N",nx:0.8,ny:0.91,direction:"bottom"}],pairs:[["15","18"]],pair:["15","18"],pairsNc:[["15","16"]]},
-      edz_módulo_de_seguridad_xps_ac: {name:"Safety module (XPS-AC)",prefix:"K",cat:"Boutonnerie",w:49,h:170,image:"assets/electrodz/módulo_de_seguridad_xps_ac.png",badge:"Safety",din:true,startOpen:true,terminals:[{id:"A1",nx:0.1721,ny:0.0412,direction:"top"},{id:"13",nx:0.3925,ny:0.0412,direction:"top"},{id:"23",nx:0.6133,ny:0.0412,direction:"top"},{id:"33",nx:0.8337,ny:0.0412,direction:"top"},{id:"14",nx:0.1721,ny:0.1458,direction:"top"},{id:"24",nx:0.3925,ny:0.1458,direction:"top"},{id:"Y1",nx:0.6133,ny:0.1458,direction:"top"},{id:"Y2",nx:0.8337,ny:0.1458,direction:"top"},{id:"A1_b",nx:0.1721,ny:0.8486,direction:"bottom"},{id:"14_b",nx:0.3925,ny:0.8486,direction:"bottom"},{id:"24_b",nx:0.6133,ny:0.8486,direction:"bottom"},{id:"34",nx:0.8337,ny:0.8486,direction:"bottom"},{id:"A2",nx:0.1721,ny:0.9548,direction:"bottom"},{id:"PE",nx:0.3925,ny:0.9548,direction:"bottom"},{id:"Y43",nx:0.6133,ny:0.9548,direction:"bottom"},{id:"Y44",nx:0.8337,ny:0.9548,direction:"bottom"}],pairs:[["13","14"],["23","24"],["33","34"],["Y43","Y44"]],pair:["13","14"],bridges:[["A1","A1_b"],["14","14_b"],["24","24_b"],["Y1","A1"]]},
-      edz_módulo_de_seguridad_de_dos_canales_xps_af: {name:"Dual-channel safety module (XPS-AF)",prefix:"K",cat:"Boutonnerie",w:49,h:170,image:"assets/electrodz/módulo_de_seguridad_de_dos_canales_xps_af.png",badge:"Safety",din:true,startOpen:true,terminals:[{id:"13",nx:0.1783,ny:0.0405,direction:"top"},{id:"23",nx:0.3921,ny:0.0405,direction:"top"},{id:"24",nx:0.6058,ny:0.0405,direction:"top"},{id:"33",nx:0.8196,ny:0.0405,direction:"top"},{id:"A1",nx:0.1783,ny:0.1457,direction:"top"},{id:"S33",nx:0.3921,ny:0.1457,direction:"top"},{id:"S34",nx:0.6058,ny:0.1457,direction:"top"},{id:"S39",nx:0.8196,ny:0.1457,direction:"top"},{id:"A2",nx:0.1783,ny:0.8481,direction:"bottom"},{id:"S11",nx:0.3921,ny:0.8481,direction:"bottom"},{id:"S12",nx:0.6058,ny:0.8481,direction:"bottom"},{id:"PE",nx:0.8196,ny:0.8481,direction:"bottom"},{id:"14",nx:0.1783,ny:0.9548,direction:"bottom"},{id:"S21",nx:0.3921,ny:0.9548,direction:"bottom"},{id:"S22",nx:0.6058,ny:0.9548,direction:"bottom"},{id:"34",nx:0.8196,ny:0.9548,direction:"bottom"}],pairs:[["13","14"],["23","24"],["33","34"]],pair:["13","14"],bridges:[["S11","A1"],["S21","A1"],["S33","A1"]]},
+      edz_módulo_de_seguridad_xps_ac: {name:"Safety module (XPS-AC)",prefix:"K",cat:"Relais",w:49,h:170,image:"assets/electrodz/módulo_de_seguridad_xps_ac.png",badge:"Safety",din:true,startOpen:true,terminals:[{id:"A1",nx:0.1721,ny:0.0412,direction:"top"},{id:"13",nx:0.3925,ny:0.0412,direction:"top"},{id:"23",nx:0.6133,ny:0.0412,direction:"top"},{id:"33",nx:0.8337,ny:0.0412,direction:"top"},{id:"14",nx:0.1721,ny:0.1458,direction:"top"},{id:"24",nx:0.3925,ny:0.1458,direction:"top"},{id:"Y1",nx:0.6133,ny:0.1458,direction:"top"},{id:"Y2",nx:0.8337,ny:0.1458,direction:"top"},{id:"A1_b",nx:0.1721,ny:0.8486,direction:"bottom"},{id:"14_b",nx:0.3925,ny:0.8486,direction:"bottom"},{id:"24_b",nx:0.6133,ny:0.8486,direction:"bottom"},{id:"34",nx:0.8337,ny:0.8486,direction:"bottom"},{id:"A2",nx:0.1721,ny:0.9548,direction:"bottom"},{id:"PE",nx:0.3925,ny:0.9548,direction:"bottom"},{id:"Y43",nx:0.6133,ny:0.9548,direction:"bottom"},{id:"Y44",nx:0.8337,ny:0.9548,direction:"bottom"}],pairs:[["13","14"],["23","24"],["33","34"],["Y43","Y44"]],pair:["13","14"],bridges:[["A1","A1_b"],["14","14_b"],["24","24_b"],["Y1","A1"]]},
+      edz_módulo_de_seguridad_de_dos_canales_xps_af: {name:"Dual-channel safety module (XPS-AF)",prefix:"K",cat:"Relais",w:49,h:170,image:"assets/electrodz/módulo_de_seguridad_de_dos_canales_xps_af.png",badge:"Safety",din:true,startOpen:true,terminals:[{id:"13",nx:0.1783,ny:0.0405,direction:"top"},{id:"23",nx:0.3921,ny:0.0405,direction:"top"},{id:"24",nx:0.6058,ny:0.0405,direction:"top"},{id:"33",nx:0.8196,ny:0.0405,direction:"top"},{id:"A1",nx:0.1783,ny:0.1457,direction:"top"},{id:"S33",nx:0.3921,ny:0.1457,direction:"top"},{id:"S34",nx:0.6058,ny:0.1457,direction:"top"},{id:"S39",nx:0.8196,ny:0.1457,direction:"top"},{id:"A2",nx:0.1783,ny:0.8481,direction:"bottom"},{id:"S11",nx:0.3921,ny:0.8481,direction:"bottom"},{id:"S12",nx:0.6058,ny:0.8481,direction:"bottom"},{id:"PE",nx:0.8196,ny:0.8481,direction:"bottom"},{id:"14",nx:0.1783,ny:0.9548,direction:"bottom"},{id:"S21",nx:0.3921,ny:0.9548,direction:"bottom"},{id:"S22",nx:0.6058,ny:0.9548,direction:"bottom"},{id:"34",nx:0.8196,ny:0.9548,direction:"bottom"}],pairs:[["13","14"],["23","24"],["33","34"]],pair:["13","14"],bridges:[["S11","A1"],["S21","A1"],["S33","A1"]]},
       edz_motor_12_terminales: {name:"12-Terminal Motor",prefix:"M",cat:"Moteurs",w:160,h:170,image:"assets/electrodz/motor_12_terminales.png",badge:"Motors",terminals:[{id:"U1",nx:0.3281,ny:0.0735,direction:"top"},{id:"V1",nx:0.4688,ny:0.0735,direction:"top"},{id:"W1",nx:0.6094,ny:0.0735,direction:"top"},{id:"U2",nx:0.3281,ny:0.3382,direction:"left"},{id:"V2",nx:0.4688,ny:0.3382,direction:"bottom"},{id:"W2",nx:0.6094,ny:0.3382,direction:"right"},{id:"PE",nx:0.2386,ny:0.0441,direction:"top"},{id:"U5",nx:0.3281,ny:0.2059,direction:"left"},{id:"V5",nx:0.4688,ny:0.2059,direction:"top"},{id:"W5",nx:0.6094,ny:0.2059,direction:"right"},{id:"U6",nx:0.3281,ny:0.4706,direction:"bottom"},{id:"V6",nx:0.4688,ny:0.4706,direction:"bottom"},{id:"W6",nx:0.6094,ny:0.4706,direction:"bottom"}]},
       edz_motor_6_terminales: {name:"6-Terminal Motor",prefix:"M",cat:"Moteurs",w:160,h:170,image:"assets/electrodz/motor_6_terminales.png",badge:"Motors",terminals:[{id:"U1",nx:0.3281,ny:0.1176,direction:"top"},{id:"V1",nx:0.4688,ny:0.1176,direction:"top"},{id:"W1",nx:0.6094,ny:0.1176,direction:"top"},{id:"U2",nx:0.4688,ny:0.25,direction:"bottom"},{id:"V2",nx:0.6094,ny:0.25,direction:"bottom"},{id:"W2",nx:0.3281,ny:0.25,direction:"bottom"},{id:"PE",nx:0.2386,ny:0.0441,direction:"top"}]},
       edz_motor_9_terminales: {name:"9-Terminal Motor",prefix:"M",cat:"Moteurs",w:160,h:170,image:"assets/electrodz/motor_9_terminales.png",badge:"Motors",terminals:[{id:"U1",nx:0.3281,ny:0.0882,direction:"top"},{id:"V1",nx:0.4688,ny:0.0882,direction:"top"},{id:"W1",nx:0.6094,ny:0.0882,direction:"top"},{id:"U2",nx:0.3281,ny:0.3529,direction:"bottom"},{id:"V2",nx:0.4688,ny:0.3529,direction:"bottom"},{id:"W2",nx:0.6094,ny:0.3529,direction:"bottom"},{id:"PE",nx:0.2386,ny:0.0441,direction:"top"},{id:"U5",nx:0.3281,ny:0.2206,direction:"left"},{id:"V5",nx:0.4688,ny:0.2206,direction:"top"},{id:"W5",nx:0.6094,ny:0.2206,direction:"right"}]},
@@ -4826,8 +4835,8 @@
       edz_pulsador_verde_2nc: {name:"Green Push Button 2NC",prefix:"S",cat:"Variateurs",w:146,h:170,image:"assets/electrodz/pulsador_verde_2nc.png",imageOff:"assets/electrodz/pulsador_verde_2nc_off.png",badge:"Drives",push:true,nc:true,terminals:[{id:"1A",nx:0.2967,ny:0.0,direction:"top"},{id:"1B",nx:0.7278,ny:0.0,direction:"top"},{id:"2A",nx:0.2967,ny:1.0,direction:"bottom"},{id:"2B",nx:0.7278,ny:1.0,direction:"bottom"}],pairs:[["1A","2A"],["1B","2B"]],pair:["1A","2A"]},
       edz_pulsador_verde_2no: {name:"Green Push Button 2NO",prefix:"S",cat:"Variateurs",w:146,h:170,image:"assets/electrodz/pulsador_verde_2no.png",imageOff:"assets/electrodz/pulsador_verde_2no_off.png",badge:"Drives",push:true,terminals:[{id:"3A",nx:0.2967,ny:0.0,direction:"top"},{id:"3B",nx:0.7278,ny:0.0,direction:"top"},{id:"4A",nx:0.2967,ny:1.0,direction:"bottom"},{id:"4B",nx:0.7278,ny:1.0,direction:"bottom"}],pairs:[["3A","4A"],["3B","4B"]],pair:["3A","4A"]},
       edz_relé_de_fases_208_440v: {name:"Phase Monitoring Relay 208-440V",prefix:"K",cat:"Relais tension / phases",w:49,h:170,image:"assets/electrodz/relé_de_fases_208_440v.png",imageOff:"assets/electrodz/relé_de_fases_208_440v_off.png",badge:"Protection",din:true,startOpen:true,terminals:[{id:"L1",nx:0.1875,ny:0.0,direction:"top"},{id:"L2",nx:0.5,ny:0.0,direction:"top"},{id:"L3",nx:0.8125,ny:0.0,direction:"top"},{id:"11",nx:0.5,ny:0.8694,direction:"bottom"},{id:"12",nx:0.1875,ny:0.8694,direction:"bottom"},{id:"14",nx:0.8125,ny:0.8694,direction:"bottom"}],pairs:[["11","14"]],pair:["11","14"],pairsNc:[["11","12"]]},
-      edz_relé_de_seguridad_cp_d_301: {name:"Safety relay (CP-D 301)",prefix:"K",cat:"Boutonnerie",w:49,h:170,image:"assets/electrodz/relé_de_seguridad_cp_d_301.png",badge:"Safety",din:true,startOpen:true,terminals:[{id:"41",nx:0.1704,ny:0.0296,direction:"top"},{id:"13",nx:0.3896,ny:0.0296,direction:"top"},{id:"23",nx:0.6092,ny:0.0296,direction:"top"},{id:"33",nx:0.8283,ny:0.0296,direction:"top"},{id:"A1",nx:0.1704,ny:0.112,direction:"top"},{id:"Y1",nx:0.3896,ny:0.112,direction:"top"},{id:"S21",nx:0.6092,ny:0.112,direction:"top"},{id:"S22",nx:0.8283,ny:0.112,direction:"top"},{id:"S11",nx:0.1704,ny:0.8861,direction:"bottom"},{id:"S12",nx:0.4,ny:0.8861,direction:"bottom"},{id:"Y2",nx:0.6092,ny:0.8861,direction:"bottom"},{id:"A2",nx:0.8283,ny:0.8861,direction:"bottom"},{id:"42",nx:0.1704,ny:0.968,direction:"bottom"},{id:"14",nx:0.4,ny:0.968,direction:"bottom"},{id:"24",nx:0.6092,ny:0.968,direction:"bottom"},{id:"34",nx:0.8283,ny:0.968,direction:"bottom"}],pairs:[["13","14"],["23","24"],["33","34"]],pair:["13","14"],pairsNc:[["41","42"]],bridges:[["S11","A1"],["S21","A2"],["Y1","A1"]]},
-      edz_relé_de_seguridad_pnoz_x3: {name:"Safety relay (PNOZ X3)",prefix:"K",cat:"Boutonnerie",w:73,h:170,image:"assets/electrodz/relé_de_seguridad_pnoz_x3.png",badge:"Safety",din:true,startOpen:true,terminals:[{id:"A1",nx:0.1314,ny:0.1349,direction:"top"},{id:"A2",nx:0.8644,ny:0.8654,direction:"bottom"},{id:"B1",nx:0.2858,ny:0.1349,direction:"top"},{id:"B2",nx:0.7144,ny:0.8654,direction:"bottom"},{id:"S11",nx:0.4289,ny:0.0307,direction:"top"},{id:"S12",nx:0.5744,ny:0.0307,direction:"top"},{id:"S13",nx:0.7144,ny:0.0307,direction:"top"},{id:"S14",nx:0.8644,ny:0.0307,direction:"top"},{id:"S21",nx:0.4289,ny:0.9679,direction:"bottom"},{id:"S22",nx:0.5744,ny:0.9679,direction:"bottom"},{id:"S31",nx:0.1314,ny:0.0307,direction:"top"},{id:"S32",nx:0.2786,ny:0.0307,direction:"top"},{id:"S33",nx:0.7144,ny:0.9679,direction:"bottom"},{id:"S34",nx:0.8644,ny:0.9679,direction:"bottom"},{id:"13",nx:0.4289,ny:0.1342,direction:"top"},{id:"14",nx:0.1314,ny:0.8654,direction:"bottom"},{id:"23",nx:0.5744,ny:0.1342,direction:"top"},{id:"24",nx:0.2786,ny:0.8654,direction:"bottom"},{id:"33",nx:0.7144,ny:0.1342,direction:"top"},{id:"34",nx:0.4289,ny:0.8654,direction:"bottom"},{id:"41",nx:0.8644,ny:0.1342,direction:"top"},{id:"42",nx:0.5744,ny:0.8654,direction:"bottom"},{id:"Y31",nx:0.1314,ny:0.9679,direction:"bottom"},{id:"Y32",nx:0.2786,ny:0.9679,direction:"bottom"}],pairs:[["13","14"],["23","24"],["33","34"],["Y31","Y32"]],pair:["13","14"],pairsNc:[["41","42"]]},
+      edz_relé_de_seguridad_cp_d_301: {name:"Safety relay (CP-D 301)",prefix:"K",cat:"Relais",w:49,h:170,image:"assets/electrodz/relé_de_seguridad_cp_d_301.png",badge:"Safety",din:true,startOpen:true,terminals:[{id:"41",nx:0.1704,ny:0.0296,direction:"top"},{id:"13",nx:0.3896,ny:0.0296,direction:"top"},{id:"23",nx:0.6092,ny:0.0296,direction:"top"},{id:"33",nx:0.8283,ny:0.0296,direction:"top"},{id:"A1",nx:0.1704,ny:0.112,direction:"top"},{id:"Y1",nx:0.3896,ny:0.112,direction:"top"},{id:"S21",nx:0.6092,ny:0.112,direction:"top"},{id:"S22",nx:0.8283,ny:0.112,direction:"top"},{id:"S11",nx:0.1704,ny:0.8861,direction:"bottom"},{id:"S12",nx:0.4,ny:0.8861,direction:"bottom"},{id:"Y2",nx:0.6092,ny:0.8861,direction:"bottom"},{id:"A2",nx:0.8283,ny:0.8861,direction:"bottom"},{id:"42",nx:0.1704,ny:0.968,direction:"bottom"},{id:"14",nx:0.4,ny:0.968,direction:"bottom"},{id:"24",nx:0.6092,ny:0.968,direction:"bottom"},{id:"34",nx:0.8283,ny:0.968,direction:"bottom"}],pairs:[["13","14"],["23","24"],["33","34"]],pair:["13","14"],pairsNc:[["41","42"]],bridges:[["S11","A1"],["S21","A2"],["Y1","A1"]]},
+      edz_relé_de_seguridad_pnoz_x3: {name:"Safety relay (PNOZ X3)",prefix:"K",cat:"Relais",w:73,h:170,image:"assets/electrodz/relé_de_seguridad_pnoz_x3.png",badge:"Safety",din:true,startOpen:true,terminals:[{id:"A1",nx:0.1314,ny:0.1349,direction:"top"},{id:"A2",nx:0.8644,ny:0.8654,direction:"bottom"},{id:"B1",nx:0.2858,ny:0.1349,direction:"top"},{id:"B2",nx:0.7144,ny:0.8654,direction:"bottom"},{id:"S11",nx:0.4289,ny:0.0307,direction:"top"},{id:"S12",nx:0.5744,ny:0.0307,direction:"top"},{id:"S13",nx:0.7144,ny:0.0307,direction:"top"},{id:"S14",nx:0.8644,ny:0.0307,direction:"top"},{id:"S21",nx:0.4289,ny:0.9679,direction:"bottom"},{id:"S22",nx:0.5744,ny:0.9679,direction:"bottom"},{id:"S31",nx:0.1314,ny:0.0307,direction:"top"},{id:"S32",nx:0.2786,ny:0.0307,direction:"top"},{id:"S33",nx:0.7144,ny:0.9679,direction:"bottom"},{id:"S34",nx:0.8644,ny:0.9679,direction:"bottom"},{id:"13",nx:0.4289,ny:0.1342,direction:"top"},{id:"14",nx:0.1314,ny:0.8654,direction:"bottom"},{id:"23",nx:0.5744,ny:0.1342,direction:"top"},{id:"24",nx:0.2786,ny:0.8654,direction:"bottom"},{id:"33",nx:0.7144,ny:0.1342,direction:"top"},{id:"34",nx:0.4289,ny:0.8654,direction:"bottom"},{id:"41",nx:0.8644,ny:0.1342,direction:"top"},{id:"42",nx:0.5744,ny:0.8654,direction:"bottom"},{id:"Y31",nx:0.1314,ny:0.9679,direction:"bottom"},{id:"Y32",nx:0.2786,ny:0.9679,direction:"bottom"}],pairs:[["13","14"],["23","24"],["33","34"],["Y31","Y32"]],pair:["13","14"],pairsNc:[["41","42"]]},
       edz_relé_encapsulado_de_11_pines: {name:"11-pin encapsulated relay",prefix:"K",cat:"Relais",w:54,h:170,image:"assets/electrodz/relé_encapsulado_de_11_pines.png",imageOff:"assets/electrodz/relé_encapsulado_de_11_pines_off.png",badge:"Control",din:true,startOpen:true,terminals:[{id:"21",nx:0.5,ny:0.0,direction:"top"},{id:"11",nx:0.8287,ny:0.0,direction:"top"},{id:"24",nx:0.5,ny:0.1962,direction:"top"},{id:"14",nx:0.8287,ny:0.1962,direction:"top"},{id:"22",nx:0.5,ny:0.7721,direction:"bottom"},{id:"12",nx:0.8287,ny:0.7721,direction:"bottom"},{id:"A1",nx:0.175,ny:0.9683,direction:"bottom"},{id:"A2",nx:0.5,ny:0.9671,direction:"bottom"},{id:"32",nx:0.175,ny:0.7721,direction:"bottom"},{id:"34",nx:0.175,ny:0.1962,direction:"top"},{id:"31",nx:0.175,ny:0.0008,direction:"top"}],pairs:[["21","24"],["11","14"],["34","31"]],pair:["21","24"],pairsNc:[["21","22"],["11","12"],["32","31"]]},
       edz_relé_encapsulado_de_8_pines: {name:"8-pin encapsulated relay",prefix:"K",cat:"Relais",w:40,h:170,image:"assets/electrodz/relé_encapsulado_de_8_pines.png",imageOff:"assets/electrodz/relé_encapsulado_de_8_pines_off.png",badge:"Control",din:true,startOpen:true,terminals:[{id:"21",nx:0.25,ny:0.0,direction:"top"},{id:"11",nx:0.7622,ny:0.0,direction:"top"},{id:"24",nx:0.25,ny:0.1962,direction:"top"},{id:"14",nx:0.7622,ny:0.1962,direction:"top"},{id:"22",nx:0.25,ny:0.7721,direction:"bottom"},{id:"12",nx:0.7622,ny:0.7721,direction:"bottom"},{id:"A1",nx:0.25,ny:0.9683,direction:"bottom"},{id:"A2",nx:0.7622,ny:0.9683,direction:"bottom"}],pairs:[["21","24"],["11","14"]],pair:["21","24"],pairsNc:[["21","22"],["11","12"]]},
       edz_relé_temporizado_multifunción_re17: {name:"RE17 Multifunction Timing Relay",prefix:"KT",cat:"Commande",hideFromLib:true,w:36,h:170,image:"assets/electrodz/relé_temporizado_multifunción_re17.png",badge:"Control",din:true,startOpen:true,terminals:[{id:"A1",nx:0.1961,ny:0.0,direction:"top"},{id:"15",nx:0.5,ny:0.0,direction:"top"},{id:"Y1",nx:0.8061,ny:0.0,direction:"top"},{id:"18",nx:0.1961,ny:0.8746,direction:"bottom"},{id:"16",nx:0.5,ny:0.8746,direction:"bottom"},{id:"A2",nx:0.8061,ny:0.8746,direction:"bottom"}]},
@@ -4898,11 +4907,11 @@
       edz_tense_dgk04f: {name:"Tense DGK-04F",prefix:"K",cat:"Relais tension / phases",w:88,h:150,image:"assets/electrodz/tense_dgk04f.png",badge:"Three-Phase Voltage Rela",din:true,startOpen:true,terminals:[{id:"L1",nx:0.13,ny:0.9,direction:"bottom"},{id:"L2",nx:0.29,ny:0.9,direction:"bottom"},{id:"L3",nx:0.45,ny:0.9,direction:"bottom"},{id:"1",nx:0.61,ny:0.9,direction:"bottom"},{id:"2",nx:0.76,ny:0.9,direction:"bottom"},{id:"3",nx:0.9,ny:0.9,direction:"bottom"}],pairs:[["2","3"]],pair:["2","3"],pairsNc:[["2","1"]]},
       edz_tense_em06: {name:"Tense EM-06",prefix:"PM",cat:"Mesure",w:192,h:192,image:"assets/electrodz/tense_em06.png",imageOff:"assets/electrodz/tense_em06_off.png",badge:"Three-Phase Digital Mult",startOpen:true,terminals:[{id:"N",nx:0.07,ny:0.91,direction:"bottom"},{id:"L1",nx:0.165,ny:0.91,direction:"bottom"},{id:"L2",nx:0.26,ny:0.91,direction:"bottom"},{id:"L3",nx:0.355,ny:0.91,direction:"bottom"},{id:"k1",nx:0.45,ny:0.91,direction:"bottom"},{id:"l1",nx:0.545,ny:0.91,direction:"bottom"},{id:"k2",nx:0.64,ny:0.91,direction:"bottom"},{id:"l2",nx:0.735,ny:0.91,direction:"bottom"},{id:"k3",nx:0.83,ny:0.91,direction:"bottom"},{id:"l3",nx:0.925,ny:0.91,direction:"bottom"}]},
       edz_tense_fkv03hf: {name:"Tense FKV-03HF",prefix:"K",cat:"Relais tension / phases",w:46,h:189,image:"assets/electrodz/tense_fkv03hf.png",badge:"Digital Phase Failure Re",din:true,startOpen:true,terminals:[{id:"1",nx:0.18,ny:0.1,direction:"top"},{id:"2",nx:0.4,ny:0.1,direction:"top"},{id:"3",nx:0.62,ny:0.1,direction:"top"},{id:"N",nx:0.18,ny:0.9,direction:"bottom"},{id:"L1",nx:0.4,ny:0.9,direction:"bottom"},{id:"L2",nx:0.62,ny:0.9,direction:"bottom"},{id:"L3",nx:0.84,ny:0.9,direction:"bottom"}],pairs:[["2","3"]],pair:["2","3"],pairsNc:[["2","1"]]},
-      edz_tomacorriente_doble_pe: {name:"Double Socket Outlet + PE",prefix:"XS",cat:"Borniers / Alim",w:97,h:170,image:"assets/electrodz/tomacorriente_doble_pe.png",badge:"Distribution",terminals:[{id:"F1",nx:0.0,ny:0.1429,direction:"left"},{id:"N1",nx:0.0,ny:0.2143,direction:"left"},{id:"PE1",nx:0.0,ny:0.2857,direction:"left"},{id:"F2",nx:0.0,ny:0.8571,direction:"left"},{id:"N2",nx:0.0,ny:0.7857,direction:"left"},{id:"PE2",nx:0.0,ny:0.7143,direction:"left"}]},
+      edz_tomacorriente_doble_pe: {name:"Double Socket Outlet + PE",prefix:"XS",cat:"Prises",w:97,h:170,image:"assets/electrodz/tomacorriente_doble_pe.png",badge:"Distribution",terminals:[{id:"F1",nx:0.0,ny:0.1429,direction:"left"},{id:"N1",nx:0.0,ny:0.2143,direction:"left"},{id:"PE1",nx:0.0,ny:0.2857,direction:"left"},{id:"F2",nx:0.0,ny:0.8571,direction:"left"},{id:"N2",nx:0.0,ny:0.7857,direction:"left"},{id:"PE2",nx:0.0,ny:0.7143,direction:"left"}]},
       edz_transformador_100_240_12vac_50va: {name:"Transformer 100-240 12VAC 50VA",prefix:"T",cat:"Transformateurs",w:97,h:170,image:"assets/electrodz/transformador_100_240_12vac_50va.png",badge:"Power",din:true,passthrough:true,terminals:[{id:"N1",nx:0.125,ny:0.0,direction:"top"},{id:"N2",nx:0.375,ny:0.0,direction:"top"},{id:"L1",nx:0.625,ny:0.0,direction:"top"},{id:"L2",nx:0.875,ny:0.0,direction:"top"},{id:"PE",nx:0.25,ny:1.0,direction:"bottom"},{id:"N",nx:0.5,ny:1.0,direction:"bottom"},{id:"L",nx:0.75,ny:1.0,direction:"bottom"}],pairs:[["L2","L"],["N2","N"]],pair:["L2","L"]},
       edz_transformador_100_240_24vac_50va: {name:"Transformer 100-240 24VAC 50VA",prefix:"T",cat:"Transformateurs",w:97,h:170,image:"assets/electrodz/transformador_100_240_24vac_50va.png",badge:"Power",din:true,passthrough:true,terminals:[{id:"N1",nx:0.125,ny:0.0,direction:"top"},{id:"N2",nx:0.375,ny:0.0,direction:"top"},{id:"L1",nx:0.625,ny:0.0,direction:"top"},{id:"L2",nx:0.875,ny:0.0,direction:"top"},{id:"PE",nx:0.25,ny:1.0,direction:"bottom"},{id:"N",nx:0.5,ny:1.0,direction:"bottom"},{id:"L",nx:0.75,ny:1.0,direction:"bottom"}],pairs:[["L2","L"],["N2","N"]],pair:["L2","L"]},
       edz_transformador_100_240_48vac_50va: {name:"Transformer 100-240 48VAC 50VA",prefix:"T",cat:"Transformateurs",w:97,h:170,image:"assets/electrodz/transformador_100_240_48vac_50va.png",badge:"Power",din:true,passthrough:true,terminals:[{id:"N1",nx:0.125,ny:0.0,direction:"top"},{id:"N2",nx:0.375,ny:0.0,direction:"top"},{id:"L1",nx:0.625,ny:0.0,direction:"top"},{id:"L2",nx:0.875,ny:0.0,direction:"top"},{id:"PE",nx:0.25,ny:1.0,direction:"bottom"},{id:"N",nx:0.5,ny:1.0,direction:"bottom"},{id:"L",nx:0.75,ny:1.0,direction:"bottom"}],pairs:[["L2","L"],["N2","N"]],pair:["L2","L"]},
-      edz_vfd_svc_3phase_interactive: {name:"SVC / V-F Variable Frequency Drive",prefix:"G",cat:"Variateurs",w:179,h:280,image:"assets/electrodz/vfd_svc_3phase_interactive.png",badge:"Drives",startOpen:true,terminals:[{id:"R",nx:0.298,ny:0.075,direction:"top"},{id:"S",nx:0.381,ny:0.075,direction:"top"},{id:"T",nx:0.465,ny:0.075,direction:"top"},{id:"PE",nx:0.543,ny:0.075,direction:"top"},{id:"U",nx:0.258,ny:0.926,direction:"bottom"},{id:"V",nx:0.341,ny:0.926,direction:"bottom"},{id:"W",nx:0.423,ny:0.926,direction:"bottom"},{id:"P4",nx:0.505,ny:0.926,direction:"bottom"},{id:"PB",nx:0.587,ny:0.926,direction:"bottom"},{id:"+10V",nx:0.202,ny:0.748,direction:"left"},{id:"AI1",nx:0.256,ny:0.748,direction:"left"},{id:"ACM",nx:0.31,ny:0.748,direction:"left"},{id:"AOV",nx:0.364,ny:0.748,direction:"left"},{id:"AOI",nx:0.418,ny:0.748,direction:"left"},{id:"FM",nx:0.472,ny:0.748,direction:"right"},{id:"A+",nx:0.526,ny:0.748,direction:"right"},{id:"B-",nx:0.58,ny:0.748,direction:"right"},{id:"COM",nx:0.634,ny:0.748,direction:"right"},{id:"+24V",nx:0.202,ny:0.806,direction:"left"},{id:"DI1",nx:0.256,ny:0.806,direction:"left"},{id:"DI2",nx:0.31,ny:0.806,direction:"left"},{id:"DI3",nx:0.364,ny:0.806,direction:"left"},{id:"DI4",nx:0.418,ny:0.806,direction:"right"},{id:"DI5",nx:0.472,ny:0.806,direction:"right"},{id:"TA",nx:0.526,ny:0.806,direction:"right"},{id:"TB",nx:0.58,ny:0.806,direction:"right"},{id:"TC",nx:0.634,ny:0.806,direction:"right"}],pairs:[["TA","TC"]],pair:["TA","TC"],pairsNc:[["TB","TC"]]},
+      edz_vfd_svc_3phase_interactive: {name:"SVC / V-F Variable Frequency Drive",prefix:"G",cat:"Variateur de vitesse",w:179,h:280,image:"assets/electrodz/vfd_svc_3phase_interactive.png",badge:"Drives",startOpen:true,terminals:[{id:"R",nx:0.298,ny:0.075,direction:"top"},{id:"S",nx:0.381,ny:0.075,direction:"top"},{id:"T",nx:0.465,ny:0.075,direction:"top"},{id:"PE",nx:0.543,ny:0.075,direction:"top"},{id:"U",nx:0.258,ny:0.926,direction:"bottom"},{id:"V",nx:0.341,ny:0.926,direction:"bottom"},{id:"W",nx:0.423,ny:0.926,direction:"bottom"},{id:"P4",nx:0.505,ny:0.926,direction:"bottom"},{id:"PB",nx:0.587,ny:0.926,direction:"bottom"},{id:"+10V",nx:0.202,ny:0.748,direction:"left"},{id:"AI1",nx:0.256,ny:0.748,direction:"left"},{id:"ACM",nx:0.31,ny:0.748,direction:"left"},{id:"AOV",nx:0.364,ny:0.748,direction:"left"},{id:"AOI",nx:0.418,ny:0.748,direction:"left"},{id:"FM",nx:0.472,ny:0.748,direction:"right"},{id:"A+",nx:0.526,ny:0.748,direction:"right"},{id:"B-",nx:0.58,ny:0.748,direction:"right"},{id:"COM",nx:0.634,ny:0.748,direction:"right"},{id:"+24V",nx:0.202,ny:0.806,direction:"left"},{id:"DI1",nx:0.256,ny:0.806,direction:"left"},{id:"DI2",nx:0.31,ny:0.806,direction:"left"},{id:"DI3",nx:0.364,ny:0.806,direction:"left"},{id:"DI4",nx:0.418,ny:0.806,direction:"right"},{id:"DI5",nx:0.472,ny:0.806,direction:"right"},{id:"TA",nx:0.526,ny:0.806,direction:"right"},{id:"TB",nx:0.58,ny:0.806,direction:"right"},{id:"TC",nx:0.634,ny:0.806,direction:"right"}],pairs:[["TA","TC"]],pair:["TA","TC"],pairsNc:[["TB","TC"]]},
       edz_atek_ast20_pt1000_rtd_3wire: {name:"ATEK AST20 - PT1000 RTD 3-WIRE",prefix:"TT",cat:"Capteurs",w:280,h:280,image:"assets/electrodz/atek_ast20_pt1000_rtd_3wire.png",badge:"Temperature Sensors",terminals:[{id:"P1",nx:0.2458,ny:0.2058,direction:"bottom"},{id:"P2",nx:0.3392,ny:0.2058,direction:"bottom"},{id:"P3",nx:0.2458,ny:0.2692,direction:"bottom"},{id:"P4",nx:0.3392,ny:0.2692,direction:"bottom"}]},
       edz_atek_ast20_pt1000_rtd_4wire: {name:"ATEK AST20 - PT1000 RTD 4-WIRE",prefix:"TT",cat:"Capteurs",w:280,h:280,image:"assets/electrodz/atek_ast20_pt1000_rtd_4wire.png",badge:"Temperature Sensors",terminals:[{id:"P1",nx:0.2458,ny:0.2058,direction:"bottom"},{id:"P2",nx:0.3392,ny:0.2058,direction:"bottom"},{id:"P3",nx:0.2458,ny:0.2692,direction:"bottom"},{id:"P4",nx:0.3392,ny:0.2692,direction:"bottom"}]},
       edz_atek_ast20_pt100_4_20ma: {name:"ATEK AST20 - PT100 4-20 mA",prefix:"TT",cat:"Capteurs",w:280,h:280,image:"assets/electrodz/atek_ast20_pt100_4_20ma.png",badge:"Temperature Sensors",terminals:[{id:"P1",nx:0.2458,ny:0.2058,direction:"bottom"},{id:"P2",nx:0.3392,ny:0.2058,direction:"bottom"},{id:"P3",nx:0.2458,ny:0.2692,direction:"bottom"},{id:"P4",nx:0.3392,ny:0.2692,direction:"bottom"}]},
@@ -4953,7 +4962,8 @@
       "edz_opas_63a_selector",
       "edz_opas_100a_selector",
       "edz_opas_ypt113_100",
-      "edz_abb_s2c_h6r"
+      "edz_abb_s2c_h6r",
+      "edz_resistor_6_6kohm"
     ].forEach((id) => {
       if (LIB[id]) LIB[id].hideFromLib = true;
     });
@@ -5033,15 +5043,67 @@
       return false;
     }
     function isDiversCat(def) {
-      return !!(def && (def.cat === "Divers" || def.cat === "Variateurs"));
+      return !!(def && def.cat === "Divers");
+    }
+    function isVfdLibItem(id, def) {
+      if (!def) return false;
+      if (id === "vsd" || id === "softstarter") return true;
+      if (/vfd/i.test(id || "")) return true;
+      const blob = libTypeBlob(id, def);
+      return /\bvfd\b|variable frequency|variateur de vitesse|freq(?:uency)? drive/i.test(blob);
+    }
+    function isBoutonnerieDumpItem(id, def) {
+      if (!def) return false;
+      const blob = libTypeBlob(id, def);
+      return /pulsador|parada_de_emergencia|selector_de_|interruptor|interuptor|limit_switch|push button|emergency stop|selector switch|\bswitch\b/i.test(blob);
     }
         /* isLibTypeFree défini dans le bloc Tiers (plus haut). */
 
     Object.keys(LIB).forEach((id) => {
       const d = LIB[id];
       if (!d) return;
-      if (d.cat === "Variateurs") d.cat = "Divers";
       if (isSensorLibItem(id, d) && !isKnxLibItem(id, d)) d.cat = "Capteurs";
+    });
+
+    /* Divers/Variateurs : VFD dédiés, interrupteurs/BP → Boutonnerie, reste Divers. */
+    Object.keys(LIB).forEach((id) => {
+      const d = LIB[id];
+      if (!d) return;
+      if (d.cat !== "Variateurs" && d.cat !== "Divers") return;
+      if (isVfdLibItem(id, d)) { d.cat = "Variateur de vitesse"; return; }
+      if (isBoutonnerieDumpItem(id, d)) { d.cat = "Boutonnerie"; return; }
+      if (d.cat === "Variateurs") d.cat = "Divers";
+    });
+
+    /* Duo contacteur + relais thermique (et garde-moteurs associés). */
+    Object.keys(LIB).forEach((id) => {
+      const d = LIB[id];
+      if (!d) return;
+      if (d.cat === "Contacteurs" || d.cat === "Relais thermiques") {
+        d.cat = "Contacteur + relais thermique";
+      }
+    });
+
+    /* Free : sections ouvertes + moteurs SwissDz + capteurs demandés. */
+    const TIER_FREE_CATS = new Set([
+      "Boutonnerie",
+      "Éclairage",
+      "Variateur de vitesse",
+      "Mesure",
+      "Borniers / Alim"
+    ]);
+    [
+      "detecteur",
+      "edz_fotocelda_crepuscular",
+      "edz_sensor_de_proximidad_inductivo_3_hilos_dc",
+      "moteur", "moteur_1ph", "moteur_3ph", "pompe_forage",
+      "barrette_2vis", "barrette_3vis"
+    ].forEach((id) => { if (LIB[id]) TIER_FREE_TYPES.add(id); });
+    Object.keys(LIB).forEach((id) => {
+      const d = LIB[id];
+      if (!d || d.hideFromLib) return;
+      if (TIER_FREE_CATS.has(d.cat)) TIER_FREE_TYPES.add(id);
+      if (d.cat === "Moteurs" && /swissdz/i.test(String(d.name || ""))) TIER_FREE_TYPES.add(id);
     });
 
     function isCompteurKind(kind) {
@@ -10131,15 +10193,18 @@
       "Différentiel",
       "Parafoudres",
       "Commande",
+      "Contacteur + relais thermique",
       "Contacteurs",
       "Relais thermiques",
       "Relais",
       "Auxiliaires",
       "PLC",
       "Boutonnerie",
-      "Éclairage / Prises",
+      "Éclairage",
+      "Prises",
       "Domotique KNX",
       "Moteurs",
+      "Variateur de vitesse",
       "Variateurs",
       "Divers",
       "Mesure",
@@ -17454,7 +17519,7 @@
     });
 
     if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
-      navigator.serviceWorker.register("sw-pwire.js?v=parafoudres-r1").catch(function () {});
+      navigator.serviceWorker.register("sw-pwire.js?v=free-cats-vfd-r1").catch(function () {});
     }
     if ("launchQueue" in window && window.launchQueue && typeof window.launchQueue.setConsumer === "function") {
       window.launchQueue.setConsumer(function (params) {
