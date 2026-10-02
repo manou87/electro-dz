@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="brand/logo-panelwire-icon.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="pinch-board-r3" />
+  <meta name="swissdz-rev" content="chrome-menus-r5" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -89,16 +89,16 @@
     .brand-dropdown .brand-sep {
       height:1px; background:var(--line); margin:4px 6px;
     }
-    .brand-dropdown button#btnVip {
+    .brand-dropdown button#btnTier {
       background:transparent; color:var(--text); border:0;
       text-transform:none; letter-spacing:0; height:auto; min-width:0;
       font-size:12px; font-weight:650; padding:8px 10px; line-height:1.25;
     }
-    .brand-dropdown button#btnVip:hover { background:var(--hover); color:var(--text); }
-    .brand-dropdown button#btnVip.on {
+    .brand-dropdown button#btnTier:hover { background:var(--hover); color:var(--text); }
+    .brand-dropdown button#btnTier.on {
       background:var(--on-bg); color:var(--on-text); border:0;
     }
-    .brand-dropdown button#btnVip.on:hover { background:var(--on-bg); color:var(--on-text); }
+    .brand-dropdown button#btnTier.on:hover { background:var(--on-bg); color:var(--on-text); }
     /* Main + style fil : même rangée que le titre / icône (espace vide à droite) */
     .brand-cluster {
       display:flex; align-items:center; gap:8px; flex:1 1 auto; min-width:0;
@@ -194,11 +194,13 @@
     .toolbar-bottom-inner {
       display:flex; align-items:center; gap:8px; min-width:0;
     }
-    /* Play épinglé hors du .bar scrollable (sinon hors écran sur téléphone). */
+    /* Play hors du .bar scrollable (sinon hors écran sur téléphone).
+       Desktop : .bar ne grandit pas → lecteur collé au cluster bas-gauche.
+       Mobile (≤900px) : .bar reprend flex:1 pour épingler le play à droite. */
     .foot-pin-play {
       display:flex; align-items:center; flex:0 0 auto; z-index:5;
     }
-    .bar { display:flex; align-items:center; gap:12px; flex-wrap:wrap; flex:1 1 auto; min-width:0; }
+    .bar { display:flex; align-items:center; gap:12px; flex-wrap:wrap; flex:0 1 auto; min-width:0; }
     /* Desktop : wrapper projet en ligne flex */
     .bar-row-1 { display:contents; }
     .group { display:flex; flex-direction:column; align-items:center; gap:0; flex:0 0 auto; }
@@ -291,7 +293,17 @@
       padding:8px;
     }
     .section-picker.open .section-dropdown,
-    .color-picker.open .swatches.color-dropdown { display:grid; }
+    .color-picker.open .swatches.color-dropdown,
+    .section-dropdown.pw-menu-open,
+    .swatches.color-dropdown.pw-menu-open { display:grid; }
+    /* Menus chrome hors overflow header (sinon iOS clippe / met derrière le plan). */
+    .section-dropdown.pw-menu-open,
+    .swatches.color-dropdown.pw-menu-open,
+    .lang-dropdown.pw-menu-open {
+      z-index:640;
+      pointer-events:auto;
+      touch-action:manipulation;
+    }
     .section-opt {
       border:1px solid var(--line); border-radius:7px; background:var(--surface);
       padding:7px 4px; font-size:11px; font-weight:750; color:var(--text);
@@ -617,16 +629,14 @@
       header { padding:2px 6px; min-width:0; overflow:visible; }
       .header-top {
         align-items:center; gap:4px; min-width:0; width:100%;
-        overflow-x:auto; overflow-y:visible; -webkit-overflow-scrolling:touch;
+        overflow:visible;
       }
       .brand-cluster {
         flex:1 1 auto;
         max-width:100%;
         min-width:0;
-        overflow-x:auto;
-        overflow-y:hidden;
+        overflow:visible;
         flex-wrap:nowrap;
-        -webkit-overflow-scrolling:touch;
       }
       .brand-tools { flex-wrap:nowrap; flex-shrink:0; }
       .toolbar-bottom { padding:2px 6px; }
@@ -2366,109 +2376,115 @@
     .size-actions .primary { background:var(--blue); color:#fff; }
     .size-actions .ghost { background:#f8fafc; border:1px solid #e5e7eb; }
 
-    /* VIP gate — cadenas discret (tuile lib + exemples) */
-    .item.vip-locked { position:relative; }
-    .item.vip-locked::after {
+    /* Tier lock — cadenas discret (tuile lib + exemples) */
+    .item.tier-locked, .item.vip-locked { position:relative; opacity:.55; filter:grayscale(.35); }
+    .item.tier-locked::after, .item.vip-locked::after {
       content:"🔒"; position:absolute; top:2px; right:2px;
       font-size:10px; line-height:1; pointer-events:none;
       filter:grayscale(1) brightness(.25);
       text-shadow:0 0 2px #fff, 0 0 2px var(--surface, #fff);
     }
-    .example-tile.vip-locked { position:relative; }
-    .example-tile.vip-locked::after {
+    .example-tile.tier-locked, .example-tile.vip-locked { position:relative; opacity:.65; }
+    .example-tile.tier-locked::after, .example-tile.vip-locked::after {
       content:"🔒"; position:absolute; top:8px; right:10px; z-index:2;
       font-size:13px; line-height:1; pointer-events:none;
       filter:grayscale(1) brightness(.25);
       text-shadow:0 0 3px #fff, 0 0 3px var(--surface, #fff);
     }
-    .vip-gate {
+    .tier-gate {
       position:fixed; inset:0; z-index:300; display:none;
       align-items:stretch; justify-content:center;
       background:
         radial-gradient(ellipse 80% 50% at 20% 0%, rgba(37,99,235,.18), transparent 55%),
-        radial-gradient(ellipse 60% 40% at 90% 100%, rgba(220,38,38,.12), transparent 50%),
+        radial-gradient(ellipse 60% 40% at 90% 100%, rgba(234,179,8,.10), transparent 50%),
         #0b1220;
       color:#e2e8f0; padding:16px; overflow:auto;
       -webkit-overflow-scrolling:touch;
     }
-    .vip-gate.open { display:flex; }
-    .vip-card {
-      margin:auto; width:min(440px, 100%);
+    .tier-gate.open { display:flex; }
+    .tier-sheet {
+      margin:auto; width:min(920px, 100%);
       background:linear-gradient(165deg, #141c2e 0%, #0f172a 55%, #111827 100%);
       border:1px solid rgba(148,163,184,.22);
       border-radius:18px; padding:22px 20px 18px;
       box-shadow:0 24px 60px rgba(0,0,0,.45);
     }
-    .vip-brand {
-      display:flex; align-items:center; gap:10px; margin-bottom:14px;
+    .tier-brand {
+      display:flex; align-items:center; gap:10px; margin-bottom:12px;
     }
-    .vip-brand .mark {
+    .tier-brand .mark {
       width:34px; height:34px; border-radius:8px; overflow:hidden;
       background:#fff; border:1px solid rgba(148,163,184,.25);
       flex-shrink:0;
     }
-    .vip-brand .mark img { width:100%; height:100%; object-fit:cover; display:block; }
-    .vip-brand .name { font-size:15px; font-weight:800; letter-spacing:.02em; color:#f8fafc; }
-    .vip-brand .name span { color:#94a3b8; font-weight:650; }
-    .vip-card h1 {
+    .tier-brand .mark img { width:100%; height:100%; object-fit:cover; display:block; }
+    .tier-brand .name { font-size:15px; font-weight:800; letter-spacing:.02em; color:#f8fafc; }
+    .tier-brand .name span { color:#94a3b8; font-weight:650; }
+    .tier-sheet h1 {
       margin:0 0 6px; font-size:clamp(22px, 5vw, 28px); line-height:1.15;
       font-weight:800; letter-spacing:-.02em; color:#f8fafc;
     }
-    .vip-card .lead {
+    .tier-sheet .lead {
       margin:0 0 16px; font-size:13px; line-height:1.45; color:#94a3b8;
     }
-    .vip-perks {
-      list-style:none; margin:0 0 16px; padding:0; display:grid; gap:8px;
+    .tier-cards {
+      display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:12px; margin-bottom:14px;
     }
-    .vip-perks li {
-      display:flex; gap:10px; align-items:flex-start;
-      font-size:12.5px; color:#cbd5e1; line-height:1.35;
-      padding:8px 10px; border-radius:10px;
-      background:rgba(255,255,255,.04); border:1px solid rgba(148,163,184,.12);
+    .tier-card {
+      display:flex; flex-direction:column; gap:8px;
+      padding:14px 12px; border-radius:14px;
+      background:rgba(255,255,255,.04); border:1px solid rgba(148,163,184,.16);
+      min-width:0;
     }
-    .vip-perks li b { color:#f8fafc; font-weight:700; display:block; margin-bottom:1px; }
-    .vip-perks .dot {
-      flex:0 0 8px; height:8px; margin-top:5px; border-radius:50%; background:#2563eb;
+    .tier-card.current { border-color:rgba(37,99,235,.55); box-shadow:0 0 0 1px rgba(37,99,235,.25) inset; }
+    .tier-card.silver { border-color:rgba(148,163,184,.35); }
+    .tier-card.gold { border-color:rgba(234,179,8,.45); }
+    .tier-card .tier-name {
+      font-size:15px; font-weight:800; color:#f8fafc; letter-spacing:.02em;
     }
-    .vip-price {
-      margin:0 0 16px; padding:12px 14px; border-radius:12px;
-      background:rgba(37,99,235,.12); border:1px solid rgba(37,99,235,.28);
+    .tier-card .tier-price {
+      font-size:13px; font-weight:700; color:#93c5fd; line-height:1.35;
     }
-    .vip-price .tag {
-      font-size:10px; font-weight:800; letter-spacing:.1em; color:#93c5fd; margin-bottom:4px;
+    .tier-card.gold .tier-price { color:#fcd34d; }
+    .tier-card .tier-price .free-amt { color:#86efac; }
+    .tier-card ul {
+      list-style:none; margin:0; padding:0; display:grid; gap:5px;
+      font-size:11.5px; color:#cbd5e1; line-height:1.35; flex:1;
     }
-    .vip-price .amt {
-      font-size:18px; font-weight:800; color:#f8fafc;
+    .tier-card ul li::before { content:"• "; color:#64748b; }
+    .tier-card .tier-actions { display:flex; flex-direction:column; gap:6px; margin-top:4px; }
+    .tier-card button {
+      min-height:38px; border-radius:10px; font-weight:750; font-size:12px;
+      border:none; cursor:pointer;
     }
-    .vip-price .hint { font-size:11px; color:#94a3b8; margin-top:4px; }
-    .vip-form { display:flex; flex-direction:column; gap:8px; margin-bottom:10px; }
-    .vip-form label { font-size:11px; font-weight:700; color:#94a3b8; letter-spacing:.04em; }
-    .vip-form input {
-      border:1px solid rgba(148,163,184,.35); border-radius:10px;
-      padding:11px 12px; font-size:15px; font-weight:650;
-      background:#0b1220; color:#f8fafc; outline:none;
-    }
-    .vip-form input:focus { border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.25); }
-    .vip-actions { display:flex; gap:8px; flex-wrap:wrap; }
-    .vip-actions button { flex:1 1 auto; min-height:42px; border-radius:10px; font-weight:750; }
-    .vip-actions .primary { background:#2563eb; color:#fff; border:none; }
-    .vip-actions .ghost {
+    .tier-card button.primary { background:#2563eb; color:#fff; }
+    .tier-card.gold button.primary { background:#ca8a04; color:#fff; }
+    .tier-card button.ghost {
       background:transparent; color:#cbd5e1; border:1px solid rgba(148,163,184,.3);
     }
-    .vip-err {
-      display:none; margin:0 0 8px; font-size:12px; font-weight:700; color:#fca5a5;
+    .tier-card button:disabled { opacity:.45; cursor:default; }
+    .tier-hint {
+      margin:0 0 10px; font-size:11px; color:#94a3b8; text-align:center; line-height:1.4;
     }
-    .vip-err.show { display:block; }
-    .vip-demo {
-      margin:12px 0 0; font-size:10px; color:#64748b; text-align:center;
+    .tier-debug {
+      display:none; margin-top:8px; padding:10px 12px; border-radius:10px;
+      background:rgba(220,38,38,.12); border:1px dashed rgba(248,113,113,.4);
+      font-size:11px; color:#fecaca;
     }
-    .vip-demo code {
-      font-family:ui-monospace, Consolas, monospace; color:#94a3b8;
-      background:rgba(255,255,255,.06); padding:1px 5px; border-radius:4px;
+    .tier-debug.show { display:block; }
+    .tier-debug .row { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+    .tier-debug button {
+      min-height:32px; padding:0 10px; border-radius:8px; font-weight:700; font-size:11px;
+      border:1px solid rgba(248,113,113,.35); background:rgba(0,0,0,.25); color:#fecaca; cursor:pointer;
     }
-    @media (max-width: 520px) {
-      .vip-card { padding:18px 14px 14px; border-radius:14px; }
-      .vip-actions { flex-direction:column; }
+    .tier-foot { display:flex; justify-content:center; margin-top:8px; }
+    .tier-foot button {
+      min-height:40px; padding:0 18px; border-radius:10px; font-weight:750;
+      background:transparent; color:#cbd5e1; border:1px solid rgba(148,163,184,.3); cursor:pointer;
+    }
+    @media (max-width: 780px) {
+      .tier-cards { grid-template-columns:1fr; }
+      .tier-sheet { padding:18px 14px 14px; border-radius:14px; }
     }
 
     /* Language : indicateur courant + menu (pas FR|EN côte à côte) */
@@ -2506,7 +2522,8 @@
       background:var(--surface); border:1px solid var(--line);
       box-shadow:var(--shadow);
     }
-    .lang-menu.open .lang-dropdown { display:block; }
+    .lang-menu.open .lang-dropdown,
+    .lang-dropdown.pw-menu-open { display:block; }
     .lang-dropdown button {
       display:block; width:100%; text-align:left;
       border:0; background:transparent; border-radius:7px;
@@ -3042,8 +3059,8 @@
         <button type="button" id="btnControleMenu" role="menuitem" title="Ouvrir le banc Contrôle électrique (maquette locale)">Contrôle électrique</button>
         <button type="button" data-brand-act="knx" role="menuitem" data-i18n="brandMenuKnx">KNX</button>
         <div class="brand-sep"></div>
-        <button type="button" id="btnVip" role="menuitem" data-i18n="btnVip" data-i18n-title="btnVipTitle"
-          title="Mode Pro — débloquer toute la bibliothèque" aria-pressed="false">Pro</button>
+        <button type="button" id="btnTier" role="menuitem" data-i18n="btnTier" data-i18n-title="btnTierTitle"
+          title="Offre — Free / Silver / Gold" aria-pressed="false">Free</button>
       </div>
     </div>
   </div>
@@ -3427,34 +3444,73 @@
     <svg class="fab-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19.2 12 8 5.2z"/></svg>
     <span class="fab-label" data-i18n="btnPlayShort">Vérifier</span>
   </button>
-  <div id="vipGate" class="vip-gate" aria-hidden="true" role="dialog" aria-labelledby="vipTitle">
-    <div class="vip-card">
-      <div class="vip-brand">
+  <div id="tierGate" class="tier-gate" aria-hidden="true" role="dialog" aria-labelledby="tierTitle">
+    <div class="tier-sheet">
+      <div class="tier-brand">
         <div class="mark" aria-hidden="true"><img src="brand/logo-panelwire-icon.png" alt="" width="34" height="34" /></div>
-        <div class="name">WireLab Pro <span>by SwissDZ</span></div>
+        <div class="name">WireLab <span>by SwissDZ</span></div>
       </div>
-      <h1 id="vipTitle" data-i18n="vipTitle">Version VIP</h1>
-      <p class="lead" data-i18n="vipLead">La version libre couvre les bases. VIP débloque toute la bibliothèque professionnelle pour schémas complets.</p>
-      <ul class="vip-perks">
-        <li><span class="dot"></span><div><b data-i18n="vipPerk1Title">Protections &amp; différentiels</b><span data-i18n="vipPerk1Body">IDR, SPD, sectionneurs, disj. 1P+N</span></div></li>
-        <li><span class="dot"></span><div><b data-i18n="vipPerk2Title">Domotique KNX &amp; commande</b><span data-i18n="vipPerk2Body">Actionneurs, poussoirs, présence, DALI, ETS formation</span></div></li>
-        <li><span class="dot"></span><div><b data-i18n="vipPerk3Title">Moteurs &amp; industrie</b><span data-i18n="vipPerk3Body">Contacteurs tri, thermique, PLC LOGO!, variateurs</span></div></li>
-      </ul>
-      <div class="vip-price">
-        <div class="tag" data-i18n="vipTarif">TARIF</div>
-        <div class="amt" data-i18n="vipPrice">Bientôt via achat in-app</div>
-        <div class="hint" data-i18n="vipPriceHint">Pas de paiement réel pour l’instant — simulation par code d’accès.</div>
+      <h1 id="tierTitle" data-i18n="tierTitle">Choisir une offre</h1>
+      <p class="lead" data-i18n="tierLead">Free pour démarrer. Silver pour toute la bibliothèque pro. Gold pour le testeur multifonction sur le plan.</p>
+      <div class="tier-cards">
+        <div class="tier-card" data-tier="free" id="tierCardFree">
+          <div class="tier-name" data-i18n="tierFreeName">Free</div>
+          <div class="tier-price"><span class="free-amt" data-i18n="tierFreePrice">Gratuit</span></div>
+          <ul>
+            <li data-i18n="tierFreePerk1">Installation de base mono / L+N</li>
+            <li data-i18n="tierFreePerk2">Disj. 1P+N, IDR 2P, bornes N+PE</li>
+            <li data-i18n="tierFreePerk3">Prises, interrupteurs, lampes, BP, voyants</li>
+            <li data-i18n="tierFreePerk4">1 paire contacteur+thermique, moteur 3~, LOGO! principal</li>
+          </ul>
+          <div class="tier-actions">
+            <button type="button" class="ghost" id="tierSelectFree" data-i18n="tierSelectFree">Rester en Free</button>
+          </div>
+        </div>
+        <div class="tier-card silver" data-tier="silver" id="tierCardSilver">
+          <div class="tier-name" data-i18n="tierSilverName">Silver</div>
+          <div class="tier-price">
+            <span data-i18n="tierSilverMonth">0,99 € / mois</span><br>
+            <span data-i18n="tierSilverYear">5,99 € / an</span>
+          </div>
+          <ul>
+            <li data-i18n="tierSilverPerk1">Toute la bibliothèque (PV, VFD, PLC, KNX…)</li>
+            <li data-i18n="tierSilverPerk2">Ladder + Contrôle électrique</li>
+            <li data-i18n="tierSilverPerk3">Testeur multifonction verrouillé (Gold)</li>
+          </ul>
+          <div class="tier-actions">
+            <button type="button" class="primary" id="tierBuySilverMonth" data-product="wirelab_silver_month" data-i18n="tierBuyMonth">Mensuel</button>
+            <button type="button" class="ghost" id="tierBuySilverYear" data-product="wirelab_silver_year" data-i18n="tierBuyYear">Annuel</button>
+          </div>
+        </div>
+        <div class="tier-card gold" data-tier="gold" id="tierCardGold">
+          <div class="tier-name" data-i18n="tierGoldName">Gold</div>
+          <div class="tier-price">
+            <span data-i18n="tierGoldMonth">1,99 € / mois</span><br>
+            <span data-i18n="tierGoldYear">9,99 € / an</span>
+          </div>
+          <ul>
+            <li data-i18n="tierGoldPerk1">Tout Silver</li>
+            <li data-i18n="tierGoldPerk2">Appareil de mesure multifonction sur le plan</li>
+            <li data-i18n="tierGoldPerk3">Accès complet formation</li>
+          </ul>
+          <div class="tier-actions">
+            <button type="button" class="primary" id="tierBuyGoldMonth" data-product="wirelab_gold_month" data-i18n="tierBuyMonth">Mensuel</button>
+            <button type="button" class="ghost" id="tierBuyGoldYear" data-product="wirelab_gold_year" data-i18n="tierBuyYear">Annuel</button>
+          </div>
+        </div>
       </div>
-      <p id="vipErr" class="vip-err" role="alert" data-i18n="vipErr">Code incorrect. Réessaie.</p>
-      <div class="vip-form">
-        <label for="vipCode" data-i18n="vipCodeLabel">Code d’accès</label>
-        <input id="vipCode" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" data-i18n-placeholder="vipCodePlaceholder" placeholder="Saisir le code VIP" />
+      <p class="tier-hint" data-i18n="tierBillingHint">Achats via Google Play Billing (bientôt). Les boutons simulent l’offre pour les tests locaux.</p>
+      <div id="tierDebug" class="tier-debug" aria-label="Debug tiers">
+        <div data-i18n="tierDebugLabel">DEBUG localhost — forcer un niveau (QA)</div>
+        <div class="row">
+          <button type="button" data-debug-tier="free">Free</button>
+          <button type="button" data-debug-tier="silver">Silver</button>
+          <button type="button" data-debug-tier="gold">Gold</button>
+        </div>
       </div>
-      <div class="vip-actions">
-        <button type="button" class="primary" id="vipValidate" data-i18n="vipValidate">Valider</button>
-        <button type="button" class="ghost" id="vipClose" data-i18n="vipClose">Continuer en version libre</button>
+      <div class="tier-foot">
+        <button type="button" id="tierClose" data-i18n="tierClose">Fermer</button>
       </div>
-      <p class="vip-demo"><span data-i18n="vipDemo">Démo test :</span> <code>SWISSDZ-VIP</code></p>
     </div>
   </div>
   <script src="i18n/panelwire-i18n.js?v=plc-ladder"></script>
@@ -3555,29 +3611,28 @@
       });
     }
 
-    /* ========== VIP (code d’accès, pas de paiement réel) ========== */
-    const VIP_STORAGE_KEY = "swissdz-panel-vip";
-    const VIP_DEMO_CODE = "SWISSDZ-VIP";
-    const VIP_FREE_TYPES = new Set([
+    /* ========== Tiers Free / Silver / Gold (stub Play Billing) ========== */
+    const TIER_STORAGE_KEY = "wirelab-tier";
+    const TIER_LEGACY_VIP_KEY = "swissdz-panel-vip";
+    const TIER_ORDER = { free: 0, silver: 1, gold: 2 };
+    const BILLING_PRODUCT_IDS = {
+      silver_month: "wirelab_silver_month",
+      silver_year: "wirelab_silver_year",
+      gold_month: "wirelab_gold_month",
+      gold_year: "wirelab_gold_year"
+    };
+    /* Free : installation de base (pas Fluke / PV / VFD / kit Siemens complet). */
+    const TIER_FREE_TYPES = new Set([
       "compteur_sonelgaz",
-      "compteur_sonelgaz_3pn",
-      "compteur_3pn",
-      "disj1pn",
-      "disj",
-      "lampe",
-      "contacteur_1ph",
-      "knx_alim",
-      "knx_actionneur",
-      "edz_motor_6_terminales",
-      "edz_sensor_de_proximidad_inductivo_2_hilos_ac_dc",
-      /* structure de base pour poser les modules DIN */
-      "rail_din_35", "rail_din_long", "rail_din_embouts", "rail", "pe",
+      "disj1pn", "disj", "agcp_principal",
+      "idr2p", "idr",
+      "pe", "borniers", "edz_borne_n", "peigne",
+      "rail_din_35", "rail_din_long", "rail_din_embouts", "rail",
       "barrette_2vis", "barrette_3vis",
-      "pompe_forage",
-      "fluke_1664"
-    ]);
-    /* Divers : FREE uniquement cette liste (le reste de Divers = Pro). */
-    const DIVERS_FREE_IDS = new Set([
+      "lampe", "poussoir", "va_et_vient",
+      "bp", "bp_nc", "au", "marche", "selecteur",
+      "voyant", "voyantRouge", "voyantOrange",
+      "edz_tomacorriente_doble_pe",
       "edz_pulsador_verde_1nc",
       "edz_parada_de_emergencia_rojo_1nc",
       "edz_interuptor_doble",
@@ -3587,83 +3642,134 @@
       "edz_pulsador_up_1nc",
       "edz_pulsador_rojo_1nc",
       "edz_selector_de_2_posiciones_1nc",
-      "edz_abb_mo132_32",
-      "edz_abb_af09",
-      "edz_abb_tf42",
-      "edz_schneider_lc1d65",
-      "edz_schneider_lc1dt60a"
+      "contacteur_3ph", "contacteur", "thermique", "thermique_3ph",
+      "contacteur_1ph",
+      "edz_abb_af09", "edz_abb_tf42",
+      "moteur", "moteur_3ph", "edz_motor_6_terminales",
+      "plc"
     ]);
-    function isVipUnlocked() {
+    const VIP_FREE_TYPES = TIER_FREE_TYPES;
+    const DIVERS_FREE_IDS = TIER_FREE_TYPES;
+    function isLocalhostHost() {
       try {
-        if (localStorage.getItem(VIP_STORAGE_KEY) === "1") return true;
-      } catch (_) {}
-      /* École électricité (athmano) : bibliothèque complète avec photos */
+        const h = String(location.hostname || "");
+        return h === "localhost" || h === "127.0.0.1" || h === "[::1]" || h === "";
+      } catch (_) { return false; }
+    }
+    function normalizeTier(v) {
+      const s = String(v || "").trim().toLowerCase();
+      if (s === "gold" || s === "pro" || s === "vip") return "gold";
+      if (s === "silver") return "silver";
+      return "free";
+    }
+    function getTier() {
       try {
         const q = new URLSearchParams(location.search);
-        if (q.get("ecole") === "1" || q.get("school") === "1") return true;
+        if (q.get("ecole") === "1" || q.get("school") === "1") return "gold";
+        const qt = q.get("tier");
+        if (qt) return normalizeTier(qt);
       } catch (_) {}
-      return false;
-    }
-    function setVipUnlocked(on) {
       try {
-        if (on) localStorage.setItem(VIP_STORAGE_KEY, "1");
-        else localStorage.removeItem(VIP_STORAGE_KEY);
+        const saved = localStorage.getItem(TIER_STORAGE_KEY);
+        if (saved) return normalizeTier(saved);
+        if (localStorage.getItem(TIER_LEGACY_VIP_KEY) === "1") {
+          localStorage.setItem(TIER_STORAGE_KEY, "gold");
+          localStorage.removeItem(TIER_LEGACY_VIP_KEY);
+          return "gold";
+        }
       } catch (_) {}
-      refreshVipSurfaces();
+      return "free";
     }
-    function isVipFree(typeId) {
-      if (isVipUnlocked()) return true;
-      if (typeof isLibTypeFree === "function") return isLibTypeFree(typeId);
-      if (VIP_FREE_TYPES.has(typeId) || DIVERS_FREE_IDS.has(typeId)) return true;
-      if (String(typeId).startsWith("siemens_")) return true;
+    function setTier(tier) {
+      const next = normalizeTier(tier);
+      try {
+        localStorage.setItem(TIER_STORAGE_KEY, next);
+        localStorage.removeItem(TIER_LEGACY_VIP_KEY);
+      } catch (_) {}
+      refreshTierSurfaces();
+    }
+    function tierAtLeast(min) {
+      return (TIER_ORDER[getTier()] || 0) >= (TIER_ORDER[normalizeTier(min)] || 0);
+    }
+    function isGoldOnlyType(typeId) {
+      if (typeId === "fluke_1664") return true;
+      const def = (typeof LIB !== "undefined" && LIB) ? LIB[typeId] : null;
+      if (def && (def.flukeMeter || def.cat === "Appareil de mesure multifonction")) return true;
       return false;
     }
-    function refreshVipSurfaces() {
-      syncVipUi();
+    function isLibTypeFree(typeId) {
+      return TIER_FREE_TYPES.has(typeId);
+    }
+    function isTypeUnlocked(typeId) {
+      if (tierAtLeast("gold")) return true;
+      if (isGoldOnlyType(typeId)) return false;
+      if (tierAtLeast("silver")) return true;
+      return isLibTypeFree(typeId);
+    }
+    function isVipUnlocked() { return tierAtLeast("gold"); }
+    function isVipFree(typeId) { return isTypeUnlocked(typeId); }
+    function setVipUnlocked(on) { setTier(on ? "gold" : "free"); }
+    function refreshVipSurfaces() { refreshTierSurfaces(); }
+    function syncVipUi() { syncTierUi(); }
+    function closeVipGate() { closeTierGate(); }
+    function refreshTierSurfaces() {
+      syncTierUi();
       try { renderPaletteItems(); } catch (_) {}
       try { renderExamplesPanel(); } catch (_) {}
     }
-    function syncVipUi() {
-      const btn = document.getElementById("btnVip");
+    function syncTierUi() {
+      const tier = getTier();
+      const btn = document.getElementById("btnTier") || document.getElementById("btnVip");
       if (btn) {
-        const on = isVipUnlocked();
-        btn.classList.toggle("on", on);
-        btn.textContent = on ? t("btnVipOn") : t("btnVip");
-        btn.title = on ? t("btnVipTitleOn") : t("btnVipTitle");
-        btn.setAttribute("aria-pressed", on ? "true" : "false");
+        const labelKey = tier === "gold" ? "btnTierGold" : (tier === "silver" ? "btnTierSilver" : "btnTierFree");
+        btn.classList.toggle("on", tier !== "free");
+        btn.textContent = t(labelKey);
+        btn.title = t("btnTierTitle");
+        btn.setAttribute("aria-pressed", tier !== "free" ? "true" : "false");
+        btn.setAttribute("data-tier", tier);
       }
+      document.querySelectorAll(".tier-card[data-tier]").forEach((card) => {
+        card.classList.toggle("current", card.getAttribute("data-tier") === tier);
+      });
+      const dbg = document.getElementById("tierDebug");
+      if (dbg) dbg.classList.toggle("show", isLocalhostHost());
     }
-    function openVipGate() {
-      const gate = document.getElementById("vipGate");
-      const err = document.getElementById("vipErr");
-      const inp = document.getElementById("vipCode");
-      if (err) err.classList.remove("show");
-      if (inp) inp.value = "";
-      if (gate) {
-        gate.classList.add("open");
-        gate.setAttribute("aria-hidden", "false");
+    function openTierGate() {
+      const gate = document.getElementById("tierGate");
+      if (!gate) return;
+      syncTierUi();
+      gate.classList.add("open");
+      gate.setAttribute("aria-hidden", "false");
+    }
+    function closeTierGate() {
+      const gate = document.getElementById("tierGate");
+      if (!gate) return;
+      gate.classList.remove("open");
+      gate.setAttribute("aria-hidden", "true");
+    }
+    function stubPurchase(tier, productId) {
+      try {
+        console.info("[WireLab Billing stub]", productId || "", "→", tier);
+      } catch (_) {}
+      setTier(tier);
+      closeTierGate();
+    }
+    function exampleRequiredTier(ex) {
+      let proj = ex && (ex.project || ex.proj || ex.data);
+      if (!proj && ex && typeof ex.build === "function") {
+        try { proj = ex.build(); } catch (_) { proj = null; }
       }
-      if (inp) setTimeout(() => inp.focus(), 50);
-    }
-    function closeVipGate() {
-      const gate = document.getElementById("vipGate");
-      if (gate) {
-        gate.classList.remove("open");
-        gate.setAttribute("aria-hidden", "true");
+      const items = (proj && proj.items) || (ex && ex.items) || [];
+      let need = "free";
+      for (let i = 0; i < items.length; i++) {
+        const it = items[i];
+        if (!it || !it.type) continue;
+        if (isGoldOnlyType(it.type)) return "gold";
+        if (!isLibTypeFree(it.type)) need = "silver";
       }
+      return need;
     }
-    function validateVipCode() {
-      const inp = document.getElementById("vipCode");
-      const err = document.getElementById("vipErr");
-      const raw = (inp && inp.value ? inp.value : "").trim().toUpperCase();
-      if (raw === VIP_DEMO_CODE) {
-        setVipUnlocked(true);
-        closeVipGate();
-        return;
-      }
-      if (err) err.classList.add("show");
-    }
-    /* ========== fin VIP ========== */
+    /* ========== fin Tiers ========== */
 
     function isKnxBusTerm(termId) {
       const id = String(termId || "");
@@ -4857,19 +4963,8 @@
     function isDiversCat(def) {
       return !!(def && (def.cat === "Divers" || def.cat === "Variateurs"));
     }
-    function isLibTypeFree(typeId) {
-      if (VIP_FREE_TYPES.has(typeId) || DIVERS_FREE_IDS.has(typeId)) return true;
-      if (String(typeId).startsWith("siemens_")) return true;
-      const def = LIB[typeId];
-      if (def && def.cat === "Photovoltaïque") return true;
-      if (isBreakerLibItem(typeId, def)) return true;
-      if (isKnxLibItem(typeId, def)) return false;
-      if (isLockedBlueMotor(typeId, def)) return false;
-      if (isSensorLibItem(typeId, def)) return false;
-      if (isDiversCat(def)) return false;
-      if (String(typeId).startsWith("edz_")) return true;
-      return false;
-    }
+        /* isLibTypeFree défini dans le bloc Tiers (plus haut). */
+
     Object.keys(LIB).forEach((id) => {
       const d = LIB[id];
       if (!d) return;
@@ -8719,18 +8814,18 @@
     function exampleHasProItem(ex) {
       try {
         const proj = ex.build();
-        return ((proj && proj.items) || []).some((it) => it && !isLibTypeFree(it.type));
+        return exampleRequiredTier({ project: proj }) !== "free";
       } catch (_) { return false; }
     }
     function makeExampleTile(ex) {
       const btn = document.createElement("button");
       btn.type = "button";
-      const locked = !isVipUnlocked() && exampleHasProItem(ex);
-      btn.className = "example-tile" + (state.activeExampleId === ex.id ? " on" : "") + (locked ? " vip-locked" : "");
+      const locked = !tierAtLeast(exampleRequiredTier(ex));
+      btn.className = "example-tile" + (state.activeExampleId === ex.id ? " on" : "") + (locked ? " tier-locked" : "");
       btn.setAttribute("data-ex", ex.id);
       const title = t(ex.title);
-      btn.setAttribute("aria-label", locked ? (title + " — " + t("vipRequired")) : title);
-      btn.title = locked ? (title + " — " + t("vipRequired")) : title;
+      btn.setAttribute("aria-label", locked ? (title + " — " + t("tierRequired")) : title);
+      btn.title = locked ? (title + " — " + t("tierRequired")) : title;
       btn.appendChild(makeExampleThumb(ex));
       const strong = document.createElement("strong");
       strong.textContent = title;
@@ -8815,7 +8910,7 @@
     function loadExampleById(id) {
       const ex = exampleCatalog().find((e) => e.id === id);
       if (!ex) return;
-      if (!isVipUnlocked() && exampleHasProItem(ex)) { openVipGate(); return; }
+      if (!tierAtLeast(exampleRequiredTier(ex))) { openTierGate(); return; }
       if ((state.items.length || state.wires.length) && !confirm(t("confirmNew"))) return;
       if (state.sim) toggleSim();
       state.activeExampleId = id;
@@ -8894,7 +8989,9 @@
       if (tgt && tgt.closest && tgt.closest(
         "#schemView, .board-zoom, .brand-col, header, footer.toolbar-bottom, .play-fab,"
         + " #btnPlay, #btnPlayFab, #btnLang, #langMenu, #brandMenu, #brandDropdown, #langDropdown,"
-        + " .lib-foot-tools, .foot-pin-play, #btnLibToggle, #vipGate, .modal, #sizeModal"
+        + " #sectionOpts, #colors, .section-dropdown, .color-dropdown, .lang-dropdown,"
+        + " #sectionPicker, #colorPicker, #btnSection, #btnColor,"
+        + " .lib-foot-tools, .foot-pin-play, #btnLibToggle, #tierGate, .modal, #sizeModal"
       )) return;
       /* Pinch 2 doigts : ne jamais bloquer (zoom plan). */
       if (ev.type && ev.type.indexOf("touch") === 0) {
@@ -9017,7 +9114,7 @@
       await schemShowView(s.name, img.url);
       if (schemSession !== s) return;
       const ex = schemMatchExample(s.name);
-      if (!ex || (!isVipUnlocked() && exampleHasProItem(ex))) {
+      if (!ex || !tierAtLeast(exampleRequiredTier(ex))) {
         schemSetStatus(t("schemUnknown"));
         return;
       }
@@ -9305,7 +9402,7 @@
       if (except !== "color" && typeof window.__closeColorPicker === "function") window.__closeColorPicker();
       if (except !== "section" && typeof window.__closeSectionPicker === "function") window.__closeSectionPicker();
     }
-    /* Menus en position:fixed : la barre (overflow) ne les coupe plus. */
+    /* Menus en position:fixed : montés sur body pour échapper overflow-x du header téléphone. */
     function placeAnchoredMenu(panel, anchor) {
       if (!panel || !anchor) return;
       const r = anchor.getBoundingClientRect();
@@ -9323,6 +9420,23 @@
       panel.style.top = Math.round(top) + "px";
       panel.style.left = Math.round(left) + "px";
     }
+    function mountAnchoredMenu(panel, anchor) {
+      if (!panel || !anchor) return;
+      if (panel.parentElement !== document.body) document.body.appendChild(panel);
+      panel.classList.add("pw-menu-open");
+      placeAnchoredMenu(panel, anchor);
+      requestAnimationFrame(() => placeAnchoredMenu(panel, anchor));
+    }
+    function hideAnchoredMenu(panel) {
+      if (!panel) return;
+      panel.classList.remove("pw-menu-open");
+    }
+    function menuHitContains(root, panel, target) {
+      if (!target) return false;
+      if (root && root.contains && root.contains(target)) return true;
+      if (panel && panel.contains && panel.contains(target)) return true;
+      return false;
+    }
     (function initSectionPicker() {
       const picker = document.getElementById("sectionPicker");
       const btn = document.getElementById("btnSection");
@@ -9332,15 +9446,19 @@
         if (!picker || !btn) return;
         picker.classList.remove("open");
         btn.setAttribute("aria-expanded", "false");
+        hideAnchoredMenu(opts);
       };
       const openSectionPicker = () => {
         if (!picker || !btn) return;
         closeWirePickers("section");
         const langMenu = document.getElementById("langMenu");
         if (langMenu) langMenu.classList.remove("open");
+        hideAnchoredMenu(document.getElementById("langDropdown"));
+        const langBtn = document.getElementById("btnLang");
+        if (langBtn) langBtn.setAttribute("aria-expanded", "false");
         picker.classList.add("open");
         btn.setAttribute("aria-expanded", "true");
-        placeAnchoredMenu(opts, btn);
+        mountAnchoredMenu(opts, btn);
       };
       if (opts) {
         SECTION_VALUES.forEach((val) => {
@@ -9368,7 +9486,7 @@
       }
       document.addEventListener("pointerdown", (ev) => {
         if (!picker || !picker.classList.contains("open")) return;
-        if (picker.contains(ev.target)) return;
+        if (menuHitContains(picker, opts, ev.target)) return;
         closeSectionPicker();
       });
       document.addEventListener("keydown", (ev) => {
@@ -9401,19 +9519,24 @@
     (function initColorPicker() {
       const picker = document.getElementById("colorPicker");
       const btn = document.getElementById("btnColor");
+      const colors = document.getElementById("colors");
       const closeColorPicker = () => {
         if (!picker || !btn) return;
         picker.classList.remove("open");
         btn.setAttribute("aria-expanded", "false");
+        hideAnchoredMenu(colors);
       };
       const openColorPicker = () => {
         if (!picker || !btn) return;
         closeWirePickers("color");
         const langMenu = document.getElementById("langMenu");
         if (langMenu) langMenu.classList.remove("open");
+        hideAnchoredMenu(document.getElementById("langDropdown"));
+        const langBtn = document.getElementById("btnLang");
+        if (langBtn) langBtn.setAttribute("aria-expanded", "false");
         picker.classList.add("open");
         btn.setAttribute("aria-expanded", "true");
-        placeAnchoredMenu(document.getElementById("colors"), btn);
+        mountAnchoredMenu(colors, btn);
       };
       if (btn && picker) {
         btn.onclick = (ev) => {
@@ -9424,7 +9547,7 @@
       }
       document.addEventListener("pointerdown", (ev) => {
         if (!picker || !picker.classList.contains("open")) return;
-        if (picker.contains(ev.target)) return;
+        if (menuHitContains(picker, colors, ev.target)) return;
         closeColorPicker();
       });
       document.addEventListener("keydown", (ev) => {
@@ -9799,13 +9922,13 @@
       }
     }
     function appendPaletteItem(id, def) {
-      const locked = !isVipFree(id);
+      const locked = !isTypeUnlocked(id);
       const b = document.createElement("button");
       b.type = "button";
       const platine = def.kind === "platine" || /platine|tablero/i.test(id + " " + (def.name || ""));
-      b.className = "item" + (platine ? " item-platine" : "") + (locked ? " vip-locked" : "");
+      b.className = "item" + (platine ? " item-platine" : "") + (locked ? " tier-locked" : "");
       const disp = libDisplayName(id, def);
-      b.title = locked ? (disp + " — " + t("vipRequired")) : disp;
+      b.title = locked ? (disp + " — " + t("tierRequired")) : disp;
       const label = def.badge ? `${disp}` : disp;
       if (def.flukeMeter) {
         const face = document.createElement("span");
@@ -9831,7 +9954,7 @@
         b.innerHTML = `<span class="thumb">${(def.badge || def.prefix || "?").slice(0, 3)}</span><span>${disp}</span>`;
       }
       b.onclick = () => {
-        if (!isVipFree(id)) { openVipGate(); return; }
+        if (!isTypeUnlocked(id)) { openTierGate(); return; }
         add(id);
         closeMobileLib();
       };
@@ -10009,6 +10132,9 @@
     bindInstantTap(document.querySelector("header"));
     bindInstantTap(document.querySelector(".brand-col"));
     bindInstantTap(document.getElementById("btnPlayFab"));
+    bindInstantTap(document.getElementById("sectionOpts"));
+    bindInstantTap(document.getElementById("colors"));
+    bindInstantTap(document.getElementById("langDropdown"));
     try { syncLibInert(); } catch (_) {}
 
     function viewCenterWorld() {
@@ -10056,7 +10182,7 @@
       return p + state.counts[p];
     }
     function add(type) {
-      if (!isVipFree(type)) { openVipGate(); return; }
+      if (!isTypeUnlocked(type)) { openTierGate(); return; }
       const def = LIB[type];
       if (!def) return;
       if (def.kind === "barrette") {
@@ -10751,7 +10877,7 @@
     }
     function duplicateItem(item) {
       if (!item) return null;
-      if (!isVipFree(item.type)) { openVipGate(); return null; }
+      if (!isTypeUnlocked(item.type)) { openTierGate(); return null; }
       const def = LIB[item.type];
       if (!def) return null;
       pushHistory();
@@ -15766,8 +15892,9 @@
       if (!el || !el.closest) return false;
       return !!el.closest(
         ".lib-side, #libTop, .lib-backdrop, footer.toolbar-bottom, header, .brand-col, .board-zoom,"
-        + " .modal, #ctxMenu, #wireOpt, #vipGate, .vip-overlay, #sizeModal, #ladderPanel, #etsPanel,"
-        + " .play-fab, .foot-pin-play, .lib-foot-tools"
+        + " .modal, #ctxMenu, #wireOpt, #tierGate, .tier-gate, #sizeModal, #ladderPanel, #etsPanel,"
+        + " .play-fab, .foot-pin-play, .lib-foot-tools,"
+        + " #sectionOpts, #colors, #langDropdown, .section-dropdown, .color-dropdown, .lang-dropdown"
       );
     }
     function boardPinchPointOnCanvas(clientX, clientY) {
@@ -16028,22 +16155,32 @@
     if (btnWireTags) btnWireTags.onclick = () => {
       setShowWireTags(!state.showWireTags);
     };
-    document.getElementById("btnVip").onclick = () => {
-      if (isVipUnlocked()) {
-        if (confirm(t("confirmVipOff"))) {
-          setVipUnlocked(false);
-        }
-        return;
+    (function bindTierUi() {
+      const btn = document.getElementById("btnTier") || document.getElementById("btnVip");
+      if (btn) btn.onclick = () => openTierGate();
+      const closeBtn = document.getElementById("tierClose");
+      if (closeBtn) closeBtn.onclick = () => closeTierGate();
+      const freeBtn = document.getElementById("tierSelectFree");
+      if (freeBtn) freeBtn.onclick = () => { setTier("free"); closeTierGate(); };
+      [
+        ["tierBuySilverMonth", "silver", BILLING_PRODUCT_IDS.silver_month],
+        ["tierBuySilverYear", "silver", BILLING_PRODUCT_IDS.silver_year],
+        ["tierBuyGoldMonth", "gold", BILLING_PRODUCT_IDS.gold_month],
+        ["tierBuyGoldYear", "gold", BILLING_PRODUCT_IDS.gold_year]
+      ].forEach(([id, tier, pid]) => {
+        const el = document.getElementById(id);
+        if (el) el.onclick = () => stubPurchase(tier, pid);
+      });
+      const dbg = document.getElementById("tierDebug");
+      if (dbg) {
+        dbg.querySelectorAll("[data-debug-tier]").forEach((b) => {
+          b.onclick = () => { setTier(b.getAttribute("data-debug-tier")); closeTierGate(); };
+        });
       }
-      openVipGate();
-    };
-    document.getElementById("vipValidate").onclick = () => validateVipCode();
-    document.getElementById("vipClose").onclick = () => closeVipGate();
-    document.getElementById("vipCode").addEventListener("keydown", (ev) => {
-      if (ev.key === "Enter") validateVipCode();
-    });
+      syncTierUi();
+    })();
     document.getElementById("btnEts").onclick = () => {
-      if (!isVipUnlocked()) { openVipGate(); return; }
+      if (!tierAtLeast("silver")) { openTierGate(); return; }
       state.etsOpen = !state.etsOpen;
       syncEtsLayout();
     };
@@ -16213,8 +16350,8 @@
     window.closeControleElectrique = closeControleElectrique;
     const btnControle = document.getElementById("btnControle");
     const btnControleMenu = document.getElementById("btnControleMenu");
-    if (btnControle) btnControle.onclick = () => openControleElectrique();
-    if (btnControleMenu) btnControleMenu.onclick = () => openControleElectrique();
+    if (btnControle) btnControle.onclick = () => { if (!tierAtLeast("silver")) { openTierGate(); return; } openControleElectrique(); };
+    if (btnControleMenu) btnControleMenu.onclick = () => { if (!tierAtLeast("silver")) { openTierGate(); return; } openControleElectrique(); };
     const btnCtrlClose = document.getElementById("ctrlElecClose");
     if (btnCtrlClose) btnCtrlClose.onclick = () => closeControleElectrique();
     (function bindCtrlChrome() {
@@ -16346,6 +16483,7 @@
       }
       function releaseFlukeToBoard() {
         if (self.__flukeGone) return null;
+        if (!tierAtLeast("gold")) { openTierGate(); return null; }
         const r = box.getBoundingClientRect();
         const pt = boardPointFromClient(r.left, r.top);
         const z = boardZoom();
@@ -16557,6 +16695,7 @@
         const langBtn = document.getElementById("btnLang");
         if (langMenu) langMenu.classList.remove("open");
         if (langBtn) langBtn.setAttribute("aria-expanded", "false");
+        try { hideAnchoredMenu(document.getElementById("langDropdown")); } catch (_) {}
         menu.classList.add("open");
         btn.setAttribute("aria-expanded", "true");
         if (dropdown) {
@@ -16587,7 +16726,7 @@
             const act = el.getAttribute("data-brand-act");
             if (act === "knx") openLibCat("Domotique KNX");
             if (act === "formation") {
-              if (!isVipUnlocked()) { openVipGate(); return; }
+              if (!tierAtLeast("silver")) { openTierGate(); return; }
               state.etsOpen = true;
               syncEtsLayout();
             }
@@ -16739,7 +16878,7 @@
     });
 
     if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
-      navigator.serviceWorker.register("sw-pwire.js?v=pinch-r3").catch(function () {});
+      navigator.serviceWorker.register("sw-pwire.js?v=chrome-menus-r5").catch(function () {});
     }
     if ("launchQueue" in window && window.launchQueue && typeof window.launchQueue.setConsumer === "function") {
       window.launchQueue.setConsumer(function (params) {
@@ -16760,13 +16899,14 @@
         if (!menu || !btn) return;
         menu.classList.remove("open");
         btn.setAttribute("aria-expanded", "false");
+        hideAnchoredMenu(dropdown);
       };
       const openLangMenu = () => {
         if (!menu || !btn) return;
         closeWirePickers();
         menu.classList.add("open");
         btn.setAttribute("aria-expanded", "true");
-        placeAnchoredMenu(dropdown, btn);
+        mountAnchoredMenu(dropdown, btn);
       };
       if (btn && menu) {
         btn.onclick = (ev) => {
@@ -16793,7 +16933,7 @@
       }
       document.addEventListener("pointerdown", (ev) => {
         if (!menu || !menu.classList.contains("open")) return;
-        if (menu.contains(ev.target)) return;
+        if (menuHitContains(menu, dropdown, ev.target)) return;
         closeLangMenu();
       });
       document.addEventListener("keydown", (ev) => {
