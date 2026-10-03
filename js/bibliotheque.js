@@ -187,8 +187,25 @@
     lock.guardAccess(book.id, fn);
   }
 
+  function pdfAssetBase() {
+    const base = window.ElectroDzSite && window.ElectroDzSite.pdfAssetBase;
+    return typeof base === "string" ? base : "";
+  }
+
   function resolveAssetUrl(relativePath) {
     if (!relativePath || /^https?:\/\//i.test(relativePath)) return relativePath || "";
+    const clean = String(relativePath).replace(/^\.\//, "");
+    // PDF non déployés sur Pages → miroir GitHub raw.
+    if (/^pdf\//i.test(clean)) {
+      const remote = pdfAssetBase();
+      if (remote) {
+        try {
+          return new URL(clean, remote).href;
+        } catch (_e) {
+          return remote.replace(/\/?$/, "/") + clean;
+        }
+      }
+    }
     try {
       return new URL(relativePath, window.location.href).href;
     } catch (_e) {
@@ -249,12 +266,17 @@
     if (arabeArchiveLoaded) return Promise.resolve();
     if (arabeArchiveLoading) return arabeArchiveLoading;
     const meta = catalog && catalog.lazyArchives && catalog.lazyArchives.arabe;
-    const url = (meta && meta.url) || "data/livres-arabe-archive.json";
-    arabeArchiveLoading = fetch(url, { cache: "default" })
-      .then(function (res) {
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        return res.json();
-      })
+    const localUrl = (meta && meta.url) || "data/livres-arabe-archive.json";
+    const urls = [localUrl];
+    const remote = pdfAssetBase();
+    if (remote && !/^https?:\/\//i.test(localUrl)) {
+      try {
+        urls.push(new URL(localUrl, remote).href);
+      } catch (_e) {
+        urls.push(remote.replace(/\/?$/, "/") + localUrl.replace(/^\.\//, ""));
+      }
+    }
+    arabeArchiveLoading = fetchFirstOk(urls)
       .then(function (data) {
         mergeArchiveBooks((data && data.books) || []);
         arabeArchiveLoaded = true;
@@ -1356,12 +1378,34 @@
     });
   }
 
+  function catalogUrls() {
+    const urls = ["data/livres.json"];
+    const remote = pdfAssetBase();
+    if (remote) {
+      try {
+        urls.push(new URL("data/livres.json", remote).href);
+      } catch (_e) {
+        urls.push(remote.replace(/\/?$/, "/") + "data/livres.json");
+      }
+    }
+    return urls;
+  }
+
+  function fetchFirstOk(urls) {
+    let chain = Promise.reject(new Error("no url"));
+    urls.forEach(function (url) {
+      chain = chain.catch(function () {
+        return fetch(url, { cache: "default" }).then(function (res) {
+          if (!res.ok) throw new Error("HTTP " + res.status + " " + url);
+          return res.json();
+        });
+      });
+    });
+    return chain;
+  }
+
   function loadCatalog() {
-    fetch("data/livres.json", { cache: "default" })
-      .then(function (res) {
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        return res.json();
-      })
+    fetchFirstOk(catalogUrls())
       .then(function (data) {
         catalog = data;
         arabeArchiveLoaded = false;

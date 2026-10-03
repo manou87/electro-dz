@@ -435,7 +435,20 @@
   function normalizePdfUrl(url) {
     if (!url) return "";
     try {
-      const u = new URL(url, window.location.href);
+      let raw = String(url).trim();
+      const remote = window.ElectroDzSite && window.ElectroDzSite.pdfAssetBase;
+      // PDF exclus de GitHub Pages → miroir raw GitHub.
+      if (remote && !/^https?:\/\//i.test(raw) && /^\.?\/?pdf\//i.test(raw)) {
+        raw = new URL(raw.replace(/^\.\//, ""), remote).href;
+      } else if (
+        remote &&
+        /^https?:\/\//i.test(raw) &&
+        /electro-dz\.com\/pdf\//i.test(raw)
+      ) {
+        const path = raw.split("/pdf/")[1];
+        if (path) raw = new URL("pdf/" + path, remote).href;
+      }
+      const u = new URL(raw, window.location.href);
       if (u.hostname.includes("dropbox.com") && u.searchParams.get("dl") === "0") {
         u.searchParams.set("dl", "1");
       }

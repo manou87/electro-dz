@@ -1,7 +1,8 @@
 name: Deploy site to GitHub Pages
 
-# Artifact Pages limité à ~1 Go. On exclut pdf/ + data/ (trop lourds) pour
-# republier le site + swissdz-panel. Miroir de secours :
+# Artifact Pages limité à ~1 Go. On exclut pdf/ (~2,8 Go) pour republier
+# le site + swissdz-panel. data/ reste publié (catalogue bibliothèque ~5 Mo).
+# Miroir de secours panel :
 # https://cdn.jsdelivr.net/gh/manou87/electro-dz@main/swissdz-panel/
 
 on:
@@ -27,7 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
-      - name: Préparer l’artifact (<1 Go, sans pdf/data)
+      - name: Préparer l’artifact (<1 Go, sans pdf/)
         run: |
           mkdir -p _site
           rsync -a \
@@ -38,7 +39,6 @@ jobs:
             --exclude='scripts' \
             --exclude='supabase' \
             --exclude='pdf' \
-            --exclude='data' \
             --exclude='swissdz-panel/backups' \
             --exclude='swissdz-panel/assets/electrodz/_pre_swissdz_brand_backup' \
             --exclude='.github-token.local' \

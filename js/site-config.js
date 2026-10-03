@@ -74,11 +74,16 @@
     ],
   };
 
+  /** PDF hors artifact Pages (pdf/ exclu du déploiement, trop lourd). */
+  const PDF_ASSET_BASE =
+    'https://raw.githubusercontent.com/manou87/electro-dz/main/';
+
   g.ElectroDzSite = {
     scope: SCOPE,
     siteOrigin: SITE_ORIGIN,
     resolveSiteBase,
     pageUrl,
+    pdfAssetBase: PDF_ASSET_BASE,
     libraryProtected: LIBRARY_PROTECTED,
     /** Accès libre simulateur SwissDZ / OIBT uniquement (journée locale inclusive). */
     oibtFreeUntil: '2026-09-25',
