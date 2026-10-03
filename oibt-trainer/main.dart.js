@@ -25504,11 +25504,17 @@ _.d=d
 _.e=e},
 aUJ(a,b,c,d){var s,r,q,p="L-PE",o="L-N",n="\u26a0 Err U hors 100\u2013500V",m=a.e
 if(m===B.b7)return B.bY
-/* WireLab embed: pretest RISO/RLO from plan volts (trainer world often unpowered). */
+/* WireLab embed: pretest RISO/RLO/RCD from plan volts + DDR. */
 var _wlP=self.__wirelabFluke
 if(_wlP&&/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))){var _max=Math.max(+_wlP.volts.LN||0,+_wlP.volts.LPE||0,+_wlP.volts.NPE||0)
 if(m.a===1){if(_max>=30)return new A.jU(!1,null,null,"\u26a0 U>30V \u2014 RISO inhib\xe9 (U="+B.c.Z(_max,0)+" V)")
 return B.bY}if(m.a===2){if(_max>30)return new A.jU(!1,null,_max,"\u26a0 LIVE \u2014 RLO inhib\xe9 (U="+J.azU(_max,0)+" V)")
+return B.bY}if(m.a===5||m.a===6){var _rc=_wlP.rcd||{}
+if(_max<100)return new A.jU(!1,null,null,"\u26a0 Pas de secteur \u2014 RCD (U="+B.c.Z(_max,0)+" V)")
+if(_max>500)return new A.jU(!1,null,null,"\u26a0 Err U hors 100\u2013500V (U="+B.c.Z(_max,0)+" V)")
+if(!_rc.present)return new A.jU(!1,null,null,"\u26a0 Pas de DDR \u2014 brancher L/N sur le diff\xe9rentiel")
+if(!_rc.closed)return new A.jU(!1,null,null,"\u26a0 DDR ouvert \u2014 r\xe9armer puis TEST")
+if(!_rc.peOk)return new A.jU(!1,null,null,"CHECK LEADS \u2014 PE requis")
 return B.bY}}
 if(!b)return B.bY
 switch(m.a){case 1:return A.aSD(30,A.aSZ(a),d,"\u26a0 U>30V \u2014 RISO inhib\xe9")
@@ -83850,8 +83856,14 @@ r=A.bA(p,0,s[0]).length===0?"L-N":A.bA(p,0,s[0])
 if(q.gO().q4(r))return!1
 if(o&&A.a4f(A.bA(p,1,s[1]))<=0.5)return!1
 return!0},
-aqf(a){var s,r,q,p=this
-if(!p.Ym(a))return
+aqf(a){var s,r,q,p=this,_wlRcd,_mult
+/* WireLab embed : déclencher le DDR du plan après TEST RCD réussi. */
+_wlRcd=self.__wirelabFluke
+if(_wlRcd&&/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))&&(a.e===B.bX||a.e===B.bN)){s=_wlRcd.rcd||{}
+if(!s.present||!s.closed||!s.uid)return
+if(a.e===B.bX){_mult=A.a4f(A.bA(a.e,1,a.f[1]))
+if(_mult<=0.5)return}try{if(self.parent&&self.parent!==self)self.parent.postMessage({type:"wirelab-fluke-rcd-trip",uid:s.uid},"*")}catch(_){}
+return}if(!p.Ym(a))return
 s=p.ax
 if(s==null)return
 r=p.aoQ()
@@ -83964,10 +83976,19 @@ s.m(0,q,A.Jg(this.y,q))}this.sO(new A.hv(B.ve,s,B.vf,B.e9,B.e9,B.e9,null,B.bn))}
 jn(b1){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d,c,b,a,a0,a1=this,a2=null,a3="C\xe2blage OK",a4="CHECK LEADS",a5="L-N",a6=b1.e,a7=A.bA(a6,0,b1.f[0]),a8=a1.gO().a.h(0,B.b5),a9=a1.gO().a.h(0,B.be),b0=a1.gO().a.h(0,B.bL)
 /* WireLab embed: tips L/N/PE from parent postMessage (not Flutter probes). */
 var _wl=self.__wirelabFluke
-if(_wl&&/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))){var _pair=a7.length===0?a5:a7,_needL=!1,_needN=!1,_needPE=!1
+if(_wl&&/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))){if(a6===B.cM||a6===B.e3||a6===B.dl){var _okE=!!_wl.L&&!!_wl.N&&!!_wl.PE
+if(_okE)return new A.h8(!0,"L\xb7N\xb7PE",_wl.sim?a3:"",!1,!1,a2)
+return new A.h8(!1,"L\xb7N\xb7PE",a4,!1,!1,a2)}
+/* RCD ΔT / IΔn : F1=0°/180°, pas une paire — exiger L·N·PE + DDR détecté. */
+if(a6===B.bX||a6===B.bN){var _rc=_wl.rcd||{},_okR=!!_rc.present&&!!_rc.peOk
+if(_okR)return new A.h8(!0,"L\xb7N\xb7PE",(_wl.sim&&_rc.liveOk)?a3:"",!1,!1,a2)
+return new A.h8(!1,"L\xb7N\xb7PE",a4,!1,!1,a2)}
+var _pair=a7.length===0?a5:a7,_needL=!1,_needN=!1,_needPE=!1
 if(_pair==="L-PE"){_needL=!0;_needPE=!0}else if(_pair==="PE-N"||_pair==="N-PE"){_needN=!0;_needPE=!0}else if(_pair==="L-N"||_pair.length===0){_needL=!0;_needN=!0}else{if(B.d.n(_pair,"L"))_needL=!0
 if(B.d.n(_pair,"N"))_needN=!0
 if(B.d.n(_pair,"PE"))_needPE=!0}if(_needL||_needN||_needPE){var _ok=(!_needL||!!_wl.L)&&(!_needN||!!_wl.N)&&(!_needPE||!!_wl.PE)
+/* RISO/RLO : cordons libres OK sans bornes (air = isolant). */
+if(!_ok&&(a6===B.e2||a6===B.cL))_ok=!0
 if(_ok)return new A.h8(!0,A.eY(_pair,"-","\xb7"),_wl.sim?a3:"",!1,!1,a2)
 return new A.h8(!1,A.eY(_pair,"-","\xb7"),a4,!1,!1,a2)}}
 if(a6===B.e4&&a1.Lc()){s=a1.La(a6)
@@ -84070,21 +84091,41 @@ q=!1
 if(a0.a.n(0,B.hK))if(r>10){a1=a3==="L-N"||a3==="L-PE"||a3.length===0
 q=a1}return new A.cf(q?192:r,50,"V")
 case 2:if(!a5.a)return a6.$1(d)
+/* WireLab embed RLO: tip jointes → Ω bas ; séparées (air) → ouvert. Sans Play/bornes. */
+var _wlLo=self.__wirelabFluke
+if(_wlLo&&/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))){var _mxLo=Math.max(+_wlLo.volts.LN||0,+_wlLo.volts.LPE||0,+_wlLo.volts.NPE||0)
+if(_mxLo>30)return a6.$1(d)
+var _psLo=String(a3||""),_rkLo=_psLo.indexOf("L-N")>=0?"LN":(_psLo.indexOf("N-PE")>=0||_psLo.indexOf("PE-N")>=0?"NPE":"LPE")
+var _tsLo=(_wlLo.tipShortByPair||{})[_rkLo]
+var _bpLo=_wlLo.risoByPair||{},_rvLo=_bpLo[_rkLo]
+var _shortLo=!!a4||!!_tsLo||(_rvLo!=null&&+ _rvLo===0)
+if(_shortLo){if(a0.a.n(0,B.og))return B.QF
+return B.QN}return B.QK}
 if(a4){if(a0.a.n(0,B.og))return B.QF
 return B.QN}return B.QK
 case 1:p=a7.gmm()
-/* WireLab embed: live → no MΩ; dead + tips OK → honest open-circuit high MΩ. */
+/* WireLab embed RISO: live → inhibé; court tip/schéma → 0; ouvert (air) → MΩ = Uessai. */
 var _wlR=self.__wirelabFluke
 if(_wlR&&/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))){var _mxR=Math.max(+_wlR.volts.LN||0,+_wlR.volts.LPE||0,+_wlR.volts.NPE||0)
 if(_mxR>=30)return new A.cf(e,p,c)
-if(!a5.a&&!a4)return new A.cf(e,p,c)
-if(a4)return new A.cf(0,p,c)
+var _bp=_wlR.risoByPair||{}
+var _ps=String(a3||"")
+var _rk=_ps.indexOf("L-N")>=0?"LN":(_ps.indexOf("N-PE")>=0||_ps.indexOf("PE-N")>=0?"NPE":"LPE")
+var _ts=(_wlR.tipShortByPair||{})[_rk]
+var _rv=_bp[_rk]
+if(a4||_ts||(_rv!=null&&isFinite(+_rv)&&+_rv===0))return new A.cf(0,p,c)
+if(_rv!=null&&isFinite(+_rv)&&+_rv>0)return new A.cf(+_rv,p,c)
 if(_wlR.riso!=null&&isFinite(+_wlR.riso))return new A.cf(+_wlR.riso,p,c)
-return new A.cf(1/0,p,c)}
+/* Air / ouvert : MΩ = tension d'essai (500 V → 500 MΩ), comme Fluke réel. */
+return new A.cf(+p||500,p,c)}
 if(!a5.a&&!a4)return new A.cf(e,p,c)
 if(a4)return new A.cf(0,p,c)
 return new A.cf(A.aMb(p,a0.a.n(0,B.kg)),p,c)
 case 3:case 4:if(!a5.a&&!a4)return a6.$1(d)
+/* WireLab Labo terre: boucle Phase-PE injectée par le parent. */
+var _wlL=self.__wirelabFluke
+if(_wlL&&/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))&&_wlL.earthOhm!=null&&isFinite(+_wlL.earthOhm)&&(_wlL.earthMethod==="loop_pe"||a1===B.e3||a1===B.dl)){o=f.ph(a3,a1)
+return new A.cf(+_wlL.earthOhm,(o==null?230:+_wlL.earthOhm)||230,d)}
 if(a4){o=f.ph(a3,a1)
 return new A.cf(0.01,(o==null?230:o)/0.01,d)}if(a0.a.n(0,B.ok))return B.QM
 n=a1===B.dl?0.38:0.42
@@ -84094,6 +84135,13 @@ case 5:m=A.a4e(A.bA(a1,3,a2[3]))
 if(m==null)m=30
 l=A.a4f(A.bA(a1,1,a2[1]))
 k=m*0.05
+/* WireLab embed RCD ΔT : temps de déclenchement selon ×½ / ×1 / ×5. */
+var _wlDt=self.__wirelabFluke
+if(_wlDt&&/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))){var _rcDt=_wlDt.rcd||{}
+if(!a5.a||!_rcDt.present||!_rcDt.closed)return new A.cf(e,k,b)
+if(a4)return new A.cf(310,k,b)
+if(l<=0.5)return new A.cf(310,k,b)
+return new A.cf(l>=5?9.2:28.4,k,b)}
 if(!a5.a)return new A.cf(e,k,b)
 if(f.A8()===!1)return new A.cf(e,k,b)
 if(a4)return new A.cf(310,k,b)
@@ -84104,12 +84152,21 @@ return new A.cf(j,k,b)
 case 6:m=A.a4e(A.bA(a1,3,a2[3]))
 if(m==null)m=30
 k=m*0.05
+/* WireLab embed RCD IΔn : courant de déclenchement (~0,92×IΔn). */
+var _wlIn=self.__wirelabFluke
+if(_wlIn&&/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))){var _rcIn=_wlIn.rcd||{}
+if(!a5.a||!_rcIn.present||!_rcIn.closed)return new A.cf(e,k,a)
+if(a4)return new A.cf(m*0.01,k,a)
+return new A.cf(m*0.92,k,a)}
 if(!a5.a)return new A.cf(e,k,a)
 if(f.A8()===!1)return new A.cf(e,k,a)
 if(a4)return new A.cf(m*0.01,k,a)
 return new A.cf(a0.a.n(0,B.oi)?48:m*0.92,k,a)
 case 8:if(!a5.a)return a6.$1(d)
 if(a4||f.gO().F8(B.b5,B.bL))return B.QE
+/* WireLab Labo terre: R from parent (piquets / méthodes). */
+var _wlE=self.__wirelabFluke
+if(_wlE&&/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))&&_wlE.earthOhm!=null&&isFinite(+_wlE.earthOhm))return new A.cf(+_wlE.earthOhm,0,d)
 i=A.ch(f).bb($.azE(),t.i)
 return new A.cf(a0.a.n(0,B.oj)?42:i,0,d)
 case 7:if(!a5.a||!f.La(a1))return a6.$1("SEQ")
@@ -84441,6 +84498,54 @@ A.ch(s).uq($.cE(),new A.a46(s),t.lc)
 A.ch(s).uq($.Zy(),new A.a47(s),t.Rp)
 /* WireLab embed bridge: expose meter controller + ready ping. */
 self.__wirelabFlukeMeter=s
+try{s.__wlSetEarth=function(){s.vm(B.cM)};s.__wlSetLoop=function(){s.vm(B.e3)};s.__wlTest=function(){s.adJ()}
+/* RISO/RLO : maintenir TEST pour injecter (comme Fluke réel). */
+s.__wlTestDown=function(){s.__wlHoldPress()}
+s.__wlTestUp=function(){s.__wlHoldRelease()}
+s.__wlHoldPress=function(){var f=s,mode,q,p,o,n,emb
+emb=/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))
+if(!emb||!f.gO().a)return
+mode=f.gO().e
+if(mode!==B.e2&&mode!==B.cL)return
+if(f.__wlHolding)return
+f.__wlHolding=!0
+f.__wlHoldDone=!1
+if(f.__wlHoldTimer){self.clearTimeout(f.__wlHoldTimer);f.__wlHoldTimer=null}
+f.sO(f.gO().aiT(B.on,"TEST\u2026",!0))
+q=A.ch(f).bb($.cE().gc2(),t.h)
+p=A.ch(f).bb($.cE(),t.lc)
+o=A.aUJ(f.gO(),p.gz2(),q.A8(),new A.a44(f,q))
+if(!o.a){n=q.jn(f.gO());f.__wlHolding=!1
+f.sO(f.gO().aj3(!0,n.d,n.e,o.b,o.c,o.d==null?"Test inhib\xe9":o.d,!1,n.b));return}
+n=q.jn(f.gO())
+if(!n.a){f.__wlHolding=!1
+f.sO(f.gO().aj_(!0,n.d,n.e,n.c.length!==0?n.c:"CHECK LEADS",!1,n.b));return}
+f.__wlHoldTimer=self.setTimeout(function(){var m,l,k,j,i,h,g,r2
+f.__wlHoldTimer=null
+if(!f.__wlHolding)return
+if(!f.gO().a||(f.gO().e!==B.e2&&f.gO().e!==B.cL)){f.__wlHolding=!1;return}
+m=A.ch(f);l=$.Zz();k=t.un
+m.bb(l.gc2(),k).B8(f.gO().gFa())
+A.ch(f).bb(l.gc2(),k).anl()
+A.ch(f).bb(l,t.qA).gA()
+n=q.jn(f.gO())
+j=q.tI(f.gO())
+i=p.q4(A.bA(f.gO().e,0,f.gO().f[0]))?"COURT-CIRCUIT pointes":null
+h=f.gO().aj1(j.a==null,n.d,n.e,j.a,j.b,!1,n.b)
+g=A.aGn(h).e?(f.gO().e===B.cL?">2\u03a9":"LIMIT"):null
+r2=i==null?g:i
+f.sO(h.aiq(r2==null?new A.a45(new A.aj2(n.a,n.c)).$1(null):r2))
+q.aqf(f.gO())
+f.__wlHoldDone=!0},1100)}
+s.__wlHoldRelease=function(){var f=s,n,q
+if(!f.__wlHolding&&!f.__wlHoldTimer)return
+f.__wlHolding=!1
+if(f.__wlHoldTimer){self.clearTimeout(f.__wlHoldTimer);f.__wlHoldTimer=null}
+if(f.__wlHoldDone)return
+if(!f.gO().a)return
+q=A.ch(f).bb($.cE().gc2(),t.h)
+n=q.jn(f.gO())
+f.sO(f.gO().aj_(!0,n.d,n.e,"Maintenir TEST",!1,n.b))}}catch(_){}
 try{if(self.parent&&self.parent!==self)self.parent.postMessage({type:"fluke/ready"},"*")}catch(_){}
 return B.He},
 mE(){var s,r,q,p,o,n,m,l,k=this,j="CHECK LEADS"
@@ -84579,7 +84684,7 @@ p=this.gO()
 s=b>0
 r=s?B.os:B.ot
 this.sO(p.aiS(r,q,s?"\u25b2":"\u25bc"))},
-adJ(){var s,r,q,p,o,n,m,l,k,j,i,h,g,f=this
+adJ(){var s,r,q,p,o,n,m,l,k,j,i,h,g,f=this,_wlHold
 f.sO(f.gO().aiT(B.on,"TEST\u2026",!0))
 s=A.ch(f)
 r=$.cE()
@@ -84598,7 +84703,7 @@ n=q.jn(f.gO())
 if(!s){s=f.gO()
 r=r.length!==0?r:"CHECK LEADS"
 f.sO(s.aj_(!0,n.d,n.e,r,!1,n.b))
-return}m=A.ch(f)
+return}var _wlFinish=function(){m=A.ch(f)
 l=$.Zz()
 k=t.un
 m.bb(l.gc2(),k).B8(f.gO().gFa())
@@ -84613,7 +84718,11 @@ if(A.aGn(h).e)g=f.gO().e===B.cL?">2\u03a9":"LIMIT"
 else g=null
 m=i==null?g:i
 f.sO(h.aiq(m==null?new A.a45(new A.aj2(s,r)).$1(null):m))
-q.aqf(f.gO())}}
+q.aqf(f.gO())}
+/* Embed RISO/RLO : pas de clic unique — maintien via __wlHoldPress / __wlHoldRelease. */
+_wlHold=self.__wirelabFluke
+if(_wlHold&&/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))&&(f.gO().e===B.e2||f.gO().e===B.cL)){if(typeof f.__wlHoldPress==="function"){f.__wlHoldPress()
+return}}_wlFinish()}}
 A.a46.prototype={
 $2(a,b){this.a.mE()},
 $S:540}
@@ -84695,7 +84804,7 @@ $2(a,b){var s,r,q,p=this,o=null,n=b.b,m=b.d,l=p.b,k=l.c,j=l.d,i=k*2*n,h=j*2*m,g=
 g.a.toString
 s=A.bk(0)
 r=p.d
-r=A.b([A.hc(0,A.j_("assets/devices/fluke_parts/fluke_base_no_knob.jpg",B.B,o,B.bf,B.dR,!1,o,o,o)),A.c5(o,A.ia(B.X,A.air(B.B,p.e*3.141592653589793/180,A.j_("assets/devices/fluke_parts/dial_knob.png",B.B,o,B.bf,B.d8,!1,o,o,o)),B.a7,!1,o,o,o,o,o,o,o,new A.amX(g,l),new A.amY(g,l),new A.amZ(g,i,h,p.c),new A.an_(g,i,h,l),o,o,o,o,o,o,o,o,o,o,new A.an0(g,r,l),!1,B.bt),h,o,(l.a-k)*n,o,(l.b-j)*m,i),A.c5(o,A.kT(A.bk(3),A.aDs(new A.tK(r,o))),0.4513*m,o,0.3301*n,o,0.2457*m,0.3196*n)],t.p)
+r=A.b([A.hc(0,A.j_(/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))?"assets/devices/fluke_parts/fluke_base_no_knob_cutout.png":"assets/devices/fluke_parts/fluke_base_no_knob.jpg",B.B,o,B.bf,B.dR,!1,o,o,o)),A.c5(o,A.ia(B.X,A.air(B.B,p.e*3.141592653589793/180,A.j_("assets/devices/fluke_parts/dial_knob.png",B.B,o,B.bf,B.d8,!1,o,o,o)),B.a7,!1,o,o,o,o,o,o,o,new A.amX(g,l),new A.amY(g,l),new A.amZ(g,i,h,p.c),new A.an_(g,i,h,l),o,o,o,o,o,o,o,o,o,o,new A.an0(g,r,l),!1,B.bt),h,o,(l.a-k)*n,o,(l.b-j)*m,i),A.c5(o,A.kT(A.bk(3),A.aDs(new A.tK(r,o))),0.4513*m,o,0.3301*n,o,0.2457*m,0.3196*n)],t.p)
 for(q=0;q<11;++q)r.push(g.a3b(n,m,B.JZ[q]))
 return A.kT(s,A.cP(B.ac,r,B.S,B.ay,o))},
 $S:211}
@@ -84758,22 +84867,32 @@ $0(){var s=this.b
 this.a.w=A.awG(s.Tp(this.c.c)-s.x)},
 $S:0}
 A.amQ.prototype={
-$1(a){var s=this.a
-return s.a8(new A.amN(s,this.b))},
+$1(a){var s=this.a,r,m
+r=s.a8(new A.amN(s,this.b))
+/* Embed : appui TEST → démarre injection RISO/RLO. */
+if(this.b===B.on&&/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))){try{m=s.geU().bb($.e7().gc2(),t.kn)
+if(m&&(m.gO().e===B.e2||m.gO().e===B.cL)&&typeof m.__wlHoldPress==="function")m.__wlHoldPress()}catch(_){}}
+return r},
 $S:23}
 A.amN.prototype={
 $0(){return this.a.z=this.b},
 $S:0}
 A.amP.prototype={
-$0(){var s=this.a
+$0(){var s=this.a,m
+if(s.z===B.on&&/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))){try{m=s.geU().bb($.e7().gc2(),t.kn)
+if(m&&typeof m.__wlHoldRelease==="function")m.__wlHoldRelease()}catch(_){}}
 return s.a8(new A.amO(s))},
 $S:0}
 A.amO.prototype={
 $0(){return this.a.z=null},
 $S:0}
 A.amR.prototype={
-$1(a){var s=this.a
+$1(a){var s=this.a,m
 s.a8(new A.amM(s))
+/* Embed RISO/RLO : relâchement TEST (pas un one-shot). */
+if(this.b===B.on&&/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))){try{m=s.geU().bb($.e7().gc2(),t.kn)
+if(m&&(m.gO().e===B.e2||m.gO().e===B.cL)&&typeof m.__wlHoldRelease==="function"){m.__wlHoldRelease()
+return}}catch(_){}}
 s.geU().bb($.e7().gc2(),t.kn).aoM(this.b)},
 $S:50}
 A.amM.prototype={
@@ -85334,10 +85453,13 @@ s=e>0?B.c.aL(f-e-10,80,f):B.c.aL(f,80,f)
 r=A.bi("w")
 q=A.bi("h")
 p=this.a
-if(g/s>p){q.sd_(s)
+/* embed : cover (remplit le cadre, pas de bandes blanches letterbox). Sinon contain. */
+if(a0){if(g/s>p){r.sd_(g)
+q.sd_(r.aJ()/p)}else{q.sd_(s)
+r.sd_(q.aJ()*p)}}else if(g/s>p){q.sd_(s)
 r.sd_(q.aJ()*p)}else{r.sd_(g)
 q.sd_(r.aJ()/p)}o=(g-r.aJ())/2
-n=B.c.aL((s-q.aJ())/2,0,s)
+n=a0?(s-q.aJ())/2:B.c.aL((s-q.aJ())/2,0,s)
 p=r.aJ()
 m=q.aJ()
 j=r.aJ()

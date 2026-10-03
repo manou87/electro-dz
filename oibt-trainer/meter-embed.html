@@ -1,47 +1,52 @@
 <!DOCTYPE html>
 <html class="embed-meter">
 <head>
-  <base href="/oibt-trainer/">
-
+  <script>
+  (function () {
+    var b = document.createElement("base");
+    if (location.protocol === "http:" || location.protocol === "https:") {
+      b.href = "/oibt-trainer/";
+    } else {
+      b.href = "./";
+    }
+    document.head.insertBefore(b, document.head.firstChild);
+  })();
+  </script>
   <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="Fluke 1664 — embed PanelWire (face trainer authentique)">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="mobile-web-app-capable" content="yes">
   <title>SwissDZ · Fluke 1664 (embed)</title>
   <link rel="icon" type="image/png" href="favicon.png"/>
-
   <style>
     html.embed-meter, html.embed-meter body {
-      background: transparent !important;
-      background-color: transparent !important;
+      width: 100% !important; height: 100% !important;
+      margin: 0 !important; padding: 0 !important;
       overflow: hidden !important;
-      margin: 0 !important;
-      padding: 0 !important;
+      background: transparent !important;
+      touch-action: none !important;
     }
     flutter-view, flt-glass-pane, flt-scene-host, flt-canvas-container {
-      background: transparent !important;
-      background-color: transparent !important;
-      touch-action: none;
-    }
-    html.embed-meter flt-scene-host canvas,
-    html.embed-meter canvas {
-      background: transparent !important;
-      background-color: transparent !important;
+      position: absolute !important; inset: 0 !important;
+      width: 100% !important; height: 100% !important;
+      background: transparent !important; touch-action: none !important;
     }
   </style>
 </head>
 <body>
   <script>
   (function () {
+    try {
+      if (navigator.serviceWorker) {
+        navigator.serviceWorker.register = function () {
+          return Promise.reject(new Error("sw-disabled-embed"));
+        };
+      }
+    } catch (_) {}
     var u = new URL(window.location.href);
-    if (!/(?:^|[?&])embed=1(?:&|$)/.test(u.search)) {
-      u.searchParams.set("embed", "1");
-    }
-    if ((u.hash || "").toLowerCase().indexOf("/meter") === -1) {
-      u.hash = "#/meter";
-    }
+    if (!/(?:^|[?&])embed=1(?:&|$)/.test(u.search)) u.searchParams.set("embed", "1");
+    if ((u.hash || "").toLowerCase().indexOf("/meter") === -1) u.hash = "#/meter";
     var target = u.pathname + "?" + u.searchParams.toString() + u.hash;
     if (target !== window.location.pathname + window.location.search + window.location.hash) {
       history.replaceState(null, "", target);
@@ -50,41 +55,35 @@
       document.documentElement.style.background = "transparent";
       document.body.style.background = "transparent";
     } catch (_) {}
+    document.addEventListener("wheel", function (ev) {
+      if (ev.ctrlKey || ev.metaKey) ev.preventDefault();
+    }, { passive: false, capture: true });
   })();
   </script>
-  <!--
-    Pont WireLab → Flutter (vrai LCD, pas d’overlay peint).
-    - V~ : volts LN / LPE / NPE depuis le plan.
-    - RISO live (≥30 V entre pointes) : prétest refuse (U>30V — RISO inhibé).
-    - RISO mort (0 V) : MΩ ouvert honnête (>∞ / haut) si tips OK ; pas de modèle de défaut
-      d’isolement dans le plan pour l’instant (riso optionnel dans le payload).
-  -->
   <script>
   (function () {
     window.__wirelabFluke = {
       L: false, N: false, PE: false,
       volts: { LN: 0, LPE: 0, NPE: 0 },
-      maxV: 0,
-      live: false,
-      riso: null,
-      sim: false
+      maxV: 0, live: false, riso: null,
+      risoByPair: { LN: null, LPE: null, NPE: null },
+      tipShortByPair: { LN: false, LPE: false, NPE: false },
+      rcd: { present: false, closed: false, idnMa: 30, uid: null, peOk: false, liveOk: false },
+      sim: false,
+      earthOhm: null,
+      earthMethod: null
     };
     function applyMsg(d) {
       if (!d || typeof d !== "object") return false;
       var t = d.type;
-      if (t !== "wirelab-fluke-leads" && t !== "panelwire/fluke-state" && t !== "panelwire/fluke-measures") {
-        return false;
-      }
+      if (t !== "wirelab-fluke-leads" && t !== "panelwire/fluke-state" &&
+          t !== "panelwire/fluke-measures" && t !== "panelwire/fluke-test") return false;
       var wl = window.__wirelabFluke;
-      if (d.L != null || d.N != null || d.PE != null) {
-        if (d.L != null) wl.L = !!d.L;
-        if (d.N != null) wl.N = !!d.N;
-        if (d.PE != null) wl.PE = !!d.PE;
-      }
+      if (d.L != null) wl.L = !!d.L;
+      if (d.N != null) wl.N = !!d.N;
+      if (d.PE != null) wl.PE = !!d.PE;
       if (d.leads && typeof d.leads === "object") {
-        wl.L = !!d.leads.L;
-        wl.N = !!d.leads.N;
-        wl.PE = !!d.leads.PE;
+        wl.L = !!d.leads.L; wl.N = !!d.leads.N; wl.PE = !!d.leads.PE;
       }
       var v = d.volts;
       if (v && typeof v === "object") {
@@ -98,48 +97,89 @@
       wl.maxV = Math.max(wl.volts.LN, wl.volts.LPE, wl.volts.NPE);
       if (d.maxV != null) wl.maxV = Math.max(wl.maxV, +d.maxV || 0);
       wl.live = !!d.live || wl.maxV >= 30;
+      if (d.risoByPair && typeof d.risoByPair === "object") {
+        wl.risoByPair = {
+          LN: (d.risoByPair.LN != null && isFinite(+d.risoByPair.LN)) ? +d.risoByPair.LN : null,
+          LPE: (d.risoByPair.LPE != null && isFinite(+d.risoByPair.LPE)) ? +d.risoByPair.LPE : null,
+          NPE: (d.risoByPair.NPE != null && isFinite(+d.risoByPair.NPE)) ? +d.risoByPair.NPE : null
+        };
+      }
+      if (d.tipShortByPair && typeof d.tipShortByPair === "object") {
+        wl.tipShortByPair = {
+          LN: !!d.tipShortByPair.LN,
+          LPE: !!d.tipShortByPair.LPE,
+          NPE: !!d.tipShortByPair.NPE
+        };
+      }
+      if (d.rcd && typeof d.rcd === "object") {
+        wl.rcd = {
+          present: !!d.rcd.present,
+          closed: !!d.rcd.closed,
+          idnMa: isFinite(+d.rcd.idnMa) ? +d.rcd.idnMa : 30,
+          uid: d.rcd.uid || null,
+          peOk: !!d.rcd.peOk,
+          liveOk: !!d.rcd.liveOk
+        };
+      }
       if (d.riso != null && isFinite(+d.riso)) wl.riso = +d.riso;
       else if (d.riso === null) wl.riso = null;
-      else if (!wl.live && (wl.L || wl.N || wl.PE)) wl.riso = null; /* moteur → ∞ ouvert */
       if (d.sim != null) wl.sim = !!d.sim;
+      if (d.earthOhm != null && isFinite(+d.earthOhm)) wl.earthOhm = +d.earthOhm;
+      else if (d.earthOhm === null) wl.earthOhm = null;
+      if (d.earthMethod != null) wl.earthMethod = d.earthMethod;
+      if (t === "panelwire/fluke-test") {
+        runFlukeTest(d);
+        return true;
+      }
       return true;
     }
     function refreshMeter() {
       var m = window.__wirelabFlukeMeter;
+      if (m && typeof m.mE === "function") { try { m.mE(); } catch (_) {} }
+    }
+    function runFlukeTest(d) {
+      var m = window.__wirelabFlukeMeter;
+      var wl = window.__wirelabFluke;
       if (!m) return;
       try {
-        if (typeof m.mE === "function") m.mE();
+        var method = (d && d.earthMethod) || wl.earthMethod || "p3_62";
+        if (method === "loop_pe") {
+          if (typeof m.__wlSetLoop === "function") m.__wlSetLoop();
+        } else {
+          if (typeof m.__wlSetEarth === "function") m.__wlSetEarth();
+        }
+      } catch (_) {}
+      refreshMeter();
+      try {
+        if (typeof m.__wlTest === "function") m.__wlTest();
+        else if (typeof m.adJ === "function") m.adJ();
+        else if (typeof m.aoM === "function") m.aoM({ a: 0 });
       } catch (_) {}
     }
+    window.__wirelabFlukeRunTest = runFlukeTest;
     window.addEventListener("message", function (ev) {
       if (!applyMsg(ev && ev.data)) return;
       refreshMeter();
     });
-    /* Si le parent a déjà posté avant le boot Flutter. */
     var tries = 0;
     var boot = setInterval(function () {
       tries++;
-      if (window.__wirelabFlukeMeter || tries > 80) {
-        clearInterval(boot);
-        refreshMeter();
-      }
+      if (window.__wirelabFlukeMeter || tries > 80) { clearInterval(boot); refreshMeter(); }
     }, 250);
   })();
   </script>
-  <!-- Un seul canvas Flutter — pas de miroir alpha (évite le ghosting double Fluke). -->
   <script>
   (function () {
     function paintHost(root) {
       if (!root || root.getElementById("fluke-embed-trans")) return;
       var s = document.createElement("style");
       s.id = "fluke-embed-trans";
-      s.textContent = "flt-scene-host,flt-canvas-container,canvas{background:transparent!important;background-color:transparent!important}";
+      s.textContent = "flt-scene-host,flt-canvas-container,canvas,flt-glass-pane,flutter-view{background:transparent!important;background-color:transparent!important;}";
       try { root.appendChild(s); } catch (_) {}
     }
     function scan() {
-      document.querySelectorAll("flt-glass-pane").forEach(function (g) {
-        paintHost(g.shadowRoot);
-      });
+      document.querySelectorAll("flt-glass-pane").forEach(function (g) { paintHost(g.shadowRoot); });
+      paintHost(document.head);
     }
     var mo = new MutationObserver(scan);
     mo.observe(document.documentElement, { childList: true, subtree: true });
@@ -148,6 +188,30 @@
     setTimeout(scan, 1500);
   })();
   </script>
-  <script src="flutter_bootstrap.js?v=fluke-riso" async></script>
+  <script>
+  (function () {
+    function boot() {
+      var s = document.createElement("script");
+      s.src = "flutter_bootstrap.js?v=fluke-embed6";
+      document.body.appendChild(s);
+    }
+    var tasks = [];
+    try {
+      if (navigator.serviceWorker && navigator.serviceWorker.getRegistrations) {
+        tasks.push(navigator.serviceWorker.getRegistrations().then(function (regs) {
+          return Promise.all(regs.map(function (r) { return r.unregister(); }));
+        }));
+      }
+    } catch (_) {}
+    try {
+      if (window.caches && caches.keys) {
+        tasks.push(caches.keys().then(function (keys) {
+          return Promise.all(keys.map(function (k) { return caches.delete(k); }));
+        }));
+      }
+    } catch (_) {}
+    Promise.all(tasks).catch(function () {}).then(boot);
+  })();
+  </script>
 </body>
 </html>
