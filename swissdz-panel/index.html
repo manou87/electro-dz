@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="brand/logo-panelwire-icon.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="bout-relais-r1" />
+  <meta name="swissdz-rev" content="no-pv-cables-8777" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -605,6 +605,13 @@
         flex:none !important; width:min(320px, 92vw) !important; max-width:92vw !important;
         box-shadow:-8px 0 24px rgba(15,23,42,.18);
       }
+      .ets-panel {
+        width:min(460px, 96vw) !important; max-width:96vw !important;
+        padding:6px 7px 8px;
+      }
+      .ets-link-side { flex-basis:64px; width:64px; }
+      .ets-iface img { height:min(130px, 34vh); max-width:44px; }
+      .ets-desk-caption { font-size:9px; }
       .ladder-close {
         width:40px; height:40px; min-width:40px; min-height:40px; font-size:22px;
       }
@@ -1089,18 +1096,146 @@
     .ladder-empty {
       color:#64748b; font-size:12px; text-align:center; padding:24px 12px;
     }
-    /* ETS formation — panneau pédagogique (pas l’ETS officiel) */
+    /* ETS formation — scène PC + RJ45 + interface KNX/IP (pas l’ETS officiel) */
     .ets-panel {
-      display:none; flex-direction:column; flex:0 0 min(420px, 42vw);
-      width:min(420px, 42vw); max-width:48vw; flex-shrink:0;
-      background:#eef1f5; color:#1e293b; border-left:1px solid #c5cedd;
+      display:none; flex-direction:column; flex:0 0 min(680px, 58vw);
+      width:min(680px, 58vw); max-width:68vw; flex-shrink:0;
+      background:linear-gradient(165deg, #cfd8e6 0%, #b7c3d4 45%, #9eacc0 100%);
+      color:#1e293b; border-left:1px solid #8b9bb0;
       min-height:0; z-index:70; position:relative;
+      padding:8px 10px 12px; box-sizing:border-box;
     }
     .workspace.has-ets .ets-panel { display:flex; }
+    .ets-desk {
+      flex:1 1 auto; min-height:0; display:flex; flex-direction:column; gap:6px;
+    }
+    .ets-desk-caption {
+      flex:0 0 auto; margin:0; font-size:10px; font-weight:800; letter-spacing:.02em;
+      color:#334155; line-height:1.35;
+    }
+    .ets-desk-caption b { color:#0b5cab; }
+    .ets-desk-row {
+      flex:1 1 auto; min-height:0; display:flex; align-items:stretch; gap:6px;
+    }
+    .ets-laptop {
+      flex:1 1 auto; min-width:0; min-height:0; display:flex; flex-direction:column;
+      filter:drop-shadow(0 14px 28px rgba(15,23,42,.32));
+    }
+    .ets-laptop-lid {
+      flex:1 1 auto; min-height:0; display:flex; flex-direction:column;
+      background:linear-gradient(180deg, #4a5160 0%, #2a303a 55%, #1c2129 100%);
+      border-radius:14px 14px 4px 4px; padding:10px 11px 8px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.14), inset 0 -1px 0 rgba(0,0,0,.35);
+      border:1px solid #111827;
+    }
+    .ets-laptop-cam {
+      width:8px; height:8px; border-radius:50%; margin:0 auto 7px;
+      background:radial-gradient(circle at 35% 35%, #64748b, #0f172a 70%);
+      box-shadow:0 0 0 2px #1e293b, 0 0 0 3px rgba(148,163,184,.25);
+      flex:0 0 auto;
+    }
+    .ets-laptop-screen {
+      flex:1 1 auto; min-height:0; display:flex; flex-direction:column;
+      border-radius:3px; overflow:hidden; background:#eef1f5;
+      box-shadow:inset 0 0 0 2px #0b1220, 0 0 0 1px rgba(255,255,255,.08);
+    }
+    .ets-laptop-hinge {
+      flex:0 0 7px; margin:0 10px;
+      background:linear-gradient(180deg, #0f172a, #64748b 40%, #334155 60%, #0f172a);
+      border-radius:0 0 3px 3px;
+      box-shadow:0 1px 0 rgba(255,255,255,.12);
+    }
+    .ets-laptop-base {
+      flex:0 0 auto; position:relative;
+      background:linear-gradient(180deg, #d7dee8 0%, #b4becd 42%, #8f9aab 100%);
+      border-radius:0 0 18px 18px; padding:8px 16px 14px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.55), 0 8px 16px rgba(15,23,42,.2);
+      border:1px solid #7b8798; border-top:none;
+      transform:perspective(600px) rotateX(8deg); transform-origin:top center;
+    }
+    .ets-laptop-deck {
+      height:72px; border-radius:6px;
+      background:linear-gradient(180deg, #eef2f7, #d5dde8);
+      border:1px solid #7f8b9c; position:relative; overflow:hidden;
+      box-shadow:inset 0 1px 0 #fff;
+    }
+    .ets-laptop-kb {
+      position:absolute; inset:7px 8% 22px; border-radius:3px;
+      background:
+        repeating-linear-gradient(90deg, #4b5563 0 9px, #e2e8f0 9px 11px),
+        repeating-linear-gradient(180deg, #4b5563 0 8px, #e2e8f0 8px 10px);
+      background-blend-mode:multiply;
+      opacity:.55;
+      box-shadow:inset 0 0 0 1px rgba(15,23,42,.15);
+    }
+    .ets-laptop-pad {
+      position:absolute; left:50%; bottom:5px; transform:translateX(-50%);
+      width:34%; height:14px; border-radius:4px; background:linear-gradient(180deg,#cbd5e1,#94a3b8);
+      box-shadow:inset 0 0 0 1px rgba(15,23,42,.18);
+    }
+    .ets-rj45-jack {
+      position:absolute; right:14px; bottom:6px; width:16px; height:9px;
+      border-radius:1px; background:linear-gradient(180deg, #1e3a5f, #0b5cab);
+      box-shadow:inset 0 0 0 1px #093d73, 0 0 0 1px rgba(255,255,255,.25);
+    }
+    .ets-rj45-jack::after {
+      content:""; position:absolute; left:3px; right:3px; top:2px; bottom:2px;
+      background:#38bdf8; opacity:.75; border-radius:1px;
+    }
+    .ets-link-side {
+      flex:0 0 78px; width:78px; display:flex; flex-direction:column;
+      align-items:center; justify-content:flex-end; position:relative;
+      padding:8px 0 4px; min-height:0;
+    }
+    .ets-rj45-cable {
+      position:absolute; left:-28px; bottom:52px; width:58px; height:58%;
+      pointer-events:none; z-index:2; overflow:visible;
+    }
+    .ets-rj45-cable path.cable {
+      fill:none; stroke:#1e3a8a; stroke-width:5.5; stroke-linecap:round;
+    }
+    .ets-rj45-cable path.cable-hi {
+      fill:none; stroke:#38bdf8; stroke-width:1.8; stroke-linecap:round; opacity:.6;
+    }
+    .ets-rj45-tag {
+      position:absolute; left:-6px; top:42%; z-index:4;
+      font-size:8px; font-weight:800; letter-spacing:.04em; color:#1e3a8a;
+      background:rgba(255,255,255,.92); border:1px solid #93c5fd; border-radius:3px;
+      padding:1px 4px; pointer-events:none; transform:rotate(-12deg);
+    }
+    .ets-iface {
+      position:relative; z-index:3; display:flex; flex-direction:column;
+      align-items:center; gap:4px; max-width:100%;
+    }
+    .ets-iface img {
+      display:block; height:min(168px, 42vh); width:auto; max-width:52px;
+      object-fit:contain; filter:drop-shadow(0 4px 8px rgba(15,23,42,.28));
+    }
+    .ets-iface-rj45 {
+      width:22px; height:10px; border-radius:1px; margin-top:-2px; order:-1;
+      background:linear-gradient(180deg, #1e3a5f, #0b5cab);
+      box-shadow:inset 0 0 0 1px #093d73;
+    }
+    .ets-iface-label {
+      font-size:9px; font-weight:800; color:#0f172a; text-align:center;
+      line-height:1.2; max-width:76px;
+    }
+    .ets-laptop-screen .ets-sub { display:none; }
+    .ets-laptop-screen .ets-head h2 { font-size:12px; margin-bottom:2px; }
+    .ets-laptop-screen .ets-body { min-height:0; }
     .ets-head {
-      flex:0 0 auto; padding:10px 12px 8px; border-bottom:1px solid #c5cedd;
+      flex:0 0 auto; padding:8px 12px 0; border-bottom:1px solid #c5cedd;
       background:linear-gradient(180deg, #f8fafc 0%, #e8edf4 100%);
     }
+    .ets-menubar {
+      display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+      font-size:10px; font-weight:700; color:#64748b; margin-bottom:6px;
+    }
+    .ets-menubar .ets-brand {
+      background:#0b5cab; color:#fff; padding:2px 7px; border-radius:3px;
+      letter-spacing:.04em; font-size:10px;
+    }
+    .ets-menubar .on { color:#0b5cab; }
     .ets-head h2 {
       color:#334155; margin:0 0 4px; font-size:13px; letter-spacing:.06em;
       font-weight:800;
@@ -1116,13 +1251,82 @@
     .ets-telegram.off {
       background:#f1f5f9; color:#64748b; border-color:#cbd5e1;
     }
-    .ets-toolbar { display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+    .ets-toolbar { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-bottom:8px; }
     .ets-toolbar button {
       background:#fff; color:#1e293b; border:1px solid #94a3b8;
       padding:6px 10px; font-size:11px; border-radius:6px; font-weight:600;
     }
     .ets-toolbar button:hover { background:#f1f5f9; border-color:#64748b; }
+    .ets-toolbar #btnEtsClose,
+    .ets-head-bar #btnEtsCloseTop {
+      margin-left:auto; background:#dc2626; color:#fff; border-color:#b91c1c;
+      font-weight:800; letter-spacing:.02em; padding:7px 14px;
+      box-shadow:0 1px 2px rgba(127,29,29,.25);
+    }
+    .ets-toolbar #btnEtsClose:hover,
+    .ets-head-bar #btnEtsCloseTop:hover {
+      background:#b91c1c; border-color:#991b1b; color:#fff;
+    }
+    .ets-head-bar {
+      display:flex; align-items:center; gap:8px; margin:0 0 6px;
+    }
+    .ets-head-bar h2 { flex:1 1 auto; margin:0; }
+    .ets-tabs {
+      display:flex; flex-wrap:wrap; gap:0; margin:0 -12px;
+      border-top:1px solid #d5deea; background:#dfe7f1;
+    }
+    .ets-tab {
+      flex:1 1 auto; min-width:72px; border:none; border-right:1px solid #c5cedd;
+      background:transparent; color:#475569; font-size:10px; font-weight:800;
+      padding:8px 6px; cursor:pointer;
+    }
+    .ets-tab:hover { background:#edf2f7; }
+    .ets-tab.on {
+      background:#fff; color:#0b5cab; box-shadow:inset 0 -2px 0 #0b5cab;
+    }
     .ets-body { flex:1 1 auto; overflow:auto; padding:10px 12px 16px; background:#e8edf3; }
+    .ets-mode-hint {
+      font-size:10px; line-height:1.4; color:#475569; background:#fff;
+      border:1px solid #c5cedd; border-radius:6px; padding:8px 10px; margin-bottom:10px;
+    }
+    .ets-mode-hint b { color:#0b5cab; }
+    .ets-tree {
+      list-style:none; margin:0; padding:0; font-size:11px;
+    }
+    .ets-tree li { margin:0; }
+    .ets-tree button.ets-tree-item {
+      width:100%; text-align:left; border:none; background:transparent;
+      padding:5px 6px; border-radius:4px; cursor:pointer; font-size:11px; font-weight:600;
+      color:#1e293b; display:flex; gap:6px; align-items:center;
+    }
+    .ets-tree button.ets-tree-item:hover { background:#e2e8f0; }
+    .ets-tree button.ets-tree-item.on { background:#dbeafe; color:#1d4ed8; }
+    .ets-tree .nest { padding-left:14px; }
+    .ets-drop {
+      min-height:36px; border:1.5px dashed #94a3b8; border-radius:6px;
+      background:#f8fafc; padding:6px; margin-top:6px; font-size:10px; color:#64748b;
+    }
+    .ets-drop.over { border-color:#0b5cab; background:#eff6ff; color:#1d4ed8; }
+    .ets-obj-chip {
+      display:inline-flex; align-items:center; gap:4px; margin:2px;
+      padding:3px 7px; border-radius:4px; background:#e0f2fe; border:1px solid #7dd3fc;
+      font-size:10px; font-weight:700; color:#075985; cursor:grab;
+    }
+    .ets-props-box {
+      border:1px solid #b8c4d6; border-radius:8px; background:#fff; padding:10px; margin-top:8px;
+    }
+    .ets-props-box h4 { margin:0 0 8px; font-size:11px; color:#0b5cab; }
+    .ets-status {
+      font-size:10px; color:#64748b; margin-top:10px; padding-top:8px; border-top:1px solid #dbe3ee;
+      font-family:ui-monospace, Menlo, monospace;
+    }
+    button.ets-card.ets-catalog-item {
+      display:block; width:100%; text-align:left; cursor:pointer;
+      font:inherit; color:inherit; margin:0 0 8px;
+    }
+    button.ets-card.ets-catalog-item:hover {
+      border-color:#0b5cab; background:#eff6ff; box-shadow:0 0 0 1px #93c5fd;
+    }
     .ets-card {
       margin-bottom:10px; border:1px solid #b8c4d6; border-radius:8px;
       background:#fff; overflow:hidden; box-shadow:0 1px 2px rgba(15,23,42,.04);
@@ -1240,11 +1444,17 @@
       width:18%; height:10%; border-radius:6px; cursor:pointer; border:2px solid transparent;
     }
     .knx-thermo-btn:hover { border-color:rgba(37,99,235,.5); background:rgba(37,99,235,.08); }
-    .knx-bin-hit {
+    .knx-bin-hit, .knx-man-hit {
       position:absolute; z-index:40; transform:translate(-50%,-50%);
       width:12%; height:8%; border-radius:4px; cursor:pointer; border:2px solid transparent;
+      box-sizing:border-box; background:transparent;
     }
-    .knx-bin-hit.on { border-color:rgba(34,197,94,.75); background:rgba(34,197,94,.2); }
+    .knx-bin-hit.on, .knx-man-hit.on {
+      border-color:rgba(34,197,94,.75); background:rgba(34,197,94,.18);
+    }
+    .knx-bin-hit:hover, .knx-man-hit:hover {
+      border-color:rgba(37,99,235,.45); background:rgba(37,99,235,.08);
+    }
 
     .item {
       display:flex; flex-direction:column; gap:3px; align-items:center; justify-content:center;
@@ -1367,10 +1577,10 @@
     #board.mode-select .dev { cursor:grab; touch-action:none; }
     #board.mode-select .dev:active { cursor:grabbing; }
     /* Doigt auto sur la face d'appui (pas un outil). Ailleurs : main, flèche ou croix. */
-    #board.mode-select .dev :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .press-face),
-    #board.mode-wire .dev :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .press-face),
-    #board.mode-select .dev:active :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .press-face),
-    #board.mode-wire .dev:active :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .press-face) {
+    #board.mode-select .dev :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-man-hit, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .press-face),
+    #board.mode-wire .dev :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-man-hit, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .press-face),
+    #board.mode-select .dev:active :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-man-hit, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .press-face),
+    #board.mode-wire .dev:active :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-man-hit, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .press-face) {
       cursor:pointer;
     }
     #board.mode-wire { cursor:crosshair; }
@@ -1388,7 +1598,7 @@
       position:absolute; inset:0; display:grid; place-items:center;
       color:var(--muted); font-size:15px; pointer-events:none; text-align:center; padding:24px;
     }
-    /* Stacking: rail (8) → modules (20) → fils (40) → pastilles (60) */
+    /* Stacking: rail (8) → modules (20) → fils (40) → module sélectionné+poignées (52) → pastilles (60) */
     /* Image pure : pas de bande/bordure ; sélection = outline léger. */
     .dev {
       position:absolute; border:none; background:transparent; border-radius:0;
@@ -1396,8 +1606,16 @@
       -webkit-user-select:none; user-select:none;
       -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent;
     }
-    /* Cadre = boîte image (pas d’offset) pour que les 4/8 poignées collent au composant */
-    .dev.sel { outline:1.5px solid #93c5fd; outline-offset:0; }
+    /* Cadre = boîte image (pas d’offset) pour que les 4/8 poignées collent au composant.
+       Au-dessus des fils (z=40) sinon le hit-test des wires vole les coins resize. */
+    .dev.sel { outline:1.5px solid #93c5fd; outline-offset:0; z-index:52; }
+    .dev.sel.rail { z-index:52; }
+    .dev.sel.pv-support { z-index:52; }
+    /* Clip KM+FR : contacteur au-dessus pour masquer les broches cuivre du thermique. */
+    .dev.km-clip-guest { z-index:43; }
+    .dev.km-clip-host { z-index:46; }
+    .dev.km-clip-guest.sel { z-index:52; }
+    .dev.km-clip-host.sel { z-index:53; }
     .dev img {
       position:absolute; inset:0; z-index:1;
       width:100%; height:100%; object-fit:fill; object-position:center;
@@ -1528,8 +1746,8 @@
     .dev.rail { z-index:8; background:transparent; box-shadow:none; }
     /* Support PV : sous les modules, y compris sélectionné (les panneaux restent visibles). */
     .dev.pv-support { z-index:7; background:transparent; box-shadow:none; }
-    /* Rail sélectionné : au-dessus des modules pour que les poignées resize restent cliquables */
-    .dev.rail.sel { z-index:25; }
+    /* Rail sélectionné : au-dessus des fils (comme .dev.sel) pour poignées resize */
+    .dev.rail.sel { z-index:52; }
     /* Fallback sans photo (ne doit pas dessiner de barre grise si image présente). */
     .dev.rail-body {
       z-index:8; background:transparent; box-shadow:none;
@@ -1555,10 +1773,27 @@
       background:repeating-linear-gradient(-45deg, #c4d600 0 3px, #008c45 3px 6px);
       color:#111; font-size:6px;
     }
+    /* Connecteur bus KNX : rectangle rouge/noir (pas cercle vert) */
     .term.knxbus {
-      width:16px; height:16px; margin:-8px 0 0 -8px;
-      background:#009640; color:#fff; font-size:6px; letter-spacing:-0.02em;
-      box-shadow:0 1px 3px rgba(0,0,0,.4);
+      position:absolute; width:22px; height:14px; margin:-7px 0 0 -11px;
+      border-radius:2px; padding:0; gap:0;
+      background:transparent; color:#fff; font-size:5px; letter-spacing:-0.02em;
+      box-shadow:none; overflow:visible;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+    }
+    .term.knxbus .knx-pair {
+      display:flex; width:100%; height:10px; border-radius:2px; overflow:hidden;
+      border:1px solid #1a1a1a; box-shadow:0 1px 2px rgba(0,0,0,.45);
+      flex:0 0 auto;
+    }
+    .term.knxbus .knx-m,
+    .term.knxbus .knx-p { flex:1 1 50%; display:block; min-width:0; height:100%; }
+    .term.knxbus .knx-m { background:#1a1a1a; }
+    .term.knxbus .knx-p { background:#e11d2e; }
+    .term.knxbus .knx-ch {
+      position:absolute; top:-9px; left:50%; transform:translateX(-50%);
+      font-size:6px; font-weight:800; color:#fff; line-height:1;
+      text-shadow:0 0 2px #000, 0 1px 2px #000; white-space:nowrap; pointer-events:none;
     }
     .term.hot { box-shadow:0 0 0 2px #fecaca, 0 1px 2px rgba(0,0,0,.25); }
     /* Barrettes de couplage (laiton) : sous les vis-bornes, au-dessus de la photo */
@@ -1603,8 +1838,8 @@
     .thumb.barrette-t i {
       width:7px; height:7px; border-radius:50%; background:#1a1208; display:block;
     }
-    .term.knxbus.hot {
-      box-shadow:0 0 0 2px rgba(0,150,64,.45), 0 1px 3px rgba(0,0,0,.35);
+    .term.knxbus.hot .knx-pair {
+      box-shadow:0 0 0 2px rgba(225,29,46,.55), 0 1px 3px rgba(0,0,0,.35);
     }
     /* Câblage semi-auto : départ + aimant borne cible */
     .term.wire-from {
@@ -1875,13 +2110,13 @@
     }
     /* Court-circuit : bannière + arc / étincelles */
     .sc-banner {
-      position:absolute; top:10px; left:50%; transform:translateX(-50%);
-      z-index:120; pointer-events:none;
-      background:#7f1d1d; color:#fff; font-weight:800; font-size:14px;
-      letter-spacing:.04em; padding:8px 16px; border-radius:10px;
+      position:absolute; z-index:120; pointer-events:none;
+      transform:translate(-50%, calc(-100% - 18px));
+      background:#7f1d1d; color:#fff; font-weight:800; font-size:13px;
+      letter-spacing:.04em; padding:7px 12px; border-radius:10px;
       box-shadow:0 8px 28px rgba(127,29,29,.45);
       animation: scPulse .35s ease-in-out infinite alternate;
-      white-space:nowrap;
+      white-space:nowrap; max-width:min(280px, 70vw);
     }
     .sc-banner small { display:block; font-weight:600; font-size:11px; opacity:.9; margin-top:2px; }
     @keyframes scPulse {
@@ -2250,6 +2485,25 @@
       box-shadow:0 0 7px 2px rgba(34,197,94,.95), 0 0 14px 4px rgba(34,197,94,.4);
       filter:brightness(1.25);
     }
+    /* TXA116 : pastilles horizontales I>Imax / OK par sortie C1·C2 */
+    .knx-psu-led {
+      position:absolute; width:12.5%; height:1.35%; border-radius:1px;
+      transform:translate(-50%,-50%); pointer-events:none; z-index:28;
+      opacity:.35;
+      background:rgba(20,20,20,.45);
+    }
+    .knx-psu-led.ok.on {
+      opacity:1; mix-blend-mode:screen;
+      background:linear-gradient(180deg, #dcfce7, #4ade80 40%, #16a34a);
+      box-shadow:0 0 5px 1px rgba(34,197,94,1), 0 0 14px 3px rgba(34,197,94,.55);
+      filter:brightness(1.35);
+    }
+    .knx-psu-led.imax.on {
+      opacity:1; mix-blend-mode:screen;
+      background:linear-gradient(180deg, #fee2e2, #f87171 40%, #dc2626);
+      box-shadow:0 0 5px 1px rgba(239,68,68,1), 0 0 14px 3px rgba(239,68,68,.5);
+      filter:brightness(1.3);
+    }
     .knx-key {
       position:absolute; z-index:40; border-radius:10%;
       transform:translate(-50%,-50%); cursor:pointer;
@@ -2392,15 +2646,20 @@
       letter-spacing:-0.02em;
       opacity:1; visibility:visible;
     }
-    /* Poignées collées aux 4 côtés + coins (= bords réels de l’image, object-fit:fill) */
+    /* Poignées collées aux 4 côtés + coins (= bords réels de l’image, object-fit:fill).
+       Zone hit élargie (padding via ::after) pour prioriser resize vs fils proches. */
     .rhandle {
-      position:absolute; width:14px; height:14px;
+      position:absolute; width:18px; height:18px;
       margin:0; transform:translate(-50%, -50%);
       background:#fff; border:1.5px solid #2563eb; border-radius:2px;
-      z-index:80; box-sizing:border-box; pointer-events:auto;
+      z-index:90; box-sizing:border-box; pointer-events:auto;
       touch-action:none;
       -webkit-user-select:none; user-select:none;
       -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent;
+    }
+    .rhandle::after {
+      content:""; position:absolute; inset:-10px;
+      pointer-events:auto;
     }
     .rhandle.n  { top:0; left:50%; cursor:ns-resize; }
     .rhandle.s  { top:100%; left:50%; cursor:ns-resize; }
@@ -2603,6 +2862,22 @@
     .lang-dropdown button[aria-selected="true"] {
       background:var(--on-bg); color:var(--on-text);
     }
+    #btnMute.sound-toggle {
+      position:relative;
+    }
+    #btnMute .sound-ico-off { display:none; }
+    #btnMute.is-muted .sound-ico-on { display:none; }
+    #btnMute.is-muted .sound-ico-off { display:block; }
+    #btnMute.is-muted {
+      color:#b91c1c;
+      border-color:#fecaca;
+      background:#fef2f2;
+    }
+    html[data-theme="dark"] #btnMute.is-muted {
+      color:#fca5a5;
+      border-color:#7f1d1d;
+      background:#450a0a;
+    }
     #btnTheme.theme-toggle {
       color:var(--btn-text); border:1px solid var(--border); background:var(--surface-2);
     }
@@ -2657,6 +2932,21 @@
     html[data-theme="dark"] .ladder-panel,
     html[data-theme="dark"] .ets-panel {
       background:#0b1220; color:var(--text); border-color:var(--line);
+    }
+    html[data-theme="dark"] .ets-panel {
+      background:linear-gradient(165deg, #1a2334 0%, #0f172a 55%, #0b1220 100%);
+    }
+    html[data-theme="dark"] .ets-desk-caption { color:#cbd5e1; }
+    html[data-theme="dark"] .ets-desk-caption b { color:#93c5fd; }
+    html[data-theme="dark"] .ets-iface-label { color:#e2e8f0; }
+    html[data-theme="dark"] .ets-rj45-tag {
+      color:#93c5fd; background:rgba(15,23,42,.9); border-color:#3b82f6;
+    }
+    html[data-theme="dark"] .ets-laptop-base {
+      background:linear-gradient(180deg, #334155, #1e293b);
+    }
+    html[data-theme="dark"] .ets-laptop-deck {
+      background:linear-gradient(180deg, #475569, #334155); border-color:#64748b;
     }
     html[data-theme="dark"] .ladder-head,
     html[data-theme="dark"] .ets-head {
@@ -3231,7 +3521,12 @@
               <button type="button" role="option" data-set-lang="ar" aria-selected="false">العربية</button>
             </div>
           </div>
-          <button id="btnControle" class="btn-controle" type="button" title="Contrôle électrique — bibliothèque et testeur, maquette locale">Contrôle électrique</button>
+          <button id="btnMute" class="btn-ico sound-toggle" type="button"
+            data-i18n-title="btnSoundOnTitle" data-i18n-aria="btnSoundAria"
+            title="Sons activés — cliquer pour couper" aria-label="Sons" aria-pressed="false">
+            <svg class="sound-ico-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10v4h3.2L12 18V6L7.2 10H4z"/><path d="M15.2 9.2a3.6 3.6 0 0 1 0 5.6"/><path d="M17.6 7a6.2 6.2 0 0 1 0 10"/></svg>
+            <svg class="sound-ico-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10v4h3.2L12 18V6L7.2 10H4z"/><path d="m16 9 5 6M21 9l-5 6"/></svg>
+          </button>
           <button id="btnTheme" class="btn-ico theme-toggle" type="button"
             data-i18n-title="themeToDark" data-i18n-aria="themeAria"
             title="Thème noir" aria-label="Thème" aria-pressed="false">
@@ -3315,16 +3610,67 @@
         <div id="ladderBody" class="ladder-body"></div>
       </aside>
       <aside id="etsPanel" class="ets-panel" data-i18n-aria="etsAria" aria-label="ETS formation">
-        <div class="ets-head">
-          <h2 data-i18n="etsTitle">ETS FORMATION</h2>
-          <p class="ets-sub" data-i18n="etsSub" data-i18n-html="1">Outil pédagogique SwissDz — même logique que l’ETS (adresses physiques, objets de communication, GA, liens). Ce n’est <b>pas</b> le logiciel ETS officiel KNX Association.</p>
-          <div id="etsTelegram" class="ets-telegram off" data-i18n="etsBusIdle">Bus : aucun télégramme</div>
-          <div class="ets-toolbar">
-            <button type="button" id="btnEtsReset" data-i18n="btnEtsReset" data-i18n-title="btnEtsResetTitle" title="Réinitialiser les adresses par défaut">Reset adresses</button>
-            <button type="button" id="btnEtsClose" data-i18n="btnEtsClose" data-i18n-title="btnEtsCloseTitle" title="Fermer">Fermer</button>
+        <div class="ets-desk">
+          <p class="ets-desk-caption">PC (ETS) → câble <b>RJ45</b> → interface <b>KNX/IP</b> → bus KNX</p>
+          <div class="ets-desk-row">
+            <div class="ets-laptop">
+              <div class="ets-laptop-lid">
+                <div class="ets-laptop-cam" aria-hidden="true"></div>
+                <div class="ets-laptop-screen">
+                  <div class="ets-head">
+                    <div class="ets-menubar">
+                      <span class="ets-brand">ETS</span>
+                      <span>Éditer</span>
+                      <span class="on">Espace de travail</span>
+                      <span>Programmation</span>
+                      <span>Diagnostic</span>
+                    </div>
+                    <div class="ets-head-bar">
+                      <h2 data-i18n="etsTitle">ETS FORMATION</h2>
+                      <button type="button" id="btnEtsCloseTop" data-i18n="btnEtsClose" data-i18n-title="btnEtsCloseTitle" title="Fermer l’ETS">✕ Fermer</button>
+                    </div>
+                    <p class="ets-sub" data-i18n="etsSub" data-i18n-html="1">Outil pédagogique SwissDz — même logique que l’ETS (adresses physiques, objets de communication, GA, liens). Ce n’est <b>pas</b> le logiciel ETS officiel KNX Association.</p>
+                    <div id="etsTelegram" class="ets-telegram off" data-i18n="etsBusIdle">Bus : aucun télégramme</div>
+                    <div class="ets-toolbar">
+                      <button type="button" id="btnEtsNewProject" title="Créer un nouveau projet ETS">+ Projet</button>
+                      <button type="button" id="btnEtsDownloadAddr" title="Télécharger adresse individuelle (pédagogique)">⬇ Adresse indiv.</button>
+                      <button type="button" id="btnEtsReset" data-i18n="btnEtsReset" data-i18n-title="btnEtsResetTitle" title="Réinitialiser les adresses par défaut">Reset adresses</button>
+                      <button type="button" id="btnEtsClose" data-i18n="btnEtsClose" data-i18n-title="btnEtsCloseTitle" title="Fermer l’ETS">✕ Fermer</button>
+                    </div>
+                    <div class="ets-tabs" role="tablist">
+                      <button type="button" class="ets-tab on" data-ets-tab="batiments" role="tab">Bâtiments</button>
+                      <button type="button" class="ets-tab" data-ets-tab="groupes" role="tab">Adresses de Groupe</button>
+                      <button type="button" class="ets-tab" data-ets-tab="params" role="tab">Paramètres</button>
+                      <button type="button" class="ets-tab" data-ets-tab="catalogues" role="tab">Catalogues</button>
+                      <button type="button" class="ets-tab" data-ets-tab="projet" role="tab">Projet</button>
+                    </div>
+                  </div>
+                  <div id="etsBody" class="ets-body"></div>
+                </div>
+              </div>
+              <div class="ets-laptop-hinge" aria-hidden="true"></div>
+              <div class="ets-laptop-base" aria-hidden="true">
+                <div class="ets-laptop-deck">
+                  <div class="ets-laptop-kb"></div>
+                  <div class="ets-laptop-pad"></div>
+                </div>
+                <div class="ets-rj45-jack" title="Port RJ45"></div>
+              </div>
+            </div>
+            <div class="ets-link-side" aria-hidden="true">
+              <span class="ets-rj45-tag">RJ45</span>
+              <svg class="ets-rj45-cable" viewBox="0 0 60 220" preserveAspectRatio="none">
+                <path class="cable" d="M4 8 C 22 36, 16 110, 42 168 C 52 192, 50 205, 44 216" />
+                <path class="cable-hi" d="M4 8 C 22 36, 16 110, 42 168 C 52 192, 50 205, 44 216" />
+              </svg>
+              <div class="ets-iface">
+                <div class="ets-iface-rj45" title="Port Ethernet RJ45"></div>
+                <img id="etsIfaceImg" src="assets/hager-tyfs120-front.png?v=hager2d-8777" alt="Interface KNX/IP TYFS120" />
+                <div class="ets-iface-label" id="etsIfaceLabel">TYFS120 · KNX/IP</div>
+              </div>
+            </div>
           </div>
         </div>
-        <div id="etsBody" class="ets-body"></div>
       </aside>
       <aside id="edzProps" class="edz-props" data-i18n-aria="edzPropsAria" aria-label="Information ElectroDZ" hidden>
         <div class="edz-props-head">
@@ -3584,7 +3930,7 @@
       </div>
     </div>
   </div>
-  <script src="i18n/panelwire-i18n.js?v=free-cats-vfd-r1"></script>
+  <script src="i18n/panelwire-i18n.js?v=km-fr-glue-8777"></script>
   <script>
     /* Assets pré-cadrés (photos studio trop larges → bandes). */
     const COLORS = [
@@ -3612,6 +3958,9 @@
     const I18N = (typeof window !== "undefined" && window.PanelWireI18n) ? window.PanelWireI18n : null;
     function t(key, vars) { return I18N ? I18N.t(key, vars) : key; }
     const THEME_KEY = "panelwire-theme";
+    const SOUNDS_MUTE_KEY = "panelwire-sounds-muted";
+    /* muted=true → silence. Défaut : sons ON (pas de mute). */
+    let soundsMuted = false;
     function isDarkTheme() {
       return document.documentElement.getAttribute("data-theme") === "dark";
     }
@@ -3624,6 +3973,31 @@
       btn.setAttribute("data-i18n-title", key);
       btn.title = t(key);
       btn.setAttribute("aria-label", t("themeAria"));
+    }
+    function syncMuteButton() {
+      const btn = document.getElementById("btnMute");
+      if (!btn) return;
+      btn.classList.toggle("is-muted", !!soundsMuted);
+      btn.setAttribute("aria-pressed", soundsMuted ? "true" : "false");
+      const key = soundsMuted ? "btnSoundOffTitle" : "btnSoundOnTitle";
+      btn.setAttribute("data-i18n-title", key);
+      btn.title = t(key);
+      btn.setAttribute("aria-label", t("btnSoundAria"));
+    }
+    function setSoundsMuted(muted) {
+      soundsMuted = !!muted;
+      try { localStorage.setItem(SOUNDS_MUTE_KEY, soundsMuted ? "1" : "0"); } catch (_) {}
+      syncMuteButton();
+      if (soundsMuted) {
+        try { stopAllBuzzers(); } catch (e) {}
+        try { stopShortCircuitSound(); } catch (e) {}
+        try { stopFireCrackle(); } catch (e) {}
+      } else if (typeof state !== "undefined" && state.sim) {
+        try { ensureAudio(); } catch (e) {}
+        try { syncBuzzers(); } catch (e) {}
+        try { syncMotorSounds(); } catch (e) {}
+        try { syncPumpWaterSounds(); } catch (e) {}
+      }
     }
     function applyTheme(theme) {
       const dark = theme === "dark";
@@ -3640,6 +4014,12 @@
       const btn = document.getElementById("btnTheme");
       if (btn) {
         btn.onclick = () => applyTheme(isDarkTheme() ? "light" : "dark");
+      }
+      try { soundsMuted = localStorage.getItem(SOUNDS_MUTE_KEY) === "1"; } catch (_) { soundsMuted = false; }
+      syncMuteButton();
+      const btnMute = document.getElementById("btnMute");
+      if (btnMute) {
+        btnMute.onclick = () => setSoundsMuted(!soundsMuted);
       }
     }
     function libDisplayName(id, def) {
@@ -3673,6 +4053,7 @@
       try { syncWireTagsButton(); } catch (_) {}
       try { render(); } catch (_) {}
       try { syncThemeButton(); } catch (_) {}
+      try { syncMuteButton(); } catch (_) {}
     }
     function syncColorSwatchTitles() {
       document.querySelectorAll("#colors .swatch").forEach((b) => {
@@ -3854,6 +4235,33 @@
         || def.knxDimmer || def.knxPresence || def.knxTemp || def.knxThermo
         || def.knxBinary || def.knxIp || def.knxDali));
     }
+    /** Sortie bus PSU (C1/C2…) câblée vers un autre appareil KNX. */
+    function knxPsuOutWired(item, outId) {
+      if (!item || !outId) return false;
+      return state.wires.some((w) => {
+        if (!w || !w.a || !w.b) return false;
+        let mine = null, other = null;
+        if (w.a.uid === item.uid && w.a.term === outId) { mine = w.a; other = w.b; }
+        else if (w.b.uid === item.uid && w.b.term === outId) { mine = w.b; other = w.a; }
+        else return false;
+        if (!other || other.uid === item.uid) return false;
+        if (!isKnxBusTerm(other.term)) return false;
+        const o = find(other.uid);
+        return !!(o && isKnxDevice(LIB[o.type]));
+      });
+    }
+    function syncKnxPsuChannelLeds(item, def, primOk, overload) {
+      if (!def || !def.knxPsuLeds || !def.knxPsuLeds.length) return;
+      item.knxOutOk = item.knxOutOk || {};
+      item.knxOutImax = item.knxOutImax || {};
+      def.knxPsuLeds.forEach((led) => {
+        const wired = knxPsuOutWired(item, led.id);
+        /* OK = primaire OK (sortie 30 V présente), comme le vrai TXA116 — sans exiger de charge. */
+        item.knxOutOk[led.id] = !!(primOk && !overload);
+        /* I>Imax = CC / surcharge : canal câblé, ou toutes les sorties si défaut global. */
+        item.knxOutImax[led.id] = !!(overload && (wired || primOk === false));
+      });
+    }
     function termRole(type, termId) {
       const id = String(termId || "");
       if (id === "PE" || /^PE\b/i.test(id)) return "pe";
@@ -3864,6 +4272,10 @@
       if (def && def.cat === "Photovoltaïque") {
         if (id === "+" || id === "PLUS" || /\+$/.test(id) || /^PLUS$/i.test(id)) return "dcplus";
         if (id === "-" || id === "−" || id === "MOINS" || /[-−]$/.test(id) || /^MOINS$/i.test(id)) return "dcminus";
+      }
+      /* Actionneurs KNX : tous les canaux = phase/charge (rouge), pas neutre sur pairs[1]. */
+      if (def && (def.knxActuator || def.knxShutter || def.knxDimmer || def.knxBinary || def.knxDali)) {
+        return "l";
       }
       if (def && Array.isArray(def.pairs) && def.pairs[1] && def.pairs[1].includes(termId)) return "n";
       return "l";
@@ -4293,7 +4705,7 @@
       }
       el.appendChild(lcd);
     }
-    /** Anciens schémas KNX+/KNX− → borne unique BUS (1 câble). */
+    /** Anciens schémas KNX+/KNX− → borne unique BUS (1 câble) ; TXA116 C1±/C2± → C1/C2. */
     function migrateKnxBusWires() {
       let changed = false;
       state.wires.forEach((w) => {
@@ -4301,6 +4713,12 @@
           const t = w[side] && w[side].term;
           if (t === "KNX+" || t === "KNX-" || t === "KNX−") {
             w[side].term = "BUS";
+            changed = true;
+          } else if (t === "C1+" || t === "C1-" || t === "C1−") {
+            w[side].term = "C1";
+            changed = true;
+          } else if (t === "C2+" || t === "C2-" || t === "C2−") {
+            w[side].term = "C2";
             changed = true;
           }
         });
@@ -4501,11 +4919,80 @@
         {id:"L",nx:0.30,ny:0.12,direction:"top"},{id:"N",nx:0.70,ny:0.12,direction:"top"},
         {id:"BUS",nx:0.50,ny:0.926,direction:"bottom"}
       ]},
-      /* Hager TXA116 — alim bus KNX 2×30 V TBTS 320 mA, 4 modules DIN (72 mm). Face SVG orthogonale (pipeline PLC). */
-      edz_hager_txa116: {name:"Hager TXA116 alim. bus 2×30 V KNX",nameEn:"Hager TXA116 KNX bus PSU 2×30 V",prefix:"G",cat:"Domotique KNX",w:72,h:90,din:true,image:"assets/hager-txa116-front.svg?v=txa116-2d",badge:"TXA116",iec:"G",knxPsu:true,secondary:["KNX+","KNX-"],bridges:[["KNX+","C1+"],["KNX+","C2+"],["KNX-","C1-"],["KNX-","C2-"]],busLed:{nx:0.55,ny:0.42},terminals:[
-        {id:"L",nx:0.1944,ny:0.1111,direction:"top"},{id:"N",nx:0.3611,ny:0.1111,direction:"top"},{id:"PE",nx:0.5278,ny:0.1111,direction:"top"},
-        {id:"C1-",nx:0.1667,ny:0.8944,direction:"bottom"},{id:"C1+",nx:0.3056,ny:0.8944,direction:"bottom"},
-        {id:"C2-",nx:0.6944,ny:0.8944,direction:"bottom"},{id:"C2+",nx:0.8333,ny:0.8944,direction:"bottom"}
+      /* Hager TXA116 — alim bus KNX 2×30 V TBTS 320 mA, 4 modules DIN.
+         Primaire L/N/PE isolés (pas de pont L–N) ; sorties C1/C2 = pastilles BUS pédagogiques
+         comme knx_alim (paire +/− via câble vert, SELV via secondary virtuel — pas de bridges
+         C1+/C1− qui recolleraient le bus sur le primaire et provoqueraient un CC au snap). */
+      /* TXA116 = référence « top » (ne pas recadrer / migrer w×h comme les autres Hager). */
+      edz_hager_txa116: {name:"Hager TXA116 alim. bus 2×30 V KNX",nameEn:"Hager TXA116 KNX bus PSU 2×30 V",prefix:"G",cat:"Domotique KNX",w:140,h:160,din:true,image:"assets/hager-txa116-front.png?v=txa116-leds-8777",badge:"TXA116",iec:"G",knxPsu:true,secondary:["KNX+","KNX-"],knxPsuLeds:[
+        /* Voyants face calés sur fentes photo : I>Imax (haut) / OK (bas) · C1 · C2 */
+        {id:"C1",imax:{nx:0.625,ny:0.292},ok:{nx:0.625,ny:0.385}},
+        {id:"C2",imax:{nx:0.855,ny:0.292},ok:{nx:0.855,ny:0.385}}
+      ],terminals:[
+        /* Bornes haut photo : 1 L · 3 N · PE (coins gauches) */
+        {id:"L",nx:0.168,ny:0.088,direction:"top"},{id:"N",nx:0.258,ny:0.088,direction:"top"},{id:"PE",nx:0.348,ny:0.088,direction:"top"},
+        /* Sorties bus bas : pastilles rectangles noir(−)/rouge(+) C1 / C2 */
+        {id:"C1",nx:0.115,ny:0.940,direction:"bottom"},{id:"C2",nx:0.855,ny:0.948,direction:"bottom"}
+      ]},
+      /* Hager série starter KNX — faces 2D photo catalogue (TXA116 = référence intacte).
+         Ratio = pixels photo ; sans stretch. SwissDz knx_* conservés. */
+      edz_hager_tyfs120: {name:"Hager TYFS120 interface KNX/IP Secure",nameEn:"Hager TYFS120 KNX/IP Secure interface",prefix:"IK",cat:"Domotique KNX",w:36,h:160,din:true,image:"assets/hager-tyfs120-front.png?v=hager-face-8777",badge:"TYFS120",iec:"IK",knxIp:true,busLed:{nx:0.50,ny:0.42},terminals:[
+        /* Connecteur bus rouge/noir en tête (face AVANT) */
+        {id:"BUS",nx:0.48,ny:0.055,direction:"top"}
+      ]},
+      edz_hager_tya604a: {name:"Hager TYA604A actionneur 4 sorties 4 A",nameEn:"Hager TYA604A switching actuator 4×4 A",prefix:"KA",cat:"Domotique KNX",w:121,h:160,din:true,image:"assets/hager-tya604a-front.png?v=hager-face-8777",badge:"TYA604A",iec:"KA",knxActuator:true,busLed:{nx:0.88,ny:0.48},knxChLeds:[
+        /* Fente LED gauche de chaque bouton C1…C4 */
+        {id:1,nx:0.510,ny:0.417},{id:3,nx:0.766,ny:0.417},{id:2,nx:0.509,ny:0.518},{id:4,nx:0.766,ny:0.518}
+      ],knxManHits:[
+        {id:1,nx:0.565,ny:0.417,nw:0.135,nh:0.055},{id:3,nx:0.821,ny:0.417,nw:0.135,nh:0.055},
+        {id:2,nx:0.564,ny:0.518,nw:0.135,nh:0.055},{id:4,nx:0.821,ny:0.518,nw:0.135,nh:0.055}
+      ],terminals:[
+        {id:"1",nx:0.28,ny:0.09,direction:"top"},{id:"3",nx:0.46,ny:0.09,direction:"top"},
+        {id:"5",nx:0.64,ny:0.09,direction:"top"},{id:"7",nx:0.82,ny:0.09,direction:"top"},
+        {id:"2",nx:0.36,ny:0.91,direction:"bottom"},{id:"4",nx:0.54,ny:0.91,direction:"bottom"},
+        {id:"6",nx:0.68,ny:0.91,direction:"bottom"},{id:"8",nx:0.82,ny:0.91,direction:"bottom"},
+        {id:"BUS",nx:0.14,ny:0.93,direction:"bottom"}
+      ],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]]},
+      edz_hager_tya624a: {name:"Hager TYA624A actionneur volet 4×",nameEn:"Hager TYA624A shutter actuator 4-fold",prefix:"KA",cat:"Domotique KNX",w:122,h:160,din:true,image:"assets/hager-tya624a-front.png?v=hager-face-8777",badge:"TYA624A",iec:"KA",knxShutter:true,busLed:{nx:0.88,ny:0.48},knxManHits:[
+        /* C1↑ C2↓ canal 1 · C3↑ C4↓ canal 2 — pile sur les boutons */
+        {id:1,ch:1,dir:"up",nx:0.609,ny:0.413,nw:0.135,nh:0.055},{id:3,ch:2,dir:"up",nx:0.843,ny:0.412,nw:0.135,nh:0.055},
+        {id:2,ch:1,dir:"down",nx:0.608,ny:0.514,nw:0.135,nh:0.055},{id:4,ch:2,dir:"down",nx:0.842,ny:0.514,nw:0.135,nh:0.055}
+      ],terminals:[
+        {id:"1",nx:0.24,ny:0.09,direction:"top"},{id:"3",nx:0.38,ny:0.09,direction:"top"},
+        {id:"5",nx:0.52,ny:0.09,direction:"top"},{id:"7",nx:0.66,ny:0.09,direction:"top"},
+        {id:"9",nx:0.80,ny:0.09,direction:"top"},
+        {id:"2",nx:0.30,ny:0.91,direction:"bottom"},{id:"4",nx:0.44,ny:0.91,direction:"bottom"},
+        {id:"6",nx:0.58,ny:0.91,direction:"bottom"},{id:"8",nx:0.72,ny:0.91,direction:"bottom"},
+        {id:"10",nx:0.86,ny:0.91,direction:"bottom"},
+        {id:"BUS",nx:0.12,ny:0.93,direction:"bottom"}
+      ]},
+      edz_hager_txa663a: {name:"Hager TXA663A variateur 3×300 W",nameEn:"Hager TXA663A dimmer 3×300 W",prefix:"UD",cat:"Domotique KNX",w:159,h:160,din:true,image:"assets/hager-txa663a-front.png?v=hager-face-8777",badge:"TXA663A",iec:"UD",knxDimmer:true,busLed:{nx:0.90,ny:0.55},knxDimBar:{nx:0.62,ny:0.38,nw:0.28},knxManHits:[
+        {id:1,nx:0.430,ny:0.505,nw:0.100,nh:0.058},{id:2,nx:0.590,ny:0.505,nw:0.100,nh:0.058},
+        {id:3,nx:0.780,ny:0.505,nw:0.100,nh:0.058}
+      ],terminals:[
+        {id:"N",nx:0.38,ny:0.10,direction:"top"},{id:"L",nx:0.52,ny:0.10,direction:"top"},
+        {id:"2",nx:0.42,ny:0.90,direction:"bottom"},{id:"4",nx:0.58,ny:0.90,direction:"bottom"},
+        {id:"6",nx:0.74,ny:0.90,direction:"bottom"},
+        {id:"BUS",nx:0.14,ny:0.93,direction:"bottom"}
+      ],pairs:[["L","2"]]},
+      edz_hager_txa306: {name:"Hager TXA306 entrées binaires 6×",nameEn:"Hager TXA306 binary inputs 6-fold",prefix:"E",cat:"Domotique KNX",w:161,h:160,din:true,image:"assets/hager-txa306-front.png?v=hager-face-8777",badge:"TXA306",iec:"E",knxBinary:true,busLed:{nx:0.12,ny:0.62},knxBinHits:[
+        {id:1,nx:0.533,ny:0.433,nw:0.090,nh:0.058},{id:3,nx:0.707,ny:0.433,nw:0.095,nh:0.058},{id:5,nx:0.882,ny:0.433,nw:0.095,nh:0.058},
+        {id:2,nx:0.533,ny:0.523,nw:0.090,nh:0.058},{id:4,nx:0.707,ny:0.523,nw:0.095,nh:0.058},{id:6,nx:0.882,ny:0.523,nw:0.095,nh:0.058}
+      ],terminals:[
+        {id:"1",nx:0.22,ny:0.10,direction:"top"},{id:"3",nx:0.34,ny:0.10,direction:"top"},
+        {id:"5",nx:0.46,ny:0.10,direction:"top"},{id:"7",nx:0.58,ny:0.10,direction:"top"},
+        {id:"9",nx:0.70,ny:0.10,direction:"top"},{id:"11",nx:0.82,ny:0.10,direction:"top"},
+        {id:"2",nx:0.22,ny:0.91,direction:"bottom"},{id:"4",nx:0.34,ny:0.91,direction:"bottom"},
+        {id:"6",nx:0.46,ny:0.91,direction:"bottom"},{id:"8",nx:0.58,ny:0.91,direction:"bottom"},
+        {id:"10",nx:0.70,ny:0.91,direction:"bottom"},{id:"12",nx:0.82,ny:0.91,direction:"bottom"},
+        {id:"BUS",nx:0.12,ny:0.93,direction:"bottom"}
+      ],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]]},
+      edz_hager_wkt304: {name:"Hager WKT304 poussoir KNX 4 touches",nameEn:"Hager WKT304 KNX push-button 4-fold",prefix:"S",cat:"Domotique KNX",w:122,h:160,image:"assets/hager-wkt304-front.png?v=hager-face-8777",badge:"WKT304",iec:"S",knxPush:true,busLed:{nx:0.78,ny:0.72},knxKeys:[
+        /* Petits boutons LED 1…4 — pas le panneau central */
+        {id:1,nx:0.285,ny:0.252,nw:0.090,nh:0.045},{id:3,nx:0.715,ny:0.252,nw:0.090,nh:0.045},
+        {id:2,nx:0.285,ny:0.748,nw:0.090,nh:0.045},{id:4,nx:0.715,ny:0.748,nw:0.090,nh:0.045}
+      ],terminals:[
+        {id:"BUS",nx:0.50,ny:0.94,direction:"bottom"}
       ]},
       knx_poussoir: {name:"Poussoir KNX SwissDz 4 touches",prefix:"S",cat:"Domotique KNX",w:90,h:155,image:"assets/knx-poussoir-4t-swissdz.png",badge:"4T",iec:"S",knxPush:true,busLed:{nx:0.50,ny:0.16},knxKeys:[
         {id:1,nx:0.306,ny:0.347,nw:0.306,nh:0.177},{id:2,nx:0.694,ny:0.347,nw:0.306,nh:0.177},
@@ -4573,12 +5060,13 @@
       pv_panel_400: {name:"Panneau photovoltaïque 400 W",nameEn:"Photovoltaic module 400 W",prefix:"PV",cat:"Photovoltaïque",w:150,h:233,image:"assets/pv/panel-400.svg?v=pv-bords",badge:"400 W",pvModule:true,watt:400,terminals:[{id:"DC+",nx:0.43,ny:0.94,direction:"bottom"},{id:"DC-",nx:0.58,ny:0.94,direction:"bottom"}]},
       pv_panel_450: {name:"Panneau photovoltaïque 450 W",nameEn:"Photovoltaic module 450 W",prefix:"PV",cat:"Photovoltaïque",w:150,h:233,image:"assets/pv/panel-450.svg?v=pv-bords",badge:"450 W",pvModule:true,watt:450,terminals:[{id:"DC+",nx:0.43,ny:0.94,direction:"bottom"},{id:"DC-",nx:0.58,ny:0.94,direction:"bottom"}]},
       pv_panel_550: {name:"Panneau photovoltaïque 550 W",nameEn:"Photovoltaic module 550 W",prefix:"PV",cat:"Photovoltaïque",w:150,h:233,image:"assets/pv/panel-550.svg?v=pv-bords",badge:"550 W",pvModule:true,watt:550,terminals:[{id:"DC+",nx:0.43,ny:0.94,direction:"bottom"},{id:"DC-",nx:0.58,ny:0.94,direction:"bottom"}]},
-      pv_mc4_m: {name:"Connecteur MC4 mâle",nameEn:"MC4 male connector",prefix:"X",cat:"Photovoltaïque",w:120,h:48,image:"assets/pv/mc4-m.svg?v=pv1",badge:"MC4 ♂",terminals:[{id:"C",nx:0.08,ny:0.50,direction:"left"},{id:"P",nx:0.93,ny:0.50,direction:"right"}],pair:["C","P"],pairs:[["C","P"]]},
-      pv_mc4_f: {name:"Connecteur MC4 femelle",nameEn:"MC4 female connector",prefix:"X",cat:"Photovoltaïque",w:120,h:48,image:"assets/pv/mc4-f.svg?v=pv1",badge:"MC4 ♀",terminals:[{id:"C",nx:0.08,ny:0.50,direction:"left"},{id:"P",nx:0.90,ny:0.50,direction:"right"}],pair:["C","P"],pairs:[["C","P"]]},
-      pv_h4_m: {name:"Connecteur H4 mâle",nameEn:"H4 male connector",prefix:"X",cat:"Photovoltaïque",w:120,h:48,image:"assets/pv/h4-m.svg?v=pv1",badge:"H4 ♂",terminals:[{id:"C",nx:0.08,ny:0.50,direction:"left"},{id:"P",nx:0.92,ny:0.50,direction:"right"}],pair:["C","P"],pairs:[["C","P"]]},
-      pv_h4_f: {name:"Connecteur H4 femelle",nameEn:"H4 female connector",prefix:"X",cat:"Photovoltaïque",w:120,h:48,image:"assets/pv/h4-f.svg?v=pv1",badge:"H4 ♀",terminals:[{id:"C",nx:0.08,ny:0.50,direction:"left"},{id:"P",nx:0.90,ny:0.50,direction:"right"}],pair:["C","P"],pairs:[["C","P"]]},
-      pv_cable_plus: {name:"Câble PV rouge (DC+)",nameEn:"PV cable red (DC+)",prefix:"W",cat:"Photovoltaïque",w:160,h:86,image:"assets/pv/cable-plus.svg?v=pv1",badge:"DC+",pvCable:true,pvPolarity:"plus",lengthM:10,terminals:[{id:"A",nx:0.08,ny:0.47,direction:"left"},{id:"B",nx:0.90,ny:0.47,direction:"right"}],pair:["A","B"],pairs:[["A","B"]]},
-      pv_cable_minus: {name:"Câble PV noir (DC−)",nameEn:"PV cable black (DC−)",prefix:"W",cat:"Photovoltaïque",w:160,h:86,image:"assets/pv/cable-minus.svg?v=pv1",badge:"DC−",pvCable:true,pvPolarity:"minus",lengthM:10,terminals:[{id:"A",nx:0.08,ny:0.47,direction:"left"},{id:"B",nx:0.90,ny:0.47,direction:"right"}],pair:["A","B"],pairs:[["A","B"]]},
+      /* Retirés du catalogue : câbles PV / MC4 / H4 (cordons solaires) — câbler avec les fils du plan. */
+      pv_mc4_m: {name:"Connecteur MC4 mâle",nameEn:"MC4 male connector",prefix:"X",cat:"Photovoltaïque",hideFromLib:true,w:120,h:48,image:"assets/pv/mc4-m.svg?v=pv1",badge:"MC4 ♂",terminals:[{id:"C",nx:0.08,ny:0.50,direction:"left"},{id:"P",nx:0.93,ny:0.50,direction:"right"}],pair:["C","P"],pairs:[["C","P"]]},
+      pv_mc4_f: {name:"Connecteur MC4 femelle",nameEn:"MC4 female connector",prefix:"X",cat:"Photovoltaïque",hideFromLib:true,w:120,h:48,image:"assets/pv/mc4-f.svg?v=pv1",badge:"MC4 ♀",terminals:[{id:"C",nx:0.08,ny:0.50,direction:"left"},{id:"P",nx:0.90,ny:0.50,direction:"right"}],pair:["C","P"],pairs:[["C","P"]]},
+      pv_h4_m: {name:"Connecteur H4 mâle",nameEn:"H4 male connector",prefix:"X",cat:"Photovoltaïque",hideFromLib:true,w:120,h:48,image:"assets/pv/h4-m.svg?v=pv1",badge:"H4 ♂",terminals:[{id:"C",nx:0.08,ny:0.50,direction:"left"},{id:"P",nx:0.92,ny:0.50,direction:"right"}],pair:["C","P"],pairs:[["C","P"]]},
+      pv_h4_f: {name:"Connecteur H4 femelle",nameEn:"H4 female connector",prefix:"X",cat:"Photovoltaïque",hideFromLib:true,w:120,h:48,image:"assets/pv/h4-f.svg?v=pv1",badge:"H4 ♀",terminals:[{id:"C",nx:0.08,ny:0.50,direction:"left"},{id:"P",nx:0.90,ny:0.50,direction:"right"}],pair:["C","P"],pairs:[["C","P"]]},
+      pv_cable_plus: {name:"Câble PV rouge (DC+)",nameEn:"PV cable red (DC+)",prefix:"W",cat:"Photovoltaïque",hideFromLib:true,w:160,h:86,image:"assets/pv/cable-plus.svg?v=pv1",badge:"DC+",pvCable:true,pvPolarity:"plus",lengthM:10,terminals:[{id:"A",nx:0.08,ny:0.47,direction:"left"},{id:"B",nx:0.90,ny:0.47,direction:"right"}],pair:["A","B"],pairs:[["A","B"]]},
+      pv_cable_minus: {name:"Câble PV noir (DC−)",nameEn:"PV cable black (DC−)",prefix:"W",cat:"Photovoltaïque",hideFromLib:true,w:160,h:86,image:"assets/pv/cable-minus.svg?v=pv1",badge:"DC−",pvCable:true,pvPolarity:"minus",lengthM:10,terminals:[{id:"A",nx:0.08,ny:0.47,direction:"left"},{id:"B",nx:0.90,ny:0.47,direction:"right"}],pair:["A","B"],pairs:[["A","B"]]},
       pv_coffret_dc: {name:"Coffret DC parafoudre + terre PLUS/MOINS",nameEn:"DC combiner SPD + PLUS/MINUS earth",prefix:"FV",cat:"Parafoudres",w:240,h:154,image:"assets/pv/combiner.svg?v=pv1",badge:"DC",terminals:[{id:"PV+",nx:0.129,ny:0.878,direction:"bottom"},{id:"PV-",nx:0.257,ny:0.878,direction:"bottom"},{id:"PE",nx:0.50,ny:0.878,direction:"bottom"},{id:"PLUS",nx:0.671,ny:0.878,direction:"bottom"},{id:"MOINS",nx:0.843,ny:0.878,direction:"bottom"},{id:"OUT+",nx:0.957,ny:0.256,direction:"right"},{id:"OUT-",nx:0.957,ny:0.40,direction:"right"}],pairs:[["PV+","OUT+"],["PV-","OUT-"]]},
       pv_inv_sun2000_3: {name:"Huawei SUN2000-3KTL",nameEn:"Huawei SUN2000-3KTL",prefix:"INV",cat:"Photovoltaïque",w:140,h:192,image:"assets/pv/inv-huawei-3.svg?v=pv-affiches",badge:"3 kW",pvInverter:true,kw:3,terminals:[{id:"PV+",nx:0.175,ny:0.927,direction:"bottom"},{id:"PV-",nx:0.325,ny:0.927,direction:"bottom"},{id:"L",nx:0.525,ny:0.927,direction:"bottom"},{id:"N",nx:0.675,ny:0.927,direction:"bottom"},{id:"PE",nx:0.825,ny:0.927,direction:"bottom"}]},
       pv_inv_sun2000_5: {name:"Huawei SUN2000-5KTL",nameEn:"Huawei SUN2000-5KTL",prefix:"INV",cat:"Photovoltaïque",w:140,h:192,image:"assets/pv/inv-huawei-5.svg?v=pv-affiches",badge:"5 kW",pvInverter:true,kw:5,terminals:[{id:"PV+",nx:0.175,ny:0.927,direction:"bottom"},{id:"PV-",nx:0.325,ny:0.927,direction:"bottom"},{id:"L",nx:0.525,ny:0.927,direction:"bottom"},{id:"N",nx:0.675,ny:0.927,direction:"bottom"},{id:"PE",nx:0.825,ny:0.927,direction:"bottom"}]},
@@ -5075,13 +5563,17 @@
       if (d.cat === "Variateurs") d.cat = "Divers";
     });
 
-    /* Duo contacteur + relais thermique (et garde-moteurs associés). */
+    /* Section combinée = uniquement les paires clip aimant KM+FR (pas tout le catalogue). */
+    const KM_FR_COMBO_IDS = new Set([
+      "contacteur_3ph", "thermique",
+      "edz_abb_af09", "edz_abb_tf42",
+      "edz_chint_nxc32", "edz_chint_nr2_25",
+      "edz_chint_nxc40", "edz_relé_térmico_23_32_a"
+    ]);
     Object.keys(LIB).forEach((id) => {
       const d = LIB[id];
-      if (!d) return;
-      if (d.cat === "Contacteurs" || d.cat === "Relais thermiques") {
-        d.cat = "Contacteur + relais thermique";
-      }
+      if (!d || !KM_FR_COMBO_IDS.has(id)) return;
+      d.cat = "Contacteur + relais thermique";
     });
 
     /* Free : sections ouvertes + moteurs SwissDz + capteurs demandés. */
@@ -5369,12 +5861,20 @@
       if (item.proxRangeMm != null) return clampProxRangeMm(item.proxRangeMm, def);
       return clampProxRangeMm(def.proxRangeMm, def);
     }
+    /** Câbles / connecteurs PV retirés du catalogue (MC4, H4, cordons DC+/DC−). */
+    const PV_CABLE_REMOVED = new Set([
+      "pv_cable_plus", "pv_cable_minus", "pv_mc4_m", "pv_mc4_f", "pv_h4_m", "pv_h4_f"
+    ]);
     function migrateItemTypes() {
       const drop = new Set();
       state.items.forEach((i) => {
         const old = i.type;
         const next = resolveLibType(i.type);
         if (next !== i.type) i.type = next;
+        if (PV_CABLE_REMOVED.has(i.type)) {
+          drop.add(i.uid);
+          return;
+        }
         const def = LIB[i.type];
         if (!def) {
           drop.add(i.uid);
@@ -5398,6 +5898,34 @@
           !(drop.has(w.a && w.a.uid) || drop.has(w.b && w.b.uid)));
         if (drop.has(state.selected)) state.selected = null;
       }
+    }
+    /** Photos Hager recadrées : annule w/h sauvegardés si le ratio ne match plus le LIB (évite stretch + bbox large).
+     *  TXA116 = référence figée : toujours rétablir w/h LIB (pas de migration forme/hitbox). */
+    function migrateHagerFaceSizes() {
+      (state.items || []).forEach((item) => {
+        if (!item || !String(item.type || "").startsWith("edz_hager_")) return;
+        const def = LIB[item.type];
+        if (!def || !def.w || !def.h) return;
+        /* Référence top : forcer la taille catalogue, annuler toute déformation post-crop. */
+        if (item.type === "edz_hager_txa116") {
+          delete item.w;
+          delete item.h;
+          return;
+        }
+        const iw = Number(item.w);
+        const ih = Number(item.h);
+        if (!Number.isFinite(iw) || !Number.isFinite(ih) || ih <= 0) {
+          delete item.w;
+          delete item.h;
+          return;
+        }
+        const want = def.w / def.h;
+        const got = iw / ih;
+        if (Math.abs(got - want) > 0.05) {
+          delete item.w;
+          delete item.h;
+        }
+      });
     }
 
     // Déplacement libre X/Y : pas de snap rail (modules non verrouillés sur le DIN).
@@ -5446,6 +5974,13 @@
       disj1pn: "idr2p"
     };
     const KM_FR_CLIP_OVERLAP = 16;
+    /* SwissDz = jointure nette ; ABB/CHINT ont des broches cuivre visibles → plus d’overlap pour les cacher. */
+    const KM_FR_CLIP_OVERLAP_BY_KM = {
+      contacteur_3ph: 20,
+      edz_abb_af09: 56,
+      edz_chint_nxc32: 52,
+      edz_chint_nxc40: 54
+    };
     const KM_FR_CLIP_RANGE = 110;
     const KM_FR_BRIDGES = [["2", "1"], ["4", "3"], ["6", "5"]];
     /* Pas de borne nommée R2. Sur l'IDR 2P, le 2e pôle est à droite : 2 (haut) et 4 (bas).
@@ -5455,6 +5990,10 @@
       return KM_FR_SIDE_BRIDGES[hostType] || KM_FR_BRIDGES;
     }
     function kmFrSideHost(type) { return !!KM_FR_SIDE_BRIDGES[type]; }
+    function kmFrClipOverlap(kmType) {
+      const n = KM_FR_CLIP_OVERLAP_BY_KM[kmType];
+      return (typeof n === "number" && n > 0) ? n : KM_FR_CLIP_OVERLAP;
+    }
     function isKmClipHostType(type) { return !!KM_FR_CLIP[type]; }
     function isFrClipType(type) { return !!FR_KM_CLIP[type]; }
     function clippedFrOf(km) {
@@ -5495,10 +6034,24 @@
           y: Math.max(0, km.y + (ks.h - fs.h) / 2)
         };
       }
+      const overlap = kmFrClipOverlap(km.type);
       return {
         x: Math.max(0, km.x + (ks.w - fs.w) / 2),
-        y: Math.max(0, km.y + ks.h - KM_FR_CLIP_OVERLAP)
+        y: Math.max(0, km.y + ks.h - overlap)
       };
+    }
+    function syncKmFrClipPoses() {
+      state.items.forEach((km) => {
+        if (!isKmClipHostType(km.type) || kmFrSideHost(km.type)) return;
+        const fr = clippedFrOf(km);
+        if (!fr) return;
+        const pose = kmFrClipPoseForFr(km, fr);
+        const dx = pose.x - fr.x, dy = pose.y - fr.y;
+        if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) return;
+        fr.x = pose.x;
+        fr.y = pose.y;
+        shiftWiresForItemDelta(fr.uid, dx, dy);
+      });
     }
     function attachFrUnderKm(km, fr) {
       if (!km || !fr) return;
@@ -5710,12 +6263,20 @@
       if (!Number.isFinite(s) || s <= 0) return 1;
       return Math.max(0.5, Math.min(3.2, s));
     }
-    /** Diamètre pastille (px) : suit le scale composant. */
+    /** Diamètre / hitbox pastille (px) : suit le scale composant. */
     function termPadSize(item, opts) {
       const knx = !!(opts && opts.knxbus);
-      const base = knx ? 16 : 13;
+      const base = knx ? 20 : 13;
       const px = Math.round(base * termVisualScale(item));
-      return Math.max(knx ? 10 : 8, Math.min(knx ? 42 : 36, px));
+      return Math.max(knx ? 12 : 8, Math.min(knx ? 48 : 36, px));
+    }
+    /** Taille visuelle connecteur bus KNX (rectangle rouge/noir). */
+    function knxBusPadSize(item) {
+      const s = termVisualScale(item);
+      return {
+        w: Math.max(16, Math.min(40, Math.round(22 * s))),
+        h: Math.max(10, Math.min(24, Math.round(14 * s)))
+      };
     }
     function clampSize(n) {
       const v = Math.round(Number(n));
@@ -6393,6 +6954,11 @@
       projectName: "schema-swissdz",
       knx: null,
       etsOpen: false,
+      etsTab: "batiments",
+      etsSelUid: null,
+      etsSelGa: "0/0/1",
+      etsProgMode: "params", /* params | objets */
+      etsToast: "",
       examplesOpen: false,
       activeExampleId: null,
       knxLastTelegram: null,
@@ -6802,6 +7368,53 @@
         });
       });
     }
+    /** Appui manuel face module (C1… / E1… / touches dimmer) — zone pile sur le bouton photo. */
+    function knxHandleManPress(item, hit) {
+      if (!item || !hit || !state.sim) return;
+      ensureKnxProgram(item);
+      const def = LIB[item.type];
+      if (!def) return;
+      if (def.knxActuator) {
+        const id = hit.id;
+        if (!item.knxCh) item.knxCh = { 1: false, 2: false, 3: false, 4: false };
+        const next = !item.knxCh[id];
+        const ga = item.knxChProg && item.knxChProg[id] ? item.knxChProg[id].ga : "";
+        if (knxCanSend(item) && ga) knxPublish(ga, next ? 1 : 0, item.tag + ".C" + id);
+        else item.knxCh[id] = next;
+        return;
+      }
+      if (def.knxShutter) {
+        const chN = hit.ch || hit.id;
+        const dir = hit.dir || "up";
+        const p = item.knxShutterProg && item.knxShutterProg[chN];
+        const ch = item.knxShutter && item.knxShutter[chN];
+        if (!p || !ch) return;
+        if (ch.dir === dir) {
+          if (knxCanSend(item)) {
+            knxPublish(p.gaStop, 1, item.tag + ".S" + chN + "stop");
+            knxClearShutterOpposite(normGa(p.gaStop), "stop");
+          } else ch.dir = "stop";
+        } else if (knxCanSend(item)) {
+          const ga = dir === "down" ? p.gaDown : p.gaUp;
+          knxPublish(ga, 1, item.tag + ".S" + chN + (dir === "down" ? "↓" : "↑"));
+          knxClearShutterOpposite(normGa(ga), dir === "down" ? "down" : "up");
+        } else {
+          ch.dir = dir;
+        }
+        knxApplyBusToDevices();
+        return;
+      }
+      if (def.knxDimmer || def.knxDali) {
+        if (!item.knxDim) item.knxDim = { on: false, level: 80 };
+        const next = !item.knxDim.on;
+        item.knxDim.on = next;
+        if (next && !(item.knxDim.level > 0)) item.knxDim.level = 80;
+        if (knxCanSend(item) && item.knxDimProg) {
+          if (item.knxDimProg.gaOn) knxPublish(item.knxDimProg.gaOn, next ? 1 : 0, item.tag + ".D" + hit.id);
+          if (item.knxDimProg.gaLevel) knxPublish(item.knxDimProg.gaLevel, next ? item.knxDim.level : 0, item.tag);
+        }
+      }
+    }
     function knxHandleKeyPress(item, keyId) {
       ensureKnxProgram(item);
       const prog = item.knxKeysProg[keyId];
@@ -6923,6 +7536,26 @@
         tel.textContent = state.sim ? t("etsBusWait") : t("ladderSimHint");
       }
     }
+    function syncEtsIfaceScene() {
+      const img = document.getElementById("etsIfaceImg");
+      const lab = document.getElementById("etsIfaceLabel");
+      if (!img) return;
+      let def = LIB.edz_hager_tyfs120 || LIB.knx_ip;
+      let badge = (def && def.badge) || "TYFS120";
+      const onBoard = (state.items || []).find((it) => {
+        const d = LIB[it.type];
+        return !!(d && d.knxIp);
+      });
+      if (onBoard && LIB[onBoard.type]) {
+        def = LIB[onBoard.type];
+        badge = def.badge || onBoard.tag || "KNX/IP";
+      }
+      let src = (def && def.image) || "assets/hager-tyfs120-front.png?v=hager-face-8777";
+      if (src.indexOf("?") === -1) src += "?v=hager-face-ets-laptop-8777";
+      if (img.getAttribute("src") !== src) img.setAttribute("src", src);
+      img.alt = "Interface KNX/IP " + badge;
+      if (lab) lab.textContent = badge + " · KNX/IP";
+    }
     function syncEtsLayout() {
       const ws = document.getElementById("workspace");
       const btn = document.getElementById("btnEts");
@@ -6931,6 +7564,7 @@
       if (btn) btn.classList.toggle("on", !!state.etsOpen);
       try { syncExamplesLayout(); } catch (_) {}
       if (!state.etsOpen) return;
+      try { syncEtsIfaceScene(); } catch (_) {}
       const ae = document.activeElement;
       const typing = panel && ae && panel.contains(ae) && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName || "");
       if (typing) updateEtsTelegram();
@@ -6991,11 +7625,285 @@
       inp.onblur = () => { onCommit(inp.value); };
       return inp;
     }
+    function ensureEtsProject() {
+      if (!state.knx || typeof state.knx !== "object") state.knx = {};
+      const k = state.knx;
+      if (!k.projectName) k.projectName = "Campus Gallieni 11";
+      if (!k.lineMedia) k.lineMedia = "IP";
+      if (!k.createLine) k.createLine = true;
+      if (!k.lineType) k.lineType = "TP";
+      if (!k.gaStyle) k.gaStyle = "3";
+      if (!k.integMode) k.integMode = "S";
+      if (!Array.isArray(k.mainGroups) || !k.mainGroups.length) {
+        k.mainGroups = [
+          { id: 0, name: "ECLAIRAGES", mid: [{ id: 0, name: "ON / OFF", gas: [{ a: "0/0/1", n: "Bureau open Space Lampe 1" }] }] },
+          { id: 1, name: "VOLETS / STORES", mid: [{ id: 0, name: "MONTEE / DESCENTE", gas: [{ a: "1/0/1", n: "Bureau volet 1" }] }] },
+          { id: 2, name: "AUTOMATISMES", mid: [] },
+          { id: 3, name: "SECURITE", mid: [] },
+          { id: 4, name: "CHAUFFAGE", mid: [] }
+        ];
+      }
+      if (!k.building) {
+        k.building = {
+          name: "Batiment 1",
+          rooms: [
+            { id: "bureau", name: "Bureau" },
+            { id: "gtl", name: "Local Elec / GTL" },
+            { id: "lan", name: "Local LAN" }
+          ]
+        };
+      }
+      return k;
+    }
+    function etsCatalogLabel(type, def) {
+      const map = {
+        knx_alim: "Alimentation KNX REG-K / 640 mA (SwissDz)",
+        edz_hager_txa116: "Hager TXA116 alim. bus 2×30 V",
+        edz_hager_tyfs120: "Hager TYFS120 interface KNX/IP Secure",
+        edz_hager_tya604a: "Hager TYA604A actionneur 4×4 A",
+        edz_hager_tya624a: "Hager TYA624A actionneur volet 4×",
+        edz_hager_txa663a: "Hager TXA663A variateur 3×300 W",
+        edz_hager_txa306: "Hager TXA306 entrées binaires 6×",
+        edz_hager_wkt304: "Hager WKT304 poussoir 4 touches",
+        knx_poussoir: "Interface poussoir quadruple (SwissDz)",
+        knx_actionneur: "Actionneur REG-K/4x230 (SwissDz)",
+        knx_volet: "Actionneur volet 2 canaux (SwissDz)",
+        knx_variateur: "Variateur 1 canal (SwissDz)",
+        knx_binaires: "Entrées binaires 4 contacts (SwissDz)",
+        knx_ip: "KNX / Routeur-IP REG-K (SwissDz)",
+        knx_dali: "Passerelle DALI (SwissDz)",
+        knx_presence: "Détecteur de présence (SwissDz)",
+        knx_sonde: "Sonde température (SwissDz)",
+        knx_thermostat: "Thermostat d'ambiance (SwissDz)"
+      };
+      return map[type] || libDisplayName(type, def).replace(/ SwissDz/g, "");
+    }
+    function etsDefaultRoomFor(def) {
+      if (!def) return "gtl";
+      if (def.knxPsu || def.knxIp || def.knxActuator || def.knxShutter || def.knxDimmer || def.knxDali || def.knxBinary) return "gtl";
+      if (def.knxPush) return "bureau";
+      return "bureau";
+    }
+    function etsListObjects(item) {
+      const def = LIB[item.type];
+      if (!def) return [];
+      ensureKnxProgram(item);
+      const out = [];
+      if (def.knxPush) {
+        [1, 2, 3, 4].forEach((n) => {
+          const p = item.knxKeysProg[n];
+          out.push({ key: "push-" + n, label: "T" + n + " — " + (p.fn || "comm"), ga: p.ga, setGa: (g) => { p.ga = g; } });
+        });
+      }
+      if (def.knxActuator) {
+        [1, 2, 3, 4].forEach((n) => {
+          const p = item.knxChProg[n];
+          out.push({ key: "ch-" + n, label: "Sortie " + n + " commutation", ga: p.ga, setGa: (g) => { p.ga = g; } });
+        });
+      }
+      if (def.knxShutter) {
+        [1, 2].forEach((n) => {
+          const p = item.knxShutterProg[n];
+          out.push({ key: "up-" + n, label: "Volet " + n + " montée", ga: p.gaUp, setGa: (g) => { p.gaUp = g; } });
+          out.push({ key: "dn-" + n, label: "Volet " + n + " descente", ga: p.gaDown, setGa: (g) => { p.gaDown = g; } });
+          out.push({ key: "st-" + n, label: "Volet " + n + " stop", ga: p.gaStop, setGa: (g) => { p.gaStop = g; } });
+        });
+      }
+      if (def.knxDimmer || def.knxDali) {
+        out.push({ key: "dim-on", label: "ON/OFF", ga: item.knxDimProg.gaOn, setGa: (g) => { item.knxDimProg.gaOn = g; } });
+        out.push({ key: "dim-lv", label: "Niveau %", ga: item.knxDimProg.gaLevel, setGa: (g) => { item.knxDimProg.gaLevel = g; } });
+      }
+      if (def.knxPresence) out.push({ key: "pir", label: "Présence", ga: item.knxPresenceProg.ga, setGa: (g) => { item.knxPresenceProg.ga = g; } });
+      if (def.knxTemp) out.push({ key: "temp", label: "Température", ga: item.knxTempProg.ga, setGa: (g) => { item.knxTempProg.ga = g; } });
+      if (def.knxThermo) {
+        out.push({ key: "set", label: "Consigne", ga: item.knxThermoProg.gaSet, setGa: (g) => { item.knxThermoProg.gaSet = g; } });
+        out.push({ key: "heat", label: "Chauffage", ga: item.knxThermoProg.gaHeat, setGa: (g) => { item.knxThermoProg.gaHeat = g; } });
+      }
+      if (def.knxBinary) {
+        [1, 2, 3, 4].forEach((n) => {
+          const p = item.knxBinProg[n];
+          out.push({ key: "bin-" + n, label: "Entrée " + n, ga: p.ga, setGa: (g) => { p.ga = g; } });
+        });
+      }
+      return out;
+    }
+    function etsAssignGaToObject(uid, objKey, ga) {
+      const item = find(uid);
+      if (!item) return false;
+      const g = normGa(ga) || String(ga || "").trim();
+      if (!g) return false;
+      const obj = etsListObjects(item).find((o) => o.key === objKey);
+      if (!obj) return false;
+      pushHistory();
+      obj.setGa(g);
+      knxApplyBusToDevices();
+      state.etsToast = "Associé " + obj.label + " → " + g;
+      return true;
+    }
+    function etsSyncTabsUi() {
+      document.querySelectorAll(".ets-tab").forEach((btn) => {
+        btn.classList.toggle("on", btn.getAttribute("data-ets-tab") === state.etsTab);
+      });
+    }
+    function etsNewProjectDialog() {
+      const k = ensureEtsProject();
+      const name = window.prompt("Nom du projet ETS", k.projectName || "Campus Gallieni 11");
+      if (name == null) return;
+      pushHistory();
+      k.projectName = String(name).trim() || "Nouveau projet";
+      k.lineMedia = "IP";
+      k.createLine = true;
+      k.lineType = "TP";
+      k.gaStyle = "3";
+      k.integMode = "S";
+      state.etsTab = "projet";
+      state.etsToast = "Projet créé — ligne 1.1 TP, adresses 3 niveaux, mode S (ETS).";
+      renderEtsPanel();
+    }
+    function etsDownloadIndividualAddress() {
+      const item = state.etsSelUid ? find(state.etsSelUid) : null;
+      const modules = state.items.filter((i) => isKnxDevice(LIB[i.type]));
+      const target = item || modules.find((i) => !LIB[i.type].knxPsu && !LIB[i.type].knxIp) || modules[0];
+      if (!target) {
+        state.etsToast = "Aucun participant KNX à programmer.";
+        renderEtsPanel();
+        return;
+      }
+      const def = LIB[target.type];
+      if (def.knxPsu) {
+        state.etsToast = "L’alimentation n’a pas d’adresse individuelle à télécharger.";
+        renderEtsPanel();
+        return;
+      }
+      ensureKnxProgram(target);
+      state.etsSelUid = target.uid;
+      state.etsToast = "Télécharger adresse individuelle → " + (target.physAddr || "?") + " (" + target.tag + "). Appuyer sur le bouton prog. du module (pédagogique).";
+      renderEtsPanel();
+    }
+    function renderEtsDeviceParams(item, host) {
+      const def = LIB[item.type];
+      ensureKnxProgram(item);
+      const box = document.createElement("div");
+      box.className = "ets-props-box";
+      box.innerHTML = "<h4>Paramètres — " + etsCatalogLabel(item.type, def) + "</h4>";
+
+      const row = document.createElement("div");
+      row.className = "ets-row";
+      row.innerHTML = "<label>Adr. indiv.</label>";
+      row.appendChild(etsInput(item.physAddr, "phys", (v) => {
+        pushHistory();
+        item.physAddr = normPhys(v) || v.trim();
+        renderEtsPanel();
+      }));
+      box.appendChild(row);
+
+      if (def.knxPsu) {
+        const n = document.createElement("div");
+        n.style.cssText = "font-size:10px;color:#64748b;";
+        n.textContent = "Alimentation bus : pas d’adresse individuelle (1.1.-). Sorties C1/C2 = bus KNX.";
+        box.appendChild(n);
+      }
+      if (def.knxPush) {
+        const cell = document.createElement("div");
+        cell.className = "ets-ga-cell";
+        cell.innerHTML = "<span>Interface poussoir</span>";
+        const sel = document.createElement("select");
+        sel.className = "ets-fn";
+        [["double", "double (2 entrées)"], ["quadruple", "quadruple (4 entrées)"]].forEach(([v, lab]) => {
+          const op = document.createElement("option");
+          op.value = v; op.textContent = lab;
+          if ((item.knxPushMode || "quadruple") === v) op.selected = true;
+          sel.appendChild(op);
+        });
+        sel.onchange = () => { pushHistory(); item.knxPushMode = sel.value; renderEtsPanel(); };
+        cell.appendChild(sel);
+        box.appendChild(cell);
+        [1, 2, 3, 4].forEach((n) => {
+          if ((item.knxPushMode || "quadruple") === "double" && n > 2) return;
+          const p = item.knxKeysProg[n];
+          const c = document.createElement("div");
+          c.className = "ets-ga-cell";
+          c.style.marginTop = "6px";
+          c.innerHTML = "<span>Entrée " + n + " — fonction</span>";
+          const s = document.createElement("select");
+          s.className = "ets-fn";
+          KNX_KEY_FNS.forEach((o) => {
+            const op = document.createElement("option");
+            op.value = o.v; op.textContent = o.lab; if (p.fn === o.v) op.selected = true;
+            s.appendChild(op);
+          });
+          s.onchange = () => { pushHistory(); p.fn = s.value; renderEtsPanel(); };
+          c.appendChild(s);
+          box.appendChild(c);
+        });
+      }
+      if (def.knxActuator) {
+        const note = document.createElement("div");
+        note.style.cssText = "font-size:10px;color:#64748b;margin:4px 0;";
+        note.textContent = "Mode manuel : Bus et mode manuel · réinit. 5 min (pédagogique).";
+        box.appendChild(note);
+        const grid = document.createElement("div");
+        grid.className = "ets-ga-grid";
+        [1, 2, 3, 4].forEach((n) => {
+          const cell = document.createElement("div");
+          cell.className = "ets-ga-cell";
+          cell.innerHTML = "<span>Canal " + n + " GA</span>";
+          cell.appendChild(etsInput(item.knxChProg[n].ga, "ga", (v) => {
+            pushHistory(); item.knxChProg[n].ga = normGa(v) || v.trim(); knxApplyBusToDevices(); renderEtsPanel(); if (state.sim) render();
+          }));
+          grid.appendChild(cell);
+        });
+        box.appendChild(grid);
+      }
+      if (def.knxShutter) {
+        [1, 2].forEach((n) => {
+          const p = item.knxShutterProg[n];
+          const lab = document.createElement("div");
+          lab.className = "ets-section-title";
+          lab.textContent = "Canal volet " + n;
+          box.appendChild(lab);
+          const grid = document.createElement("div");
+          grid.className = "ets-ga-grid";
+          [["gaUp", "GA montée"], ["gaDown", "GA descente"], ["gaStop", "GA stop"]].forEach(([kk, label]) => {
+            const cell = document.createElement("div");
+            cell.className = "ets-ga-cell";
+            cell.innerHTML = "<span>" + label + "</span>";
+            cell.appendChild(etsInput(p[kk], "ga", (v) => {
+              pushHistory(); p[kk] = normGa(v) || v.trim(); knxApplyBusToDevices(); renderEtsPanel(); if (state.sim) render();
+            }));
+            grid.appendChild(cell);
+          });
+          box.appendChild(grid);
+        });
+      }
+      if (def.knxDimmer || def.knxDali || def.knxPresence || def.knxTemp || def.knxThermo || def.knxBinary || def.knxIp) {
+        /* Réutilise les champs GA existants via objets */
+        etsListObjects(item).forEach((o) => {
+          const cell = document.createElement("div");
+          cell.className = "ets-ga-cell";
+          cell.style.marginTop = "4px";
+          cell.innerHTML = "<span>" + o.label + "</span>";
+          cell.appendChild(etsInput(o.ga, "ga", (v) => {
+            pushHistory(); o.setGa(normGa(v) || v.trim()); knxApplyBusToDevices(); renderEtsPanel(); if (state.sim) render();
+          }));
+          box.appendChild(cell);
+        });
+        if (def.knxIp) {
+          const note = document.createElement("div");
+          note.style.cssText = "font-size:10px;color:#64748b;margin-top:4px;";
+          note.textContent = t("etsIpNote");
+          box.appendChild(note);
+        }
+      }
+      host.appendChild(box);
+    }
     function renderEtsPanel() {
       const body = document.getElementById("etsBody");
       const tel = document.getElementById("etsTelegram");
       if (!body) return;
+      const knx = ensureEtsProject();
       state.items.forEach((it) => { if (isKnxDevice(LIB[it.type])) ensureKnxProgram(it); });
+      etsSyncTabsUi();
       if (tel) {
         const tg = state.knxLastTelegram;
         if (tg && state.sim) {
@@ -7008,208 +7916,361 @@
       }
       body.innerHTML = "";
       const modules = state.items.filter((i) => isKnxDevice(LIB[i.type]));
+      if (state.etsToast) {
+        const toast = document.createElement("div");
+        toast.className = "ets-mode-hint";
+        toast.innerHTML = "<b>Info</b> — " + state.etsToast;
+        body.appendChild(toast);
+        state.etsToast = "";
+      }
+
+      const tab = state.etsTab || "batiments";
+
+      if (tab === "projet") {
+        const hint = document.createElement("div");
+        hint.className = "ets-mode-hint";
+        hint.innerHTML = "<b>Rappel modes</b> — <i>A-mode</i> (auto, préconfiguré) · <i>E-mode</i> (easy, boîtier) · <b>S-mode</b> (System / ETS, focus ici).";
+        body.appendChild(hint);
+        const card = document.createElement("div");
+        card.className = "ets-card";
+        card.innerHTML = '<div class="ets-card-title"><span>Créer / configurer le projet</span></div>';
+        const cb = document.createElement("div");
+        cb.className = "ets-card-body";
+        const fields = [
+          ["Nom", "projectName", "text"],
+          ["Ligne réseau", "lineMedia", "select", ["IP", "USB", "TP"]],
+          ["Créer ligne 1.1", "createLine", "check"],
+          ["Type ligne", "lineType", "select", ["TP", "IP"]],
+          ["Style adresses de groupe", "gaStyle", "select", [["3", "Trois niveaux"], ["2", "Deux niveaux"], ["1", "Libre"]]],
+          ["Mode intégration", "integMode", "select", [["S", "S-mode (ETS / System)"], ["E", "E-mode (Easy)"], ["A", "A-mode (Automatique)"]]]
+        ];
+        fields.forEach((f) => {
+          const row = document.createElement("div");
+          row.className = "ets-row";
+          row.innerHTML = "<label>" + f[0] + "</label>";
+          const key = f[1];
+          if (f[2] === "check") {
+            const inp = document.createElement("input");
+            inp.type = "checkbox"; inp.checked = !!knx[key];
+            inp.onchange = () => { pushHistory(); knx[key] = inp.checked; };
+            row.appendChild(inp);
+          } else if (f[2] === "select") {
+            const sel = document.createElement("select");
+            sel.className = "ets-fn";
+            (f[3] || []).forEach((opt) => {
+              const v = Array.isArray(opt) ? opt[0] : opt;
+              const lab = Array.isArray(opt) ? opt[1] : opt;
+              const op = document.createElement("option");
+              op.value = v; op.textContent = lab;
+              if (String(knx[key]) === String(v)) op.selected = true;
+              sel.appendChild(op);
+            });
+            sel.onchange = () => { pushHistory(); knx[key] = sel.value; };
+            row.appendChild(sel);
+          } else {
+            row.appendChild(etsInput(knx[key], "", (v) => { pushHistory(); knx[key] = v.trim(); }));
+          }
+          cb.appendChild(row);
+        });
+        card.appendChild(cb);
+        body.appendChild(card);
+        const st = document.createElement("div");
+        st.className = "ets-status";
+        st.textContent = (knx.projectName || "—") + " · " + (knx.lineMedia || "IP") + " · ligne 1.1 " + (knx.lineType || "TP") + " · GA " + (knx.gaStyle || "3") + " niveaux · mode " + (knx.integMode || "S");
+        body.appendChild(st);
+        return;
+      }
+
+      if (tab === "catalogues") {
+        const title = document.createElement("div");
+        title.className = "ets-section-title";
+        title.textContent = "Catalogues — produits KNX (biblio Domotique)";
+        body.appendChild(title);
+        const hint = document.createElement("div");
+        hint.className = "ets-mode-hint";
+        hint.innerHTML = "Clique un produit pour le <b>placer sur le plan</b> (même action que la biblio Domotique KNX).";
+        body.appendChild(hint);
+        Object.keys(LIB).filter((k) => isKnxDevice(LIB[k])).forEach((type) => {
+          const def = LIB[type];
+          const card = document.createElement("button");
+          card.type = "button";
+          card.className = "ets-card ets-catalog-item";
+          card.title = "Placer : " + etsCatalogLabel(type, def);
+          card.innerHTML = '<div class="ets-card-title"><span>' + etsCatalogLabel(type, def) +
+            ' <span class="tag">' + (def.badge || "") + "</span></span></div>";
+          card.onclick = () => {
+            if (!isTypeUnlocked(type)) { openTierGate(); return; }
+            add(type);
+            try { closeMobileLib(); } catch (_) {}
+          };
+          body.appendChild(card);
+        });
+        return;
+      }
+
       if (!modules.length) {
         const empty = document.createElement("div");
         empty.className = "ets-empty";
-        empty.innerHTML = "Aucun module KNX sur le canevas.<br>Pose alim, poussoir, actionneur, volet… depuis la biblio <b>Domotique KNX</b>.";
+        empty.innerHTML = "Aucun module KNX sur le canevas.<br>Pose alim Hager/SwissDz, poussoir, actionneur, IP… depuis <b>Domotique KNX</b>, puis reviens ici.";
         body.appendChild(empty);
         return;
       }
-      const listTitle = document.createElement("div");
-      listTitle.className = "ets-section-title";
-      listTitle.textContent = t("etsParticipants");
-      body.appendChild(listTitle);
 
-      modules.forEach((item) => {
-        const def = LIB[item.type];
-        ensureKnxProgram(item);
-        const card = document.createElement("div");
-        card.className = "ets-card";
-        const title = document.createElement("div");
-        title.className = "ets-card-title";
-        title.innerHTML = "<span><b>" + item.tag + "</b> — " + libDisplayName(item.type, def).replace(" SwissDz", "").replace(" SwissDz", "") +
-          ' <span class="tag">' + (item.physAddr || "") + "</span></span>" +
-          '<span class="bus-pill' + (item.knxBusOk ? " on" : "") + '">' + (item.knxBusOk ? "BUS OK" : "BUS —") + "</span>";
-        card.appendChild(title);
-        const cb = document.createElement("div");
-        cb.className = "ets-card-body";
+      if (!state.etsSelUid || !find(state.etsSelUid)) {
+        state.etsSelUid = modules[0].uid;
+      }
 
-        const row = document.createElement("div");
-        row.className = "ets-row";
-        row.innerHTML = "<label>Physique</label>";
-        row.appendChild(etsInput(item.physAddr, "phys", (v) => {
-          pushHistory();
-          const n = normPhys(v);
-          item.physAddr = n || v.trim();
-          renderEtsPanel();
-        }));
-        cb.appendChild(row);
+      if (tab === "batiments" || tab === "params") {
+        const hint = document.createElement("div");
+        hint.className = "ets-mode-hint";
+        if (tab === "params") {
+          hint.innerHTML = "<b>Méthode 1 — Paramètres</b> : config appareil (fonction entrée, mode manuel, adresses…). Puis associe les GA dans « Adresses de Groupe ».";
+        } else {
+          hint.innerHTML = "<b>Bâtiments</b> — topologie pédagogique (pièces). Sélectionne un participant pour programmer (adresse indiv. / paramètres).";
+        }
+        body.appendChild(hint);
 
-        if (def.knxPush) {
-          [1, 2, 3, 4].forEach((n) => {
-            const p = item.knxKeysProg[n];
-            const cell = document.createElement("div");
-            cell.className = "ets-ga-cell";
-            cell.style.marginTop = "6px";
-            cell.innerHTML = "<span>T" + n + " — objet</span>";
-            const sel = document.createElement("select");
-            sel.className = "ets-fn";
-            KNX_KEY_FNS.forEach((o) => {
-              const op = document.createElement("option");
-              op.value = o.v; op.textContent = o.lab; if (p.fn === o.v) op.selected = true;
-              sel.appendChild(op);
+        const wrap = document.createElement("div");
+        wrap.style.cssText = "display:grid;grid-template-columns:1fr 1.2fr;gap:8px;";
+        const left = document.createElement("div");
+        left.className = "ets-card";
+        left.innerHTML = '<div class="ets-card-title"><span>' + (knx.projectName || "Projet") + " / " + (knx.building.name || "Bâtiment") + "</span></div>";
+        const tree = document.createElement("ul");
+        tree.className = "ets-tree";
+        const rooms = (knx.building && knx.building.rooms) || [];
+        rooms.forEach((room) => {
+          const li = document.createElement("li");
+          const head = document.createElement("button");
+          head.type = "button";
+          head.className = "ets-tree-item";
+          head.textContent = "📁 " + room.name;
+          li.appendChild(head);
+          const nest = document.createElement("ul");
+          nest.className = "ets-tree nest";
+          modules.filter((it) => {
+            const def = LIB[it.type];
+            const roomId = it.etsRoom || etsDefaultRoomFor(def);
+            return roomId === room.id;
+          }).forEach((it) => {
+            const def = LIB[it.type];
+            const li2 = document.createElement("li");
+            const b = document.createElement("button");
+            b.type = "button";
+            b.className = "ets-tree-item" + (state.etsSelUid === it.uid ? " on" : "");
+            const addr = def.knxPsu ? "1.1.-" : (it.physAddr || "");
+            b.innerHTML = "<span>" + addr + "</span> <span>" + etsCatalogLabel(it.type, def) + "</span>"
+              + '<span class="bus-pill' + (it.knxBusOk ? " on" : "") + '" style="margin-left:auto">' + (it.knxBusOk ? "BUS" : "—") + "</span>";
+            b.onclick = () => { state.etsSelUid = it.uid; if (tab === "batiments") state.etsTab = "params"; renderEtsPanel(); };
+            li2.appendChild(b);
+            nest.appendChild(li2);
+          });
+          li.appendChild(nest);
+          tree.appendChild(li);
+        });
+        /* Orphelins */
+        const orphan = modules.filter((it) => {
+          const rid = it.etsRoom || etsDefaultRoomFor(LIB[it.type]);
+          return !rooms.some((r) => r.id === rid);
+        });
+        if (orphan.length) {
+          const li = document.createElement("li");
+          li.innerHTML = '<button type="button" class="ets-tree-item">📁 Autres</button>';
+          const nest = document.createElement("ul");
+          nest.className = "ets-tree nest";
+          orphan.forEach((it) => {
+            const def = LIB[it.type];
+            const li2 = document.createElement("li");
+            const b = document.createElement("button");
+            b.type = "button";
+            b.className = "ets-tree-item" + (state.etsSelUid === it.uid ? " on" : "");
+            b.textContent = (it.physAddr || "") + " " + etsCatalogLabel(it.type, def);
+            b.onclick = () => { state.etsSelUid = it.uid; state.etsTab = "params"; renderEtsPanel(); };
+            li2.appendChild(b);
+            nest.appendChild(li2);
+          });
+          li.appendChild(nest);
+          tree.appendChild(li);
+        }
+        left.appendChild(tree);
+        wrap.appendChild(left);
+
+        const right = document.createElement("div");
+        const sel = find(state.etsSelUid);
+        if (sel) {
+          const modeRow = document.createElement("div");
+          modeRow.style.cssText = "display:flex;gap:6px;margin-bottom:8px;";
+          [["params", "Paramètres"], ["objets", "Objets de Groupe"]].forEach(([v, lab]) => {
+            const b = document.createElement("button");
+            b.type = "button";
+            b.textContent = lab;
+            b.style.cssText = "flex:1;padding:6px;font-size:11px;font-weight:800;border:1px solid #94a3b8;border-radius:6px;cursor:pointer;"
+              + (state.etsProgMode === v ? "background:#0b5cab;color:#fff;border-color:#0b5cab;" : "background:#fff;");
+            b.onclick = () => { state.etsProgMode = v; renderEtsPanel(); };
+            modeRow.appendChild(b);
+          });
+          right.appendChild(modeRow);
+
+          if (state.etsProgMode === "params" || tab === "params") {
+            renderEtsDeviceParams(sel, right);
+          } else {
+            const box = document.createElement("div");
+            box.className = "ets-props-box";
+            box.innerHTML = "<h4>Objets de Groupe — glisser vers une Adresse de Groupe</h4>";
+            etsListObjects(sel).forEach((o) => {
+              const chip = document.createElement("span");
+              chip.className = "ets-obj-chip";
+              chip.draggable = true;
+              chip.textContent = o.label + (o.ga ? " [" + o.ga + "]" : "");
+              chip.title = "Glisser vers une GA";
+              chip.ondragstart = (ev) => {
+                ev.dataTransfer.setData("text/ets-obj", JSON.stringify({ uid: sel.uid, key: o.key }));
+                ev.dataTransfer.effectAllowed = "copy";
+              };
+              box.appendChild(chip);
             });
-            sel.onchange = () => { pushHistory(); p.fn = sel.value; renderEtsPanel(); };
-            cell.appendChild(sel);
-            cell.appendChild(etsInput(p.ga, "ga", (v) => {
-              pushHistory(); p.ga = normGa(v) || v.trim(); renderEtsPanel(); if (state.sim) render();
-            }));
-            cb.appendChild(cell);
-          });
+            const tip = document.createElement("div");
+            tip.style.cssText = "font-size:10px;color:#64748b;margin-top:8px;";
+            tip.textContent = "Astuce : onglet « Adresses de Groupe » → déposer l’objet sur 0/0/1…";
+            box.appendChild(tip);
+            right.appendChild(box);
+          }
         }
-        if (def.knxActuator) {
-          const grid = document.createElement("div");
-          grid.className = "ets-ga-grid";
-          [1, 2, 3, 4].forEach((n) => {
-            const cell = document.createElement("div");
-            cell.className = "ets-ga-cell";
-            cell.innerHTML = "<span>Sortie " + n + " GA</span>";
-            cell.appendChild(etsInput(item.knxChProg[n].ga, "ga", (v) => {
-              pushHistory(); item.knxChProg[n].ga = normGa(v) || v.trim(); knxApplyBusToDevices(); renderEtsPanel(); if (state.sim) render();
-            }));
-            grid.appendChild(cell);
-          });
-          cb.appendChild(grid);
-        }
-        if (def.knxShutter) {
-          [1, 2].forEach((n) => {
-            const p = item.knxShutterProg[n];
-            const lab = document.createElement("div");
-            lab.className = "ets-section-title";
-            lab.textContent = t("etsShutterCh", { n: n });
-            cb.appendChild(lab);
-            const grid = document.createElement("div");
-            grid.className = "ets-ga-grid";
-            [["gaUp", "GA montée"], ["gaDown", "GA descente"], ["gaStop", "GA stop"]].forEach(([k, label]) => {
-              const cell = document.createElement("div");
-              cell.className = "ets-ga-cell";
-              cell.innerHTML = "<span>" + label + "</span>";
-              cell.appendChild(etsInput(p[k], "ga", (v) => {
-                pushHistory(); p[k] = normGa(v) || v.trim(); knxApplyBusToDevices(); renderEtsPanel(); if (state.sim) render();
-              }));
-              grid.appendChild(cell);
+        wrap.appendChild(right);
+        body.appendChild(wrap);
+      }
+
+      if (tab === "groupes") {
+        const hint = document.createElement("div");
+        hint.className = "ets-mode-hint";
+        hint.innerHTML = "<b>Méthode 2 — Adresses de Groupe</b> : crée / sélectionne une GA, puis <b>glisse-dépose</b> un objet de communication depuis Bâtiments → Objets de Groupe.";
+        body.appendChild(hint);
+
+        const wrap = document.createElement("div");
+        wrap.style.cssText = "display:grid;grid-template-columns:1fr 1.1fr;gap:8px;";
+        const left = document.createElement("div");
+        left.className = "ets-card";
+        left.innerHTML = '<div class="ets-card-title"><span>Adresses de Groupe (3 niveaux)</span>'
+          + '<button type="button" id="etsAddGa" style="font-size:10px;padding:3px 7px;border-radius:4px;border:1px solid #94a3b8;background:#fff;cursor:pointer;">+ GA</button></div>';
+        const tree = document.createElement("ul");
+        tree.className = "ets-tree";
+        (knx.mainGroups || []).forEach((mg) => {
+          const li = document.createElement("li");
+          li.innerHTML = '<button type="button" class="ets-tree-item">▦ ' + mg.id + " " + mg.name + "</button>";
+          const nest = document.createElement("ul");
+          nest.className = "ets-tree nest";
+          (mg.mid || []).forEach((mid) => {
+            const liM = document.createElement("li");
+            liM.innerHTML = '<button type="button" class="ets-tree-item">▣ ' + mg.id + "/" + mid.id + " " + mid.name + "</button>";
+            const nestG = document.createElement("ul");
+            nestG.className = "ets-tree nest";
+            (mid.gas || []).forEach((g) => {
+              const liG = document.createElement("li");
+              const b = document.createElement("button");
+              b.type = "button";
+              b.className = "ets-tree-item" + (state.etsSelGa === g.a ? " on" : "");
+              b.textContent = "▪ " + g.a + " " + (g.n || "");
+              b.onclick = () => { state.etsSelGa = g.a; renderEtsPanel(); };
+              liG.appendChild(b);
+              nestG.appendChild(liG);
             });
-            cb.appendChild(grid);
+            liM.appendChild(nestG);
+            nest.appendChild(liM);
+          });
+          li.appendChild(nest);
+          tree.appendChild(li);
+        });
+        left.appendChild(tree);
+        wrap.appendChild(left);
+
+        const right = document.createElement("div");
+        right.className = "ets-card";
+        const ga = state.etsSelGa || "0/0/1";
+        right.innerHTML = '<div class="ets-card-title"><span>GA sélectionnée <span class="tag">' + ga + "</span></span></div>";
+        const drop = document.createElement("div");
+        drop.className = "ets-drop";
+        drop.textContent = "Déposer ici un objet de groupe (depuis Bâtiments → Objets de Groupe)";
+        drop.ondragover = (ev) => { ev.preventDefault(); drop.classList.add("over"); };
+        drop.ondragleave = () => drop.classList.remove("over");
+        drop.ondrop = (ev) => {
+          ev.preventDefault();
+          drop.classList.remove("over");
+          try {
+            const data = JSON.parse(ev.dataTransfer.getData("text/ets-obj") || "{}");
+            if (data.uid && data.key && etsAssignGaToObject(data.uid, data.key, ga)) renderEtsPanel();
+          } catch (_) {}
+        };
+        right.appendChild(drop);
+
+        const linked = collectKnxLinks().filter((L) => L.ga === normGa(ga) || L.ga === ga);
+        const table = document.createElement("table");
+        table.className = "ets-links";
+        table.innerHTML = "<thead><tr><th>Objet</th><th>Participant</th><th>Lien</th></tr></thead>";
+        const tb = document.createElement("tbody");
+        if (!linked.length) {
+          tb.innerHTML = "<tr><td colspan='3'>Aucun objet associé à cette GA.</td></tr>";
+        } else {
+          linked.forEach((L) => {
+            L.prod.concat(L.cons).forEach((p) => {
+              const tr = document.createElement("tr");
+              tr.innerHTML = "<td>" + p.obj + "</td><td>" + p.tag + " (" + (p.phys || "") + ")</td><td class='ok'>lié</td>";
+              tb.appendChild(tr);
+            });
           });
         }
-        if (def.knxDimmer || def.knxDali) {
-          const grid = document.createElement("div");
-          grid.className = "ets-ga-grid";
-          [["gaOn", "GA ON/OFF"], ["gaLevel", "GA niveau %"]].forEach(([k, label]) => {
-            const cell = document.createElement("div");
-            cell.className = "ets-ga-cell";
-            cell.innerHTML = "<span>" + label + "</span>";
-            cell.appendChild(etsInput(item.knxDimProg[k], "ga", (v) => {
-              pushHistory(); item.knxDimProg[k] = normGa(v) || v.trim(); knxApplyBusToDevices(); renderEtsPanel(); if (state.sim) render();
-            }));
-            grid.appendChild(cell);
-          });
-          cb.appendChild(grid);
-        }
-        if (def.knxPresence) {
-          const cell = document.createElement("div");
-          cell.className = "ets-ga-cell";
-          cell.innerHTML = "<span>GA présence (1 bit)</span>";
-          cell.appendChild(etsInput(item.knxPresenceProg.ga, "ga", (v) => {
-            pushHistory(); item.knxPresenceProg.ga = normGa(v) || v.trim(); renderEtsPanel();
-          }));
-          cb.appendChild(cell);
-        }
-        if (def.knxTemp) {
-          const cell = document.createElement("div");
-          cell.className = "ets-ga-cell";
-          cell.innerHTML = "<span>GA température</span>";
-          cell.appendChild(etsInput(item.knxTempProg.ga, "ga", (v) => {
-            pushHistory(); item.knxTempProg.ga = normGa(v) || v.trim(); renderEtsPanel();
-          }));
-          const rowT = document.createElement("div");
-          rowT.className = "ets-row";
-          rowT.innerHTML = "<label>Valeur °C</label>";
-          const tin = document.createElement("input");
-          tin.type = "number"; tin.step = "0.1"; tin.value = item.knxTemp;
-          tin.onpointerdown = (e) => e.stopPropagation();
-          tin.onchange = () => {
+        table.appendChild(tb);
+        right.appendChild(table);
+        wrap.appendChild(right);
+        body.appendChild(wrap);
+
+        const addBtn = left.querySelector("#etsAddGa");
+        if (addBtn) {
+          addBtn.onclick = () => {
+            const name = window.prompt("Nom de la nouvelle adresse de groupe", "Bureau open Space Lampe 2");
+            if (name == null) return;
+            const mg = knx.mainGroups[0];
+            if (!mg.mid[0]) mg.mid[0] = { id: 0, name: "ON / OFF", gas: [] };
+            const mid = mg.mid[0];
+            const n = (mid.gas || []).length + 1;
+            const a = "0/0/" + n;
             pushHistory();
-            item.knxTemp = Number(tin.value) || 21.5;
-            if (knxCanSend(item)) knxPublish(item.knxTempProg.ga, item.knxTemp, item.tag);
+            mid.gas.push({ a: a, n: String(name).trim() || a });
+            state.etsSelGa = a;
             renderEtsPanel();
           };
-          rowT.appendChild(tin);
-          cb.appendChild(cell);
-          cb.appendChild(rowT);
         }
-        if (def.knxThermo) {
-          const grid = document.createElement("div");
-          grid.className = "ets-ga-grid";
-          [["gaSet", "GA consigne"], ["gaHeat", "GA chauffage"]].forEach(([k, label]) => {
-            const cell = document.createElement("div");
-            cell.className = "ets-ga-cell";
-            cell.innerHTML = "<span>" + label + "</span>";
-            cell.appendChild(etsInput(item.knxThermoProg[k], "ga", (v) => {
-              pushHistory(); item.knxThermoProg[k] = normGa(v) || v.trim(); renderEtsPanel();
-            }));
-            grid.appendChild(cell);
-          });
-          cb.appendChild(grid);
-        }
-        if (def.knxBinary) {
-          const grid = document.createElement("div");
-          grid.className = "ets-ga-grid";
-          [1, 2, 3, 4].forEach((n) => {
-            const cell = document.createElement("div");
-            cell.className = "ets-ga-cell";
-            cell.innerHTML = "<span>E" + n + " GA</span>";
-            cell.appendChild(etsInput(item.knxBinProg[n].ga, "ga", (v) => {
-              pushHistory(); item.knxBinProg[n].ga = normGa(v) || v.trim(); renderEtsPanel();
-            }));
-            grid.appendChild(cell);
-          });
-          cb.appendChild(grid);
-        }
-        if (def.knxIp) {
-          const note = document.createElement("div");
-          note.style.cssText = "font-size:10px;color:#64748b;margin-top:4px;";
-          note.textContent = t("etsIpNote");
-          cb.appendChild(note);
-        }
-        card.appendChild(cb);
-        body.appendChild(card);
-      });
-
-      const linksTitle = document.createElement("div");
-      linksTitle.className = "ets-section-title";
-      linksTitle.textContent = t("etsLinks");
-      body.appendChild(linksTitle);
-      const links = collectKnxLinks();
-      const table = document.createElement("table");
-      table.className = "ets-links";
-      table.innerHTML = "<thead><tr><th>GA</th><th>Émetteurs</th><th>Récepteurs</th><th>Lien</th></tr></thead>";
-      const tb = document.createElement("tbody");
-      if (!links.length) {
-        tb.innerHTML = "<tr><td colspan='4'>Aucun objet GA programmé.</td></tr>";
-      } else {
-        links.forEach((L) => {
-          const tr = document.createElement("tr");
-          const ok = L.prod.length && L.cons.length;
-          tr.innerHTML = "<td><b>" + L.ga + "</b></td><td>" +
-            (L.prod.map((p) => p.tag + " " + p.obj).join("<br>") || "—") + "</td><td>" +
-            (L.cons.map((c) => c.tag + " " + c.obj).join("<br>") || "—") + "</td><td class='" +
-            (ok ? "ok" : "miss") + "'>" + (ok ? "lié" : "incomplet") + "</td>";
-          tb.appendChild(tr);
-        });
       }
-      table.appendChild(tb);
-      body.appendChild(table);
+
+      /* Tableau liens global (toujours utile en bas sauf catalogues/projet) */
+      if (tab === "batiments" || tab === "groupes" || tab === "params") {
+        const linksTitle = document.createElement("div");
+        linksTitle.className = "ets-section-title";
+        linksTitle.textContent = t("etsLinks");
+        body.appendChild(linksTitle);
+        const links = collectKnxLinks();
+        const table = document.createElement("table");
+        table.className = "ets-links";
+        table.innerHTML = "<thead><tr><th>GA</th><th>Émetteurs</th><th>Récepteurs</th><th>Lien</th></tr></thead>";
+        const tb = document.createElement("tbody");
+        if (!links.length) {
+          tb.innerHTML = "<tr><td colspan='4'>Aucun objet GA programmé.</td></tr>";
+        } else {
+          links.forEach((L) => {
+            const tr = document.createElement("tr");
+            const ok = L.prod.length && L.cons.length;
+            tr.innerHTML = "<td><b>" + L.ga + "</b></td><td>" +
+              (L.prod.map((p) => p.tag + " " + p.obj).join("<br>") || "—") + "</td><td>" +
+              (L.cons.map((c) => c.tag + " " + c.obj).join("<br>") || "—") + "</td><td class='" +
+              (ok ? "ok" : "miss") + "'>" + (ok ? "lié" : "incomplet") + "</td>";
+            tb.appendChild(tr);
+          });
+        }
+        table.appendChild(tb);
+        body.appendChild(table);
+        const st = document.createElement("div");
+        st.className = "ets-status";
+        st.textContent = "1.1 Nouvelle ligne · " + (knx.lineMedia || "IP") + " · Adresses de Groupe · mode " + (knx.integMode || "S");
+        body.appendChild(st);
+      }
     }
     /* ========== fin ETS FORMATION ========== */
 
@@ -10179,38 +11240,39 @@
       }, { passive: false });
     }
 
+    /* Ordre catalogue = priorité utilisateur (atelier / démarrage schéma). */
     const CAT_ORDER = [
       "Structure",
       "Alimentation",
-      "Photovoltaïque",
-      "Alim auxiliaire",
-      "Transformateurs",
+      "Borniers / Alim",
       "Disjoncteurs modulaires",
+      "Différentiel",
+      "Parafoudres",
       "Disjoncteurs boîtier moulé",
       "Sectionneurs",
       "Inverseurs de source",
       "Relais tension / phases",
-      "Différentiel",
-      "Parafoudres",
-      "Commande",
       "Contacteur + relais thermique",
       "Contacteurs",
       "Relais thermiques",
-      "Relais",
-      "Auxiliaires",
-      "PLC",
-      "Boutonnerie",
-      "Éclairage",
-      "Prises",
-      "Domotique KNX",
       "Moteurs",
       "Variateur de vitesse",
-      "Variateurs",
-      "Divers",
+      "Boutonnerie",
+      "Commande",
+      "Relais",
+      "Auxiliaires",
+      "Éclairage",
+      "Prises",
+      "Capteurs",
       "Mesure",
       "Appareil de mesure multifonction",
-      "Capteurs",
-      "Borniers / Alim",
+      "PLC",
+      "Domotique KNX",
+      "Photovoltaïque",
+      "Alim auxiliaire",
+      "Transformateurs",
+      "Variateurs",
+      "Divers",
     ];
     const ALIAS_IDS = new Set(["rail", "disj", "idr", "contacteur", "thermique_3ph", "moteur_3ph", "compteur_3pn"]);
     const cats = {};
@@ -11521,6 +12583,7 @@
         stopLadderLoop();
         stopKnxAnim();
         stopAllBuzzers();
+        stopShortCircuitSound();
         state.shortArmed = false;
         state.short = null;
         clearFireImmediate();
@@ -12851,16 +13914,53 @@
       return !!(item.coilOn || item.closed);
     }
 
-    /* Web Audio : bip tant que le sonore est alimenté (X1/X2 sous L+N). */
+    /* Web Audio : bip sonore, hum moteur, zap court-circuit (+ clip pompe). */
     const buzzerNodes = new Map();
     let audioCtx = null;
+    let audioResumePending = false;
+    let audioGestureUnlocked = false;
+    function resyncSimSounds() {
+      if (!state.sim || soundsMuted) return;
+      syncBuzzers();
+      syncMotorSounds();
+      syncPumpWaterSounds();
+    }
     function ensureAudio() {
       const AC = window.AudioContext || window.webkitAudioContext;
       if (!AC) return null;
       if (!audioCtx) audioCtx = new AC();
-      if (audioCtx.state === "suspended") audioCtx.resume().catch(() => {});
+      if (audioCtx.state === "suspended" && !audioResumePending) {
+        audioResumePending = true;
+        const p = audioCtx.resume();
+        if (p && typeof p.then === "function") {
+          p.then(() => {
+            audioResumePending = false;
+            /* iOS/WebView : osc. créés pendant suspended restent silencieux → re-sync. */
+            resyncSimSounds();
+          }).catch(() => { audioResumePending = false; });
+        } else {
+          audioResumePending = false;
+        }
+      }
+      /* Déblocage iOS (une fois) : buffer silencieux dans le geste utilisateur. */
+      if (!audioGestureUnlocked) {
+        try {
+          const buf = audioCtx.createBuffer(1, 1, audioCtx.sampleRate || 22050);
+          const src = audioCtx.createBufferSource();
+          src.buffer = buf;
+          src.connect(audioCtx.destination);
+          src.start(0);
+          if (audioCtx.state === "running") audioGestureUnlocked = true;
+        } catch (e) {}
+      }
       return audioCtx;
     }
+    ["pointerdown", "touchstart", "keydown"].forEach((evName) => {
+      document.addEventListener(evName, () => {
+        if (soundsMuted) return;
+        try { ensureAudio(); } catch (e) {}
+      }, { capture: true, passive: true });
+    });
     function makeNoiseBuffer(ctx, seconds) {
       const n = Math.max(1, (seconds * ctx.sampleRate) | 0);
       const buf = ctx.createBuffer(1, n, ctx.sampleRate);
@@ -12879,13 +13979,18 @@
         const pts = wirePts(w);
         if (pts.length < 2) return;
         const mid = midPoint(pts);
+        let len = 0;
+        for (let i = 1; i < pts.length; i++) len += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y);
         let score = 0;
         if ((ra === "l" && rb === "n") || (ra === "n" && rb === "l")) score = 3;
         else if ((ra === "l" && rb === "pe") || (ra === "pe" && rb === "l")) score = 3;
         else if (ra !== rb) score = 2;
         else if (w.a.uid !== w.b.uid) score = 1;
         if (kind === "L-L" && ra === "l" && rb === "l" && w.a.uid !== w.b.uid) score = Math.max(score, 2);
-        if (!best || score > best.score) best = { x: mid.x, y: mid.y, wireId: w.id, score };
+        /* Préférer le pont le plus court (pastille près du défaut, pas au milieu d’un long fil). */
+        if (!best || score > best.score || (score === best.score && len < best.len)) {
+          best = { x: mid.x, y: mid.y, wireId: w.id, score, len };
+        }
       });
       if (best) return best;
       const cpt = state.items.find((i) => LIB[i.type] && isCompteurKind(LIB[i.type].kind));
@@ -12915,6 +14020,147 @@
           navigator.vibrate(pattern);
         }
       } catch (e) {}
+    }
+    let shortSoundNodes = null;
+    function stopShortCircuitSound() {
+      if (!shortSoundNodes) return;
+      const nodes = shortSoundNodes;
+      shortSoundNodes = null;
+      (nodes.sources || []).forEach((s) => {
+        try { s.stop(); } catch (e) {}
+        try { s.disconnect(); } catch (e) {}
+      });
+      (nodes.gains || []).forEach((g) => {
+        try { g.disconnect(); } catch (e) {}
+      });
+      try { if (nodes.gain) nodes.gain.disconnect(); } catch (e) {}
+    }
+    /** Arc / étincelle court-circuit — 1re version (bang sine + bruit + scies), one-shot. */
+    function playShortCircuitSound() {
+      if (soundsMuted) return;
+      const ctx = ensureAudio();
+      if (!ctx) return;
+      stopShortCircuitSound();
+      const t0 = ctx.currentTime;
+      const sources = [];
+      const gains = [];
+      /* Bang basse + craquement bruit blanc (synthèse type CC — version d’origine). */
+      const boom = ctx.createOscillator();
+      const boomG = ctx.createGain();
+      boom.type = "sine";
+      boom.frequency.setValueAtTime(90, t0);
+      boom.frequency.exponentialRampToValueAtTime(35, t0 + 0.18);
+      boomG.gain.setValueAtTime(0.0001, t0);
+      boomG.gain.exponentialRampToValueAtTime(0.55, t0 + 0.012);
+      boomG.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.35);
+      boom.connect(boomG);
+      boomG.connect(ctx.destination);
+      boom.start(t0);
+      boom.stop(t0 + 0.4);
+      sources.push(boom);
+      gains.push(boomG);
+
+      const nBuf = makeNoiseBuffer(ctx, 0.6);
+      const noise = ctx.createBufferSource();
+      noise.buffer = nBuf;
+      const filt = ctx.createBiquadFilter();
+      filt.type = "bandpass";
+      filt.frequency.setValueAtTime(1800, t0);
+      filt.frequency.exponentialRampToValueAtTime(400, t0 + 0.5);
+      filt.Q.value = 0.7;
+      const noiseG = ctx.createGain();
+      noiseG.gain.setValueAtTime(0.0001, t0);
+      noiseG.gain.exponentialRampToValueAtTime(0.4, t0 + 0.008);
+      noiseG.gain.exponentialRampToValueAtTime(0.12, t0 + 0.08);
+      noiseG.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.55);
+      noise.connect(filt);
+      filt.connect(noiseG);
+      noiseG.connect(ctx.destination);
+      noise.start(t0);
+      noise.stop(t0 + 0.6);
+      sources.push(noise);
+      gains.push(noiseG);
+
+      /* Étincelles aiguës */
+      for (let k = 0; k < 5; k++) {
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        const tk = t0 + 0.02 + k * 0.045;
+        o.type = "sawtooth";
+        o.frequency.setValueAtTime(1200 + Math.random() * 2400, tk);
+        o.frequency.exponentialRampToValueAtTime(200 + Math.random() * 400, tk + 0.06);
+        g.gain.setValueAtTime(0.0001, tk);
+        g.gain.exponentialRampToValueAtTime(0.12, tk + 0.005);
+        g.gain.exponentialRampToValueAtTime(0.0001, tk + 0.07);
+        o.connect(g);
+        g.connect(ctx.destination);
+        o.start(tk);
+        o.stop(tk + 0.08);
+        sources.push(o);
+        gains.push(g);
+      }
+      shortSoundNodes = { sources, gain: boomG, gains };
+      setTimeout(() => {
+        if (shortSoundNodes && shortSoundNodes.sources === sources) stopShortCircuitSound();
+      }, 700);
+    }
+    let fireCrackleNode = null;
+    let fireSoundDelayTimer = null;
+    function stopFireCrackle() {
+      if (fireSoundDelayTimer != null) {
+        clearTimeout(fireSoundDelayTimer);
+        fireSoundDelayTimer = null;
+      }
+      if (!fireCrackleNode) return;
+      const node = fireCrackleNode;
+      fireCrackleNode = null;
+      try {
+        const ctx = audioCtx;
+        const t = ctx ? ctx.currentTime : 0;
+        if (node.gain) {
+          node.gain.gain.cancelScheduledValues(t);
+          node.gain.gain.setValueAtTime(Math.max(0.0001, node.gain.gain.value), t);
+          node.gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.12);
+        }
+      } catch (e) {}
+      setTimeout(() => {
+        try { if (node.src) node.src.stop(); } catch (e) {}
+        try { if (node.src) node.src.disconnect(); } catch (e) {}
+        try { if (node.filt) node.filt.disconnect(); } catch (e) {}
+        try { if (node.gain) node.gain.disconnect(); } catch (e) {}
+      }, 140);
+    }
+    /** Crépitement feu (après le bang CC) — bruit filtré en boucle. */
+    function startFireCrackle() {
+      if (soundsMuted || fireCrackleNode) return;
+      const ctx = ensureAudio();
+      if (!ctx) return;
+      const src = ctx.createBufferSource();
+      src.buffer = makeNoiseBuffer(ctx, 1.2);
+      src.loop = true;
+      const filt = ctx.createBiquadFilter();
+      filt.type = "bandpass";
+      filt.frequency.value = 380;
+      filt.Q.value = 0.55;
+      const gain = ctx.createGain();
+      const t0 = ctx.currentTime;
+      gain.gain.setValueAtTime(0.0001, t0);
+      gain.gain.exponentialRampToValueAtTime(0.085, t0 + 0.35);
+      src.connect(filt);
+      filt.connect(gain);
+      gain.connect(ctx.destination);
+      src.start();
+      fireCrackleNode = { src, filt, gain };
+    }
+    /** Séquence CC bang puis feu. */
+    function playShortThenFire() {
+      playShortCircuitSound();
+      if (fireSoundDelayTimer != null) clearTimeout(fireSoundDelayTimer);
+      fireSoundDelayTimer = setTimeout(() => {
+        fireSoundDelayTimer = null;
+        if (!state.sim || !state.shortArmed || soundsMuted) return;
+        startFireCrackle();
+      }, 550);
     }
     function triggerShortCircuit(loc) {
       state.short = {
@@ -13008,6 +14254,7 @@
       state.fire = null;
       state.shortSince = null;
       stopFireAnim();
+      stopFireCrackle();
       if (state._fireClearTimer) {
         clearTimeout(state._fireClearTimer);
         state._fireClearTimer = null;
@@ -13015,12 +14262,16 @@
     }
     function updateFireAfterShortCleared() {
       state.shortSince = null;
-      if (!state.fire) return;
+      if (!state.fire) {
+        stopFireCrackle();
+        return;
+      }
       if (!state.sim) {
         clearFireImmediate();
         return;
       }
-      /* Le visual s’éteint sous ~1,5 s une fois le défaut corrigé */
+      /* Son feu stop net ; le visual s’éteint sous ~1,5 s */
+      stopFireCrackle();
       stopFireAnim();
       const now = performance.now();
       if (state.fire.clearAt == null) state.fire.clearAt = now + 1500;
@@ -13033,11 +14284,13 @@
         state.fire.x = loc.x;
         state.fire.y = loc.y;
         state.fire.clearAt = null;
+        startFireCrackle();
         return;
       }
       if (now - state.shortSince < 2500) return;
       state.fire = { x: loc.x, y: loc.y, t0: now, clearAt: null };
       vibrateShortCircuit([120, 60, 300]);
+      startFireCrackle();
     }
     function stopAllBuzzers() {
       buzzerNodes.forEach((node) => {
@@ -13070,13 +14323,14 @@
       motorNodes.clear();
     }
     function startMotorSound(uid, dir) {
+      if (soundsMuted) return;
       const ctx = ensureAudio();
       if (!ctx) return;
       const t0 = ctx.currentTime;
       const sources = [];
       const master = ctx.createGain();
       master.gain.setValueAtTime(0.0001, t0);
-      master.gain.exponentialRampToValueAtTime(0.14, t0 + 0.05);
+      master.gain.exponentialRampToValueAtTime(0.22, t0 + 0.05);
       master.connect(ctx.destination);
 
       /* Démarrage : grésillement + rampe de fréquence */
@@ -13126,7 +14380,7 @@
       motorNodes.set(uid, { sources, gain: master, dir });
     }
     function syncMotorSounds() {
-      if (!state.sim) {
+      if (!state.sim || soundsMuted) {
         stopAllMotorSounds();
         return;
       }
@@ -13163,7 +14417,7 @@
       });
     }
     const pumpWaterNodes = new Map();
-    const PUMP_WATER_SRC = "assets/audio/eau-tuyau.mp3";
+    const PUMP_WATER_SRC = "assets/audio/eau-tuyau.mp3?v=audio-r2";
     const PUMP_WATER_VOL = 0.32;
     function pumpWaterUrl() {
       try { return new URL(PUMP_WATER_SRC, document.baseURI || location.href).href; }
@@ -13178,6 +14432,7 @@
       pumpWaterNodes.forEach((node) => stopPumpWaterNode(node));
     }
     function startPumpWaterSound(uid) {
+      if (soundsMuted) return;
       let node = pumpWaterNodes.get(uid);
       if (!node) {
         node = new Audio(pumpWaterUrl());
@@ -13196,7 +14451,7 @@
       }
     }
     function syncPumpWaterSounds() {
-      if (!state.sim) {
+      if (!state.sim || soundsMuted) {
         stopAllPumpWaterSounds();
         return;
       }
@@ -13212,8 +14467,16 @@
       });
     }
     function syncBuzzers() {
-      if (!state.sim) {
-        stopAllBuzzers();
+      if (!state.sim || soundsMuted) {
+        buzzerNodes.forEach((node) => {
+          try { node.osc.stop(); } catch (e) {}
+          try { node.gain.disconnect(); } catch (e) {}
+        });
+        buzzerNodes.clear();
+        if (!state.sim) {
+          stopAllMotorSounds();
+          stopAllPumpWaterSounds();
+        }
         return;
       }
       const active = new Set();
@@ -13228,7 +14491,7 @@
         const gain = ctx.createGain();
         osc.type = "square";
         osc.frequency.value = 880;
-        gain.gain.value = 0.045;
+        gain.gain.value = 0.06;
         osc.connect(gain);
         gain.connect(ctx.destination);
         osc.start();
@@ -13352,7 +14615,10 @@
 
     function simulate() {
       updateProxHits();
-      state.items.forEach((i) => { i.hot = {}; i.neu = {}; i.lit = false; i.coilOn = false; i.knxBusOk = false; i.pumpFlow = false; });
+      state.items.forEach((i) => {
+        i.hot = {}; i.neu = {}; i.lit = false; i.coilOn = false; i.knxBusOk = false; i.pumpFlow = false;
+        i.knxOutOk = {}; i.knxOutImax = {};
+      });
       state.wires.forEach((w) => { w.live = false; });
       if (!state.sim) {
         stopAllBuzzers();
@@ -13452,7 +14718,15 @@
           const pM = findp(key(item.uid, "KNX-"));
           item.knxBusOk = (rootIsHot(pP, hotRoots) && rootIsNeu(pM, neuRoots))
             || (rootIsNeu(pP, neuRoots) && rootIsHot(pM, hotRoots));
-          if (def.knxPsu) item.coilOn = !!item.knxBusOk;
+          if (def.knxPsu) {
+            /* Primaire L+N = alim OK (indépendant du câblage bus C1/C2). */
+            const pL = findp(key(item.uid, "L"));
+            const pN = findp(key(item.uid, "N"));
+            const primOk = rootIsHot(pL, hotRoots) && rootIsNeu(pN, neuRoots);
+            item.knxBusOk = !!primOk;
+            item.coilOn = !!primOk;
+            syncKnxPsuChannelLeds(item, def, primOk, false);
+          }
         });
         const knxPushes = state.items.filter((i) => {
           const d = LIB[i.type];
@@ -13520,6 +14794,9 @@
 
           /* KNX poussoir : pas de contact puissance — ordres via bus (voir sync plus bas) */
           if (def.knxPush) return;
+
+          /* KNX alim : primaire L/N/PE + secondary virtuel uniquement — pas de pairs/bridges */
+          if (def.knxPsu) return;
 
           /* KNX actionneur : contacts par canal (sync poussoir → knxCh) */
           if (def.knxActuator) {
@@ -13629,15 +14906,22 @@
         const loc = locateShortPoint(findp, key, shortHit.root, shortHit.kind);
         loc.kind = shortHit.kind;
         loc.label = shortHit.label;
+        const firstArm = !state.shortArmed;
         triggerShortCircuit(loc);
         maybeIgniteFire(loc);
-        state.items.forEach((i) => { i.hot = {}; i.neu = {}; i.lit = false; i.coilOn = false; i.knxBusOk = false; i.pumpFlow = false; });
+        state.items.forEach((i) => {
+          i.hot = {}; i.neu = {}; i.lit = false; i.coilOn = false; i.knxBusOk = false; i.pumpFlow = false;
+          const d = LIB[i.type];
+          if (d && d.knxPsu) syncKnxPsuChannelLeds(i, d, false, true);
+        });
         state.wires.forEach((w) => {
           w.live = false;
           w.liveN = false;
           w.fault = loc.wireId && w.id === loc.wireId;
         });
         stopAllBuzzers();
+        /* Après stop : bang CC puis feu (ne doit pas être coupé par stopAllBuzzers). */
+        if (firstArm) playShortThenFire();
         return;
       }
 
@@ -13975,6 +15259,7 @@
       /* Migre les anciens ids calibre, puis retire les types inconnus (ex. pastilles L/N). */
       migrateItemTypes();
       migrateKnxBusWires();
+      migrateHagerFaceSizes();
       const before = state.items.length;
       state.items = state.items.filter((i) => LIB[i.type]);
       releaseFlukeFrames();
@@ -14088,6 +15373,12 @@
             "stroke-linejoin": "round"
           });
           hit.addEventListener("pointerdown", (ev) => {
+            /* Priorité resize : si un coin/poignée est sous le pointeur, ne pas voler le fil. */
+            try {
+              const stack = (typeof document.elementsFromPoint === "function")
+                ? document.elementsFromPoint(ev.clientX, ev.clientY) : [];
+              if (stack.some((n) => n && n.classList && n.classList.contains("rhandle"))) return;
+            } catch (_) {}
             ev.stopPropagation();
             if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
             ev.preventDefault();
@@ -14564,12 +15855,15 @@
       /* 1) Composants / rail */
       let pvDc = { flow: new Map(), pol: new Map(), invLive: new Map() };
       try { pvDc = computePvDcFlow(); } catch (_) {}
+      try { syncKmFrClipPoses(); } catch (_) {}
       state.items.forEach((item) => {
         const def = LIB[item.type];
         if (!def) return;
         const sz = itemSize(item);
         const el = def.flukeMeter ? flukeHostEl(item) : document.createElement("div");
         el.className = "dev" + (isItemSelected(item.uid) ? " sel" : "");
+        if (isKmClipHostType(item.type) && clippedFrOf(item)) el.classList.add("km-clip-host");
+        if (item.parentUid && isFrClipType(item.type) && clipHostOf(item)) el.classList.add("km-clip-guest");
         el.dataset.uid = item.uid;
         el.title = (libDisplayName(item.type, def) || def.name || item.tag || "")
           + " — appui long : menu · Fiche à la demande";
@@ -14801,13 +16095,33 @@
         /* KNX : LED bus + objets (touches, sorties, volet, dim, capteurs) */
         if (isKnxDevice(def)) {
           ensureKnxProgram(item);
-          const led = def.busLed || { nx: 0.5, ny: 0.2 };
-          const d = document.createElement("div");
-          d.className = "knx-bus-led" + (item.knxBusOk ? " on" : "");
-          d.style.left = (led.nx * 100) + "%";
-          d.style.top = (led.ny * 100) + "%";
-          d.title = (item.physAddr || "") + " — " + (item.knxBusOk ? "Bus KNX OK" : "Bus KNX hors tension");
-          el.appendChild(d);
+          if (def.knxPsuLeds && def.knxPsuLeds.length) {
+            const okMap = item.knxOutOk || {};
+            const imMap = item.knxOutImax || {};
+            def.knxPsuLeds.forEach((ch) => {
+              [["imax", imMap[ch.id], ch.imax], ["ok", okMap[ch.id], ch.ok]].forEach(([kind, on, pos]) => {
+                if (!pos) return;
+                const d = document.createElement("div");
+                d.className = "knx-psu-led " + kind + (on ? " on" : "");
+                d.style.left = (pos.nx * 100) + "%";
+                d.style.top = (pos.ny * 100) + "%";
+                d.title = ch.id + " · " + (kind === "ok" ? "OK" : "I>Imax")
+                  + (on ? " allumé" : " éteint")
+                  + (kind === "ok"
+                    ? (on ? " — 30 V OK (primaire alimenté)" : " — brancher L + N")
+                    : (on ? " — défaut / surcharge bus" : ""));
+                el.appendChild(d);
+              });
+            });
+          } else {
+            const led = def.busLed || { nx: 0.5, ny: 0.2 };
+            const d = document.createElement("div");
+            d.className = "knx-bus-led" + (item.knxBusOk ? " on" : "");
+            d.style.left = (led.nx * 100) + "%";
+            d.style.top = (led.ny * 100) + "%";
+            d.title = (item.physAddr || "") + " — " + (item.knxBusOk ? "Bus KNX OK" : "Bus KNX hors tension");
+            el.appendChild(d);
+          }
         }
         if (def.knxPush && def.knxKeys) {
           def.knxKeys.forEach((k) => {
@@ -14848,6 +16162,38 @@
             const ga = item.knxChProg && item.knxChProg[c.id] ? item.knxChProg[c.id].ga : "";
             d.title = "Sortie " + c.id + " GA " + ga + (ch[c.id] ? " ON" : " OFF");
             el.appendChild(d);
+          });
+        }
+        /* Boutons manuels face (Hager etc.) — hitbox = taille exacte du bouton photo */
+        if (def.knxManHits && def.knxManHits.length) {
+          def.knxManHits.forEach((h) => {
+            const hit = document.createElement("div");
+            let on = false;
+            if (def.knxActuator) on = !!(item.knxCh && item.knxCh[h.id]);
+            else if (def.knxShutter) {
+              const ch = item.knxShutter && item.knxShutter[h.ch || h.id];
+              on = !!(ch && ch.dir && ch.dir === (h.dir || "up"));
+            } else if (def.knxDimmer || def.knxDali) on = !!(item.knxDim && item.knxDim.on);
+            hit.className = "knx-man-hit" + (on ? " on" : "");
+            hit.style.left = (h.nx * 100) + "%";
+            hit.style.top = (h.ny * 100) + "%";
+            if (h.nw) hit.style.width = (h.nw * 100) + "%";
+            if (h.nh) hit.style.height = (h.nh * 100) + "%";
+            hit.title = state.sim
+              ? ((h.dir ? ("Volet " + (h.ch || h.id) + " " + h.dir) : ("Manuel C" + h.id)) + (on ? " · actif" : ""))
+              : t("knxNeedSimTap", { id: h.id });
+            hit.setAttribute("aria-label", "Bouton manuel " + h.id);
+            hit.onpointerdown = (ev) => {
+              ev.stopPropagation();
+              ev.preventDefault();
+              if (!state.sim) return;
+              pushHistory();
+              knxHandleManPress(item, h);
+              ensureAudio();
+              render();
+              if (state.etsOpen) renderEtsPanel();
+            };
+            el.appendChild(hit);
           });
         }
         if (def.knxShutter && def.knxShutters) {
@@ -14939,12 +16285,15 @@
             hit.className = "knx-bin-hit" + (item.knxBin && item.knxBin[h.id] ? " on" : "");
             hit.style.left = (h.nx * 100) + "%";
             hit.style.top = (h.ny * 100) + "%";
+            if (h.nw) hit.style.width = (h.nw * 100) + "%";
+            if (h.nh) hit.style.height = (h.nh * 100) + "%";
             hit.title = "Entrée E" + h.id;
             hit.onpointerdown = (ev) => {
               ev.stopPropagation(); ev.preventDefault();
               if (!state.sim) return;
               pushHistory();
               ensureKnxProgram(item);
+              if (!item.knxBin) item.knxBin = {};
               item.knxBin[h.id] = !item.knxBin[h.id];
               if (knxCanSend(item)) knxPublish(item.knxBinProg[h.id].ga, item.knxBin[h.id] ? 1 : 0, item.tag + ".E" + h.id);
               render();
@@ -15157,6 +16506,8 @@
           if (ev.target.classList.contains("fc-lever-hit")) return;
           if (ev.target.classList.contains("sel-knob-hit")) return;
           if (ev.target.classList.contains("knx-key")) return;
+          if (ev.target.classList.contains("knx-man-hit")) return;
+          if (ev.target.classList.contains("knx-bin-hit")) return;
           if (ev.target.classList.contains("fluke-drag-handle")) return;
           if (ev.target.classList.contains("fluke-viewport") || ev.target.tagName === "IFRAME") return;
           /* Mode fil : toucher le corps près d’une borne = accroche (pas besoin de viser la pastille). */
@@ -15388,6 +16739,8 @@
         if (!state.fire) {
           const banner = document.createElement("div");
           banner.className = "sc-banner";
+          banner.style.left = state.short.x + "px";
+          banner.style.top = state.short.y + "px";
           banner.innerHTML = shortBannerHtml(state.short, false);
           world.appendChild(banner);
           const fx = document.createElement("div");
@@ -15426,6 +16779,10 @@
       if (state.fire) {
         const banner = document.createElement("div");
         banner.className = "sc-banner fire";
+        const bx = (state.short && state.short.x != null) ? state.short.x : state.fire.x;
+        const by = (state.short && state.short.y != null) ? state.short.y : state.fire.y;
+        banner.style.left = bx + "px";
+        banner.style.top = by + "px";
         banner.innerHTML = shortBannerHtml(state.short, true);
         world.appendChild(banner);
         const layer = document.createElement("div");
@@ -15554,19 +16911,34 @@
       t.style.left = x + "px";
       t.style.top = y + "px";
       /* Scale pastille avec le composant (hitbox = taille visuelle). */
-      const pad = termPadSize(item, { knxbus });
-      const half = pad / 2;
-      t.style.width = pad + "px";
-      t.style.height = pad + "px";
-      t.style.margin = (-half) + "px 0 0 " + (-half) + "px";
-      const baseFs = (knxbus || pe) ? 6 : 7;
-      const fs = Math.max(5, Math.min(14, Math.round(baseFs * termVisualScale(item))));
-      t.style.fontSize = fs + "px";
+      const knxChan = /^C([12])/i.exec(id);
+      const knxLabel = knxChan ? ("C" + knxChan[1]) : "BUS";
+      if (knxbus) {
+        const kz = knxBusPadSize(item);
+        t.style.width = kz.w + "px";
+        t.style.height = kz.h + "px";
+        t.style.margin = (-kz.h / 2) + "px 0 0 " + (-kz.w / 2) + "px";
+        t.style.borderRadius = "2px";
+        t.innerHTML = '<span class="knx-pair" aria-hidden="true"><i class="knx-m"></i><i class="knx-p"></i></span>'
+          + '<span class="knx-ch">' + knxLabel + "</span>";
+      } else {
+        const pad = termPadSize(item, { knxbus: false });
+        const half = pad / 2;
+        t.style.width = pad + "px";
+        t.style.height = pad + "px";
+        t.style.margin = (-half) + "px 0 0 " + (-half) + "px";
+        const baseFs = pe ? 6 : 7;
+        const fs = Math.max(5, Math.min(14, Math.round(baseFs * termVisualScale(item))));
+        t.style.fontSize = fs + "px";
+        const sym = mark && mark.sym;
+        t.textContent = pe ? "PE"
+          : (sym || (dcplus ? "+" : dcminus ? "−" : (id.length > 2 ? id.slice(0, 2) : id)));
+      }
       const sym = mark && mark.sym;
-      t.textContent = pe ? "PE" : knxbus ? "BUS"
-        : (sym || (dcplus ? "+" : dcminus ? "−" : (id.length > 2 ? id.slice(0, 2) : id)));
       t.title = pe ? "PE — mise à la terre"
-        : knxbus ? "BUS KNX — un câble vert (KNX+ et KNX−)"
+        : knxbus ? (knxChan
+          ? (knxLabel + " — connecteur bus KNX (− noir / + rouge), câble vert")
+          : "BUS KNX — connecteur (− noir / + rouge), un câble vert")
         : dcminus ? "DC− — câble noir"
         : dcplus ? "DC+ — câble rouge"
         : (sym || (neu ? "N — neutre (bleu)" : id));
@@ -16825,6 +18197,17 @@
       state.etsOpen = !state.etsOpen;
       syncEtsLayout();
     };
+    document.querySelectorAll(".ets-tab").forEach((btn) => {
+      btn.onclick = () => {
+        state.etsTab = btn.getAttribute("data-ets-tab") || "batiments";
+        if (state.etsTab === "params") state.etsProgMode = "params";
+        renderEtsPanel();
+      };
+    });
+    const btnEtsNew = document.getElementById("btnEtsNewProject");
+    if (btnEtsNew) btnEtsNew.onclick = () => etsNewProjectDialog();
+    const btnEtsDl = document.getElementById("btnEtsDownloadAddr");
+    if (btnEtsDl) btnEtsDl.onclick = () => etsDownloadIndividualAddress();
     let ctrlMaquetteRef = null;
     function syncCtrlMaquetteScale() {
       const wrap = document.getElementById("ctrlElec");
@@ -17383,10 +18766,13 @@
         if (ev.key === "Escape") closeBrandMenu();
       });
     })();
-    document.getElementById("btnEtsClose").onclick = () => {
+    function closeEtsPanel() {
       state.etsOpen = false;
       syncEtsLayout();
-    };
+    }
+    document.getElementById("btnEtsClose").onclick = closeEtsPanel;
+    const btnEtsCloseTop = document.getElementById("btnEtsCloseTop");
+    if (btnEtsCloseTop) btnEtsCloseTop.onclick = closeEtsPanel;
     document.getElementById("btnEtsReset").onclick = () => {
       pushHistory();
       resetAllKnxAddresses();
