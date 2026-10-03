@@ -13139,7 +13139,7 @@
     }
     function flukeMeterSrc() {
       /* Face live oibt-trainer uniquement — pas de photo inventée sur le plan. */
-      return oibtAsset("meter-embed.html?embed=1&v=fluke-embed6#/meter");
+      return oibtAsset("meter-embed.html?embed=1&v=fluke-embed7#/meter");
     }
     /** Précharge désactivée : le reparent hors écran → plan tue CanvasKit (case vide). */
     function warmupFlukeEmbed() {
@@ -13642,7 +13642,7 @@
           armFlukeReadyWatch(frame);
         });
         flukeLiveFrames.set(uid, frame);
-      } else if (frame.src.indexOf("v=fluke-embed6") < 0) {
+      } else if (frame.src.indexOf("v=fluke-embed7") < 0) {
         frame.src = flukeMeterSrc();
       }
       return frame;

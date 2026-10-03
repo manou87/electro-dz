@@ -83856,14 +83856,17 @@ r=A.bA(p,0,s[0]).length===0?"L-N":A.bA(p,0,s[0])
 if(q.gO().q4(r))return!1
 if(o&&A.a4f(A.bA(p,1,s[1]))<=0.5)return!1
 return!0},
-aqf(a){var s,r,q,p=this,_wlRcd,_mult
-/* WireLab embed : déclencher le DDR du plan après TEST RCD réussi. */
+aqf(a){var s,r,q,p=this,_wlRcd,_mult,_pair
+/* WireLab embed : déclencher le DDR du plan (RCD ΔT/IΔn, ou LOOP HI L-PE). */
 _wlRcd=self.__wirelabFluke
-if(_wlRcd&&/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))&&(a.e===B.bX||a.e===B.bN)){s=_wlRcd.rcd||{}
-if(!s.present||!s.closed||!s.uid)return
-if(a.e===B.bX){_mult=A.a4f(A.bA(a.e,1,a.f[1]))
+if(_wlRcd&&/\bembed=1\b/.test((self.location.search||"")+(self.location.hash||""))){s=_wlRcd.rcd||{}
+if(s.present&&s.closed&&s.uid){if(a.e===B.bX||a.e===B.bN){if(a.e===B.bX){_mult=A.a4f(A.bA(a.e,1,a.f[1]))
 if(_mult<=0.5)return}try{if(self.parent&&self.parent!==self)self.parent.postMessage({type:"wirelab-fluke-rcd-trip",uid:s.uid},"*")}catch(_){}
-return}if(!p.Ym(a))return
+return}if(a.e===B.dl){_pair=A.bA(a.e,0,a.f[0])
+/* LOOP HI I L-PE : fort courant de défaut → le DDR déclenche. NO TRIP / L-N : non. */
+if(_pair.length===0||_pair==="L-PE"){try{if(self.parent&&self.parent!==self)self.parent.postMessage({type:"wirelab-fluke-rcd-trip",uid:s.uid},"*")}catch(_){}
+return}}}}
+if(!p.Ym(a))return
 s=p.ax
 if(s==null)return
 r=p.aoQ()
