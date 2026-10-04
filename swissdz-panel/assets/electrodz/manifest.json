@@ -2260,7 +2260,7 @@
     {
       "key": "edz_fendare_601382200040",
       "name": "Fendare / Finder-compatible 60.13 + 90.23 Socket",
-      "cat": "Commande",
+      "cat": "Relais",
       "image": "assets/electrodz/fendare_601382200040.png",
       "imageOff": "assets/electrodz/fendare_601382200040_off.png",
       "push": false,
@@ -2290,7 +2290,7 @@
     {
       "key": "edz_fotocelda_crepuscular",
       "name": "Photocell (dusk-to-dawn)",
-      "cat": "Commande",
+      "cat": "Capteurs",
       "image": "assets/electrodz/fotocelda_crepuscular.png",
       "imageOff": null,
       "push": false,
@@ -2515,7 +2515,7 @@
     {
       "key": "edz_interruptor_de_conmutacion_doble",
       "name": "Double 3-way switch",
-      "cat": "Variateurs",
+      "cat": "Prises / Interrupteurs",
       "image": "assets/electrodz/interruptor_de_conmutacion_doble.png",
       "imageOff": null,
       "push": false,
@@ -2530,7 +2530,7 @@
     {
       "key": "edz_interruptor_de_nivel_flotador",
       "name": "Float level switch",
-      "cat": "Commande",
+      "cat": "Capteurs",
       "image": "assets/electrodz/interruptor_de_nivel_flotador.png",
       "imageOff": "assets/electrodz/interruptor_de_nivel_flotador_off.png",
       "push": false,
@@ -2560,7 +2560,7 @@
     {
       "key": "edz_interuptor_cruzado_4_vias",
       "name": "Intermediate (Crossover) Switch",
-      "cat": "Variateurs",
+      "cat": "Prises / Interrupteurs",
       "image": "assets/electrodz/interuptor_cruzado_4_vias.png",
       "imageOff": "assets/electrodz/interuptor_cruzado_4_vias_off.png",
       "push": false,
@@ -2575,7 +2575,7 @@
     {
       "key": "edz_interuptor_de_conmutacion_simple",
       "name": "Single Two-Way Switch",
-      "cat": "Variateurs",
+      "cat": "Prises / Interrupteurs",
       "image": "assets/electrodz/interuptor_de_conmutacion_simple.png",
       "imageOff": "assets/electrodz/interuptor_de_conmutacion_simple_off.png",
       "push": false,
@@ -2590,7 +2590,7 @@
     {
       "key": "edz_interuptor_doble",
       "name": "Double switch",
-      "cat": "Variateurs",
+      "cat": "Prises / Interrupteurs",
       "image": "assets/electrodz/interuptor_doble.png",
       "imageOff": null,
       "push": false,
@@ -2605,7 +2605,7 @@
     {
       "key": "edz_interuptor_simple",
       "name": "Single Switch",
-      "cat": "Variateurs",
+      "cat": "Prises / Interrupteurs",
       "image": "assets/electrodz/interuptor_simple.png",
       "imageOff": "assets/electrodz/interuptor_simple_off.png",
       "push": false,
@@ -2740,7 +2740,7 @@
     {
       "key": "edz_módulo_de_seguridad_xps_ac",
       "name": "Safety module (XPS-AC)",
-      "cat": "Boutonnerie",
+      "cat": "Relais",
       "image": "assets/electrodz/módulo_de_seguridad_xps_ac.png",
       "imageOff": null,
       "push": false,
@@ -2755,7 +2755,7 @@
     {
       "key": "edz_módulo_de_seguridad_de_dos_canales_xps_af",
       "name": "Dual-channel safety module (XPS-AF)",
-      "cat": "Boutonnerie",
+      "cat": "Relais",
       "image": "assets/electrodz/módulo_de_seguridad_de_dos_canales_xps_af.png",
       "imageOff": null,
       "push": false,
@@ -2845,7 +2845,7 @@
     {
       "key": "edz_opas_100a_selector",
       "name": "OPAS 100 A 0-1-2-3 Selector",
-      "cat": "Boutonnerie",
+      "cat": "Sectionneurs",
       "image": "assets/electrodz/opas_100a_selector.png",
       "imageOff": null,
       "push": false,
@@ -2860,7 +2860,7 @@
     {
       "key": "edz_opas_63a_selector",
       "name": "OPAS 63 A 0-1-2 Selector",
-      "cat": "Boutonnerie",
+      "cat": "Sectionneurs",
       "image": "assets/electrodz/opas_63a_selector.png",
       "imageOff": null,
       "push": false,
@@ -2875,7 +2875,7 @@
     {
       "key": "edz_opas_ypt113_100",
       "name": "OPAS YPT113-100 0-1-2-3",
-      "cat": "Boutonnerie",
+      "cat": "Sectionneurs",
       "image": "assets/electrodz/opas_ypt113_100.png",
       "imageOff": null,
       "push": false,
@@ -2935,7 +2935,7 @@
     {
       "key": "edz_parada_de_emergencia_rojo_1nc",
       "name": "Red Emergency Stop Button 1NC",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/parada_de_emergencia_rojo_1nc.png",
       "imageOff": "assets/electrodz/parada_de_emergencia_rojo_1nc_off.png",
       "push": false,
@@ -2950,7 +2950,7 @@
     {
       "key": "edz_parada_de_emergencia_rojo_1no_1nc",
       "name": "Red Emergency Stop Button 1NO+1NC",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/parada_de_emergencia_rojo_1no_1nc.png",
       "imageOff": "assets/electrodz/parada_de_emergencia_rojo_1no_1nc_off.png",
       "push": false,
@@ -2965,7 +2965,7 @@
     {
       "key": "edz_parada_de_emergencia_rojo_1no",
       "name": "Red Emergency Stop Button 1NO",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/parada_de_emergencia_rojo_1no.png",
       "imageOff": "assets/electrodz/parada_de_emergencia_rojo_1no_off.png",
       "push": false,
@@ -2980,7 +2980,7 @@
     {
       "key": "edz_parada_de_emergencia_rojo_2nc",
       "name": "Red Emergency Stop Button 2NC",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/parada_de_emergencia_rojo_2nc.png",
       "imageOff": "assets/electrodz/parada_de_emergencia_rojo_2nc_off.png",
       "push": false,
@@ -2995,7 +2995,7 @@
     {
       "key": "edz_parada_de_emergencia_rojo_2no",
       "name": "Red Emergency Stop Button 2NO",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/parada_de_emergencia_rojo_2no.png",
       "imageOff": "assets/electrodz/parada_de_emergencia_rojo_2no_off.png",
       "push": false,
@@ -3085,7 +3085,7 @@
     {
       "key": "edz_plunger_limit_switch_1no_1nc",
       "name": "Plunger limit switch 1NO+1NC",
-      "cat": "Variateurs",
+      "cat": "Capteurs",
       "image": "assets/electrodz/plunger_limit_switch_1no_1nc.png",
       "imageOff": "assets/electrodz/plunger_limit_switch_1no_1nc_off.png",
       "push": false,
@@ -3100,7 +3100,7 @@
     {
       "key": "edz_plunger_limit_switch_com",
       "name": "Plunger limit switch COM",
-      "cat": "Variateurs",
+      "cat": "Capteurs",
       "image": "assets/electrodz/plunger_limit_switch_com.png",
       "imageOff": "assets/electrodz/plunger_limit_switch_com_off.png",
       "push": false,
@@ -3115,7 +3115,7 @@
     {
       "key": "edz_potenciómetro_lineal_10kohm_2w",
       "name": "Linear Potentiometer 10kOhm 2W",
-      "cat": "Moteur / Indus",
+      "cat": "Divers",
       "image": "assets/electrodz/potenciómetro_lineal_10kohm_2w.png",
       "imageOff": null,
       "push": false,
@@ -3130,7 +3130,7 @@
     {
       "key": "edz_potenciómetro_lineal_5kohm_2w",
       "name": "Linear Potentiometer 5kOhm 2W",
-      "cat": "Moteur / Indus",
+      "cat": "Divers",
       "image": "assets/electrodz/potenciómetro_lineal_5kohm_2w.png",
       "imageOff": null,
       "push": false,
@@ -3190,7 +3190,7 @@
     {
       "key": "edz_pulsador_down_1nc",
       "name": "DOWN Push Button 1NC",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_down_1nc.png",
       "imageOff": "assets/electrodz/pulsador_down_1nc_off.png",
       "push": true,
@@ -3205,7 +3205,7 @@
     {
       "key": "edz_pulsador_down_1no_1nc",
       "name": "DOWN Push Button 1NO+1NC",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_down_1no_1nc.png",
       "imageOff": "assets/electrodz/pulsador_down_1no_1nc_off.png",
       "push": true,
@@ -3220,7 +3220,7 @@
     {
       "key": "edz_pulsador_down_1no",
       "name": "DOWN Push Button 1NO",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_down_1no.png",
       "imageOff": "assets/electrodz/pulsador_down_1no_off.png",
       "push": true,
@@ -3235,7 +3235,7 @@
     {
       "key": "edz_pulsador_down_2nc",
       "name": "DOWN Push Button 2NC",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_down_2nc.png",
       "imageOff": "assets/electrodz/pulsador_down_2nc_off.png",
       "push": true,
@@ -3250,7 +3250,7 @@
     {
       "key": "edz_pulsador_down_2no",
       "name": "DOWN Push Button 2NO",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_down_2no.png",
       "imageOff": "assets/electrodz/pulsador_down_2no_off.png",
       "push": true,
@@ -3265,7 +3265,7 @@
     {
       "key": "edz_pulsador_up_1nc",
       "name": "UP Push Button 1NC",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_up_1nc.png",
       "imageOff": "assets/electrodz/pulsador_up_1nc_off.png",
       "push": true,
@@ -3280,7 +3280,7 @@
     {
       "key": "edz_pulsador_up_1no_1nc",
       "name": "UP Push Button 1NO+1NC",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_up_1no_1nc.png",
       "imageOff": "assets/electrodz/pulsador_up_1no_1nc_off.png",
       "push": true,
@@ -3295,7 +3295,7 @@
     {
       "key": "edz_pulsador_up_1no",
       "name": "UP Push Button 1NO",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_up_1no.png",
       "imageOff": "assets/electrodz/pulsador_up_1no_off.png",
       "push": true,
@@ -3310,7 +3310,7 @@
     {
       "key": "edz_pulsador_up_2nc",
       "name": "UP Push Button 2NC",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_up_2nc.png",
       "imageOff": "assets/electrodz/pulsador_up_2nc_off.png",
       "push": true,
@@ -3325,7 +3325,7 @@
     {
       "key": "edz_pulsador_up_2no",
       "name": "UP Push Button 2NO",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_up_2no.png",
       "imageOff": "assets/electrodz/pulsador_up_2no_off.png",
       "push": true,
@@ -3340,7 +3340,7 @@
     {
       "key": "edz_pulsador_azul_1nc",
       "name": "Blue Push Button 1NC",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_azul_1nc.png",
       "imageOff": "assets/electrodz/pulsador_azul_1nc_off.png",
       "push": true,
@@ -3355,7 +3355,7 @@
     {
       "key": "edz_pulsador_azul_1no_1nc",
       "name": "Blue Push Button 1NO+1NC",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_azul_1no_1nc.png",
       "imageOff": "assets/electrodz/pulsador_azul_1no_1nc_off.png",
       "push": true,
@@ -3370,7 +3370,7 @@
     {
       "key": "edz_pulsador_azul_1no",
       "name": "Blue Push Button 1NO",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_azul_1no.png",
       "imageOff": "assets/electrodz/pulsador_azul_1no_off.png",
       "push": true,
@@ -3385,7 +3385,7 @@
     {
       "key": "edz_pulsador_azul_2nc",
       "name": "Blue Push Button 2NC",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_azul_2nc.png",
       "imageOff": "assets/electrodz/pulsador_azul_2nc_off.png",
       "push": true,
@@ -3400,7 +3400,7 @@
     {
       "key": "edz_pulsador_azul_2no",
       "name": "Blue Push Button 2NO",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_azul_2no.png",
       "imageOff": "assets/electrodz/pulsador_azul_2no_off.png",
       "push": true,
@@ -3415,7 +3415,7 @@
     {
       "key": "edz_pulsador_rojo_1nc",
       "name": "Red Push Button 1NC",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_rojo_1nc.png",
       "imageOff": "assets/electrodz/pulsador_rojo_1nc_off.png",
       "push": true,
@@ -3430,7 +3430,7 @@
     {
       "key": "edz_pulsador_rojo_1no_1nc",
       "name": "Red Push Button 1NO+1NC",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_rojo_1no_1nc.png",
       "imageOff": "assets/electrodz/pulsador_rojo_1no_1nc_off.png",
       "push": true,
@@ -3445,7 +3445,7 @@
     {
       "key": "edz_pulsador_rojo_1no",
       "name": "Red Push Button 1NO",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_rojo_1no.png",
       "imageOff": "assets/electrodz/pulsador_rojo_1no_off.png",
       "push": true,
@@ -3460,7 +3460,7 @@
     {
       "key": "edz_pulsador_rojo_2nc",
       "name": "Red Push Button 2NC",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_rojo_2nc.png",
       "imageOff": "assets/electrodz/pulsador_rojo_2nc_off.png",
       "push": true,
@@ -3475,7 +3475,7 @@
     {
       "key": "edz_pulsador_rojo_2no",
       "name": "Red Push Button 2NO",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_rojo_2no.png",
       "imageOff": "assets/electrodz/pulsador_rojo_2no_off.png",
       "push": true,
@@ -3490,7 +3490,7 @@
     {
       "key": "edz_pulsador_verde_1nc",
       "name": "Green Push Button 1NC",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_verde_1nc.png",
       "imageOff": "assets/electrodz/pulsador_verde_1nc_off.png",
       "push": true,
@@ -3505,7 +3505,7 @@
     {
       "key": "edz_pulsador_verde_1no_1nc",
       "name": "Green Push Button 1NO+1NC",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_verde_1no_1nc.png",
       "imageOff": "assets/electrodz/pulsador_verde_1no_1nc_off.png",
       "push": true,
@@ -3520,7 +3520,7 @@
     {
       "key": "edz_pulsador_verde_1no",
       "name": "Green Push Button 1NO",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_verde_1no.png",
       "imageOff": "assets/electrodz/pulsador_verde_1no_off.png",
       "push": true,
@@ -3535,7 +3535,7 @@
     {
       "key": "edz_pulsador_verde_2nc",
       "name": "Green Push Button 2NC",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_verde_2nc.png",
       "imageOff": "assets/electrodz/pulsador_verde_2nc_off.png",
       "push": true,
@@ -3550,7 +3550,7 @@
     {
       "key": "edz_pulsador_verde_2no",
       "name": "Green Push Button 2NO",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/pulsador_verde_2no.png",
       "imageOff": "assets/electrodz/pulsador_verde_2no_off.png",
       "push": true,
@@ -3580,7 +3580,7 @@
     {
       "key": "edz_relé_de_seguridad_cp_d_301",
       "name": "Safety relay (CP-D 301)",
-      "cat": "Boutonnerie",
+      "cat": "Relais",
       "image": "assets/electrodz/relé_de_seguridad_cp_d_301.png",
       "imageOff": null,
       "push": false,
@@ -3595,7 +3595,7 @@
     {
       "key": "edz_relé_de_seguridad_pnoz_x3",
       "name": "Safety relay (PNOZ X3)",
-      "cat": "Boutonnerie",
+      "cat": "Relais",
       "image": "assets/electrodz/relé_de_seguridad_pnoz_x3.png",
       "imageOff": null,
       "push": false,
@@ -3670,7 +3670,7 @@
     {
       "key": "edz_resistor_6_6kohm",
       "name": "Resistor 6.6kOhm",
-      "cat": "Borniers / Alim",
+      "cat": "Divers",
       "image": "assets/electrodz/resistor_6_6kohm.png",
       "imageOff": null,
       "push": false,
@@ -3685,7 +3685,7 @@
     {
       "key": "edz_roller_lever_limit_switch_1no_1nc",
       "name": "Roller lever limit switch 1NO+1NC",
-      "cat": "Variateurs",
+      "cat": "Capteurs",
       "image": "assets/electrodz/roller_lever_limit_switch_1no_1nc.png",
       "imageOff": null,
       "push": false,
@@ -3700,7 +3700,7 @@
     {
       "key": "edz_roller_lever_limit_switch_com",
       "name": "Roller lever limit switch COM",
-      "cat": "Variateurs",
+      "cat": "Capteurs",
       "image": "assets/electrodz/roller_lever_limit_switch_com.png",
       "imageOff": null,
       "push": false,
@@ -4165,7 +4165,7 @@
     {
       "key": "edz_schneider_rxm4ab2p7",
       "name": "Schneider Electric RXM4AB2P7 + RXZE2M114",
-      "cat": "Commande",
+      "cat": "Relais",
       "image": "assets/electrodz/schneider_rxm4ab2p7.png",
       "imageOff": "assets/electrodz/schneider_rxm4ab2p7_off.png",
       "push": false,
@@ -4375,7 +4375,7 @@
     {
       "key": "edz_selector_de_2_posiciones_1nc",
       "name": "2-Position Selector Switch 1NC",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/selector_de_2_posiciones_1nc.png",
       "imageOff": "assets/electrodz/selector_de_2_posiciones_1nc_off.png",
       "push": false,
@@ -4390,7 +4390,7 @@
     {
       "key": "edz_selector_de_2_posiciones_1no_1nc",
       "name": "2-Position Selector Switch 1NO+1NC",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/selector_de_2_posiciones_1no_1nc.png",
       "imageOff": "assets/electrodz/selector_de_2_posiciones_1no_1nc_off.png",
       "push": false,
@@ -4405,7 +4405,7 @@
     {
       "key": "edz_selector_de_2_posiciones_1no",
       "name": "2-Position Selector Switch 1NO",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/selector_de_2_posiciones_1no.png",
       "imageOff": "assets/electrodz/selector_de_2_posiciones_1no_off.png",
       "push": false,
@@ -4420,7 +4420,7 @@
     {
       "key": "edz_selector_de_2_posiciones_2nc",
       "name": "2-Position Selector Switch 2NC",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/selector_de_2_posiciones_2nc.png",
       "imageOff": "assets/electrodz/selector_de_2_posiciones_2nc_off.png",
       "push": false,
@@ -4435,7 +4435,7 @@
     {
       "key": "edz_selector_de_2_posiciones_2no",
       "name": "2-Position Selector Switch 2NO",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/selector_de_2_posiciones_2no.png",
       "imageOff": "assets/electrodz/selector_de_2_posiciones_2no_off.png",
       "push": false,
@@ -4450,7 +4450,7 @@
     {
       "key": "edz_selector_de_3_posiciones_1no_1nc",
       "name": "3-Position Selector Switch 1NO+1NC",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/selector_de_3_posiciones_1no_1nc.png",
       "imageOff": null,
       "push": false,
@@ -4465,7 +4465,7 @@
     {
       "key": "edz_selector_de_3_posiciones_2nc",
       "name": "3-Position Selector Switch 2NC",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/selector_de_3_posiciones_2nc.png",
       "imageOff": null,
       "push": false,
@@ -4480,7 +4480,7 @@
     {
       "key": "edz_selector_de_3_posiciones_2no",
       "name": "3-Position Selector Switch 2NO",
-      "cat": "Variateurs",
+      "cat": "Boutonnerie",
       "image": "assets/electrodz/selector_de_3_posiciones_2no.png",
       "imageOff": null,
       "push": false,
@@ -4510,7 +4510,7 @@
     {
       "key": "edz_sensor_de_proximidad_inductivo_3_hilos_dc",
       "name": "3-wire DC inductive proximity sensor",
-      "cat": "Commande",
+      "cat": "Capteurs",
       "image": "assets/electrodz/sensor_de_proximidad_inductivo_3_hilos_dc.png",
       "imageOff": null,
       "push": false,
@@ -4660,7 +4660,7 @@
     {
       "key": "edz_tomacorriente_doble_pe",
       "name": "Double Socket Outlet + PE",
-      "cat": "Borniers / Alim",
+      "cat": "Prises / Interrupteurs",
       "image": "assets/electrodz/tomacorriente_doble_pe.png",
       "imageOff": null,
       "push": false,
