@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="brand/logo-wirelab-pro-icon.png?v=anthracite-gris" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="native-shell-8777-v26-zoom-fix" />
+  <meta name="swissdz-rev" content="native-shell-8777-v27-tap-zoom-root" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -265,9 +265,14 @@
     html.pw-expo body {
       display:block !important;
     }
-    html.pw-pinch-lock,
-    html.pw-pinch-lock body {
-      overflow:hidden !important;
+    /*
+     * v27 : pinch-lock UNIQUEMENT sur #board.
+     * v24–v26 appliquaient touch-action:none sur html/body → intersection
+     * avec les boutons chrome (manipulation) = none → 1er tap mort / click
+     * non synthétisé tant que le lock restait (ou juste après un pinch).
+     */
+    html.pw-pinch-lock #board,
+    html.pw-pinch-lock #board * {
       touch-action:none !important;
     }
     .app-shell {
@@ -310,7 +315,7 @@
       position:fixed !important;
       top:0 !important;
       left:0 !important;
-      z-index:300 !important;
+      z-index:400 !important;
       height:auto !important;
       min-height:calc(44px + var(--pw-pad-top)) !important;
       padding-top:var(--pw-pad-top) !important;
@@ -325,7 +330,7 @@
       top:0 !important;
       left:0 !important;
       right:0 !important;
-      z-index:290 !important;
+      z-index:390 !important;
       min-height:calc(44px + var(--pw-pad-top)) !important;
       padding-top:var(--pw-pad-top) !important;
       padding-left:max(96px, 28vw) !important; /* place pour .brand-col */
@@ -337,8 +342,9 @@
       touch-action:manipulation !important;
     }
     /* Plan : entre header et footer.
-       pointer-events:none sur le cadre → si le plan chevauche le chrome
-       (safe-area / --pw-head-h), les taps traversent vers header/footer. */
+       v27 : PLUS de pointer-events:none sur .workspace (échec v24 — 1er tap
+       fantôme iOS/WebView). Le plan ne doit PAS chevaucher le chrome :
+       --pw-head-h / --pw-foot-h + z-index chrome > plan. */
     html.pw-expo .workspace {
       position:fixed !important;
       top:var(--pw-head-h, calc(44px + var(--pw-pad-top))) !important;
@@ -351,14 +357,6 @@
       overflow:hidden !important;
       z-index:1 !important;
       grid-area:unset !important;
-      pointer-events:none !important;
-    }
-    html.pw-expo .workspace #board,
-    html.pw-expo .workspace .board-zoom,
-    html.pw-expo .workspace .board-zoom button,
-    html.pw-expo .workspace .board-ref-bar,
-    html.pw-expo .workspace .schem-view,
-    html.pw-expo .workspace .ladder-panel {
       pointer-events:auto !important;
     }
     html.pw-expo #board {
@@ -420,7 +418,7 @@
       width:100% !important;
       margin:0 !important;
       transform:none !important;
-      z-index:300 !important;
+      z-index:400 !important;
       background:var(--surface) !important;
       pointer-events:auto !important;
       touch-action:manipulation !important;
@@ -8480,20 +8478,12 @@
     let boardZoomPend = null;
     /* Déclaré tôt : utilisé pendant setBoardZoomAt (défini avant les handlers pinch). */
     var boardTouchPinch = null;
-    /* Pré-agrandit le spacer une fois au début du pinch — plus aucun resize pendant le geste. */
-    function ensurePinchSpacerRoom() {
-      const spacer = document.getElementById("boardZoomSpacer");
-      if (!spacer) return;
-      const pad = boardPad();
-      const vw = Math.max(0, board.clientWidth || 0);
-      const vh = Math.max(0, board.clientHeight || 0);
-      const needW = Math.max(Math.round(BOARD_WORLD_W * BOARD_ZOOM_MAX + pad * 2), vw);
-      const needH = Math.max(Math.round(BOARD_WORLD_H * BOARD_ZOOM_MAX + pad * 2), vh);
-      const curW = parseFloat(spacer.style.width) || 0;
-      const curH = parseFloat(spacer.style.height) || 0;
-      if (needW > curW + 0.5) spacer.style.width = needW + "px";
-      if (needH > curH + 0.5) spacer.style.height = needH + "px";
-    }
+    var boardPinchPtrs = new Map();
+    /*
+     * v27 : NE PAS pré-agrandir le spacer à BOARD_ZOOM_MAX (échec v26).
+     * Ce jump de layout au touchstart pinch faisait trembler plan + composants.
+     * Pendant pinch : spacer figé ; settle à la fin via applyBoardZoomStyles().
+     */
     function applyBoardZoomStyles(opts) {
       const pinching = !!(opts && opts.livePinch) || board.classList.contains("is-pinching");
       /* Pendant pinch : arrondi plus grossier (moins de scintillement subpixel). */
@@ -21723,7 +21713,6 @@
       const rect0 = board.getBoundingClientRect();
       const ox0 = mid.x - rect0.left;
       const oy0 = mid.y - rect0.top;
-      ensurePinchSpacerRoom();
       boardTouchPinch = {
         dist0: dist,
         z0: zNow,
@@ -21829,6 +21818,14 @@
       else root.classList.remove("pw-pinch-lock");
       /* Jamais de height / scroll / visualViewport ici — zoom board = scale only. */
     }
+    /* Sécurité : lock / is-pinching ne doivent jamais rester collés hors geste. */
+    function forceClearPinchUiLock() {
+      if (boardTouchPinch) return;
+      if (boardPinchPtrs && boardPinchPtrs.size >= 2) return;
+      boardGesturePinch = false;
+      try { board.classList.remove("is-pinching"); } catch (_) {}
+      lockShellDuringPinch(false);
+    }
     function endBoardTouchPinch() {
       /* Flush dernière frame pinch avant settle spacer. */
       if (boardZoomRaf) {
@@ -21868,9 +21865,22 @@
     }
     applyStableShellH();
     measureFootBandH();
+    /* 2e mesure après layout Expo (safe-area) — évite board sous le chrome. */
+    requestAnimationFrame(function () {
+      requestAnimationFrame(measureFootBandH);
+    });
     window.addEventListener("orientationchange", () => {
       setTimeout(measureFootBandH, 180);
     });
+    /* Tap chrome : lever un pinch-lock fantôme sans bloquer le même tap. */
+    document.addEventListener("pointerdown", function (ev) {
+      try {
+        if (boardTouchPinch) return;
+        if (!(boardChromeBandHit(ev.clientX, ev.clientY) || boardPinchUiBlocked(ev.target))) return;
+        forceClearPinchUiLock();
+        if (boardPinchPtrs && boardPinchPtrs.size) boardPinchPtrs.clear();
+      } catch (_) {}
+    }, true);
     /* Pas de resize/visibility → measure/scroll : jump intermittent après zoom/tap. */
     /*
      * Pinch PRINCIPAL = Pointer Events.
@@ -21878,7 +21888,6 @@
      * coupe les Touch Events ; le 2e doigt n’envoie plus touchstart → pinch JS mort.
      * Les Pointer Events du 2e doigt restent vivants → on zoome ici.
      */
-    const boardPinchPtrs = new Map();
     function boardPinchPtrPair() {
       if (boardPinchPtrs.size < 2) return null;
       const pts = Array.from(boardPinchPtrs.values());
@@ -21906,7 +21915,6 @@
         const rect0 = board.getBoundingClientRect();
         const ox0 = midX - rect0.left;
         const oy0 = midY - rect0.top;
-        ensurePinchSpacerRoom();
         boardTouchPinch = {
           dist0: dist,
           z0: zNow,
@@ -21953,6 +21961,8 @@
       boardPinchPtrs.delete(ev.pointerId);
       if (boardPinchPtrs.size < 2 && boardTouchPinch && boardTouchPinch.via === "pointer") {
         endBoardTouchPinch();
+      } else if (boardPinchPtrs.size < 2) {
+        forceClearPinchUiLock();
       }
     }
     window.addEventListener("pointerdown", onBoardPinchPointerDown, { capture: true, passive: false });
