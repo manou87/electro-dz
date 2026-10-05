@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="brand/logo-wirelab-pro-icon.png?v=anthracite-gris" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="native-shell-8777-v25-lamp-header" />
+  <meta name="swissdz-rev" content="native-shell-8777-v26-zoom-fix" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -2058,15 +2058,16 @@
       overscroll-behavior:contain;
     }
     #board *, #boardZoomSpacer, #boardCoordsHost, #boardWorld { touch-action:none; }
-    /* Ne pas basculer overflow pendant pinch (causait un saut / vibration). */
+    /* Pinch : garder overflow:auto (passer en hidden = saut iOS). Spacer figé en JS. */
     #board.is-pinching {
       overflow:auto;
       overscroll-behavior:none;
       pointer-events:auto;
     }
-    /* Anti-vibration photos pendant pinch/zoom */
+    /* Anti-vibration photos pendant pinch/zoom — layer GPU stable */
     #board.is-pinching #boardWorld {
       will-change:transform;
+      -webkit-transform:translateZ(0);
     }
     #board.is-pinching #boardWorld,
     #board.is-pinching #boardWorld img,
@@ -8479,30 +8480,39 @@
     let boardZoomPend = null;
     /* Déclaré tôt : utilisé pendant setBoardZoomAt (défini avant les handlers pinch). */
     var boardTouchPinch = null;
+    /* Pré-agrandit le spacer une fois au début du pinch — plus aucun resize pendant le geste. */
+    function ensurePinchSpacerRoom() {
+      const spacer = document.getElementById("boardZoomSpacer");
+      if (!spacer) return;
+      const pad = boardPad();
+      const vw = Math.max(0, board.clientWidth || 0);
+      const vh = Math.max(0, board.clientHeight || 0);
+      const needW = Math.max(Math.round(BOARD_WORLD_W * BOARD_ZOOM_MAX + pad * 2), vw);
+      const needH = Math.max(Math.round(BOARD_WORLD_H * BOARD_ZOOM_MAX + pad * 2), vh);
+      const curW = parseFloat(spacer.style.width) || 0;
+      const curH = parseFloat(spacer.style.height) || 0;
+      if (needW > curW + 0.5) spacer.style.width = needW + "px";
+      if (needH > curH + 0.5) spacer.style.height = needH + "px";
+    }
     function applyBoardZoomStyles(opts) {
       const pinching = !!(opts && opts.livePinch) || board.classList.contains("is-pinching");
       /* Pendant pinch : arrondi plus grossier (moins de scintillement subpixel). */
       const zRound = pinching ? 100 : 1000;
       const z = Math.round(boardZoom() * zRound) / zRound;
       if (Math.abs(z - state.boardZoom) > 1e-9) state.boardZoom = z;
-      const pad = boardPad();
+      const pad = (pinching && boardTouchPinch && Number.isFinite(boardTouchPinch.pad0))
+        ? boardTouchPinch.pad0
+        : boardPad();
       const spacer = document.getElementById("boardZoomSpacer");
       const world = document.getElementById("boardWorld");
       const vw = Math.max(0, board.clientWidth || 0);
       const vh = Math.max(0, board.clientHeight || 0);
       const needW = Math.max(Math.round(BOARD_WORLD_W * z + pad * 2), vw);
       const needH = Math.max(Math.round(BOARD_WORLD_H * z + pad * 2), vh);
-      if (spacer) {
-        if (pinching) {
-          /* Pinch : agrandir si besoin, JAMAIS rétrécir (reflow = vibration). */
-          const curW = parseFloat(spacer.style.width) || 0;
-          const curH = parseFloat(spacer.style.height) || 0;
-          if (needW > curW + 0.5) spacer.style.width = needW + "px";
-          if (needH > curH + 0.5) spacer.style.height = needH + "px";
-        } else {
-          spacer.style.width = needW + "px";
-          spacer.style.height = needH + "px";
-        }
+      if (spacer && !pinching) {
+        /* Hors pinch seulement — resize pendant pinch = thrash scroll iOS/WebView. */
+        spacer.style.width = needW + "px";
+        spacer.style.height = needH + "px";
       }
       if (world) {
         world.style.left = pad + "px";
@@ -8560,13 +8570,17 @@
         applyBoardZoomStyles(pinching ? { livePinch: true } : null);
         return;
       }
-      const ox = (clientX == null) ? board.clientWidth / 2 : (clientX - rect.left);
-      const oy = (clientY == null) ? bh / 2 : (clientY - rect.top);
-      /* Ancre monde figée au début du pinch (évite le tremblement des doigts). */
+      let ox = (clientX == null) ? board.clientWidth / 2 : (clientX - rect.left);
+      let oy = (clientY == null) ? bh / 2 : (clientY - rect.top);
+      /* Ancre monde + foyer écran figés au début du pinch (anti-tremblement doigts). */
       let ax, ay;
+      let padUse = pad;
       if (pinching && boardTouchPinch && Number.isFinite(boardTouchPinch.ax)) {
         ax = boardTouchPinch.ax;
         ay = boardTouchPinch.ay;
+        if (Number.isFinite(boardTouchPinch.ox0)) ox = boardTouchPinch.ox0;
+        if (Number.isFinite(boardTouchPinch.oy0)) oy = boardTouchPinch.oy0;
+        if (Number.isFinite(boardTouchPinch.pad0)) padUse = boardTouchPinch.pad0;
       } else {
         ax = (board.scrollLeft + ox - pad) / z0;
         ay = (board.scrollTop + oy - pad) / z0;
@@ -8576,7 +8590,7 @@
         return;
       }
       if (pinching) {
-        boardZoomPend = { z1: z1, ox: ox, oy: oy, ax: ax, ay: ay, pad: pad };
+        boardZoomPend = { z1: z1, ox: ox, oy: oy, ax: ax, ay: ay, pad: padUse };
         if (!boardZoomRaf) {
           boardZoomRaf = requestAnimationFrame(function () {
             boardZoomRaf = 0;
@@ -8584,9 +8598,10 @@
             boardZoomPend = null;
             if (!p) return;
             state.boardZoom = p.z1;
+            /* Spacer figé : seulement scale + scroll (pas de Math.round → moins de jitter). */
             applyBoardZoomStyles({ livePinch: true });
-            board.scrollLeft = Math.round(p.ax * p.z1 - p.ox + p.pad);
-            board.scrollTop = Math.round(p.ay * p.z1 - p.oy + p.pad);
+            board.scrollLeft = p.ax * p.z1 - p.ox + p.pad;
+            board.scrollTop = p.ay * p.z1 - p.oy + p.pad;
           });
         }
         return;
@@ -21708,11 +21723,15 @@
       const rect0 = board.getBoundingClientRect();
       const ox0 = mid.x - rect0.left;
       const oy0 = mid.y - rect0.top;
+      ensurePinchSpacerRoom();
       boardTouchPinch = {
         dist0: dist,
         z0: zNow,
         midX: mid.x,
         midY: mid.y,
+        ox0: ox0,
+        oy0: oy0,
+        pad0: pad0,
         ax: (board.scrollLeft + ox0 - pad0) / zNow,
         ay: (board.scrollTop + oy0 - pad0) / zNow,
         idA: a.identifier,
@@ -21811,17 +21830,40 @@
       /* Jamais de height / scroll / visualViewport ici — zoom board = scale only. */
     }
     function endBoardTouchPinch() {
-      boardTouchPinch = null;
-      boardGesturePinch = false;
-      board.classList.remove("is-pinching");
+      /* Flush dernière frame pinch avant settle spacer. */
       if (boardZoomRaf) {
         cancelAnimationFrame(boardZoomRaf);
         boardZoomRaf = 0;
       }
-      boardZoomPend = null;
-      /* Fin pinch : appliquer taille spacer exacte + grille. */
+      if (boardZoomPend) {
+        state.boardZoom = boardZoomPend.z1;
+        boardZoomPend = null;
+      }
+      const z = boardZoom();
+      const pad0 = (boardTouchPinch && Number.isFinite(boardTouchPinch.pad0))
+        ? boardTouchPinch.pad0
+        : boardPad();
+      const fox = (boardTouchPinch && Number.isFinite(boardTouchPinch.ox0))
+        ? boardTouchPinch.ox0
+        : (board.clientWidth / 2);
+      const foy = (boardTouchPinch && Number.isFinite(boardTouchPinch.oy0))
+        ? boardTouchPinch.oy0
+        : (Math.max(1, board.clientHeight) / 2);
+      const ax = (boardTouchPinch && Number.isFinite(boardTouchPinch.ax))
+        ? boardTouchPinch.ax
+        : ((board.scrollLeft + fox - pad0) / z);
+      const ay = (boardTouchPinch && Number.isFinite(boardTouchPinch.ay))
+        ? boardTouchPinch.ay
+        : ((board.scrollTop + foy - pad0) / z);
+      boardTouchPinch = null;
+      boardGesturePinch = false;
+      board.classList.remove("is-pinching");
+      /* Settle spacer (peut rétrécir après dézoom) puis re-ancre pour éviter le jump. */
       applyBoardZoomStyles();
       syncBoardCoords();
+      const pad1 = boardPad();
+      board.scrollLeft = Math.round(ax * z - fox + pad1);
+      board.scrollTop = Math.round(ay * z - foy + pad1);
       lockShellDuringPinch(false);
     }
     applyStableShellH();
@@ -21864,12 +21906,16 @@
         const rect0 = board.getBoundingClientRect();
         const ox0 = midX - rect0.left;
         const oy0 = midY - rect0.top;
+        ensurePinchSpacerRoom();
         boardTouchPinch = {
           dist0: dist,
           z0: zNow,
           midX: midX,
           midY: midY,
-          /* Ancre monde figée — anti-vibration pendant le pinch. */
+          ox0: ox0,
+          oy0: oy0,
+          pad0: pad0,
+          /* Ancre monde + foyer écran figés — anti-vibration pendant le pinch. */
           ax: (board.scrollLeft + ox0 - pad0) / zNow,
           ay: (board.scrollTop + oy0 - pad0) / zNow,
           idA: a.id,
@@ -21880,7 +21926,10 @@
         board.classList.add("is-pinching");
         lockShellDuringPinch(true);
       } else if (boardTouchPinch.via === "pointer") {
+        /* midX/Y ignorés : setBoardZoomAt utilise ox0/oy0 figés. */
         setBoardZoomAt(boardTouchPinch.z0 * (dist / boardTouchPinch.dist0), midX, midY, { livePinch: true });
+      } else if (boardTouchPinch.via === "touch") {
+        /* Touch path déjà actif : ne pas doubler le zoom via pointer. */
       }
       if (ev && ev.cancelable) ev.preventDefault();
     }
