@@ -8,7 +8,8 @@
   <link rel="apple-touch-icon" href="brand/logo-wirelab-pro-icon.png?v=official-gemini" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="native-shell-8777-v115-i18n-chips" />
+  <meta name="swissdz-rev" content="native-shell-8777-v116-tiers-pro" />
+  <!-- v116: Free = tout sauf Gold→Pro : Fluke, KNX hors SwissDz, contrôle élec, exemples (PV free, terre free) -->
   <!-- v115: libAdd/libClose traduits ; chips Front/Back = flèches ↑↓ (clés i18n déployées) -->
   <!-- v114: pan ne vole plus path.hit/whandle — sélection + déplacement direction câble rétabli -->
   <!-- v113: annule v111 — autoRoute recontourne les autres fils (comme avant) -->
@@ -5722,16 +5723,16 @@
         <div class="name">WireLab <span>by SwissDZ</span></div>
       </div>
       <h1 id="tierTitle" data-i18n="tierTitle">Choisir une offre</h1>
-      <p class="lead" data-i18n="tierLead">Free pour démarrer (dont PV). Pro = toute la biblio + Fluke, ETS et installations prédéfinies.</p>
+      <p class="lead" data-i18n="tierLead">Free = schéma + KNX SwissDZ + solaire + terre. Pro = Fluke, contrôle électrique, KNX marques et installations.</p>
       <div class="tier-cards">
         <div class="tier-card" data-tier="free" id="tierCardFree">
           <div class="tier-name" data-i18n="tierFreeName">Free</div>
           <div class="tier-price"><span class="free-amt" data-i18n="tierFreePrice">Gratuit</span></div>
           <ul>
-            <li data-i18n="tierFreePerk1">Alim, structure, borniers, disj. mod. / différentiel / moulé, sectionneurs</li>
-            <li data-i18n="tierFreePerk2">Boutonnerie &amp; commande sélectionnées, KM+FR, moteurs, LOGO!, KNX SwissDz de base</li>
-            <li data-i18n="tierFreePerk3">Éclairage, prises, capteurs clés, compteurs, alim. aux. &amp; transformateurs</li>
-            <li data-i18n="tierFreePerk4">Photovoltaïque inclus · sans Fluke / ETS / autres installations Pro</li>
+            <li data-i18n="tierFreePerk1">Toute la bibliothèque (sauf KNX marques)</li>
+            <li data-i18n="tierFreePerk2">KNX SwissDZ · solaire · mise à la terre</li>
+            <li data-i18n="tierFreePerk3">Exemple photovoltaïque</li>
+            <li data-i18n="tierFreePerk4">Sans Fluke, contrôle électrique, ETS ni autres installations</li>
           </ul>
           <div class="tier-actions">
             <button type="button" class="ghost" id="tierSelectFree" data-i18n="tierSelectFree">Rester en Free</button>
@@ -5744,9 +5745,9 @@
             <span data-i18n="tierProYear">14,99 € / an</span>
           </div>
           <ul>
-            <li data-i18n="tierProPerk1">Toute la bibliothèque</li>
-            <li data-i18n="tierProPerk2">Fluke 1664 + accessoires mise à la terre</li>
-            <li data-i18n="tierProPerk3">ETS formation + installations prédéfinies</li>
+            <li data-i18n="tierProPerk1">Fluke 1664 + contrôle électrique</li>
+            <li data-i18n="tierProPerk2">KNX marques (hors SwissDZ) + ETS</li>
+            <li data-i18n="tierProPerk3">Installations prédéfinies (sauf solaire)</li>
           </ul>
           <div class="tier-actions">
             <button type="button" class="primary" id="tierBuyGoldMonth" data-product="wirelab_gold_month" data-i18n="tierBuyMonth">Mensuel</button>
@@ -5769,7 +5770,7 @@
   </div>
   <link rel="stylesheet" href="labo-terre/labo-terre.css?v=labo-arrows-stakes1" />
   <link rel="stylesheet" href="controle-elec/mains-cable.css?v=mains-cable-4" />
-  <script src="i18n/panelwire-i18n.js?v=v115-i18n-chips"></script>
+  <script src="i18n/panelwire-i18n.js?v=v116-tiers-pro"></script>
   <script src="labo-terre/labo-terre.js?v=labo-arrows-stakes1"></script>
   <script src="controle-elec/mains-cable.js?v=mains-cable-4"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -6009,10 +6010,14 @@
       if (typeId === "fluke_1664") return true;
       const def = (typeof LIB !== "undefined" && LIB) ? LIB[typeId] : null;
       if (!def) return false;
+      /* v116 : Fluke = Pro. Mise à la terre (mt_ / labo) = Free. */
       if (def.flukeMeter || def.cat === "Appareil de mesure multifonction") return true;
-      /* Accessoires mise à la terre / labo (avec Fluke). */
-      if (def.mesureAcc || /^mt_/.test(String(typeId || ""))) return true;
       return false;
+    }
+    function isProKnxType(typeId) {
+      const def = (typeof LIB !== "undefined" && LIB) ? LIB[typeId] : null;
+      if (!def || def.cat !== "Domotique KNX") return false;
+      return !TIER_FREE_KNX.has(typeId);
     }
     function isLibTypeFree(typeId) {
       return TIER_FREE_TYPES.has(typeId);
@@ -7818,9 +7823,10 @@
     ["combo_swissdz_km_fr", "combo_abb_af09_tf42", "thermique", "edz_abb_tf42"].forEach((id) => {
       if (LIB[id]) TIER_FREE_TYPES.add(id);
     });
-    /* Jamais Free pour Fluke / accessoires terre. */
+    /* v116 : tout le reste Free. Pro = Fluke + KNX hors SwissDZ (Gold historique : ETS, contrôle, exemples). */
     Object.keys(LIB).forEach((id) => {
-      if (isGoldOnlyType(id)) TIER_FREE_TYPES.delete(id);
+      if (isGoldOnlyType(id) || isProKnxType(id)) TIER_FREE_TYPES.delete(id);
+      else TIER_FREE_TYPES.add(id);
     });
 
     function isCompteurKind(kind) {
@@ -25396,7 +25402,6 @@
     if (btnControleMenu) btnControleMenu.onclick = () => requestControleElectrique();
     const btnLaboTerreMenu = document.getElementById("btnLaboTerreMenu");
     if (btnLaboTerreMenu) btnLaboTerreMenu.onclick = () => {
-      if (!tierAtLeast("gold")) { openTierGate(); return; }
       if (window.WireLabLaboTerre && typeof window.WireLabLaboTerre.open === "function") {
         window.WireLabLaboTerre.open();
       }
