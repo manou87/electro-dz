@@ -8,7 +8,8 @@
   <link rel="apple-touch-icon" href="brand/logo-wirelab-pro-icon.png?v=official-gemini" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="native-shell-8777-v114-wire-move" />
+  <meta name="swissdz-rev" content="native-shell-8777-v115-i18n-chips" />
+  <!-- v115: libAdd/libClose traduits ; chips Front/Back = flèches ↑↓ (clés i18n déployées) -->
   <!-- v114: pan ne vole plus path.hit/whandle — sélection + déplacement direction câble rétabli -->
   <!-- v113: annule v111 — autoRoute recontourne les autres fils (comme avant) -->
   <!-- v112: Centrer = cadre l’installation (plus le plan vide → coin) -->
@@ -5768,7 +5769,7 @@
   </div>
   <link rel="stylesheet" href="labo-terre/labo-terre.css?v=labo-arrows-stakes1" />
   <link rel="stylesheet" href="controle-elec/mains-cable.css?v=mains-cable-4" />
-  <script src="i18n/panelwire-i18n.js?v=v101-i18n-fix"></script>
+  <script src="i18n/panelwire-i18n.js?v=v115-i18n-chips"></script>
   <script src="labo-terre/labo-terre.js?v=labo-arrows-stakes1"></script>
   <script src="controle-elec/mains-cable.js?v=mains-cable-4"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -5804,6 +5805,11 @@
     /* ========== i18n helpers ========== */
     const I18N = (typeof window !== "undefined" && window.PanelWireI18n) ? window.PanelWireI18n : null;
     function t(key, vars) { return I18N ? I18N.t(key, vars) : key; }
+    /* Si clé absente, I18N.t renvoie la clé (truthy) — ne pas faire `t(k) || fallback`. */
+    function tOr(key, fallback) {
+      const s = t(key);
+      return (s && s !== key) ? s : fallback;
+    }
     const THEME_KEY = "panelwire-theme";
     const SOUNDS_MUTE_KEY = "panelwire-sounds-muted";
     /* swissdz-rev v44-grid-toggle : grille plan ON/OFF (défaut ON). */
@@ -16364,7 +16370,7 @@
       }
       const addLab = document.createElement("span");
       addLab.className = "lib-add";
-      addLab.textContent = (typeof t === "function" ? t("libAdd") : null) || "Ajouter";
+      addLab.textContent = tOr("libAdd", "Ajouter");
       b.appendChild(addLab);
       b.onclick = () => {
         if (!isTypeUnlocked(id)) { openTierGate(); return; }
@@ -16485,7 +16491,7 @@
         o.textContent = label;
         sel.appendChild(o);
       };
-      addOpt("*", (typeof t === "function" ? t("libCatAll") : null) || "Toutes les catégories");
+      addOpt("*", tOr("libCatAll", "Toutes les catégories"));
       libOrderedCats().forEach((cat) => addOpt(cat, catDisplayName(cat)));
       /* v90 : installations exemplaires = Menu uniquement (plus dans la biblio). */
       sel.addEventListener("change", () => {
@@ -21415,9 +21421,9 @@
       modal.dataset.typeId = typeId;
       modal.querySelector(".lib-tech-title").textContent = libDisplayName(typeId, def);
       modal.querySelector(".lib-tech-body").innerHTML = renderLibPropsBody(typeId);
-      modal.querySelector(".lib-tech-add").textContent = (typeof t === "function" ? t("libAdd") : null) || "Ajouter";
+      modal.querySelector(".lib-tech-add").textContent = tOr("libAdd", "Ajouter");
       const closeLab = modal.querySelector(".lib-tech-close");
-      if (closeLab) closeLab.textContent = (typeof t === "function" ? t("libClose") : null) || "Fermer";
+      if (closeLab) closeLab.textContent = tOr("libClose", "Fermer");
       modal.classList.add("open");
       modal.setAttribute("aria-hidden", "false");
     }
