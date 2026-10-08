@@ -8,7 +8,16 @@
   <link rel="apple-touch-icon" href="brand/logo-wirelab-pro-icon.png?v=official-gemini" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="native-shell-8777-v123-facade-reel" />
+  <meta name="swissdz-rev" content="native-shell-8777-v134-exemples-scroll" />
+  <!-- v134: Installations exemplaires — la liste de la modale centrale défile (molette + doigt), le plan derrière ne panne plus -->
+  <!-- v133: ETS — chaque participant KNX (volet, slot façade, poussoir, actionneur, coupleur) a ses GA et noms d’objets -->
+  <!-- v132: cordon PE continu ; mesures Fluke du plan = bornes réellement touchées (hors / sous tension) -->
+  <!-- v131: cordons Fluke du plan — pointe et coude déplaçables, position conservée au render -->
+  <!-- v129: Labo terre — jardin large, piquet E mobile, câblette sous la barrette, pontet ouvert/fermé -->
+  <!-- v130: voyants LED colorés (jaune, bleu, blanc, rouge, vert) de nouveau dans Boutonnerie -->
+  <!-- v128: Labo terre — pointe S dans la terre ; Fluke 1664 au sol, cordons sur ses bornes -->
+  <!-- v125: Labo terre = Installation de la mise à la terre (4 scènes storyboard) ; méthodes 62%/triangle/4P/boucle inchangées -->
+  <!-- v124: sons locaux — volet/portail/garage (LaSonothèque s1126) + moteur VMC (s0957) ; pattern pompe, pas d’URL live -->
   <!-- v123: façade et volet n’agissent que si L+N (+PE) et bus KNX sont vraiment raccordés ; la maison se redimensionne -->
   <!-- v122: façade maison sur la grille — emplacements +, volet photo réutilisé, garages, lampes, PV, météo, porte -->
   <!-- v121: fenêtre + volet = L/N/PE + bus KNX (plus de bornes U/D) ; mouvement par GA comme un actionneur volet -->
@@ -3080,9 +3089,10 @@
     .dev.fluke-meter.sel .fluke-edge-w,
     .dev.fluke-meter.sel .fluke-edge-e { width:14px; }
     .dev.fluke-meter .rhandle { pointer-events:auto; }
-    /* Pointes L/N/PE libres sur le board (hors iframe) — au-dessus du plan et des fils */
+    /* Pointes L/N/PE libres sur le board (hors iframe).
+       v131: au-dessus des pastilles (70–74) — sinon le clic tombe sur la borne et la pointe reste figée. */
     .fluke-probe {
-      position:absolute; z-index:48;
+      position:absolute; z-index:76;
       width:28px; height:58px;
       margin:0; padding:0;
       pointer-events:auto; cursor:grab; touch-action:none;
@@ -3101,7 +3111,7 @@
       outline:2px solid #fbbf24; outline-offset:1px; border-radius:4px;
     }
     .fluke-probe.is-wired {
-      z-index:46;
+      z-index:76;
       outline:2px solid #22c55e; outline-offset:1px; border-radius:4px;
     }
     /* Cordons Fluke : calque dédié, jamais clipés par l’iframe / masque trainer */
@@ -3115,6 +3125,24 @@
       stroke-linecap:round;
       stroke-linejoin:round;
       vector-effect:non-scaling-stroke;
+    }
+    /* v131: le trait coloré était pointer-events:none → le doigt pannait le plan.
+       Hit large + pastille de coude : le tracé suit et reste après le render. */
+    svg.fluke-leads path.fluke-lead-hit {
+      fill:none; stroke:transparent; stroke-width:22;
+      stroke-linecap:round; stroke-linejoin:round;
+      pointer-events:stroke; cursor:grab; touch-action:none;
+      vector-effect:non-scaling-stroke;
+    }
+    svg.fluke-leads .fluke-bend {
+      fill:#3b82f6; stroke:#fff; stroke-width:1.5;
+      cursor:grab; pointer-events:all; touch-action:none;
+    }
+    svg.fluke-leads path.fluke-lead-hit:active,
+    svg.fluke-leads .fluke-bend:active { cursor:grabbing; }
+    #board.is-dragging svg.fluke-leads path.fluke-lead-hit,
+    #board.is-dragging svg.fluke-leads .fluke-bend {
+      pointer-events:none !important;
     }
     .item .fluke-lib-face {
       position:relative; display:block; width:78%; max-height:56px;
@@ -3555,6 +3583,21 @@
     .examples-card {
       width:min(380px,92vw); max-height:min(82vh,720px); overflow:auto;
       -webkit-overflow-scrolling:touch; overscroll-behavior:contain; scrollbar-width:thin;
+    }
+    /* v134 : modale du milieu — titre + Fermer restent, seule la liste défile.
+       touch-action pan-y : le doigt scrolle la liste, il ne panne pas le plan. */
+    #examplesModal .examples-card {
+      display:flex; flex-direction:column; min-height:0;
+      max-height:min(82vh,720px); overflow:hidden;
+    }
+    #examplesModal .examples-card > h3,
+    #examplesModal .examples-card > .sub,
+    #examplesModal .examples-card > .size-actions { flex:0 0 auto; }
+    #examplesModal #examplesModalList {
+      flex:1 1 auto; min-height:0; max-height:min(62vh,560px);
+      overflow-x:hidden; overflow-y:auto;
+      -webkit-overflow-scrolling:touch; overscroll-behavior:contain;
+      touch-action:pan-y; scrollbar-width:thin;
     }
     .lib-install-btn {
       display:flex; align-items:center; justify-content:flex-start; gap:6px;
@@ -5235,7 +5278,7 @@
         <button type="button" id="btnLadder" role="menuitem" data-i18n="btnLadder" data-i18n-title="btnLadderTitle" title="Afficher / masquer l'éditeur Ladder (auto si PLC posé)">Ladder</button>
         <button type="button" id="btnEts" role="menuitem" data-i18n="btnEts" data-i18n-title="btnEtsTitle" title="ETS formation — adresses physiques, GA, objets (pas l'ETS officiel)">ETS formation</button>
         <button type="button" id="btnControleMenu" role="menuitem" data-i18n="btnControle" data-i18n-title="btnControleTitle" title="Ouvrir le Contrôle électrique sur un nouveau plan">Contrôle électrique</button>
-        <button type="button" id="btnLaboTerreMenu" role="menuitem" data-i18n="btnLaboTerre" data-i18n-title="btnLaboTerreTitle" title="Labo terre — poser des piquets puis mesurer (62 %, triangle, 4P, Phase-PE)">Labo terre</button>
+        <button type="button" id="btnLaboTerreMenu" role="menuitem" data-i18n="btnLaboTerre" data-i18n-title="btnLaboTerreTitle" title="Installation de la mise à la terre — 4 étapes (chantier, piquet, 62 %, Fluke 1664)">Installation de la mise à la terre</button>
         <button type="button" data-brand-act="knx" role="menuitem" data-i18n="brandMenuKnx">KNX</button>
         <div class="brand-sep"></div>
         <button type="button" id="btnSignIn" role="menuitem" data-i18n="btnSignIn" data-i18n-title="btnSignInTitle"
@@ -5935,10 +5978,10 @@
       </div>
     </div>
   </div>
-  <link rel="stylesheet" href="labo-terre/labo-terre.css?v=labo-arrows-stakes1" />
+  <link rel="stylesheet" href="labo-terre/labo-terre.css?v=v129-terre-espace" />
   <link rel="stylesheet" href="controle-elec/mains-cable.css?v=mains-cable-4" />
-  <script src="i18n/panelwire-i18n.js?v=v123-facade-reel"></script>
-  <script src="labo-terre/labo-terre.js?v=labo-arrows-stakes1"></script>
+  <script src="i18n/panelwire-i18n.js?v=v125-terre-install"></script>
+  <script src="labo-terre/labo-terre.js?v=v129-terre-espace"></script>
   <script src="controle-elec/mains-cable.js?v=mains-cable-4"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/wirelab-auth.js?v=v90-fluke-exmenu"></script>
@@ -6039,6 +6082,7 @@
         try { syncBuzzers(); } catch (e) {}
         try { syncMotorSounds(); } catch (e) {}
         try { syncPumpWaterSounds(); } catch (e) {}
+        try { syncGateSounds(); } catch (e) {}
       }
     }
     function applyTheme(theme) {
@@ -10338,7 +10382,7 @@
       selected: null, selectedIds: [], selectedWire: null, wireOpt: null, selectedBar: null, wireFrom: null,
       wireDraftPts: [], /* clics vide = coudes (option) ; algo autoRoute inchangé entre segments */
       drag: null,
-      resize: null, wireDrag: null, flukeTipDrag: null, preview: null, wireSnap: null,
+      resize: null, wireDrag: null, flukeTipDrag: null, flukeBendDrag: null, preview: null, wireSnap: null,
       wirePadFlash: null,
       short: null, shortArmed: false,
       shortSince: null, fire: null,
@@ -10352,6 +10396,7 @@
       etsOpen: false,
       etsTab: "batiments",
       etsSelUid: null,
+      etsSelSlot: "", /* façade : id d’emplacement (v1, e1, porte…) ; vide = tout le participant */
       etsSelGa: "0/0/1",
       etsProgMode: "params", /* params | objets */
       etsToast: "",
@@ -10665,7 +10710,7 @@
     }
 
     function syncDragLock() {
-      board.classList.toggle("is-dragging", !!(state.drag || state.resize || state.wireDrag || state.flukeTipDrag || state.proxRangeDrag));
+      board.classList.toggle("is-dragging", !!(state.drag || state.resize || state.wireDrag || state.flukeTipDrag || state.flukeBendDrag || state.proxRangeDrag));
     }
 
     /* ========== ETS FORMATION (pédagogique, pas ETS officiel) ========== */
@@ -10716,6 +10761,21 @@
         2: { gaUp: "1/2/4", gaDown: "1/2/5", gaStop: "1/2/6" }
       };
     }
+    function knxBinaryIds(def) {
+      const hits = (def && def.knxBinHits) || [];
+      const ids = [];
+      hits.forEach((h) => {
+        const n = h && h.id | 0;
+        if (n > 0 && ids.indexOf(n) < 0) ids.push(n);
+      });
+      ids.sort((a, b) => a - b);
+      return ids.length ? ids : [1, 2, 3, 4];
+    }
+    function knxEnsureName(obj, key, fallback) {
+      if (!obj) return fallback;
+      if (!obj[key]) obj[key] = fallback;
+      return obj[key];
+    }
     function ensureKnxProgram(item) {
       if (!item) return;
       const def = LIB[item.type];
@@ -10724,43 +10784,76 @@
         const prefer = def.knxPsu ? "1.1.0" : def.knxPush ? "1.1.1" : def.knxActuator ? "1.1.2"
           : def.knxShutter ? "1.1.3" : def.knxDimmer ? "1.1.4" : def.knxPresence ? "1.1.5"
           : def.knxTemp ? "1.1.6" : def.knxThermo ? "1.1.7" : def.knxBinary ? "1.1.8"
-          : def.knxIp ? "1.1.9" : def.knxDali ? "1.1.10" : def.knxRoller ? "1.1.12" : "1.1.11";
+          : def.knxIp ? "1.1.9" : def.knxDali ? "1.1.10" : def.knxRoller ? "1.1.12"
+          : def.houseFacade ? "1.1.13" : "1.1.11";
         item.physAddr = nextKnxPhysAddr(prefer);
       }
       if (def.knxPush) {
         if (!item.knxToggle) item.knxToggle = { 1: false, 2: false, 3: false, 4: false };
         if (!item.knxKeysProg) item.knxKeysProg = defaultKnxKeysProg();
+        [1, 2, 3, 4].forEach((n) => {
+          if (!item.knxKeysProg[n]) item.knxKeysProg[n] = { fn: "switch", ga: "1/0/" + n };
+          knxEnsureName(item.knxKeysProg[n], "name", "Touche " + n);
+        });
       }
       if (def.knxActuator) {
         if (!item.knxCh) item.knxCh = { 1: false, 2: false, 3: false, 4: false };
         if (!item.knxChProg) item.knxChProg = defaultKnxChProg();
+        [1, 2, 3, 4].forEach((n) => {
+          if (!item.knxChProg[n]) item.knxChProg[n] = { ga: "1/1/" + n };
+          knxEnsureName(item.knxChProg[n], "name", "Sortie " + n);
+        });
       }
       if (def.knxShutter) {
         if (!item.knxShutter) item.knxShutter = { 1: { dir: "stop", pos: 0.35 }, 2: { dir: "stop", pos: 0.35 } };
         if (!item.knxShutterProg) item.knxShutterProg = defaultKnxShutterProg();
+        [1, 2].forEach((n) => {
+          const p = item.knxShutterProg[n];
+          if (!p) return;
+          knxEnsureName(p, "nameUp", "Volet " + n + " montée");
+          knxEnsureName(p, "nameDown", "Volet " + n + " descente");
+          knxEnsureName(p, "nameStop", "Volet " + n + " arrêt");
+        });
       }
       if (def.knxRoller) {
         if (!item.knxRollerProg) item.knxRollerProg = { gaUp: "1/2/1", gaDown: "1/2/2", gaStop: "1/2/3" };
+        knxEnsureName(item.knxRollerProg, "nameUp", "Montée");
+        knxEnsureName(item.knxRollerProg, "nameDown", "Descente");
+        knxEnsureName(item.knxRollerProg, "nameStop", "Arrêt");
       }
       if (def.knxDimmer || def.knxDali) {
         if (!item.knxDim) item.knxDim = { on: false, level: 80 };
         if (!item.knxDimProg) item.knxDimProg = { gaOn: "1/3/1", gaLevel: "1/3/2" };
+        knxEnsureName(item.knxDimProg, "nameOn", "ON/OFF");
+        knxEnsureName(item.knxDimProg, "nameLevel", "Niveau");
       }
       if (def.knxPresence) {
         if (item.knxPresence == null) item.knxPresence = false;
         if (!item.knxPresenceProg) item.knxPresenceProg = { ga: "1/4/1" };
+        knxEnsureName(item.knxPresenceProg, "name", "Présence");
       }
       if (def.knxTemp) {
         if (item.knxTemp == null) item.knxTemp = 21.5;
         if (!item.knxTempProg) item.knxTempProg = { ga: "1/5/1" };
+        knxEnsureName(item.knxTempProg, "name", "Température");
       }
       if (def.knxThermo) {
         if (!item.knxThermo) item.knxThermo = { set: 20, room: 21, heat: false };
         if (!item.knxThermoProg) item.knxThermoProg = { gaSet: "1/6/1", gaHeat: "1/6/2" };
+        knxEnsureName(item.knxThermoProg, "nameSet", "Consigne");
+        knxEnsureName(item.knxThermoProg, "nameHeat", "Chauffage");
       }
       if (def.knxBinary) {
-        if (!item.knxBin) item.knxBin = { 1: false, 2: false, 3: false, 4: false };
-        if (!item.knxBinProg) item.knxBinProg = { 1: { ga: "1/7/1" }, 2: { ga: "1/7/2" }, 3: { ga: "1/7/3" }, 4: { ga: "1/7/4" } };
+        if (!item.knxBin || typeof item.knxBin !== "object") item.knxBin = {};
+        if (!item.knxBinProg || typeof item.knxBinProg !== "object") item.knxBinProg = {};
+        knxBinaryIds(def).forEach((n) => {
+          if (item.knxBin[n] == null) item.knxBin[n] = false;
+          if (!item.knxBinProg[n]) item.knxBinProg[n] = { ga: "1/7/" + n, name: "Entrée " + n };
+          else knxEnsureName(item.knxBinProg[n], "name", "Entrée " + n);
+        });
+      }
+      if (def.houseFacade) {
+        try { ensureFacadeProg(item); } catch (_) {}
       }
     }
     function resetAllKnxAddresses() {
@@ -10771,6 +10864,7 @@
         delete it.knxKeysProg; delete it.knxChProg; delete it.knxShutterProg; delete it.knxRollerProg;
         delete it.knxDimProg; delete it.knxPresenceProg; delete it.knxTempProg;
         delete it.knxThermoProg; delete it.knxBinProg;
+        if (it.facade && it.facade.prog) delete it.facade.prog;
         ensureKnxProgram(it);
       });
     }
@@ -10888,6 +10982,11 @@
           if (act.knxShutterProg[2]) progs.push(act.knxShutterProg[2]);
         }
         if (d.knxRoller && act.knxRollerProg) progs.push(act.knxRollerProg);
+        if (d.houseFacade && act.facade) {
+          try { ensureFacadeProg(act); } catch (_) {}
+          const fp = (act.facade && act.facade.prog) || {};
+          Object.keys(fp).forEach((id) => { if (fp[id] && fp[id].gaUp) progs.push(fp[id]); });
+        }
         progs.forEach((p) => {
           if (kind === "up" && normGa(p.gaUp) === ga) {
             if (p.gaDown) state.knxBusValues[normGa(p.gaDown)] = 0;
@@ -11167,6 +11266,7 @@
       if (!f.roller || typeof f.roller !== "object") f.roller = {};
       if (!f.light || typeof f.light !== "object") f.light = {};
       f.strike = !!f.strike;
+      f.video = !!f.video;
       return f;
     }
     function syncFacadeBox(item) {
@@ -11194,6 +11294,59 @@
         e6: "1/1/23", ei5: "1/1/24"
       };
       return map[slotId] || "";
+    }
+    /* Défauts GA. La simulation lit item.facade.prog[slot] — un autre participant ne partage pas cet objet. */
+    function defaultFacadeSlotProg(slotId, kind) {
+      if (kind === "volet" || kind === "garage") {
+        const p = facadeRollerProg(slotId) || { gaUp: "1/2/1", gaDown: "1/2/2", gaStop: "1/2/3" };
+        const lab = (kind === "garage" ? "Garage " : "Volet ") + slotId;
+        return {
+          nameUp: lab + " montée", nameDown: lab + " descente", nameStop: lab + " arrêt",
+          gaUp: p.gaUp, gaDown: p.gaDown, gaStop: p.gaStop
+        };
+      }
+      if (kind === "light") return { name: "Lampe " + slotId, ga: facadeLightGa(slotId) || "1/1/40" };
+      if (kind === "door") {
+        return { nameStrike: "Gâche", gaStrike: "1/1/30", nameVideo: "Visiophone", gaVideo: "1/1/31" };
+      }
+      if (kind === "meteo") return { name: "Station météo", ga: "1/5/10" };
+      if (kind === "pv") return { name: "Solaire " + slotId, ga: slotId === "pv2" ? "1/8/2" : "1/8/1" };
+      return null;
+    }
+    function ensureFacadeProg(item) {
+      const f = ensureFacade(item);
+      if (!f.prog || typeof f.prog !== "object") f.prog = {};
+      facadeGeom(f.bays).slots.forEach((s) => {
+        if (!f.eq[s.id]) return;
+        const d = defaultFacadeSlotProg(s.id, s.kind);
+        if (!d) return;
+        if (!f.prog[s.id]) f.prog[s.id] = d;
+        else Object.keys(d).forEach((k) => {
+          if (f.prog[s.id][k] == null || f.prog[s.id][k] === "") f.prog[s.id][k] = d[k];
+        });
+      });
+      return f.prog;
+    }
+    function facadeProgOf(item, slotId) {
+      const prog = ensureFacadeProg(item);
+      return prog[slotId] || null;
+    }
+    function facadeSyncProducers(item) {
+      if (!item || !item.facade) return;
+      const f = item.facade;
+      ensureFacadeProg(item);
+      if (!state.knxBusValues) state.knxBusValues = {};
+      facadeGeom(f.bays).slots.forEach((s) => {
+        if (!f.eq[s.id] || (s.kind !== "meteo" && s.kind !== "pv")) return;
+        const p = f.prog[s.id];
+        const g = p ? normGa(p.ga) : "";
+        if (!g) return;
+        const next = facadeSlotReady(item, s.id) ? 1 : 0;
+        if (state.knxBusValues[g] !== next) {
+          state.knxBusValues[g] = next;
+          state.knxLastTelegram = { ga: g, value: next, src: (item.tag || "FH") + "." + s.id, ts: performance.now() };
+        }
+      });
     }
     function facadeKindLabel(kind) {
       if (kind === "meteo") return "Station météo (bus)";
@@ -11301,7 +11454,7 @@
         const r = f.roller[id];
         if (!r || !f.eq[id]) return;
         if (!facadeSlotReady(item, id)) { r.dir = "stop"; return; }
-        const p = facadeRollerProg(id);
+        const p = facadeProgOf(item, id);
         if (!p) return;
         const gu = normGa(p.gaUp), gd = normGa(p.gaDown), gs = normGa(p.gaStop);
         const up = !!(gu && vals[gu]);
@@ -11316,12 +11469,16 @@
       Object.keys(f.light || {}).forEach((id) => {
         if (!f.eq[id]) return;
         if (!facadeSlotReady(item, id)) return;
-        const g = normGa(facadeLightGa(id));
+        const p = facadeProgOf(item, id);
+        const g = p ? normGa(p.ga) : "";
         if (g && Object.prototype.hasOwnProperty.call(vals, g)) f.light[id] = !!vals[g];
       });
       if (f.eq.porte && facadeSlotReady(item, "porte")) {
-        const g = normGa("1/1/30");
+        const p = facadeProgOf(item, "porte");
+        const g = p ? normGa(p.gaStrike) : "";
         if (g && Object.prototype.hasOwnProperty.call(vals, g)) f.strike = !!vals[g];
+        const gv = p ? normGa(p.gaVideo) : "";
+        if (gv && Object.prototype.hasOwnProperty.call(vals, gv)) f.video = !!vals[gv];
       }
     }
     function facadeSetEquipped(item, slotId, on) {
@@ -11333,6 +11490,7 @@
         if (slot.kind === "volet" || slot.kind === "garage") f.roller[slotId] = { dir: "stop", pos: 0 };
         if (slot.kind === "light") f.light[slotId] = false;
         if (slot.kind === "door") f.strike = false;
+        ensureFacadeProg(item);
       } else {
         delete f.eq[slotId];
         if (f.roller) delete f.roller[slotId];
@@ -11369,7 +11527,7 @@
       const p = Number(r.pos);
       r.pos = Number.isFinite(p) ? Math.max(0, Math.min(1, p)) : 0;
       const next = (dir === "stop" || r.dir === dir) ? "stop" : dir;
-      const prog = facadeRollerProg(slotId);
+      const prog = facadeProgOf(item, slotId);
       if (prog && knxCanSend(item)) {
         if (!state.knxBusValues) state.knxBusValues = {};
         if (next === "stop") {
@@ -11603,7 +11761,7 @@
           bindRollerTap(sw, function () {
             if (!facadeSlotReady(item, s.id)) return;
             const next = !f.light[s.id];
-            const ga = facadeLightGa(s.id);
+            const ga = (facadeProgOf(item, s.id) || {}).ga;
             if (ga && knxCanSend(item)) {
               knxPublish(ga, next ? 1 : 0, (item.tag || "FH") + "." + s.id);
               render();
@@ -11638,6 +11796,21 @@
           scr.style.cssText = "margin:5px 4px 0;height:48%;background:#1e293b;border-radius:2px";
           phone.appendChild(cam);
           phone.appendChild(scr);
+          phone.title = "Visiophone";
+          bindRollerTap(phone, function () {
+            if (!facadeSlotReady(item, "porte")) return;
+            const p = facadeProgOf(item, "porte");
+            const next = !f.video;
+            if (p && p.gaVideo && knxCanSend(item)) {
+              f.video = next;
+              knxPublish(p.gaVideo, next ? 1 : 0, (item.tag || "FH") + ".visio");
+              render();
+            } else {
+              pushHistory();
+              f.video = next;
+              render();
+            }
+          });
           slot.appendChild(phone);
           const strike = document.createElement("div");
           strike.className = "facade-strike" + (unlocked ? " on" : "");
@@ -11646,8 +11819,9 @@
           bindRollerTap(strike, function () {
             if (!facadeSlotReady(item, "porte")) return;
             const next = !f.strike;
+            const gaStrike = (facadeProgOf(item, "porte") || {}).gaStrike || "1/1/30";
             if (knxCanSend(item)) {
-              knxPublish("1/1/30", next ? 1 : 0, (item.tag || "FH") + ".porte");
+              knxPublish(gaStrike, next ? 1 : 0, (item.tag || "FH") + ".porte");
               render();
             } else {
               pushHistory();
@@ -11721,6 +11895,7 @@
     let rollerRaf = null;
     let rollerLast = 0;
     function startRollerAnim() {
+      try { syncGateSounds(); } catch (e) {}
       if (rollerRaf != null) return;
       if (!rollerNeedsTick()) return;
       rollerLast = performance.now();
@@ -11763,14 +11938,14 @@
               rr.pos = Math.min(1, (Number(rr.pos) || 0) + speed * dt);
               if (rr.pos >= 1) {
                 rr.dir = "stop";
-                const prog = facadeRollerProg(id);
+                const prog = facadeProgOf(item, id);
                 if (prog && state.knxBusValues) state.knxBusValues[normGa(prog.gaUp)] = 0;
               }
             } else if (rr.dir === "down") {
               rr.pos = Math.max(0, (Number(rr.pos) || 0) - speed * dt);
               if (rr.pos <= 0) {
                 rr.dir = "stop";
-                const prog = facadeRollerProg(id);
+                const prog = facadeProgOf(item, id);
                 if (prog && state.knxBusValues) state.knxBusValues[normGa(prog.gaDown)] = 0;
               }
             }
@@ -11778,6 +11953,7 @@
           });
         });
         paintRollerBlinds();
+        try { syncGateSounds(); } catch (e) {}
         if (moving || rollerNeedsTick()) rollerRaf = requestAnimationFrame(tick);
         else rollerRaf = null;
       };
@@ -11944,12 +12120,13 @@
       else renderEtsPanel();
     }
     /** Ouvre #etsPanel cadre flottant sur le composant KNX (chip-bar / menu ctx — même panneau que btnEts). */
-    function openEtsForItem(item) {
+    function openEtsForItem(item, slotId) {
       if (!item) return;
       const def = LIB[item.type];
       if (!def || !isKnxDevice(def)) return;
       if (!tierAtLeast("silver")) { openTierGate(); return; }
       state.etsSelUid = item.uid;
+      state.etsSelSlot = slotId || "";
       state.etsTab = "params";
       state.etsProgMode = "params";
       state.etsOpen = true;
@@ -11958,49 +12135,34 @@
       try { ensureEtsFrameGeom(true); } catch (_) {}
       syncEtsLayout();
     }
+    /** Sélection plan : ouvre le cadre ETS déjà existant sur CE participant (et ce slot façade). */
+    function focusEtsOnKnx(item, slotId) {
+      if (!item || state.mode === "wire") return;
+      const def = LIB[item.type];
+      if (!def || !isKnxDevice(def)) return;
+      state.etsSelUid = item.uid;
+      state.etsSelSlot = slotId || "";
+      state.etsTab = "params";
+      state.etsProgMode = "params";
+      ensureKnxProgram(item);
+      if (!state.etsOpen) {
+        if (!tierAtLeast("silver")) return;
+        state.etsOpen = true;
+        try { ensureEtsFrameGeom(!state.etsFrame); } catch (_) {}
+      }
+      syncEtsLayout();
+    }
     function collectKnxLinks() {
       const producers = [];
       const consumers = [];
       state.items.forEach((it) => {
         const def = LIB[it.type];
         if (!def || !isKnxDevice(def)) return;
-        ensureKnxProgram(it);
-        if (def.knxPush) {
-          [1, 2, 3, 4].forEach((n) => {
-            const p = it.knxKeysProg[n];
-            producers.push({ tag: it.tag, obj: "T" + n + " (" + (p.fn || "") + ")", ga: normGa(p.ga), phys: it.physAddr });
-          });
-        }
-        if (def.knxPresence) producers.push({ tag: it.tag, obj: "Présence", ga: normGa(it.knxPresenceProg.ga), phys: it.physAddr });
-        if (def.knxTemp) producers.push({ tag: it.tag, obj: "Température", ga: normGa(it.knxTempProg.ga), phys: it.physAddr });
-        if (def.knxThermo) {
-          producers.push({ tag: it.tag, obj: "Consigne", ga: normGa(it.knxThermoProg.gaSet), phys: it.physAddr });
-          producers.push({ tag: it.tag, obj: "Chauffage", ga: normGa(it.knxThermoProg.gaHeat), phys: it.physAddr });
-        }
-        if (def.knxBinary) {
-          [1, 2, 3, 4].forEach((n) => producers.push({ tag: it.tag, obj: "E" + n, ga: normGa(it.knxBinProg[n].ga), phys: it.physAddr }));
-        }
-        if (def.knxActuator) {
-          [1, 2, 3, 4].forEach((n) => consumers.push({ tag: it.tag, obj: "Sortie " + n, ga: normGa(it.knxChProg[n].ga), phys: it.physAddr }));
-        }
-        if (def.knxShutter) {
-          [1, 2].forEach((n) => {
-            const p = it.knxShutterProg[n];
-            consumers.push({ tag: it.tag, obj: "Volet" + n + " ↑", ga: normGa(p.gaUp), phys: it.physAddr });
-            consumers.push({ tag: it.tag, obj: "Volet" + n + " ↓", ga: normGa(p.gaDown), phys: it.physAddr });
-            consumers.push({ tag: it.tag, obj: "Volet" + n + " stop", ga: normGa(p.gaStop), phys: it.physAddr });
-          });
-        }
-        if (def.knxRoller && it.knxRollerProg) {
-          const p = it.knxRollerProg;
-          consumers.push({ tag: it.tag, obj: "Volet ↑", ga: normGa(p.gaUp), phys: it.physAddr });
-          consumers.push({ tag: it.tag, obj: "Volet ↓", ga: normGa(p.gaDown), phys: it.physAddr });
-          consumers.push({ tag: it.tag, obj: "Volet stop", ga: normGa(p.gaStop), phys: it.physAddr });
-        }
-        if (def.knxDimmer || def.knxDali) {
-          consumers.push({ tag: it.tag, obj: "ON/OFF", ga: normGa(it.knxDimProg.gaOn), phys: it.physAddr });
-          consumers.push({ tag: it.tag, obj: "Niveau", ga: normGa(it.knxDimProg.gaLevel), phys: it.physAddr });
-        }
+        etsListObjects(it).forEach((o) => {
+          const row = { tag: it.tag, obj: o.name || o.label, ga: normGa(o.ga), phys: it.physAddr };
+          if (o.flow === "tx") producers.push(row);
+          else consumers.push(row);
+        });
       });
       const byGa = {};
       producers.forEach((p) => { if (!p.ga) return; (byGa[p.ga] = byGa[p.ga] || { ga: p.ga, prod: [], cons: [] }).prod.push(p); });
@@ -12086,49 +12248,138 @@
       if (!def) return [];
       ensureKnxProgram(item);
       const out = [];
+      function add(o) { out.push(o); }
       if (def.knxPush) {
         [1, 2, 3, 4].forEach((n) => {
           const p = item.knxKeysProg[n];
-          out.push({ key: "push-" + n, label: "T" + n + " — " + (p.fn || "comm"), ga: p.ga, setGa: (g) => { p.ga = g; } });
+          if (!p) return;
+          add({ key: "push-" + n, flow: "tx", role: "Touche " + n, name: p.name, label: p.name, ga: p.ga, setGa: (g) => { p.ga = g; }, setName: (nme) => { p.name = nme; } });
         });
       }
       if (def.knxActuator) {
         [1, 2, 3, 4].forEach((n) => {
           const p = item.knxChProg[n];
-          out.push({ key: "ch-" + n, label: "Sortie " + n + " commutation", ga: p.ga, setGa: (g) => { p.ga = g; } });
+          if (!p) return;
+          add({ key: "ch-" + n, flow: "rx", role: "Sortie " + n, name: p.name, label: p.name, ga: p.ga, setGa: (g) => { p.ga = g; }, setName: (nme) => { p.name = nme; } });
         });
       }
       if (def.knxShutter) {
         [1, 2].forEach((n) => {
           const p = item.knxShutterProg[n];
-          out.push({ key: "up-" + n, label: "Volet " + n + " montée", ga: p.gaUp, setGa: (g) => { p.gaUp = g; } });
-          out.push({ key: "dn-" + n, label: "Volet " + n + " descente", ga: p.gaDown, setGa: (g) => { p.gaDown = g; } });
-          out.push({ key: "st-" + n, label: "Volet " + n + " stop", ga: p.gaStop, setGa: (g) => { p.gaStop = g; } });
+          if (!p) return;
+          add({ key: "up-" + n, flow: "rx", role: "Volet " + n + " montée", name: p.nameUp, label: p.nameUp, ga: p.gaUp, setGa: (g) => { p.gaUp = g; }, setName: (nme) => { p.nameUp = nme; } });
+          add({ key: "dn-" + n, flow: "rx", role: "Volet " + n + " descente", name: p.nameDown, label: p.nameDown, ga: p.gaDown, setGa: (g) => { p.gaDown = g; }, setName: (nme) => { p.nameDown = nme; } });
+          add({ key: "st-" + n, flow: "rx", role: "Volet " + n + " arrêt", name: p.nameStop, label: p.nameStop, ga: p.gaStop, setGa: (g) => { p.gaStop = g; }, setName: (nme) => { p.nameStop = nme; } });
         });
       }
       if (def.knxRoller && item.knxRollerProg) {
         const p = item.knxRollerProg;
-        out.push({ key: "roller-up", label: "Volet montée", ga: p.gaUp, setGa: (g) => { p.gaUp = g; } });
-        out.push({ key: "roller-dn", label: "Volet descente", ga: p.gaDown, setGa: (g) => { p.gaDown = g; } });
-        out.push({ key: "roller-st", label: "Volet stop", ga: p.gaStop, setGa: (g) => { p.gaStop = g; } });
+        add({ key: "roller-up", flow: "rx", role: "Montée", name: p.nameUp, label: p.nameUp, ga: p.gaUp, setGa: (g) => { p.gaUp = g; }, setName: (nme) => { p.nameUp = nme; } });
+        add({ key: "roller-dn", flow: "rx", role: "Descente", name: p.nameDown, label: p.nameDown, ga: p.gaDown, setGa: (g) => { p.gaDown = g; }, setName: (nme) => { p.nameDown = nme; } });
+        add({ key: "roller-st", flow: "rx", role: "Arrêt", name: p.nameStop, label: p.nameStop, ga: p.gaStop, setGa: (g) => { p.gaStop = g; }, setName: (nme) => { p.nameStop = nme; } });
       }
       if (def.knxDimmer || def.knxDali) {
-        out.push({ key: "dim-on", label: "ON/OFF", ga: item.knxDimProg.gaOn, setGa: (g) => { item.knxDimProg.gaOn = g; } });
-        out.push({ key: "dim-lv", label: "Niveau %", ga: item.knxDimProg.gaLevel, setGa: (g) => { item.knxDimProg.gaLevel = g; } });
+        const p = item.knxDimProg;
+        add({ key: "dim-on", flow: "rx", role: "ON/OFF", name: p.nameOn, label: p.nameOn, ga: p.gaOn, setGa: (g) => { p.gaOn = g; }, setName: (nme) => { p.nameOn = nme; } });
+        add({ key: "dim-lv", flow: "rx", role: "Niveau", name: p.nameLevel, label: p.nameLevel, ga: p.gaLevel, setGa: (g) => { p.gaLevel = g; }, setName: (nme) => { p.nameLevel = nme; } });
       }
-      if (def.knxPresence) out.push({ key: "pir", label: "Présence", ga: item.knxPresenceProg.ga, setGa: (g) => { item.knxPresenceProg.ga = g; } });
-      if (def.knxTemp) out.push({ key: "temp", label: "Température", ga: item.knxTempProg.ga, setGa: (g) => { item.knxTempProg.ga = g; } });
+      if (def.knxPresence) {
+        const p = item.knxPresenceProg;
+        add({ key: "pir", flow: "tx", role: "Présence", name: p.name, label: p.name, ga: p.ga, setGa: (g) => { p.ga = g; }, setName: (nme) => { p.name = nme; } });
+      }
+      if (def.knxTemp) {
+        const p = item.knxTempProg;
+        add({ key: "temp", flow: "tx", role: "Température", name: p.name, label: p.name, ga: p.ga, setGa: (g) => { p.ga = g; }, setName: (nme) => { p.name = nme; } });
+      }
       if (def.knxThermo) {
-        out.push({ key: "set", label: "Consigne", ga: item.knxThermoProg.gaSet, setGa: (g) => { item.knxThermoProg.gaSet = g; } });
-        out.push({ key: "heat", label: "Chauffage", ga: item.knxThermoProg.gaHeat, setGa: (g) => { item.knxThermoProg.gaHeat = g; } });
+        const p = item.knxThermoProg;
+        add({ key: "set", flow: "tx", role: "Consigne", name: p.nameSet, label: p.nameSet, ga: p.gaSet, setGa: (g) => { p.gaSet = g; }, setName: (nme) => { p.nameSet = nme; } });
+        add({ key: "heat", flow: "tx", role: "Chauffage", name: p.nameHeat, label: p.nameHeat, ga: p.gaHeat, setGa: (g) => { p.gaHeat = g; }, setName: (nme) => { p.nameHeat = nme; } });
       }
       if (def.knxBinary) {
-        [1, 2, 3, 4].forEach((n) => {
+        knxBinaryIds(def).forEach((n) => {
           const p = item.knxBinProg[n];
-          out.push({ key: "bin-" + n, label: "Entrée " + n, ga: p.ga, setGa: (g) => { p.ga = g; } });
+          if (!p) return;
+          add({ key: "bin-" + n, flow: "tx", role: "Entrée " + n, name: p.name, label: p.name, ga: p.ga, setGa: (g) => { p.ga = g; }, setName: (nme) => { p.name = nme; } });
+        });
+      }
+      if (def.houseFacade && item.facade) {
+        const f = item.facade;
+        facadeGeom(f.bays).slots.forEach((s) => {
+          if (!f.eq || !f.eq[s.id] || !f.prog || !f.prog[s.id]) return;
+          const p = f.prog[s.id];
+          const slot = s.id;
+          if (s.kind === "volet" || s.kind === "garage") {
+            add({ key: "facade:" + slot + ":up", slot: slot, flow: "rx", role: facadeKindLabel(s.kind) + " montée", name: p.nameUp, label: p.nameUp, ga: p.gaUp, setGa: (g) => { p.gaUp = g; }, setName: (nme) => { p.nameUp = nme; } });
+            add({ key: "facade:" + slot + ":dn", slot: slot, flow: "rx", role: facadeKindLabel(s.kind) + " descente", name: p.nameDown, label: p.nameDown, ga: p.gaDown, setGa: (g) => { p.gaDown = g; }, setName: (nme) => { p.nameDown = nme; } });
+            add({ key: "facade:" + slot + ":st", slot: slot, flow: "rx", role: facadeKindLabel(s.kind) + " arrêt", name: p.nameStop, label: p.nameStop, ga: p.gaStop, setGa: (g) => { p.gaStop = g; }, setName: (nme) => { p.nameStop = nme; } });
+          } else if (s.kind === "light") {
+            add({ key: "facade:" + slot + ":on", slot: slot, flow: "rx", role: "Lampe " + slot, name: p.name, label: p.name, ga: p.ga, setGa: (g) => { p.ga = g; }, setName: (nme) => { p.name = nme; } });
+          } else if (s.kind === "door") {
+            add({ key: "facade:porte:strike", slot: slot, flow: "rx", role: "Gâche", name: p.nameStrike, label: p.nameStrike, ga: p.gaStrike, setGa: (g) => { p.gaStrike = g; }, setName: (nme) => { p.nameStrike = nme; } });
+            add({ key: "facade:porte:video", slot: slot, flow: "tx", role: "Visiophone", name: p.nameVideo, label: p.nameVideo, ga: p.gaVideo, setGa: (g) => { p.gaVideo = g; }, setName: (nme) => { p.nameVideo = nme; } });
+          } else if (s.kind === "meteo" || s.kind === "pv") {
+            add({ key: "facade:" + slot + ":bus", slot: slot, flow: "tx", role: facadeKindLabel(s.kind), name: p.name, label: p.name, ga: p.ga, setGa: (g) => { p.ga = g; }, setName: (nme) => { p.name = nme; } });
+          }
         });
       }
       return out;
+    }
+    function etsObjectsForView(item) {
+      const all = etsListObjects(item);
+      const def = item && LIB[item.type];
+      if (!state.etsSelSlot || !def || !def.houseFacade) return all;
+      return all.filter((o) => o.slot === state.etsSelSlot);
+    }
+    function renderEtsCommObjects(item, host) {
+      const objs = etsObjectsForView(item);
+      const title = document.createElement("div");
+      title.className = "ets-section-title";
+      title.textContent = state.etsSelSlot && LIB[item.type] && LIB[item.type].houseFacade
+        ? ("Objets — " + state.etsSelSlot)
+        : "Objets de communication";
+      host.appendChild(title);
+      const hint = document.createElement("div");
+      hint.style.cssText = "font-size:10px;color:#64748b;margin-bottom:4px;";
+      hint.textContent = "Nom + adresse x/y/z de ce participant seulement. La simulation commande avec ces GA.";
+      host.appendChild(hint);
+      if (!objs.length) {
+        const n = document.createElement("div");
+        n.style.cssText = "font-size:10px;color:#64748b;";
+        n.textContent = (LIB[item.type] && LIB[item.type].houseFacade)
+          ? "Équipe un emplacement (+) : volet, lampe, garage, porte, météo ou solaire. Chacun a ses adresses."
+          : "Pas d’objet de groupe — adresse individuelle seulement (coupleur / alimentation).";
+        host.appendChild(n);
+        return;
+      }
+      objs.forEach((o) => {
+        const cell = document.createElement("div");
+        cell.className = "ets-ga-cell";
+        cell.style.marginTop = "6px";
+        const lab = document.createElement("span");
+        lab.textContent = o.role || o.label;
+        cell.appendChild(lab);
+        const grid = document.createElement("div");
+        grid.style.cssText = "display:grid;grid-template-columns:1.3fr .9fr;gap:4px;";
+        const nameInp = etsInput(o.name || o.label, "", (v) => {
+          pushHistory();
+          if (o.setName) o.setName(String(v || "").trim() || (o.role || "Objet"));
+          renderEtsPanel();
+        });
+        nameInp.placeholder = "Nom d'objet";
+        nameInp.style.fontFamily = "inherit";
+        grid.appendChild(nameInp);
+        grid.appendChild(etsInput(o.ga, "ga", (v) => {
+          pushHistory();
+          o.setGa(normGa(v) || String(v || "").trim());
+          knxApplyBusToDevices();
+          try { if (LIB[item.type] && LIB[item.type].houseFacade) facadeSyncProducers(item); } catch (_) {}
+          renderEtsPanel();
+          if (state.sim) render();
+        }));
+        cell.appendChild(grid);
+        host.appendChild(cell);
+      });
     }
     function etsAssignGaToObject(uid, objKey, ga) {
       const item = find(uid);
@@ -12188,7 +12439,12 @@
       ensureKnxProgram(item);
       const box = document.createElement("div");
       box.className = "ets-props-box";
-      box.innerHTML = "<h4>Paramètres — " + etsCatalogLabel(item.type, def) + "</h4>";
+      let head = (item.tag ? item.tag + " — " : "") + etsCatalogLabel(item.type, def);
+      if (def.houseFacade && state.etsSelSlot) {
+        const sl = facadeSlotById(item, state.etsSelSlot);
+        head += " · " + state.etsSelSlot + (sl ? " " + facadeKindLabel(sl.kind) : "");
+      }
+      box.innerHTML = "<h4>Paramètres — " + head + "</h4>";
 
       const row = document.createElement("div");
       row.className = "ets-row";
@@ -12245,60 +12501,58 @@
         note.style.cssText = "font-size:10px;color:#64748b;margin:4px 0;";
         note.textContent = "Mode manuel : Bus et mode manuel · réinit. 5 min (pédagogique).";
         box.appendChild(note);
-        const grid = document.createElement("div");
-        grid.className = "ets-ga-grid";
-        [1, 2, 3, 4].forEach((n) => {
-          const cell = document.createElement("div");
-          cell.className = "ets-ga-cell";
-          cell.innerHTML = "<span>Canal " + n + " GA</span>";
-          cell.appendChild(etsInput(item.knxChProg[n].ga, "ga", (v) => {
-            pushHistory(); item.knxChProg[n].ga = normGa(v) || v.trim(); knxApplyBusToDevices(); renderEtsPanel(); if (state.sim) render();
-          }));
-          grid.appendChild(cell);
-        });
-        box.appendChild(grid);
       }
-      if (def.knxShutter) {
-        [1, 2].forEach((n) => {
-          const p = item.knxShutterProg[n];
-          const lab = document.createElement("div");
-          lab.className = "ets-section-title";
-          lab.textContent = "Canal volet " + n;
-          box.appendChild(lab);
-          const grid = document.createElement("div");
-          grid.className = "ets-ga-grid";
-          [["gaUp", "GA montée"], ["gaDown", "GA descente"], ["gaStop", "GA stop"]].forEach(([kk, label]) => {
-            const cell = document.createElement("div");
-            cell.className = "ets-ga-cell";
-            cell.innerHTML = "<span>" + label + "</span>";
-            cell.appendChild(etsInput(p[kk], "ga", (v) => {
-              pushHistory(); p[kk] = normGa(v) || v.trim(); knxApplyBusToDevices(); renderEtsPanel(); if (state.sim) render();
-            }));
-            grid.appendChild(cell);
-          });
-          box.appendChild(grid);
-        });
-      }
-      if (def.knxRoller || def.knxDimmer || def.knxDali || def.knxPresence || def.knxTemp || def.knxThermo || def.knxBinary || def.knxIp) {
-        /* Réutilise les champs GA existants via objets */
-        etsListObjects(item).forEach((o) => {
-          const cell = document.createElement("div");
-          cell.className = "ets-ga-cell";
-          cell.style.marginTop = "4px";
-          cell.innerHTML = "<span>" + o.label + "</span>";
-          cell.appendChild(etsInput(o.ga, "ga", (v) => {
-            pushHistory(); o.setGa(normGa(v) || v.trim()); knxApplyBusToDevices(); renderEtsPanel(); if (state.sim) render();
-          }));
-          box.appendChild(cell);
-        });
-        if (def.knxIp) {
-          const note = document.createElement("div");
-          note.style.cssText = "font-size:10px;color:#64748b;margin-top:4px;";
-          note.textContent = t("etsIpNote");
-          box.appendChild(note);
-        }
+      renderEtsCommObjects(item, box);
+      if (def.knxIp) {
+        const note = document.createElement("div");
+        note.style.cssText = "font-size:10px;color:#64748b;margin-top:4px;";
+        note.textContent = t("etsIpNote");
+        box.appendChild(note);
       }
       host.appendChild(box);
+    }
+    function appendEtsDeviceNode(nest, it, tab) {
+      const def = LIB[it.type];
+      const li2 = document.createElement("li");
+      const b = document.createElement("button");
+      b.type = "button";
+      const devOn = state.etsSelUid === it.uid && !state.etsSelSlot;
+      b.className = "ets-tree-item" + (devOn ? " on" : "");
+      const addr = def.knxPsu ? "1.1.-" : (it.physAddr || "");
+      b.innerHTML = "<span>" + addr + "</span> <span>" + (it.tag ? it.tag + " · " : "") + etsCatalogLabel(it.type, def) + "</span>"
+        + '<span class="bus-pill' + (it.knxBusOk ? " on" : "") + '" style="margin-left:auto">' + (it.knxBusOk ? "BUS" : "—") + "</span>";
+      b.onclick = () => {
+        state.etsSelUid = it.uid;
+        state.etsSelSlot = "";
+        if (tab === "batiments") state.etsTab = "params";
+        renderEtsPanel();
+      };
+      li2.appendChild(b);
+      if (def.houseFacade && it.facade) {
+        ensureFacadeProg(it);
+        const f = it.facade;
+        const sub = document.createElement("ul");
+        sub.className = "ets-tree nest";
+        facadeGeom(f.bays).slots.forEach((s) => {
+          if (!f.eq || !f.eq[s.id]) return;
+          const li3 = document.createElement("li");
+          const sb = document.createElement("button");
+          sb.type = "button";
+          sb.className = "ets-tree-item" + (state.etsSelUid === it.uid && state.etsSelSlot === s.id ? " on" : "");
+          sb.textContent = s.id + " · " + facadeKindLabel(s.kind);
+          sb.onclick = () => {
+            state.etsSelUid = it.uid;
+            state.etsSelSlot = s.id;
+            state.etsTab = "params";
+            state.etsProgMode = "params";
+            renderEtsPanel();
+          };
+          li3.appendChild(sb);
+          sub.appendChild(li3);
+        });
+        if (sub.childNodes.length) li2.appendChild(sub);
+      }
+      nest.appendChild(li2);
     }
     function renderEtsPanel() {
       const body = document.getElementById("etsBody");
@@ -12414,22 +12668,29 @@
       if (!modules.length) {
         const empty = document.createElement("div");
         empty.className = "ets-empty";
-        empty.innerHTML = "Aucun module KNX sur le canevas.<br>Pose alim Hager/SwissDz, poussoir, actionneur, IP… depuis <b>Domotique KNX</b>, puis reviens ici.";
+        empty.innerHTML = "Aucun participant KNX sur le plan.<br>Pose une fenêtre, une façade, un poussoir, un actionneur ou un coupleur depuis <b>Domotique KNX</b>.";
         body.appendChild(empty);
         return;
       }
 
       if (!state.etsSelUid || !find(state.etsSelUid)) {
         state.etsSelUid = modules[0].uid;
+        state.etsSelSlot = "";
+      }
+      {
+        const selNow = find(state.etsSelUid);
+        const selDef = selNow && LIB[selNow.type];
+        const slotOk = !!(selDef && selDef.houseFacade && state.etsSelSlot && selNow.facade && selNow.facade.eq && selNow.facade.eq[state.etsSelSlot]);
+        if (!slotOk) state.etsSelSlot = "";
       }
 
       if (tab === "batiments" || tab === "params") {
         const hint = document.createElement("div");
         hint.className = "ets-mode-hint";
         if (tab === "params") {
-          hint.innerHTML = "<b>Méthode 1 — Paramètres</b> : config appareil (fonction entrée, mode manuel, adresses…). Puis associe les GA dans « Adresses de Groupe ».";
+          hint.innerHTML = "<b>Paramètres</b> — chaque participant a ses objets. Nom + GA x/y/z : la simulation utilise ces adresses, pas un jeu global.";
         } else {
-          hint.innerHTML = "<b>Bâtiments</b> — topologie pédagogique (pièces). Sélectionne un participant pour programmer (adresse indiv. / paramètres).";
+          hint.innerHTML = "<b>Bâtiments</b> — une ligne par composant KNX. Façade : un emplacement = ses propres adresses.";
         }
         body.appendChild(hint);
 
@@ -12454,19 +12715,7 @@
             const def = LIB[it.type];
             const roomId = it.etsRoom || etsDefaultRoomFor(def);
             return roomId === room.id;
-          }).forEach((it) => {
-            const def = LIB[it.type];
-            const li2 = document.createElement("li");
-            const b = document.createElement("button");
-            b.type = "button";
-            b.className = "ets-tree-item" + (state.etsSelUid === it.uid ? " on" : "");
-            const addr = def.knxPsu ? "1.1.-" : (it.physAddr || "");
-            b.innerHTML = "<span>" + addr + "</span> <span>" + etsCatalogLabel(it.type, def) + "</span>"
-              + '<span class="bus-pill' + (it.knxBusOk ? " on" : "") + '" style="margin-left:auto">' + (it.knxBusOk ? "BUS" : "—") + "</span>";
-            b.onclick = () => { state.etsSelUid = it.uid; if (tab === "batiments") state.etsTab = "params"; renderEtsPanel(); };
-            li2.appendChild(b);
-            nest.appendChild(li2);
-          });
+          }).forEach((it) => { appendEtsDeviceNode(nest, it, tab); });
           li.appendChild(nest);
           tree.appendChild(li);
         });
@@ -12480,17 +12729,7 @@
           li.innerHTML = '<button type="button" class="ets-tree-item">📁 Autres</button>';
           const nest = document.createElement("ul");
           nest.className = "ets-tree nest";
-          orphan.forEach((it) => {
-            const def = LIB[it.type];
-            const li2 = document.createElement("li");
-            const b = document.createElement("button");
-            b.type = "button";
-            b.className = "ets-tree-item" + (state.etsSelUid === it.uid ? " on" : "");
-            b.textContent = (it.physAddr || "") + " " + etsCatalogLabel(it.type, def);
-            b.onclick = () => { state.etsSelUid = it.uid; state.etsTab = "params"; renderEtsPanel(); };
-            li2.appendChild(b);
-            nest.appendChild(li2);
-          });
+          orphan.forEach((it) => { appendEtsDeviceNode(nest, it, tab); });
           li.appendChild(nest);
           tree.appendChild(li);
         }
@@ -12519,11 +12758,11 @@
             const box = document.createElement("div");
             box.className = "ets-props-box";
             box.innerHTML = "<h4>Objets de Groupe — glisser vers une Adresse de Groupe</h4>";
-            etsListObjects(sel).forEach((o) => {
+            etsObjectsForView(sel).forEach((o) => {
               const chip = document.createElement("span");
               chip.className = "ets-obj-chip";
               chip.draggable = true;
-              chip.textContent = o.label + (o.ga ? " [" + o.ga + "]" : "");
+              chip.textContent = (o.name || o.label) + (o.ga ? " [" + o.ga + "]" : "");
               chip.title = "Glisser vers une GA";
               chip.ondragstart = (ev) => {
                 ev.dataTransfer.setData("text/ets-obj", JSON.stringify({ uid: sel.uid, key: o.key }));
@@ -14482,6 +14721,16 @@
         });
         if (tips.L || tips.N || tips.PE) out.flukeTips = tips;
       }
+      if (it.flukeBends && typeof it.flukeBends === "object") {
+        const bends = {};
+        ["L", "N", "PE"].forEach((id) => {
+          const b = it.flukeBends[id];
+          if (!b) return;
+          const x = Number(b.x), y = Number(b.y);
+          if (Number.isFinite(x) && Number.isFinite(y)) bends[id] = { x, y };
+        });
+        if (bends.L || bends.N || bends.PE) out.flukeBends = bends;
+      }
       if (it.flukeTipOrientV25) out.flukeTipOrientV25 = 1;
       if (it.flukeUi) out.flukeUi = true;
       return out;
@@ -14513,7 +14762,7 @@
       try { localStorage.removeItem(AUTOSAVE_KEY); } catch (_) {}
     }
     function writeAutosave() {
-      if (state.drag || state.resize || state.wireDrag || state.flukeTipDrag) return;
+      if (state.drag || state.resize || state.wireDrag || state.flukeTipDrag || state.flukeBendDrag) return;
       try {
         /* Ne pas écraser un schéma sauvé par un canevas vide (reload / boot). */
         if (!state.items.length && !state.wires.length) {
@@ -17807,7 +18056,12 @@
       "edz_pulsador_up_2nc", "edz_pulsador_up_2no",
       "edz_pulsador_down_1nc", "edz_pulsador_down_1no", "edz_pulsador_down_1no_1nc",
       "edz_pulsador_down_2nc", "edz_pulsador_down_2no",
-      /* Voyants LED retirés de Boutonnerie (demande user) */
+      /* v130 : voyants LED colorés remis dans Boutonnerie */
+      "edz_piloto_led_amarillo",
+      "edz_piloto_led_azul",
+      "edz_piloto_led_blanco",
+      "edz_piloto_led_rojo",
+      "edz_piloto_led_verde",
       /* AU rouge */
       "edz_parada_de_emergencia_rojo_1nc",
       "edz_parada_de_emergencia_rojo_1no",
@@ -19577,7 +19831,7 @@
     const FLUKE_CABLES = [
       { id: "L", color: "#C62828", hi: "#FF8A80", asset: "assets/fluke/cable_L.png?v=fluke-riso", ax: 0.36, ay: 0.08, mark: "L1" },
       { id: "N", color: "#1565C0", hi: "#90CAF9", asset: "assets/fluke/cable_N.png?v=fluke-riso", ax: 0.50, ay: 0.08, mark: "L3" },
-      { id: "PE", color: "#2E7D32", hi: "#C8E6C9", stripe: "#FDD835", asset: "assets/fluke/cable_PE.png?v=fluke-riso", ax: 0.64, ay: 0.08, mark: "L2" }
+      { id: "PE", color: "#2E7D32", hi: "#C8E6C9", stripe: "#FDD835", asset: "assets/fluke/cable_PE.png?v=v132b", ax: 0.64, ay: 0.08, mark: "L2" }
     ];
     const FLUKE_METAL = 0.96;
     /* Accroche cordon ≈ haut poignée (pas la pointe métal). */
@@ -19750,8 +20004,37 @@
         y: tipPt.y + dy * Math.cos(rad)
       };
     }
-    /* Courbe souple type cordon 4 mm : sortie jack + ventre, pas une barre raide. */
-    function flukeLeadPathD(jack, tip, side) {
+    function flukeBendsOf(item) {
+      if (!item.flukeBends || typeof item.flukeBends !== "object") item.flukeBends = {};
+      return item.flukeBends;
+    }
+    /* Coude posé par l’utilisateur (coords plan). null = courbe auto. */
+    function flukeBendOf(item, tipId) {
+      const b = flukeBendsOf(item)[tipId];
+      if (!b || !Number.isFinite(Number(b.x)) || !Number.isFinite(Number(b.y))) return null;
+      return { x: Number(b.x), y: Number(b.y) };
+    }
+    /* Courbe souple type cordon 4 mm : sortie jack + ventre, pas une barre raide.
+       Si un coude est mémorisé, la courbe PASSE par ce point (il survit au render). */
+    function flukeLeadPathD(jack, tip, side, bend) {
+      /* Coude : deux cubiques qui PASSENT par le point, collées aux segments.
+         L’ancien point de contrôle quadratique partait loin et cassait le trait (surtout PE). */
+      if (bend && Number.isFinite(Number(bend.x)) && Number.isFinite(Number(bend.y))) {
+        const bx = Number(bend.x);
+        const by = Number(bend.y);
+        const ax = jack.x + (bx - jack.x) * 0.65;
+        const ay = jack.y + (by - jack.y) * 0.65;
+        const a2x = bx + (jack.x - bx) * 0.22;
+        const a2y = by + (jack.y - by) * 0.22;
+        const b1x = bx + (tip.x - bx) * 0.22;
+        const b1y = by + (tip.y - by) * 0.22;
+        const b2x = tip.x + (bx - tip.x) * 0.65;
+        const b2y = tip.y + (by - tip.y) * 0.65;
+        const f = (n) => n.toFixed(1);
+        return "M " + f(jack.x) + " " + f(jack.y) +
+          " C " + f(ax) + " " + f(ay) + ", " + f(a2x) + " " + f(a2y) + ", " + f(bx) + " " + f(by) +
+          " C " + f(b1x) + " " + f(b1y) + ", " + f(b2x) + " " + f(b2y) + ", " + f(tip.x) + " " + f(tip.y);
+      }
       const dx = tip.x - jack.x;
       const dy = tip.y - jack.y;
       const dist = Math.hypot(dx, dy) || 1;
@@ -19893,7 +20176,7 @@
     }
     function flukeMeterSrc() {
       /* Face interactive oibt-trainer ; si KO, underlay local reste visible. */
-      return oibtAsset("meter-embed.html?embed=1&v=fluke-embed8#/meter");
+      return oibtAsset("meter-embed.html?embed=1&v=fluke-embed9#/meter");
     }
     /** Précharge désactivée : le reparent hors écran → plan tue CanvasKit (case vide). */
     function warmupFlukeEmbed() {
@@ -20205,6 +20488,19 @@
       else if (nHot && peHot && pN && pPE && pN !== pPE) out.NPE = 400;
       return out;
     }
+    /* Zs du plan : même 0,42 Ω qu’un boucle sain du contrôle, seulement si L–PE est vraiment sous tension
+       et PE est la terre du schéma. Court L–PE = ~0 Ω. Sinon pas de valeur (OL côté Fluke). */
+    function flukePlanLoopOhm(item) {
+      if (!state.sim || !item) return null;
+      if (!flukeTipWired(item, "L") || !flukeTipWired(item, "PE")) return null;
+      const v = flukeTipVolts(item);
+      const lpe = +v.LPE || 0;
+      const ln = +v.LN || 0;
+      if (lpe < 50 && ln < 50) return null;
+      if (flukeRisoByPair(item).LPE === 0) return 0.02;
+      if (lpe >= 100 && item.pe && item.pe.PE) return 0.42;
+      return null;
+    }
     function pushFlukeEmbedVoltages() {
       state.items.forEach((item) => {
         if (item.type !== "fluke_1664") return;
@@ -20215,15 +20511,20 @@
           N: flukeTipWired(item, "N"),
           PE: flukeTipWired(item, "PE")
         };
-        /* Cordons toujours sur le Fluke : RISO/RLO sans bornes ni Play. */
-        const leads = { L: true, N: true, PE: true };
+        /* v132: une pointe compte seulement si elle est posée sur une borne du plan. */
+        const leads = { L: !!wired.L, N: !!wired.N, PE: !!wired.PE };
         const volts = flukeTipVolts(item);
+        if (!leads.L || !leads.N) volts.LN = 0;
+        if (!leads.L || !leads.PE) volts.LPE = 0;
+        if (!leads.N || !leads.PE) volts.NPE = 0;
         const maxV = Math.max(volts.LN || 0, volts.LPE || 0, volts.NPE || 0);
-        const live = maxV >= 30;
+        const live = !!state.sim && maxV >= 30;
         const tipShortByPair = flukeTipShortByPair(item);
         const risoByPair = live ? { LN: null, LPE: null, NPE: null } : flukeRisoByPair(item);
         const rcd = flukeRcdInfo(item);
-        /* Mort : 0 = court ; null = air ouvert → MΩ = Uessai côté embed. Live : pas de MΩ. */
+        const loopOhm = flukePlanLoopOhm(item);
+        /* Mort : 0 = court entre les bornes touchées ; null = ouvert (MΩ = Uessai).
+           Pointe en l’air : leads false → OL dans l’embed, pas une valeur inventée. */
         const msg = {
           type: "wirelab-fluke-leads",
           L: leads.L,
@@ -20240,7 +20541,9 @@
           live,
           sim: !!state.sim,
           risoByPair,
-          rcd
+          rcd,
+          earthOhm: loopOhm,
+          earthMethod: "plan"
         };
         /* Paire active lue côté embed (risoByPair / tipShortByPair) ; pas de riso global. */
         msg.riso = null;
@@ -20409,7 +20712,7 @@
           armFlukeReadyWatch(frame);
         });
         flukeLiveFrames.set(uid, frame);
-      } else if (frame.src.indexOf("v=fluke-embed8") < 0) {
+      } else if (frame.src.indexOf("v=fluke-embed9") < 0) {
         frame.src = flukeMeterSrc();
       }
       return frame;
@@ -20678,6 +20981,37 @@
       try { board.setPointerCapture(ev.pointerId); } catch (_) {}
       render();
     }
+    /* Glisser le trait ou la pastille bleue : un coude, mémorisé sur l’appareil. */
+    function beginFlukeBendDrag(item, cab, ev) {
+      if (ev.button != null && ev.button !== 0 && ev.pointerType !== "touch") return;
+      ev.stopPropagation();
+      if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
+      ev.preventDefault();
+      state.wireFrom = null;
+      state.wireDrag = null;
+      state.flukeTipDrag = null;
+      state.selected = item.uid;
+      state.selectedWire = null;
+      const histKey = structuralKey(cloneEditableState());
+      pushHistory();
+      const prev = flukeBendOf(item, cab.id);
+      const pt = boardPointFromClient(ev.clientX, ev.clientY);
+      state.flukeBendDrag = {
+        uid: item.uid,
+        tip: cab.id,
+        px: ev.clientX,
+        py: ev.clientY,
+        histKey,
+        pointerId: ev.pointerId,
+        mx: prev ? prev.x : pt.x,
+        my: prev ? prev.y : pt.y,
+        hadBend: !!prev,
+        live: false
+      };
+      syncDragLock();
+      try { board.setPointerCapture(ev.pointerId); } catch (_) {}
+      render();
+    }
     function appendFlukeLeads(svg, NS) {
       state.items.forEach((item) => {
         if (!LIB[item.type] || !LIB[item.type].flukeMeter) return;
@@ -20698,7 +21032,11 @@
             : flukeTipRot(item, cab.id);
           const cordEnd = flukeCordEndAbs(item, tipPt, tipRot);
           const side = cab.id === "L" ? -1 : cab.id === "PE" ? 1 : 0;
-          const d = flukeLeadPathD(jack, cordEnd, side);
+          let bend = flukeBendOf(item, cab.id);
+          if (state.flukeBendDrag && state.flukeBendDrag.uid === item.uid && state.flukeBendDrag.tip === cab.id && state.flukeBendDrag.live) {
+            bend = { x: state.flukeBendDrag.mx, y: state.flukeBendDrag.my };
+          }
+          const d = flukeLeadPathD(jack, cordEnd, side, bend);
           const shadowOff = Math.max(0.6, 0.8 * probeSz.scale);
           flukeLeadStroke(svg, NS, d, {
             stroke: "#0b1220", width: lead.shadow, opacity: 0.28,
@@ -20706,13 +21044,38 @@
           });
           flukeLeadStroke(svg, NS, d, { stroke: cab.color, width: lead.body, opacity: 1 });
           if (cab.stripe) {
+            /* v132: filet jaune plein (pas de tirets). Les tirets + vector-effect coupaient le PE. */
             flukeLeadStroke(svg, NS, d, {
-              stroke: cab.stripe, width: lead.stripe, opacity: 0.95, dash: lead.dash
+              stroke: cab.stripe,
+              width: Math.max(1.15, lead.stripe * 0.48),
+              opacity: 1
             });
           }
           flukeLeadStroke(svg, NS, d, {
             stroke: cab.hi || "#ffffff", width: lead.hi, opacity: 0.45
           });
+          const hit = document.createElementNS(NS, "path");
+          hit.setAttribute("d", d);
+          hit.setAttribute("class", "fluke-lead-hit");
+          hit.setAttribute("fill", "none");
+          hit.setAttribute("data-uid", item.uid);
+          hit.setAttribute("data-tip", cab.id);
+          const tipEl = document.createElementNS(NS, "title");
+          tipEl.textContent = "Cordon " + cab.id + " — glisser pour poser un coude";
+          hit.appendChild(tipEl);
+          hit.onpointerdown = (ev) => beginFlukeBendDrag(item, cab, ev);
+          svg.appendChild(hit);
+          if (bend) {
+            const handle = document.createElementNS(NS, "circle");
+            handle.setAttribute("class", "fluke-bend");
+            handle.setAttribute("cx", bend.x.toFixed(1));
+            handle.setAttribute("cy", bend.y.toFixed(1));
+            handle.setAttribute("r", "7");
+            handle.setAttribute("data-uid", item.uid);
+            handle.setAttribute("data-tip", cab.id);
+            handle.onpointerdown = (ev) => beginFlukeBendDrag(item, cab, ev);
+            svg.appendChild(handle);
+          }
         });
       });
     }
@@ -21570,7 +21933,7 @@
       });
     }
 
-    /* Web Audio : bip sonore, hum moteur, zap court-circuit (+ clip pompe). */
+    /* Web Audio : bip, zap CC ; clips locaux pompe / moteur / volet-portail (LaSonothèque). */
     const buzzerNodes = new Map();
     let audioCtx = null;
     let audioResumePending = false;
@@ -21580,6 +21943,7 @@
       syncBuzzers();
       syncMotorSounds();
       syncPumpWaterSounds();
+      syncGateSounds();
     }
     function ensureAudio() {
       const AC = window.AudioContext || window.webkitAudioContext;
@@ -21956,84 +22320,47 @@
       buzzerNodes.clear();
       stopAllMotorSounds();
       stopAllPumpWaterSounds();
+      stopAllGateSounds();
     }
+    /* swissdz-rev v124 : hum moteur = clip local (LaSonothèque s0957), pattern pompe. */
     const motorNodes = new Map();
-    function stopAllMotorSounds() {
-      motorNodes.forEach((node) => {
-        try {
-          const t = audioCtx ? audioCtx.currentTime : 0;
-          if (node.gain) {
-            node.gain.gain.cancelScheduledValues(t);
-            node.gain.gain.setValueAtTime(Math.max(0.0001, node.gain.gain.value), t);
-            node.gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.08);
-          }
-        } catch (e) {}
-        setTimeout(() => {
-          (node.sources || []).forEach((s) => {
-            try { s.stop(); } catch (e) {}
-            try { s.disconnect(); } catch (e) {}
-          });
-          try { if (node.gain) node.gain.disconnect(); } catch (e) {}
-        }, 100);
-      });
-      motorNodes.clear();
+    const MOTOR_HUM_SRC = "assets/audio/moteur-vmc.wav?v=audio-v124";
+    const MOTOR_HUM_VOL = 0.26;
+    function motorHumUrl() {
+      try { return new URL(MOTOR_HUM_SRC, document.baseURI || location.href).href; }
+      catch (e) { return MOTOR_HUM_SRC; }
     }
-    function startMotorSound(uid, dir) {
+    function stopMotorHumNode(node) {
+      if (!node) return;
+      try { node.pause(); } catch (e) {}
+      try { node.currentTime = 0; } catch (e) {}
+    }
+    function stopAllMotorSounds() {
+      motorNodes.forEach((node) => stopMotorHumNode(node));
+    }
+    function startMotorSound(uid) {
       if (soundsMuted) return;
-      const ctx = ensureAudio();
-      if (!ctx) return;
-      const t0 = ctx.currentTime;
-      const sources = [];
-      const master = ctx.createGain();
-      master.gain.setValueAtTime(0.0001, t0);
-      master.gain.exponentialRampToValueAtTime(0.22, t0 + 0.05);
-      master.connect(ctx.destination);
-
-      /* Démarrage : grésillement + rampe de fréquence */
-      const nBuf = makeNoiseBuffer(ctx, 0.45);
-      const noise = ctx.createBufferSource();
-      noise.buffer = nBuf;
-      const nBp = ctx.createBiquadFilter();
-      nBp.type = "bandpass";
-      nBp.frequency.setValueAtTime(400, t0);
-      nBp.frequency.exponentialRampToValueAtTime(180, t0 + 0.4);
-      nBp.Q.value = 0.8;
-      const nG = ctx.createGain();
-      nG.gain.setValueAtTime(0.0001, t0);
-      nG.gain.exponentialRampToValueAtTime(0.55, t0 + 0.03);
-      nG.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.42);
-      noise.connect(nBp);
-      nBp.connect(nG);
-      nG.connect(master);
-      noise.start(t0);
-      noise.stop(t0 + 0.45);
-      sources.push(noise);
-
-      const osc = ctx.createOscillator();
-      osc.type = "sawtooth";
-      const base = dir < 0 ? 78 : 92;
-      osc.frequency.setValueAtTime(base * 0.55, t0);
-      osc.frequency.exponentialRampToValueAtTime(base, t0 + 0.35);
-      const humG = ctx.createGain();
-      humG.gain.setValueAtTime(0.0001, t0);
-      humG.gain.exponentialRampToValueAtTime(0.22, t0 + 0.12);
-      humG.gain.setValueAtTime(0.16, t0 + 0.5);
-      osc.connect(humG);
-      humG.connect(master);
-      osc.start(t0);
-      sources.push(osc);
-
-      const hum2 = ctx.createOscillator();
-      hum2.type = "sine";
-      hum2.frequency.value = 50;
-      const h2g = ctx.createGain();
-      h2g.gain.value = 0.05;
-      hum2.connect(h2g);
-      h2g.connect(master);
-      hum2.start(t0);
-      sources.push(hum2);
-
-      motorNodes.set(uid, { sources, gain: master, dir });
+      let node = motorNodes.get(uid);
+      if (!node) {
+        node = new Audio(motorHumUrl());
+        node.loop = true;
+        node.preload = "auto";
+        node.volume = MOTOR_HUM_VOL;
+        node.setAttribute("data-motor-hum", String(uid));
+        node.hidden = true;
+        try { document.body.appendChild(node); } catch (e) {}
+        motorNodes.set(uid, node);
+      }
+      node.volume = MOTOR_HUM_VOL;
+      if (node.paused) {
+        const playP = node.play();
+        if (playP && playP.catch) playP.catch(() => {});
+      }
+    }
+    function motorIsRunning(item, def) {
+      if (!def || !def.motor || def.pumpWell) return false;
+      if (item.lit) return true;
+      return Number(item.driveHz) > 1;
     }
     function syncMotorSounds() {
       if (!state.sim || soundsMuted) {
@@ -22043,33 +22370,12 @@
       const active = new Set();
       state.items.forEach((item) => {
         const def = LIB[item.type];
-        /* Pompe de forage : clip eau (pas le synthé moteur). */
-        if (!def || !def.motor || !item.lit || def.pumpWell) return;
+        if (!motorIsRunning(item, def)) return;
         active.add(item.uid);
-        const dir = item.motorDir < 0 ? -1 : 1;
-        const prev = motorNodes.get(item.uid);
-        if (prev && prev.dir === dir) return;
-        if (prev) {
-          try { prev.sources.forEach((s) => { try { s.stop(); } catch (e) {} }); } catch (e) {}
-          try { prev.gain.disconnect(); } catch (e) {}
-          motorNodes.delete(item.uid);
-        }
-        startMotorSound(item.uid, dir);
+        startMotorSound(item.uid);
       });
-      [...motorNodes.keys()].forEach((uid) => {
-        if (active.has(uid)) return;
-        const node = motorNodes.get(uid);
-        motorNodes.delete(uid);
-        try {
-          const t = audioCtx ? audioCtx.currentTime : 0;
-          node.gain.gain.cancelScheduledValues(t);
-          node.gain.gain.setValueAtTime(Math.max(0.0001, node.gain.gain.value), t);
-          node.gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.1);
-        } catch (e) {}
-        setTimeout(() => {
-          (node.sources || []).forEach((s) => { try { s.stop(); } catch (e) {} });
-          try { node.gain.disconnect(); } catch (e) {}
-        }, 120);
+      motorNodes.forEach((node, uid) => {
+        if (!active.has(uid)) stopMotorHumNode(node);
       });
     }
     const pumpWaterNodes = new Map();
@@ -22122,6 +22428,72 @@
         if (!active.has(uid)) stopPumpWaterNode(node);
       });
     }
+    /* swissdz-rev v124 : volet / garage / portail = clip local LaSonothèque s1126.
+       Loop tant que dir = up|down ; stop à l’arrêt (pos 0/1 ou commande stop). */
+    const gateSoundNodes = new Map();
+    const GATE_SRC = "assets/audio/portail-fermeture.mp3?v=audio-v124";
+    const GATE_VOL = 0.34;
+    function gateSoundUrl() {
+      try { return new URL(GATE_SRC, document.baseURI || location.href).href; }
+      catch (e) { return GATE_SRC; }
+    }
+    function rollerDirMoving(r) {
+      return !!(r && (r.dir === "up" || r.dir === "down"));
+    }
+    function stopGateSoundNode(node) {
+      if (!node) return;
+      try { node.pause(); } catch (e) {}
+      try { node.currentTime = 0; } catch (e) {}
+    }
+    function stopAllGateSounds() {
+      gateSoundNodes.forEach((node) => stopGateSoundNode(node));
+    }
+    function startGateSound(uid) {
+      if (soundsMuted) return;
+      let node = gateSoundNodes.get(uid);
+      if (!node) {
+        node = new Audio(gateSoundUrl());
+        node.loop = true;
+        node.preload = "auto";
+        node.volume = GATE_VOL;
+        node.setAttribute("data-gate", String(uid));
+        node.hidden = true;
+        try { document.body.appendChild(node); } catch (e) {}
+        gateSoundNodes.set(uid, node);
+      }
+      node.volume = GATE_VOL;
+      if (node.paused) {
+        const playP = node.play();
+        if (playP && playP.catch) playP.catch(() => {});
+      }
+    }
+    function collectMovingGateIds() {
+      const ids = [];
+      state.items.forEach((item) => {
+        const def = LIB[item.type];
+        if (!def) return;
+        if (def.rollerBlind && rollerDirMoving(item.roller)) ids.push(String(item.uid));
+        if (def.houseFacade && item.facade && item.facade.roller) {
+          const eq = item.facade.eq || {};
+          Object.keys(item.facade.roller).forEach((id) => {
+            if (!eq[id]) return;
+            if (rollerDirMoving(item.facade.roller[id])) ids.push(item.uid + ":" + id);
+          });
+        }
+      });
+      return ids;
+    }
+    function syncGateSounds() {
+      if (!state.sim || soundsMuted) {
+        stopAllGateSounds();
+        return;
+      }
+      const active = new Set(collectMovingGateIds());
+      active.forEach((uid) => startGateSound(uid));
+      gateSoundNodes.forEach((node, uid) => {
+        if (!active.has(uid)) stopGateSoundNode(node);
+      });
+    }
     function syncBuzzers() {
       if (!state.sim || soundsMuted) {
         buzzerNodes.forEach((node) => {
@@ -22132,6 +22504,7 @@
         if (!state.sim) {
           stopAllMotorSounds();
           stopAllPumpWaterSounds();
+          stopAllGateSounds();
         }
         return;
       }
@@ -22427,6 +22800,7 @@
               if (ok) anyBus = true;
             });
             item.knxBusOk = anyBus;
+            try { facadeSyncProducers(item); } catch (_) {}
             return;
           }
           const pP = findp(key(item.uid, "KNX+"));
@@ -23237,6 +23611,7 @@
       syncBuzzers();
       syncMotorSounds();
       syncPumpWaterSounds();
+      syncGateSounds();
       let spacer = document.getElementById("boardZoomSpacer");
       let world = document.getElementById("boardWorld");
       let coordsHost = document.getElementById("boardCoordsHost");
@@ -25286,8 +25661,21 @@
         if (ev.cancelable) ev.preventDefault();
         return;
       }
-      if (state.wireDrag || state.resize || state.drag || state.flukeTipDrag) {
+      if (state.wireDrag || state.resize || state.drag || state.flukeTipDrag || state.flukeBendDrag) {
         if (ev.cancelable) ev.preventDefault();
+      }
+      if (state.flukeBendDrag) {
+        const bd = state.flukeBendDrag;
+        const moved = Math.hypot(ev.clientX - bd.px, ev.clientY - bd.py);
+        if (moved >= 6) {
+          bd.mx = x;
+          bd.my = y;
+          bd.live = true;
+          const item = find(bd.uid);
+          if (item) flukeBendsOf(item)[bd.tip] = { x: x, y: y };
+          render();
+        }
+        return;
       }
       if (state.flukeTipDrag) {
         const fd = state.flukeTipDrag;
@@ -25404,7 +25792,7 @@
     }
     window.addEventListener("touchmove", (ev) => {
       if (!touchEventOnBoard(ev)) return;
-      if (boardTouchPinch || state.drag || state.resize || state.wireDrag || state.flukeTipDrag || state.proxRangeDrag) {
+      if (boardTouchPinch || state.drag || state.resize || state.wireDrag || state.flukeTipDrag || state.flukeBendDrag || state.proxRangeDrag) {
         if (ev.cancelable) ev.preventDefault();
       }
     }, { passive: false });
@@ -25508,8 +25896,10 @@
       });
       const wasWireDrag = !!state.wireDrag;
       const wasFlukeTip = !!state.flukeTipDrag;
+      const wasFlukeBend = !!state.flukeBendDrag;
       const wasProxRange = !!state.proxRangeDrag;
       const flukeTipHistKey = state.flukeTipDrag && state.flukeTipDrag.histKey;
+      const flukeBendHistKey = state.flukeBendDrag && state.flukeBendDrag.histKey;
       const wireHistKey = state.wireDrag && state.wireDrag.histKey;
       const dragHistKey = state.drag && state.drag.histKey;
       const resizeHistKey = state.resize && state.resize.histKey;
@@ -25517,6 +25907,7 @@
       const captureId = (state.drag && state.drag.pointerId)
         || (state.resize && state.resize.pointerId)
         || (state.flukeTipDrag && state.flukeTipDrag.pointerId)
+        || (state.flukeBendDrag && state.flukeBendDrag.pointerId)
         || (state.proxRangeDrag && state.proxRangeDrag.pointerId);
       const dragStartX = state.drag && state.drag.x;
       const dragStartY = state.drag && state.drag.y;
@@ -25566,6 +25957,22 @@
           };
         } else {
           discardHistoryIfUnchanged(flukeTipHistKey);
+        }
+      }
+      if (state.flukeBendDrag) {
+        const bd = state.flukeBendDrag;
+        const moved = Math.hypot(ev.clientX - bd.px, ev.clientY - bd.py);
+        const bendItem = find(bd.uid);
+        const mx = bd.mx;
+        const my = bd.my;
+        state.flukeBendDrag = null;
+        if (bendItem && moved >= 6) {
+          flukeBendsOf(bendItem)[bd.tip] = { x: mx, y: my };
+        } else if (bendItem && !bd.hadBend) {
+          delete flukeBendsOf(bendItem)[bd.tip];
+          discardHistoryIfUnchanged(flukeBendHistKey);
+        } else {
+          discardHistoryIfUnchanged(flukeBendHistKey);
         }
       }
       if (captureId != null) {
@@ -25625,10 +26032,19 @@
         const tapMoved = dragUidTap != null
           ? dragMoved
           : (lpWas ? Math.hypot(ev.clientX - lpWas.x, ev.clientY - lpWas.y) : 999);
-        if (!ctxByHold && !wasWireDrag && !wasFlukeTip && !wasProxRange && !state.resize
+        if (!ctxByHold && !wasWireDrag && !wasFlukeTip && !wasFlukeBend && !wasProxRange && !state.resize
             && tapUid && tapMoved < tapSlop) {
           const tapped = find(tapUid);
-          if (tapped) noteItemTap(tapped);
+          if (tapped) {
+            noteItemTap(tapped);
+            if (isKnxDevice(LIB[tapped.type])) {
+              let slotId = "";
+              const slotEl = ev.target && ev.target.closest && ev.target.closest(".facade-slot");
+              const skip = ev.target && ev.target.closest && ev.target.closest(".roller-cmd, .facade-switch, .facade-strike, .facade-x, .facade-plus, .facade-pop, .facade-bay");
+              if (slotEl && !skip && LIB[tapped.type] && LIB[tapped.type].houseFacade && slotEl.dataset.slot) slotId = slotEl.dataset.slot;
+              focusEtsOnKnx(tapped, slotId);
+            }
+          }
         }
       }
       state._ctxOpenedByHold = false;
@@ -25649,7 +26065,7 @@
       if (wasResize) discardHistoryIfUnchanged(resizeHistKey);
       if (wasWireDrag) discardHistoryIfUnchanged(wireHistKey);
       if (wasProxRange) discardHistoryIfUnchanged(proxRangeHistKey);
-      if (state.sim || wasWireDrag || wasFlukeTip || wasDrag || wasResize || wasProxRange) render();
+      if (state.sim || wasWireDrag || wasFlukeTip || wasFlukeBend || wasDrag || wasResize || wasProxRange) render();
       else writeAutosave();
     });
 
@@ -26179,7 +26595,7 @@
       render();
     });
     board.addEventListener("contextmenu", (ev) => {
-      if (ev.target.closest(".dev, .board-ref-layer, svg.wires, svg.prox-beams, .term, .whandle, .wdel, .rhandle, .fluke-probe")) {
+      if (ev.target.closest(".dev, .board-ref-layer, svg.wires, svg.prox-beams, .term, .whandle, .wdel, .rhandle, .fluke-probe, .fluke-lead-hit, .fluke-bend")) {
         ev.preventDefault();
       }
       /* Clic droit pendant tirage fil : annuler le brouillon (option coudes). */
@@ -26196,6 +26612,7 @@
       clearWireDraft();
       state.drag = null;
       state.flukeTipDrag = null;
+      state.flukeBendDrag = null;
       state.proxRangeDrag = null;
       syncDragLock();
       document.getElementById("modeSelect").classList.toggle("active", mode === "select");
@@ -26252,7 +26669,7 @@
       /* #etsPanel volontaire : pinch board ne vole pas le cadre ; resize = pinch dédié v37. */
       return !!el.closest(
         ".lib-side, #libTop, .lib-backdrop, footer.toolbar-bottom, header, .brand-col, .board-zoom,"
-        + " .modal, #ctxMenu, #itemChipBar, #wireOpt, #tierGate, .tier-gate, #wlAuthModal, #sizeModal, #ladderPanel, #etsPanel,"
+        + " .modal, #ctxMenu, #itemChipBar, #wireOpt, #tierGate, .tier-gate, #wlAuthModal, #sizeModal, #examplesModal, #ladderPanel, #etsPanel,"
         + " .play-fab, .foot-pin-play, .lib-foot-tools, .brand-dropdown, .brand-menu,"
         + " #sectionOpts, #colors, #langDropdown, .section-dropdown, .color-dropdown, .lang-dropdown,"
         + " .edz-props, button.btn-ico, .section-toggle, .color-toggle, #btnLang, .btn-lib-toggle"
@@ -26312,6 +26729,7 @@
       if (state.resize) state.resize = null;
       if (state.wireDrag) state.wireDrag = null;
       if (state.flukeTipDrag) state.flukeTipDrag = null;
+      if (state.flukeBendDrag) state.flukeBendDrag = null;
       if (state.proxRangeDrag) state.proxRangeDrag = null;
       if (typeof clearEdzLongPress === "function") clearEdzLongPress();
       if (typeof clearWireHold === "function") clearWireHold();
@@ -26640,7 +27058,7 @@
     board.addEventListener("touchcancel", boardPinchTouchHandler, { passive: false, capture: true });
     /* v106 = pan 1 doigt WireLabPro-1.0.1 : immédiat sur le vide (pas de hold 220ms). */
     function boardMidPanBlocked() {
-      return !!(state.drag || state.resize || state.wireDrag || state.flukeTipDrag || state.proxRangeDrag || boardTouchPinch);
+      return !!(state.drag || state.resize || state.wireDrag || state.flukeTipDrag || state.flukeBendDrag || state.proxRangeDrag || boardTouchPinch);
     }
     function boardPanEmptyTarget(t) {
       if (!t) return false;
@@ -26651,10 +27069,10 @@
         if (hitDev === lockedPlatine) return true;
       }
       /* v114: path.hit / whandle / wdel / wtag = interaction fil — PAS du vide (sinon pan capture vole sélection + direction). */
-      if (t.closest && t.closest(".dev, .board-ref-layer, .term, .rhandle, .whandle, .wdel, .wtag, .wtag-hit, .wtag-bg, .wbend, .board-zoom, .item-chip-bar, button, a, input, select, textarea, [data-term], .fluke-live")) {
+      if (t.closest && t.closest(".dev, .board-ref-layer, .term, .rhandle, .whandle, .wdel, .wtag, .wtag-hit, .wtag-bg, .wbend, .fluke-probe, .fluke-lead-hit, .fluke-bend, .board-zoom, .item-chip-bar, button, a, input, select, textarea, [data-term], .fluke-live")) {
         return false;
       }
-      if (t.classList && (t.classList.contains("hit") || t.classList.contains("whandle") || t.classList.contains("wdel") || t.classList.contains("wbend"))) {
+      if (t.classList && (t.classList.contains("hit") || t.classList.contains("whandle") || t.classList.contains("wdel") || t.classList.contains("wbend") || t.classList.contains("fluke-lead-hit") || t.classList.contains("fluke-bend") || t.classList.contains("fluke-probe"))) {
         return false;
       }
       if (t.closest && t.closest("svg.wires path.hit, svg.wires .whandle, svg.wires .wdel, svg.wires .wtag, svg.wires .wtag-hit, svg.wires .wtag-bg")) {
