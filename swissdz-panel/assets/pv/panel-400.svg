@@ -124,10 +124,13 @@
 <path d="M146 236.0 H166 M156.0 228 V244" stroke="#93c5fd" stroke-width="0.6" opacity=".55"/>
   <g id="pv-polarity-terminals">
     <rect x="50" y="246" width="80" height="26" rx="3" fill="#1f2937" stroke="#64748b"/>
+    <!-- Bornes aux bords : série = − (droite) → + (gauche) du voisin -->
+    <circle cx="29" cy="259" r="7" fill="#dc2626" stroke="#fff" stroke-width="1.2"/>
+    <circle cx="151" cy="259" r="7" fill="#111" stroke="#fff" stroke-width="1.2"/>
   </g>
   <g id="pv-polarity-edge">
-    <text x="28" y="268" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="800" fill="#dc2626">+</text>
-    <text x="152" y="268" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="800" fill="#0f172a">−</text>
+    <text x="29" y="275" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="800" fill="#dc2626">+</text>
+    <text x="151" y="275" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="800" fill="#0f172a">−</text>
   </g>
   <rect x="28" y="118" width="124" height="36" rx="4" fill="#0f172a" fill-opacity=".72"/>
   <text x="90" y="142" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" font-weight="800" fill="#f8fafc">400 W</text>

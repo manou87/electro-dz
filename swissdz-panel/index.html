@@ -8,7 +8,14 @@
   <link rel="apple-touch-icon" href="brand/logo-wirelab-pro-icon.png?v=official-gemini" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="native-shell-8777-v116-tiers-pro" />
+  <meta name="swissdz-rev" content="native-shell-8777-v123-facade-reel" />
+  <!-- v123: façade et volet n’agissent que si L+N (+PE) et bus KNX sont vraiment raccordés ; la maison se redimensionne -->
+  <!-- v122: façade maison sur la grille — emplacements +, volet photo réutilisé, garages, lampes, PV, météo, porte -->
+  <!-- v121: fenêtre + volet = L/N/PE + bus KNX (plus de bornes U/D) ; mouvement par GA comme un actionneur volet -->
+  <!-- v120: Installations exemplaires — liste complète scrollable (variateur SVC + anciens exemples), verrou Pro visible -->
+  <!-- v119: fenêtre + volet roulant — lames qui montent et descendent, fermé à la pose -->
+  <!-- v118: exemple Menu — démarrage variateur SVC + moteur tri (24 V, jour/nuit, DI1/DI2) -->
+  <!-- v117: variateur SVC / V-F actif — afficheur, clavier, pot, options de base pour tester un moteur -->
   <!-- v116: Free = tout sauf Gold→Pro : Fluke, KNX hors SwissDz, contrôle élec, exemples (PV free, terre free) -->
   <!-- v115: libAdd/libClose traduits ; chips Front/Back = flèches ↑↓ (clés i18n déployées) -->
   <!-- v114: pan ne vole plus path.hit/whandle — sélection + déplacement direction câble rétabli -->
@@ -2616,6 +2623,113 @@
       border-top:7px solid #dc2626; border-bottom:0;
       margin-top:10%;
     }
+    /* v119-fenetre-volet : lames dans la vitre. translateY(-pos*100%) ; pos 0 fermé, 1 ouvert. */
+    .roller-opening {
+      position:absolute; z-index:6; overflow:hidden; pointer-events:none;
+    }
+    .roller-opening .cloth {
+      position:absolute; left:0; right:0; top:0; height:100%;
+      background:repeating-linear-gradient(
+        to bottom,
+        #4b5568 0px,
+        #6b7785 2px,
+        #3d4854 5px,
+        #2a333d 7px,
+        #1c232b 8px
+      );
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.25);
+      will-change: transform;
+    }
+    .roller-opening .cloth::after {
+      content:""; position:absolute; left:0; right:0; bottom:0; height:8px;
+      background:linear-gradient(#9aa3ad, #111827);
+      box-shadow: 0 2px 3px rgba(0,0,0,.35);
+    }
+    .roller-cmds {
+      position:absolute; z-index:42; left:8%; right:8%; bottom:1.2%;
+      height:11%; display:flex; gap:3px; pointer-events:auto;
+    }
+    .roller-cmd {
+      flex:1 1 0; min-width:0; display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      border-radius:5px; background:#0f172a; color:#f8fafc;
+      font:700 8px/1.05 system-ui, sans-serif; cursor:pointer;
+      touch-action:manipulation; user-select:none;
+      box-shadow:0 1px 2px rgba(0,0,0,.35);
+    }
+    .roller-cmd b { font-size:11px; line-height:1; font-weight:800; pointer-events:none; }
+    .roller-cmd span { pointer-events:none; letter-spacing:-0.02em; }
+    .roller-cmd.on { background:#15803d; }
+    .roller-cmd[data-dir="down"].on { background:#c2410c; }
+    .roller-cmd[data-dir="stop"] { background:#334155; }
+    /* v122-facade-maison : gabarit sur la grille (pas une 2e photo de volet). */
+    .dev.house-facade { overflow:visible; }
+    .facade-shell { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+    .facade-slot { position:absolute; box-sizing:border-box; z-index:3; pointer-events:none; overflow:visible; }
+    .facade-slot.empty {
+      pointer-events:auto; cursor:pointer;
+      border:1.5px dashed #64748b; border-radius:4px;
+      background:rgba(255,255,255,.28);
+    }
+    .facade-plus {
+      position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+      width:22px; height:22px; border-radius:6px; background:#0f172a; color:#fff;
+      font:800 16px/22px system-ui,sans-serif; text-align:center; pointer-events:none;
+    }
+    .dev.house-facade .facade-volet-img {
+      position:absolute; inset:0; width:100%; height:100%; object-fit:fill;
+      z-index:1; pointer-events:none; background:#fff;
+    }
+    .facade-slot .roller-cmds { height:26px; bottom:2px; left:3px; right:3px; z-index:8; pointer-events:auto; }
+    .facade-slot .roller-cmd { font-size:7px; border-radius:4px; }
+    .facade-slot .roller-cmd b { font-size:9px; }
+    .facade-slot .roller-opening { z-index:4; }
+    .facade-garage-cloth {
+      background:repeating-linear-gradient(to bottom,#6b7280 0 12px,#d1d5db 12px 14px,#4b5563 14px 26px) !important;
+    }
+    .facade-x, .facade-bay, .facade-switch, .facade-strike, .facade-pop button {
+      pointer-events:auto; touch-action:manipulation;
+    }
+    .facade-x {
+      position:absolute; top:-8px; right:-8px; z-index:12; width:16px; height:16px;
+      border:0; border-radius:8px; background:#0f172a; color:#fff; font:800 11px/16px system-ui; cursor:pointer; padding:0;
+    }
+    .facade-bay {
+      position:absolute; z-index:12; width:26px; height:26px; border-radius:8px;
+      border:1.5px dashed #334155; background:#0f172a; color:#fff; font:800 16px/1 system-ui; cursor:pointer;
+    }
+    .facade-pop {
+      position:absolute; left:50%; top:100%; transform:translate(-50%, 6px); z-index:30;
+      min-width:148px; background:#fff; color:#0f172a; border:1px solid #94a3b8;
+      border-radius:8px; padding:6px; box-shadow:0 6px 16px rgba(15,23,42,.2); pointer-events:auto;
+    }
+    .facade-pop p { margin:0 0 6px; font:700 11px/1.3 system-ui,sans-serif; }
+    .facade-pop button {
+      border:0; border-radius:6px; background:#0f172a; color:#fff; font:700 11px/1 system-ui;
+      padding:6px 8px; margin:0 4px 0 0; cursor:pointer;
+    }
+    .facade-pop button.ghost { background:#e2e8f0; color:#0f172a; }
+    .facade-switch, .facade-strike {
+      position:absolute; z-index:8; left:50%; transform:translateX(-50%);
+      background:#0f172a; color:#e2e8f0; border-radius:5px; cursor:pointer;
+      font:800 8px/1.05 system-ui,sans-serif; text-align:center; padding:2px 4px;
+    }
+    .facade-switch { bottom:-2px; min-width:28px; }
+    .facade-switch b { display:block; pointer-events:none; }
+    .facade-switch.on b:first-child { color:#fde047; }
+    .facade-switch:not(.on) b:last-child { color:#fde047; }
+    .facade-beam {
+      position:absolute; left:50%; top:18px; width:64px; height:78px; transform:translateX(-50%);
+      background:linear-gradient(180deg, rgba(250,204,21,.8), rgba(250,204,21,0));
+      clip-path:polygon(38% 0, 62% 0, 100% 100%, 0 100%);
+      pointer-events:none; z-index:2;
+    }
+    .facade-sconce { position:absolute; left:50%; top:4px; width:16px; height:12px; transform:translateX(-50%); background:#111; border-radius:2px 2px 5px 5px; pointer-events:none; z-index:3; }
+    .facade-strike { bottom:6px; min-width:46px; }
+    .facade-strike.on { background:#166534; color:#ecfccb; }
+    .facade-door-leaf { transform-origin:8% 50%; transition:transform .35s ease; }
+    .facade-door-leaf.open { transform:perspective(240px) rotateY(-36deg); }
+    .facade-lib-thumb svg { width:100%; height:40px; display:block; }
     .knx-dim-bar {
       position:absolute; z-index:26; height:8px; border-radius:4px;
       background:#1e293b; overflow:hidden; transform:translate(-50%,-50%);
@@ -2803,10 +2917,10 @@
     #board.mode-select .dev { cursor:grab; touch-action:none; }
     #board.mode-select .dev:active { cursor:grabbing; }
     /* Doigt auto sur la face d'appui (pas un outil). Ailleurs : main, flèche ou croix. */
-    #board.mode-select .dev :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-man-hit, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .press-face),
-    #board.mode-wire .dev :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-man-hit, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .press-face),
-    #board.mode-select .dev:active :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-man-hit, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .press-face),
-    #board.mode-wire .dev:active :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-man-hit, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .press-face) {
+    #board.mode-select .dev :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-man-hit, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .press-face, .vfd-key, .vfd-pot),
+    #board.mode-wire .dev :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-man-hit, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .press-face, .vfd-key, .vfd-pot),
+    #board.mode-select .dev:active :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-man-hit, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .press-face, .vfd-key, .vfd-pot),
+    #board.mode-wire .dev:active :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-man-hit, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .press-face, .vfd-key, .vfd-pot) {
       cursor:pointer;
     }
     #board.mode-wire { cursor:crosshair; }
@@ -3438,7 +3552,10 @@
       pointer-events:none;
     }
     .example-thumb image { image-rendering:auto; }
-    .examples-card { width:min(380px,92vw); max-height:min(82vh,720px); overflow:auto; }
+    .examples-card {
+      width:min(380px,92vw); max-height:min(82vh,720px); overflow:auto;
+      -webkit-overflow-scrolling:touch; overscroll-behavior:contain; scrollbar-width:thin;
+    }
     .lib-install-btn {
       display:flex; align-items:center; justify-content:flex-start; gap:6px;
       width:auto; flex:0 0 auto; margin:6px 8px 8px;
@@ -3452,17 +3569,31 @@
     .lib-install-btn:hover, .lib-install-btn.on {
       background:var(--on-bg); color:var(--on-text); border-color:#bfdbfe;
     }
+    /* v120 : la colonne grandissait à la hauteur du catalogue (~3400px) et
+       .app-shell { overflow:hidden } coupait tout après les premiers exemples
+       (variateur, château, relevage) — aucun scroll sur #libExamples. */
     .lib-examples {
-      display:none; flex-direction:column; flex:0 0 auto; min-height:0;
-      overflow:visible; padding:6px 8px 12px;
-      -webkit-overflow-scrolling:touch; scrollbar-width:thin;
+      display:none; flex-direction:column; flex:1 1 auto; min-height:0;
+      overflow-x:hidden; overflow-y:auto; padding:6px 8px 12px;
+      -webkit-overflow-scrolling:touch; scrollbar-width:thin; overscroll-behavior:contain;
+    }
+    .lib-side.show-examples {
+      min-height:0;
+      overflow:hidden;
     }
     .lib-side.show-examples .lib-examples,
-    .lib-tabs .lib-examples.lib-acc-panel { display:flex !important; }
+    .lib-tabs .lib-examples.lib-acc-panel {
+      display:flex !important;
+      flex:1 1 auto;
+      min-height:0;
+      max-height:none;
+      overflow-x:hidden;
+      overflow-y:auto;
+    }
     .lib-side.show-examples .lib-side-head > strong { display:none; }
     /* Onglets catégories + Installations restent visibles pour revenir */
     .lib-side.show-examples .lib-tabs {
-      display:flex !important; flex:1 1 auto; max-height:none; min-height:0;
+      display:flex !important; flex:1 1 auto; max-height:42%; min-height:0;
     }
     /* Mode travail : catégories seules ; grille photos en accordéon sous la section (.lib-acc-panel) */
     .lib-side:not(.lib-cat-open):not(.show-examples) .lib-tabs .lib-acc-panel { display:none; }
@@ -3864,6 +3995,42 @@
     }
     .plc-lcd-status .lan { opacity:0.7; }
     .plc-lcd-status .run { letter-spacing:0.12em; font-weight:900; }
+    /* swissdz-rev v117-vfd-svc : afficheur 5 digits + voyants, par-dessus la vitre gravée. */
+    .vfd-lcd {
+      position:absolute; z-index:32; pointer-events:none; box-sizing:border-box;
+      background:#120100; border-radius:2px; overflow:hidden;
+      display:flex; align-items:center; justify-content:flex-end;
+      padding:0 6% 0 4%;
+      box-shadow:inset 0 0 8px rgba(0,0,0,.75);
+    }
+    .vfd-lcd.on { background:#1a0604; }
+    .vfd-digits {
+      font-family:"Courier New", Courier, ui-monospace, monospace;
+      font-weight:800; line-height:1; letter-spacing:0.04em;
+      color:#3a100c; white-space:pre; font-variant-numeric:tabular-nums;
+    }
+    .vfd-lcd.on .vfd-digits {
+      color:#ff3a16;
+      text-shadow:0 0 6px rgba(255,48,16,.95), 0 0 1px #ffd0c2;
+    }
+    .vfd-digits.edit { animation:vfdBlink .7s step-end infinite; }
+    @keyframes vfdBlink { 50% { opacity:.2; } }
+    .vfd-led {
+      position:absolute; z-index:33; pointer-events:none;
+      width:7px; height:7px; border-radius:50%;
+      transform:translate(-50%,-50%);
+      background:#2a1210; box-shadow:inset 0 0 2px rgba(0,0,0,.8);
+    }
+    .vfd-led.on { background:#ff2d1a; box-shadow:0 0 6px #ff3a16; }
+    button.vfd-key, button.vfd-pot {
+      position:absolute; z-index:34; transform:translate(-50%,-50%);
+      border-radius:50%; cursor:pointer; border:2px solid transparent;
+      background:transparent; color:transparent; font-size:0; line-height:0;
+      box-sizing:border-box; padding:0; min-width:0; min-height:0;
+      touch-action:none; -webkit-tap-highlight-color:transparent;
+    }
+    button.vfd-key:hover, button.vfd-pot:hover { border-color:rgba(255,80,40,.45); background:rgba(255,60,20,.12); }
+    button.vfd-pot { border-radius:50%; }
     .plc-q-glow {
       position:absolute; width:10px; height:10px; margin:-5px 0 0 -5px; border-radius:50%;
       background:radial-gradient(circle, rgba(250,204,21,.95), transparent 70%);
@@ -5770,7 +5937,7 @@
   </div>
   <link rel="stylesheet" href="labo-terre/labo-terre.css?v=labo-arrows-stakes1" />
   <link rel="stylesheet" href="controle-elec/mains-cable.css?v=mains-cable-4" />
-  <script src="i18n/panelwire-i18n.js?v=v116-tiers-pro"></script>
+  <script src="i18n/panelwire-i18n.js?v=v123-facade-reel"></script>
   <script src="labo-terre/labo-terre.js?v=labo-arrows-stakes1"></script>
   <script src="controle-elec/mains-cable.js?v=mains-cable-4"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -6084,13 +6251,14 @@
 
     function isKnxBusTerm(termId) {
       const id = String(termId || "");
-      if (id === "BUS" || id === "KNX+" || id === "KNX-" || id === "KNX−") return true;
+      if (id === "BUS" || id === "KNX+" || id === "KNX-" || id === "KNX−" || /\.BUS$/i.test(id)) return true;
       /* Hager TXA116 etc. : sorties bus C1/C2 (+/−) = même pastille pédagogique BUS */
       if (/^C[12]([+\-−])?$/i.test(id)) return true;
       return false;
     }
     function isKnxDevice(def) {
       return !!(def && (def.knxPsu || def.knxPush || def.knxActuator || def.knxShutter
+        || def.knxRoller || def.houseFacade
         || def.knxDimmer || def.knxPresence || def.knxTemp || def.knxThermo
         || def.knxBinary || def.knxIp || def.knxDali));
     }
@@ -6123,6 +6291,15 @@
     }
     function termRole(type, termId) {
       const id = String(termId || "");
+      const leaf = id.indexOf(".") >= 0 ? id.slice(id.lastIndexOf(".") + 1) : id;
+      if (leaf !== id) {
+        if (leaf === "PE") return "pe";
+        if (leaf === "BUS") return "knxbus";
+        if (leaf === "N") return "n";
+        if (leaf === "L") return "l";
+        if (leaf === "DC+" || leaf === "+") return "dcplus";
+        if (leaf === "DC-" || leaf === "DC−" || leaf === "-" || leaf === "−") return "dcminus";
+      }
       if (id === "PE" || /^PE\b/i.test(id)) return "pe";
       if (id === "BUS" || id === "KNX+" || id === "KNX-" || id === "KNX−" || /^C[12]([+\-−])?$/i.test(id)) return "knxbus";
       /* Bleu = neutre uniquement (noms N… — jamais A2/X2/L2 via heuristic pairs). */
@@ -6299,7 +6476,11 @@
       const pol = new Map();
       const invLive = new Map();
       const modules = state.items.filter((it) => LIB[it.type] && LIB[it.type].pvModule);
-      if (!modules.length || !state.wires.length) return { flow, pol, invLive };
+      const facadeHasPv = state.items.some((it) => {
+        const d = LIB[it.type];
+        return d && d.houseFacade && it.facade && it.facade.eq && (it.facade.eq.pv1 || it.facade.eq.pv2);
+      });
+      if ((!modules.length && !facadeHasPv) || !state.wires.length) return { flow, pol, invLive };
       const key = (uid, term) => uid + ":" + term;
       const parent = new Map();
       function findp(k) {
@@ -6332,8 +6513,9 @@
       const minusRoots = new Set();
       state.items.forEach((item) => {
         const def = LIB[item.type];
-        if (!def || !def.terminals) return;
-        def.terminals.forEach((t) => {
+        if (!def) return;
+        const terms = def.houseFacade ? termsOf(item) : (def.terminals || []);
+        terms.forEach((t) => {
           const role = termRole(item.type, t.id);
           const r = findp(key(item.uid, t.id));
           if (role === "dcplus") plusRoots.add(r);
@@ -6364,6 +6546,22 @@
         const pm = polTerms(item);
         const d = LIB[item.type];
         if (pm) sources.push({ p: pm.p, m: pm.m, V: 1, Rs: 0.15, watt: Number(d && d.watt) || 0, uid: item.uid });
+      });
+      /* Rangées de toit : sources seulement si DC+ et DC− ont chacun un fil. */
+      state.items.forEach((item) => {
+        const def = LIB[item.type];
+        if (!def || !def.houseFacade || !item.facade || !item.facade.eq) return;
+        ["pv1", "pv2"].forEach((id) => {
+          if (!item.facade.eq[id]) return;
+          const pId = id + ".DC+";
+          const mId = id + ".DC-";
+          const wired = (term) => state.wires.some((w) => {
+            return (w.a && w.a.uid === item.uid && w.a.term === term)
+              || (w.b && w.b.uid === item.uid && w.b.term === term);
+          });
+          if (!wired(pId) || !wired(mId)) return;
+          sources.push({ p: key(item.uid, pId), m: key(item.uid, mId), V: 1, Rs: 0.15, watt: 800, uid: item.uid });
+        });
       });
       const loads = [];
       state.items.forEach((item) => {
@@ -6972,6 +7170,19 @@
         {id:"D2",nx:0.794,ny:0.494,direction:"top"},{id:"N2",nx:0.912,ny:0.494,direction:"top"},
         {id:"BUS",nx:0.50,ny:0.896,direction:"bottom"}
       ]},
+      /* v121 : coffre du volet = L N PE + BUS (paire KNX+/KNX−, un câble comme WKT304).
+         Pas de bornes Monter/Descendre. knxRoller = mêmes GA qu’un canal knxShutter, sans L→U/D.
+         roller.pos 0 = fermé à la pose, 1 = ouvert.
+         v123 : touches Monter/Arrêt/Descendre inertes tant que L, N, PE et BUS ne sont pas raccordés. */
+      fenetre_volet: {name:"Fenêtre + volet roulant",nameEn:"Window + roller shutter",prefix:"VR",cat:"Domotique KNX",w:210,h:332,image:"assets/electrodz/fenetre_volet.png?v=v121-fenetre-knx",badge:"Volet",iec:"VR",rollerBlind:true,knxRoller:true,busLed:{nx:0.08,ny:0.045},rollerOpening:{nx:0.168,ny:0.218,nw:0.652,nh:0.640},terminals:[
+        {id:"L",nx:0.28,ny:0.04,direction:"top"},
+        {id:"N",nx:0.46,ny:0.04,direction:"top"},
+        {id:"PE",nx:0.64,ny:0.04,direction:"top"},
+        {id:"BUS",nx:0.84,ny:0.04,direction:"top"}
+      ]},
+      /* v122 : gabarit façade. Bornes = termsOf() selon emplacements équipés (pas un 2e moteur de fils).
+         Photo volet = fenetre_volet.png (même ouverture rollerOpening). */
+      facade_maison: {name:"Façade maison",nameEn:"House facade",nameAr:"واجهة المنزل",prefix:"FH",cat:"Domotique KNX",w:960,h:780,badge:"Façade",iec:"FH",houseFacade:true,terminals:[]},
       knx_variateur: {name:"Variateur KNX SwissDz 1 canal",prefix:"UD",cat:"Domotique KNX",w:86,h:150,din:true,image:"assets/knx-variateur-swissdz.png",badge:"Dim",iec:"UD",knxDimmer:true,busLed:{nx:0.50,ny:0.14},knxDimBar:{nx:0.50,ny:0.30,nw:0.62},terminals:[
         {id:"L",nx:0.20,ny:0.52,direction:"top"},{id:"~",nx:0.50,ny:0.52,direction:"top"},{id:"N",nx:0.80,ny:0.52,direction:"top"},
         {id:"BUS",nx:0.50,ny:0.907,direction:"bottom"}
@@ -7596,6 +7807,393 @@
       if (d.cat === "Variateurs") d.cat = "Divers";
     });
 
+    /* swissdz-rev v117-vfd-svc : SVC / V-F — écran, clavier, sortie U/V/W isolée. */
+    Object.keys(LIB).forEach((id) => {
+      if (id !== "edz_vfd_svc_3phase_interactive") return;
+      const d = LIB[id];
+      if (!d) return;
+      d.vfd = true;
+      d.hasVfd = true;
+      d.hasScreen = true;
+      d.vfdLcd = { nx: 0.383, ny: 0.190, nw: 0.427, nh: 0.090 };
+      d.vfdLeds = [
+        { id: "for", nx: 0.332, ny: 0.210 },
+        { id: "rev", nx: 0.332, ny: 0.242 },
+        { id: "hzL", nx: 0.332, ny: 0.274 },
+        { id: "hz", nx: 0.888, ny: 0.210 },
+        { id: "a", nx: 0.888, ny: 0.242 },
+        { id: "v", nx: 0.888, ny: 0.274 }
+      ];
+      d.vfdKeys = [
+        { id: "prg", nx: 0.400, ny: 0.348, nw: 0.115, nh: 0.072 },
+        { id: "up", nx: 0.512, ny: 0.348, nw: 0.115, nh: 0.072 },
+        { id: "shift", nx: 0.648, ny: 0.348, nw: 0.115, nh: 0.072 },
+        { id: "run", nx: 0.808, ny: 0.348, nw: 0.115, nh: 0.072 },
+        { id: "jog", nx: 0.400, ny: 0.436, nw: 0.115, nh: 0.072 },
+        { id: "down", nx: 0.512, ny: 0.436, nw: 0.115, nh: 0.072 },
+        { id: "enter", nx: 0.648, ny: 0.436, nw: 0.115, nh: 0.072 },
+        { id: "stop", nx: 0.808, ny: 0.440, nw: 0.120, nh: 0.078 },
+        { id: "pot", nx: 0.155, ny: 0.460, nw: 0.200, nh: 0.150 }
+      ];
+    });
+    const VFD_PARAMS = [
+      { id: "set", code: "F0.01" },
+      { id: "fmax", code: "F0.02" },
+      { id: "acc", code: "F0.03" },
+      { id: "dec", code: "F0.04" },
+      { id: "src", code: "F0.05" },
+      { id: "cmd", code: "F0.06" },
+      { id: "dir", code: "F0.07" }
+    ];
+    let vfdLiveTimer = null;
+    function defaultVfdState() {
+      return {
+        run: false, jog: false, dir: 1, hz: 0, setHz: 50, fmax: 50, fmin: 0,
+        acc: 3, dec: 3, jogHz: 5, src: 0, cmd: 0, pot: 0.5, view: "hz",
+        menu: -1, edit: false, step: 1, fault: "", powered: false, outOn: false, outDir: 1,
+        _t: 0, _diRun: false, _diRev: false, _ai: false
+      };
+    }
+    function ensureVfd(item) {
+      if (!item.vfd || typeof item.vfd !== "object") item.vfd = defaultVfdState();
+      const d = defaultVfdState();
+      Object.keys(d).forEach((k) => { if (item.vfd[k] == null) item.vfd[k] = d[k]; });
+      return item.vfd;
+    }
+    function vfdClamp(n, min, max) {
+      const x = Number(n);
+      if (!Number.isFinite(x)) return min;
+      return Math.max(min, Math.min(max, x));
+    }
+    function vfdOutDir(v) {
+      if (!v) return 1;
+      if (v.cmd === 1) return v._diRev ? -1 : 1;
+      return v.dir < 0 ? -1 : 1;
+    }
+    function vfdTargetHz(item) {
+      const v = item && item.vfd;
+      if (!v || !v.powered || v.fault) return 0;
+      if (v.jog) return vfdClamp(v.jogHz, 0, v.fmax || 50);
+      const want = v.cmd === 1 ? !!v._diRun : !!v.run;
+      if (!want) return 0;
+      let t = v.setHz;
+      if (v.src === 1) t = (Number(v.pot) || 0) * (v.fmax || 50);
+      else if (v.src === 2) t = v._ai ? (v.fmax || 50) : 0;
+      return vfdClamp(t, v.fmin || 0, v.fmax || 50);
+    }
+    function vfdFmt5(n, dec) {
+      const x = vfdClamp(n, 0, 999);
+      let s = x.toFixed(dec);
+      if (s.length > 5) s = s.slice(0, 5);
+      while (s.length < 5) s = " " + s;
+      return s;
+    }
+    function vfdDigits(item) {
+      const v = item.vfd;
+      if (!v || !v.powered) return "     ";
+      if (v.fault) return "Lu   ";
+      if (v.menu >= 0 && !v.edit) return (VFD_PARAMS[v.menu] || VFD_PARAMS[0]).code;
+      if (v.menu >= 0 && v.edit) {
+        const id = (VFD_PARAMS[v.menu] || VFD_PARAMS[0]).id;
+        if (id === "set") return vfdFmt5(v.setHz, 2);
+        if (id === "fmax") return vfdFmt5(v.fmax, 2);
+        if (id === "acc") return vfdFmt5(v.acc, 1);
+        if (id === "dec") return vfdFmt5(v.dec, 1);
+        if (id === "src") return "    " + String(v.src | 0);
+        if (id === "cmd") return "    " + String(v.cmd | 0);
+        if (id === "dir") return "    " + (v.dir < 0 ? "1" : "0");
+      }
+      if (v.view === "a") {
+        const amps = v.hz > 0.3 ? (v.hz / 50) * 4.2 : 0;
+        return vfdFmt5(amps, 2);
+      }
+      if (v.view === "v") return vfdFmt5((v.hz / 50) * 400, 1);
+      return vfdFmt5(v.hz, 2);
+    }
+    function vfdLcdTitle(item) {
+      const v = item.vfd;
+      if (!v || !v.powered) return "Variateur hors tension — alimente R S T";
+      if (v.fault) return "Défaut Lu — STOP / RESET";
+      if (v.menu >= 0) {
+        const id = (VFD_PARAMS[v.menu] || VFD_PARAMS[0]).id;
+        const names = {
+          set: "F0.01 consigne Hz",
+          fmax: "F0.02 fréquence max",
+          acc: "F0.03 accélération (s)",
+          dec: "F0.04 décélération (s)",
+          src: "F0.05 source F : 0 clavier, 1 potentiomètre, 2 AI1=+10V",
+          cmd: "F0.06 commande : 0 clavier, 1 bornes DI1=marche DI2=arrière",
+          dir: "F0.07 sens : 0 avant, 1 arrière"
+        };
+        return (names[id] || "Paramètre") + (v.edit ? " — édition" : " — ENTER pour modifier");
+      }
+      const unit = v.view === "a" ? "A" : (v.view === "v" ? "V" : "Hz");
+      return "Sortie " + (Number(v.hz) || 0).toFixed(2) + " " + unit
+        + (v.outOn ? (v.outDir < 0 ? " · REV" : " · FWD") : " · arrêt");
+    }
+    function vfdLedOn(item, id) {
+      const v = item.vfd;
+      if (!v || !v.powered || v.fault) return false;
+      if (id === "for") return v.outOn && v.outDir > 0;
+      if (id === "rev") return v.outOn && v.outDir < 0;
+      if (id === "hzL" || id === "hz") return v.menu < 0 && v.view === "hz";
+      if (id === "a") return v.menu < 0 && v.view === "a";
+      if (id === "v") return v.menu < 0 && v.view === "v";
+      return false;
+    }
+    function vfdNudge(item, sign) {
+      const v = ensureVfd(item);
+      if (!v.powered || v.fault) return;
+      const step = v.step === 0.1 ? 0.1 : (v.step === 10 ? 10 : 1);
+      if (v.menu < 0) {
+        if (v.src === 1) v.pot = vfdClamp((Number(v.pot) || 0) + sign * (step >= 10 ? 0.1 : 0.02), 0, 1);
+        else if (v.src === 0) v.setHz = vfdClamp(v.setHz + sign * step, v.fmin || 0, v.fmax || 50);
+        return;
+      }
+      if (!v.edit) {
+        v.menu = (v.menu + (sign > 0 ? 1 : -1) + VFD_PARAMS.length) % VFD_PARAMS.length;
+        return;
+      }
+      const id = VFD_PARAMS[v.menu].id;
+      if (id === "set") v.setHz = vfdClamp(v.setHz + sign * step, 0, v.fmax || 50);
+      else if (id === "fmax") {
+        v.fmax = vfdClamp(v.fmax + sign * (step >= 10 ? 10 : 1), 10, 60);
+        if (v.setHz > v.fmax) v.setHz = v.fmax;
+      } else if (id === "acc") v.acc = vfdClamp(v.acc + sign * (step >= 10 ? 5 : 0.5), 0.2, 60);
+      else if (id === "dec") v.dec = vfdClamp(v.dec + sign * (step >= 10 ? 5 : 0.5), 0.2, 60);
+      else if (id === "src") v.src = (v.src + (sign > 0 ? 1 : -1) + 3) % 3;
+      else if (id === "cmd") v.cmd = v.cmd ? 0 : 1;
+      else if (id === "dir") v.dir = v.dir < 0 ? 1 : -1;
+    }
+    function vfdHandleKey(item, keyId) {
+      const v = ensureVfd(item);
+      if (!state.sim) return;
+      if (keyId === "stop") {
+        v.run = false;
+        v.jog = false;
+        if (v.powered) v.fault = "";
+        return;
+      }
+      if (!v.powered || v.fault) return;
+      if (keyId === "run") {
+        if (v.cmd === 0) v.run = true;
+        return;
+      }
+      if (keyId === "prg") {
+        if (v.menu < 0) { v.menu = 0; v.edit = false; }
+        else { v.menu = -1; v.edit = false; }
+        return;
+      }
+      if (keyId === "enter") {
+        if (v.menu >= 0) v.edit = !v.edit;
+        return;
+      }
+      if (keyId === "shift") {
+        if (v.menu < 0 && !v.edit) {
+          v.view = v.view === "hz" ? "a" : (v.view === "a" ? "v" : "hz");
+        } else {
+          v.step = v.step === 1 ? 0.1 : (v.step === 0.1 ? 10 : 1);
+        }
+        return;
+      }
+      if (keyId === "up") vfdNudge(item, 1);
+      else if (keyId === "down") vfdNudge(item, -1);
+    }
+    function vfdAnyRamping() {
+      if (!state.sim) return false;
+      return state.items.some((it) => {
+        const d = LIB[it.type];
+        if (!d || !d.vfd || !it.vfd || !it.vfd.powered) return false;
+        return Math.abs((it.vfd.hz || 0) - vfdTargetHz(it)) > 0.08 || !!it.vfd.jog;
+      });
+    }
+    function vfdSnap() {
+      return state.items.map((it) => {
+        const d = LIB[it.type];
+        if (!d || !d.vfd || !it.vfd) return null;
+        return it.uid + ":" + (it.vfd.outOn ? "1" : "0") + ":" + it.vfd.outDir + ":" + Math.round(vfdTargetHz(it));
+      }).filter(Boolean).join("|");
+    }
+    function vfdPatchDom() {
+      state.items.forEach((it) => {
+        const d = LIB[it.type];
+        if (!d || !d.vfd || !it.vfd) return;
+        const root = document.querySelector('.dev[data-uid="' + it.uid + '"]');
+        if (!root) return;
+        const digits = root.querySelector(".vfd-digits");
+        const lcd = root.querySelector(".vfd-lcd");
+        if (digits) {
+          digits.textContent = vfdDigits(it);
+          digits.classList.toggle("edit", !!(it.vfd.edit && it.vfd.powered && !it.vfd.fault));
+        }
+        if (lcd) {
+          lcd.classList.toggle("on", !!it.vfd.powered && !it.vfd.fault);
+          lcd.classList.toggle("fault", !!it.vfd.fault && !!it.vfd.powered);
+          lcd.title = vfdLcdTitle(it);
+        }
+        root.querySelectorAll(".vfd-led").forEach((led) => {
+          led.classList.toggle("on", vfdLedOn(it, led.dataset.led || ""));
+        });
+      });
+    }
+    function kickVfdLive() {
+      if (vfdLiveTimer || !vfdAnyRamping()) return;
+      const arm = () => {
+        vfdLiveTimer = setTimeout(() => {
+          vfdLiveTimer = null;
+          if (!state.sim || !vfdAnyRamping()) return;
+          const before = vfdSnap();
+          simulate();
+          if (vfdSnap() !== before) render();
+          else vfdPatchDom();
+          if (vfdAnyRamping()) arm();
+        }, 100);
+      };
+      arm();
+    }
+    function stepVfdItem(item, now, findp, key) {
+      const v = ensureVfd(item);
+      const tied = (a, b) => findp(key(item.uid, a)) === findp(key(item.uid, b));
+      v._diRun = tied("+24V", "DI1");
+      v._diRev = tied("+24V", "DI2");
+      v._ai = tied("+10V", "AI1");
+      const pR = phaseLabelAt(item.uid, "R");
+      const pS = phaseLabelAt(item.uid, "S");
+      const pT = phaseLabelAt(item.uid, "T");
+      const powered = !!(pR && pS && pT && pR !== pS && pS !== pT && pR !== pT);
+      if (!powered) {
+        if (v.powered && (v.run || v.jog || v.hz > 0.4)) v.fault = "Lu";
+        v.powered = false;
+        v.run = false;
+        v.jog = false;
+      } else v.powered = true;
+      v.outDir = vfdOutDir(v);
+      const target = vfdTargetHz(item);
+      const dt = v._t ? Math.min(0.25, (now - v._t) / 1000) : 0.05;
+      v._t = now;
+      const span = Math.max(1, v.fmax || 50);
+      const sec = Math.max(0.2, target >= v.hz ? (v.acc || 3) : (v.dec || 3));
+      const rate = span / sec;
+      if (v.hz < target) v.hz = Math.min(target, v.hz + rate * dt);
+      else if (v.hz > target) v.hz = Math.max(target, v.hz - rate * dt);
+      if (Math.abs(v.hz - target) < 0.05) v.hz = target;
+      const want = target > 0.05;
+      v.outOn = !!(powered && !v.fault && want && v.hz >= 0.3);
+      item.closed = !!v.outOn;
+      item.coilOn = !!powered;
+    }
+    function bindVfdFace(el, item, keyId) {
+      if (keyId === "jog") {
+        el.onpointerdown = (ev) => {
+          ev.stopPropagation();
+          if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
+          ev.preventDefault();
+          if (!state.sim) return;
+          ensureVfd(item).jog = true;
+          const end = () => {
+            window.removeEventListener("pointerup", end);
+            window.removeEventListener("pointercancel", end);
+            if (!item.vfd || !item.vfd.jog) return;
+            item.vfd.jog = false;
+            render();
+            kickVfdLive();
+          };
+          window.addEventListener("pointerup", end);
+          window.addEventListener("pointercancel", end);
+          render();
+          kickVfdLive();
+        };
+        return;
+      }
+      if (keyId === "pot") {
+        el.onpointerdown = (ev) => {
+          ev.stopPropagation();
+          if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
+          ev.preventDefault();
+          if (!state.sim) return;
+          const v = ensureVfd(item);
+          const y0 = ev.clientY;
+          const p0 = Number(v.pot) || 0;
+          const move = (e) => {
+            v.pot = vfdClamp(p0 + (y0 - e.clientY) / 120, 0, 1);
+            render();
+            kickVfdLive();
+          };
+          const up = () => {
+            window.removeEventListener("pointermove", move);
+            window.removeEventListener("pointerup", up);
+          };
+          window.addEventListener("pointermove", move);
+          window.addEventListener("pointerup", up);
+        };
+        return;
+      }
+      el.onpointerdown = (ev) => {
+        ev.stopPropagation();
+        if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
+        ev.preventDefault();
+        el._vfdTap = { x: ev.clientX, y: ev.clientY, id: ev.pointerId };
+      };
+      el.onpointerup = (ev) => {
+        ev.stopPropagation();
+        if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
+        const t = el._vfdTap;
+        el._vfdTap = null;
+        if (!t || t.id !== ev.pointerId) return;
+        if (Math.hypot(ev.clientX - t.x, ev.clientY - t.y) > tapSlopPx(ev)) return;
+        if (!state.sim) return;
+        pushHistory();
+        vfdHandleKey(item, keyId);
+        render();
+        kickVfdLive();
+      };
+      el.onpointercancel = () => { el._vfdTap = null; };
+    }
+    function mountVfdFace(el, item, def) {
+      const v = ensureVfd(item);
+      const box = def.vfdLcd || { nx: 0.383, ny: 0.19, nw: 0.427, nh: 0.09 };
+      const lcd = document.createElement("div");
+      lcd.className = "vfd-lcd" + (v.powered && !v.fault ? " on" : "") + (v.fault && v.powered ? " fault" : "");
+      lcd.style.left = (box.nx * 100) + "%";
+      lcd.style.top = (box.ny * 100) + "%";
+      lcd.style.width = (box.nw * 100) + "%";
+      lcd.style.height = (box.nh * 100) + "%";
+      lcd.title = vfdLcdTitle(item);
+      const digits = document.createElement("div");
+      digits.className = "vfd-digits" + (v.edit && v.powered && !v.fault ? " edit" : "");
+      const hPx = parseFloat(el.style.height) || def.h || 280;
+      digits.style.fontSize = Math.max(12, hPx * box.nh * 0.70) + "px";
+      digits.textContent = state.sim ? vfdDigits(item) : "     ";
+      lcd.appendChild(digits);
+      if (state.sim) el.appendChild(lcd);
+      (def.vfdLeds || []).forEach((led) => {
+        if (!state.sim) return;
+        const d = document.createElement("div");
+        d.className = "vfd-led" + (vfdLedOn(item, led.id) ? " on" : "");
+        d.dataset.led = led.id;
+        d.style.left = (led.nx * 100) + "%";
+        d.style.top = (led.ny * 100) + "%";
+        el.appendChild(d);
+      });
+      (def.vfdKeys || []).forEach((k) => {
+        const hit = document.createElement("button");
+        hit.type = "button";
+        hit.className = k.id === "pot" ? "vfd-pot" : "vfd-key";
+        hit.style.left = (k.nx * 100) + "%";
+        hit.style.top = (k.ny * 100) + "%";
+        hit.style.width = ((k.nw || 0.11) * 100) + "%";
+        hit.style.height = ((k.nh || 0.07) * 100) + "%";
+        const names = {
+          prg: "PRG", up: "Haut", shift: "SHIFT", run: "RUN",
+          jog: "JOG", down: "Bas", enter: "ENTER", stop: "STOP / RESET", pot: "Potentiomètre"
+        };
+        hit.title = names[k.id] || k.id;
+        hit.setAttribute("aria-label", hit.title);
+        bindVfdFace(hit, item, k.id);
+        el.appendChild(hit);
+      });
+    }
+
     /* Coffret DC PV (parafoudre intégré) reste en Photovoltaïque. */
     if (LIB.pv_coffret_dc) LIB.pv_coffret_dc.cat = "Photovoltaïque";
 
@@ -7744,6 +8342,8 @@
       "knx_poussoir",
       "knx_actionneur",
       "knx_volet",
+      "fenetre_volet",
+      "facade_maison",
       "knx_presence",
       "knx_variateur",
       "knx_binaires"
@@ -8011,6 +8611,13 @@
         const t = k.slice(i + 1);
         const item = find(u);
         const def = item && LIB[item.type];
+        /* v117 : sortie onduleur isolée — U/V/W = phases synthétiques, pas un pont vers R/S/T. */
+        if (def && def.vfd && item.vfd && item.vfd.outOn) {
+          const rev = item.vfd.outDir < 0;
+          if (t === "U") return 1;
+          if (t === "V") return rev ? 3 : 2;
+          if (t === "W") return rev ? 2 : 3;
+        }
         if (def && (def.source || isCompteurKind(def.kind) || def.kind === "phase")) {
           if (t === "L1") return 1;
           if (t === "L2") return 2;
@@ -8813,6 +9420,7 @@
       if (def && def.pvSupport) {
         return { w: Math.max(70, Math.round(def.w * 0.4)), h: Math.max(90, Math.round(def.h * 0.4)) };
       }
+      if (def && def.houseFacade) return { w: 480, h: 390 };
       return { w: 40, h: 40 };
     }
     /** Tout composant placé peut être redimensionné (plus seulement din/rail). */
@@ -10116,7 +10724,7 @@
         const prefer = def.knxPsu ? "1.1.0" : def.knxPush ? "1.1.1" : def.knxActuator ? "1.1.2"
           : def.knxShutter ? "1.1.3" : def.knxDimmer ? "1.1.4" : def.knxPresence ? "1.1.5"
           : def.knxTemp ? "1.1.6" : def.knxThermo ? "1.1.7" : def.knxBinary ? "1.1.8"
-          : def.knxIp ? "1.1.9" : def.knxDali ? "1.1.10" : "1.1.11";
+          : def.knxIp ? "1.1.9" : def.knxDali ? "1.1.10" : def.knxRoller ? "1.1.12" : "1.1.11";
         item.physAddr = nextKnxPhysAddr(prefer);
       }
       if (def.knxPush) {
@@ -10130,6 +10738,9 @@
       if (def.knxShutter) {
         if (!item.knxShutter) item.knxShutter = { 1: { dir: "stop", pos: 0.35 }, 2: { dir: "stop", pos: 0.35 } };
         if (!item.knxShutterProg) item.knxShutterProg = defaultKnxShutterProg();
+      }
+      if (def.knxRoller) {
+        if (!item.knxRollerProg) item.knxRollerProg = { gaUp: "1/2/1", gaDown: "1/2/2", gaStop: "1/2/3" };
       }
       if (def.knxDimmer || def.knxDali) {
         if (!item.knxDim) item.knxDim = { on: false, level: 80 };
@@ -10157,7 +10768,7 @@
         const def = LIB[it.type];
         if (!def || !isKnxDevice(def)) return;
         delete it.physAddr;
-        delete it.knxKeysProg; delete it.knxChProg; delete it.knxShutterProg;
+        delete it.knxKeysProg; delete it.knxChProg; delete it.knxShutterProg; delete it.knxRollerProg;
         delete it.knxDimProg; delete it.knxPresenceProg; delete it.knxTempProg;
         delete it.knxThermoProg; delete it.knxBinProg;
         ensureKnxProgram(it);
@@ -10172,7 +10783,7 @@
     function knxHasListenerOnBus() {
       return state.items.some((i) => {
         const d = LIB[i.type];
-        return d && i.knxBusOk && (d.knxActuator || d.knxShutter || d.knxDimmer || d.knxDali || d.knxThermo);
+        return d && i.knxBusOk && (d.knxActuator || d.knxShutter || d.knxRoller || d.houseFacade || d.knxDimmer || d.knxDali || d.knxThermo);
       });
     }
     function knxCanSend(item) {
@@ -10196,6 +10807,12 @@
           if ((def.knxDimmer || def.knxDali) && item.knxDim) item.knxDim.on = false;
           if (def.knxShutter && item.knxShutter) {
             [1, 2].forEach((n) => { if (item.knxShutter[n]) item.knxShutter[n].dir = "stop"; });
+          }
+          if (def.knxRoller && item.roller) item.roller.dir = "stop";
+          if (def.houseFacade && item.facade && item.facade.roller) {
+            Object.keys(item.facade.roller).forEach((id) => {
+              if (item.facade.roller[id]) item.facade.roller[id].dir = "stop";
+            });
           }
           return;
         }
@@ -10230,6 +10847,24 @@
             else ch.dir = "stop";
           }
         }
+        if (def.knxRoller && item.knxRollerProg) {
+          const r = ensureRoller(item);
+          if (!rollerPowered(item)) {
+            r.dir = "stop";
+          } else {
+            const p = item.knxRollerProg;
+            const gu = normGa(p.gaUp), gd = normGa(p.gaDown), gs = normGa(p.gaStop);
+            const up = !!(gu && vals[gu]);
+            const down = !!(gd && vals[gd]);
+            const stop = !!(gs && vals[gs]);
+            if (stop || (up && down)) r.dir = "stop";
+            else if (up) { r.dir = "up"; if (gd) vals[gd] = 0; }
+            else if (down) { r.dir = "down"; if (gu) vals[gu] = 0; }
+            else r.dir = "stop";
+            if (r.dir === "up" || r.dir === "down") startRollerAnim();
+          }
+        }
+        if (def.houseFacade && item.facade) facadeApplyBus(item, vals);
         if (def.knxThermo) {
           const gSet = normGa(item.knxThermoProg.gaSet);
           if (gSet && Object.prototype.hasOwnProperty.call(vals, gSet)) {
@@ -10244,10 +10879,16 @@
     }
     function knxClearShutterOpposite(ga, kind) {
       state.items.forEach((act) => {
-        if (!LIB[act.type] || !LIB[act.type].knxShutter || !act.knxBusOk) return;
+        const d = LIB[act.type];
+        if (!d || !act.knxBusOk || (!d.knxShutter && !d.knxRoller)) return;
         ensureKnxProgram(act);
-        [1, 2].forEach((n) => {
-          const p = act.knxShutterProg[n];
+        const progs = [];
+        if (d.knxShutter && act.knxShutterProg) {
+          if (act.knxShutterProg[1]) progs.push(act.knxShutterProg[1]);
+          if (act.knxShutterProg[2]) progs.push(act.knxShutterProg[2]);
+        }
+        if (d.knxRoller && act.knxRollerProg) progs.push(act.knxRollerProg);
+        progs.forEach((p) => {
           if (kind === "up" && normGa(p.gaUp) === ga) {
             if (p.gaDown) state.knxBusValues[normGa(p.gaDown)] = 0;
             if (p.gaStop) state.knxBusValues[normGa(p.gaStop)] = 0;
@@ -10400,6 +11041,748 @@
         el.title = "Volet " + chN + " — " + ch.dir + " (" + Math.round(ch.pos * 100) + "%)";
       });
     }
+    /* swissdz-rev v121 : toile pos 0 = fermé, 1 = ouvert.
+       v123 : GA 1/2/1 monter, 1/2/2 descendre, 1/2/3 arrêt — seulement si L+N+PE et bus KNX. */
+    function ensureRoller(item) {
+      if (!item.roller || typeof item.roller !== "object") item.roller = { dir: "stop", pos: 0 };
+      const p = Number(item.roller.pos);
+      item.roller.pos = Number.isFinite(p) ? Math.max(0, Math.min(1, p)) : 0;
+      if (item.roller.dir !== "up" && item.roller.dir !== "down") item.roller.dir = "stop";
+      return item.roller;
+    }
+    function knxClearRollerGa(item, which) {
+      const p = item && item.knxRollerProg;
+      if (!p || !state.knxBusValues) return;
+      const g = normGa(p[which]);
+      if (g) state.knxBusValues[g] = 0;
+    }
+    /** L et N sous tension, PE à la terre si la borne existe, bus KNX du participant alimenté. */
+    function lnPairOk(item, lId, nId) {
+      const h = (item && item.hot) || {};
+      const n = (item && item.neu) || {};
+      return (!!h[lId] && !!n[nId]) || (!!n[lId] && !!h[nId]);
+    }
+    function rollerPowered(item) {
+      if (!state.sim || !item || !item.knxBusOk) return false;
+      if (!lnPairOk(item, "L", "N")) return false;
+      const def = LIB[item.type];
+      const hasPe = !!(def && (def.terminals || []).some((t) => t.id === "PE"));
+      if (hasPe && !(item.pe && item.pe.PE)) return false;
+      return true;
+    }
+    function rollerCommand(item, dir) {
+      if (!rollerPowered(item)) return;
+      const r = ensureRoller(item);
+      const next = (dir === "stop" || r.dir === dir) ? "stop" : dir;
+      if (knxCanSend(item)) {
+        ensureKnxProgram(item);
+        const p = item.knxRollerProg;
+        if (p) {
+          if (next === "stop") {
+            knxPublish(p.gaStop, 1, (item.tag || "VR") + ".stop");
+            knxClearShutterOpposite(normGa(p.gaStop), "stop");
+          } else {
+            const ga = next === "down" ? p.gaDown : p.gaUp;
+            knxPublish(ga, 1, (item.tag || "VR") + (next === "down" ? ".↓" : ".↑"));
+            knxClearShutterOpposite(normGa(ga), next);
+          }
+          knxApplyBusToDevices();
+        } else r.dir = next;
+      } else {
+        r.dir = next;
+      }
+      startRollerAnim();
+      paintRollerBlinds();
+    }
+    function bindRollerTap(el, activate) {
+      if (!el || typeof activate !== "function") return;
+      el.onpointerdown = (ev) => {
+        ev.stopPropagation();
+        if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
+        ev.preventDefault();
+        el._rollerTap = { x: ev.clientX, y: ev.clientY, id: ev.pointerId };
+      };
+      el.onpointerup = (ev) => {
+        ev.stopPropagation();
+        if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
+        const t = el._rollerTap;
+        el._rollerTap = null;
+        if (!t || t.id !== ev.pointerId) return;
+        if (Math.hypot(ev.clientX - t.x, ev.clientY - t.y) > tapSlopPx(ev)) return;
+        activate();
+      };
+      el.onpointercancel = () => { el._rollerTap = null; };
+    }
+    /* ===== v122 façade maison — gabarit + photo volet existante =====
+       v123 GA (commande seulement si le slot a L+N, PE si la borne existe, et BUS sur une alim KNX) :
+       v1 1/2/1 monter, 1/2/2 descendre, 1/2/3 arrêt ; v2 1/2/4…6 ; v3 1/2/7…9 ; v4 1/2/10…12 ; v5 1/2/13…15 ; v6 1/2/16…18.
+       g1 1/2/21…23 ; g2 1/2/24…26.
+       Lampes e1 1/1/11, ei1 1/1/12, e2 1/1/13, ei2 1/1/14, e3 1/1/15, ei3 1/1/16, e4 1/1/17,
+       eg1 1/1/18, eg2 1/1/19, ed 1/1/20, e5 1/1/21, ei4 1/1/22, e6 1/1/23, ei5 1/1/24.
+       Gâche porte 1/1/30. Météo : BUS seul, aucun chiffre envoyé ni affiché. PV : DC+/DC− seulement si câblés. */
+    const FACADE_MAX_BAYS = 6;
+    let facadeUi = null;
+    function facadeGeom(bays) {
+      bays = bays | 0;
+      if (bays < 4) bays = 4;
+      if (bays > FACADE_MAX_BAYS) bays = FACADE_MAX_BAYS;
+      const side = 180, winW = 120, winH = 190, gap = 40;
+      const W = side * 2 + bays * winW + (bays - 1) * gap;
+      const H = 780;
+      const winY = 318;
+      const groundY = 584;
+      const gH = 170;
+      const slots = [];
+      slots.push({ id: "meteo", kind: "meteo", x: (W - 140) / 2, y: 78, w: 140, h: 58 });
+      slots.push({ id: "pv1", kind: "pv", x: 170, y: 158, w: Math.max(80, W - 340), h: 28 });
+      slots.push({ id: "pv2", kind: "pv", x: 110, y: 194, w: Math.max(120, W - 220), h: 28 });
+      for (let i = 0; i < bays; i++) {
+        const x = side + i * (winW + gap);
+        slots.push({ id: "v" + (i + 1), kind: "volet", x: x, y: winY, w: winW, h: winH });
+        slots.push({ id: "e" + (i + 1), kind: "light", x: x + winW / 2 - 18, y: winY - 72, w: 36, h: 36, ax: x + winW / 2 });
+        if (i < bays - 1) {
+          const mx = x + winW + gap / 2;
+          slots.push({ id: "ei" + (i + 1), kind: "light", x: mx - 18, y: winY - 72, w: 36, h: 36, ax: mx });
+        }
+      }
+      const gW = Math.round((W * 0.36) / 10) * 10;
+      slots.push({ id: "g1", kind: "garage", x: 20, y: groundY, w: gW, h: gH });
+      slots.push({ id: "g2", kind: "garage", x: W - 20 - gW, y: groundY, w: gW, h: gH });
+      slots.push({ id: "porte", kind: "door", x: (W - 100) / 2, y: groundY - 8, w: 100, h: 200 });
+      slots.push({ id: "eg1", kind: "light", x: 20 + gW / 2 - 18, y: groundY - 68, w: 36, h: 36, ax: 20 + gW / 2 });
+      slots.push({ id: "eg2", kind: "light", x: W - 20 - gW / 2 - 18, y: groundY - 68, w: 36, h: 36, ax: W - 20 - gW / 2 });
+      slots.push({ id: "ed", kind: "light", x: W / 2 - 18, y: groundY - 68, w: 36, h: 36, ax: W / 2 });
+      return { w: W, h: H, bays: bays, slots: slots, gW: gW, eave: 240, ridge: 146 };
+    }
+    function ensureFacade(item) {
+      if (!item.facade || typeof item.facade !== "object") {
+        item.facade = { bays: 4, eq: {}, roller: {}, light: {}, strike: false };
+      }
+      const f = item.facade;
+      let b = f.bays | 0;
+      if (b < 4) b = 4;
+      if (b > FACADE_MAX_BAYS) b = FACADE_MAX_BAYS;
+      f.bays = b;
+      if (!f.eq || typeof f.eq !== "object") f.eq = {};
+      if (!f.roller || typeof f.roller !== "object") f.roller = {};
+      if (!f.light || typeof f.light !== "object") f.light = {};
+      f.strike = !!f.strike;
+      return f;
+    }
+    function syncFacadeBox(item) {
+      const f = ensureFacade(item);
+      const g = facadeGeom(f.bays);
+      if (!(Number(item.w) > 0)) item.w = g.w;
+      if (!(Number(item.h) > 0)) item.h = g.h;
+      return g;
+    }
+    function facadeRollerProg(slotId) {
+      const vm = /^v(\d+)$/.exec(slotId || "");
+      if (vm) {
+        const base = 1 + (Number(vm[1]) - 1) * 3;
+        return { gaUp: "1/2/" + base, gaDown: "1/2/" + (base + 1), gaStop: "1/2/" + (base + 2) };
+      }
+      if (slotId === "g1") return { gaUp: "1/2/21", gaDown: "1/2/22", gaStop: "1/2/23" };
+      if (slotId === "g2") return { gaUp: "1/2/24", gaDown: "1/2/25", gaStop: "1/2/26" };
+      return null;
+    }
+    function facadeLightGa(slotId) {
+      const map = {
+        e1: "1/1/11", ei1: "1/1/12", e2: "1/1/13", ei2: "1/1/14",
+        e3: "1/1/15", ei3: "1/1/16", e4: "1/1/17", eg1: "1/1/18",
+        eg2: "1/1/19", ed: "1/1/20", e5: "1/1/21", ei4: "1/1/22",
+        e6: "1/1/23", ei5: "1/1/24"
+      };
+      return map[slotId] || "";
+    }
+    function facadeKindLabel(kind) {
+      if (kind === "meteo") return "Station météo (bus)";
+      if (kind === "pv") return "Rangée panneaux solaires";
+      if (kind === "volet") return "Fenêtre + volet roulant";
+      if (kind === "light") return "Éclairage de façade";
+      if (kind === "garage") return "Porte de garage";
+      if (kind === "door") return "Porte, visiophone et gâche";
+      return "Emplacement";
+    }
+    function facadeSlotById(item, id) {
+      const g = facadeGeom(ensureFacade(item).bays);
+      for (let i = 0; i < g.slots.length; i++) if (g.slots[i].id === id) return g.slots[i];
+      return null;
+    }
+    function facadeTermPoints(s) {
+      const pts = [];
+      if (s.kind === "meteo") {
+        pts.push({ leaf: "BUS", sym: "BUS", x: s.x + s.w / 2, y: s.y + s.h - 2, dir: "bottom" });
+      } else if (s.kind === "pv") {
+        pts.push({ leaf: "DC+", sym: "+", x: s.x + s.w - 6, y: s.y + 8, dir: "right" });
+        pts.push({ leaf: "DC-", sym: "−", x: s.x + s.w - 6, y: s.y + s.h - 8, dir: "right" });
+      } else if (s.kind === "light") {
+        const ax = s.ax != null ? s.ax : (s.x + s.w / 2);
+        const y = s.y + s.h + 8;
+        pts.push({ leaf: "L", sym: "L", x: ax - 18, y: y, dir: "bottom" });
+        pts.push({ leaf: "N", sym: "N", x: ax, y: y, dir: "bottom" });
+        pts.push({ leaf: "BUS", sym: "BUS", x: ax + 18, y: y, dir: "bottom" });
+      } else if (s.kind === "door") {
+        ["L", "N", "BUS"].forEach(function (leaf, i) {
+          pts.push({ leaf: leaf, sym: leaf, x: s.x + s.w * (0.22 + i * 0.28), y: s.y + 2, dir: "top" });
+        });
+      } else {
+        ["L", "N", "PE", "BUS"].forEach(function (leaf, i) {
+          pts.push({ leaf: leaf, sym: leaf, x: s.x + s.w * (0.16 + i * 0.22), y: s.y + 3, dir: "top" });
+        });
+      }
+      return pts;
+    }
+    function facadeTerminals(item) {
+      const f = ensureFacade(item);
+      const g = facadeGeom(f.bays);
+      const out = [];
+      g.slots.forEach(function (s) {
+        if (!f.eq[s.id]) return;
+        facadeTermPoints(s).forEach(function (p) {
+          out.push({
+            id: s.id + "." + p.leaf,
+            nx: p.x / g.w,
+            ny: p.y / g.h,
+            direction: p.dir,
+            sym: p.sym
+          });
+        });
+      });
+      return out;
+    }
+    function termsOf(item) {
+      const def = item && LIB[item.type];
+      if (!def) return [];
+      if (def.houseFacade) return facadeTerminals(item);
+      return def.terminals || [];
+    }
+    function facadeFullState(bays) {
+      const g = facadeGeom(bays || 4);
+      const eq = {};
+      const roller = {};
+      const light = {};
+      g.slots.forEach(function (s) {
+        eq[s.id] = 1;
+        if (s.kind === "volet" || s.kind === "garage") roller[s.id] = { dir: "stop", pos: 0 };
+        if (s.kind === "light") light[s.id] = false;
+      });
+      return { bays: g.bays, eq: eq, roller: roller, light: light, strike: false };
+    }
+    function facadeSlotReady(item, id) {
+      if (!state.sim || !item) return false;
+      const slot = facadeSlotById(item, id);
+      if (!slot || !item.facade || !item.facade.eq || !item.facade.eq[id]) return false;
+      const leaves = facadeTermPoints(slot).map((p) => p.leaf);
+      if (leaves.indexOf("L") >= 0 && !lnPairOk(item, id + ".L", id + ".N")) return false;
+      if (leaves.indexOf("PE") >= 0 && !(item.pe && item.pe[id + ".PE"])) return false;
+      if (leaves.indexOf("BUS") >= 0 && !(item.facadeBus && item.facadeBus[id])) return false;
+      if (slot.kind === "pv") {
+        const plus = id + ".DC+";
+        const minus = id + ".DC-";
+        const hit = (term) => state.wires.some((w) => {
+          return (w.a && w.a.uid === item.uid && w.a.term === term)
+            || (w.b && w.b.uid === item.uid && w.b.term === term);
+        });
+        return hit(plus) && hit(minus);
+      }
+      if (slot.kind === "meteo") return !!(item.facadeBus && item.facadeBus[id]);
+      return true;
+    }
+    function facadeLightLit(item, id) {
+      const f = item.facade;
+      if (!f || !f.light || !f.light[id]) return false;
+      return facadeSlotReady(item, id);
+    }
+    function facadeApplyBus(item, vals) {
+      const f = ensureFacade(item);
+      vals = vals || {};
+      Object.keys(f.roller || {}).forEach((id) => {
+        const r = f.roller[id];
+        if (!r || !f.eq[id]) return;
+        if (!facadeSlotReady(item, id)) { r.dir = "stop"; return; }
+        const p = facadeRollerProg(id);
+        if (!p) return;
+        const gu = normGa(p.gaUp), gd = normGa(p.gaDown), gs = normGa(p.gaStop);
+        const up = !!(gu && vals[gu]);
+        const down = !!(gd && vals[gd]);
+        const stop = !!(gs && vals[gs]);
+        if (stop || (up && down)) r.dir = "stop";
+        else if (up) { r.dir = "up"; if (gd) vals[gd] = 0; }
+        else if (down) { r.dir = "down"; if (gu) vals[gu] = 0; }
+        else r.dir = "stop";
+        if (r.dir === "up" || r.dir === "down") startRollerAnim();
+      });
+      Object.keys(f.light || {}).forEach((id) => {
+        if (!f.eq[id]) return;
+        if (!facadeSlotReady(item, id)) return;
+        const g = normGa(facadeLightGa(id));
+        if (g && Object.prototype.hasOwnProperty.call(vals, g)) f.light[id] = !!vals[g];
+      });
+      if (f.eq.porte && facadeSlotReady(item, "porte")) {
+        const g = normGa("1/1/30");
+        if (g && Object.prototype.hasOwnProperty.call(vals, g)) f.strike = !!vals[g];
+      }
+    }
+    function facadeSetEquipped(item, slotId, on) {
+      pushHistory();
+      const f = ensureFacade(item);
+      const slot = facadeSlotById(item, slotId);
+      if (on && slot) {
+        f.eq[slotId] = 1;
+        if (slot.kind === "volet" || slot.kind === "garage") f.roller[slotId] = { dir: "stop", pos: 0 };
+        if (slot.kind === "light") f.light[slotId] = false;
+        if (slot.kind === "door") f.strike = false;
+      } else {
+        delete f.eq[slotId];
+        if (f.roller) delete f.roller[slotId];
+        if (f.light) delete f.light[slotId];
+        const pfx = slotId + ".";
+        state.wires = state.wires.filter(function (w) {
+          const hit = function (r) { return r && r.uid === item.uid && String(r.term || "").indexOf(pfx) === 0; };
+          return !hit(w.a) && !hit(w.b);
+        });
+      }
+      facadeUi = null;
+      render();
+    }
+    function facadeAddBay(item) {
+      /* Hook travée : élargit la façade d'une fenêtre (4 → 6 max). */
+      const f = ensureFacade(item);
+      if (f.bays >= FACADE_MAX_BAYS) return;
+      pushHistory();
+      const before = snapshotItemTermEps(item.uid);
+      const oldW = facadeGeom(f.bays).w;
+      f.bays += 1;
+      const g = facadeGeom(f.bays);
+      const sz = itemSize(item);
+      item.w = Math.round(sz.w * g.w / Math.max(1, oldW));
+      followWiresAfterTermMove(item.uid, before);
+      facadeUi = null;
+      render();
+    }
+    function facadeRollerCommand(item, slotId, dir) {
+      if (!facadeSlotReady(item, slotId)) return;
+      const f = ensureFacade(item);
+      if (!f.roller[slotId]) f.roller[slotId] = { dir: "stop", pos: 0 };
+      const r = f.roller[slotId];
+      const p = Number(r.pos);
+      r.pos = Number.isFinite(p) ? Math.max(0, Math.min(1, p)) : 0;
+      const next = (dir === "stop" || r.dir === dir) ? "stop" : dir;
+      const prog = facadeRollerProg(slotId);
+      if (prog && knxCanSend(item)) {
+        if (!state.knxBusValues) state.knxBusValues = {};
+        if (next === "stop") {
+          knxPublish(prog.gaStop, 1, (item.tag || "FH") + "." + slotId + ".stop");
+          state.knxBusValues[normGa(prog.gaUp)] = 0;
+          state.knxBusValues[normGa(prog.gaDown)] = 0;
+        } else if (next === "down") {
+          knxPublish(prog.gaDown, 1, (item.tag || "FH") + "." + slotId + ".down");
+          state.knxBusValues[normGa(prog.gaUp)] = 0;
+          state.knxBusValues[normGa(prog.gaStop)] = 0;
+        } else {
+          knxPublish(prog.gaUp, 1, (item.tag || "FH") + "." + slotId + ".up");
+          state.knxBusValues[normGa(prog.gaDown)] = 0;
+          state.knxBusValues[normGa(prog.gaStop)] = 0;
+        }
+        knxApplyBusToDevices();
+      } else {
+        r.dir = next;
+      }
+      startRollerAnim();
+      paintRollerBlinds();
+    }
+    function facadeThumbSvg() {
+      return '<svg viewBox="0 0 96 64" aria-hidden="true"><polygon points="6,28 18,16 78,16 90,28" fill="#9ca3af"/><rect x="10" y="28" width="76" height="30" fill="#e5e7eb" stroke="#64748b"/><rect x="18" y="34" width="12" height="16" fill="#fff" stroke="#94a3b8"/><rect x="40" y="34" width="12" height="16" fill="#fff" stroke="#94a3b8"/><rect x="62" y="34" width="12" height="16" fill="#fff" stroke="#94a3b8"/></svg>';
+    }
+    function facadeMeteoSvg() {
+      return '<svg viewBox="0 0 140 54" width="100%" height="100%" aria-hidden="true">'
+        + '<rect x="67" y="20" width="5" height="32" fill="#334155"/>'
+        + '<circle cx="69" cy="18" r="3" fill="#1e293b"/>'
+        + '<line x1="69" y1="18" x2="50" y2="10" stroke="#475569" stroke-width="2"/>'
+        + '<line x1="69" y1="18" x2="88" y2="10" stroke="#475569" stroke-width="2"/>'
+        + '<line x1="69" y1="18" x2="69" y2="4" stroke="#475569" stroke-width="2"/>'
+        + '<circle cx="48" cy="9" r="5" fill="#64748b"/>'
+        + '<circle cx="90" cy="9" r="5" fill="#64748b"/>'
+        + '<circle cx="69" cy="3" r="5" fill="#94a3b8"/>'
+        + '<polygon points="96,16 122,12 96,24" fill="#334155"/>'
+        + '<rect x="22" y="26" width="18" height="10" rx="1" fill="#0f172a"/>'
+        + '<rect x="24" y="28" width="14" height="6" fill="#38bdf8"/>'
+        + '<rect x="100" y="30" width="16" height="14" fill="#e2e8f0" stroke="#475569"/>'
+        + '<circle cx="108" cy="37" r="3" fill="#94a3b8"/>'
+        + "</svg>";
+    }
+    function facadePvHtml(w) {
+      const n = Math.max(2, Math.min(8, Math.round(w / 52)));
+      let html = '<div style="display:flex;gap:3px;width:100%;height:100%;padding:2px;box-sizing:border-box">';
+      for (let i = 0; i < n; i++) {
+        html += '<div style="flex:1;background:#1e3a8a;border:1px solid #e2e8f0;background-image:linear-gradient(rgba(147,197,253,.7) 1px,transparent 1px),linear-gradient(90deg,rgba(147,197,253,.7) 1px,transparent 1px);background-size:9px 9px"></div>';
+      }
+      html += "</div>";
+      return html;
+    }
+    function facadeCmdBar(item, slotId) {
+      const bar = document.createElement("div");
+      bar.className = "roller-cmds";
+      const r = (item.facade.roller && item.facade.roller[slotId]) || { dir: "stop", pos: 0 };
+      [
+        { dir: "up", mark: "▲", label: "Monter" },
+        { dir: "stop", mark: "■", label: "Arrêt" },
+        { dir: "down", mark: "▼", label: "Descendre" }
+      ].forEach(function (b) {
+        const btn = document.createElement("div");
+        btn.className = "roller-cmd" + (b.dir !== "stop" && r.dir === b.dir ? " on" : "");
+        btn.dataset.dir = b.dir;
+        btn.title = b.label;
+        btn.setAttribute("role", "button");
+        const mk = document.createElement("b");
+        mk.textContent = b.mark;
+        const lb = document.createElement("span");
+        lb.textContent = b.label;
+        btn.appendChild(mk);
+        btn.appendChild(lb);
+        bindRollerTap(btn, function () {
+          pushHistory();
+          facadeRollerCommand(item, slotId, b.dir);
+        });
+        bar.appendChild(btn);
+      });
+      return bar;
+    }
+    function facadeRemoveBtn(item, slotId) {
+      const x = document.createElement("button");
+      x.type = "button";
+      x.className = "facade-x";
+      x.textContent = "×";
+      x.title = "Retirer";
+      bindRollerTap(x, function () {
+        facadeUi = { uid: item.uid, id: slotId, mode: "remove" };
+        render();
+      });
+      return x;
+    }
+    function facadePopEl(item, slot) {
+      if (!facadeUi || facadeUi.uid !== item.uid || facadeUi.id !== slot.id) return null;
+      const pop = document.createElement("div");
+      pop.className = "facade-pop";
+      const p = document.createElement("p");
+      p.textContent = facadeKindLabel(slot.kind);
+      pop.appendChild(p);
+      const ok = document.createElement("button");
+      ok.type = "button";
+      ok.textContent = facadeUi.mode === "remove" ? "Retirer" : "Équiper";
+      bindRollerTap(ok, function () { facadeSetEquipped(item, slot.id, facadeUi.mode !== "remove"); });
+      const no = document.createElement("button");
+      no.type = "button";
+      no.className = "ghost";
+      no.textContent = "Annuler";
+      bindRollerTap(no, function () { facadeUi = null; render(); });
+      pop.appendChild(ok);
+      pop.appendChild(no);
+      return pop;
+    }
+    function paintHouseFacade(el, item) {
+      const f = ensureFacade(item);
+      const g = facadeGeom(f.bays);
+      const shell = document.createElement("div");
+      shell.className = "facade-shell";
+      const NS = "http://www.w3.org/2000/svg";
+      const svg = document.createElementNS(NS, "svg");
+      svg.setAttribute("viewBox", "0 0 " + g.w + " " + g.h);
+      svg.setAttribute("width", "100%");
+      svg.setAttribute("height", "100%");
+      function svgRect(x, y, w, h, fill) {
+        const r = document.createElementNS(NS, "rect");
+        r.setAttribute("x", String(x));
+        r.setAttribute("y", String(y));
+        r.setAttribute("width", String(w));
+        r.setAttribute("height", String(h));
+        r.setAttribute("fill", fill);
+        r.setAttribute("stroke", "#94a3b8");
+        r.setAttribute("stroke-width", "2");
+        return r;
+      }
+      svg.appendChild(svgRect(16, g.eave, g.w - 32, g.h - g.eave - 12, "#e7eaee"));
+      svg.appendChild(svgRect(16, 568, g.gW + 8, g.h - 580, "#d5dbe3"));
+      svg.appendChild(svgRect(g.w - 16 - g.gW - 8, 568, g.gW + 8, g.h - 580, "#d5dbe3"));
+      const roof = document.createElementNS(NS, "polygon");
+      roof.setAttribute("points", "16," + g.eave + " 80," + g.ridge + " " + (g.w - 80) + "," + g.ridge + " " + (g.w - 16) + "," + g.eave);
+      roof.setAttribute("fill", "#8b939c");
+      roof.setAttribute("stroke", "#475569");
+      roof.setAttribute("stroke-width", "2");
+      svg.appendChild(roof);
+      shell.appendChild(svg);
+      el.appendChild(shell);
+      const voletSrc = (LIB.fenetre_volet && LIB.fenetre_volet.image) || "assets/electrodz/fenetre_volet.png?v=v121-fenetre-knx";
+      const op = (LIB.fenetre_volet && LIB.fenetre_volet.rollerOpening) || { nx: 0.168, ny: 0.218, nw: 0.652, nh: 0.640 };
+      g.slots.forEach(function (s) {
+        const slot = document.createElement("div");
+        slot.className = "facade-slot" + (f.eq[s.id] ? "" : " empty");
+        slot.style.left = (s.x / g.w * 100) + "%";
+        slot.style.top = (s.y / g.h * 100) + "%";
+        slot.style.width = (s.w / g.w * 100) + "%";
+        slot.style.height = (s.h / g.h * 100) + "%";
+        slot.dataset.slot = s.id;
+        if (!f.eq[s.id]) {
+          const plus = document.createElement("div");
+          plus.className = "facade-plus";
+          plus.textContent = "+";
+          slot.appendChild(plus);
+          slot.title = facadeKindLabel(s.kind);
+          bindRollerTap(slot, function () {
+            facadeUi = { uid: item.uid, id: s.id, mode: "equip" };
+            state.selected = item.uid;
+            render();
+          });
+          const pop0 = facadePopEl(item, s);
+          if (pop0) slot.appendChild(pop0);
+          el.appendChild(slot);
+          return;
+        }
+        if (s.kind === "volet" || s.kind === "garage") {
+          if (!f.roller[s.id]) f.roller[s.id] = { dir: "stop", pos: 0 };
+          const r = f.roller[s.id];
+          if (s.kind === "volet") {
+            const img = document.createElement("img");
+            img.className = "facade-volet-img";
+            img.alt = "";
+            img.draggable = false;
+            img.src = voletSrc;
+            slot.appendChild(img);
+            const wrap = document.createElement("div");
+            wrap.className = "roller-opening";
+            wrap.dataset.uid = item.uid;
+            wrap.dataset.slot = s.id;
+            wrap.style.left = (op.nx * 100) + "%";
+            wrap.style.top = (op.ny * 100) + "%";
+            wrap.style.width = (op.nw * 100) + "%";
+            wrap.style.height = (op.nh * 100) + "%";
+            const cloth = document.createElement("div");
+            cloth.className = "cloth";
+            cloth.style.transform = "translateY(" + (-r.pos * 100) + "%)";
+            wrap.appendChild(cloth);
+            slot.appendChild(wrap);
+          } else {
+            const wrap = document.createElement("div");
+            wrap.className = "roller-opening";
+            wrap.dataset.uid = item.uid;
+            wrap.dataset.slot = s.id;
+            wrap.style.left = "4%";
+            wrap.style.top = "6%";
+            wrap.style.width = "92%";
+            wrap.style.height = "72%";
+            wrap.style.background = "#eef2f6";
+            wrap.style.border = "2px solid #64748b";
+            wrap.style.borderRadius = "2px";
+            const cloth = document.createElement("div");
+            cloth.className = "cloth facade-garage-cloth";
+            cloth.style.transform = "translateY(" + (-r.pos * 100) + "%)";
+            wrap.appendChild(cloth);
+            slot.appendChild(wrap);
+          }
+          slot.appendChild(facadeCmdBar(item, s.id));
+        } else if (s.kind === "light") {
+          if (f.light[s.id] == null) f.light[s.id] = false;
+          if (facadeLightLit(item, s.id)) {
+            const beam = document.createElement("div");
+            beam.className = "facade-beam";
+            slot.appendChild(beam);
+          }
+          const sc = document.createElement("div");
+          sc.className = "facade-sconce";
+          slot.appendChild(sc);
+          const sw = document.createElement("div");
+          sw.className = "facade-switch" + (f.light[s.id] ? " on" : "");
+          sw.title = "On/Off — L, N et bus KNX";
+          const onb = document.createElement("b");
+          onb.textContent = "On";
+          const offb = document.createElement("b");
+          offb.textContent = "Off";
+          sw.appendChild(onb);
+          sw.appendChild(offb);
+          bindRollerTap(sw, function () {
+            if (!facadeSlotReady(item, s.id)) return;
+            const next = !f.light[s.id];
+            const ga = facadeLightGa(s.id);
+            if (ga && knxCanSend(item)) {
+              knxPublish(ga, next ? 1 : 0, (item.tag || "FH") + "." + s.id);
+              render();
+            } else {
+              pushHistory();
+              f.light[s.id] = next;
+              render();
+            }
+          });
+          slot.appendChild(sw);
+        } else if (s.kind === "meteo") {
+          slot.innerHTML = facadeMeteoSvg();
+        } else if (s.kind === "pv") {
+          slot.innerHTML = facadePvHtml(s.w);
+        } else if (s.kind === "door") {
+          const unlocked = !!(f.strike && facadeSlotReady(item, "porte"));
+          const leaf = document.createElement("div");
+          leaf.className = "facade-door-leaf" + (unlocked ? " open" : "");
+          leaf.style.cssText = "position:absolute;left:6%;top:8%;width:52%;height:84%;background:#334155;border-radius:2px";
+          const win = document.createElement("div");
+          win.style.cssText = "position:absolute;left:22%;top:10%;width:56%;height:26%;background:linear-gradient(#e2e8f0,#94a3b8);border:2px solid #f8fafc";
+          leaf.appendChild(win);
+          const handle = document.createElement("div");
+          handle.style.cssText = "position:absolute;right:8%;top:48%;width:8%;height:4%;background:#e2e8f0;border-radius:2px";
+          leaf.appendChild(handle);
+          slot.appendChild(leaf);
+          const phone = document.createElement("div");
+          phone.style.cssText = "position:absolute;right:4%;top:22%;width:30%;height:42%;background:#0f172a;border-radius:3px";
+          const cam = document.createElement("div");
+          cam.style.cssText = "width:8px;height:8px;border-radius:50%;background:#cbd5e1;margin:5px auto 0";
+          const scr = document.createElement("div");
+          scr.style.cssText = "margin:5px 4px 0;height:48%;background:#1e293b;border-radius:2px";
+          phone.appendChild(cam);
+          phone.appendChild(scr);
+          slot.appendChild(phone);
+          const strike = document.createElement("div");
+          strike.className = "facade-strike" + (unlocked ? " on" : "");
+          strike.textContent = "Gâche";
+          strike.title = "Déverrouiller";
+          bindRollerTap(strike, function () {
+            if (!facadeSlotReady(item, "porte")) return;
+            const next = !f.strike;
+            if (knxCanSend(item)) {
+              knxPublish("1/1/30", next ? 1 : 0, (item.tag || "FH") + ".porte");
+              render();
+            } else {
+              pushHistory();
+              f.strike = next;
+              render();
+            }
+          });
+          slot.appendChild(strike);
+        }
+        slot.appendChild(facadeRemoveBtn(item, s.id));
+        const pop1 = facadePopEl(item, s);
+        if (pop1) slot.appendChild(pop1);
+        el.appendChild(slot);
+      });
+      if (f.bays < FACADE_MAX_BAYS) {
+        const bay = document.createElement("button");
+        bay.type = "button";
+        bay.className = "facade-bay";
+        bay.textContent = "+";
+        bay.title = "Ajouter une travée";
+        bay.style.left = ((g.w - 42) / g.w * 100) + "%";
+        bay.style.top = (400 / g.h * 100) + "%";
+        bindRollerTap(bay, function () { facadeAddBay(item); });
+        el.appendChild(bay);
+      }
+    }
+
+
+    function paintRollerBlinds() {
+      document.querySelectorAll(".roller-opening").forEach((el) => {
+        const it = find(el.dataset.uid);
+        if (!it) return;
+        let r = null;
+        if (el.dataset.slot) r = it.facade && it.facade.roller && it.facade.roller[el.dataset.slot];
+        else r = it.roller;
+        if (!r) return;
+        const cloth = el.querySelector(".cloth");
+        if (cloth) cloth.style.transform = "translateY(" + (-(Number(r.pos) || 0) * 100) + "%)";
+        const host = el.dataset.slot ? el.parentElement : el.closest(".dev");
+        if (host) {
+          const bar = host.querySelector(".roller-cmds");
+          if (bar) bar.querySelectorAll(".roller-cmd").forEach((b) => {
+            const d = b.dataset.dir;
+            b.classList.toggle("on", d !== "stop" && d === r.dir);
+          });
+        }
+        const pct = Math.round((Number(r.pos) || 0) * 100);
+        const word = r.dir === "up" ? "montée" : r.dir === "down" ? "descente" : "arrêt";
+        el.title = word + " — " + pct + " % ouvert";
+      });
+    }
+    function rollerNeedsTick() {
+      return state.items.some((item) => {
+        const def = LIB[item.type];
+        if (!def) return false;
+        if (def.rollerBlind) {
+          const r = ensureRoller(item);
+          if (r.dir === "up" || r.dir === "down") return true;
+        }
+        if (def.houseFacade && item.facade && item.facade.roller) {
+          const eq = item.facade.eq || {};
+          return Object.keys(item.facade.roller).some((id) => {
+            if (!eq[id]) return false;
+            const rr = item.facade.roller[id];
+            return rr && (rr.dir === "up" || rr.dir === "down");
+          });
+        }
+        return false;
+      });
+    }
+    let rollerRaf = null;
+    let rollerLast = 0;
+    function startRollerAnim() {
+      if (rollerRaf != null) return;
+      if (!rollerNeedsTick()) return;
+      rollerLast = performance.now();
+      const tick = (now) => {
+        const dt = Math.min(0.05, (now - rollerLast) / 1000);
+        rollerLast = now;
+        let moving = false;
+        state.items.forEach((item) => {
+          const def = LIB[item.type];
+          if (!def || !def.rollerBlind) return;
+          const r = ensureRoller(item);
+          const speed = 0.32;
+          if (!rollerPowered(item)) r.dir = "stop";
+          if (r.dir === "up") {
+            r.pos = Math.min(1, r.pos + speed * dt);
+            if (r.pos >= 1) {
+              r.dir = "stop";
+              knxClearRollerGa(item, "gaUp");
+            }
+          } else if (r.dir === "down") {
+            r.pos = Math.max(0, r.pos - speed * dt);
+            if (r.pos <= 0) {
+              r.dir = "stop";
+              knxClearRollerGa(item, "gaDown");
+            }
+          }
+          if (r.dir === "up" || r.dir === "down") moving = true;
+        });
+        state.items.forEach((item) => {
+          const def = LIB[item.type];
+          if (!def || !def.houseFacade || !item.facade || !item.facade.roller) return;
+          const eq = item.facade.eq || {};
+          const speed = 0.32;
+          Object.keys(item.facade.roller).forEach((id) => {
+            if (!eq[id]) return;
+            const rr = item.facade.roller[id];
+            if (!rr) return;
+            if (!facadeSlotReady(item, id)) rr.dir = "stop";
+            if (rr.dir === "up") {
+              rr.pos = Math.min(1, (Number(rr.pos) || 0) + speed * dt);
+              if (rr.pos >= 1) {
+                rr.dir = "stop";
+                const prog = facadeRollerProg(id);
+                if (prog && state.knxBusValues) state.knxBusValues[normGa(prog.gaUp)] = 0;
+              }
+            } else if (rr.dir === "down") {
+              rr.pos = Math.max(0, (Number(rr.pos) || 0) - speed * dt);
+              if (rr.pos <= 0) {
+                rr.dir = "stop";
+                const prog = facadeRollerProg(id);
+                if (prog && state.knxBusValues) state.knxBusValues[normGa(prog.gaDown)] = 0;
+              }
+            }
+            if (rr.dir === "up" || rr.dir === "down") moving = true;
+          });
+        });
+        paintRollerBlinds();
+        if (moving || rollerNeedsTick()) rollerRaf = requestAnimationFrame(tick);
+        else rollerRaf = null;
+      };
+      rollerRaf = requestAnimationFrame(tick);
+    }
     function startKnxAnim() {
       stopKnxAnim();
       knxAnimLast = performance.now();
@@ -10437,6 +11820,7 @@
           });
         });
         if (moved) paintKnxShutters();
+        startRollerAnim();
         knxAnimRaf = requestAnimationFrame(tick);
       };
       knxAnimRaf = requestAnimationFrame(tick);
@@ -10607,6 +11991,12 @@
             consumers.push({ tag: it.tag, obj: "Volet" + n + " stop", ga: normGa(p.gaStop), phys: it.physAddr });
           });
         }
+        if (def.knxRoller && it.knxRollerProg) {
+          const p = it.knxRollerProg;
+          consumers.push({ tag: it.tag, obj: "Volet ↑", ga: normGa(p.gaUp), phys: it.physAddr });
+          consumers.push({ tag: it.tag, obj: "Volet ↓", ga: normGa(p.gaDown), phys: it.physAddr });
+          consumers.push({ tag: it.tag, obj: "Volet stop", ga: normGa(p.gaStop), phys: it.physAddr });
+        }
         if (def.knxDimmer || def.knxDali) {
           consumers.push({ tag: it.tag, obj: "ON/OFF", ga: normGa(it.knxDimProg.gaOn), phys: it.physAddr });
           consumers.push({ tag: it.tag, obj: "Niveau", ga: normGa(it.knxDimProg.gaLevel), phys: it.physAddr });
@@ -10715,6 +12105,12 @@
           out.push({ key: "dn-" + n, label: "Volet " + n + " descente", ga: p.gaDown, setGa: (g) => { p.gaDown = g; } });
           out.push({ key: "st-" + n, label: "Volet " + n + " stop", ga: p.gaStop, setGa: (g) => { p.gaStop = g; } });
         });
+      }
+      if (def.knxRoller && item.knxRollerProg) {
+        const p = item.knxRollerProg;
+        out.push({ key: "roller-up", label: "Volet montée", ga: p.gaUp, setGa: (g) => { p.gaUp = g; } });
+        out.push({ key: "roller-dn", label: "Volet descente", ga: p.gaDown, setGa: (g) => { p.gaDown = g; } });
+        out.push({ key: "roller-st", label: "Volet stop", ga: p.gaStop, setGa: (g) => { p.gaStop = g; } });
       }
       if (def.knxDimmer || def.knxDali) {
         out.push({ key: "dim-on", label: "ON/OFF", ga: item.knxDimProg.gaOn, setGa: (g) => { item.knxDimProg.gaOn = g; } });
@@ -10883,7 +12279,7 @@
           box.appendChild(grid);
         });
       }
-      if (def.knxDimmer || def.knxDali || def.knxPresence || def.knxTemp || def.knxThermo || def.knxBinary || def.knxIp) {
+      if (def.knxRoller || def.knxDimmer || def.knxDali || def.knxPresence || def.knxTemp || def.knxThermo || def.knxBinary || def.knxIp) {
         /* Réutilise les champs GA existants via objets */
         etsListObjects(item).forEach((o) => {
           const cell = document.createElement("div");
@@ -12980,6 +14376,21 @@
         pressed: !!it.pressed,
         spdFailed: !!it.spdFailed,
         astroForce: it.astroForce == null ? null : String(it.astroForce),
+        vfd: it.vfd && typeof it.vfd === "object" ? {
+          dir: it.vfd.dir < 0 ? -1 : 1,
+          setHz: Number.isFinite(Number(it.vfd.setHz)) ? Number(it.vfd.setHz) : 50,
+          fmax: Number.isFinite(Number(it.vfd.fmax)) ? Number(it.vfd.fmax) : 50,
+          fmin: Number.isFinite(Number(it.vfd.fmin)) ? Number(it.vfd.fmin) : 0,
+          acc: Number.isFinite(Number(it.vfd.acc)) ? Number(it.vfd.acc) : 3,
+          dec: Number.isFinite(Number(it.vfd.dec)) ? Number(it.vfd.dec) : 3,
+          jogHz: Number.isFinite(Number(it.vfd.jogHz)) ? Number(it.vfd.jogHz) : 5,
+          src: it.vfd.src | 0,
+          cmd: it.vfd.cmd | 0,
+          pot: Number.isFinite(Number(it.vfd.pot)) ? Number(it.vfd.pot) : 0.5,
+          run: !!it.vfd.run,
+          view: it.vfd.view === "a" || it.vfd.view === "v" ? it.vfd.view : "hz",
+          menu: Number.isFinite(Number(it.vfd.menu)) ? Number(it.vfd.menu) : -1
+        } : null,
         astroNight: it.astroNight == null ? null : !!it.astroNight,
         atsMode: it.atsMode == null ? null : String(it.atsMode),
         atsPos: it.atsPos == null ? null : String(it.atsPos),
@@ -13012,7 +14423,16 @@
       if (it.knxKeysProg) out.knxKeysProg = deepClone(it.knxKeysProg);
       if (it.knxChProg) out.knxChProg = deepClone(it.knxChProg);
       if (it.knxShutterProg) out.knxShutterProg = deepClone(it.knxShutterProg);
+      if (it.knxRollerProg) out.knxRollerProg = deepClone(it.knxRollerProg);
       if (it.knxShutter) out.knxShutter = deepClone(it.knxShutter);
+      if (it.roller && typeof it.roller === "object") {
+        const rp = Number(it.roller.pos);
+        out.roller = {
+          dir: it.roller.dir === "up" || it.roller.dir === "down" ? it.roller.dir : "stop",
+          pos: Number.isFinite(rp) ? Math.max(0, Math.min(1, rp)) : 0
+        };
+      }
+      if (it.facade && typeof it.facade === "object") out.facade = deepClone(it.facade);
       if (it.knxDimProg) out.knxDimProg = deepClone(it.knxDimProg);
       if (it.knxDim) out.knxDim = deepClone(it.knxDim);
       if (it.knxPresenceProg) out.knxPresenceProg = deepClone(it.knxPresenceProg);
@@ -14059,11 +15479,92 @@
         wireNo: 24
       };
     }
+    function exampleVfdSvcMoteurProject() {
+      /* Compteur 3P+N → C32 → SVC (R S T / U V W) → moteur 6 bornes en triangle.
+         24 V interne : +24V → AU (NC) → SB0 (NC) → jour/nuit → (SB1 NO ∥ TA–TC) → DI1.
+         SA1 en AUTO = arrière (DI2). DI3–DI5 non câblées : la sim ne les lit pas. */
+      const CTL = "#6d28d9";
+      return {
+        name: "demarrage-variateur-svc-moteur-tri",
+        items: [
+          exIt("c1", "compteur_sonelgaz_3pn", "P1", 56, 16),
+          exIt("c2", "edz_itm_3p_c32", "QF1", 100, 230),
+          {
+            uid: "g1", type: "edz_vfd_svc_3phase_interactive", tag: "G1",
+            x: 64, y: 460, closed: false, pressed: false,
+            vfd: {
+              dir: 1, setHz: 50, fmax: 50, fmin: 0, acc: 1.5, dec: 1.5,
+              jogHz: 5, src: 0, cmd: 1, pot: 0.5, run: false, view: "hz", menu: -1
+            }
+          },
+          exIt("au1", "au", "AU1", 300, 20),
+          exIt("sb0", "edz_abb_mp1_10r", "SB0", 400, 52),
+          exIt("kt1", "jour_nuit", "KT1", 478, 12),
+          exIt("sb1", "edz_abb_mp1_10g", "SB1", 548, 52),
+          { uid: "sa1", type: "edz_chint_la38_11x2", tag: "SA1", x: 630, y: 52, closed: false, pressed: false, selPos: "0" },
+          exIt("x1", "borniers", "X1", 740, 250),
+          exIt("pe1", "pe", "PE1", 910, 280),
+          {
+            uid: "m1", type: "edz_motor_6_terminales", tag: "M1",
+            x: 72, y: 800, closed: true, pressed: false,
+            bars: [
+              { id: "br1", terms: ["U1", "W2"] },
+              { id: "br2", terms: ["V1", "U2"] },
+              { id: "br3", terms: ["W1", "V2"] }
+            ]
+          }
+        ],
+        wires: [
+          exW("w1", 1, "c1", "L1", "c2", "1", EX_L),
+          exW("w2", 2, "c1", "L2", "c2", "3", EX_L2),
+          exW("w3", 3, "c1", "L3", "c2", "5", EX_L3),
+          exW("w4", 4, "c2", "2", "g1", "R", EX_L),
+          exW("w5", 5, "c2", "4", "g1", "S", EX_L2),
+          exW("w6", 6, "c2", "6", "g1", "T", EX_L3),
+          exW("w7", 7, "g1", "U", "m1", "U1", EX_L),
+          exW("w8", 8, "g1", "V", "m1", "V1", EX_L2),
+          exW("w9", 9, "g1", "W", "m1", "W1", EX_L3),
+          exW("w10", 10, "c1", "N", "x1", "N", EX_N),
+          exW("w11", 11, "pe1", "PE", "g1", "PE", EX_PE, 2.5),
+          exW("w12", 12, "g1", "PE", "m1", "PE", EX_PE, 2.5),
+          exW("w13", 13, "pe1", "PE", "x1", "PE", EX_PE, 2.5),
+          exW("w14", 14, "g1", "+24V", "au1", "11", CTL, 0.75),
+          exW("w15", 15, "au1", "12", "sb0", "1", CTL, 0.75),
+          exW("w16", 16, "sb0", "2", "kt1", "1", CTL, 0.75),
+          exW("w17", 17, "kt1", "2", "sb1", "1", CTL, 0.75),
+          exW("w18", 18, "sb1", "2", "g1", "DI1", CTL, 0.75),
+          exW("w19", 19, "kt1", "2", "g1", "TA", CTL, 0.75),
+          exW("w20", 20, "g1", "TC", "g1", "DI1", CTL, 0.75),
+          exW("w21", 21, "g1", "+24V", "sa1", "11", CTL, 0.75),
+          exW("w22", 22, "sa1", "14", "g1", "DI2", CTL, 0.75)
+        ],
+        counts: { P: 1, QF: 1, G: 1, S: 3, KT: 1, X: 1, PE: 1, M: 1 },
+        seq: 20,
+        wireNo: 23
+      };
+    }
+    function exampleFacadeKnxProject() {
+      const g = facadeGeom(4);
+      return {
+        name: "facade-knx",
+        items: [{
+          uid: "fac1", type: "facade_maison", tag: "FH1",
+          x: 120, y: 40, closed: true, pressed: false,
+          w: g.w, h: g.h,
+          facade: facadeFullState(4)
+        }],
+        wires: [],
+        counts: { FH: 1 },
+        seq: 2,
+        wireNo: 1
+      };
+    }
     function exampleCatalog() {
       return [
         { id: "maison", cat: "exCatInstall", title: "exMaisonTitle", hint: "exMaisonHint", test: "exTestPlay", build: exampleMaisonProject },
         { id: "ats_deux_sources", cat: "exCatInstall", title: "exAtsDeuxSourcesTitle", hint: "exAtsDeuxSourcesHint", test: "exTestAtsDeuxSources", build: exampleAtsDeuxSourcesProject },
         { id: "knx_schneider", cat: "exCatKnx", title: "exKnxSchneiderTitle", hint: "exKnxSchneiderHint", test: "exTestKnx", build: exampleKnxSchneiderRegkProject },
+        { id: "facade_knx", cat: "exCatKnx", title: "exFacadeKnxTitle", hint: "exFacadeKnxHint", test: "exFacadeKnxTest", build: exampleFacadeKnxProject },
         { id: "pv", cat: "exCatPv", title: "exPvTitle", hint: "exPvHint", test: "exTestPlay", build: examplePvProject },
         { id: "lampe", cat: "exCatLight", title: "exLampeTitle", hint: "exLampeHint", test: "exTestPlay", build: exampleLampeProject },
         { id: "marche", cat: "exCatLight", title: "exMarcheTitle", hint: "exMarcheHint", test: "exTestOnOff", build: exampleMarcheLampeProject },
@@ -14073,6 +15574,7 @@
         { id: "moteur_abb_maintien", cat: "exCatMotor", title: "exMoteurAbbMaintienTitle", hint: "exMoteurAbbMaintienHint", test: "exTestMotorStartStop", build: exampleMoteurAbbMaintienProject },
         { id: "pompe", cat: "exCatMotor", title: "examplePompeTitle", hint: "examplePompeHint", test: "exTestMotorStartStop", build: examplePompeForageProject },
         { id: "moteur_etoile", cat: "exCatMotor", title: "exMoteurEtoileTitle", hint: "exMoteurEtoileHint", test: "exTestMotorStartStop", build: exampleMoteurEtoileProject },
+        { id: "vfd_svc_moteur", cat: "exCatMotor", title: "exVfdSvcTitle", hint: "exVfdSvcHint", test: "exVfdSvcTest", build: exampleVfdSvcMoteurProject },
         { id: "process_cuve", cat: "exCatProcess", title: "exProcessCuveTitle", hint: "exProcessCuveHint", test: "exTestMotorStartStop", build: exampleProcessCuvePompeProject },
         { id: "chateau_eau", cat: "exCatProcess", title: "exChateauEauTitle", hint: "exChateauEauHint", test: "exTestMotorStartStop", build: exampleChateauEauProject },
         { id: "reservoir_incendie", cat: "exCatProcess", title: "exReservoirIncendieTitle", hint: "exReservoirIncendieHint", test: "exTestMotorStartStop", build: exampleReservoirIncendieProject },
@@ -14082,7 +15584,12 @@
     }
     function exampleItemSize(it) {
       const def = LIB[it.type];
-      return { w: (def && def.w) || 48, h: (def && def.h) || 48 };
+      const w = Number(it && it.w);
+      const h = Number(it && it.h);
+      return {
+        w: Number.isFinite(w) && w > 0 ? w : ((def && def.w) || 48),
+        h: Number.isFinite(h) && h > 0 ? h : ((def && def.h) || 48)
+      };
     }
     function exampleTermPoint(items, uid, termId) {
       const it = items.find((x) => x.uid === uid);
@@ -14153,6 +15660,29 @@
           img.setAttribute("height", String(sz.h));
           img.setAttribute("preserveAspectRatio", "xMidYMid meet");
           svg.appendChild(img);
+        } else if (def.houseFacade) {
+          const g = document.createElementNS(NS, "g");
+          const wall = document.createElementNS(NS, "rect");
+          wall.setAttribute("x", String(it.x + sz.w * 0.06));
+          wall.setAttribute("y", String(it.y + sz.h * 0.34));
+          wall.setAttribute("width", String(sz.w * 0.88));
+          wall.setAttribute("height", String(sz.h * 0.6));
+          wall.setAttribute("fill", "#e5e7eb");
+          wall.setAttribute("stroke", "#64748b");
+          wall.setAttribute("stroke-width", "4");
+          const roof = document.createElementNS(NS, "polygon");
+          const yE = it.y + sz.h * 0.36;
+          const yR = it.y + sz.h * 0.18;
+          roof.setAttribute("points",
+            (it.x + sz.w * 0.04) + "," + yE + " " +
+            (it.x + sz.w * 0.14) + "," + yR + " " +
+            (it.x + sz.w * 0.86) + "," + yR + " " +
+            (it.x + sz.w * 0.96) + "," + yE
+          );
+          roof.setAttribute("fill", "#9ca3af");
+          g.appendChild(wall);
+          g.appendChild(roof);
+          svg.appendChild(g);
         } else if (def.kind === "pe") {
           const g = document.createElementNS(NS, "g");
           const r = document.createElementNS(NS, "rect");
@@ -14243,7 +15773,20 @@
           lab.appendChild(count);
           host.appendChild(lab);
         }
-        host.appendChild(makeExampleTile(ex));
+        /* Une miniature cassée ne doit pas vider la fin du catalogue. */
+        try {
+          host.appendChild(makeExampleTile(ex));
+        } catch (_) {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "example-tile";
+          btn.setAttribute("data-ex", ex.id);
+          const strong = document.createElement("strong");
+          strong.textContent = t(ex.title);
+          btn.appendChild(strong);
+          btn.onclick = () => loadExampleById(ex.id);
+          host.appendChild(btn);
+        }
       });
     }
     function renderExamplesPanel() {
@@ -16361,6 +17904,8 @@
         b.appendChild(cap);
       } else if (def.image) {
         b.innerHTML = `<img alt="" src="${def.thumb || def.image}"><span>${label}</span>`;
+      } else if (def.houseFacade) {
+        b.innerHTML = `<span class="thumb facade-lib-thumb">${facadeThumbSvg()}</span><span>${label}</span>`;
       } else if (def.kind === "barrette") {
         const n = def.holes || 2;
         const holes = Array.from({ length: n }, () => "<i></i>").join("");
@@ -16929,6 +18474,14 @@
         hot: {},
         neu: {}
       };
+      if (def.vfd) item.vfd = defaultVfdState();
+      if (def.rollerBlind) item.roller = { dir: "stop", pos: 0 };
+      if (def.houseFacade) {
+        item.facade = { bays: 4, eq: {}, roller: {}, light: {}, strike: false };
+        const box = facadeGeom(4);
+        item.w = box.w;
+        item.h = box.h;
+      }
       if (def.pvCable) item.lengthM = Number(def.lengthM) > 0 ? Number(def.lengthM) : 10;
       if (motorHasSixLeadPlate(def)) applyMotorBarPreset(item, "delta");
       return item;
@@ -18176,7 +19729,7 @@
         const other = (w.a.uid === item.uid && w.a.term === cab.id) ? w.b : w.a;
         const otherItem = find(other.uid);
         if (!otherItem || !LIB[otherItem.type]) return;
-        const term = LIB[otherItem.type].terminals.find((t) => t.id === other.term);
+        const term = termsOf(otherItem).find((t) => t.id === other.term);
         if (!term) return;
         const p = termAbs(otherItem, term);
         const prevRot = tips[cab.id] && tips[cab.id].rot;
@@ -18708,9 +20261,10 @@
       let bestD = Infinity;
       state.items.forEach((item) => {
         const def = LIB[item.type];
-        if (!def || !def.terminals) return;
-        if (def.flukeMeter) return;
-        def.terminals.forEach((t) => {
+        if (!def || def.flukeMeter) return;
+        const terms = termsOf(item);
+        if (!terms.length) return;
+        terms.forEach((t) => {
           if (item.uid === skipUid && t.id === skipTerm) return;
           const p = termAbs(item, t);
           const d = Math.hypot(p.x - x, p.y - y);
@@ -18728,8 +20282,10 @@
       const out = [];
       state.items.forEach((item) => {
         const def = LIB[item.type];
-        if (!def || !def.terminals || def.flukeMeter) return;
-        def.terminals.forEach((t) => {
+        if (!def || def.flukeMeter) return;
+        const terms = termsOf(item);
+        if (!terms.length) return;
+        terms.forEach((t) => {
           if (item.uid === skipUid && t.id === skipTerm) return;
           const p = termAbs(item, t);
           out.push({ uid: item.uid, term: t.id, x: p.x, y: p.y, d: Math.hypot(p.x - x, p.y - y) });
@@ -19218,7 +20774,10 @@
     }
     function endpoint(ref) {
       const item = find(ref.uid);
-      const term = LIB[item.type].terminals.find((t) => t.id === ref.term);
+      const term = termsOf(item).find((t) => t.id === ref.term);
+      if (!term) {
+        return { x: item ? item.x : 0, y: item ? item.y : 0, direction: "top", id: ref.term, uid: ref.uid };
+      }
       return { ...termAbs(item, term), id: term.id, uid: item.uid };
     }
     function almostEq(a, b) { return Math.abs(a - b) < 0.75; }
@@ -19618,9 +21177,10 @@
     function snapshotItemTermEps(uid) {
       const item = find(uid);
       const def = item && LIB[item.type];
-      if (!item || !def || !def.terminals) return {};
+      const terms = item ? termsOf(item) : [];
+      if (!item || !def || !terms.length) return {};
       const out = {};
-      def.terminals.forEach((t) => {
+      terms.forEach((t) => {
         const p = termAbs(item, t);
         out[t.id] = { x: p.x, y: p.y };
       });
@@ -20625,6 +22185,12 @@
       state.items.forEach((item) => {
         const def = LIB[item.type];
         if (!def) return;
+        if (def.vfd && item.vfd && item.vfd.outOn) {
+          const rev = item.vfd.outDir < 0;
+          supplies.push({ key: key(item.uid, "U"), pot: "L1", uid: item.uid, term: "U" });
+          supplies.push({ key: key(item.uid, "V"), pot: rev ? "L3" : "L2", uid: item.uid, term: "V" });
+          supplies.push({ key: key(item.uid, "W"), pot: rev ? "L2" : "L3", uid: item.uid, term: "W" });
+        }
         const isMeter = isCompteurKind(def.kind);
         const isSrc = !!(def.source || isMeter || def.kind === "phase" || def.kind === "neutre");
         if (def.kind === "phase" || isMeter || (isSrc && compteurPhaseIds(def).length)) {
@@ -20733,7 +22299,7 @@
         }
       });
       state.items.forEach((i) => {
-        i.hot = {}; i.neu = {}; i.lit = false; i.coilOn = false; i.knxBusOk = false; i.pumpFlow = false;
+        i.hot = {}; i.neu = {}; i.pe = {}; i.lit = false; i.coilOn = false; i.knxBusOk = false; i.facadeBus = {}; i.pumpFlow = false; i.driveHz = 0;
         i.knxOutOk = {}; i.knxOutImax = {};
       });
       state.wires.forEach((w) => { w.live = false; });
@@ -20748,6 +22314,15 @@
           resetLadderTimers();
           state.ladder.hl = {};
         }
+        state.items.forEach((i) => {
+          if (!i.vfd) return;
+          i.vfd.powered = false;
+          i.vfd.outOn = false;
+          i.vfd.hz = 0;
+          i.vfd.run = false;
+          i.vfd.jog = false;
+        });
+        if (vfdLiveTimer) { clearTimeout(vfdLiveTimer); vfdLiveTimer = null; }
         pushFlukeEmbedVoltages();
         return;
       }
@@ -20788,8 +22363,15 @@
         const ia = find(w.a.uid), ib = find(w.b.uid);
         if (!ia || !ib) return;
         if (!isKnxDevice(LIB[ia.type]) || !isKnxDevice(LIB[ib.type])) return;
-        unite(key(w.a.uid, "KNX+"), key(w.b.uid, "KNX+"));
-        unite(key(w.a.uid, "KNX-"), key(w.b.uid, "KNX-"));
+        /* BUS simple → paire virtuelle. Façade : une paire par emplacement (v1.BUS → v1.KNX+/KNX−). */
+        const knxPoleKey = (uid, term, pol) => {
+          const id = String(term || "");
+          const dot = id.lastIndexOf(".");
+          if (dot > 0 && id.slice(dot + 1).toUpperCase() === "BUS") return key(uid, id.slice(0, dot) + "." + pol);
+          return key(uid, pol);
+        };
+        unite(knxPoleKey(w.a.uid, w.a.term, "KNX+"), knxPoleKey(w.b.uid, w.b.term, "KNX+"));
+        unite(knxPoleKey(w.a.uid, w.a.term, "KNX-"), knxPoleKey(w.b.uid, w.b.term, "KNX-"));
       });
 
       /* 1b) Compteur 3P+N : L1/L2/L3 restent distincts (sinon un pont L1–L2 n’est jamais un CC). */
@@ -20830,6 +22412,23 @@
         state.items.forEach((item) => {
           const def = LIB[item.type];
           if (!isKnxDevice(def)) return;
+          if (def.houseFacade) {
+            const f = ensureFacade(item);
+            item.facadeBus = {};
+            let anyBus = false;
+            facadeGeom(f.bays).slots.forEach((s) => {
+              if (!f.eq || !f.eq[s.id]) return;
+              if (!facadeTermPoints(s).some((p) => p.leaf === "BUS")) return;
+              const pP = findp(key(item.uid, s.id + ".KNX+"));
+              const pM = findp(key(item.uid, s.id + ".KNX-"));
+              const ok = (rootIsHot(pP, hotRoots) && rootIsNeu(pM, neuRoots))
+                || (rootIsNeu(pP, neuRoots) && rootIsHot(pM, hotRoots));
+              item.facadeBus[s.id] = !!ok;
+              if (ok) anyBus = true;
+            });
+            item.knxBusOk = anyBus;
+            return;
+          }
           const pP = findp(key(item.uid, "KNX+"));
           const pM = findp(key(item.uid, "KNX-"));
           item.knxBusOk = (rootIsHot(pP, hotRoots) && rootIsNeu(pM, neuRoots))
@@ -20935,7 +22534,8 @@
             return;
           }
 
-
+          /* Fenêtre KNX : L/N/PE + bus. Le volet suit les GA, pas un contact U/D. */
+          if (def.knxRoller) return;
 
           /* Inverseur de phase PCR (ATR-KT) : Auto L1→L2→L3 ; N toujours ponté si ON. */
           if (def.pcr) {
@@ -21014,6 +22614,14 @@
               });
             }
             item.coilOn = !!item.spdClamping;
+            return;
+          }
+
+          /* v118 : TA-TC du frame précédent, pendant la passe contacts,
+             pour que le maintien DI1 existe avant la lecture des bornes. */
+          if (def.vfd) {
+            if (item.vfd && item.vfd.outOn) unite(key(item.uid, "TA"), key(item.uid, "TC"));
+            else unite(key(item.uid, "TB"), key(item.uid, "TC"));
             return;
           }
 
@@ -21110,6 +22718,16 @@
         item.closed = !!item.coilOn && !item.forcedOpen;
       });
 
+      /* v117 : variateur — rampe Hz, puis relais marche TA-TC / repos TB-TC. */
+      const nowVfd = performance.now();
+      state.items.forEach((item) => {
+        const def = LIB[item.type];
+        if (!def || !def.vfd) return;
+        stepVfdItem(item, nowVfd, findp, key);
+        if (item.vfd && item.vfd.outOn) unite(key(item.uid, "TA"), key(item.uid, "TC"));
+        else unite(key(item.uid, "TB"), key(item.uid, "TC"));
+      });
+
       const roots = findSourceRoots(findp, key);
       let { hotRoot, neuRoot, hotKey, neuKey, hotKeys, neuKeys, hotRoots, neuRoots, peRoots, supplies } = roots;
       if (!hotRoots.size && !neuRoots.size && !(peRoots && peRoots.size)) {
@@ -21145,7 +22763,7 @@
         triggerShortCircuit(loc);
         maybeIgniteFire(loc);
         state.items.forEach((i) => {
-          i.hot = {}; i.neu = {}; i.lit = false; i.coilOn = false; i.knxBusOk = false; i.pumpFlow = false;
+          i.hot = {}; i.neu = {}; i.pe = {}; i.lit = false; i.coilOn = false; i.knxBusOk = false; i.facadeBus = {}; i.pumpFlow = false; i.driveHz = 0;
           const d = LIB[i.type];
           if (d && d.knxPsu) syncKnxPsuChannelLeds(i, d, false, true);
         });
@@ -21167,15 +22785,22 @@
 
       function mark(uid, term) {
         const root = findp(key(uid, term));
-        return { hot: rootIsHot(root, hotRoots), neu: rootIsNeu(root, neuRoots) };
+        return {
+          hot: rootIsHot(root, hotRoots),
+          neu: rootIsNeu(root, neuRoots),
+          pe: !!(peRoots && peRoots.has(root))
+        };
       }
       state.items.forEach((item) => {
         const def = LIB[item.type];
-        if (!def || !def.terminals) return;
-        def.terminals.forEach((t) => {
+        if (!def) return;
+        const terms = termsOf(item);
+        if (!def.houseFacade && !terms.length) return;
+        terms.forEach((t) => {
           const m = mark(item.uid, t.id);
           if (m.hot) item.hot[t.id] = true;
           if (m.neu) item.neu[t.id] = true;
+          if (m.pe) item.pe[t.id] = true;
         });
         if (def.lamp) {
           const ids = def.terminals.map((t) => t.id);
@@ -21214,6 +22839,14 @@
             }
             item.lit = !!(allHot && three && couplingOk);
             item.motorDir = item.lit ? (motorDirFromPhases(pU, pV, pW) || 1) : 0;
+            if (item.lit) {
+              const rootM = findp(key(item.uid, stator[0]));
+              state.items.forEach((src) => {
+                const sd = LIB[src.type];
+                if (!sd || !sd.vfd || !src.vfd || !src.vfd.outOn) return;
+                if (findp(key(src.uid, "U")) === rootM) item.driveHz = vfdTargetHz(src);
+              });
+            }
             if (def.pumpWell) {
               item.pumpFlow = item.lit;
             }
@@ -21454,6 +23087,12 @@
           edzKv(t("edzKvPrefix"), def.prefix) +
           edzKv(t("edzKvId"), typeId)
       );
+      if (def.houseFacade) {
+        html += edzSec(
+          "Façade",
+          "<p style=\"margin:0;font-size:12px;line-height:1.35\">Tap + sur un emplacement pour l’équiper (volet, lampe, garage, météo, panneaux, porte). Bornes L/N/PE/BUS sur l’élément équipé. Le volet reprend la photo Fenêtre + volet. Le + à droite ajoute une travée (max 6).</p>"
+        );
+      }
       const terms = def.terminals || [];
       if (terms.length) {
         const lis = terms
@@ -22183,6 +23822,7 @@
       paintItems.forEach((item) => {
         const def = LIB[item.type];
         if (!def) return;
+        if (def.houseFacade) syncFacadeBox(item);
         const sz = itemSize(item);
         let el;
         if (def.flukeMeter) {
@@ -22203,6 +23843,7 @@
           }
         }
         el.className = "dev" + (isItemSelected(item.uid) ? " sel" : "");
+        if (def.houseFacade) el.classList.add("house-facade");
         if (isKmClipHostType(item.type) && clippedFrOf(item)) el.classList.add("km-clip-host");
         if (item.parentUid && isFrClipType(item.type) && clipHostOf(item)) el.classList.add("km-clip-guest");
         el.dataset.uid = item.uid;
@@ -22270,6 +23911,7 @@
           for (let i = 0; i < holes; i++) face.appendChild(document.createElement("i"));
           el.appendChild(face);
         }
+        if (def.houseFacade) paintHouseFacade(el, item);
         if (isPlatine(item)) applyPlatineFace(el, item);
         if (def.pvCable) {
           const badge = document.createElement("div");
@@ -22305,6 +23947,10 @@
             wrap.setAttribute("aria-hidden", "true");
             const rotor = document.createElement("div");
             rotor.className = "motor-rotor";
+            if (item.driveHz > 1) {
+              const dur = Math.max(0.16, 0.55 * (50 / Math.min(60, item.driveHz)));
+              rotor.style.animationDuration = dur.toFixed(3) + "s";
+            }
             wrap.appendChild(rotor);
             el.appendChild(wrap);
             if (item.lit) {
@@ -22352,6 +23998,7 @@
           c.title = "Bobine alimentée";
           el.appendChild(c);
         }
+        if (def.vfd) mountVfdFace(el, item, def);
         if (def.plc) {
           const lcdDef = def.lcd === false ? null : (def.lcd || def.glow || { nx: 0.07, ny: 0.31, nw: 0.40, nh: 0.21 });
           if (lcdDef) {
@@ -22590,6 +24237,49 @@
             wrap.title = "Volet " + s.id + " — " + dir + " (" + Math.round(pos * 100) + "%)";
             el.appendChild(wrap);
           });
+        }
+        if (def.rollerBlind) {
+          const r = ensureRoller(item);
+          const op = def.rollerOpening || { nx: 0.17, ny: 0.22, nw: 0.66, nh: 0.64 };
+          const wrap = document.createElement("div");
+          wrap.className = "roller-opening";
+          wrap.dataset.uid = item.uid;
+          wrap.style.left = (op.nx * 100) + "%";
+          wrap.style.top = (op.ny * 100) + "%";
+          wrap.style.width = (op.nw * 100) + "%";
+          wrap.style.height = (op.nh * 100) + "%";
+          const cloth = document.createElement("div");
+          cloth.className = "cloth";
+          cloth.style.transform = "translateY(" + (-r.pos * 100) + "%)";
+          wrap.appendChild(cloth);
+          el.appendChild(wrap);
+          const bar = document.createElement("div");
+          bar.className = "roller-cmds";
+          [
+            { dir: "up", mark: "▲", label: "Monter" },
+            { dir: "stop", mark: "■", label: "Arrêt" },
+            { dir: "down", mark: "▼", label: "Descendre" }
+          ].forEach((b) => {
+            const btn = document.createElement("div");
+            btn.className = "roller-cmd" + (b.dir !== "stop" && r.dir === b.dir ? " on" : "");
+            btn.dataset.dir = b.dir;
+            btn.title = "Essai local : " + b.label;
+            btn.setAttribute("role", "button");
+            btn.setAttribute("aria-label", "Essai local : " + b.label);
+            const mk = document.createElement("b");
+            mk.textContent = b.mark;
+            const lb = document.createElement("span");
+            lb.textContent = b.label;
+            btn.appendChild(mk);
+            btn.appendChild(lb);
+            bindRollerTap(btn, () => {
+              pushHistory();
+              rollerCommand(item, b.dir);
+            });
+            bar.appendChild(btn);
+          });
+          el.appendChild(bar);
+          if (r.dir === "up" || r.dir === "down") startRollerAnim();
         }
         if ((def.knxDimmer || def.knxDali) && item.knxDim) {
           const bar = document.createElement("div");
@@ -22907,7 +24597,7 @@
           if (ev.target.classList.contains("fc-lever-hit")) return;
           if (ev.target.classList.contains("sel-knob-hit")) return;
           /* v33-knx-tap : closest() — ne pas démarrer drag si doigt sur touche KNX */
-          if (ev.target.closest && ev.target.closest(".knx-key, .knx-man-hit, .knx-bin-hit, .knx-presence-hit, .knx-thermo-btn")) return;
+          if (ev.target.closest && ev.target.closest(".knx-key, .knx-man-hit, .knx-bin-hit, .knx-presence-hit, .knx-thermo-btn, .vfd-key, .vfd-pot")) return;
           if (ev.target.classList.contains("knx-key")) return;
           if (ev.target.classList.contains("knx-man-hit")) return;
           if (ev.target.classList.contains("knx-bin-hit")) return;
@@ -23134,7 +24824,9 @@
         const def = LIB[item.type];
         if (!def) return;
         const motorBarTerms = motorHasSixLeadPlate(def) ? motorBarLinkedTerms(item) : null;
-        def.terminals.forEach((t) => {
+        const terms = termsOf(item);
+        if (!terms.length) return;
+        terms.forEach((t) => {
           if (def.flukeMeter) return; /* pointes = UI de connexion, pas pastilles */
           if (kmFrHiddenTerm(item, t.id)) return;
           const p = termAbs(item, t);
