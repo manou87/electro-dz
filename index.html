@@ -356,71 +356,41 @@
       letter-spacing:.03em;
     }
 
-    /* Réseaux — bande légère */
+    /* Réseaux — titre + icônes seules */
     .social-band{
-      margin:8px 0 16px;padding:12px 10px;
+      margin:8px 0 16px;padding:14px 10px 8px;
       border-radius:12px;
       background:transparent;
       border:none;
     }
     .social-band h2{
-      font-size:.92rem;font-weight:800;text-align:center;margin-bottom:4px;color:#fff;
+      font-size:.92rem;font-weight:800;text-align:center;margin-bottom:14px;color:#fff;
       text-shadow:0 1px 3px rgba(0,0,0,0.85);
-    }
-    .social-band .social-sub{
-      text-align:center;color:#e2e8f0;font-size:.74rem;margin-bottom:10px;
-      text-shadow:0 1px 2px rgba(0,0,0,0.75);
     }
     .social-grid{
-      display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
-      align-items:stretch;
+      display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
+      gap:14px;
     }
-    .social-card{
-      display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
-      text-align:center;height:100%;
-      padding:10px 8px;border-radius:8px;
-      background:transparent;border:1px solid var(--border);
-      transition:transform .2s,box-shadow .2s,border-color .2s;
+    .social-icon{
+      display:inline-flex;align-items:center;justify-content:center;
+      width:52px;height:52px;border-radius:14px;
+      background:rgba(15,23,42,0.55);border:1px solid var(--border);
+      transition:transform .2s,box-shadow .2s,border-color .2s,background .2s;
     }
-    .social-card:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,0,0,0.25)}
-    .social-card .ico-wrap{
-      flex-shrink:0;width:40px;height:40px;margin-bottom:8px;
-      background:rgba(148,163,184,0.12);border-width:1.5px;
+    .social-icon:hover{transform:translateY(-3px)}
+    .social-icon:focus-visible{outline:2px solid #cbd5e1;outline-offset:3px}
+    .social-icon .ico{
+      width:28px;height:28px;stroke:none;fill:currentColor;
+      filter:drop-shadow(0 1px 2px rgba(0,0,0,0.45));
     }
-    .social-card .ico{width:22px;height:22px;stroke-width:2.2;
-      filter:drop-shadow(0 1px 2px rgba(0,0,0,0.65))}
-    .social-card strong{
-      font-size:.84rem;display:block;margin-bottom:2px;color:#fff;font-weight:800;
-      text-shadow:0 1px 3px rgba(0,0,0,0.85);
-    }
-    .social-card span{
-      font-size:.7rem;color:#e2e8f0;font-weight:600;
-      text-shadow:0 1px 2px rgba(0,0,0,0.75);
-    }
-    .social-card--wa:hover{border-color:#25d366;box-shadow:0 8px 24px rgba(37,211,102,0.25)}
-    .social-card--tt:hover{border-color:#cbd5e1;box-shadow:0 8px 24px rgba(148,163,184,0.2)}
-    .social-card--yt:hover{border-color:#ff0000;box-shadow:0 8px 24px rgba(255,0,0,0.25)}
-    .social-card--fb:hover{border-color:#1877f2;box-shadow:0 8px 24px rgba(24,119,242,0.25)}
-    /* YouTube : vignette toujours visible (comme les tuiles outils) */
-    .social-card--yt[data-preview]{
-      position:relative;overflow:hidden;min-height:96px;
-      justify-content:flex-end;padding:10px 8px 12px;
-    }
-    .social-card--yt[data-preview]::before{
-      content:"";position:absolute;inset:0;z-index:0;pointer-events:none;border-radius:inherit;
-      background-image:var(--peek-img);background-size:cover;background-position:center;
-      opacity:1;
-    }
-    .social-card--yt[data-preview]::after{
-      content:"";position:absolute;inset:0;z-index:1;pointer-events:none;border-radius:inherit;
-      background:linear-gradient(to top,rgba(4,8,18,.92) 0%,rgba(4,8,18,.55) 45%,rgba(4,8,18,.25) 100%);
-    }
-    .social-card--yt[data-preview] .ico-wrap,
-    .social-card--yt[data-preview] strong,
-    .social-card--yt[data-preview] span{position:relative;z-index:2}
-    .social-card--yt[data-preview] .ico-wrap{
-      background:rgba(255,0,0,.55);border-color:rgba(255,255,255,.35);
-    }
+    .social-icon--wa{color:#25d366}
+    .social-icon--wa:hover{border-color:#25d366;box-shadow:0 8px 22px rgba(37,211,102,0.28);background:rgba(37,211,102,0.12)}
+    .social-icon--tt{color:#fff}
+    .social-icon--tt:hover{border-color:#cbd5e1;box-shadow:0 8px 22px rgba(148,163,184,0.22);background:rgba(148,163,184,0.12)}
+    .social-icon--yt{color:#ff0000}
+    .social-icon--yt:hover{border-color:#ff0000;box-shadow:0 8px 22px rgba(255,0,0,0.28);background:rgba(255,0,0,0.12)}
+    .social-icon--fb{color:#1877f2}
+    .social-icon--fb:hover{border-color:#1877f2;box-shadow:0 8px 22px rgba(24,119,242,0.28);background:rgba(24,119,242,0.12)}
 
     .yt-clips{
       display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;
@@ -473,7 +443,6 @@
 
     @media(max-width:900px){
       .spotlight-grid,.hub-grid{grid-template-columns:repeat(2,1fr)}
-      .social-grid{grid-template-columns:repeat(2,1fr)}
       .yt-clip::after{width:28px;height:28px;background-size:12px}
     }
     @media(max-width:768px){
@@ -525,10 +494,11 @@
     <symbol id="ico-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
     <symbol id="ico-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></symbol>
     <symbol id="ico-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></symbol>
-    <symbol id="ico-wa" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></symbol>
+    <symbol id="ico-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></symbol>
     <symbol id="ico-play" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></symbol>
-    <symbol id="ico-fb" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></symbol>
-    <symbol id="ico-tt" viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></symbol>
+    <symbol id="ico-yt" viewBox="0 0 24 24"><path fill="currentColor" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></symbol>
+    <symbol id="ico-fb" viewBox="0 0 24 24"><path fill="currentColor" d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.668 4.533-4.668 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></symbol>
+    <symbol id="ico-tt" viewBox="0 0 24 24"><path fill="currentColor" d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.95-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.03-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.7-.22-1.49-.2-2.17.1-.8.4-1.4 1.14-1.6 2-.22.86-.04 1.79.5 2.48.58.75 1.55 1.16 2.5 1.08 1.05-.05 2.01-.76 2.4-1.74.12-.33.18-.68.18-1.03.02-4.54.01-9.07.02-13.61z"/></symbol>
   </svg>
 
   <div class="site-chrome">
@@ -692,41 +662,21 @@
       </div>
     </section>
 
-    <!-- Communauté / réseaux sociaux -->
-    <section class="social-band" id="communaute">
-      <h2 data-i18n="social.title">Notre communauté SwissDZ</h2>
-      <p class="social-sub" data-i18n="social.sub">Suivez-nous — tutoriels, astuces chantier et actualités</p>
+    <!-- Réseaux sociaux — icônes seules -->
+    <section class="social-band" id="communaute" aria-labelledby="social-title">
+      <h2 id="social-title" data-i18n="social.title">Suivez-nous sur nos réseaux sociaux</h2>
       <div class="social-grid">
-        <a class="social-card social-card--wa" href="https://wa.me/213555429960" target="_blank" rel="noopener noreferrer">
-          <span class="ico-wrap ico-wrap--wa"><svg class="ico"><use href="#ico-wa"/></svg></span>
-          <strong>WhatsApp</strong>
-          <span>+213 555 429 960</span>
+        <a class="social-icon social-icon--wa" href="https://wa.me/213555429960" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" title="WhatsApp">
+          <svg class="ico" aria-hidden="true"><use href="#ico-wa"/></svg>
         </a>
-        <a class="social-card social-card--tt" href="https://www.tiktok.com/@elektrodzch" target="_blank" rel="noopener noreferrer">
-          <span class="ico-wrap ico-wrap--tt"><svg class="ico"><use href="#ico-tt"/></svg></span>
-          <strong>TikTok</strong>
-          <span>@elektrodzch</span>
+        <a class="social-icon social-icon--tt" href="https://www.tiktok.com/@elektrodzch" target="_blank" rel="noopener noreferrer" aria-label="TikTok" title="TikTok">
+          <svg class="ico" aria-hidden="true"><use href="#ico-tt"/></svg>
         </a>
-        <a class="social-card social-card--yt" href="https://www.youtube.com/@Elektro-dz-suisse" target="_blank" rel="noopener noreferrer" data-preview="assets/section-previews/youtube-peek.jpg">
-          <span class="ico-wrap ico-wrap--yt"><svg class="ico ico--fill"><use href="#ico-play"/></svg></span>
-          <strong>YouTube</strong>
-          <span>@Elektro-dz-suisse</span>
+        <a class="social-icon social-icon--yt" href="https://www.youtube.com/@Elektro-dz-suisse" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube">
+          <svg class="ico" aria-hidden="true"><use href="#ico-yt"/></svg>
         </a>
-        <a class="social-card social-card--fb" href="https://www.facebook.com/share/1TXqM56Ncd/" target="_blank" rel="noopener noreferrer">
-          <span class="ico-wrap ico-wrap--fb"><svg class="ico"><use href="#ico-fb"/></svg></span>
-          <strong>Facebook</strong>
-          <span data-i18n="social.fb">Electro DZ</span>
-        </a>
-      </div>
-      <div class="yt-clips" aria-label="YouTube">
-        <a class="yt-clip" href="https://youtu.be/oeECd-p0gAg" target="_blank" rel="noopener noreferrer" aria-label="Vidéo YouTube 1">
-          <img src="https://i.ytimg.com/vi/oeECd-p0gAg/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async"/>
-        </a>
-        <a class="yt-clip" href="https://youtu.be/N2u4N_OF6bs" target="_blank" rel="noopener noreferrer" aria-label="Vidéo YouTube 2">
-          <img src="https://i.ytimg.com/vi/N2u4N_OF6bs/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async"/>
-        </a>
-        <a class="yt-clip" href="https://youtu.be/1Tk4rRiCwJ4" target="_blank" rel="noopener noreferrer" aria-label="Vidéo YouTube 3">
-          <img src="https://i.ytimg.com/vi/1Tk4rRiCwJ4/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async"/>
+        <a class="social-icon social-icon--fb" href="https://www.facebook.com/share/1TXqM56Ncd/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook">
+          <svg class="ico" aria-hidden="true"><use href="#ico-fb"/></svg>
         </a>
       </div>
     </section>
