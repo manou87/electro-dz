@@ -3028,17 +3028,17 @@
       box-shadow:none !important; pointer-events:none;
       -webkit-mask-image:none; mask-image:none;
     }
-    /* Canvas Flutter à taille fixe (400×214) + scale CSS : agrandir n’explose plus le WebGL. */
+    /* Iframe = boîtier (100 %). Pas de scale CSS : sinon l’écran CHECK LEADS
+       se cale sur un autre rectangle que la face et le zoom ne touche qu’une partie. */
     .dev.fluke-meter iframe.fluke-live {
       position:absolute; left:0; top:0; z-index:1;
-      width:400px; height:214px;
+      width:100%; height:100%;
       border:0 !important; margin:0; padding:0;
       background:transparent !important; background-color:transparent !important;
       color-scheme:only light;
       touch-action:none;
       pointer-events:none;
-      transform-origin:0 0;
-      will-change:transform;
+      transform:none !important;
       -webkit-backface-visibility:hidden; backface-visibility:hidden;
       /* v90 : tant que Flutter n’est pas prêt, underlay photo reste visible */
       opacity:0;
@@ -9449,7 +9449,7 @@
       });
     }
     const MIN_SIZE = 30;
-    /* Fluke : canvas Flutter fixe ; le boîtier visuel scale en CSS (évite écran noir WebGL). */
+    /* Fluke : iframe = boîtier (max 720). Le zoom du plan scale tout le .dev, pas un calque à part. */
     const FLUKE_BASE_W = 400;
     const FLUKE_BASE_H = 214;
     const FLUKE_MIN_W = 160;
@@ -20700,7 +20700,7 @@
         frame.setAttribute("scrolling", "no");
         frame.setAttribute("allowtransparency", "true");
         frame.setAttribute("frameborder", "0");
-        frame.style.cssText = "width:" + FLUKE_BASE_W + "px;height:" + FLUKE_BASE_H + "px;border:0;background:transparent;transform-origin:0 0;";
+        frame.style.cssText = "width:100%;height:100%;border:0;background:transparent;transform:none;";
         frame.src = flukeMeterSrc();
         frame.addEventListener("load", () => {
           try { frame.dataset.flukeReady = ""; } catch (_) {}
@@ -20810,19 +20810,17 @@
       item.w = w;
       item.h = h;
     }
-    /** Iframe toujours 400×214 px ; scale CSS = taille visuelle (pas de canvas géant). */
+    /** Iframe = taille du boîtier. Flutter cale face + écran sur le même rectangle. */
     function fitFlukeLiveFrame(frame, item) {
       if (!frame || !item) return;
-      const sz = itemSize(item);
-      const scale = Math.max(0.2, sz.w / FLUKE_BASE_W);
-      frame.style.width = FLUKE_BASE_W + "px";
-      frame.style.height = FLUKE_BASE_H + "px";
-      frame.style.transform = "scale(" + scale + ")";
+      frame.style.width = "100%";
+      frame.style.height = "100%";
+      frame.style.transform = "none";
       frame.style.transformOrigin = "0 0";
       frame.style.left = "0";
       frame.style.top = "0";
-      frame.style.right = "auto";
-      frame.style.bottom = "auto";
+      frame.style.right = "0";
+      frame.style.bottom = "0";
     }
     function appendFlukeFace(parent) {
       /* Vignette librairie seulement — le plan utilise l’iframe trainer, pas cette photo. */
