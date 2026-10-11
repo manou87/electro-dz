@@ -275,7 +275,9 @@
     }
     #wlAuthModal .wl-auth-vitrine::after {
       content:""; position:absolute; inset:0; z-index:1;
-      background:linear-gradient(180deg, rgba(11,16,24,.35) 0%, rgba(11,16,24,.55) 42%, rgba(11,16,24,.92) 100%);
+      background:
+        linear-gradient(90deg, rgba(8,12,18,.78) 0%, rgba(8,12,18,.45) 50%, rgba(8,12,18,.28) 100%),
+        linear-gradient(180deg, rgba(8,12,18,.45) 0%, rgba(8,12,18,.35) 40%, rgba(8,12,18,.92) 100%);
     }
     #wlAuthModal .wl-auth-vitrine-bar {
       position:absolute; left:0; top:0; height:3px; width:0%; z-index:3;
@@ -286,9 +288,15 @@
     }
     @keyframes wlAuthVitrineBar { from { width:0%; } to { width:100%; } }
     #wlAuthModal .wl-auth-vitrine-caption {
-      position:absolute; left:0; right:0; bottom:0; z-index:2;
-      padding:max(1rem, env(safe-area-inset-bottom)) 1.25rem 1.15rem;
-      color:#f4f7fb;
+      position:absolute; left:1rem; right:1rem; bottom:max(1rem, env(safe-area-inset-bottom)); z-index:2;
+      padding:0.95rem 1.05rem 1.05rem;
+      color:#fff;
+      max-width:36rem;
+      border-radius:0.9rem;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(8,12,18,.86);
+      backdrop-filter:blur(10px);
+      box-shadow:0 12px 36px rgba(0,0,0,.4);
     }
     #wlAuthModal .wl-auth-vitrine-caption [data-vitrine-tag] {
       display:block; color:#f5c518; font-size:.72rem; font-weight:800;
@@ -297,10 +305,10 @@
     #wlAuthModal .wl-auth-vitrine-caption [data-vitrine-name] {
       display:block; font-size:clamp(1.05rem, 2.8vw, 1.55rem); font-weight:800;
       letter-spacing:-.02em; line-height:1.15; margin-bottom:.35rem;
-      max-width:28ch;
+      max-width:28ch; color:#fff;
     }
     #wlAuthModal .wl-auth-vitrine-caption [data-vitrine-ex] {
-      margin:0; font-size:.88rem; line-height:1.4; color:#c5d0e0; max-width:48ch;
+      margin:0; font-size:.88rem; line-height:1.4; color:#d7e0ee; max-width:48ch;
     }
     #wlAuthModal .wl-auth-sheet {
       position:relative; z-index:2;
@@ -322,8 +330,9 @@
       }
       #wlAuthModal .wl-auth-vitrine-caption {
         bottom:auto; top:max(12px, env(safe-area-inset-top));
-        padding:1rem 1rem 0;
-        background:linear-gradient(180deg, rgba(11,16,24,.75), transparent);
+        left:0.75rem; right:0.75rem;
+        padding:0.85rem 0.95rem;
+        background:rgba(8,12,18,.88);
       }
     }
 
