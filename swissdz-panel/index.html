@@ -251,6 +251,82 @@
       padding:8px 10px; border-radius:8px; background:rgba(250,204,21,.12);
       border:1px solid rgba(250,204,21,.35);
     }
+
+    /* Vitrine schémas — plein écran derrière la connexion (avant l’entrée). */
+    #wlAuthModal {
+      position:fixed; inset:0; z-index:12000; display:none;
+      align-items:center; justify-content:center;
+      padding:max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+      background:#0b1018; backdrop-filter:none;
+    }
+    #wlAuthModal.open { display:flex; }
+    #wlAuthModal .wl-auth-vitrine {
+      position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none;
+      background:#0b1018;
+    }
+    #wlAuthModal .wl-auth-vitrine-stage { position:absolute; inset:0; }
+    #wlAuthModal .wl-auth-vitrine-stage img {
+      position:absolute; inset:0; width:100%; height:100%;
+      object-fit:cover; object-position:center;
+      opacity:0; transition:opacity .7s ease; transform:scale(1.03);
+    }
+    #wlAuthModal .wl-auth-vitrine-stage img.is-active {
+      opacity:1; transform:scale(1); transition:opacity .7s ease, transform 10s linear;
+    }
+    #wlAuthModal .wl-auth-vitrine::after {
+      content:""; position:absolute; inset:0; z-index:1;
+      background:linear-gradient(180deg, rgba(11,16,24,.35) 0%, rgba(11,16,24,.55) 42%, rgba(11,16,24,.92) 100%);
+    }
+    #wlAuthModal .wl-auth-vitrine-bar {
+      position:absolute; left:0; top:0; height:3px; width:0%; z-index:3;
+      background:#f5c518; pointer-events:none;
+    }
+    #wlAuthModal .wl-auth-vitrine-bar.is-running {
+      animation: wlAuthVitrineBar 10s linear forwards;
+    }
+    @keyframes wlAuthVitrineBar { from { width:0%; } to { width:100%; } }
+    #wlAuthModal .wl-auth-vitrine-caption {
+      position:absolute; left:0; right:0; bottom:0; z-index:2;
+      padding:max(1rem, env(safe-area-inset-bottom)) 1.25rem 1.15rem;
+      color:#f4f7fb;
+    }
+    #wlAuthModal .wl-auth-vitrine-caption [data-vitrine-tag] {
+      display:block; color:#f5c518; font-size:.72rem; font-weight:800;
+      letter-spacing:.04em; text-transform:uppercase; margin-bottom:.35rem;
+    }
+    #wlAuthModal .wl-auth-vitrine-caption [data-vitrine-name] {
+      display:block; font-size:clamp(1.05rem, 2.8vw, 1.55rem); font-weight:800;
+      letter-spacing:-.02em; line-height:1.15; margin-bottom:.35rem;
+      max-width:28ch;
+    }
+    #wlAuthModal .wl-auth-vitrine-caption [data-vitrine-ex] {
+      margin:0; font-size:.88rem; line-height:1.4; color:#c5d0e0; max-width:48ch;
+    }
+    #wlAuthModal .wl-auth-sheet {
+      position:relative; z-index:2;
+      width:min(380px,100%); max-height:min(90vh,640px); overflow:auto;
+      background:var(--panel,#fff); color:var(--text,#0f172a);
+      border:1px solid var(--line,rgba(15,23,42,.12));
+      border-radius:16px; box-shadow:0 18px 50px rgba(15,23,42,.45);
+      padding:18px 18px 14px;
+    }
+    @media (max-width:720px) {
+      #wlAuthModal {
+        align-items:flex-end; justify-content:stretch;
+        padding:0;
+      }
+      #wlAuthModal .wl-auth-sheet {
+        width:100%; max-width:none; border-radius:18px 18px 0 0;
+        max-height:min(62vh, 560px);
+        margin-bottom:0;
+      }
+      #wlAuthModal .wl-auth-vitrine-caption {
+        bottom:auto; top:max(12px, env(safe-area-inset-top));
+        padding:1rem 1rem 0;
+        background:linear-gradient(180deg, rgba(11,16,24,.75), transparent);
+      }
+    }
+
     /* Main + style fil : même rangée que le titre / icône (espace vide à droite) */
     .brand-cluster {
       display:flex; align-items:center; gap:8px; flex:1 1 auto; min-width:0;
@@ -5886,7 +5962,17 @@
     <span class="fab-label" data-i18n="btnPlayShort">Vérifier</span>
   </button>
   <div id="wlAuthModal" aria-hidden="true" role="dialog" aria-labelledby="wlAuthTitle">
+    <div class="wl-auth-vitrine" aria-hidden="true">
+      <div class="wl-auth-vitrine-bar"></div>
+      <div class="wl-auth-vitrine-stage"></div>
+      <div class="wl-auth-vitrine-caption">
+        <span data-vitrine-tag>Schéma · Photovoltaïque</span>
+        <strong data-vitrine-name>Installation photovoltaïque raccordée réseau</strong>
+        <p data-vitrine-ex>Panneaux → coffret DC → onduleur → protections AC → compteur. Câble L / N / PE, lance Play.</p>
+      </div>
+    </div>
     <div class="wl-auth-sheet">
+
       <h2 id="wlAuthTitle" data-i18n="authTitle">Connexion</h2>
       <p class="wl-auth-lead" data-i18n="authLead">Même compte que electro-dz.com (Supabase).</p>
       <p id="wlAuthExpoNote" class="wl-auth-expo" hidden data-i18n="authExpoNote">
@@ -5985,6 +6071,7 @@
   <script src="controle-elec/mains-cable.js?v=mains-cable-4"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/wirelab-auth.js?v=v90-fluke-exmenu"></script>
+  <script src="js/wirelab-auth-vitrine.js?v=vitrine10"></script>
   <script>
     /* Assets pré-cadrés (photos studio trop larges → bandes). */
     const COLORS = [
