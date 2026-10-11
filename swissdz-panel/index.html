@@ -3011,10 +3011,10 @@
     #board.mode-select .dev { cursor:grab; touch-action:none; }
     #board.mode-select .dev:active { cursor:grabbing; }
     /* Doigt auto sur la face d'appui (pas un outil). Ailleurs : main, flèche ou croix. */
-    #board.mode-select .dev :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-man-hit, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .press-face, .vfd-key, .vfd-pot),
-    #board.mode-wire .dev :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-man-hit, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .press-face, .vfd-key, .vfd-pot),
-    #board.mode-select .dev:active :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-man-hit, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .press-face, .vfd-key, .vfd-pot),
-    #board.mode-wire .dev:active :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-man-hit, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .press-face, .vfd-key, .vfd-pot) {
+    #board.mode-select .dev :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-man-hit, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .rcd-test-hit, .press-face, .vfd-key, .vfd-pot),
+    #board.mode-wire .dev :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-man-hit, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .rcd-test-hit, .press-face, .vfd-key, .vfd-pot),
+    #board.mode-select .dev:active :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-man-hit, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .rcd-test-hit, .press-face, .vfd-key, .vfd-pot),
+    #board.mode-wire .dev:active :is(.lever-hit, .fc-lever-hit, .sel-knob-hit, .knx-key, .knx-man-hit, .knx-presence-hit, .knx-thermo-btn, .knx-bin-hit, .badge-hit, .badge-trip, .rcd-test-hit, .press-face, .vfd-key, .vfd-pot) {
       cursor:pointer;
     }
     #board.mode-wire { cursor:crosshair; }
@@ -3492,6 +3492,11 @@
     .lever-hit {
       position:absolute; left:22%; top:30%; width:56%; height:22%;
       z-index:40; cursor:pointer; background:transparent; border:none; padding:0;
+      -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+    }
+    /* Bouton TEST différentiel (bobine IΔ) — zone calée sur la photo, distincte du levier */
+    .rcd-test-hit {
+      position:absolute; z-index:46; cursor:pointer; background:transparent; border:none; padding:0;
       -webkit-tap-highlight-color:transparent; touch-action:manipulation;
     }
     /* Tête de poussoir / AU / BP : doigt au survol, le reste du boîtier reste la main. */
@@ -7078,8 +7083,8 @@
       /* Même photo que le Disj 2P C16 beige — retiré de la lib UI. */
       fusible_gG: {name:"Porte-fusible 1P+N gG SwissDz",prefix:"FU",cat:"Sectionneurs",hideFromLib:true,w:83,h:172,din:true,image:"assets/disj-2p-swissdz.png",badge:"gG",iec:"FU",terminals:[{id:"1",nx:0.2321,ny:0.1173,direction:"top"},{id:"2",nx:0.2321,ny:0.8525,direction:"bottom"},{id:"3",nx:0.7369,ny:0.1173,direction:"top"},{id:"4",nx:0.7609,ny:0.8525,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"]]},
       fusible_aM: {name:"Porte-fusible 1P+N aM SwissDz",prefix:"FU",cat:"Sectionneurs",hideFromLib:true,w:83,h:172,din:true,image:"assets/disj-2p-swissdz.png",badge:"aM",iec:"FU",terminals:[{id:"1",nx:0.2321,ny:0.1173,direction:"top"},{id:"2",nx:0.2321,ny:0.8525,direction:"bottom"},{id:"3",nx:0.7369,ny:0.1173,direction:"top"},{id:"4",nx:0.7609,ny:0.8525,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"]]},
-      idr2p: {name:"IDR 2P SwissDz",prefix:"QI",cat:"Différentiel",w:107,h:172,din:true,image:"assets/idr-2p-on.png",imageOff:"assets/idr-2p-off.png",badge:"2P",iec:"QI",idnMa:30,rcd:true,terminals:[{id:"1",nx:0.24,ny:0.025,direction:"top"},{id:"2",nx:0.79,ny:0.025,direction:"top"},{id:"3",nx:0.24,ny:0.975,direction:"bottom"},{id:"4",nx:0.78,ny:0.975,direction:"bottom"}],pair:["1","3"],pairs:[["1","3"],["2","4"]]},
-      idr4p: {name:"IDR 4P SwissDz",prefix:"QI",cat:"Différentiel",w:164,h:172,din:true,image:"assets/idr-4p-on.png",imageOff:"assets/idr-4p-off.png",badge:"4P",iec:"QI",idnMa:30,rcd:true,terminals:[{id:"1",nx:0.1426,ny:0.025,direction:"top"},{id:"2",nx:0.1426,ny:0.975,direction:"bottom"},{id:"3",nx:0.3697,ny:0.025,direction:"top"},{id:"4",nx:0.3697,ny:0.975,direction:"bottom"},{id:"5",nx:0.6293,ny:0.025,direction:"top"},{id:"6",nx:0.6293,ny:0.975,direction:"bottom"},{id:"7",nx:0.8672,ny:0.025,direction:"top"},{id:"8",nx:0.8563,ny:0.975,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]]},
+      idr2p: {name:"IDR 2P SwissDz",prefix:"QI",cat:"Différentiel",w:107,h:172,din:true,image:"assets/idr-2p-on.png",imageOff:"assets/idr-2p-off.png",badge:"2P",iec:"QI",idnMa:30,rcd:true,testBtn:{nx:0.68,ny:0.34,nw:0.22,nh:0.16},leverHit:{nx:0.06,ny:0.26,nw:0.52,nh:0.30},terminals:[{id:"1",nx:0.24,ny:0.025,direction:"top"},{id:"2",nx:0.79,ny:0.025,direction:"top"},{id:"3",nx:0.24,ny:0.975,direction:"bottom"},{id:"4",nx:0.78,ny:0.975,direction:"bottom"}],pair:["1","3"],pairs:[["1","3"],["2","4"]]},
+      idr4p: {name:"IDR 4P SwissDz",prefix:"QI",cat:"Différentiel",w:164,h:172,din:true,image:"assets/idr-4p-on.png",imageOff:"assets/idr-4p-off.png",badge:"4P",iec:"QI",idnMa:30,rcd:true,testBtn:{nx:0.78,ny:0.34,nw:0.16,nh:0.14},leverHit:{nx:0.08,ny:0.26,nw:0.55,nh:0.30},terminals:[{id:"1",nx:0.1426,ny:0.025,direction:"top"},{id:"2",nx:0.1426,ny:0.975,direction:"bottom"},{id:"3",nx:0.3697,ny:0.025,direction:"top"},{id:"4",nx:0.3697,ny:0.975,direction:"bottom"},{id:"5",nx:0.6293,ny:0.025,direction:"top"},{id:"6",nx:0.6293,ny:0.975,direction:"bottom"},{id:"7",nx:0.8672,ny:0.025,direction:"top"},{id:"8",nx:0.8563,ny:0.975,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]]},
       telerupteur: {name:"Télérupteur SwissDz",prefix:"TL",cat:"Commande",w:60,h:172,din:true,image:"assets/telerupteur.png",iec:"TL",latch:true,terminals:[{id:"A1",nx:0.27,ny:0.1285,direction:"top"},{id:"A2",nx:0.7,ny:0.1285,direction:"top"},{id:"11",nx:0.27,ny:0.8615,direction:"bottom"},{id:"14",nx:0.79,ny:0.8615,direction:"bottom"}],pair:["11","14"],pairs:[["11","14"]]},
       minuterie: {name:"Minuterie SwissDz",prefix:"KT",cat:"Commande",w:42,h:172,din:true,image:"assets/minuterie.png",iec:"KT",terminals:[{id:"1",nx:0.4978,ny:0.0983,direction:"top"},{id:"2",nx:0.4978,ny:0.8816,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"]]},
       jour_nuit: {name:"Contact jour/nuit SwissDz",prefix:"KT",cat:"Commande",w:45,h:172,din:true,image:"assets/jour-nuit-swissdz.png",badge:"J/N",iec:"KT",terminals:[{id:"1",nx:0.5,ny:0.1079,direction:"top"},{id:"2",nx:0.5,ny:0.882,direction:"bottom"}],pair:["1","2"],pairs:[["1","2"]]},
@@ -7430,9 +7435,9 @@
       edz_abb_ct_erc_22: {name:"ABB CT-ERC.22",prefix:"KT",cat:"Commande",w:35,h:160,image:"assets/electrodz/abb_ct_erc_22.png",badge:"Electronic On-delay Time",din:true,startOpen:true,terminals:[{id:"A1",nx:0.208,ny:0.067,direction:"top"},{id:"15",nx:0.506,ny:0.067,direction:"top"},{id:"25",nx:0.796,ny:0.064,direction:"top"},{id:"18",nx:0.208,ny:0.833,direction:"bottom"},{id:"16",nx:0.506,ny:0.833,direction:"bottom"},{id:"28",nx:0.208,ny:0.943,direction:"bottom"},{id:"26",nx:0.506,ny:0.943,direction:"bottom"},{id:"A2",nx:0.796,ny:0.943,direction:"bottom"}],pairs:[["15","18"],["25","28"]],pair:["15","18"],pairsNc:[["15","16"],["25","26"]]},
       edz_abb_cr_m: {name:"ABB Cr M",prefix:"KA",cat:"Relais",w:45,h:156,image:"assets/electrodz/abb_cr_m.png",imageOff:"assets/electrodz/abb_cr_m_off.png",badge:"Relay",din:true,startOpen:true,terminals:[{id:"A1",nx:0.2,ny:0.03,direction:"top"},{id:"A2",nx:0.8,ny:0.03,direction:"top"},{id:"11",nx:0.25,ny:0.97,direction:"bottom"},{id:"12",nx:0.5,ny:0.97,direction:"bottom"},{id:"14",nx:0.75,ny:0.97,direction:"bottom"}],pairs:[["11","14"]],pair:["11","14"],pairsNc:[["11","12"]]},
       edz_abb_ct_c: {name:"ABB Ct C",prefix:"KT",cat:"Commande",w:45,h:180,image:"assets/electrodz/abb_ct_c.png",imageOff:"assets/electrodz/abb_ct_c_off.png",badge:"Timer",din:true,startOpen:true,terminals:[{id:"A1",nx:0.18,ny:0.98,direction:"bottom"},{id:"A2",nx:0.82,ny:0.98,direction:"bottom"},{id:"15",nx:0.34,ny:0.03,direction:"top"},{id:"16",nx:0.5,ny:0.03,direction:"top"},{id:"18",nx:0.66,ny:0.03,direction:"top"}],pairs:[["15","18"]],pair:["15","18"],pairsNc:[["15","16"]]},
-      edz_abb_ds201_a: {name:"ABB DS201-A",prefix:"QF",cat:"Différentiel",w:36,h:220,image:"assets/electrodz/abb_ds201_a.png",imageOff:"assets/electrodz/abb_ds201_a_off.png",badge:"Rccb Rcbo",din:true,startOpen:true,idnMa:30,rcd:true,terminals:[{id:"1",nx:0.5,ny:0.02,direction:"top"},{id:"2",nx:0.5,ny:0.98,direction:"bottom"}],pairs:[["1","2"]],pair:["1","2"]},
-      edz_abb_f202_a: {name:"ABB F202-A",prefix:"QF",cat:"Différentiel",w:72,h:170,image:"assets/electrodz/abb_f202_a.png",imageOff:"assets/electrodz/abb_f202_a_off.png",badge:"Rccb Rcbo",din:true,startOpen:true,idnMa:30,rcd:true,terminals:[{id:"1",nx:0.25,ny:0.02,direction:"top"},{id:"2",nx:0.25,ny:0.98,direction:"bottom"},{id:"3",nx:0.75,ny:0.02,direction:"top"},{id:"4",nx:0.75,ny:0.98,direction:"bottom"}],pairs:[["1","2"],["3","4"]],pair:["1","2"]},
-      edz_abb_f204_a: {name:"ABB F204-A",prefix:"QF",cat:"Différentiel",w:144,h:170,image:"assets/electrodz/abb_f204_a.png",imageOff:"assets/electrodz/abb_f204_a_off.png",badge:"Rccb Rcbo",din:true,startOpen:true,idnMa:30,rcd:true,terminals:[{id:"1",nx:0.125,ny:0.02,direction:"top"},{id:"2",nx:0.125,ny:0.98,direction:"bottom"},{id:"3",nx:0.375,ny:0.02,direction:"top"},{id:"4",nx:0.375,ny:0.98,direction:"bottom"},{id:"5",nx:0.625,ny:0.02,direction:"top"},{id:"6",nx:0.625,ny:0.98,direction:"bottom"},{id:"7",nx:0.875,ny:0.02,direction:"top"},{id:"8",nx:0.875,ny:0.98,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]],pair:["1","2"]},
+      edz_abb_ds201_a: {name:"ABB DS201-A",prefix:"QF",cat:"Différentiel",w:72,h:180,image:"assets/electrodz/abb_ds201_a.png",imageOff:"assets/electrodz/abb_ds201_a_off.png",badge:"1P+N RCBO",din:true,startOpen:true,idnMa:30,rcd:true,testBtn:{nx:0.10,ny:0.40,nw:0.28,nh:0.11},leverHit:{nx:0.22,ny:0.36,nw:0.58,nh:0.20},terminals:[{id:"1",nx:0.28,ny:0.025,direction:"top"},{id:"N",nx:0.72,ny:0.025,direction:"top"},{id:"2",nx:0.28,ny:0.975,direction:"bottom"},{id:"N2",nx:0.72,ny:0.975,direction:"bottom"}],pairs:[["1","2"],["N","N2"]],pair:["1","2"]},
+      edz_abb_f202_a: {name:"ABB F202-A",prefix:"QF",cat:"Différentiel",w:72,h:170,image:"assets/electrodz/abb_f202_a.png",imageOff:"assets/electrodz/abb_f202_a_off.png",badge:"Rccb Rcbo",din:true,startOpen:true,idnMa:30,rcd:true,testBtn:{nx:0.58,ny:0.24,nw:0.32,nh:0.16},leverHit:{nx:0.18,ny:0.42,nw:0.64,nh:0.18},terminals:[{id:"1",nx:0.25,ny:0.02,direction:"top"},{id:"2",nx:0.25,ny:0.98,direction:"bottom"},{id:"3",nx:0.75,ny:0.02,direction:"top"},{id:"4",nx:0.75,ny:0.98,direction:"bottom"}],pairs:[["1","2"],["3","4"]],pair:["1","2"]},
+      edz_abb_f204_a: {name:"ABB F204-A",prefix:"QF",cat:"Différentiel",w:144,h:170,image:"assets/electrodz/abb_f204_a.png",imageOff:"assets/electrodz/abb_f204_a_off.png",badge:"Rccb Rcbo",din:true,startOpen:true,idnMa:30,rcd:true,testBtn:{nx:0.55,ny:0.24,nw:0.18,nh:0.14},leverHit:{nx:0.18,ny:0.42,nw:0.64,nh:0.18},terminals:[{id:"1",nx:0.125,ny:0.02,direction:"top"},{id:"2",nx:0.125,ny:0.98,direction:"bottom"},{id:"3",nx:0.375,ny:0.02,direction:"top"},{id:"4",nx:0.375,ny:0.98,direction:"bottom"},{id:"5",nx:0.625,ny:0.02,direction:"top"},{id:"6",nx:0.625,ny:0.98,direction:"bottom"},{id:"7",nx:0.875,ny:0.02,direction:"top"},{id:"8",nx:0.875,ny:0.98,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"],["7","8"]],pair:["1","2"]},
       edz_abb_mcb_01: {name:"ABB MCB-01",prefix:"H",cat:"Boutonnerie",w:60,h:60,image:"assets/electrodz/abb_mcb_01.png",imageOff:"assets/electrodz/abb_mcb_01_off.png",badge:"Buzzer",lamp:true,buzzer:true,terminals:[{id:"L",nx:0.35,ny:0.95,direction:"bottom"},{id:"N",nx:0.65,ny:0.95,direction:"bottom"}]},
       edz_abb_mcb_10: {name:"ABB MCB-10",prefix:"H",cat:"Boutonnerie",w:60,h:60,image:"assets/electrodz/abb_mcb_10.png",imageOff:"assets/electrodz/abb_mcb_10_off.png",badge:"Buzzer",lamp:true,buzzer:true,terminals:[{id:"L",nx:0.35,ny:0.95,direction:"bottom"},{id:"N",nx:0.65,ny:0.95,direction:"bottom"}]},
       edz_abb_mcbh_10: {name:"ABB MCBH-10",prefix:"H",cat:"Boutonnerie",w:60,h:60,image:"assets/electrodz/abb_mcbh_10.png",imageOff:"assets/electrodz/abb_mcbh_10_off.png",badge:"Buzzer",lamp:true,buzzer:true,terminals:[{id:"L",nx:0.35,ny:0.95,direction:"bottom"},{id:"N",nx:0.65,ny:0.95,direction:"bottom"}]},
@@ -7564,8 +7569,8 @@
       edz_ukk160: {name:"Generic UKK-160",prefix:"X",cat:"Borniers",w:59,h:140,image:"assets/electrodz/ukk160.png",badge:"Power Distribution Block",din:true,passthrough:true,terminals:[{id:"IN",nx:0.2,ny:0.5,direction:"left"},{id:"O1",nx:0.78,ny:0.13,direction:"right"},{id:"O2",nx:0.78,ny:0.275,direction:"right"},{id:"O3",nx:0.78,ny:0.42,direction:"right"},{id:"O4",nx:0.78,ny:0.565,direction:"right"},{id:"O5",nx:0.78,ny:0.71,direction:"right"},{id:"O6",nx:0.78,ny:0.855,direction:"right"}],pairs:[["IN","O1"],["IN","O2"],["IN","O3"],["IN","O4"],["IN","O5"],["IN","O6"]],pair:["IN","O1"]},
       edz_ukk250: {name:"Generic UKK-250",prefix:"X",cat:"Borniers",w:99,h:194,image:"assets/electrodz/ukk250.png",badge:"Power Distribution Block",din:true,passthrough:true,terminals:[{id:"IN",nx:0.2,ny:0.5,direction:"left"},{id:"O1",nx:0.55,ny:0.18,direction:"right"},{id:"O2",nx:0.55,ny:0.36,direction:"right"},{id:"O3",nx:0.55,ny:0.54,direction:"right"},{id:"O4",nx:0.73,ny:0.36,direction:"right"},{id:"O5",nx:0.73,ny:0.54,direction:"right"},{id:"O6",nx:0.73,ny:0.72,direction:"right"},{id:"O7",nx:0.73,ny:0.9,direction:"right"},{id:"O8",nx:0.91,ny:0.36,direction:"right"},{id:"O9",nx:0.91,ny:0.54,direction:"right"},{id:"O10",nx:0.91,ny:0.72,direction:"right"},{id:"O11",nx:0.91,ny:0.9,direction:"right"}],pairs:[["IN","O1"],["IN","O2"],["IN","O3"],["IN","O4"],["IN","O5"],["IN","O6"],["IN","O7"],["IN","O8"],["IN","O9"],["IN","O10"],["IN","O11"]],pair:["IN","O1"]},
       edz_guardamotor_24_32_a: {name:"MPCB 24-32 A",prefix:"QM",cat:"Disjoncteur moteur",w:85,h:170,image:"assets/electrodz/guardamotor_24_32_a.png",imageOff:"assets/electrodz/guardamotor_24_32_a_off.png",badge:"Power",din:true,startOpen:true,terminals:[{id:"1",nx:0.1667,ny:0.0193,direction:"top"},{id:"3",nx:0.5,ny:0.0193,direction:"top"},{id:"5",nx:0.8333,ny:0.0193,direction:"top"},{id:"2",nx:0.1667,ny:0.9783,direction:"bottom"},{id:"4",nx:0.5,ny:0.9783,direction:"bottom"},{id:"6",nx:0.8333,ny:0.9783,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"]],pair:["1","2"]},
-      edz_id_2p_25a_30ma: {name:"RCCB 2P 25A 30mA",prefix:"QF",cat:"Différentiel",w:57,h:170,image:"assets/electrodz/id_2p_25a_30ma.png",imageOff:"assets/electrodz/id_2p_25a_30ma_off.png",badge:"Protection",startOpen:true,terminals:[{id:"N1",nx:0.25,ny:0.0,direction:"top"},{id:"1",nx:0.75,ny:0.0,direction:"top"},{id:"N2",nx:0.25,ny:1.0,direction:"bottom"},{id:"2",nx:0.75,ny:1.0,direction:"bottom"}],pairs:[["N1","N2"],["1","2"]],pair:["N1","N2"]},
-      edz_id_4p_25a_30ma: {name:"RCCB 4P 25A 30mA",prefix:"QF",cat:"Différentiel",w:113,h:170,image:"assets/electrodz/id_4p_25a_30ma.png",imageOff:"assets/electrodz/id_4p_25a_30ma_off.png",badge:"Protection",din:true,startOpen:true,terminals:[{id:"1",nx:0.375,ny:0.0,direction:"top"},{id:"3",nx:0.625,ny:0.0,direction:"top"},{id:"2",nx:0.375,ny:1.0,direction:"bottom"},{id:"4",nx:0.625,ny:1.0,direction:"bottom"},{id:"5",nx:0.875,ny:0.0,direction:"top"},{id:"6",nx:0.875,ny:1.0,direction:"bottom"},{id:"N2",nx:0.125,ny:1.0,direction:"bottom"},{id:"N1",nx:0.125,ny:0.0,direction:"top"}],pairs:[["N2","N1"],["1","2"],["3","4"],["5","6"]],pair:["N2","N1"]},
+      edz_id_2p_25a_30ma: {name:"RCCB 2P 25A 30mA",prefix:"QF",cat:"Différentiel",w:57,h:170,image:"assets/electrodz/id_2p_25a_30ma.png",imageOff:"assets/electrodz/id_2p_25a_30ma_off.png",badge:"Protection",startOpen:true,idnMa:30,rcd:true,testBtn:{nx:0.62,ny:0.30,nw:0.30,nh:0.14},leverHit:{nx:0.12,ny:0.42,nw:0.70,nh:0.18},terminals:[{id:"N1",nx:0.25,ny:0.0,direction:"top"},{id:"1",nx:0.75,ny:0.0,direction:"top"},{id:"N2",nx:0.25,ny:1.0,direction:"bottom"},{id:"2",nx:0.75,ny:1.0,direction:"bottom"}],pairs:[["N1","N2"],["1","2"]],pair:["N1","N2"]},
+      edz_id_4p_25a_30ma: {name:"RCCB 4P 25A 30mA",prefix:"QF",cat:"Différentiel",w:113,h:170,image:"assets/electrodz/id_4p_25a_30ma.png",imageOff:"assets/electrodz/id_4p_25a_30ma_off.png",badge:"Protection",din:true,startOpen:true,idnMa:30,rcd:true,testBtn:{nx:0.70,ny:0.30,nw:0.22,nh:0.14},leverHit:{nx:0.12,ny:0.42,nw:0.70,nh:0.18},terminals:[{id:"1",nx:0.375,ny:0.0,direction:"top"},{id:"3",nx:0.625,ny:0.0,direction:"top"},{id:"2",nx:0.375,ny:1.0,direction:"bottom"},{id:"4",nx:0.625,ny:1.0,direction:"bottom"},{id:"5",nx:0.875,ny:0.0,direction:"top"},{id:"6",nx:0.875,ny:1.0,direction:"bottom"},{id:"N2",nx:0.125,ny:1.0,direction:"bottom"},{id:"N1",nx:0.125,ny:0.0,direction:"top"}],pairs:[["N2","N1"],["1","2"],["3","4"],["5","6"]],pair:["N2","N1"]},
       edz_itm_1p_c32: {name:"MCB 1P C32",prefix:"Q",cat:"Disjoncteurs modulaires",w:28,h:170,image:"assets/electrodz/itm_1p_c32.png",imageOff:"assets/electrodz/itm_1p_c32_off.png",badge:"Protection",startOpen:true,terminals:[{id:"1",nx:0.5,ny:0.0,direction:"top"},{id:"2",nx:0.5,ny:1.0,direction:"bottom"}],pairs:[["1","2"]],pair:["1","2"]},
       edz_itm_2p_c32: {name:"MCB 2P C32",prefix:"Q",cat:"Disjoncteurs modulaires",w:57,h:170,image:"assets/electrodz/itm_2p_c32.png",imageOff:"assets/electrodz/itm_2p_c32_off.png",badge:"Protection",din:true,startOpen:true,terminals:[{id:"1",nx:0.25,ny:0.0,direction:"top"},{id:"3",nx:0.75,ny:0.0,direction:"top"},{id:"2",nx:0.25,ny:1.0,direction:"bottom"},{id:"4",nx:0.75,ny:1.0,direction:"bottom"}],pairs:[["1","2"],["3","4"]],pair:["1","2"]},
       edz_itm_3p_c32: {name:"MCB 3P C32",prefix:"Q",cat:"Disjoncteurs modulaires",w:85,h:170,image:"assets/electrodz/itm_3p_c32.png",imageOff:"assets/electrodz/itm_3p_c32_off.png",badge:"Protection",din:true,startOpen:true,terminals:[{id:"1",nx:0.1667,ny:0.0,direction:"top"},{id:"3",nx:0.5,ny:0.0,direction:"top"},{id:"2",nx:0.1667,ny:1.0,direction:"bottom"},{id:"4",nx:0.5,ny:1.0,direction:"bottom"},{id:"5",nx:0.8333,ny:0.0,direction:"top"},{id:"6",nx:0.8333,ny:1.0,direction:"bottom"}],pairs:[["1","2"],["3","4"],["5","6"]],pair:["1","2"]},
@@ -22122,11 +22127,18 @@
       }
       return { x: 400, y: 300, wireId: null, score: 0 };
     }
-    function tripProtectionsOnShort() {
+    /** Déclenchement protections : L–PE = différentiels (IΔ) ; L–N / L–L = toutes protections. */
+    function tripProtectionsOnShort(kind) {
+      const earthLeak = kind === "L-PE";
       state.items.forEach((item) => {
         const def = LIB[item.type];
         if (!def || def.push || def.prox || hasCoil(def) || def.lamp || def.buzzer || def.motor) return;
-        if (def.pair || def.pairs || def.vv) item.closed = false;
+        if (!(def.pair || def.pairs || def.vv)) return;
+        if (earthLeak) {
+          if (isDiffDevice(item)) item.closed = false;
+          return;
+        }
+        item.closed = false;
       });
     }
     /* Vibration téléphone : no-op desktop / API absente. Pattern fini, pas de boucle. */
@@ -22290,7 +22302,7 @@
       if (!state.shortArmed) {
         state.shortArmed = true;
         vibrateShortCircuit([80, 40, 80, 40, 200]);
-        tripProtectionsOnShort();
+        tripProtectionsOnShort((loc && loc.kind) || "L-N");
       }
     }
     function clearShortIfIdle() {
@@ -24879,6 +24891,12 @@
         if (def.imageOff && !def.push && !def.prox && !hasCoil(def) && !def.passthrough) {
           const lever = document.createElement("div");
           lever.className = "lever-hit";
+          if (def.leverHit) {
+            lever.style.left = (def.leverHit.nx * 100) + "%";
+            lever.style.top = (def.leverHit.ny * 100) + "%";
+            lever.style.width = (def.leverHit.nw * 100) + "%";
+            lever.style.height = (def.leverHit.nh * 100) + "%";
+          }
           if (def.spd) {
             lever.setAttribute("aria-label", item.spdFailed ? "Remplacer cartouche" : "Parafoudre OK");
           } else if (def.astro) {
@@ -24891,6 +24909,7 @@
           } else {
             lever.setAttribute("aria-label", item.closed !== false ? "ON" : "OFF");
           }
+          lever.title = isDiffDevice(item) ? "Levier disjoncteur (I / O)" : (lever.title || "");
           lever.onpointerdown = (ev) => {
             ev.stopPropagation();
             lever._tap = { x: ev.clientX, y: ev.clientY, id: ev.pointerId };
@@ -24929,23 +24948,32 @@
           face.setAttribute("aria-hidden", "true");
           el.appendChild(face);
         }
-        /* IDR : zone TEST = déclenchement (ouvre le différentiel) */
-        if (def.prefix === "QI" && (def.pair || def.pairs)) {
+        /* Différentiel / RCBO : bouton TEST = déclenchement IΔ (pas le levier). */
+        if (isDiffDevice(item) && (def.pair || def.pairs)) {
           const tb = document.createElement("div");
-          tb.className = "badge badge-hit";
-          tb.style.left = "auto";
-          tb.style.right = "4px";
-          tb.style.bottom = "36px";
-          tb.style.width = "34px";
-          tb.style.height = "22px";
-          tb.title = "TEST = déclencher l'IDR";
-          tb.setAttribute("aria-label", "TEST IDR");
-          tb.onclick = (ev) => {
+          tb.className = "rcd-test-hit";
+          const hit = def.testBtn || { nx: 0.68, ny: 0.34, nw: 0.22, nh: 0.14 };
+          tb.style.left = (hit.nx * 100) + "%";
+          tb.style.top = (hit.ny * 100) + "%";
+          tb.style.width = (hit.nw * 100) + "%";
+          tb.style.height = (hit.nh * 100) + "%";
+          tb.title = "TEST = déclenchement différentiel (IΔ)";
+          tb.setAttribute("aria-label", "Bouton TEST différentiel");
+          tb.onpointerdown = (ev) => {
             ev.stopPropagation();
+            tb._tap = { x: ev.clientX, y: ev.clientY, id: ev.pointerId };
+          };
+          tb.onpointerup = (ev) => {
+            ev.stopPropagation();
+            const t = tb._tap;
+            tb._tap = null;
+            if (!t || t.id !== ev.pointerId) return;
+            if (Math.hypot(ev.clientX - t.x, ev.clientY - t.y) > tapSlopPx(ev)) return;
             pushHistory();
             item.closed = false;
             render();
           };
+          tb.onpointercancel = () => { tb._tap = null; };
           el.appendChild(tb);
         }
         /* Thermique : badge Ir + zone trip (ouvre puissance + NC 95-96) */
@@ -24986,7 +25014,7 @@
             el.appendChild(d);
           });
         }
-        if ((def.pair || def.pairs || def.selector || def.vv) && !def.prox && !def.knxActuator && !def.knxPush && !def.knxShutter && !def.knxDimmer && !def.knxDali && !def.knxBinary && !def.fc && !def.passthrough) {
+        if ((def.pair || def.pairs || def.selector || def.vv) && !def.prox && !def.knxActuator && !def.knxPush && !def.knxShutter && !def.knxDimmer && !def.knxDali && !def.knxBinary && !def.fc && !def.passthrough && !isDiffDevice(item)) {
           const b = document.createElement("div");
           /* Pas de libellé Marche/Arrêt sur aucun composant — zone clic discrète seulement */
           let on = def.push ? item.pressed : item.closed;
@@ -25065,6 +25093,7 @@
           if (ev.target.classList.contains("rhandle")) return;
           if (ev.target.classList.contains("badge")) return;
           if (ev.target.classList.contains("lever-hit")) return;
+          if (ev.target.classList.contains("rcd-test-hit")) return;
           if (ev.target.classList.contains("fc-lever-hit")) return;
           if (ev.target.classList.contains("sel-knob-hit")) return;
           /* v33-knx-tap : closest() — ne pas démarrer drag si doigt sur touche KNX */
