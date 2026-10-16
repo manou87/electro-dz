@@ -8,7 +8,8 @@
   <link rel="apple-touch-icon" href="brand/logo-wirelab-pro-icon.png?v=official-gemini" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="native-shell-8777-v137-eduvolt-cable-snap-labels" />
+  <meta name="swissdz-rev" content="native-shell-8777-v138-eduvolt-no-overlay-panels" />
+  <!-- v138: retire cadres flottants (segments/bornes/labels/banner) — REA = modèle, pas overlays plan -->
   <!-- v137: REA câblage — Snap H/V+grille, start/endLabel, éditeur segments (sans goulottes) -->
   <!-- v136: modèle câble EduVolt — Dibujar cable H/V, extrémités libres, presets -->
   <!-- v135: (partiel) axe H/V + presets sur borne→borne — remplacé par v136 -->
@@ -6281,7 +6282,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/wirelab-auth.js?v=v90-fluke-exmenu"></script>
   <script src="js/wirelab-auth-vitrine.js?v=vitrine10"></script>
-  <script src="eduvolt-cable-model.js?v=v137"></script>
+  <script src="eduvolt-cable-model.js?v=v138"></script>
   <script>
     /* Assets pré-cadrés (photos studio trop larges → bandes). */
     const COLORS = [
@@ -10693,7 +10694,7 @@
       mode: "select", sim: false, color: COLORS[0].c, colorManual: false, section: 0.75,
       /* Modèle EduVolt : objets câble (H/V), distincts du câblage borne→borne. */
       cables: [], cableNo: 1, cableTool: "h", cablePreset: "v1", cableName: "Câble v1",
-      cableDraft: null, selectedCable: null, showFreeTermsPanel: true,
+      cableDraft: null, selectedCable: null, showFreeTermsPanel: false,
       cableSnapGrid: true, cableSyncLabels: false,
       seq: 1, wireNo: 1, counts: {}, items: [], wires: [],
       selected: null, selectedIds: [], selectedWire: null, wireOpt: null, selectedBar: null, wireFrom: null,

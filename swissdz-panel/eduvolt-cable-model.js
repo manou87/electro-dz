@@ -35,7 +35,8 @@
     if (state.cablePreset == null) state.cablePreset = "v1";
     if (state.cableDraft == null) state.cableDraft = null;
     if (state.selectedCable == null) state.selectedCable = null;
-    if (state.showFreeTermsPanel == null) state.showFreeTermsPanel = true;
+    /* Pas de cadres flottants sur le plan (REA = data/strings, pas overlay canvas). */
+    if (state.showFreeTermsPanel == null) state.showFreeTermsPanel = false;
     if (state.cableSnapGrid == null) state.cableSnapGrid = true;
     if (state.cableSyncLabels == null) state.cableSyncLabels = false;
     return state;
@@ -687,118 +688,28 @@
       btnSnap.setAttribute("aria-pressed", state.cableSnapGrid ? "true" : "false");
     }
     if (sel && state.cablePreset && sel.value !== state.cablePreset) sel.value = state.cablePreset || "v1";
-    if (banner) {
-      banner.hidden = mode !== "cable";
-      const snapTxt = state.cableSnapGrid ? "Snap ON" : "Snap OFF";
-      banner.textContent = state.cableDraft
-        ? ("Dibujando Cable — " + (state.cableTool === "v" ? "Vertical" : "Horizontal")
-          + " · " + snapTxt + " · clic=segment · borne=attach · Entrée=confirmar · Esc=cancelar")
-        : ("Dibujar cable — " + (state.cableTool === "v" ? "Cable vertical" : "Cable horizontal")
-          + " · " + snapTxt + " · preset " + ((PRESETS[state.cablePreset] || PRESETS.v1).name));
-    }
+    /* Banner bas d’écran : pas dans EduVolt sur le plan — masqué. */
+    if (banner) banner.hidden = true;
     try { document.body.classList.toggle("eduvolt-cable-mode", mode === "cable"); } catch (_) {}
     renderFreeTermsPanel();
     renderSegmentsPanel();
     renderLabelsPanel();
   }
 
+  /** Cadres flottants retirés du plan (v138) — REA = modèle, pas overlays EduVolt canvas. */
   function renderFreeTermsPanel() {
     const panel = document.getElementById("eduvoltFreeTerms");
-    if (!panel) return;
-    const state = ensureState();
-    const show = state && state.mode === "cable" && state.showFreeTermsPanel !== false;
-    panel.hidden = !show;
-    if (!show) return;
-    const list = listFreeTerminals();
-    const body = panel.querySelector(".ev-ft-body");
-    if (!body) return;
-    body.innerHTML = "";
-    const title = panel.querySelector(".ev-ft-title");
-    if (title) title.textContent = "BORNES SIN CONEXIÓN (" + list.length + ")";
-    if (!list.length) {
-      body.innerHTML = '<div class="ev-ft-empty">Aucune borne libre</div>';
-      return;
-    }
-    list.slice(0, 80).forEach((ft) => {
-      const row = document.createElement("button");
-      row.type = "button";
-      row.className = "ev-ft-row";
-      row.textContent = (ft.tag || "?") + " · " + ft.term;
-      row.onclick = () => {
-        enterCableMode(state.cableTool || "h");
-        onTermClick(ft.uid, ft.term);
-        try { if (typeof global.render === "function") global.render(); } catch (_) {}
-      };
-      body.appendChild(row);
-    });
+    if (panel) panel.hidden = true;
   }
 
   function renderSegmentsPanel() {
     const panel = document.getElementById("eduvoltSegments");
-    if (!panel) return;
-    const state = ensureState();
-    const cab = selectedCableObj();
-    /* Visible dès qu’un câble est sélectionné (mode cable ou clic sur tracé). */
-    const show = !!(state && cab && Array.isArray(cab.segments) && cab.segments.length);
-    panel.hidden = !show;
-    if (!show) return;
-    const body = panel.querySelector(".ev-seg-body");
-    const title = panel.querySelector(".ev-seg-title");
-    if (title) title.textContent = "Cable segments: " + (cab.segments.length);
-    if (!body) return;
-    body.innerHTML = "";
-    cab.segments.forEach((seg, i) => {
-      const row = document.createElement("div");
-      row.className = "ev-seg-row";
-      const inp = document.createElement("input");
-      inp.type = "text";
-      inp.value = seg.name || ("Segmento " + (i + 1));
-      inp.maxLength = 32;
-      inp.title = "Renombrar segmento";
-      inp.onchange = () => {
-        renameSegment(cab.id, i, inp.value);
-        try { if (typeof global.render === "function") global.render(); } catch (_) {}
-        renderSegmentsPanel();
-      };
-      const up = document.createElement("button");
-      up.type = "button"; up.textContent = "↑"; up.title = "Subir segmento";
-      up.onclick = () => { moveSegment(cab.id, i, -1); renderSegmentsPanel(); try { global.render(); } catch (_) {} };
-      const down = document.createElement("button");
-      down.type = "button"; down.textContent = "↓"; down.title = "Bajar segmento";
-      down.onclick = () => { moveSegment(cab.id, i, 1); renderSegmentsPanel(); try { global.render(); } catch (_) {} };
-      const del = document.createElement("button");
-      del.type = "button"; del.textContent = "✕"; del.title = "Eliminar segmento";
-      del.disabled = cab.segments.length <= 1;
-      del.onclick = () => {
-        deleteSegment(cab.id, i);
-        try { if (typeof global.render === "function") global.render(); } catch (_) {}
-        renderSegmentsPanel();
-      };
-      row.appendChild(inp);
-      row.appendChild(up);
-      row.appendChild(down);
-      row.appendChild(del);
-      body.appendChild(row);
-    });
+    if (panel) panel.hidden = true;
   }
 
   function renderLabelsPanel() {
     const panel = document.getElementById("eduvoltCableLabels");
-    if (!panel) return;
-    const state = ensureState();
-    const cab = selectedCableObj();
-    const show = !!(state && cab);
-    panel.hidden = !show;
-    if (!show) return;
-    const startInp = document.getElementById("evLabelStart");
-    const endInp = document.getElementById("evLabelEnd");
-    const syncChk = document.getElementById("evLabelSync");
-    if (startInp && document.activeElement !== startInp) startInp.value = cab.startLabel || "";
-    if (endInp && document.activeElement !== endInp) {
-      endInp.value = cab.endLabel || "";
-      endInp.disabled = !!cab.syncLabels;
-    }
-    if (syncChk) syncChk.checked = !!cab.syncLabels;
+    if (panel) panel.hidden = true;
   }
 
   function bindUi() {
