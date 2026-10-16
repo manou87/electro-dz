@@ -1,13 +1,15 @@
 /**
- * Modèle câblage EduVolt Designer — objet « câble » (pas borne→borne).
- * Chargé après l’init de `state` / helpers panneau ; exposé sur window.EduVoltCable.
+ * Modèle câblage EduVolt Designer — objet « câble » (REA APK 2.2.10).
+ * Hors scope : goulottes / wire duct (pas le câblage).
  *
- * Flux UI (strings APK 2.2.10) :
- *  - Dibujar cable / Drawing Cable
- *  - Cable horizontal (hWire) / Cable vertical (vWire)
- *  - Extrémite libre (loose end) ou attachée à une borne
- *  - Segments nommés, presets v1/v2/v3
- *  - Exit cable mode / Cancel drawing / Confirm
+ * REA evidence (isolate strings + CableElement tokens) :
+ *  - Dibujar / Dibujando Cable · hWire / vWire
+ *  - Snap horizontal/vertical · Snap to grid ON/OFF
+ *  - Cable (loose end) · Extremos independientes
+ *  - startLabel / endLabel / syncLabels (Same label both ends)
+ *  - Segments : Segmento N · Renombrar / Eliminar / Subir / Bajar
+ *  - cable_confirm / cable_cancel / Exit cable mode
+ *  - BORNES SIN CONEXIÓN
  */
 (function (global) {
   "use strict";
@@ -17,6 +19,8 @@
     v2: { id: "v2", name: "Câble v2", section: 2.5, color: "#0088ce" },
     v3: { id: "v3", name: "Câble v3", section: 6, color: "#111111" }
   };
+  /** EduVolt grille câble ≈ 50 px (REA: Snap horizontal/vertical + grille). */
+  const CABLE_GRID = 50;
 
   function S() {
     return global.state;
@@ -27,11 +31,13 @@
     if (!state) return null;
     if (!Array.isArray(state.cables)) state.cables = [];
     if (state.cableNo == null) state.cableNo = 1;
-    if (!state.cableTool) state.cableTool = "h"; /* h | v */
+    if (!state.cableTool) state.cableTool = "h";
     if (state.cablePreset == null) state.cablePreset = "v1";
     if (state.cableDraft == null) state.cableDraft = null;
     if (state.selectedCable == null) state.selectedCable = null;
     if (state.showFreeTermsPanel == null) state.showFreeTermsPanel = true;
+    if (state.cableSnapGrid == null) state.cableSnapGrid = true;
+    if (state.cableSyncLabels == null) state.cableSyncLabels = false;
     return state;
   }
 
@@ -48,29 +54,40 @@
     state.preview = null;
   }
 
+  function gridStep() {
+    const state = ensureState();
+    if (state && state.cableSnapGrid === false) return 1;
+    return CABLE_GRID;
+  }
+
   function snapPoint(x, y, step) {
-    const s = step > 0 ? step : 10;
+    const s = step > 0 ? step : gridStep();
     return { x: Math.round(x / s) * s, y: Math.round(y / s) * s };
   }
 
+  /** Snap H/V puis grille (REA: Snap horizontal/vertical). */
   function projectOrtho(last, x, y, tool) {
-    if (!last) return { x: x, y: y };
-    if (tool === "h") return { x: x, y: last.y };
-    if (tool === "v") return { x: last.x, y: y };
-    /* free: pick dominant axis */
-    if (Math.abs(x - last.x) >= Math.abs(y - last.y)) return { x: x, y: last.y };
-    return { x: last.x, y: y };
+    if (!last) return snapPoint(x, y);
+    let px = x, py = y;
+    if (tool === "h") py = last.y;
+    else if (tool === "v") px = last.x;
+    else if (Math.abs(x - last.x) >= Math.abs(y - last.y)) py = last.y;
+    else px = last.x;
+    const snapped = snapPoint(px, py);
+    /* Garder l’axe verrouillé après snap grille. */
+    if (tool === "h") snapped.y = last.y;
+    if (tool === "v") snapped.x = last.x;
+    return snapped;
   }
 
   function pickNearTerminal(x, y, skip) {
     const state = ensureState();
     if (!state || typeof global.nearestPanelTerm !== "function") return null;
-    const hit = global.nearestPanelTerm(x, y, {
+    return global.nearestPanelTerm(x, y, {
       skipUid: skip && skip.uid,
       skipTerm: skip && skip.term,
       maxDist: 28
-    });
-    return hit || null;
+    }) || null;
   }
 
   function termPoint(ref) {
@@ -111,7 +128,7 @@
     const state = ensureState();
     if (!state) return;
     const preset = activePreset();
-    let start = snapPoint(x, y, 10);
+    let start = snapPoint(x, y);
     let a = null;
     let looseStart = true;
     if (termRef) {
@@ -128,6 +145,7 @@
         looseStart = false;
       }
     }
+    const label = preset.name;
     state.cableDraft = {
       tool: state.cableTool === "v" ? "v" : "h",
       points: [start],
@@ -140,7 +158,10 @@
       color: preset.color,
       section: preset.section,
       colorManual: true,
-      segments: [{ name: "Segmento 1", fromIdx: 0 }]
+      startLabel: label,
+      endLabel: state.cableSyncLabels ? label : "",
+      syncLabels: !!state.cableSyncLabels,
+      segments: [{ name: "Segmento 1", fromIdx: 0, type: state.cableTool === "v" ? "v" : "h" }]
     };
     updateDraftPreview(start.x, start.y);
   }
@@ -163,8 +184,7 @@
       cur = projectOrtho(last, x, y, draft.tool);
       state.wireSnap = null;
     }
-    const pts = draftPointsAbsolute(draft).concat([{ x: cur.x, y: cur.y }]);
-    state.preview = { pts: pts, eduvoltCable: true };
+    state.preview = { pts: draftPointsAbsolute(draft).concat([{ x: cur.x, y: cur.y }]), eduvoltCable: true };
   }
 
   function addDraftCorner(x, y) {
@@ -173,13 +193,16 @@
     if (!draft) return false;
     const last = draft.points[draft.points.length - 1];
     const cur = projectOrtho(last, x, y, draft.tool);
-    if (Math.hypot(cur.x - last.x, cur.y - last.y) < 8) return false;
+    if (Math.hypot(cur.x - last.x, cur.y - last.y) < Math.max(8, gridStep() * 0.4)) return false;
     draft.points.push(cur);
-    /* Alternate H/V after each corner (EduVolt multi-segment). */
+    const segType = draft.tool;
     draft.tool = draft.tool === "h" ? "v" : "h";
-    const segN = (draft.segments && draft.segments.length) || 0;
     if (!draft.segments) draft.segments = [];
-    draft.segments.push({ name: "Segmento " + (segN + 1), fromIdx: draft.points.length - 1 });
+    draft.segments.push({
+      name: "Segmento " + (draft.segments.length + 1),
+      fromIdx: draft.points.length - 1,
+      type: segType
+    });
     updateDraftPreview(cur.x, cur.y);
     return true;
   }
@@ -205,18 +228,28 @@
       const tp = termPoint(b);
       if (tp) {
         if (points.length === 1) points.push(tp);
-        else points[points.length - 1] = tp;
+        else {
+          /* Dernier segment : snap ortho vers la borne. */
+          const prev = points[points.length - 2] || points[0];
+          const ortho = projectOrtho(prev, tp.x, tp.y, draft.tool);
+          points[points.length - 1] = { x: ortho.x, y: ortho.y };
+          if (Math.hypot(ortho.x - tp.x, ortho.y - tp.y) > 1) points.push({ x: tp.x, y: tp.y });
+        }
       }
       looseEnd = false;
     }
 
     if (points.length < 2) {
-      /* Single click without move — ignore. */
       clearCableDraft();
       return null;
     }
 
     if (typeof global.pushHistory === "function") global.pushHistory();
+
+    const startLabel = String(draft.startLabel || "").trim().slice(0, 32);
+    let endLabel = String(draft.endLabel || "").trim().slice(0, 32);
+    const syncLabels = !!(draft.syncLabels || state.cableSyncLabels);
+    if (syncLabels && startLabel) endLabel = startLabel;
 
     const cable = {
       id: "cab" + (state.seq++),
@@ -233,6 +266,9 @@
       looseEnd: looseEnd,
       showStartTerminal: !draft.a,
       showEndTerminal: looseEnd,
+      startLabel: startLabel,
+      endLabel: endLabel,
+      syncLabels: syncLabels,
       segments: (draft.segments || []).slice(),
       wireId: null
     };
@@ -241,6 +277,9 @@
     clearCableDraft();
     state.selectedCable = cable.id;
     state.selectedWire = cable.wireId || null;
+    renderSegmentsPanel();
+    renderLabelsPanel();
+    syncToolbar();
     return cable;
   }
 
@@ -248,7 +287,6 @@
     clearCableDraft();
   }
 
-  /** Quand les 2 extrémités sont sur des bornes → fil sim (bornes électriques). */
   function syncCableToWire(cable) {
     const state = ensureState();
     if (!state || !cable) return;
@@ -272,6 +310,8 @@
         colorManual: true,
         waypoints: mids,
         name: cable.name,
+        tagA: cable.startLabel || null,
+        tagB: cable.endLabel || null,
         fromCable: cable.id,
         live: false
       };
@@ -285,6 +325,8 @@
       w.colorManual = true;
       w.waypoints = mids;
       w.name = cable.name;
+      w.tagA = cable.startLabel || null;
+      w.tagB = cable.endLabel || null;
       w.fromCable = cable.id;
     }
   }
@@ -307,17 +349,21 @@
       looseStart: !!c.looseStart,
       looseEnd: !!c.looseEnd,
       showStartTerminal: c.showStartTerminal !== false && !c.a,
-      showEndTerminal: c.showEndTerminal !== false && !c.b
+      showEndTerminal: c.showEndTerminal !== false && !c.b,
+      syncLabels: !!c.syncLabels
     };
     if (c.preset) out.preset = c.preset;
     if (c.colorManual) out.colorManual = true;
+    if (c.startLabel) out.startLabel = String(c.startLabel).slice(0, 32);
+    if (c.endLabel) out.endLabel = String(c.endLabel).slice(0, 32);
     if (c.a && c.a.uid != null) out.a = { uid: c.a.uid, term: c.a.term };
     if (c.b && c.b.uid != null) out.b = { uid: c.b.uid, term: c.b.term };
     if (c.wireId) out.wireId = c.wireId;
     if (Array.isArray(c.segments) && c.segments.length) {
       out.segments = c.segments.map((s) => ({
         name: String((s && s.name) || "").slice(0, 32),
-        fromIdx: Number(s && s.fromIdx) || 0
+        fromIdx: Number(s && s.fromIdx) || 0,
+        type: s && (s.type === "v" || s.type === "h") ? s.type : undefined
       }));
     }
     return out;
@@ -345,23 +391,76 @@
         } catch (_) {}
         const key = item.uid + "::" + t.id;
         if (used.has(key)) return;
-        out.push({
-          uid: item.uid,
-          term: t.id,
-          tag: item.tag || item.type,
-          type: item.type
-        });
+        out.push({ uid: item.uid, term: t.id, tag: item.tag || item.type, type: item.type });
       });
     });
     return out;
+  }
+
+  function selectedCableObj() {
+    const state = ensureState();
+    if (!state || !state.selectedCable) return null;
+    return (state.cables || []).find((c) => c.id === state.selectedCable) || null;
+  }
+
+  function renameSegment(cableId, segIndex, name) {
+    const state = ensureState();
+    const cab = (state.cables || []).find((c) => c.id === cableId);
+    if (!cab || !cab.segments || !cab.segments[segIndex]) return false;
+    if (typeof global.pushHistory === "function") global.pushHistory();
+    cab.segments[segIndex].name = String(name || "").trim().slice(0, 32) || ("Segmento " + (segIndex + 1));
+    return true;
+  }
+
+  function deleteSegment(cableId, segIndex) {
+    const state = ensureState();
+    const cab = (state.cables || []).find((c) => c.id === cableId);
+    if (!cab || !cab.segments || cab.segments.length <= 1) return false;
+    if (segIndex < 0 || segIndex >= cab.segments.length) return false;
+    if (typeof global.pushHistory === "function") global.pushHistory();
+    const from = cab.segments[segIndex].fromIdx | 0;
+    const next = cab.segments[segIndex + 1];
+    const to = next ? (next.fromIdx | 0) : ((cab.points || []).length - 1);
+    if (cab.points && cab.points.length > 2 && to > from) {
+      cab.points.splice(from + 1, Math.max(0, to - from - 1));
+    }
+    cab.segments.splice(segIndex, 1);
+    cab.segments.forEach((s, i) => {
+      if (!s.name || /^(Segmento|Segment)\s+\d+$/i.test(s.name)) s.name = "Segmento " + (i + 1);
+    });
+    syncCableToWire(cab);
+    return true;
+  }
+
+  function moveSegment(cableId, segIndex, dir) {
+    const state = ensureState();
+    const cab = (state.cables || []).find((c) => c.id === cableId);
+    if (!cab || !cab.segments) return false;
+    const j = segIndex + (dir < 0 ? -1 : 1);
+    if (segIndex < 0 || j < 0 || segIndex >= cab.segments.length || j >= cab.segments.length) return false;
+    if (typeof global.pushHistory === "function") global.pushHistory();
+    const tmp = cab.segments[segIndex];
+    cab.segments[segIndex] = cab.segments[j];
+    cab.segments[j] = tmp;
+    return true;
+  }
+
+  function setCableLabels(cableId, startLabel, endLabel, sync) {
+    const state = ensureState();
+    const cab = (state.cables || []).find((c) => c.id === cableId);
+    if (!cab) return false;
+    if (typeof global.pushHistory === "function") global.pushHistory();
+    cab.startLabel = String(startLabel || "").trim().slice(0, 32);
+    cab.syncLabels = !!sync;
+    cab.endLabel = cab.syncLabels ? cab.startLabel : String(endLabel || "").trim().slice(0, 32);
+    syncCableToWire(cab);
+    return true;
   }
 
   function onBoardPointer(ev, pt) {
     const state = ensureState();
     if (!state || state.mode !== "cable") return false;
     const draft = state.cableDraft;
-
-    /* Snap to terminal first. */
     const snap = pickNearTerminal(pt.x, pt.y, draft && draft.a);
 
     if (!draft) {
@@ -369,14 +468,10 @@
       else startDraft(pt.x, pt.y, null);
       return true;
     }
-
     if (snap) {
-      /* Attach end + confirm cable. */
       finalizeDraft({ b: { uid: snap.uid, term: snap.term } });
       return true;
     }
-
-    /* Empty click = add segment corner. */
     addDraftCorner(pt.x, pt.y);
     return true;
   }
@@ -399,18 +494,101 @@
     return true;
   }
 
+  function drawEndLabel(svg, NS, pt, text, dy) {
+    if (!text || !pt) return;
+    const lab = document.createElementNS(NS, "text");
+    lab.setAttribute("class", "wire-len eduvolt-end-label");
+    lab.setAttribute("x", pt.x);
+    lab.setAttribute("y", pt.y + dy);
+    lab.setAttribute("text-anchor", "middle");
+    lab.textContent = String(text).slice(0, 24);
+    svg.appendChild(lab);
+  }
+
+  function pathD(pts) {
+    if (!pts || pts.length < 2) return "";
+    let d = "M " + pts[0].x + " " + pts[0].y;
+    for (let i = 1; i < pts.length; i++) d += " L " + pts[i].x + " " + pts[i].y;
+    return d;
+  }
+
+  function selectCable(cableId) {
+    const state = ensureState();
+    if (!state) return;
+    const cab = (state.cables || []).find((c) => c.id === cableId);
+    if (!cab) return;
+    state.selectedCable = cab.id;
+    state.selectedWire = cab.wireId || null;
+    state.selected = null;
+    state.selectedIds = [];
+    renderSegmentsPanel();
+    renderLabelsPanel();
+  }
+
   function drawCables(svg, NS, drawPathFn) {
     const state = ensureState();
     if (!state || !svg || !NS) return;
     (state.cables || []).forEach((cable) => {
-      /* Câbles doublement attachés : déjà dessinés via wire sync. */
-      if (cable.a && cable.b && cable.wireId) return;
+      if (cable.a && cable.b && cable.wireId) {
+        /* Labels d’extrémités même si le path est le wire sync. */
+        const pts = cablePointsAbsolute(cable);
+        if (pts.length >= 2) {
+          drawEndLabel(svg, NS, pts[0], cable.startLabel, -10);
+          drawEndLabel(svg, NS, pts[pts.length - 1], cable.endLabel, 14);
+        }
+        return;
+      }
       const pts = cablePointsAbsolute(cable);
       if (pts.length < 2) return;
-      if (typeof drawPathFn === "function") {
-        drawPathFn(pts, cable.color, false, cable.id, false);
+      const d = pathD(pts);
+      const selected = state.selectedCable === cable.id;
+      /* Hit cible propre câble (id cab* ≠ wire id). */
+      const hit = document.createElementNS(NS, "path");
+      hit.setAttribute("d", d);
+      hit.setAttribute("fill", "none");
+      hit.setAttribute("stroke", "transparent");
+      hit.setAttribute("stroke-width", "18");
+      hit.setAttribute("stroke-linecap", "round");
+      hit.setAttribute("stroke-linejoin", "round");
+      hit.setAttribute("class", "eduvolt-cable-hit");
+      hit.style.pointerEvents = "stroke";
+      hit.style.cursor = "pointer";
+      hit.addEventListener("pointerdown", (ev) => {
+        ev.stopPropagation();
+        if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
+        ev.preventDefault();
+        if (ev.button === 2) return;
+            selectCable(cable.id);
+        try { if (typeof global.render === "function") global.render(); } catch (_) {}
+        renderSegmentsPanel();
+        renderLabelsPanel();
+      });
+      svg.appendChild(hit);
+      if (selected) {
+        const ring = document.createElementNS(NS, "path");
+        ring.setAttribute("d", d);
+        ring.setAttribute("fill", "none");
+        ring.setAttribute("stroke", "#3b82f6");
+        ring.setAttribute("stroke-width", "10");
+        ring.setAttribute("stroke-linecap", "round");
+        ring.setAttribute("stroke-linejoin", "round");
+        ring.setAttribute("class", "eduvolt-cable-sel");
+        ring.setAttribute("pointer-events", "none");
+        svg.appendChild(ring);
       }
-      /* Terminaisons extrémités libres. */
+      /* Tracé visible sans id wire (évite collision selectedWire). */
+      if (typeof drawPathFn === "function") drawPathFn(pts, cable.color, false, null, false);
+      else {
+        const stroke = document.createElementNS(NS, "path");
+        stroke.setAttribute("d", d);
+        stroke.setAttribute("fill", "none");
+        stroke.setAttribute("stroke", cable.color || "#92400e");
+        stroke.setAttribute("stroke-width", "3.5");
+        stroke.setAttribute("stroke-linecap", "round");
+        stroke.setAttribute("stroke-linejoin", "round");
+        stroke.setAttribute("pointer-events", "none");
+        svg.appendChild(stroke);
+      }
       [[pts[0], cable.showStartTerminal || cable.looseStart],
        [pts[pts.length - 1], cable.showEndTerminal || cable.looseEnd]].forEach((pair) => {
         if (!pair[1] || !pair[0]) return;
@@ -435,6 +613,8 @@
         lab.textContent = String(cable.name).slice(0, 24);
         svg.appendChild(lab);
       }
+      drawEndLabel(svg, NS, pts[0], cable.startLabel, -10);
+      drawEndLabel(svg, NS, pts[pts.length - 1], cable.endLabel, 14);
     });
   }
 
@@ -455,7 +635,7 @@
   function applyPreset(key) {
     const state = ensureState();
     if (!state) return;
-    state.cablePreset = PRESETS[key] ? key : "";
+    state.cablePreset = PRESETS[key] ? key : "v1";
     const p = activePreset();
     state.color = p.color;
     state.section = p.section;
@@ -466,6 +646,8 @@
       state.cableDraft.color = p.color;
       state.cableDraft.section = p.section;
       state.cableDraft.name = p.name + " · " + (state.cableNo || 1);
+      state.cableDraft.startLabel = p.name;
+      if (state.cableDraft.syncLabels) state.cableDraft.endLabel = p.name;
       state.cableDraft.colorManual = true;
     }
     try { if (typeof global.syncSectionSelect === "function") global.syncSectionSelect(); } catch (_) {}
@@ -481,8 +663,11 @@
     const btnH = document.getElementById("cableToolH");
     const btnV = document.getElementById("cableToolV");
     const btnExit = document.getElementById("cableExit");
+    const btnSnap = document.getElementById("cableSnapGrid");
     const sel = document.getElementById("cablePreset");
     const banner = document.getElementById("eduvoltCableBanner");
+    const btnDuct = document.getElementById("btnWireDuct");
+    if (btnDuct) btnDuct.hidden = true; /* hors câblage */
     if (btnCable) btnCable.classList.toggle("active", mode === "cable");
     if (btnH) {
       btnH.classList.toggle("active", mode === "cable" && state.cableTool === "h");
@@ -493,22 +678,35 @@
       btnV.setAttribute("aria-pressed", mode === "cable" && state.cableTool === "v" ? "true" : "false");
     }
     if (btnExit) btnExit.hidden = mode !== "cable";
-    if (sel && state.cablePreset && sel.value !== state.cablePreset) sel.value = state.cablePreset || "";
+    if (btnSnap) {
+      btnSnap.hidden = mode !== "cable";
+      btnSnap.classList.toggle("active", !!state.cableSnapGrid);
+      btnSnap.title = state.cableSnapGrid
+        ? "Snap to grid: ON — Snap horizontal/vertical"
+        : "Snap to grid: OFF";
+      btnSnap.setAttribute("aria-pressed", state.cableSnapGrid ? "true" : "false");
+    }
+    if (sel && state.cablePreset && sel.value !== state.cablePreset) sel.value = state.cablePreset || "v1";
     if (banner) {
       banner.hidden = mode !== "cable";
+      const snapTxt = state.cableSnapGrid ? "Snap ON" : "Snap OFF";
       banner.textContent = state.cableDraft
-        ? ("Dibujando Cable — " + (state.cableTool === "v" ? "Vertical" : "Horizontal") + " · clic = segment · borne = attach · Entrée = confirmer · Esc = cancelar")
-        : ("Dibujar cable — " + (state.cableTool === "v" ? "Cable vertical" : "Cable horizontal") + " · preset " + ((PRESETS[state.cablePreset] || PRESETS.v1).name));
+        ? ("Dibujando Cable — " + (state.cableTool === "v" ? "Vertical" : "Horizontal")
+          + " · " + snapTxt + " · clic=segment · borne=attach · Entrée=confirmar · Esc=cancelar")
+        : ("Dibujar cable — " + (state.cableTool === "v" ? "Cable vertical" : "Cable horizontal")
+          + " · " + snapTxt + " · preset " + ((PRESETS[state.cablePreset] || PRESETS.v1).name));
     }
     try { document.body.classList.toggle("eduvolt-cable-mode", mode === "cable"); } catch (_) {}
     renderFreeTermsPanel();
+    renderSegmentsPanel();
+    renderLabelsPanel();
   }
 
   function renderFreeTermsPanel() {
     const panel = document.getElementById("eduvoltFreeTerms");
     if (!panel) return;
     const state = ensureState();
-    const show = state && (state.mode === "cable" || state.mode === "wire") && state.showFreeTermsPanel !== false;
+    const show = state && state.mode === "cable" && state.showFreeTermsPanel !== false;
     panel.hidden = !show;
     if (!show) return;
     const list = listFreeTerminals();
@@ -526,7 +724,6 @@
       row.type = "button";
       row.className = "ev-ft-row";
       row.textContent = (ft.tag || "?") + " · " + ft.term;
-      row.title = "Câbler depuis " + ft.tag + " / " + ft.term;
       row.onclick = () => {
         enterCableMode(state.cableTool || "h");
         onTermClick(ft.uid, ft.term);
@@ -536,11 +733,72 @@
     });
   }
 
-  function placeWireDuct() {
-    if (typeof global.add === "function") {
-      global.add("goulotte_h_480");
-      return;
+  function renderSegmentsPanel() {
+    const panel = document.getElementById("eduvoltSegments");
+    if (!panel) return;
+    const state = ensureState();
+    const cab = selectedCableObj();
+    /* Visible dès qu’un câble est sélectionné (mode cable ou clic sur tracé). */
+    const show = !!(state && cab && Array.isArray(cab.segments) && cab.segments.length);
+    panel.hidden = !show;
+    if (!show) return;
+    const body = panel.querySelector(".ev-seg-body");
+    const title = panel.querySelector(".ev-seg-title");
+    if (title) title.textContent = "Cable segments: " + (cab.segments.length);
+    if (!body) return;
+    body.innerHTML = "";
+    cab.segments.forEach((seg, i) => {
+      const row = document.createElement("div");
+      row.className = "ev-seg-row";
+      const inp = document.createElement("input");
+      inp.type = "text";
+      inp.value = seg.name || ("Segmento " + (i + 1));
+      inp.maxLength = 32;
+      inp.title = "Renombrar segmento";
+      inp.onchange = () => {
+        renameSegment(cab.id, i, inp.value);
+        try { if (typeof global.render === "function") global.render(); } catch (_) {}
+        renderSegmentsPanel();
+      };
+      const up = document.createElement("button");
+      up.type = "button"; up.textContent = "↑"; up.title = "Subir segmento";
+      up.onclick = () => { moveSegment(cab.id, i, -1); renderSegmentsPanel(); try { global.render(); } catch (_) {} };
+      const down = document.createElement("button");
+      down.type = "button"; down.textContent = "↓"; down.title = "Bajar segmento";
+      down.onclick = () => { moveSegment(cab.id, i, 1); renderSegmentsPanel(); try { global.render(); } catch (_) {} };
+      const del = document.createElement("button");
+      del.type = "button"; del.textContent = "✕"; del.title = "Eliminar segmento";
+      del.disabled = cab.segments.length <= 1;
+      del.onclick = () => {
+        deleteSegment(cab.id, i);
+        try { if (typeof global.render === "function") global.render(); } catch (_) {}
+        renderSegmentsPanel();
+      };
+      row.appendChild(inp);
+      row.appendChild(up);
+      row.appendChild(down);
+      row.appendChild(del);
+      body.appendChild(row);
+    });
+  }
+
+  function renderLabelsPanel() {
+    const panel = document.getElementById("eduvoltCableLabels");
+    if (!panel) return;
+    const state = ensureState();
+    const cab = selectedCableObj();
+    const show = !!(state && cab);
+    panel.hidden = !show;
+    if (!show) return;
+    const startInp = document.getElementById("evLabelStart");
+    const endInp = document.getElementById("evLabelEnd");
+    const syncChk = document.getElementById("evLabelSync");
+    if (startInp && document.activeElement !== startInp) startInp.value = cab.startLabel || "";
+    if (endInp && document.activeElement !== endInp) {
+      endInp.value = cab.endLabel || "";
+      endInp.disabled = !!cab.syncLabels;
     }
+    if (syncChk) syncChk.checked = !!cab.syncLabels;
   }
 
   function bindUi() {
@@ -550,44 +808,61 @@
     const btnH = document.getElementById("cableToolH");
     const btnV = document.getElementById("cableToolV");
     const btnExit = document.getElementById("cableExit");
+    const btnSnap = document.getElementById("cableSnapGrid");
     const btnDuct = document.getElementById("btnWireDuct");
     const sel = document.getElementById("cablePreset");
+    if (btnDuct) { btnDuct.hidden = true; btnDuct.onclick = null; }
     if (btnCable) btnCable.onclick = () => enterCableMode((S() && S().cableTool) || "h");
     if (btnH) btnH.onclick = () => {
       const state = ensureState();
       if (state) state.cableTool = "h";
       enterCableMode("h");
-      try { if (typeof global.render === "function") global.render(); } catch (_) {}
+      try { global.render(); } catch (_) {}
     };
     if (btnV) btnV.onclick = () => {
       const state = ensureState();
       if (state) state.cableTool = "v";
       enterCableMode("v");
-      try { if (typeof global.render === "function") global.render(); } catch (_) {}
+      try { global.render(); } catch (_) {}
     };
-    if (btnExit) btnExit.onclick = () => {
-      exitCableMode();
-      try { if (typeof global.render === "function") global.render(); } catch (_) {}
+    if (btnExit) btnExit.onclick = () => { exitCableMode(); try { global.render(); } catch (_) {} };
+    if (btnSnap) btnSnap.onclick = () => {
+      const state = ensureState();
+      if (!state) return;
+      state.cableSnapGrid = !state.cableSnapGrid;
+      syncToolbar();
     };
-    if (btnDuct) btnDuct.onclick = () => placeWireDuct();
-    if (sel) {
-      sel.onchange = () => {
-        applyPreset(sel.value || "v1");
-        if (S() && S().mode !== "cable") enterCableMode((S() && S().cableTool) || "h");
-        try { if (typeof global.render === "function") global.render(); } catch (_) {}
-      };
-    }
+    if (sel) sel.onchange = () => {
+      applyPreset(sel.value || "v1");
+      if (S() && S().mode !== "cable") enterCableMode((S() && S().cableTool) || "h");
+      try { global.render(); } catch (_) {}
+    };
+
+    const startInp = document.getElementById("evLabelStart");
+    const endInp = document.getElementById("evLabelEnd");
+    const syncChk = document.getElementById("evLabelSync");
+    const commitLabels = () => {
+      const cab = selectedCableObj();
+      if (!cab) return;
+      setCableLabels(cab.id, startInp && startInp.value, endInp && endInp.value, syncChk && syncChk.checked);
+      try { global.render(); } catch (_) {}
+      renderLabelsPanel();
+    };
+    if (startInp) startInp.onchange = commitLabels;
+    if (endInp) endInp.onchange = commitLabels;
+    if (syncChk) syncChk.onchange = commitLabels;
+
     document.addEventListener("keydown", (ev) => {
       const state = ensureState();
       if (!state || state.mode !== "cable") return;
       if (ev.key === "Escape") {
         if (state.cableDraft) cancelDraft();
         else exitCableMode();
-        try { if (typeof global.render === "function") global.render(); } catch (_) {}
+        try { global.render(); } catch (_) {}
         ev.preventDefault();
       } else if (ev.key === "Enter" && state.cableDraft) {
         finalizeDraft({});
-        try { if (typeof global.render === "function") global.render(); } catch (_) {}
+        try { global.render(); } catch (_) {}
         ev.preventDefault();
       }
     });
@@ -596,6 +871,7 @@
 
   global.EduVoltCable = {
     PRESETS: PRESETS,
+    CABLE_GRID: CABLE_GRID,
     ensureState: ensureState,
     clearCableDraft: clearCableDraft,
     startDraft: startDraft,
@@ -615,7 +891,13 @@
     applyPreset: applyPreset,
     syncToolbar: syncToolbar,
     renderFreeTermsPanel: renderFreeTermsPanel,
-    placeWireDuct: placeWireDuct,
+    renderSegmentsPanel: renderSegmentsPanel,
+    renderLabelsPanel: renderLabelsPanel,
+    renameSegment: renameSegment,
+    deleteSegment: deleteSegment,
+    moveSegment: moveSegment,
+    setCableLabels: setCableLabels,
+    selectCable: selectCable,
     bindUi: bindUi,
     cablePointsAbsolute: cablePointsAbsolute
   };
