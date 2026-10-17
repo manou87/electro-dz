@@ -8,7 +8,14 @@
   <link rel="apple-touch-icon" href="brand/logo-wirelab-pro-icon.png?v=official-gemini" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="native-shell-8777-v134-exemples-scroll" />
+  <meta name="swissdz-rev" content="native-shell-8777-v141-eduvolt-chapas" />
+  <!-- v141: REA chapas/jumpers — tap 2 bornes (distinct du câble) -->
+  <!-- v140: algo vidéo — preview L ortho, grille 20, coins chanfreinés, presets L1/N/PE -->
+  <!-- v139: REA+vidéo — cable_confirm/cancel toolbar + props câble via wireOpt (pas cadres plan) -->
+  <!-- v138: retire cadres flottants (segments/bornes/labels/banner) — REA = modèle, pas overlays plan -->
+  <!-- v137: REA câblage — Snap H/V+grille, start/endLabel, éditeur segments (sans goulottes) -->
+  <!-- v136: modèle câble EduVolt — Dibujar cable H/V, extrémités libres, presets -->
+  <!-- v135: (partiel) axe H/V + presets sur borne→borne — remplacé par v136 -->
   <!-- v134: Installations exemplaires — la liste de la modale centrale défile (molette + doigt), le plan derrière ne panne plus -->
   <!-- v133: ETS — chaque participant KNX (volet, slot façade, poussoir, actionneur, coupleur) a ses GA et noms d’objets -->
   <!-- v132: cordon PE continu ; mesures Fluke du plan = bornes réellement touchées (hors / sous tension) -->
@@ -3409,6 +3416,166 @@
       opacity:.88;
       box-shadow:0 0 0 1px rgba(100,116,139,.55);
     }
+    /* v135 : bornes sans fil (mode Câblage) */
+    .term.term-free {
+      box-shadow:0 0 0 2px rgba(245,158,11,.85), 0 1px 2px rgba(0,0,0,.3);
+      outline:1px dashed rgba(180,83,9,.7);
+      outline-offset:1px;
+    }
+    #board.mode-wire .term.term-free { opacity:1; }
+    #board.mode-wire .term:not(.term-free):not(.wire-from):not(.snap-aim) { opacity:.72; }
+    /* Goulotte PVC : couvre fils + modules (z CSS 80–85). */
+    .dev.goulotte {
+      background:transparent; box-shadow:none;
+      overflow:visible; border-radius:0;
+      z-index:80;
+    }
+    .dev.sel.goulotte { z-index:85; }
+    .dev.goulotte img {
+      width:100%; height:100%; object-fit:fill; display:block; pointer-events:none;
+      border-radius:4px; box-shadow:0 2px 5px rgba(15,23,42,.28);
+    }
+    .dev.goulotte .rhandle { z-index:120; }
+    .thumb.goulotte-t {
+      background:linear-gradient(180deg,#e5e7eb 0%,#9ca3af 45%,#6b7280 100%);
+      color:#111827; font:700 9px ui-sans-serif,system-ui,sans-serif;
+      letter-spacing:.02em; display:flex; align-items:center; justify-content:center;
+    }
+    svg.wire-term-guides {
+      position:absolute; left:0; top:0; width:100%; height:100%;
+      overflow:visible; pointer-events:none; z-index:54;
+      min-width:2000px; min-height:1400px;
+    }
+    svg.wire-term-guides .wt-stub {
+      fill:none; stroke:rgba(245,158,11,.55); stroke-width:1.35; stroke-linecap:round;
+    }
+    svg.wire-term-guides .wt-dot {
+      fill:rgba(245,158,11,.40); stroke:rgba(180,83,9,.55); stroke-width:0.55;
+    }
+    svg.wire-term-guides .wt-arrow { fill:rgba(245,158,11,.55); }
+    .cable-axis-group, .cable-preset-picker { display:flex; align-items:center; gap:4px; }
+    .cable-axis-group .btn-ico, #modeCable.btn-ico {
+      min-width:34px; height:34px; font:800 11px/1 ui-sans-serif,system-ui,sans-serif;
+      letter-spacing:.02em;
+    }
+    .cable-axis-group .btn-ico.active, #modeCable.btn-ico.active {
+      background:rgba(239,68,68,.14); color:#b91c1c; border-color:rgba(239,68,68,.35);
+    }
+    html[data-theme="dark"] .cable-axis-group .btn-ico.active,
+    html[data-theme="dark"] #modeCable.btn-ico.active {
+      background:rgba(248,113,113,.16); color:#fecaca; border-color:rgba(248,113,113,.4);
+    }
+    #board.mode-cable { cursor:crosshair; }
+    #board.mode-jumper { cursor:crosshair; }
+    #modeJumper.btn-ico.active {
+      background:rgba(245,158,11,.16); color:#b45309; border-color:rgba(245,158,11,.4);
+    }
+    html[data-theme="dark"] #modeJumper.btn-ico.active {
+      background:rgba(251,191,36,.18); color:#fde68a; border-color:rgba(251,191,36,.45);
+    }
+    svg.wires .eduvolt-jumper { pointer-events:stroke; }
+    #eduvoltCableBanner {
+      position:fixed; left:50%; transform:translateX(-50%); bottom:72px; z-index:1200;
+      max-width:min(920px,92vw); padding:8px 14px; border-radius:10px;
+      background:rgba(15,23,42,.92); color:#f8fafc; font:600 12px/1.35 ui-sans-serif,system-ui,sans-serif;
+      box-shadow:0 8px 24px rgba(0,0,0,.35); pointer-events:none;
+    }
+    #eduvoltFreeTerms {
+      position:fixed; right:12px; top:88px; z-index:1100; width:220px; max-height:46vh;
+      display:flex; flex-direction:column; border-radius:10px; overflow:hidden;
+      background:rgba(255,255,255,.96); border:1px solid #cbd5e1;
+      box-shadow:0 10px 28px rgba(15,23,42,.18);
+    }
+    html[data-theme="dark"] #eduvoltFreeTerms {
+      background:rgba(15,23,42,.96); border-color:#334155; color:#e2e8f0;
+    }
+    #eduvoltFreeTerms .ev-ft-title {
+      padding:8px 10px; font:800 11px/1.2 ui-sans-serif,system-ui,sans-serif;
+      letter-spacing:.04em; background:#fef3c7; color:#92400e; border-bottom:1px solid #f59e0b;
+    }
+    html[data-theme="dark"] #eduvoltFreeTerms .ev-ft-title {
+      background:#422006; color:#fde68a; border-bottom-color:#b45309;
+    }
+    #eduvoltFreeTerms .ev-ft-body { overflow:auto; padding:6px; display:flex; flex-direction:column; gap:4px; }
+    #eduvoltFreeTerms .ev-ft-row {
+      text-align:left; border:1px solid #e2e8f0; background:#fff; border-radius:6px;
+      padding:6px 8px; font:600 11px/1.2 ui-sans-serif,system-ui,sans-serif; cursor:pointer;
+    }
+    html[data-theme="dark"] #eduvoltFreeTerms .ev-ft-row {
+      background:#0b1220; border-color:#334155; color:#e2e8f0;
+    }
+    #eduvoltFreeTerms .ev-ft-row:hover { border-color:#f59e0b; }
+    #eduvoltFreeTerms .ev-ft-empty { opacity:.65; font:600 11px/1.3 ui-sans-serif,system-ui,sans-serif; padding:8px; }
+    svg.wires .eduvolt-loose-end { pointer-events:none; }
+    svg.wires .eduvolt-end-label { font:700 10px/1 ui-sans-serif,system-ui,sans-serif; fill:#0f172a; }
+    html[data-theme="dark"] svg.wires .eduvolt-end-label { fill:#f8fafc; }
+    #cableSnapGrid.btn-ico.active {
+      background:rgba(14,165,233,.16); color:#0369a1; border-color:rgba(14,165,233,.4);
+    }
+    html[data-theme="dark"] #cableSnapGrid.btn-ico.active {
+      background:rgba(56,189,248,.18); color:#bae6fd; border-color:rgba(56,189,248,.45);
+    }
+    #eduvoltSegments, #eduvoltCableLabels {
+      position:fixed; left:12px; z-index:1100; width:240px; max-height:38vh;
+      display:flex; flex-direction:column; border-radius:10px; overflow:hidden;
+      background:rgba(255,255,255,.96); border:1px solid #cbd5e1;
+      box-shadow:0 10px 28px rgba(15,23,42,.18);
+    }
+    #eduvoltSegments { top:88px; }
+    #eduvoltCableLabels { top:calc(88px + min(38vh, 220px) + 10px); max-height:none; }
+    html[data-theme="dark"] #eduvoltSegments,
+    html[data-theme="dark"] #eduvoltCableLabels {
+      background:rgba(15,23,42,.96); border-color:#334155; color:#e2e8f0;
+    }
+    #eduvoltSegments .ev-seg-title, #eduvoltCableLabels .ev-lab-title {
+      padding:8px 10px; font:800 11px/1.2 ui-sans-serif,system-ui,sans-serif;
+      letter-spacing:.04em; background:#e0f2fe; color:#075985; border-bottom:1px solid #38bdf8;
+    }
+    html[data-theme="dark"] #eduvoltSegments .ev-seg-title,
+    html[data-theme="dark"] #eduvoltCableLabels .ev-lab-title {
+      background:#0c4a6e; color:#bae6fd; border-bottom-color:#0284c7;
+    }
+    #eduvoltSegments .ev-seg-body { overflow:auto; padding:6px; display:flex; flex-direction:column; gap:4px; }
+    #eduvoltSegments .ev-seg-row {
+      display:flex; align-items:center; gap:4px;
+    }
+    #eduvoltSegments .ev-seg-row input {
+      flex:1; min-width:0; height:28px; border-radius:6px; border:1px solid #e2e8f0;
+      padding:0 6px; font:600 11px/1.2 ui-sans-serif,system-ui,sans-serif; background:#fff;
+    }
+    html[data-theme="dark"] #eduvoltSegments .ev-seg-row input {
+      background:#0b1220; border-color:#334155; color:#e2e8f0;
+    }
+    #eduvoltSegments .ev-seg-row button {
+      width:26px; height:28px; border-radius:6px; border:1px solid #e2e8f0;
+      background:#f8fafc; cursor:pointer; font:700 12px/1 ui-sans-serif,system-ui,sans-serif;
+    }
+    html[data-theme="dark"] #eduvoltSegments .ev-seg-row button {
+      background:#0b1220; border-color:#334155; color:#e2e8f0;
+    }
+    #eduvoltCableLabels .ev-lab-body {
+      padding:8px 10px; display:flex; flex-direction:column; gap:6px;
+      font:600 11px/1.2 ui-sans-serif,system-ui,sans-serif;
+    }
+    #eduvoltCableLabels .ev-lab-body label { display:flex; flex-direction:column; gap:3px; }
+    #eduvoltCableLabels .ev-lab-body input[type="text"] {
+      height:28px; border-radius:6px; border:1px solid #e2e8f0; padding:0 6px;
+      font:600 11px/1.2 ui-sans-serif,system-ui,sans-serif; background:#fff;
+    }
+    html[data-theme="dark"] #eduvoltCableLabels .ev-lab-body input[type="text"] {
+      background:#0b1220; border-color:#334155; color:#e2e8f0;
+    }
+    #eduvoltCableLabels .ev-lab-sync {
+      display:flex; flex-direction:row; align-items:center; gap:6px;
+    }
+    .cable-preset-picker select {
+      height:34px; max-width:118px; border-radius:8px; border:1px solid var(--border,#cbd5e1);
+      background:var(--surface-2,#f8fafc); color:inherit; font:600 11px/1.1 ui-sans-serif,system-ui,sans-serif;
+      padding:0 8px;
+    }
+    header .brand-tools .cable-preset-picker select {
+      background:#0b1220; color:#f8fafc; border-color:#1e293b;
+    }
     .dev.barrette-dev {
       background:transparent; box-shadow:none; overflow:visible;
     }
@@ -5444,6 +5611,32 @@
                 </svg>
               </button>
             </div>
+              <button id="modeCable" class="btn-ico" type="button"
+                title="Dibujar cable (modèle EduVolt) — trait H/V, extrémités libres"
+                aria-label="Dessiner câble EduVolt" aria-pressed="false">CB</button>
+              <button id="modeJumper" class="btn-ico" type="button"
+                title="Chapas / Jumpers — tap 2 bornes"
+                aria-label="Chapas jumper" aria-pressed="false">═</button>
+            </div>
+            <div class="row cable-axis-group" id="cableToolGroup" role="group" aria-label="Outil câble EduVolt">
+              <button id="cableToolH" class="btn-ico" type="button" title="L-ortho : d’abord horizontal (Align axes)" aria-label="Préférer H dans le L" aria-pressed="false">H</button>
+              <button id="cableToolV" class="btn-ico" type="button" title="L-ortho : d’abord vertical (Align axes)" aria-label="Préférer V dans le L" aria-pressed="false">V</button>
+              <button id="cableSnapGrid" class="btn-ico" type="button" title="Snap to grid: ON — Snap horizontal/vertical" aria-label="Snap grille câble" aria-pressed="true" hidden>#</button>
+              <button id="cableConfirm" class="btn-ico" type="button" title="Confirmar cable (cable_confirm)" aria-label="Confirmer câble" hidden>✓</button>
+              <button id="cableCancel" class="btn-ico" type="button" title="Cancel drawing (cable_cancel)" aria-label="Annuler dessin câble" hidden>↶</button>
+              <button id="cableExit" class="btn-ico" type="button" title="Salir del modo cable" aria-label="Quitter mode câble" hidden>✕</button>
+              <!-- goulottes / wire duct : hors câblage (REA) — bouton retiré -->
+            </div>
+            <div class="cable-preset-picker" title="Presets câble EduVolt (Potencia / Contrôle)">
+              <select id="cablePreset" aria-label="Preset câble">
+                <option value="l1">L1 · 2,5 mm²</option>
+                <option value="l2">L2 · 2,5 mm²</option>
+                <option value="l3">L3 · 2,5 mm²</option>
+                <option value="n">N · 2,5 mm²</option>
+                <option value="pe">PE · 2,5 mm²</option>
+                <option value="ctrl">Contrôle · 1,5 mm²</option>
+              </select>
+            </div>
           </div>
           <div class="group group-style">
             <div class="row wire-pickers">
@@ -5901,6 +6094,31 @@
     </div>
   </div>
 
+  <div id="eduvoltCableBanner" hidden aria-live="polite"></div>
+  <div id="eduvoltFreeTerms" hidden>
+    <div class="ev-ft-title">BORNES SIN CONEXIÓN</div>
+    <div class="ev-ft-body"></div>
+  </div>
+  <div id="eduvoltSegments" hidden>
+    <div class="ev-seg-title">Cable segments</div>
+    <div class="ev-seg-body"></div>
+  </div>
+  <div id="eduvoltCableLabels" hidden>
+    <div class="ev-lab-title">Étiquettes câble</div>
+    <div class="ev-lab-body">
+      <label>startLabel
+        <input id="evLabelStart" type="text" maxlength="32" placeholder="Extrémité A" aria-label="startLabel" />
+      </label>
+      <label>endLabel
+        <input id="evLabelEnd" type="text" maxlength="32" placeholder="Extrémité B" aria-label="endLabel" />
+      </label>
+      <label class="ev-lab-sync">
+        <input id="evLabelSync" type="checkbox" />
+        Same label both ends
+      </label>
+    </div>
+  </div>
+
   <div id="wireOpt" class="wire-opt" hidden aria-hidden="true">
     <div class="wire-opt-card" role="dialog" aria-label="Options fil et bandelettes">
       <div class="wire-opt-k">Section</div>
@@ -5909,6 +6127,8 @@
       <div class="wire-opt-colors" id="wireOptColors"></div>
       <div class="wire-opt-k">Longueur (m)</div>
       <input id="wireOptLen" class="wire-opt-len" type="number" min="0.1" max="500" step="0.1" placeholder="m" aria-label="Longueur du fil en mètres" />
+      <div class="wire-opt-k">Nom du câble</div>
+      <input id="wireOptName" class="wire-opt-len" type="text" maxlength="32" placeholder="Ex. Câble v1" aria-label="Nom du câble" />
       <div class="wire-opt-k">Bandelettes</div>
       <div class="wire-opt-tags">
         <input id="wireOptTagA" class="wire-opt-tag" type="text" maxlength="24" placeholder="Extrémité A" aria-label="Bandelette extrémité A" />
@@ -6081,6 +6301,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/wirelab-auth.js?v=v90-fluke-exmenu"></script>
   <script src="js/wirelab-auth-vitrine.js?v=vitrine10"></script>
+  <script src="eduvolt-cable-model.js?v=v141"></script>
   <script>
     /* Assets pré-cadrés (photos studio trop larges → bandes). */
     const COLORS = [
@@ -7057,6 +7278,13 @@
       rail_din_35: {name:"Rail DIN 35 mm (TH35)",prefix:"X",cat:"Structure",w:473,h:103,kind:"rail",image:"assets/rail-din-35-swissdz.png",badge:"TH35",terminals:[]},
       rail_din_long: {name:"Rail DIN long perforé",prefix:"X",cat:"Structure",w:715,h:189,kind:"rail",image:"assets/rail-din-long-swissdz.png",badge:"Long",terminals:[]},
       rail_din_embouts: {name:"Rail DIN + embouts",prefix:"X",cat:"Structure",w:547,h:110,kind:"rail",image:"assets/rail-din-embouts-swissdz.png",badge:"Embouts",terminals:[]},
+      /* Goulottes PVC — kind goulotte + overWires : calque au-dessus des fils (masque le câblage). */
+      goulotte_h_240: {name:"Goulotte horizontale 240",nameEn:"Horizontal trunking 240",prefix:"X",cat:"Goulotte",w:240,h:34,kind:"goulotte",overWires:true,image:"assets/goulotte-h-240.svg?v=edz1",badge:"H240",terminals:[]},
+      goulotte_h_360: {name:"Goulotte horizontale 360",nameEn:"Horizontal trunking 360",prefix:"X",cat:"Goulotte",w:360,h:34,kind:"goulotte",overWires:true,image:"assets/goulotte-h-360.svg?v=edz1",badge:"H360",terminals:[]},
+      goulotte_h_480: {name:"Goulotte horizontale 480",nameEn:"Horizontal trunking 480",prefix:"X",cat:"Goulotte",w:480,h:34,kind:"goulotte",overWires:true,image:"assets/goulotte-h-480.svg?v=edz1",badge:"H480",terminals:[]},
+      goulotte_v_280: {name:"Goulotte verticale 280",nameEn:"Vertical trunking 280",prefix:"X",cat:"Goulotte",w:34,h:280,kind:"goulotte",overWires:true,image:"assets/goulotte-v-280.svg?v=edz1",badge:"V280",terminals:[]},
+      goulotte_v_420: {name:"Goulotte verticale 420",nameEn:"Vertical trunking 420",prefix:"X",cat:"Goulotte",w:34,h:420,kind:"goulotte",overWires:true,image:"assets/goulotte-v-420.svg?v=edz1",badge:"V420",terminals:[]},
+      goulotte_angle: {name:"Angle de goulotte",nameEn:"Trunking corner",prefix:"X",cat:"Goulotte",w:48,h:48,kind:"goulotte",overWires:true,image:"assets/goulotte-angle.svg?v=edz1",badge:"∠",terminals:[]},
       /* L/N = uniquement via compteur Sonelgaz — pas de pastilles source L/N dans la lib. PE Terre seul. */
       pe: {name:"Terre PE",prefix:"PE",cat:"Borniers",w:56,h:56,kind:"pe",terminals:[{id:"PE",nx:0.5,ny:0.5,direction:"left"}],badge:"PE"},
       /* Tête de réseau : compteur → L+N uniquement (jamais PE). PE = prise de terre / bornier PE. Empilable avec AGCP. */
@@ -9561,6 +9789,10 @@
         return { w: Math.max(70, Math.round(def.w * 0.4)), h: Math.max(90, Math.round(def.h * 0.4)) };
       }
       if (def && def.houseFacade) return { w: 480, h: 390 };
+      /* Goulotte : longueur ET section (épaisseur) libres. */
+      if (def && def.kind === "goulotte") {
+        return { w: 20, h: 20 };
+      }
       return { w: 40, h: 40 };
     }
     /** Tout composant placé peut être redimensionné (plus seulement din/rail). */
@@ -9617,7 +9849,7 @@
       if (!item) return;
       item.w = clampSize(w);
       item.h = clampSize(h);
-      item.x = resolveDinX(item, item.x, item.y);
+      if (!isGoulotte(item)) item.x = resolveDinX(item, item.x, item.y);
     }
     function applySizeToSameType(source, w, h) {
       if (!source) return;
@@ -9631,17 +9863,22 @@
       // 2e passe collision après tailles synchronisées
       state.items.forEach((it) => {
         if (it.type !== source.type) return;
+        if (isGoulotte(it)) return;
         it.x = resolveDinX(it, it.x, it.y);
       });
     }
     function rectsOverlap(a, b) {
       return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
     }
-    /** Composants solides (KNX inclus) — pas rails / platines / barrettes / supports PV. */
+    /** Composants solides (KNX inclus) — pas rails / platines / goulottes / barrettes / supports PV. */
     function isCollidableItem(item) {
       const def = LIB[item && item.type];
-      return !!(def && def.kind !== "rail" && def.kind !== "platine" && def.kind !== "barrette"
-        && !def.pvSupport && !isPlatine(item));
+      return !!(def && def.kind !== "rail" && def.kind !== "platine" && def.kind !== "goulotte"
+        && def.kind !== "barrette" && !def.pvSupport && !isPlatine(item));
+    }
+    function isGoulotte(item) {
+      const def = LIB[item && item.type];
+      return !!(def && def.kind === "goulotte");
     }
     /* Supports PV : case = face module 150×233, écart 10 px. Les panneaux épousent la case. */
     const PV_CELL_W = 150;
@@ -10474,6 +10711,11 @@
     }
     const state = {
       mode: "select", sim: false, color: COLORS[0].c, colorManual: false, section: 0.75,
+      /* Modèle EduVolt : objets câble (H/V), distincts du câblage borne→borne. */
+      cables: [], cableNo: 1, cableTool: "h", cablePreset: "l1", cableName: "L1",
+      cableDraft: null, selectedCable: null, showFreeTermsPanel: false,
+      cableSnapGrid: true, cableSyncLabels: false,
+      jumpers: [], jumperNo: 1, jumperDraft: null,
       seq: 1, wireNo: 1, counts: {}, items: [], wires: [],
       selected: null, selectedIds: [], selectedWire: null, wireOpt: null, selectedBar: null, wireFrom: null,
       wireDraftPts: [], /* clics vide = coudes (option) ; algo autoRoute inchangé entre segments */
@@ -14839,9 +15081,13 @@
         name: state.projectName || "schema-swissdz",
         items: state.items.map(sanitizeItem),
         wires: state.wires.map(sanitizeWire),
+        cables: (state.cables || []).map((c) => (window.EduVoltCable ? EduVoltCable.sanitizeCable(c) : c)).filter(Boolean),
+        jumpers: (state.jumpers || []).map((j) => (window.EduVoltCable && EduVoltCable.sanitizeJumper ? EduVoltCable.sanitizeJumper(j) : j)).filter(Boolean),
         counts: deepClone(state.counts),
         seq: state.seq,
-        wireNo: state.wireNo
+        wireNo: state.wireNo,
+        cableNo: state.cableNo || 1,
+        jumperNo: state.jumperNo || 1
       };
       if (state.ladder && Array.isArray(state.ladder.rungs)) {
         stashActiveLadder();
@@ -14908,9 +15154,28 @@
       if (dropUids.size) {
         state.wires = state.wires.filter((w) => !dropUids.has(w.a && w.a.uid) && !dropUids.has(w.b && w.b.uid));
       }
+      state.cables = Array.isArray(data.cables) ? deepClone(data.cables) : [];
+      if (dropUids.size) {
+        state.cables = state.cables.filter((c) => {
+          if (c.a && dropUids.has(c.a.uid)) return false;
+          if (c.b && dropUids.has(c.b.uid)) return false;
+          return true;
+        });
+      }
+      state.jumpers = Array.isArray(data.jumpers) ? deepClone(data.jumpers) : [];
+      if (dropUids.size) {
+        state.jumpers = state.jumpers.filter((j) => {
+          if (j.a && dropUids.has(j.a.uid)) return false;
+          if (j.b && dropUids.has(j.b.uid)) return false;
+          return true;
+        });
+      }
+      if (data.jumperNo != null) state.jumperNo = data.jumperNo;
       state.counts = deepClone(data.counts || {});
       if (data.seq != null) state.seq = data.seq;
       if (data.wireNo != null) state.wireNo = data.wireNo;
+      if (data.cableNo != null) state.cableNo = data.cableNo;
+      try { if (window.EduVoltCable) EduVoltCable.syncAllCablesToWires(); } catch (_) {}
       if (data.laddersByHost && typeof data.laddersByHost === "object") {
         state.laddersByHost = deepClone(data.laddersByHost);
       } else {
@@ -17241,15 +17506,23 @@
       return true;
     }
     function workspaceHasContent() {
-      return !!(state.items && state.items.length) || !!(state.wires && state.wires.length);
+      return !!(state.items && state.items.length) || !!(state.wires && state.wires.length)
+        || !!(state.cables && state.cables.length) || !!(state.jumpers && state.jumpers.length);
     }
     function startBlankWorkspace(opts) {
       const o = opts || {};
       pushHistory();
       state.items = [];
       state.wires = [];
+      state.cables = [];
+      state.jumpers = [];
       state.counts = {};
       state.wireNo = 1;
+      state.cableNo = 1;
+      state.jumperNo = 1;
+      state.jumperDraft = null;
+      state.cableDraft = null;
+      state.selectedCable = null;
       state.sim = false;
       state.selected = null;
       state.selectedIds = [];
@@ -17382,6 +17655,7 @@
       }
       if (w.tagA != null && String(w.tagA).trim()) out.tagA = String(w.tagA).trim().slice(0, 24);
       if (w.tagB != null && String(w.tagB).trim()) out.tagB = String(w.tagB).trim().slice(0, 24);
+      if (w.name != null && String(w.name).trim()) out.name = String(w.name).trim().slice(0, 32);
       if (w.lengthM != null && Number.isFinite(Number(w.lengthM)) && Number(w.lengthM) > 0) {
         out.lengthM = Math.round(Number(w.lengthM) * 10) / 10;
       }
@@ -17391,21 +17665,30 @@
       return {
         items: state.items.map(sanitizeItem),
         wires: state.wires.map(sanitizeWire),
+        cables: (state.cables || []).map((c) => (window.EduVoltCable ? EduVoltCable.sanitizeCable(c) : deepClone(c))).filter(Boolean),
+        jumpers: (state.jumpers || []).map((j) => (window.EduVoltCable && EduVoltCable.sanitizeJumper ? EduVoltCable.sanitizeJumper(j) : deepClone(j))).filter(Boolean),
         counts: deepClone(state.counts),
         seq: state.seq,
         wireNo: state.wireNo,
+        cableNo: state.cableNo || 1,
+        jumperNo: state.jumperNo || 1,
         selected: state.selected,
         selectedIds: Array.isArray(state.selectedIds) ? state.selectedIds.slice() : [],
-        selectedWire: state.selectedWire
+        selectedWire: state.selectedWire,
+        selectedCable: state.selectedCable
       };
     }
     function structuralKey(snap) {
       return JSON.stringify({
         items: snap.items,
         wires: snap.wires,
+        cables: snap.cables || [],
+        jumpers: snap.jumpers || [],
         counts: snap.counts,
         seq: snap.seq,
-        wireNo: snap.wireNo
+        wireNo: snap.wireNo,
+        cableNo: snap.cableNo,
+        jumperNo: snap.jumperNo
       });
     }
     function updateHistoryButtons() {
@@ -17446,19 +17729,27 @@
         live: false,
         waypoints: w.waypoints || []
       }));
+      state.cables = Array.isArray(snap.cables) ? deepClone(snap.cables) : [];
+      state.jumpers = Array.isArray(snap.jumpers) ? deepClone(snap.jumpers) : [];
       state.counts = deepClone(snap.counts || {});
       state.seq = snap.seq;
       state.wireNo = snap.wireNo;
+      if (snap.cableNo != null) state.cableNo = snap.cableNo;
+      if (snap.jumperNo != null) state.jumperNo = snap.jumperNo;
       const selOk = snap.selected && state.items.some((i) => i.uid === snap.selected);
       const wireOk = snap.selectedWire && state.wires.some((w) => w.id === snap.selectedWire);
+      const cabOk = snap.selectedCable && state.cables.some((c) => c.id === snap.selectedCable);
       state.selected = selOk ? snap.selected : null;
       state.selectedIds = Array.isArray(snap.selectedIds)
         ? snap.selectedIds.filter((u) => state.items.some((i) => i.uid === u))
         : (state.selected ? [state.selected] : []);
       state.selectedWire = wireOk ? snap.selectedWire : null;
+      state.selectedCable = cabOk ? snap.selectedCable : null;
       state.edzPropsUid = null;
       clearEdzLongPress();
       state.wireFrom = null;
+      state.cableDraft = null;
+      state.jumperDraft = null;
       state.preview = null;
       state.drag = null;
       state.resize = null;
@@ -17597,10 +17888,24 @@
           if (Number(w.section) !== n) {
             pushHistory();
             w.section = n;
+            if (w.fromCable) {
+              const cab = (state.cables || []).find((c) => c.id === w.fromCable);
+              if (cab) cab.section = n;
+            }
             render();
           } else {
             syncSectionSelect();
           }
+          return;
+        }
+      }
+      if (state.selectedCable) {
+        const cab = (state.cables || []).find((c) => c.id === state.selectedCable);
+        if (cab && Number(cab.section) !== n) {
+          pushHistory();
+          cab.section = n;
+          try { if (window.EduVoltCable) EduVoltCable.syncCableToWire(cab); } catch (_) {}
+          render();
           return;
         }
       }
@@ -17827,33 +18132,68 @@
       const panel = document.getElementById("wireOpt");
       if (!panel) return;
       const opt = state.wireOpt;
-      const w = opt && state.wires.find((x) => x.id === opt.id);
-      if (!opt || !w || state.selectedWire !== opt.id) {
+      const cab = opt && opt.cableId && (state.cables || []).find((c) => c.id === opt.cableId);
+      const w = opt && opt.id && state.wires.find((x) => x.id === opt.id);
+      if (!opt || (!w && !cab) || (w && state.selectedWire !== opt.id) || (cab && state.selectedCable !== opt.cableId)) {
         if (!panel.hidden) closeWireOpt();
         return;
       }
-      const sec = wireSectionOf(w);
+      const src = w || cab;
+      const sec = w ? wireSectionOf(w) : (Number(cab.section) || state.section);
       panel.querySelectorAll(".wire-opt-sec").forEach((btn) => {
         btn.classList.toggle("on", Number(btn.dataset.v) === sec);
       });
       panel.querySelectorAll(".wire-opt-swatch").forEach((btn) => {
-        btn.classList.toggle("on", btn.dataset.c === w.color);
+        btn.classList.toggle("on", btn.dataset.c === src.color);
       });
       const lenInp = document.getElementById("wireOptLen");
       if (lenInp && document.activeElement !== lenInp) {
-        lenInp.value = w.lengthM != null ? String(w.lengthM) : "";
+        lenInp.value = w && w.lengthM != null ? String(w.lengthM) : "";
+      }
+      const nameInp = document.getElementById("wireOptName");
+      if (nameInp && document.activeElement !== nameInp) {
+        nameInp.value = src.name != null ? String(src.name) : "";
       }
       const tagA = document.getElementById("wireOptTagA");
       const tagB = document.getElementById("wireOptTagB");
-      if (tagA && document.activeElement !== tagA) tagA.value = wireTagText(w, "a");
-      if (tagB && document.activeElement !== tagB) tagB.value = wireTagText(w, "b");
+      if (tagA && document.activeElement !== tagA) {
+        tagA.value = w ? wireTagText(w, "a") : (cab.startLabel || "");
+      }
+      if (tagB && document.activeElement !== tagB) {
+        tagB.value = w ? wireTagText(w, "b") : (cab.endLabel || "");
+      }
+    }
+    function commitWireOptName() {
+      const w = state.selectedWire && state.wires.find((x) => x.id === state.selectedWire);
+      const cab = state.selectedCable && (state.cables || []).find((c) => c.id === state.selectedCable);
+      const inp = document.getElementById("wireOptName");
+      if (!inp || (!w && !cab)) return;
+      const next = String(inp.value || "").trim().slice(0, 32) || null;
+      const prev = (w || cab).name == null ? null : String((w || cab).name);
+      if (prev === next) return;
+      pushHistory();
+      if (w) { if (next) w.name = next; else delete w.name; }
+      if (cab) {
+        cab.name = next || cab.name;
+        try { if (window.EduVoltCable) EduVoltCable.syncCableToWire(cab); } catch (_) {}
+      }
+      render();
     }
     function commitWireOptTag(end) {
       const w = state.selectedWire && state.wires.find((x) => x.id === state.selectedWire);
-      if (!w) return;
+      const cab = state.selectedCable && (state.cables || []).find((c) => c.id === state.selectedCable);
       const inp = document.getElementById(end === "a" ? "wireOptTagA" : "wireOptTagB");
-      if (!inp) return;
+      if (!inp || (!w && !cab)) return;
       const trimmed = String(inp.value || "").trim().slice(0, 24);
+      if (cab && !w) {
+        pushHistory();
+        if (end === "a") cab.startLabel = trimmed;
+        else cab.endLabel = trimmed;
+        try { if (window.EduVoltCable) EduVoltCable.syncCableToWire(cab); } catch (_) {}
+        render();
+        return;
+      }
+      if (!w) return;
       const def = defaultWireTag(w, end);
       const key = end === "a" ? "tagA" : "tagB";
       const next = (!trimmed || trimmed === def) ? null : trimmed;
@@ -17861,6 +18201,13 @@
       if (prev === next) return;
       pushHistory();
       w[key] = next;
+      if (w.fromCable) {
+        const c2 = (state.cables || []).find((c) => c.id === w.fromCable);
+        if (c2) {
+          if (end === "a") c2.startLabel = next || "";
+          else c2.endLabel = next || "";
+        }
+      }
       render();
     }
     function openWireOpt(id, clientX, clientY) {
@@ -17932,10 +18279,23 @@
           b.onclick = (ev) => {
             ev.stopPropagation();
             const w = state.selectedWire && state.wires.find((x) => x.id === state.selectedWire);
-            if (!w || (w.color === entry.c && w.colorManual)) return;
-            pushHistory();
-            w.color = entry.c;
-            w.colorManual = true;
+            const cab = state.selectedCable && (state.cables || []).find((c) => c.id === state.selectedCable);
+            if (w) {
+              if (w.color === entry.c && w.colorManual) return;
+              pushHistory();
+              w.color = entry.c;
+              w.colorManual = true;
+              if (w.fromCable) {
+                const c2 = (state.cables || []).find((c) => c.id === w.fromCable);
+                if (c2) { c2.color = entry.c; c2.colorManual = true; }
+              }
+            } else if (cab) {
+              if (cab.color === entry.c && cab.colorManual) return;
+              pushHistory();
+              cab.color = entry.c;
+              cab.colorManual = true;
+              try { if (window.EduVoltCable) EduVoltCable.syncCableToWire(cab); } catch (_) {}
+            } else return;
             state.color = entry.c;
             state.colorManual = true;
             render();
@@ -17979,6 +18339,20 @@
           if (ev.key === "Enter") {
             ev.preventDefault();
             commitLen();
+          }
+        });
+      }
+      const nameInp = document.getElementById("wireOptName");
+      if (nameInp) {
+        nameInp.addEventListener("change", (ev) => {
+          ev.stopPropagation();
+          commitWireOptName();
+        });
+        nameInp.addEventListener("keydown", (ev) => {
+          ev.stopPropagation();
+          if (ev.key === "Enter") {
+            ev.preventDefault();
+            commitWireOptName();
           }
         });
       }
@@ -18091,6 +18465,7 @@
     const CAT_ORDER = [
       "Alimentation",
       "Structure",
+      "Goulotte",
       "Borniers",
       "Disjoncteurs modulaires",
       "Différentiel",
@@ -18262,6 +18637,8 @@
         b.innerHTML = `<span class="thumb barrette-t">${holes}</span><span>${disp}</span>`;
       } else if (def.kind === "rail") {
         b.innerHTML = `<span class="thumb rail-t">DIN</span><span>${disp}</span>`;
+      } else if (def.kind === "goulotte") {
+        b.innerHTML = `<span class="thumb goulotte-t">${(def.badge || "GOU").slice(0, 4)}</span><span>${disp}</span>`;
       } else if (def.kind === "pe") {
         b.innerHTML = `<span class="thumb" style="background:repeating-linear-gradient(-45deg,#c4d600 0 4px,#008c45 4px 8px);padding:2px">${peSymbolSvg()}</span><span>${disp}</span>`;
       } else if (def.pumpWell) {
@@ -18834,6 +19211,8 @@
       }
       if (def.pvCable) item.lengthM = Number(def.lengthM) > 0 ? Number(def.lengthM) : 10;
       if (motorHasSixLeadPlate(def)) applyMotorBarPreset(item, "delta");
+      /* Goulottes / overWires : calque devant fils + modules (z ≥ 1000 → CSS 80–85). */
+      if (def.overWires || def.kind === "goulotte") item.z = 1000;
       return item;
     }
     function add(type) {
@@ -19188,7 +19567,7 @@
     }
     function proxCanBeTarget(item, def) {
       if (!item || !def) return false;
-      if (def.kind === "rail" || def.kind === "barrette") return false;
+      if (def.kind === "rail" || def.kind === "barrette" || def.kind === "goulotte") return false;
       return true;
     }
     function updateProxHits() {
@@ -19643,15 +20022,19 @@
       item.z = min - 1;
       return true;
     }
-    /** Map uid → CSS z-index. Sous fils: 20–50 ; sur fils: 56–58 ; pastilles: 70. */
+    /** Map uid → CSS z-index.
+     *  Sous fils: 20–50 ; sur fils: 56–58 ; pastilles: 70 ; goulottes: 80–85. */
     function computeDevCssZByUid() {
       const UNDER_LO = 20, UNDER_HI = 50;
       const OVER_LO = 56, OVER_HI = 58;
+      const GOU_LO = 80, GOU_HI = 85;
       const under = [];
       const over = [];
+      const gou = [];
       state.items.forEach((it) => {
         const def = LIB[it.type];
         if (def && def.kind === "rail") return;
+        if (def && def.kind === "goulotte") { gou.push(it); return; }
         if (itemOverWires(it)) over.push(it);
         else under.push(it);
       });
@@ -19665,6 +20048,7 @@
       };
       under.sort(byKey);
       over.sort(byKey);
+      gou.sort(byKey);
       const map = new Map();
       const mapBand = (list, lo, hi) => {
         const n = list.length;
@@ -19679,6 +20063,7 @@
       });
       mapBand(under, UNDER_LO, UNDER_HI);
       mapBand(over, OVER_LO, OVER_HI);
+      mapBand(gou, GOU_LO, GOU_HI);
       /* KM+FR : host au-dessus du guest, même bande (sous ou sur fils). */
       state.items.forEach((it) => {
         if (!isKmClipHostType(it.type)) return;
@@ -21299,6 +21684,63 @@
      * U voisins (1a–1d) : [A, A2, B2, B] inchangé. Pas de piqué diagonal dans le pad.
      * v85-cabling-ref-20261001 : stubs figés = pointes de virage (poignées bleues).
      */
+    /** Repères bornes libres (sans fil) en mode Câblage — style EduVolt. */
+    function termIsFree(uid, termId) {
+      if (wiresSharingTerm({ uid, term: termId }).length) return false;
+      const cabs = state.cables || [];
+      for (let i = 0; i < cabs.length; i++) {
+        const c = cabs[i];
+        if (c.a && c.a.uid === uid && c.a.term === termId) return false;
+        if (c.b && c.b.uid === uid && c.b.term === termId) return false;
+      }
+      return true;
+    }
+    function appendWireTermGuides(world, NS) {
+      if (!world || !NS) return;
+      if (!state || (state.mode !== "wire" && state.mode !== "cable")) return;
+      const stubLen = 12;
+      const svg = document.createElementNS(NS, "svg");
+      svg.setAttribute("class", "wire-term-guides");
+      svg.setAttribute("aria-hidden", "true");
+      (state.items || []).forEach((item) => {
+        const def = LIB[item.type];
+        if (!def || def.flukeMeter) return;
+        (termsOf(item) || []).forEach((t) => {
+          try {
+            if (typeof kmFrHiddenTerm === "function" && kmFrHiddenTerm(item, t.id)) return;
+            if (!termIsFree(item.uid, t.id)) return;
+            const p = termAbs(item, t);
+            const d = DIR[t.direction] || [0, -1];
+            const x2 = p.x + d[0] * stubLen;
+            const y2 = p.y + d[1] * stubLen;
+            const line = document.createElementNS(NS, "line");
+            line.setAttribute("class", "wt-stub");
+            line.setAttribute("x1", String(p.x));
+            line.setAttribute("y1", String(p.y));
+            line.setAttribute("x2", String(x2));
+            line.setAttribute("y2", String(y2));
+            svg.appendChild(line);
+            const dot = document.createElementNS(NS, "circle");
+            dot.setAttribute("class", "wt-dot");
+            dot.setAttribute("cx", String(p.x));
+            dot.setAttribute("cy", String(p.y));
+            dot.setAttribute("r", "2.4");
+            svg.appendChild(dot);
+            const head = 4.2;
+            const ax = x2 - d[0] * head;
+            const ay = y2 - d[1] * head;
+            const px = -d[1] * 2.2, py = d[0] * 2.2;
+            const tri = document.createElementNS(NS, "polygon");
+            tri.setAttribute("class", "wt-arrow");
+            tri.setAttribute("points",
+              x2 + "," + y2 + " " + (ax + px) + "," + (ay + py) + " " + (ax - px) + "," + (ay - py));
+            svg.appendChild(tri);
+          } catch (_) {}
+        });
+      });
+      world.appendChild(svg);
+    }
+
     function withCardinalStubs(pts, A, B) {
       const da = padUnit(A), db = padUnit(B);
       let raw = (pts || []).slice(1, -1).map((p) => ({ x: p.x, y: p.y }));
@@ -21474,15 +21916,19 @@
     function addWireDraftCorner(x, y) {
       if (!state.wireFrom) return false;
       const last = wireDraftLastNode();
-      const dx = x - last.x;
-      const dy = y - last.y;
+      let dx = x - last.x;
+      let dy = y - last.y;
       if (Math.hypot(dx, dy) < 12) return false;
+      /* Axe forcé H/V (outil câble EduVolt) sinon plus grand delta. */
+      const axis = state.cableAxis || "free";
+      if (axis === "h") { dy = 0; }
+      else if (axis === "v") { dx = 0; }
       /* Verrouille H ou V depuis le dernier point (garde le L, sans changer autoRoute). */
       let corner;
-      if (Math.abs(dx) >= Math.abs(dy)) {
-        corner = { x: x, y: last.y, direction: dx >= 0 ? "left" : "right" };
+      if (axis === "h" || (axis === "free" && Math.abs(dx) >= Math.abs(dy))) {
+        corner = { x: last.x + dx, y: last.y, direction: dx >= 0 ? "left" : "right" };
       } else {
-        corner = { x: last.x, y: y, direction: dy >= 0 ? "top" : "bottom" };
+        corner = { x: last.x, y: last.y + dy, direction: dy >= 0 ? "top" : "bottom" };
       }
       if (!state.wireDraftPts) state.wireDraftPts = [];
       const prev = state.wireDraftPts[state.wireDraftPts.length - 1];
@@ -21515,8 +21961,12 @@
         state.preview = { pts: routeThroughChain(chain) };
       } else {
         const last = chain[chain.length - 1];
-        const dir = guessStubDir(last.x, last.y, x, y);
-        chain.push({ x, y, direction: dir });
+        let px = x, py = y;
+        const axis = state.cableAxis || "free";
+        if (axis === "h") py = last.y;
+        else if (axis === "v") px = last.x;
+        const dir = guessStubDir(last.x, last.y, px, py);
+        chain.push({ x: px, y: py, direction: dir });
         state.preview = { pts: routeThroughChain(chain) };
       }
     }
@@ -23832,6 +24282,14 @@
             state.selectedIds = [];
             state.refSelected = false;
             state.selectedWire = id;
+            try {
+              const wHit = state.wires.find((x) => x.id === id);
+              if (wHit && wHit.fromCable) state.selectedCable = wHit.fromCable;
+              else if (window.EduVoltCable) {
+                const cab = (state.cables || []).find((c) => c.wireId === id);
+                if (cab) state.selectedCable = cab.id;
+              }
+            } catch (_) {}
             syncDragLock();
             /* v51 : double-clic = panneau fil + bandelettes (plus d’appui long / jog ici). */
             if (ev.detail >= 2) {
@@ -23839,6 +24297,12 @@
               return;
             }
             render();
+            try {
+              if (window.EduVoltCable) {
+                EduVoltCable.renderSegmentsPanel();
+                EduVoltCable.renderLabelsPanel();
+              }
+            } catch (_) {}
           });
           hit.addEventListener("contextmenu", (ev) => {
             ev.stopPropagation();
@@ -23925,6 +24389,29 @@
           lab.setAttribute("text-anchor", "middle");
           lab.textContent = String(wObj.lengthM).replace(".", ",") + " m";
           svgWires.appendChild(lab);
+        }
+        if (wObj && wObj.name && String(wObj.name).trim() && pts.length >= 2) {
+          let acc2 = 0, total2 = 0;
+          for (let i = 1; i < pts.length; i++) total2 += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y);
+          const mid2 = total2 / 2;
+          let mx2 = pts[0].x, my2 = pts[0].y;
+          for (let i = 1; i < pts.length; i++) {
+            const seg = Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y);
+            if (acc2 + seg >= mid2 || i === pts.length - 1) {
+              const t = seg ? Math.max(0, Math.min(1, (mid2 - acc2) / seg)) : 0;
+              mx2 = pts[i - 1].x + (pts[i].x - pts[i - 1].x) * t;
+              my2 = pts[i - 1].y + (pts[i].y - pts[i - 1].y) * t;
+              break;
+            }
+            acc2 += seg;
+          }
+          const nlab = document.createElementNS(NS, "text");
+          nlab.setAttribute("class", "wire-len");
+          nlab.setAttribute("x", mx2.toFixed(1));
+          nlab.setAttribute("y", (my2 + (Number(wObj.lengthM) > 0 ? 12 : -8)).toFixed(1));
+          nlab.setAttribute("text-anchor", "middle");
+          nlab.textContent = String(wObj.name).trim().slice(0, 24);
+          svgWires.appendChild(nlab);
         }
 
         /* Flux animé : AC aller-retour, ou continu PV dans un seul sens si la boucle est fermée. */
@@ -24353,6 +24840,7 @@
           el.classList.add("rail");
           if (!def.image) el.classList.add("rail-body");
         }
+        if (def.kind === "goulotte") el.classList.add("goulotte");
         if (def.pvSupport) el.classList.add("pv-support");
         if (def.kind === "pe") el.classList.add("source", "pe");
         if (def.kind === "barrette") el.classList.add("barrette-dev");
@@ -25231,6 +25719,8 @@
       /* 2) Fils au-dessus des faces (z-index 55) ; pastilles ensuite (60). Géométrie/routeur inchangés. */
       world.appendChild(svgWires);
       state.wires.forEach((w) => {
+        /* Chapas : rendu dédié (drawJumpers), pas le tracé fil ortho. */
+        if (w.jumper || w.fromJumper) return;
         /* Connexion Fluke : fil électrique pour la sim, tracé = cordon fluke-lead. */
         if (isFlukeMeterRef(w.a) || isFlukeMeterRef(w.b)) return;
         /* Couleurs IEC / bus : défaut pédagogique, sauf override manuel explicite */
@@ -25247,9 +25737,19 @@
         const dcDir = pvDc.flow.get(w.id) || 0;
         drawWire(wirePtsDraw(w), w.color, w.live, w.id, w.liveN, (dcPol || dcDir) ? { dir: dcDir, pol: dcPol } : null);
       });
+      try {
+        if (window.EduVoltCable) {
+          EduVoltCable.drawCables(svgWires, NS, function (pts, color, live, id) {
+            drawWire(pts, color, live, id, false);
+          });
+          if (EduVoltCable.drawJumpers) EduVoltCable.drawJumpers(svgWires, NS);
+        }
+      } catch (_) {}
       if (state.preview) {
         let pc = state.color;
-        if (state.wireFrom && !state.colorManual) {
+        if (state.mode === "cable" && state.cableDraft) {
+          pc = state.cableDraft.color || state.color;
+        } else if (state.wireFrom && !state.colorManual) {
           pc = wireColorForRefs(state.wireFrom, state.wireFrom);
         } else if (state.flukeTipDrag) {
           const cab = FLUKE_CABLES.find((c) => c.id === state.flukeTipDrag.tip);
@@ -25259,12 +25759,15 @@
         if (!state.flukeTipDrag) {
           drawWire(state.preview.pts, pc, false, null, false);
           /* Poignées des coudes posés au clic (option direction). */
-          (state.wireDraftPts || []).forEach((p) => {
+          const draftPts = (state.mode === "cable" && state.cableDraft)
+            ? (state.cableDraft.points || [])
+            : (state.wireDraftPts || []);
+          draftPts.forEach((p) => {
             const c = document.createElementNS(NS, "circle");
             c.setAttribute("cx", p.x);
             c.setAttribute("cy", p.y);
             c.setAttribute("r", "5");
-            c.setAttribute("fill", "#38bdf8");
+            c.setAttribute("fill", state.mode === "cable" ? "#f59e0b" : "#38bdf8");
             c.setAttribute("stroke", "#0f172a");
             c.setAttribute("stroke-width", "1.5");
             c.setAttribute("pointer-events", "none");
@@ -25318,10 +25821,14 @@
             sym: t.sym || "",
             barLink: barLink,
             cableOn: cableOn,
-            motorPlate: !!motorBarTerms
+            motorPlate: !!motorBarTerms,
+            termFree: (state.mode === "wire" || state.mode === "cable" || state.mode === "jumper")
+              && termIsFree(item.uid, t.id)
           }, item));
         });
       });
+      try { appendWireTermGuides(world, NS); } catch (_) {}
+      try { if (window.EduVoltCable) EduVoltCable.renderFreeTermsPanel(); } catch (_) {}
 
       /* 4) Effet court-circuit : bannière + arc / étincelles */
       if (state.short) {
@@ -25465,6 +25972,19 @@
         }
         state.selectedBar = null;
       }
+      if (state.selectedCable) {
+        const cid = state.selectedCable;
+        pushHistory();
+        const cab = (state.cables || []).find((c) => c.id === cid);
+        if (cab && cab.wireId) {
+          state.wires = state.wires.filter((w) => w.id !== cab.wireId);
+        }
+        state.cables = (state.cables || []).filter((c) => c.id !== cid);
+        state.selectedCable = null;
+        state.selectedWire = null;
+        render();
+        return true;
+      }
       if (state.selectedWire) {
         removeWire(state.selectedWire);
         return true;
@@ -25474,9 +25994,15 @@
         pushHistory();
         const drop = new Set(ids);
         state.wires = state.wires.filter((w) => !drop.has(w.a.uid) && !drop.has(w.b.uid));
+        state.cables = (state.cables || []).filter((c) => {
+          if (c.a && drop.has(c.a.uid)) return false;
+          if (c.b && drop.has(c.b.uid)) return false;
+          return true;
+        });
         state.items = state.items.filter((i) => !drop.has(i.uid));
         state.selected = null;
         state.selectedIds = [];
+        state.selectedCable = null;
         if (ids.some((u) => state.edzPropsUid === u)) state.edzPropsUid = null;
         clearEdzLongPress();
         render();
@@ -25510,7 +26036,8 @@
         + (knxbus ? " knxbus" : "")
         + (mark && mark.barLink ? " bar-link" : "")
         + (mark && mark.cableOn ? " cable-on" : "")
-        + (mark && mark.motorPlate && !mark.barLink && !mark.cableOn && !pe ? " motor-free" : "");
+        + (mark && mark.motorPlate && !mark.barLink && !mark.cableOn && !pe ? " motor-free" : "")
+        + (mark && mark.termFree ? " term-free" : "");
       t.style.left = x + "px";
       t.style.top = y + "px";
       /* Scale pastille avec le composant (hitbox = taille visuelle). */
@@ -25553,6 +26080,8 @@
         else if (mark.barLink) tip = id + " — ponté par barrette (ne pas doubler en fil)";
         else if (mark.cableOn) tip = id + " — fil extérieur branché";
         else tip = id + " — libre (à câbler ou laisser ouvert)";
+      } else if (mark && mark.termFree) {
+        tip = (tip || id) + " — borne libre (sans connexion)";
       }
       t.title = tip;
       if (state.wireFrom && state.wireFrom.uid === uid && state.wireFrom.term === id) {
@@ -25567,7 +26096,7 @@
       t.onpointerdown = (ev) => {
         ev.stopPropagation();
         ev.preventDefault();
-        if (state.mode === "wire") {
+        if (state.mode === "wire" || state.mode === "cable" || state.mode === "jumper") {
           onTerm(uid, id, { touch: isTouchLikePointer(ev) });
           return;
         }
@@ -25590,6 +26119,15 @@
 
     function onTerm(uid, id, opts) {
       const touch = !!(opts && opts.touch);
+      if (state.mode === "cable" || state.mode === "jumper") {
+        try {
+          if (window.EduVoltCable && EduVoltCable.onTermClick(uid, id)) {
+            render();
+            return;
+          }
+        } catch (_) {}
+      }
+      if (state.mode !== "wire") return;
       if (!state.wireFrom) {
         state.wireFrom = { uid, term: id };
         state.wireSnap = null;
@@ -25625,6 +26163,9 @@
         waypoints: []
       };
       if (manual) w.colorManual = true;
+      if (state.cableName && String(state.cableName).trim()) {
+        w.name = String(state.cableName).trim().slice(0, 32);
+      }
       /* Figé à la création : autoRoute inchangé ; si coudes clic → chaîne de segments autoRoute. */
       const draft = state.wireDraftPts || [];
       const routed = draft.length
@@ -25738,8 +26279,9 @@
       /* Persiste dans le modèle item (pas seulement le DOM) — survit au re-select/render. */
       applyItemSize(item, nw, nh);
       if (defR && defR.flukeMeter) normalizeFlukeSize(item);
-      item.y = ny;
-      item.x = resolveDinX(item, nx, item.y);
+      item.y = Math.max(0, ny);
+      /* Goulottes libres (pas d’aimant DIN / anti-chevauchement). */
+      item.x = isGoulotte(item) ? Math.max(0, nx) : resolveDinX(item, nx, item.y);
       if (isPvSupportItem(item)) refitPvModules(item);
       else if (isPvModuleItem(item)) {
         delete item.pvHost;
@@ -25861,6 +26403,9 @@
           item.y = soft.y;
           item.x = soft.x;
           /* Pas de shiftWires : bornes = pointes absolues, inchangées. */
+        } else if (isGoulotte(item)) {
+          item.x = Math.max(0, nx);
+          item.y = Math.max(0, ny);
         } else {
           const prevX = item.x, prevY = item.y;
           const soft = applySoftAlign(item, nx, ny);
@@ -25871,7 +26416,10 @@
         render();
         return;
       }
-      if (state.mode === "wire" && state.wireFrom) {
+      if (state.mode === "cable" && state.cableDraft) {
+        try { if (window.EduVoltCable) EduVoltCable.updateDraftPreview(x, y); } catch (_) {}
+        render();
+      } else if (state.mode === "wire" && state.wireFrom) {
         updateWirePreview(x, y, { touch: isTouchLikePointer(ev) });
         render();
       }
@@ -26664,6 +27212,15 @@
       closeCtxMenu();
       closeWireOpt();
       clearWireHold();
+      if (state.mode === "cable" || state.mode === "jumper") {
+        const pt = boardPointFromClient(ev.clientX, ev.clientY);
+        try {
+          if (window.EduVoltCable && EduVoltCable.onBoardPointer(ev, pt)) {
+            render();
+            return;
+          }
+        } catch (_) {}
+      }
       if (state.mode === "wire" && state.wireFrom) {
         const pt = boardPointFromClient(ev.clientX, ev.clientY);
         const snap = resolveWireSnapCommit(pt, ev);
@@ -26694,18 +27251,32 @@
       if (ev.target.closest(".dev, .board-ref-layer, svg.wires, svg.prox-beams, .term, .whandle, .wdel, .rhandle, .fluke-probe, .fluke-lead-hit, .fluke-bend")) {
         ev.preventDefault();
       }
-      /* Clic droit pendant tirage fil : annuler le brouillon (option coudes). */
+      /* Clic droit pendant tirage fil / câble EduVolt : annuler le brouillon. */
       if (state.mode === "wire" && state.wireFrom) {
         ev.preventDefault();
         clearWireDraft();
         render();
       }
+      if (state.mode === "cable" && state.cableDraft) {
+        ev.preventDefault();
+        try { if (window.EduVoltCable) EduVoltCable.cancelDraft(); } catch (_) {}
+        render();
+      }
+      if (state.mode === "jumper" && state.jumperDraft) {
+        ev.preventDefault();
+        state.jumperDraft = null;
+        render();
+      }
     });
 
     function setMode(mode) {
-      if (mode !== "select" && mode !== "wire") mode = "select";
+      if (mode !== "select" && mode !== "wire" && mode !== "cable" && mode !== "jumper") mode = "select";
       state.mode = mode;
       clearWireDraft();
+      if (mode !== "cable") {
+        try { if (window.EduVoltCable) EduVoltCable.clearCableDraft(); } catch (_) {}
+      }
+      if (mode !== "jumper") state.jumperDraft = null;
       state.drag = null;
       state.flukeTipDrag = null;
       state.flukeBendDrag = null;
@@ -26713,13 +27284,47 @@
       syncDragLock();
       document.getElementById("modeSelect").classList.toggle("active", mode === "select");
       document.getElementById("modeWire").classList.toggle("active", mode === "wire");
+      const btnCab = document.getElementById("modeCable");
+      if (btnCab) {
+        btnCab.classList.toggle("active", mode === "cable");
+        btnCab.setAttribute("aria-pressed", mode === "cable" ? "true" : "false");
+      }
+      const btnJmp = document.getElementById("modeJumper");
+      if (btnJmp) {
+        btnJmp.classList.toggle("active", mode === "jumper");
+        btnJmp.setAttribute("aria-pressed", mode === "jumper" ? "true" : "false");
+      }
       board.classList.toggle("mode-select", mode === "select");
       board.classList.remove("mode-press");
       board.classList.toggle("mode-wire", mode === "wire");
+      board.classList.toggle("mode-cable", mode === "cable");
+      board.classList.toggle("mode-jumper", mode === "jumper");
+      try { if (window.EduVoltCable) EduVoltCable.syncToolbar(); } catch (_) {}
       render();
     }
     document.getElementById("modeSelect").onclick = () => setMode("select");
     document.getElementById("modeWire").onclick = () => setMode("wire");
+    /* EduVolt cable tool UI — bind après DOM (module eduvolt-cable-model.js). */
+    (function initEduVoltCableUi() {
+      try {
+        window.state = state;
+        window.LIB = LIB;
+        window.setMode = setMode;
+        window.render = render;
+        window.pushHistory = pushHistory;
+        window.add = add;
+        window.endpoint = endpoint;
+        window.nearestPanelTerm = nearestPanelTerm;
+        window.termsOf = termsOf;
+        window.kmFrHiddenTerm = kmFrHiddenTerm;
+        window.syncSectionSelect = syncSectionSelect;
+        window.syncColorSwatches = syncColorSwatches;
+        window.openWireOpt = openWireOpt;
+        window.syncWireOpt = syncWireOpt;
+        window.placeWireOpt = placeWireOpt;
+        if (window.EduVoltCable) EduVoltCable.bindUi();
+      } catch (e) { console.warn(e); }
+    })();
     document.getElementById("btnZoomIn").onclick = (ev) => {
       try { if (ev && ev.currentTarget && ev.currentTarget.blur) ev.currentTarget.blur(); } catch (_) {}
       bumpBoardZoom(1);
@@ -27203,6 +27808,17 @@
       const isLeftEmpty = (ev.button === 0 || ev.pointerType === "touch") && boardPanEmptyTarget(ev.target);
       if (!isMid && !isLeftEmpty) return;
       if (boardMidPanBlocked()) return;
+      if (isLeftEmpty && (state.mode === "cable" || state.mode === "jumper")) {
+        const pt = boardPointFromClient(ev.clientX, ev.clientY);
+        try {
+          if (window.EduVoltCable && EduVoltCable.onBoardPointer(ev, pt)) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            render();
+            return;
+          }
+        } catch (_) {}
+      }
       if (isLeftEmpty && state.mode === "wire" && state.wireFrom) {
         const pt = boardPointFromClient(ev.clientX, ev.clientY);
         const snap = resolveWireSnapCommit(pt, ev);
@@ -28402,9 +29018,11 @@
     document.getElementById("btnUndo").onclick = () => undo();
     document.getElementById("btnRedo").onclick = () => redo();
     document.getElementById("btnClearWires").onclick = () => {
-      if (!state.wires.length) return;
+      if (!state.wires.length && !(state.jumpers && state.jumpers.length)) return;
       pushHistory();
       state.wires = [];
+      state.jumpers = [];
+      state.jumperDraft = null;
       state.preview = null;
       state.wireFrom = null;
       state.selectedWire = null;
