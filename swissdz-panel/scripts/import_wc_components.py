@@ -96,9 +96,9 @@ CAT_MAP = {
     "Contactor": "Contacteurs",
     "Contactors": "Contacteurs",
     "4-Pole Contactor": "Contacteurs",
-    "Motor Protection Breaker": "Relais thermiques",
-    "Motor Protection Circuit Breaker": "Relais thermiques",
-    "Overload Relay": "Relais thermiques",
+    "Motor Protection Breaker": "Disjoncteur moteur",
+    "Motor Protection Circuit Breaker": "Disjoncteur moteur",
+    "Overload Relay": "Disjoncteur moteur",
     "Motors": "Moteurs",
     "PLC": "PLC",
     "Actuators": "Moteurs",
@@ -133,8 +133,8 @@ CAT_ID_OVERRIDES = {
     "edz_bornes_l1_l2_l3_n": "Borniers / Alim",
     "edz_bornes_l1_l2_l3": "Borniers / Alim",
     "edz_contactor_0911": "Contacteurs",
-    "edz_guardamotor_24_32_a": "Relais thermiques",
-    "edz_relé_térmico_23_32_a": "Relais thermiques",
+    "edz_guardamotor_24_32_a": "Disjoncteur moteur",
+    "edz_relé_térmico_23_32_a": "Disjoncteur moteur",
 }
 
 # Behaviors that conduct when device is ON / closed / energized (NO path).
@@ -191,7 +191,7 @@ def map_category(cat_src: str, badge: str | None, key: str | None = None) -> str
     if any(k in blob for k in ("contactor",)):
         return "Contacteurs"
     if any(k in blob for k in ("overload", "thermal", "guardamotor", "mpcb")):
-        return "Relais thermiques"
+        return "Disjoncteur moteur"
     if any(k in blob for k in ("motor", "actuator")):
         return "Moteurs"
     if "plc" in blob:

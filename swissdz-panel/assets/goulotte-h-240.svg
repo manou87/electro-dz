@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" width="240" height="34" viewBox="0 0 240 34">
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d1d5db"/>
+      <stop offset="35%" stop-color="#9ca3af"/>
+      <stop offset="70%" stop-color="#6b7280"/>
+      <stop offset="100%" stop-color="#4b5563"/>
+    </linearGradient>
+    <linearGradient id="lid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e5e7eb"/>
+      <stop offset="45%" stop-color="#9ca3af"/>
+      <stop offset="100%" stop-color="#6b7280"/>
+    </linearGradient>
+    <linearGradient id="side" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#374151"/>
+      <stop offset="50%" stop-color="#6b7280"/>
+      <stop offset="100%" stop-color="#374151"/>
+    </linearGradient>
+  </defs>
+  <!-- base channel -->
+  <rect x="1" y="2" width="238" height="30" rx="4" fill="url(#body)" stroke="#374151" stroke-width="1.4"/>
+  <!-- inner cavity hint (dark, wires hide under) -->
+  <rect x="5" y="6.1" width="230" height="21.8" rx="2" fill="#1f2937" opacity="0.22"/>
+  <!-- snap-on lid -->
+  <rect x="3" y="4" width="234" height="26" rx="3" fill="url(#lid)" stroke="#4b5563" stroke-width="1"/>
+  <!-- lateral lips -->
+  <rect x="2" y="3" width="5" height="28" rx="1.5" fill="url(#side)" opacity="0.85"/>
+  <rect x="233" y="3" width="5" height="28" rx="1.5" fill="url(#side)" opacity="0.85"/>
+  <!-- ventilation / grip slots -->
+  <rect x="14" y="9.5" width="3" height="15.0" rx="1" fill="#6b7280" opacity="0.55"/><rect x="24" y="9.5" width="3" height="15.0" rx="1" fill="#6b7280" opacity="0.55"/><rect x="34" y="9.5" width="3" height="15.0" rx="1" fill="#6b7280" opacity="0.55"/><rect x="44" y="9.5" width="3" height="15.0" rx="1" fill="#6b7280" opacity="0.55"/><rect x="54" y="9.5" width="3" height="15.0" rx="1" fill="#6b7280" opacity="0.55"/><rect x="64" y="9.5" width="3" height="15.0" rx="1" fill="#6b7280" opacity="0.55"/><rect x="74" y="9.5" width="3" height="15.0" rx="1" fill="#6b7280" opacity="0.55"/><rect x="84" y="9.5" width="3" height="15.0" rx="1" fill="#6b7280" opacity="0.55"/><rect x="94" y="9.5" width="3" height="15.0" rx="1" fill="#6b7280" opacity="0.55"/><rect x="104" y="9.5" width="3" height="15.0" rx="1" fill="#6b7280" opacity="0.55"/><rect x="114" y="9.5" width="3" height="15.0" rx="1" fill="#6b7280" opacity="0.55"/><rect x="124" y="9.5" width="3" height="15.0" rx="1" fill="#6b7280" opacity="0.55"/><rect x="134" y="9.5" width="3" height="15.0" rx="1" fill="#6b7280" opacity="0.55"/><rect x="144" y="9.5" width="3" height="15.0" rx="1" fill="#6b7280" opacity="0.55"/><rect x="154" y="9.5" width="3" height="15.0" rx="1" fill="#6b7280" opacity="0.55"/><rect x="164" y="9.5" width="3" height="15.0" rx="1" fill="#6b7280" opacity="0.55"/><rect x="174" y="9.5" width="3" height="15.0" rx="1" fill="#6b7280" opacity="0.55"/><rect x="184" y="9.5" width="3" height="15.0" rx="1" fill="#6b7280" opacity="0.55"/><rect x="194" y="9.5" width="3" height="15.0" rx="1" fill="#6b7280" opacity="0.55"/><rect x="204" y="9.5" width="3" height="15.0" rx="1" fill="#6b7280" opacity="0.55"/><rect x="214" y="9.5" width="3" height="15.0" rx="1" fill="#6b7280" opacity="0.55"/><rect x="224" y="9.5" width="3" height="15.0" rx="1" fill="#6b7280" opacity="0.55"/>
+  <!-- highlight edge -->
+  <path d="M6 5.5 H234" stroke="#f3f4f6" stroke-width="1.2" opacity="0.55"/>
+  <text x="120" y="21.1" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="10" font-weight="800" letter-spacing="0.06em" fill="#111827" opacity="0.42">Electro DZ</text>
+</svg>
