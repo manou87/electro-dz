@@ -8,7 +8,9 @@
   <link rel="apple-touch-icon" href="brand/logo-wirelab-pro-icon.png?v=official-gemini" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="native-shell-8777-v174-moteur-vis-ventilo-arbre" />
+  <meta name="swissdz-rev" content="native-shell-8777-v176-rail-platine-overlap" />
+  <!-- v176: rail→platine = chevauchement AABB (rail >> platine) ; plus centre-dans-cadre -->
+  <!-- v175: hiérarchie montage — module DIN → rail DIN → platine (snap + mountUid ; rail enfant de la platine) -->
   <!-- v174: bornes à vis réelles sur plaque moteur + barrettes Y/Δ sur les vis ; ventilo agrandi sur l’arbre (~50 %) + flèche sens -->
   <!-- v173: bornes moteur 6/9/12/mono sur la plaque WireONa (pas bord ABB) — barrettes Y/Δ dans le boîtier à bornes -->
   <!-- v172: moteur plaque WireONa (In, Id/In, cosφ, pôles, slip, pic démarrage) ; ventilo sur arbre ; sélecteurs clicables en Play -->
@@ -9726,6 +9728,13 @@
           const km = state.items.find((o) => o.uid === i.parentUid);
           if (!km || KM_FR_CLIP[km.type] !== i.type) i.parentUid = null;
         }
+        /* mountUid = rail→platine / module→rail ; invalide → null */
+        if (i.mountUid) {
+          const host = state.items.find((o) => o.uid === i.mountUid);
+          if (!host) i.mountUid = null;
+          else if (isRail(i) && !isPlatine(host)) i.mountUid = null;
+          else if (isDinModule(i) && !isRail(host)) i.mountUid = null;
+        }
       });
       if (drop.size) {
         state.items = state.items.filter((i) => !drop.has(i.uid));
@@ -9763,10 +9772,10 @@
       return String(type || "").startsWith("edz_hager_");
     }
 
-    // Déplacement libre X/Y : pas de snap rail (modules non verrouillés sur le DIN).
-    function snapToRailY(_item, _x, y) {
-      return y;
-    }
+    /* Snap module DIN → rail (Y centré sur le rail). Distance généreuse = aimant réel. */
+    const RAIL_MODULE_SNAP_Y = 96;
+    const RAIL_MODULE_PAD_X = 64;
+    const PLATINE_RAIL_PAD = 24;
 
     function isRail(item) {
       const def = LIB[item && item.type];
@@ -9785,36 +9794,218 @@
       const def = LIB[item && item.type];
       return !!(def && def.din);
     }
-    /** Modules posés sur un rail (chevauchement X + bande Y autour du rail). */
+    /** parentUid = clip KM/FR ; mountUid = montage structurel (module→rail→platine). */
+    function clearMountUid(item) {
+      if (item) item.mountUid = null;
+    }
+    function mountHostOf(item) {
+      if (!item || !item.mountUid) return null;
+      return find(item.mountUid) || null;
+    }
+    /**
+     * Chevauchement AABB item ↔ platine (pad inclus).
+     * Les rails (≈473 px) sont bien plus larges que la platine LIB (150 px) :
+     * un test « centre dans le cadre » rate presque toujours → on exige un vrai overlap.
+     * Retourne l’aire de chevauchement, ou 0 si trop faible.
+     */
+    function platineOverlapArea(item, plate, x, y) {
+      if (!item || !plate) return 0;
+      const sz = itemSize(item);
+      const pb = itemWorldAabb(plate);
+      const pad = PLATINE_RAIL_PAD;
+      const ox0 = Math.max(x, pb.minX - pad);
+      const oy0 = Math.max(y, pb.minY - pad);
+      const ox1 = Math.min(x + sz.w, pb.maxX + pad);
+      const oy1 = Math.min(y + sz.h, pb.maxY + pad);
+      const ow = ox1 - ox0;
+      const oh = oy1 - oy0;
+      if (ow <= 0 || oh <= 0) return 0;
+      const plateW = Math.max(1, pb.maxX - pb.minX);
+      const plateH = Math.max(1, pb.maxY - pb.minY);
+      /* Au moins ~25 % du plus petit côté commun (min 10 px) — évite un coin seul. */
+      const minOw = Math.max(10, Math.min(sz.w, plateW) * 0.25);
+      const minOh = Math.max(10, Math.min(sz.h, plateH) * 0.25);
+      if (ow < minOw || oh < minOh) return 0;
+      return ow * oh;
+    }
+    function nearestRailAt(item, x, y) {
+      if (!item || !isDinModule(item)) return null;
+      const sz = itemSize(item);
+      const meL = x, meR = x + sz.w, meCy = y + sz.h / 2;
+      let best = null, bestScore = Infinity;
+      state.items.forEach((r) => {
+        if (!isRail(r) || r.uid === item.uid) return;
+        const rr = itemSize(r);
+        const rL = r.x, rR = r.x + rr.w, rCy = r.y + rr.h / 2;
+        if (meL >= rR + RAIL_MODULE_PAD_X || meR <= rL - RAIL_MODULE_PAD_X) return;
+        const overlapX = meL < rR && meR > rL;
+        const dY = Math.abs(meCy - rCy);
+        if (dY > RAIL_MODULE_SNAP_Y) return;
+        const score = dY + (overlapX ? 0 : 80);
+        if (score < bestScore) { bestScore = score; best = r; }
+      });
+      return best;
+    }
+    /** Aligne le centre Y du module sur le rail DIN le plus proche (sinon y inchangé). */
+    function snapToRailY(item, x, y) {
+      if (!item || !isDinModule(item)) return y;
+      /* Invité clip KM/FR : suit le contacteur, pas le rail directement. */
+      if (isFrClipType(item.type) && clipHostOf(item)) return y;
+      const rail = nearestRailAt(item, x, y);
+      if (!rail) return y;
+      const sz = itemSize(item);
+      const rs = itemSize(rail);
+      return rail.y + rs.h / 2 - sz.h / 2;
+    }
+    function nearestPlatineAt(item, x, y) {
+      if (!item) return null;
+      let best = null, bestArea = 0;
+      state.items.forEach((p) => {
+        if (!isPlatine(p) || p.uid === item.uid) return;
+        const area = platineOverlapArea(item, p, x, y);
+        if (area > bestArea) { bestArea = area; best = p; }
+      });
+      return best;
+    }
+    /** Attache / détache le rail sur une platine (mountUid). */
+    function attachRailToPlatine(rail) {
+      if (!rail || !isRail(rail)) return;
+      const plate = nearestPlatineAt(rail, rail.x, rail.y);
+      if (plate) rail.mountUid = plate.uid;
+      else clearMountUid(rail);
+    }
+    /** Quand on pose / déplace une platine : accroche les rails qui la chevauchent. */
+    function attachOverlappingRailsToPlatine(platine) {
+      if (!platine || !isPlatine(platine)) return;
+      state.items.forEach((r) => {
+        if (!isRail(r) || r.uid === platine.uid) return;
+        const area = platineOverlapArea(r, platine, r.x, r.y);
+        if (area <= 0) {
+          if (r.mountUid === platine.uid) clearMountUid(r);
+          return;
+        }
+        /* Garder la platine avec le plus grand chevauchement. */
+        const cur = mountHostOf(r);
+        if (cur && isPlatine(cur) && cur.uid !== platine.uid) {
+          const curArea = platineOverlapArea(r, cur, r.x, r.y);
+          if (curArea >= area) return;
+        }
+        r.mountUid = platine.uid;
+      });
+    }
+    /** Attache / détache un module DIN sur un rail (mountUid). */
+    function attachModuleToRail(item) {
+      if (!item || !isDinModule(item)) return;
+      if (isFrClipType(item.type) && clipHostOf(item)) {
+        clearMountUid(item);
+        return;
+      }
+      const rail = nearestRailAt(item, item.x, item.y);
+      if (rail) {
+        const rs = itemSize(rail);
+        const sz = itemSize(item);
+        const targetY = rail.y + rs.h / 2 - sz.h / 2;
+        const dy = targetY - item.y;
+        if (Math.abs(dy) > 0.25) {
+          item.y = targetY;
+          shiftWiresForItemDelta(item.uid, 0, dy);
+        }
+        item.mountUid = rail.uid;
+      } else {
+        clearMountUid(item);
+      }
+    }
+    /**
+     * Hiérarchie WireONa : composant → rail DIN → platine.
+     * Appelé au lâcher / à l’ajout biblio.
+     */
+    function snapMountHierarchy(item) {
+      if (!item) return;
+      if (isPlatine(item)) {
+        attachOverlappingRailsToPlatine(item);
+        return;
+      }
+      if (isRail(item)) {
+        attachRailToPlatine(item);
+        return;
+      }
+      if (isDinModule(item)) {
+        attachModuleToRail(item);
+        /* Module sur rail déjà monté sur platine : rien de plus (transitif). */
+      }
+    }
+    /** Modules posés sur un rail (mountUid prioritaire, sinon proximité spatiale). */
     function modulesOnRail(rail) {
       if (!rail || !isRail(rail)) return [];
       const rs = itemSize(rail);
       const railCy = rail.y + rs.h / 2;
-      return state.items.filter((it) => {
-        if (!isDinModule(it)) return false;
+      const seen = new Set();
+      const out = [];
+      state.items.forEach((it) => {
+        if (!isDinModule(it) || it.uid === rail.uid) return;
+        if (it.mountUid === rail.uid) {
+          seen.add(it.uid);
+          out.push(it);
+          return;
+        }
+        if (it.mountUid) return; /* monté ailleurs */
         const sz = itemSize(it);
         const overlapX = it.x < rail.x + rs.w && it.x + sz.w > rail.x;
-        if (!overlapX) return false;
+        if (!overlapX) return;
         const mCy = it.y + sz.h / 2;
-        const nearY = Math.abs(mCy - railCy) < Math.max(rs.h, sz.h) * 0.7;
-        const overlapY = it.y < rail.y + rs.h + 50 && it.y + sz.h > rail.y - 50;
-        return nearY || overlapY;
+        const nearY = Math.abs(mCy - railCy) < Math.max(rs.h, sz.h) * 0.85;
+        const overlapY = it.y < rail.y + rs.h + 60 && it.y + sz.h > rail.y - 60;
+        if (nearY || overlapY) {
+          seen.add(it.uid);
+          out.push(it);
+        }
       });
+      return out;
     }
-    /** Tout ce qui est « dans » la platine (centre du composant dans le cadre) — rails, modules, etc. */
+    /** Tout ce qui est « dans » / monté sur la platine — rails (mountUid) + modules sur ces rails. */
     function itemsOnPlatine(platine) {
       if (!platine || !isPlatine(platine)) return [];
       const pb = itemWorldAabb(platine);
-      const pad = 2;
-      return state.items.filter((it) => {
-        if (!it || it.uid === platine.uid) return false;
-        if (isPlatine(it)) return false;
+      const byUid = new Map();
+      state.items.forEach((it) => {
+        if (!it || it.uid === platine.uid) return;
+        if (isPlatine(it)) return;
+        if (it.mountUid === platine.uid) {
+          byUid.set(it.uid, it);
+          return;
+        }
+        /* Rails : chevauchement AABB (pas centre — rail souvent plus large que la platine). */
+        if (isRail(it)) {
+          if (platineOverlapArea(it, platine, it.x, it.y) > 0) byUid.set(it.uid, it);
+          return;
+        }
         const sz = itemSize(it);
         const cx = it.x + sz.w / 2;
         const cy = it.y + sz.h / 2;
-        return cx >= pb.minX - pad && cx <= pb.maxX + pad
-          && cy >= pb.minY - pad && cy <= pb.maxY + pad;
+        const pad = 8;
+        if (cx >= pb.minX - pad && cx <= pb.maxX + pad
+            && cy >= pb.minY - pad && cy <= pb.maxY + pad) {
+          byUid.set(it.uid, it);
+        }
       });
+      /* Modules montés sur un rail déjà rattaché à cette platine. */
+      const railIds = new Set();
+      byUid.forEach((it) => { if (isRail(it)) railIds.add(it.uid); });
+      state.items.forEach((it) => {
+        if (!it || byUid.has(it.uid)) return;
+        if (it.mountUid && railIds.has(it.mountUid)) byUid.set(it.uid, it);
+        else if (isDinModule(it) && !it.mountUid) {
+          /* Fallback spatial : module sur un rail déjà dans le groupe platine. */
+          for (const rid of railIds) {
+            const rail = find(rid);
+            if (rail && modulesOnRail(rail).some((m) => m.uid === it.uid)) {
+              byUid.set(it.uid, it);
+              break;
+            }
+          }
+        }
+      });
+      return Array.from(byUid.values());
     }
     /* Clip aimant : KM + thermique, et IDR 2P + disjoncteur 1P+N sur le 2e pôle (R2). */
     const KM_FR_CLIP = {
@@ -9918,6 +10109,7 @@
       fr.x = pose.x;
       fr.y = pose.y;
       fr.parentUid = km.uid;
+      clearMountUid(fr); /* clip KM/FR prime sur le montage rail */
       shiftWiresForItemDelta(fr.uid, fr.x - ox, fr.y - oy);
     }
     function detachKmFr(item) {
@@ -10809,13 +11001,25 @@
       let bestXd = ALIGN_SNAP + 1;
       let bestY = null;
       let bestYd = ALIGN_SNAP + 1;
-      const rail = nearestRailToItem({ uid: item.uid, type: item.type, x: nx, y: ny, w: item.w, h: item.h });
-      if (rail) {
-        const rr = itemBox(rail);
-        const d = Math.abs(me.cy - rr.cy);
-        if (d <= ALIGN_SNAP && d < bestYd) {
-          bestYd = d;
-          bestY = rr.cy - sz.h / 2;
+      if (isDinModule(item)) {
+        const rail = nearestRailAt(item, nx, ny);
+        if (rail) {
+          const rr = itemBox(rail);
+          const d = Math.abs(me.cy - rr.cy);
+          if (d <= RAIL_MODULE_SNAP_Y && d < bestYd) {
+            bestYd = d;
+            bestY = rr.cy - sz.h / 2;
+          }
+        }
+      } else {
+        const rail = nearestRailToItem({ uid: item.uid, type: item.type, x: nx, y: ny, w: item.w, h: item.h });
+        if (rail) {
+          const rr = itemBox(rail);
+          const d = Math.abs(me.cy - rr.cy);
+          if (d <= ALIGN_SNAP && d < bestYd) {
+            bestYd = d;
+            bestY = rr.cy - sz.h / 2;
+          }
         }
       }
       for (const other of state.items) {
@@ -15555,6 +15759,7 @@
       if (Number.isFinite(sw) && sw > 0) out.w = Math.round(sw);
       if (Number.isFinite(sh) && sh > 0) out.h = Math.round(sh);
       if (it.parentUid) out.parentUid = it.parentUid;
+      if (it.mountUid) out.mountUid = it.mountUid;
       if (it.proxRangeMm != null && Number.isFinite(Number(it.proxRangeMm))) {
         out.proxRangeMm = Number(it.proxRangeMm);
       }
@@ -19966,6 +20171,10 @@
       try { x = resolveDinX(item, x, y); } catch (_) {}
       item.x = x;
       item.y = y;
+      try {
+        if (isDinModule(item)) item.y = snapToRailY(item, item.x, item.y);
+        snapMountHierarchy(item);
+      } catch (_) {}
     }
     /**
      * v53-place-beside-align : à l’ajout, si de la place → à côté du composant
@@ -20112,7 +20321,13 @@
         pushHistory();
         const km = makeLibBoardItem(kmType);
         if (drop) placeAtClient(km, drop.x, drop.y);
-        else placeBesideAligned(km);
+        else {
+          placeBesideAligned(km);
+          try {
+            km.y = snapToRailY(km, km.x, km.y);
+            snapMountHierarchy(km);
+          } catch (_) {}
+        }
         state.items.push(km);
         const fr = makeLibBoardItem(frType);
         attachFrUnderKm(km, fr);
@@ -20129,7 +20344,13 @@
       const item = makeLibBoardItem(type);
       /* Drag & drop : sous le doigt/souris. Sinon à côté / centre viewport. */
       if (drop) placeAtClient(item, drop.x, drop.y);
-      else placeBesideAligned(item);
+      else {
+        placeBesideAligned(item);
+        try {
+          if (isDinModule(item)) item.y = snapToRailY(item, item.x, item.y);
+          snapMountHierarchy(item);
+        } catch (_) {}
+      }
       state.items.push(item);
       if (isKnxDevice(def)) ensureKnxProgram(item);
       setSelection([item.uid], item.uid);
@@ -21086,6 +21307,8 @@
       copy.y = snapToRailY(copy, copy.x, copy.y);
       copy.x = resolveDinX(copy, copy.x, copy.y);
       if (isFrClipType(copy.type)) copy.parentUid = null;
+      clearMountUid(copy);
+      snapMountHierarchy(copy);
       state.items.push(copy);
       const srcFr = clippedFrOf(item);
       if (srcFr && isKmClipHostType(item.type)) {
@@ -27127,6 +27350,10 @@
         const drop = new Set(ids);
         state.wires = state.wires.filter((w) => !drop.has(w.a.uid) && !drop.has(w.b.uid));
         state.items = state.items.filter((i) => !drop.has(i.uid));
+        state.items.forEach((i) => {
+          if (i.mountUid && drop.has(i.mountUid)) i.mountUid = null;
+          if (i.parentUid && drop.has(i.parentUid)) i.parentUid = null;
+        });
         state.selected = null;
         state.selectedIds = [];
         if (ids.some((u) => state.edzPropsUid === u)) state.edzPropsUid = null;
@@ -27510,7 +27737,7 @@
             item.y = pose.y;
           } else {
             const soft = applySoftAlign(item, nx, ny);
-            item.y = soft.y;
+            item.y = snapToRailY(item, soft.x, soft.y);
             item.x = resolveDinX(item, soft.x, item.y);
           }
           shiftWiresForItemDelta(item.uid, item.x - prevX, item.y - prevY);
@@ -27537,7 +27764,7 @@
         } else {
           const prevX = item.x, prevY = item.y;
           const soft = applySoftAlign(item, nx, ny);
-          item.y = soft.y;
+          item.y = isDinModule(item) ? snapToRailY(item, soft.x, soft.y) : soft.y;
           item.x = resolveDinX(item, soft.x, item.y);
           shiftWiresForItemDelta(item.uid, item.x - prevX, item.y - prevY);
         }
@@ -27768,10 +27995,19 @@
           const ex = state.drag.group.groupIds || null;
           state.drag.group.items.forEach((s) => {
             const it = find(s.uid);
-            if (!it || isRail(it)) return;
+            if (!it || isRail(it) || isPlatine(it)) return;
             settleItemPlacement(it, s.x, s.y, ex);
           });
           if (state.drag.group.kmFr) snapKmFrOnDrop(dragged);
+          else if (isRail(dragged)) {
+            snapMountHierarchy(dragged);
+            modulesOnRail(dragged).forEach((m) => {
+              if (isFrClipType(m.type) && clipHostOf(m)) return;
+              m.mountUid = dragged.uid;
+            });
+          } else if (isPlatine(dragged)) {
+            snapMountHierarchy(dragged);
+          }
         } else if (isPvSupportItem(dragged)) {
           adoptPvModules(dragged);
           const s = snapPvSupports(dragged, dragged.x, dragged.y);
@@ -27793,6 +28029,7 @@
           settleItemPlacement(dragged, state.drag.x, state.drag.y, null);
           if (isBarretteItem(dragged)) tryAttachBarrette(dragged);
           snapKmFrOnDrop(dragged);
+          snapMountHierarchy(dragged);
         }
         if (dragged && dragStartX != null && (dragged.x !== dragStartX || dragged.y !== dragStartY)) {
           rememberItemPrevPos(dragged, dragStartX, dragStartY);
