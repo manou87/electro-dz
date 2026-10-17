@@ -33,6 +33,9 @@
       "quick.ecole": "École électricité",
       "quick.ecole.hint":
         "École électricité — SwissDZ Panel pédagogique (accès par code)",
+      "quick.wirelab": "WireLab",
+      "quick.wirelab.hint":
+        "WireLab — tableau électrique pédagogique, moteurs et sélecteurs (accès par code)",
       "quick.oibt": "Entraînement au contrôle électrique",
       "quick.oibt.hint":
         "Entraînement au contrôle d'installations — tableau, prises et testeur",
@@ -162,6 +165,9 @@
       "quick.ecole": "مدرسة الكهرباء",
       "quick.ecole.hint":
         "مدرسة الكهرباء — لوحة SwissDZ التعليمية (رمز دخول)",
+      "quick.wirelab": "WireLab",
+      "quick.wirelab.hint":
+        "WireLab — لوحة كهربائية تعليمية، محركات ومحددات (رمز دخول)",
       "quick.oibt": "تدريب على المراقبة الكهربائية",
       "quick.oibt.hint":
         "تدريب على مراقبة التركيبات — لوحة، مقابس وجهاز اختبار",
@@ -292,6 +298,9 @@
       "quick.ecole": "Electricity school",
       "quick.ecole.hint":
         "Electricity school — educational SwissDZ Panel (access code)",
+      "quick.wirelab": "WireLab",
+      "quick.wirelab.hint":
+        "WireLab — educational electrical panel, motors and selectors (access code)",
       "quick.oibt": "Electrical inspection training",
       "quick.oibt.hint":
         "Electrical inspection training — panel, outlets and tester",

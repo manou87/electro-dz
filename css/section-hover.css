@@ -50,6 +50,31 @@
   border-color: rgba(34, 211, 238, 0.38);
 }
 
+.quick-access--icons .quick-item--wirelab .ico-wrap {
+  background: #050505;
+  border-color: rgba(196, 30, 46, 0.55);
+  overflow: hidden;
+  padding: 0;
+}
+
+.quick-access--icons .quick-item--wirelab .ico--brand {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  stroke: none;
+  fill: none;
+}
+
+/* Tuile WireLab : garder l’icône marque visible même avec photo d’aperçu */
+.quick-item.quick-item--wirelab[data-preview] .ico-wrap {
+  display: flex;
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  margin: 10px auto 4px;
+}
+
 .quick-access--icons .quick-item--oibt .ico-wrap {
   background: rgba(56, 189, 248, 0.12);
   border-color: rgba(56, 189, 248, 0.38);
