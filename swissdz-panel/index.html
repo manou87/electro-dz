@@ -8,7 +8,8 @@
   <link rel="apple-touch-icon" href="brand/logo-wirelab-pro-icon.png?v=official-gemini" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="native-shell-8777-v175-rail-platine-hierarchie" />
+  <meta name="swissdz-rev" content="native-shell-8777-v176-rail-platine-overlap" />
+  <!-- v176: rail→platine = chevauchement AABB (rail >> platine) ; plus centre-dans-cadre -->
   <!-- v175: hiérarchie montage — module DIN → rail DIN → platine (snap + mountUid ; rail enfant de la platine) -->
   <!-- v174: bornes à vis réelles sur plaque moteur + barrettes Y/Δ sur les vis ; ventilo agrandi sur l’arbre (~50 %) + flèche sens -->
   <!-- v173: bornes moteur 6/9/12/mono sur la plaque WireONa (pas bord ABB) — barrettes Y/Δ dans le boîtier à bornes -->
@@ -9772,9 +9773,9 @@
     }
 
     /* Snap module DIN → rail (Y centré sur le rail). Distance généreuse = aimant réel. */
-    const RAIL_MODULE_SNAP_Y = 72;
-    const RAIL_MODULE_PAD_X = 48;
-    const PLATINE_RAIL_PAD = 12;
+    const RAIL_MODULE_SNAP_Y = 96;
+    const RAIL_MODULE_PAD_X = 64;
+    const PLATINE_RAIL_PAD = 24;
 
     function isRail(item) {
       const def = LIB[item && item.type];
@@ -9800,6 +9801,32 @@
     function mountHostOf(item) {
       if (!item || !item.mountUid) return null;
       return find(item.mountUid) || null;
+    }
+    /**
+     * Chevauchement AABB item ↔ platine (pad inclus).
+     * Les rails (≈473 px) sont bien plus larges que la platine LIB (150 px) :
+     * un test « centre dans le cadre » rate presque toujours → on exige un vrai overlap.
+     * Retourne l’aire de chevauchement, ou 0 si trop faible.
+     */
+    function platineOverlapArea(item, plate, x, y) {
+      if (!item || !plate) return 0;
+      const sz = itemSize(item);
+      const pb = itemWorldAabb(plate);
+      const pad = PLATINE_RAIL_PAD;
+      const ox0 = Math.max(x, pb.minX - pad);
+      const oy0 = Math.max(y, pb.minY - pad);
+      const ox1 = Math.min(x + sz.w, pb.maxX + pad);
+      const oy1 = Math.min(y + sz.h, pb.maxY + pad);
+      const ow = ox1 - ox0;
+      const oh = oy1 - oy0;
+      if (ow <= 0 || oh <= 0) return 0;
+      const plateW = Math.max(1, pb.maxX - pb.minX);
+      const plateH = Math.max(1, pb.maxY - pb.minY);
+      /* Au moins ~25 % du plus petit côté commun (min 10 px) — évite un coin seul. */
+      const minOw = Math.max(10, Math.min(sz.w, plateW) * 0.25);
+      const minOh = Math.max(10, Math.min(sz.h, plateH) * 0.25);
+      if (ow < minOw || oh < minOh) return 0;
+      return ow * oh;
     }
     function nearestRailAt(item, x, y) {
       if (!item || !isDinModule(item)) return null;
@@ -9832,21 +9859,11 @@
     }
     function nearestPlatineAt(item, x, y) {
       if (!item) return null;
-      const sz = itemSize(item);
-      const cx = x + sz.w / 2;
-      const cy = y + sz.h / 2;
-      let best = null, bestD = Infinity;
+      let best = null, bestArea = 0;
       state.items.forEach((p) => {
         if (!isPlatine(p) || p.uid === item.uid) return;
-        const pb = itemWorldAabb(p);
-        const pad = PLATINE_RAIL_PAD;
-        const inside = cx >= pb.minX - pad && cx <= pb.maxX + pad
-          && cy >= pb.minY - pad && cy <= pb.maxY + pad;
-        if (!inside) return;
-        const pcx = (pb.minX + pb.maxX) / 2;
-        const pcy = (pb.minY + pb.maxY) / 2;
-        const d = Math.hypot(cx - pcx, cy - pcy);
-        if (d < bestD) { bestD = d; best = p; }
+        const area = platineOverlapArea(item, p, x, y);
+        if (area > bestArea) { bestArea = area; best = p; }
       });
       return best;
     }
@@ -9856,6 +9873,25 @@
       const plate = nearestPlatineAt(rail, rail.x, rail.y);
       if (plate) rail.mountUid = plate.uid;
       else clearMountUid(rail);
+    }
+    /** Quand on pose / déplace une platine : accroche les rails qui la chevauchent. */
+    function attachOverlappingRailsToPlatine(platine) {
+      if (!platine || !isPlatine(platine)) return;
+      state.items.forEach((r) => {
+        if (!isRail(r) || r.uid === platine.uid) return;
+        const area = platineOverlapArea(r, platine, r.x, r.y);
+        if (area <= 0) {
+          if (r.mountUid === platine.uid) clearMountUid(r);
+          return;
+        }
+        /* Garder la platine avec le plus grand chevauchement. */
+        const cur = mountHostOf(r);
+        if (cur && isPlatine(cur) && cur.uid !== platine.uid) {
+          const curArea = platineOverlapArea(r, cur, r.x, r.y);
+          if (curArea >= area) return;
+        }
+        r.mountUid = platine.uid;
+      });
     }
     /** Attache / détache un module DIN sur un rail (mountUid). */
     function attachModuleToRail(item) {
@@ -9885,6 +9921,10 @@
      */
     function snapMountHierarchy(item) {
       if (!item) return;
+      if (isPlatine(item)) {
+        attachOverlappingRailsToPlatine(item);
+        return;
+      }
       if (isRail(item)) {
         attachRailToPlatine(item);
         return;
@@ -9913,8 +9953,8 @@
         const overlapX = it.x < rail.x + rs.w && it.x + sz.w > rail.x;
         if (!overlapX) return;
         const mCy = it.y + sz.h / 2;
-        const nearY = Math.abs(mCy - railCy) < Math.max(rs.h, sz.h) * 0.7;
-        const overlapY = it.y < rail.y + rs.h + 50 && it.y + sz.h > rail.y - 50;
+        const nearY = Math.abs(mCy - railCy) < Math.max(rs.h, sz.h) * 0.85;
+        const overlapY = it.y < rail.y + rs.h + 60 && it.y + sz.h > rail.y - 60;
         if (nearY || overlapY) {
           seen.add(it.uid);
           out.push(it);
@@ -9926,7 +9966,6 @@
     function itemsOnPlatine(platine) {
       if (!platine || !isPlatine(platine)) return [];
       const pb = itemWorldAabb(platine);
-      const pad = 2;
       const byUid = new Map();
       state.items.forEach((it) => {
         if (!it || it.uid === platine.uid) return;
@@ -9935,9 +9974,15 @@
           byUid.set(it.uid, it);
           return;
         }
+        /* Rails : chevauchement AABB (pas centre — rail souvent plus large que la platine). */
+        if (isRail(it)) {
+          if (platineOverlapArea(it, platine, it.x, it.y) > 0) byUid.set(it.uid, it);
+          return;
+        }
         const sz = itemSize(it);
         const cx = it.x + sz.w / 2;
         const cy = it.y + sz.h / 2;
+        const pad = 8;
         if (cx >= pb.minX - pad && cx <= pb.maxX + pad
             && cy >= pb.minY - pad && cy <= pb.maxY + pad) {
           byUid.set(it.uid, it);
@@ -9949,6 +9994,16 @@
       state.items.forEach((it) => {
         if (!it || byUid.has(it.uid)) return;
         if (it.mountUid && railIds.has(it.mountUid)) byUid.set(it.uid, it);
+        else if (isDinModule(it) && !it.mountUid) {
+          /* Fallback spatial : module sur un rail déjà dans le groupe platine. */
+          for (const rid of railIds) {
+            const rail = find(rid);
+            if (rail && modulesOnRail(rail).some((m) => m.uid === it.uid)) {
+              byUid.set(it.uid, it);
+              break;
+            }
+          }
+        }
       });
       return Array.from(byUid.values());
     }
@@ -27951,9 +28006,7 @@
               m.mountUid = dragged.uid;
             });
           } else if (isPlatine(dragged)) {
-            itemsOnPlatine(dragged).forEach((it) => {
-              if (isRail(it)) it.mountUid = dragged.uid;
-            });
+            snapMountHierarchy(dragged);
           }
         } else if (isPvSupportItem(dragged)) {
           adoptPvModules(dragged);
