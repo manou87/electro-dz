@@ -8,7 +8,8 @@
   <link rel="apple-touch-icon" href="brand/logo-wirelab-pro-icon.png?v=official-gemini" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="native-shell-8777-v134-exemples-scroll" />
+  <meta name="swissdz-rev" content="native-shell-8777-v164-bandelette-borne-lettre" />
+  <!-- v164: bandelettes = id borne seul (L1, N, 2a…) + chip compact — plus de W30.L1 -->
   <!-- v134: Installations exemplaires — la liste de la modale centrale défile (molette + doigt), le plan derrière ne panne plus -->
   <!-- v133: ETS — chaque participant KNX (volet, slot façade, poussoir, actionneur, coupleur) a ses GA et noms d’objets -->
   <!-- v132: cordon PE continu ; mesures Fluke du plan = bornes réellement touchées (hors / sous tension) -->
@@ -21915,11 +21916,12 @@
       return (ra === "dcplus" && rb === "dcminus") || (ra === "dcminus" && rb === "dcplus");
     }
     function defaultWireTag(w, end) {
+      /* v164 : bandelette = lettre/id de la borne (L1, N, 2a, PE…) — plus de W30.L1. */
+      const term = (w && w[end] && w[end].term != null) ? String(w[end].term).trim() : "";
+      if (term) return term;
+      /* Filet de sécurité si borne inconnue : numéro de fil court. */
       const no = Number.isFinite(Number(w && w.no)) ? Number(w.no) : 0;
-      /* v78-pv-series : série module→module = Wn seulement (pas W4.DC+ / W4.DC− sur le même fil). */
-      if (isPvSeriesBridgeWire(w)) return "W" + no;
-      const term = (w && w[end] && w[end].term != null) ? String(w[end].term) : "";
-      return "W" + no + (term ? "." + term : "");
+      return no ? String(no) : "";
     }
     function wireTagStored(w, end) {
       const raw = end === "a" ? (w && w.tagA) : (w && w.tagB);
@@ -21945,13 +21947,13 @@
       } catch (_) {}
       return String(text || "").length * fontSize * 0.62;
     }
-    /* swissdz-rev v43-bandelette-short : longueur (bw) ~20 % plus courte, hauteur inchangée. */
+    /* v164 : chip compact — id borne seul (L1, N, 2a…), plus de grand texte Wxx. */
     function wireTagMetrics(width, text) {
-      const h = Math.max(9, Math.min(18, width * 1.35 + 5.2));
-      const fs = Math.max(6.5, Math.min(12, h * 0.68));
+      const h = Math.max(7.5, Math.min(12.5, width * 1.05 + 3.4));
+      const fs = Math.max(5.5, Math.min(8.5, h * 0.72));
       const tw = measureWireTagText(text, fs);
-      const padX = Math.max(1.0, h * 0.16);
-      const bw = Math.max(h * 1.05, Math.min(60, tw + padX * 2));
+      const padX = Math.max(0.7, h * 0.12);
+      const bw = Math.max(h * 0.85, Math.min(30, tw + padX * 2));
       return { h, fs, bw };
     }
     function beginEditWireTag(id, end) {
