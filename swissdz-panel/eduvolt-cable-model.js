@@ -1,26 +1,37 @@
 /**
- * Modèle câblage EduVolt Designer — objet « câble » (REA APK 2.2.10).
- * Hors scope : goulottes / wire duct (pas le câblage).
+ * Modèle câblage EduVolt Designer — objet « câble ».
+ * Evidence : REA APK 2.2.10 + vidéos WhatsApp/YouTube (Dropbox 2026-10-17).
+ * Hors scope : goulottes / wire duct.
  *
- * REA evidence (isolate strings + CableElement tokens) :
- *  - Dibujar / Dibujando Cable · hWire / vWire
- *  - Snap horizontal/vertical · Snap to grid ON/OFF
- *  - Cable (loose end) · Extremos independientes
- *  - startLabel / endLabel / syncLabels (Same label both ends)
- *  - Segments : Segmento N · Renombrar / Eliminar / Subir / Bajar
- *  - cable_confirm / cable_cancel / Exit cable mode
- *  - BORNES SIN CONEXIÓN
+ * Algo tracé observé (vidéo) :
+ *  - Preview rubber-band = L ortho (H+V), pas un seul axe verrouillé
+ *  - Clic vide = waypoint / coude ; Confirm / Cancel
+ *  - Snap grille + Align to axes ; coins légèrement chanfreinés
+ *  - Presets rôle : L1/L2/N/PE (2,5) · contrôle (1,5)
  */
 (function (global) {
   "use strict";
 
   const PRESETS = {
-    v1: { id: "v1", name: "Câble v1", section: 1.5, color: "#92400e" },
-    v2: { id: "v2", name: "Câble v2", section: 2.5, color: "#0088ce" },
-    v3: { id: "v3", name: "Câble v3", section: 6, color: "#111111" }
+    l1: { id: "l1", name: "L1", section: 2.5, color: "#92400e" },
+    l2: { id: "l2", name: "L2", section: 2.5, color: "#111111" },
+    l3: { id: "l3", name: "L3", section: 2.5, color: "#6b7280" },
+    n: { id: "n", name: "N", section: 2.5, color: "#0088ce" },
+    pe: { id: "pe", name: "PE", section: 2.5, color: "#16a34a" },
+    ctrl: { id: "ctrl", name: "Contrôle", section: 1.5, color: "#111111" },
+    /* alias rétrocompat */
+    v1: { id: "v1", name: "Contrôle", section: 1.5, color: "#92400e" },
+    v2: { id: "v2", name: "N", section: 2.5, color: "#0088ce" },
+    v3: { id: "v3", name: "L2", section: 2.5, color: "#111111" }
   };
-  /** EduVolt grille câble ≈ 50 px (REA: Snap horizontal/vertical + grille). */
-  const CABLE_GRID = 50;
+  /**
+   * Pas de grille câble. EduVolt cell ≈ 1/6–1/8 largeur contacteur.
+   * WireLab contacteur ~120–150 px → cellule ~18–25 ; on aligne sur 20
+   * (anciennement 50 = trop grossier vs vidéo).
+   */
+  const CABLE_GRID = 20;
+  /** Chanfrein coin (px) — coins EduVolt légèrement coupés / arrondis. */
+  const CORNER_CHAMFER = 6;
 
   function S() {
     return global.state;
@@ -32,7 +43,7 @@
     if (!Array.isArray(state.cables)) state.cables = [];
     if (state.cableNo == null) state.cableNo = 1;
     if (!state.cableTool) state.cableTool = "h";
-    if (state.cablePreset == null) state.cablePreset = "v1";
+    if (state.cablePreset == null) state.cablePreset = "l1";
     if (state.cableDraft == null) state.cableDraft = null;
     if (state.selectedCable == null) state.selectedCable = null;
     /* Pas de cadres flottants sur le plan (REA = data/strings, pas overlay canvas). */
@@ -44,8 +55,8 @@
 
   function activePreset() {
     const state = ensureState();
-    const key = (state && state.cablePreset) || "v1";
-    return PRESETS[key] || PRESETS.v1;
+    const key = (state && state.cablePreset) || "l1";
+    return PRESETS[key] || PRESETS.l1;
   }
 
   function clearCableDraft() {
@@ -66,19 +77,56 @@
     return { x: Math.round(x / s) * s, y: Math.round(y / s) * s };
   }
 
-  /** Snap H/V puis grille (REA: Snap horizontal/vertical). */
+  /**
+   * Chemin ortho en L (vidéo EduVolt) : last → coin → fin.
+   * prefer 'h' = d’abord horizontal puis vertical ; 'v' = inverse.
+   * Si déjà aligné sur un axe → un seul segment (pas de coin).
+   */
+  function orthoLegs(last, x, y, prefer) {
+    if (!last) return [snapPoint(x, y)];
+    const end = snapPoint(x, y);
+    const dx = end.x - last.x;
+    const dy = end.y - last.y;
+    if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return [last];
+    if (Math.abs(dx) < 1 || Math.abs(dy) < 1) return [last, end];
+    let firstH = prefer === "v" ? false : prefer === "h" ? true : Math.abs(dx) >= Math.abs(dy);
+    const corner = firstH
+      ? { x: end.x, y: last.y }
+      : { x: last.x, y: end.y };
+    return [last, corner, end];
+  }
+
+  /** Point unique projeté (dernier de l’L) — compat anciens appels. */
   function projectOrtho(last, x, y, tool) {
-    if (!last) return snapPoint(x, y);
-    let px = x, py = y;
-    if (tool === "h") py = last.y;
-    else if (tool === "v") px = last.x;
-    else if (Math.abs(x - last.x) >= Math.abs(y - last.y)) py = last.y;
-    else px = last.x;
-    const snapped = snapPoint(px, py);
-    /* Garder l’axe verrouillé après snap grille. */
-    if (tool === "h") snapped.y = last.y;
-    if (tool === "v") snapped.x = last.x;
-    return snapped;
+    const legs = orthoLegs(last, x, y, tool);
+    return legs[legs.length - 1];
+  }
+
+  /** SVG path avec coins chanfreinés (finition EduVolt). */
+  function pathDChamfer(pts, radius) {
+    if (!pts || pts.length < 2) return "";
+    const r = Math.max(0, radius == null ? CORNER_CHAMFER : radius);
+    if (pts.length === 2 || r < 1) {
+      let d = "M " + pts[0].x + " " + pts[0].y;
+      for (let i = 1; i < pts.length; i++) d += " L " + pts[i].x + " " + pts[i].y;
+      return d;
+    }
+    let d = "M " + pts[0].x + " " + pts[0].y;
+    for (let i = 1; i < pts.length - 1; i++) {
+      const a = pts[i - 1], b = pts[i], c = pts[i + 1];
+      const v1x = a.x - b.x, v1y = a.y - b.y;
+      const v2x = c.x - b.x, v2y = c.y - b.y;
+      const l1 = Math.hypot(v1x, v1y) || 1;
+      const l2 = Math.hypot(v2x, v2y) || 1;
+      const rr = Math.min(r, l1 * 0.45, l2 * 0.45);
+      const p1 = { x: b.x + (v1x / l1) * rr, y: b.y + (v1y / l1) * rr };
+      const p2 = { x: b.x + (v2x / l2) * rr, y: b.y + (v2y / l2) * rr };
+      d += " L " + p1.x + " " + p1.y;
+      d += " Q " + b.x + " " + b.y + " " + p2.x + " " + p2.y;
+    }
+    const last = pts[pts.length - 1];
+    d += " L " + last.x + " " + last.y;
+    return d;
   }
 
   function pickNearTerminal(x, y, skip) {
@@ -165,6 +213,7 @@
       segments: [{ name: "Segmento 1", fromIdx: 0, type: state.cableTool === "v" ? "v" : "h" }]
     };
     updateDraftPreview(start.x, start.y);
+    syncToolbar();
   }
 
   function updateDraftPreview(x, y) {
@@ -176,16 +225,21 @@
     }
     const last = draft.points[draft.points.length - 1];
     const near = pickNearTerminal(x, y, draft.a);
-    let cur;
+    let targetX = x, targetY = y;
     if (near) {
       const tp = termPoint({ uid: near.uid, term: near.term });
-      cur = tp || projectOrtho(last, x, y, draft.tool);
+      if (tp) { targetX = tp.x; targetY = tp.y; }
       state.wireSnap = near;
     } else {
-      cur = projectOrtho(last, x, y, draft.tool);
       state.wireSnap = null;
     }
-    state.preview = { pts: draftPointsAbsolute(draft).concat([{ x: cur.x, y: cur.y }]), eduvoltCable: true };
+    /* Preview L-shape (vidéo) : last → coin → curseur */
+    const legs = orthoLegs(last, targetX, targetY, draft.tool);
+    const extra = legs.slice(1);
+    state.preview = {
+      pts: draftPointsAbsolute(draft).concat(extra),
+      eduvoltCable: true
+    };
   }
 
   function addDraftCorner(x, y) {
@@ -193,18 +247,25 @@
     const draft = state && state.cableDraft;
     if (!draft) return false;
     const last = draft.points[draft.points.length - 1];
-    const cur = projectOrtho(last, x, y, draft.tool);
-    if (Math.hypot(cur.x - last.x, cur.y - last.y) < Math.max(8, gridStep() * 0.4)) return false;
-    draft.points.push(cur);
-    const segType = draft.tool;
-    draft.tool = draft.tool === "h" ? "v" : "h";
+    const legs = orthoLegs(last, x, y, draft.tool);
+    const added = legs.slice(1);
+    if (!added.length) return false;
+    const end = added[added.length - 1];
+    if (Math.hypot(end.x - last.x, end.y - last.y) < Math.max(6, gridStep() * 0.35)) return false;
     if (!draft.segments) draft.segments = [];
-    draft.segments.push({
-      name: "Segmento " + (draft.segments.length + 1),
-      fromIdx: draft.points.length - 1,
-      type: segType
+    added.forEach((pt, i) => {
+      const prev = i === 0 ? last : added[i - 1];
+      const segType = Math.abs(pt.x - prev.x) >= Math.abs(pt.y - prev.y) ? "h" : "v";
+      draft.points.push(pt);
+      draft.segments.push({
+        name: "Segmento " + (draft.segments.length + 1),
+        fromIdx: draft.points.length - 1,
+        type: segType
+      });
     });
-    updateDraftPreview(cur.x, cur.y);
+    /* Préférer l’autre axe au prochain L (comportement naturel après un coude). */
+    draft.tool = draft.tool === "h" ? "v" : "h";
+    updateDraftPreview(end.x, end.y);
     syncToolbar();
     return true;
   }
@@ -223,19 +284,23 @@
 
     if (opts.cursor) {
       const last = points[points.length - 1];
-      const cur = projectOrtho(last, opts.cursor.x, opts.cursor.y, draft.tool);
-      if (Math.hypot(cur.x - last.x, cur.y - last.y) >= 8) points.push(cur);
+      const legs = orthoLegs(last, opts.cursor.x, opts.cursor.y, draft.tool).slice(1);
+      legs.forEach((p) => {
+        if (Math.hypot(p.x - points[points.length - 1].x, p.y - points[points.length - 1].y) >= 4) {
+          points.push(p);
+        }
+      });
     }
     if (b) {
       const tp = termPoint(b);
       if (tp) {
-        if (points.length === 1) points.push(tp);
+        const last = points[points.length - 1];
+        const legs = orthoLegs(last, tp.x, tp.y, draft.tool).slice(1);
+        if (!legs.length) points.push({ x: tp.x, y: tp.y });
         else {
-          /* Dernier segment : snap ortho vers la borne. */
-          const prev = points[points.length - 2] || points[0];
-          const ortho = projectOrtho(prev, tp.x, tp.y, draft.tool);
-          points[points.length - 1] = { x: ortho.x, y: ortho.y };
-          if (Math.hypot(ortho.x - tp.x, ortho.y - tp.y) > 1) points.push({ x: tp.x, y: tp.y });
+          legs.forEach((p) => points.push(p));
+          const end = points[points.length - 1];
+          if (Math.hypot(end.x - tp.x, end.y - tp.y) > 1) points.push({ x: tp.x, y: tp.y });
         }
       }
       looseEnd = false;
@@ -508,10 +573,7 @@
   }
 
   function pathD(pts) {
-    if (!pts || pts.length < 2) return "";
-    let d = "M " + pts[0].x + " " + pts[0].y;
-    for (let i = 1; i < pts.length; i++) d += " L " + pts[i].x + " " + pts[i].y;
-    return d;
+    return pathDChamfer(pts, CORNER_CHAMFER);
   }
 
   function selectCable(cableId) {
@@ -667,7 +729,7 @@
   function applyPreset(key) {
     const state = ensureState();
     if (!state) return;
-    state.cablePreset = PRESETS[key] ? key : "v1";
+    state.cablePreset = PRESETS[key] ? key : "l1";
     const p = activePreset();
     state.color = p.color;
     state.section = p.section;

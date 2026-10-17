@@ -8,7 +8,8 @@
   <link rel="apple-touch-icon" href="brand/logo-wirelab-pro-icon.png?v=official-gemini" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="native-shell-8777-v139-eduvolt-confirm-props" />
+  <meta name="swissdz-rev" content="native-shell-8777-v140-eduvolt-lshape-routing" />
+  <!-- v140: algo vidéo — preview L ortho, grille 20, coins chanfreinés, presets L1/N/PE -->
   <!-- v139: REA+vidéo — cable_confirm/cancel toolbar + props câble via wireOpt (pas cadres plan) -->
   <!-- v138: retire cadres flottants (segments/bornes/labels/banner) — REA = modèle, pas overlays plan -->
   <!-- v137: REA câblage — Snap H/V+grille, start/endLabel, éditeur segments (sans goulottes) -->
@@ -5606,19 +5607,22 @@
                 aria-label="Dessiner câble EduVolt" aria-pressed="false">CB</button>
             </div>
             <div class="row cable-axis-group" id="cableToolGroup" role="group" aria-label="Outil câble EduVolt">
-              <button id="cableToolH" class="btn-ico" type="button" title="Cable horizontal (hWire)" aria-label="Câble horizontal" aria-pressed="false">H</button>
-              <button id="cableToolV" class="btn-ico" type="button" title="Cable vertical (vWire)" aria-label="Câble vertical" aria-pressed="false">V</button>
+              <button id="cableToolH" class="btn-ico" type="button" title="L-ortho : d’abord horizontal (Align axes)" aria-label="Préférer H dans le L" aria-pressed="false">H</button>
+              <button id="cableToolV" class="btn-ico" type="button" title="L-ortho : d’abord vertical (Align axes)" aria-label="Préférer V dans le L" aria-pressed="false">V</button>
               <button id="cableSnapGrid" class="btn-ico" type="button" title="Snap to grid: ON — Snap horizontal/vertical" aria-label="Snap grille câble" aria-pressed="true" hidden>#</button>
               <button id="cableConfirm" class="btn-ico" type="button" title="Confirmar cable (cable_confirm)" aria-label="Confirmer câble" hidden>✓</button>
               <button id="cableCancel" class="btn-ico" type="button" title="Cancel drawing (cable_cancel)" aria-label="Annuler dessin câble" hidden>↶</button>
               <button id="cableExit" class="btn-ico" type="button" title="Salir del modo cable" aria-label="Quitter mode câble" hidden>✕</button>
               <!-- goulottes / wire duct : hors câblage (REA) — bouton retiré -->
             </div>
-            <div class="cable-preset-picker" title="Presets câble EduVolt v1/v2/v3">
+            <div class="cable-preset-picker" title="Presets câble EduVolt (Potencia / Contrôle)">
               <select id="cablePreset" aria-label="Preset câble">
-                <option value="v1">Câble v1 · 1,5 mm²</option>
-                <option value="v2">Câble v2 · 2,5 mm²</option>
-                <option value="v3">Câble v3 · 6 mm²</option>
+                <option value="l1">L1 · 2,5 mm²</option>
+                <option value="l2">L2 · 2,5 mm²</option>
+                <option value="l3">L3 · 2,5 mm²</option>
+                <option value="n">N · 2,5 mm²</option>
+                <option value="pe">PE · 2,5 mm²</option>
+                <option value="ctrl">Contrôle · 1,5 mm²</option>
               </select>
             </div>
           </div>
@@ -6285,7 +6289,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/wirelab-auth.js?v=v90-fluke-exmenu"></script>
   <script src="js/wirelab-auth-vitrine.js?v=vitrine10"></script>
-  <script src="eduvolt-cable-model.js?v=v139"></script>
+  <script src="eduvolt-cable-model.js?v=v140"></script>
   <script>
     /* Assets pré-cadrés (photos studio trop larges → bandes). */
     const COLORS = [
@@ -10696,7 +10700,7 @@
     const state = {
       mode: "select", sim: false, color: COLORS[0].c, colorManual: false, section: 0.75,
       /* Modèle EduVolt : objets câble (H/V), distincts du câblage borne→borne. */
-      cables: [], cableNo: 1, cableTool: "h", cablePreset: "v1", cableName: "Câble v1",
+      cables: [], cableNo: 1, cableTool: "h", cablePreset: "l1", cableName: "L1",
       cableDraft: null, selectedCable: null, showFreeTermsPanel: false,
       cableSnapGrid: true, cableSyncLabels: false,
       seq: 1, wireNo: 1, counts: {}, items: [], wires: [],
@@ -17850,10 +17854,24 @@
           if (Number(w.section) !== n) {
             pushHistory();
             w.section = n;
+            if (w.fromCable) {
+              const cab = (state.cables || []).find((c) => c.id === w.fromCable);
+              if (cab) cab.section = n;
+            }
             render();
           } else {
             syncSectionSelect();
           }
+          return;
+        }
+      }
+      if (state.selectedCable) {
+        const cab = (state.cables || []).find((c) => c.id === state.selectedCable);
+        if (cab && Number(cab.section) !== n) {
+          pushHistory();
+          cab.section = n;
+          try { if (window.EduVoltCable) EduVoltCable.syncCableToWire(cab); } catch (_) {}
+          render();
           return;
         }
       }
@@ -18227,10 +18245,23 @@
           b.onclick = (ev) => {
             ev.stopPropagation();
             const w = state.selectedWire && state.wires.find((x) => x.id === state.selectedWire);
-            if (!w || (w.color === entry.c && w.colorManual)) return;
-            pushHistory();
-            w.color = entry.c;
-            w.colorManual = true;
+            const cab = state.selectedCable && (state.cables || []).find((c) => c.id === state.selectedCable);
+            if (w) {
+              if (w.color === entry.c && w.colorManual) return;
+              pushHistory();
+              w.color = entry.c;
+              w.colorManual = true;
+              if (w.fromCable) {
+                const c2 = (state.cables || []).find((c) => c.id === w.fromCable);
+                if (c2) { c2.color = entry.c; c2.colorManual = true; }
+              }
+            } else if (cab) {
+              if (cab.color === entry.c && cab.colorManual) return;
+              pushHistory();
+              cab.color = entry.c;
+              cab.colorManual = true;
+              try { if (window.EduVoltCable) EduVoltCable.syncCableToWire(cab); } catch (_) {}
+            } else return;
             state.color = entry.c;
             state.colorManual = true;
             render();
@@ -27239,6 +27270,9 @@
         window.kmFrHiddenTerm = kmFrHiddenTerm;
         window.syncSectionSelect = syncSectionSelect;
         window.syncColorSwatches = syncColorSwatches;
+        window.openWireOpt = openWireOpt;
+        window.syncWireOpt = syncWireOpt;
+        window.placeWireOpt = placeWireOpt;
         if (window.EduVoltCable) EduVoltCable.bindUi();
       } catch (e) { console.warn(e); }
     })();
