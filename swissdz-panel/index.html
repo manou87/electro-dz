@@ -8,8 +8,9 @@
   <link rel="apple-touch-icon" href="brand/logo-wirelab-pro-icon.png?v=official-gemini" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="native-shell-8777-v135-cablage-v" />
-  <!-- v135: câblage V — L ortho vertical-first uniquement (UI classique inchangée, sans chrome EduVolt) -->
+  <meta name="swissdz-rev" content="native-shell-8777-v136-cablage-v-coudes" />
+  <!-- v136: câblage V = propositions de coudes gauche/droite/droit (L ortho), sans autoRoute bouclé sur les clics -->
+  <!-- v135: (erreur) V-first forcé dans manhattanRoute — ce n’était pas le V EduVolt des coudes -->
   <!-- v134: Installations exemplaires — la liste de la modale centrale défile (molette + doigt), le plan derrière ne panne plus -->
   <!-- v133: ETS — chaque participant KNX (volet, slot façade, poussoir, actionneur, coupleur) a ses GA et noms d’objets -->
   <!-- v132: cordon PE continu ; mesures Fluke du plan = bornes réellement touchées (hors / sous tension) -->
@@ -10477,7 +10478,8 @@
       mode: "select", sim: false, color: COLORS[0].c, colorManual: false, section: 0.75,
       seq: 1, wireNo: 1, counts: {}, items: [], wires: [],
       selected: null, selectedIds: [], selectedWire: null, wireOpt: null, selectedBar: null, wireFrom: null,
-      wireDraftPts: [], /* clics vide = coudes (option) ; algo autoRoute inchangé entre segments */
+      wireDraftPts: [], /* clics vide = coudes ortho (gauche/droite/droit) ; prefer V EduVolt */
+      wireDraftPrefer: "v",
       drag: null,
       resize: null, wireDrag: null, flukeTipDrag: null, flukeBendDrag: null, preview: null, wireSnap: null,
       wirePadFlash: null,
@@ -21392,9 +21394,10 @@
       return dedupePts([A, A2, B2, B]);
     }
     /**
-     * L ortho (câblage V) : last → coin → fin.
-     * prefer 'v' = d’abord vertical puis horizontal (défaut) ;
-     * 'h' = inverse. Déjà aligné sur un axe → un seul segment.
+     * L ortho EduVolt (outil V) : last → coin → fin.
+     * prefer 'v' = d’abord vertical puis horizontal ;
+     * 'h' = inverse. Déjà aligné sur un axe → un seul segment (tout droit).
+     * Sinon le coin propose gauche / droite (ou haut / bas) — jamais un S / boucle.
      */
     function orthoLegs(last, x, y, prefer) {
       if (!last) return [{ x: x, y: y }];
@@ -21411,7 +21414,32 @@
         : { x: last.x, y: end.y };
       return [{ x: last.x, y: last.y }, corner, end];
     }
+    function segDir(prev, pt) {
+      const dx = pt.x - prev.x;
+      const dy = pt.y - prev.y;
+      if (Math.abs(dx) >= Math.abs(dy)) return dx >= 0 ? "left" : "right";
+      return dy >= 0 ? "top" : "bottom";
+    }
+    /** Chaîne ortho pure (coudes clic) — jamais autoRoute / stubs entre points. */
+    function orthoRouteThrough(nodes, prefer0) {
+      if (!nodes || nodes.length < 2) return nodes ? nodes.map((p) => ({ x: p.x, y: p.y })) : [];
+      let prefer = prefer0 === "h" ? "h" : "v";
+      let out = [{ x: nodes[0].x, y: nodes[0].y }];
+      for (let i = 1; i < nodes.length; i++) {
+        const last = out[out.length - 1];
+        const legs = orthoLegs(last, nodes[i].x, nodes[i].y, prefer).slice(1);
+        legs.forEach((pt) => {
+          const prev = out[out.length - 1];
+          if (Math.hypot(pt.x - prev.x, pt.y - prev.y) < 1) return;
+          out.push({ x: pt.x, y: pt.y });
+        });
+        /* Après un L (coin), basculer l’axe — même logique EduVolt. */
+        if (legs.length >= 2) prefer = prefer === "h" ? "v" : "h";
+      }
+      return dedupePts(out);
+    }
     function manhattanRoute(a, b, aLen, bLen) {
+      const da = padUnit(a);
       const db = padUnit(b);
       const A = { x: a.x, y: a.y };
       const B = { x: b.x, y: b.y };
@@ -21419,8 +21447,10 @@
       const B2 = db ? stubOf(b, bLen) : { x: B.x, y: B.y };
       const mid = [A2];
       if (Math.abs(A2.x - B2.x) > 1 && Math.abs(A2.y - B2.y) > 1) {
-        /* Toujours V-first (vertical puis horizontal) — câblage V. */
-        mid.push({ x: A2.x, y: B2.y });
+        /* Borne→borne sans coude clic : préférence selon la pastille (classique). */
+        const preferYFirst = Math.abs(da[1]) >= Math.abs(da[0]);
+        if (preferYFirst) mid.push({ x: A2.x, y: B2.y });
+        else mid.push({ x: B2.x, y: A2.y });
       }
       mid.push(B2);
       return dedupePts([A, ...simplifyOrtho(mid), B]);
@@ -21467,49 +21497,53 @@
     function clearWireDraft() {
       state.wireFrom = null;
       state.wireDraftPts = [];
+      state.wireDraftPrefer = "v";
       state.preview = null;
       state.wireSnap = null;
     }
-    /** Chaîne de segments via autoRoute (algo inchangé), entre bornes / coudes clic. */
+    /**
+     * Coudes clic / preview : chaîne ortho (V EduVolt).
+     * Ne passe PAS par autoRoute — sinon chaque point « direction » devient un stub → boucles / S.
+     * Borne→borne sans coude : autoRoute classique (inchangé).
+     */
     function routeThroughChain(nodes) {
-      if (!nodes || nodes.length < 2) return nodes ? nodes.slice() : [];
-      let out = [];
-      for (let i = 0; i < nodes.length - 1; i++) {
-        const seg = autoRoute(nodes[i], nodes[i + 1]);
-        if (!seg || seg.length < 2) continue;
-        if (!out.length) out = seg.slice();
-        else out = out.concat(seg.slice(1));
-      }
-      return dedupePts(out);
+      return orthoRouteThrough(nodes, state.wireDraftPrefer || "v");
     }
     function wireDraftLastNode() {
       const a = endpoint(state.wireFrom);
       const drafts = state.wireDraftPts || [];
-      if (!drafts.length) return a;
+      if (!drafts.length) {
+        /* Même ancrage que le preview : après le stub cardinal, pas sur la pastille. */
+        if (a && a.direction) return stubOf(a, STUB);
+        return a;
+      }
       const last = drafts[drafts.length - 1];
-      return { x: last.x, y: last.y, direction: last.direction || "right" };
+      return { x: last.x, y: last.y };
     }
-    /** Option : clic vide = L ortho V-first (câblage V). */
+    /**
+     * Clic vide = proposition de coude propre (EduVolt V) :
+     * - aligné → tout droit (un segment)
+     * - sinon L vertical-first → coin à gauche ou à droite
+     * Jamais de coude « n’importe comment ».
+     */
     function addWireDraftCorner(x, y) {
       if (!state.wireFrom) return false;
       const last = wireDraftLastNode();
       if (Math.hypot(x - last.x, y - last.y) < 12) return false;
-      /* L : last → (last.x, y) → (x, y) — vertical d’abord. */
-      const legs = orthoLegs(last, x, y, "v").slice(1);
+      const prefer = state.wireDraftPrefer === "h" ? "h" : "v";
+      const legs = orthoLegs(last, x, y, prefer).slice(1);
       if (!legs.length) return false;
       if (!state.wireDraftPts) state.wireDraftPts = [];
       let added = 0;
       legs.forEach((pt) => {
         const prev = state.wireDraftPts[state.wireDraftPts.length - 1] || last;
         if (Math.hypot(prev.x - pt.x, prev.y - pt.y) < 8) return;
-        const dx = pt.x - prev.x;
-        const dy = pt.y - prev.y;
-        const direction = Math.abs(dx) >= Math.abs(dy)
-          ? (dx >= 0 ? "left" : "right")
-          : (dy >= 0 ? "top" : "bottom");
-        state.wireDraftPts.push({ x: pt.x, y: pt.y, direction });
+        state.wireDraftPts.push({ x: pt.x, y: pt.y, direction: segDir(prev, pt) });
         added++;
       });
+      if (added > 0 && legs.length >= 2) {
+        state.wireDraftPrefer = prefer === "h" ? "v" : "h";
+      }
       return added > 0;
     }
     function updateWirePreview(x, y, opts) {
@@ -21532,24 +21566,35 @@
           });
       state.wireSnap = snap;
       const drafts = state.wireDraftPts || [];
-      const chain = [a].concat(drafts);
-      if (snap) {
-        chain.push(endpoint({ uid: snap.uid, term: snap.term }));
-        state.preview = { pts: routeThroughChain(chain) };
-        return;
-      }
-      /* Preview rubber-band L V-first (comme outil V EduVolt), sans changer l’UI. */
+      const prefer = state.wireDraftPrefer === "h" ? "h" : "v";
+      /* Base = stub cardinal + coudes déjà posés (ortho pur). */
       let base;
-      if (drafts.length) {
-        base = routeThroughChain(chain);
-      } else if (a && a.direction) {
+      if (a && a.direction) {
         const A2 = stubOf(a, STUB);
         base = [{ x: a.x, y: a.y }, A2];
       } else {
         base = [{ x: a.x, y: a.y }];
       }
+      if (drafts.length) {
+        base = dedupePts(base.concat(orthoRouteThrough(
+          [base[base.length - 1]].concat(drafts),
+          prefer
+        ).slice(1)));
+      }
+      if (snap) {
+        const b = endpoint({ uid: snap.uid, term: snap.term });
+        let B2 = b;
+        if (b && b.direction) B2 = stubOf(b, STUB);
+        const from = base[base.length - 1] || a;
+        const mid = orthoLegs(from, B2.x, B2.y, prefer).slice(1);
+        const tail = (B2.x !== b.x || B2.y !== b.y)
+          ? mid.concat([{ x: b.x, y: b.y }])
+          : mid;
+        state.preview = { pts: dedupePts(base.concat(tail)) };
+        return;
+      }
       const from = base[base.length - 1] || a;
-      const legs = orthoLegs(from, x, y, "v").slice(1);
+      const legs = orthoLegs(from, x, y, prefer).slice(1);
       state.preview = { pts: dedupePts(base.concat(legs)) };
     }
     function wirePts(w) {
@@ -25625,6 +25670,8 @@
       if (!state.wireFrom) {
         state.wireFrom = { uid, term: id };
         state.wireSnap = null;
+        state.wireDraftPts = [];
+        state.wireDraftPrefer = "v"; /* outil V EduVolt : propositions L vertical-first */
         const item = find(uid);
         if (item && !state.colorManual) {
           const role = termRole(item.type, id);
@@ -25657,11 +25704,24 @@
         waypoints: []
       };
       if (manual) w.colorManual = true;
-      /* Figé à la création : autoRoute inchangé ; si coudes clic → chaîne de segments autoRoute. */
+      /* Sans coude clic → autoRoute classique. Avec coudes → ortho pur (pas de stubs entre points). */
       const draft = state.wireDraftPts || [];
-      const routed = draft.length
-        ? routeThroughChain([endpoint(w.a)].concat(draft, [endpoint(w.b)]))
-        : autoRoute(endpoint(w.a), endpoint(w.b));
+      let routed;
+      if (draft.length) {
+        const A = endpoint(w.a);
+        const B = endpoint(w.b);
+        const prefer = state.wireDraftPrefer === "h" ? "h" : "v";
+        let nodes = [];
+        if (A && A.direction) nodes.push(stubOf(A, STUB));
+        else nodes.push({ x: A.x, y: A.y });
+        draft.forEach((p) => nodes.push({ x: p.x, y: p.y }));
+        if (B && B.direction) nodes.push(stubOf(B, STUB));
+        else nodes.push({ x: B.x, y: B.y });
+        const mid = orthoRouteThrough(nodes, prefer);
+        routed = dedupePts([{ x: A.x, y: A.y }].concat(mid, [{ x: B.x, y: B.y }]));
+      } else {
+        routed = autoRoute(endpoint(w.a), endpoint(w.b));
+      }
       bakeWaypoints(w, routed);
       state.wires.push(w);
       clearWireDraft();
