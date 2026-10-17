@@ -8,7 +8,8 @@
   <link rel="apple-touch-icon" href="brand/logo-wirelab-pro-icon.png?v=official-gemini" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="native-shell-8777-v140-eduvolt-lshape-routing" />
+  <meta name="swissdz-rev" content="native-shell-8777-v141-eduvolt-chapas" />
+  <!-- v141: REA chapas/jumpers — tap 2 bornes (distinct du câble) -->
   <!-- v140: algo vidéo — preview L ortho, grille 20, coins chanfreinés, presets L1/N/PE -->
   <!-- v139: REA+vidéo — cable_confirm/cancel toolbar + props câble via wireOpt (pas cadres plan) -->
   <!-- v138: retire cadres flottants (segments/bornes/labels/banner) — REA = modèle, pas overlays plan -->
@@ -3465,6 +3466,14 @@
       background:rgba(248,113,113,.16); color:#fecaca; border-color:rgba(248,113,113,.4);
     }
     #board.mode-cable { cursor:crosshair; }
+    #board.mode-jumper { cursor:crosshair; }
+    #modeJumper.btn-ico.active {
+      background:rgba(245,158,11,.16); color:#b45309; border-color:rgba(245,158,11,.4);
+    }
+    html[data-theme="dark"] #modeJumper.btn-ico.active {
+      background:rgba(251,191,36,.18); color:#fde68a; border-color:rgba(251,191,36,.45);
+    }
+    svg.wires .eduvolt-jumper { pointer-events:stroke; }
     #eduvoltCableBanner {
       position:fixed; left:50%; transform:translateX(-50%); bottom:72px; z-index:1200;
       max-width:min(920px,92vw); padding:8px 14px; border-radius:10px;
@@ -5605,6 +5614,9 @@
               <button id="modeCable" class="btn-ico" type="button"
                 title="Dibujar cable (modèle EduVolt) — trait H/V, extrémités libres"
                 aria-label="Dessiner câble EduVolt" aria-pressed="false">CB</button>
+              <button id="modeJumper" class="btn-ico" type="button"
+                title="Chapas / Jumpers — tap 2 bornes"
+                aria-label="Chapas jumper" aria-pressed="false">═</button>
             </div>
             <div class="row cable-axis-group" id="cableToolGroup" role="group" aria-label="Outil câble EduVolt">
               <button id="cableToolH" class="btn-ico" type="button" title="L-ortho : d’abord horizontal (Align axes)" aria-label="Préférer H dans le L" aria-pressed="false">H</button>
@@ -6289,7 +6301,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/wirelab-auth.js?v=v90-fluke-exmenu"></script>
   <script src="js/wirelab-auth-vitrine.js?v=vitrine10"></script>
-  <script src="eduvolt-cable-model.js?v=v140"></script>
+  <script src="eduvolt-cable-model.js?v=v141"></script>
   <script>
     /* Assets pré-cadrés (photos studio trop larges → bandes). */
     const COLORS = [
@@ -10703,6 +10715,7 @@
       cables: [], cableNo: 1, cableTool: "h", cablePreset: "l1", cableName: "L1",
       cableDraft: null, selectedCable: null, showFreeTermsPanel: false,
       cableSnapGrid: true, cableSyncLabels: false,
+      jumpers: [], jumperNo: 1, jumperDraft: null,
       seq: 1, wireNo: 1, counts: {}, items: [], wires: [],
       selected: null, selectedIds: [], selectedWire: null, wireOpt: null, selectedBar: null, wireFrom: null,
       wireDraftPts: [], /* clics vide = coudes (option) ; algo autoRoute inchangé entre segments */
@@ -15069,10 +15082,12 @@
         items: state.items.map(sanitizeItem),
         wires: state.wires.map(sanitizeWire),
         cables: (state.cables || []).map((c) => (window.EduVoltCable ? EduVoltCable.sanitizeCable(c) : c)).filter(Boolean),
+        jumpers: (state.jumpers || []).map((j) => (window.EduVoltCable && EduVoltCable.sanitizeJumper ? EduVoltCable.sanitizeJumper(j) : j)).filter(Boolean),
         counts: deepClone(state.counts),
         seq: state.seq,
         wireNo: state.wireNo,
-        cableNo: state.cableNo || 1
+        cableNo: state.cableNo || 1,
+        jumperNo: state.jumperNo || 1
       };
       if (state.ladder && Array.isArray(state.ladder.rungs)) {
         stashActiveLadder();
@@ -15147,6 +15162,15 @@
           return true;
         });
       }
+      state.jumpers = Array.isArray(data.jumpers) ? deepClone(data.jumpers) : [];
+      if (dropUids.size) {
+        state.jumpers = state.jumpers.filter((j) => {
+          if (j.a && dropUids.has(j.a.uid)) return false;
+          if (j.b && dropUids.has(j.b.uid)) return false;
+          return true;
+        });
+      }
+      if (data.jumperNo != null) state.jumperNo = data.jumperNo;
       state.counts = deepClone(data.counts || {});
       if (data.seq != null) state.seq = data.seq;
       if (data.wireNo != null) state.wireNo = data.wireNo;
@@ -17483,7 +17507,7 @@
     }
     function workspaceHasContent() {
       return !!(state.items && state.items.length) || !!(state.wires && state.wires.length)
-        || !!(state.cables && state.cables.length);
+        || !!(state.cables && state.cables.length) || !!(state.jumpers && state.jumpers.length);
     }
     function startBlankWorkspace(opts) {
       const o = opts || {};
@@ -17491,9 +17515,12 @@
       state.items = [];
       state.wires = [];
       state.cables = [];
+      state.jumpers = [];
       state.counts = {};
       state.wireNo = 1;
       state.cableNo = 1;
+      state.jumperNo = 1;
+      state.jumperDraft = null;
       state.cableDraft = null;
       state.selectedCable = null;
       state.sim = false;
@@ -17639,10 +17666,12 @@
         items: state.items.map(sanitizeItem),
         wires: state.wires.map(sanitizeWire),
         cables: (state.cables || []).map((c) => (window.EduVoltCable ? EduVoltCable.sanitizeCable(c) : deepClone(c))).filter(Boolean),
+        jumpers: (state.jumpers || []).map((j) => (window.EduVoltCable && EduVoltCable.sanitizeJumper ? EduVoltCable.sanitizeJumper(j) : deepClone(j))).filter(Boolean),
         counts: deepClone(state.counts),
         seq: state.seq,
         wireNo: state.wireNo,
         cableNo: state.cableNo || 1,
+        jumperNo: state.jumperNo || 1,
         selected: state.selected,
         selectedIds: Array.isArray(state.selectedIds) ? state.selectedIds.slice() : [],
         selectedWire: state.selectedWire,
@@ -17654,10 +17683,12 @@
         items: snap.items,
         wires: snap.wires,
         cables: snap.cables || [],
+        jumpers: snap.jumpers || [],
         counts: snap.counts,
         seq: snap.seq,
         wireNo: snap.wireNo,
-        cableNo: snap.cableNo
+        cableNo: snap.cableNo,
+        jumperNo: snap.jumperNo
       });
     }
     function updateHistoryButtons() {
@@ -17699,10 +17730,12 @@
         waypoints: w.waypoints || []
       }));
       state.cables = Array.isArray(snap.cables) ? deepClone(snap.cables) : [];
+      state.jumpers = Array.isArray(snap.jumpers) ? deepClone(snap.jumpers) : [];
       state.counts = deepClone(snap.counts || {});
       state.seq = snap.seq;
       state.wireNo = snap.wireNo;
       if (snap.cableNo != null) state.cableNo = snap.cableNo;
+      if (snap.jumperNo != null) state.jumperNo = snap.jumperNo;
       const selOk = snap.selected && state.items.some((i) => i.uid === snap.selected);
       const wireOk = snap.selectedWire && state.wires.some((w) => w.id === snap.selectedWire);
       const cabOk = snap.selectedCable && state.cables.some((c) => c.id === snap.selectedCable);
@@ -17716,6 +17749,7 @@
       clearEdzLongPress();
       state.wireFrom = null;
       state.cableDraft = null;
+      state.jumperDraft = null;
       state.preview = null;
       state.drag = null;
       state.resize = null;
@@ -25685,6 +25719,8 @@
       /* 2) Fils au-dessus des faces (z-index 55) ; pastilles ensuite (60). Géométrie/routeur inchangés. */
       world.appendChild(svgWires);
       state.wires.forEach((w) => {
+        /* Chapas : rendu dédié (drawJumpers), pas le tracé fil ortho. */
+        if (w.jumper || w.fromJumper) return;
         /* Connexion Fluke : fil électrique pour la sim, tracé = cordon fluke-lead. */
         if (isFlukeMeterRef(w.a) || isFlukeMeterRef(w.b)) return;
         /* Couleurs IEC / bus : défaut pédagogique, sauf override manuel explicite */
@@ -25706,6 +25742,7 @@
           EduVoltCable.drawCables(svgWires, NS, function (pts, color, live, id) {
             drawWire(pts, color, live, id, false);
           });
+          if (EduVoltCable.drawJumpers) EduVoltCable.drawJumpers(svgWires, NS);
         }
       } catch (_) {}
       if (state.preview) {
@@ -25785,7 +25822,7 @@
             barLink: barLink,
             cableOn: cableOn,
             motorPlate: !!motorBarTerms,
-            termFree: (state.mode === "wire" || state.mode === "cable")
+            termFree: (state.mode === "wire" || state.mode === "cable" || state.mode === "jumper")
               && termIsFree(item.uid, t.id)
           }, item));
         });
@@ -26059,7 +26096,7 @@
       t.onpointerdown = (ev) => {
         ev.stopPropagation();
         ev.preventDefault();
-        if (state.mode === "wire" || state.mode === "cable") {
+        if (state.mode === "wire" || state.mode === "cable" || state.mode === "jumper") {
           onTerm(uid, id, { touch: isTouchLikePointer(ev) });
           return;
         }
@@ -26082,7 +26119,7 @@
 
     function onTerm(uid, id, opts) {
       const touch = !!(opts && opts.touch);
-      if (state.mode === "cable") {
+      if (state.mode === "cable" || state.mode === "jumper") {
         try {
           if (window.EduVoltCable && EduVoltCable.onTermClick(uid, id)) {
             render();
@@ -27175,7 +27212,7 @@
       closeCtxMenu();
       closeWireOpt();
       clearWireHold();
-      if (state.mode === "cable") {
+      if (state.mode === "cable" || state.mode === "jumper") {
         const pt = boardPointFromClient(ev.clientX, ev.clientY);
         try {
           if (window.EduVoltCable && EduVoltCable.onBoardPointer(ev, pt)) {
@@ -27225,15 +27262,21 @@
         try { if (window.EduVoltCable) EduVoltCable.cancelDraft(); } catch (_) {}
         render();
       }
+      if (state.mode === "jumper" && state.jumperDraft) {
+        ev.preventDefault();
+        state.jumperDraft = null;
+        render();
+      }
     });
 
     function setMode(mode) {
-      if (mode !== "select" && mode !== "wire" && mode !== "cable") mode = "select";
+      if (mode !== "select" && mode !== "wire" && mode !== "cable" && mode !== "jumper") mode = "select";
       state.mode = mode;
       clearWireDraft();
       if (mode !== "cable") {
         try { if (window.EduVoltCable) EduVoltCable.clearCableDraft(); } catch (_) {}
       }
+      if (mode !== "jumper") state.jumperDraft = null;
       state.drag = null;
       state.flukeTipDrag = null;
       state.flukeBendDrag = null;
@@ -27246,10 +27289,16 @@
         btnCab.classList.toggle("active", mode === "cable");
         btnCab.setAttribute("aria-pressed", mode === "cable" ? "true" : "false");
       }
+      const btnJmp = document.getElementById("modeJumper");
+      if (btnJmp) {
+        btnJmp.classList.toggle("active", mode === "jumper");
+        btnJmp.setAttribute("aria-pressed", mode === "jumper" ? "true" : "false");
+      }
       board.classList.toggle("mode-select", mode === "select");
       board.classList.remove("mode-press");
       board.classList.toggle("mode-wire", mode === "wire");
       board.classList.toggle("mode-cable", mode === "cable");
+      board.classList.toggle("mode-jumper", mode === "jumper");
       try { if (window.EduVoltCable) EduVoltCable.syncToolbar(); } catch (_) {}
       render();
     }
@@ -27759,7 +27808,7 @@
       const isLeftEmpty = (ev.button === 0 || ev.pointerType === "touch") && boardPanEmptyTarget(ev.target);
       if (!isMid && !isLeftEmpty) return;
       if (boardMidPanBlocked()) return;
-      if (isLeftEmpty && state.mode === "cable") {
+      if (isLeftEmpty && (state.mode === "cable" || state.mode === "jumper")) {
         const pt = boardPointFromClient(ev.clientX, ev.clientY);
         try {
           if (window.EduVoltCable && EduVoltCable.onBoardPointer(ev, pt)) {
@@ -28969,9 +29018,11 @@
     document.getElementById("btnUndo").onclick = () => undo();
     document.getElementById("btnRedo").onclick = () => redo();
     document.getElementById("btnClearWires").onclick = () => {
-      if (!state.wires.length) return;
+      if (!state.wires.length && !(state.jumpers && state.jumpers.length)) return;
       pushHistory();
       state.wires = [];
+      state.jumpers = [];
+      state.jumperDraft = null;
       state.preview = null;
       state.wireFrom = null;
       state.selectedWire = null;

@@ -46,6 +46,10 @@
     if (state.cablePreset == null) state.cablePreset = "l1";
     if (state.cableDraft == null) state.cableDraft = null;
     if (state.selectedCable == null) state.selectedCable = null;
+    /* Chapas / jumpers (REA: tap 2 bornes) — distincts du câble. */
+    if (!Array.isArray(state.jumpers)) state.jumpers = [];
+    if (state.jumperNo == null) state.jumperNo = 1;
+    if (state.jumperDraft == null) state.jumperDraft = null;
     /* Pas de cadres flottants sur le plan (REA = data/strings, pas overlay canvas). */
     if (state.showFreeTermsPanel == null) state.showFreeTermsPanel = false;
     if (state.cableSnapGrid == null) state.cableSnapGrid = true;
@@ -526,7 +530,14 @@
 
   function onBoardPointer(ev, pt) {
     const state = ensureState();
-    if (!state || state.mode !== "cable") return false;
+    if (!state) return false;
+    if (state.mode === "jumper") {
+      /* Chapas : uniquement via bornes (REA tap 2 terminals). */
+      const snap = pickNearTerminal(pt.x, pt.y, null);
+      if (snap) return onTermClick(snap.uid, snap.term);
+      return true;
+    }
+    if (state.mode !== "cable") return false;
     const draft = state.cableDraft;
     const snap = pickNearTerminal(pt.x, pt.y, draft && draft.a);
 
@@ -543,11 +554,188 @@
     return true;
   }
 
+  function jumperKey(a, b) {
+    if (!a || !b) return "";
+    const ka = a.uid + "::" + a.term;
+    const kb = b.uid + "::" + b.term;
+    return ka < kb ? ka + "|" + kb : kb + "|" + ka;
+  }
+
+  function findJumper(a, b) {
+    const state = ensureState();
+    if (!state) return null;
+    const key = jumperKey(a, b);
+    return (state.jumpers || []).find((j) => jumperKey(j.a, j.b) === key) || null;
+  }
+
+  function syncJumperToWire(jumper) {
+    const state = ensureState();
+    if (!state || !jumper || !jumper.a || !jumper.b) return;
+    let w = jumper.wireId && state.wires.find((x) => x.id === jumper.wireId);
+    if (!w) {
+      w = {
+        id: "w" + (state.seq++),
+        no: state.wireNo++,
+        a: { uid: jumper.a.uid, term: jumper.a.term },
+        b: { uid: jumper.b.uid, term: jumper.b.term },
+        color: "#c4c4c4",
+        section: 6,
+        colorManual: true,
+        waypoints: [],
+        name: jumper.name || ("Chapa " + (jumper.no || "")),
+        fromJumper: jumper.id,
+        jumper: true,
+        live: false
+      };
+      state.wires.push(w);
+      jumper.wireId = w.id;
+    } else {
+      w.a = { uid: jumper.a.uid, term: jumper.a.term };
+      w.b = { uid: jumper.b.uid, term: jumper.b.term };
+      w.fromJumper = jumper.id;
+      w.jumper = true;
+    }
+  }
+
+  function removeJumper(jumper) {
+    const state = ensureState();
+    if (!state || !jumper) return;
+    if (jumper.wireId) {
+      state.wires = (state.wires || []).filter((w) => w.id !== jumper.wireId);
+    }
+    state.jumpers = (state.jumpers || []).filter((j) => j.id !== jumper.id);
+  }
+
+  /** REA: tap 2 bornes → place/remove jumper (chapa). */
+  function toggleJumper(a, b) {
+    const state = ensureState();
+    if (!state || !a || !b) return null;
+    if (a.uid === b.uid && a.term === b.term) return null;
+    const existing = findJumper(a, b);
+    if (typeof global.pushHistory === "function") global.pushHistory();
+    if (existing) {
+      removeJumper(existing);
+      state.jumperDraft = null;
+      return null;
+    }
+    const jumper = {
+      id: "jmp" + (state.seq++),
+      no: state.jumperNo++,
+      name: "Chapa " + (state.jumperNo - 1),
+      a: { uid: a.uid, term: a.term },
+      b: { uid: b.uid, term: b.term },
+      wireId: null
+    };
+    state.jumpers.push(jumper);
+    syncJumperToWire(jumper);
+    state.jumperDraft = null;
+    return jumper;
+  }
+
+  function sanitizeJumper(j) {
+    if (!j || !j.a || !j.b) return null;
+    return {
+      id: j.id,
+      no: j.no,
+      name: j.name != null ? String(j.name).slice(0, 32) : "",
+      a: { uid: j.a.uid, term: j.a.term },
+      b: { uid: j.b.uid, term: j.b.term },
+      wireId: j.wireId || null
+    };
+  }
+
+  function enterJumperMode() {
+    const state = ensureState();
+    if (!state) return;
+    cancelDraft();
+    state.jumperDraft = null;
+    if (typeof global.setMode === "function") global.setMode("jumper");
+    else state.mode = "jumper";
+    syncToolbar();
+  }
+
+  function drawJumpers(svg, NS) {
+    const state = ensureState();
+    if (!state || !svg || !NS) return;
+    (state.jumpers || []).forEach((jumper) => {
+      const pa = termPoint(jumper.a);
+      const pb = termPoint(jumper.b);
+      if (!pa || !pb) return;
+      const g = document.createElementNS(NS, "g");
+      g.setAttribute("class", "eduvolt-jumper");
+      const hit = document.createElementNS(NS, "line");
+      hit.setAttribute("x1", pa.x); hit.setAttribute("y1", pa.y);
+      hit.setAttribute("x2", pb.x); hit.setAttribute("y2", pb.y);
+      hit.setAttribute("stroke", "transparent");
+      hit.setAttribute("stroke-width", "14");
+      hit.style.cursor = "pointer";
+      hit.addEventListener("pointerdown", (ev) => {
+        ev.stopPropagation();
+        ev.preventDefault();
+        if (ev.detail >= 2) {
+          if (typeof global.pushHistory === "function") global.pushHistory();
+          removeJumper(jumper);
+          try { if (typeof global.render === "function") global.render(); } catch (_) {}
+        }
+      });
+      g.appendChild(hit);
+      const bar = document.createElementNS(NS, "line");
+      bar.setAttribute("x1", pa.x); bar.setAttribute("y1", pa.y);
+      bar.setAttribute("x2", pb.x); bar.setAttribute("y2", pb.y);
+      bar.setAttribute("stroke", "#9ca3af");
+      bar.setAttribute("stroke-width", "5.5");
+      bar.setAttribute("stroke-linecap", "round");
+      bar.setAttribute("pointer-events", "none");
+      g.appendChild(bar);
+      const core = document.createElementNS(NS, "line");
+      core.setAttribute("x1", pa.x); core.setAttribute("y1", pa.y);
+      core.setAttribute("x2", pb.x); core.setAttribute("y2", pb.y);
+      core.setAttribute("stroke", "#e5e7eb");
+      core.setAttribute("stroke-width", "2.2");
+      core.setAttribute("stroke-linecap", "round");
+      core.setAttribute("pointer-events", "none");
+      g.appendChild(core);
+      svg.appendChild(g);
+    });
+    /* Preview 1ère borne chapa */
+    if (state.mode === "jumper" && state.jumperDraft && state.jumperDraft.a) {
+      const p = termPoint(state.jumperDraft.a);
+      if (p) {
+        const c = document.createElementNS(NS, "circle");
+        c.setAttribute("cx", p.x); c.setAttribute("cy", p.y);
+        c.setAttribute("r", "7");
+        c.setAttribute("fill", "none");
+        c.setAttribute("stroke", "#f59e0b");
+        c.setAttribute("stroke-width", "2.5");
+        c.setAttribute("pointer-events", "none");
+        svg.appendChild(c);
+      }
+    }
+  }
+
   function onTermClick(uid, termId) {
     const state = ensureState();
-    if (!state || state.mode !== "cable") return false;
-    const draft = state.cableDraft;
+    if (!state) return false;
     const ref = { uid: uid, term: termId };
+
+    if (state.mode === "jumper") {
+      if (!state.jumperDraft || !state.jumperDraft.a) {
+        state.jumperDraft = { a: ref };
+        syncToolbar();
+        return true;
+      }
+      if (state.jumperDraft.a.uid === uid && state.jumperDraft.a.term === termId) {
+        state.jumperDraft = null;
+        syncToolbar();
+        return true;
+      }
+      toggleJumper(state.jumperDraft.a, ref);
+      syncToolbar();
+      return true;
+    }
+
+    if (state.mode !== "cable") return false;
+    const draft = state.cableDraft;
     if (!draft) {
       const tp = termPoint(ref) || { x: 0, y: 0 };
       startDraft(tp.x, tp.y, ref);
@@ -723,6 +911,8 @@
 
   function exitCableMode() {
     cancelDraft();
+    const state = ensureState();
+    if (state) state.jumperDraft = null;
     if (typeof global.setMode === "function") global.setMode("select");
   }
 
@@ -754,6 +944,7 @@
     if (!state) return;
     const mode = state.mode;
     const btnCable = document.getElementById("modeCable");
+    const btnJumper = document.getElementById("modeJumper");
     const btnH = document.getElementById("cableToolH");
     const btnV = document.getElementById("cableToolV");
     const btnExit = document.getElementById("cableExit");
@@ -766,15 +957,24 @@
     const drafting = !!(state.cableDraft && state.cableDraft.points && state.cableDraft.points.length);
     if (btnDuct) btnDuct.hidden = true; /* hors câblage */
     if (btnCable) btnCable.classList.toggle("active", mode === "cable");
+    if (btnJumper) {
+      btnJumper.classList.toggle("active", mode === "jumper");
+      btnJumper.setAttribute("aria-pressed", mode === "jumper" ? "true" : "false");
+      btnJumper.title = state.jumperDraft && state.jumperDraft.a
+        ? "Chapa : choisir la 2ᵉ borne (tap pour retirer si déjà liée)"
+        : "Chapas / Jumpers — tap 2 bornes";
+    }
     if (btnH) {
       btnH.classList.toggle("active", mode === "cable" && state.cableTool === "h");
       btnH.setAttribute("aria-pressed", mode === "cable" && state.cableTool === "h" ? "true" : "false");
+      btnH.hidden = mode === "jumper";
     }
     if (btnV) {
       btnV.classList.toggle("active", mode === "cable" && state.cableTool === "v");
       btnV.setAttribute("aria-pressed", mode === "cable" && state.cableTool === "v" ? "true" : "false");
+      btnV.hidden = mode === "jumper";
     }
-    if (btnExit) btnExit.hidden = mode !== "cable";
+    if (btnExit) btnExit.hidden = !(mode === "cable" || mode === "jumper");
     if (btnSnap) {
       btnSnap.hidden = mode !== "cable";
       btnSnap.classList.toggle("active", !!state.cableSnapGrid);
@@ -789,9 +989,13 @@
       btnConfirm.classList.toggle("active", drafting);
     }
     if (btnCancel) btnCancel.hidden = !(mode === "cable" && drafting);
-    if (sel && state.cablePreset && sel.value !== state.cablePreset) sel.value = state.cablePreset || "v1";
+    if (sel) {
+      sel.hidden = mode === "jumper";
+      if (state.cablePreset && sel.value !== state.cablePreset) sel.value = state.cablePreset || "l1";
+    }
     /* Banner bas d’écran : pas dans EduVolt sur le plan — masqué. */
     if (banner) banner.hidden = true;
+    try { document.body.classList.toggle("eduvolt-jumper-mode", mode === "jumper"); } catch (_) {}
     try { document.body.classList.toggle("eduvolt-cable-mode", mode === "cable"); } catch (_) {}
     renderFreeTermsPanel();
     renderSegmentsPanel();
@@ -826,6 +1030,11 @@
     const sel = document.getElementById("cablePreset");
     if (btnDuct) { btnDuct.hidden = true; btnDuct.onclick = null; }
     if (btnCable) btnCable.onclick = () => enterCableMode((S() && S().cableTool) || "h");
+    const btnJumper = document.getElementById("modeJumper");
+    if (btnJumper) btnJumper.onclick = () => {
+      enterJumperMode();
+      try { global.render(); } catch (_) {}
+    };
     if (btnH) btnH.onclick = () => {
       const state = ensureState();
       if (state) state.cableTool = "h";
@@ -879,7 +1088,18 @@
 
     document.addEventListener("keydown", (ev) => {
       const state = ensureState();
-      if (!state || state.mode !== "cable") return;
+      if (!state) return;
+      if (state.mode === "jumper") {
+        if (ev.key === "Escape") {
+          if (state.jumperDraft) state.jumperDraft = null;
+          else exitCableMode();
+          try { global.render(); } catch (_) {}
+          syncToolbar();
+          ev.preventDefault();
+        }
+        return;
+      }
+      if (state.mode !== "cable") return;
       if (ev.key === "Escape") {
         if (state.cableDraft) cancelDraft();
         else exitCableMode();
@@ -907,12 +1127,16 @@
     syncCableToWire: syncCableToWire,
     syncAllCablesToWires: syncAllCablesToWires,
     sanitizeCable: sanitizeCable,
+    sanitizeJumper: sanitizeJumper,
     listFreeTerminals: listFreeTerminals,
     onBoardPointer: onBoardPointer,
     onTermClick: onTermClick,
     drawCables: drawCables,
+    drawJumpers: drawJumpers,
     enterCableMode: enterCableMode,
+    enterJumperMode: enterJumperMode,
     exitCableMode: exitCableMode,
+    toggleJumper: toggleJumper,
     applyPreset: applyPreset,
     syncToolbar: syncToolbar,
     renderFreeTermsPanel: renderFreeTermsPanel,
