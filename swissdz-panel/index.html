@@ -8,7 +8,8 @@
   <link rel="apple-touch-icon" href="brand/logo-wirelab-pro-icon.png?v=official-gemini" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="native-shell-8777-v134-exemples-scroll" />
+  <meta name="swissdz-rev" content="native-shell-8777-v135-cablage-v" />
+  <!-- v135: câblage V — L ortho vertical-first uniquement (UI classique inchangée, sans chrome EduVolt) -->
   <!-- v134: Installations exemplaires — la liste de la modale centrale défile (molette + doigt), le plan derrière ne panne plus -->
   <!-- v133: ETS — chaque participant KNX (volet, slot façade, poussoir, actionneur, coupleur) a ses GA et noms d’objets -->
   <!-- v132: cordon PE continu ; mesures Fluke du plan = bornes réellement touchées (hors / sous tension) -->
@@ -21390,8 +21391,27 @@
       }
       return dedupePts([A, A2, B2, B]);
     }
+    /**
+     * L ortho (câblage V) : last → coin → fin.
+     * prefer 'v' = d’abord vertical puis horizontal (défaut) ;
+     * 'h' = inverse. Déjà aligné sur un axe → un seul segment.
+     */
+    function orthoLegs(last, x, y, prefer) {
+      if (!last) return [{ x: x, y: y }];
+      const end = { x: x, y: y };
+      const dx = end.x - last.x;
+      const dy = end.y - last.y;
+      if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return [{ x: last.x, y: last.y }];
+      if (Math.abs(dx) < 1 || Math.abs(dy) < 1) {
+        return [{ x: last.x, y: last.y }, end];
+      }
+      const firstH = prefer === "h" ? true : prefer === "v" ? false : Math.abs(dx) >= Math.abs(dy);
+      const corner = firstH
+        ? { x: end.x, y: last.y }
+        : { x: last.x, y: end.y };
+      return [{ x: last.x, y: last.y }, corner, end];
+    }
     function manhattanRoute(a, b, aLen, bLen) {
-      const da = padUnit(a);
       const db = padUnit(b);
       const A = { x: a.x, y: a.y };
       const B = { x: b.x, y: b.y };
@@ -21399,9 +21419,8 @@
       const B2 = db ? stubOf(b, bLen) : { x: B.x, y: B.y };
       const mid = [A2];
       if (Math.abs(A2.x - B2.x) > 1 && Math.abs(A2.y - B2.y) > 1) {
-        const preferYFirst = Math.abs(da[1]) >= Math.abs(da[0]);
-        if (preferYFirst) mid.push({ x: A2.x, y: B2.y });
-        else mid.push({ x: B2.x, y: A2.y });
+        /* Toujours V-first (vertical puis horizontal) — câblage V. */
+        mid.push({ x: A2.x, y: B2.y });
       }
       mid.push(B2);
       return dedupePts([A, ...simplifyOrtho(mid), B]);
@@ -21470,25 +21489,28 @@
       const last = drafts[drafts.length - 1];
       return { x: last.x, y: last.y, direction: last.direction || "right" };
     }
-    /** Option : clic vide = pointe de changement de direction (coude). */
+    /** Option : clic vide = L ortho V-first (câblage V). */
     function addWireDraftCorner(x, y) {
       if (!state.wireFrom) return false;
       const last = wireDraftLastNode();
-      const dx = x - last.x;
-      const dy = y - last.y;
-      if (Math.hypot(dx, dy) < 12) return false;
-      /* Verrouille H ou V depuis le dernier point (garde le L, sans changer autoRoute). */
-      let corner;
-      if (Math.abs(dx) >= Math.abs(dy)) {
-        corner = { x: x, y: last.y, direction: dx >= 0 ? "left" : "right" };
-      } else {
-        corner = { x: last.x, y: y, direction: dy >= 0 ? "top" : "bottom" };
-      }
+      if (Math.hypot(x - last.x, y - last.y) < 12) return false;
+      /* L : last → (last.x, y) → (x, y) — vertical d’abord. */
+      const legs = orthoLegs(last, x, y, "v").slice(1);
+      if (!legs.length) return false;
       if (!state.wireDraftPts) state.wireDraftPts = [];
-      const prev = state.wireDraftPts[state.wireDraftPts.length - 1];
-      if (prev && Math.hypot(prev.x - corner.x, prev.y - corner.y) < 8) return false;
-      state.wireDraftPts.push(corner);
-      return true;
+      let added = 0;
+      legs.forEach((pt) => {
+        const prev = state.wireDraftPts[state.wireDraftPts.length - 1] || last;
+        if (Math.hypot(prev.x - pt.x, prev.y - pt.y) < 8) return;
+        const dx = pt.x - prev.x;
+        const dy = pt.y - prev.y;
+        const direction = Math.abs(dx) >= Math.abs(dy)
+          ? (dx >= 0 ? "left" : "right")
+          : (dy >= 0 ? "top" : "bottom");
+        state.wireDraftPts.push({ x: pt.x, y: pt.y, direction });
+        added++;
+      });
+      return added > 0;
     }
     function updateWirePreview(x, y, opts) {
       if (!state.wireFrom) {
@@ -21509,16 +21531,26 @@
             skipTerm: state.wireFrom.term
           });
       state.wireSnap = snap;
-      const chain = [a].concat(state.wireDraftPts || []);
+      const drafts = state.wireDraftPts || [];
+      const chain = [a].concat(drafts);
       if (snap) {
         chain.push(endpoint({ uid: snap.uid, term: snap.term }));
         state.preview = { pts: routeThroughChain(chain) };
-      } else {
-        const last = chain[chain.length - 1];
-        const dir = guessStubDir(last.x, last.y, x, y);
-        chain.push({ x, y, direction: dir });
-        state.preview = { pts: routeThroughChain(chain) };
+        return;
       }
+      /* Preview rubber-band L V-first (comme outil V EduVolt), sans changer l’UI. */
+      let base;
+      if (drafts.length) {
+        base = routeThroughChain(chain);
+      } else if (a && a.direction) {
+        const A2 = stubOf(a, STUB);
+        base = [{ x: a.x, y: a.y }, A2];
+      } else {
+        base = [{ x: a.x, y: a.y }];
+      }
+      const from = base[base.length - 1] || a;
+      const legs = orthoLegs(from, x, y, "v").slice(1);
+      state.preview = { pts: dedupePts(base.concat(legs)) };
     }
     function wirePts(w) {
       /* v42: pendant drag module, géométrie 100 % figée (aucun fil ne suit / ne se contourne). */
