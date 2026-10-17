@@ -205,6 +205,7 @@
       type: segType
     });
     updateDraftPreview(cur.x, cur.y);
+    syncToolbar();
     return true;
   }
 
@@ -526,6 +527,31 @@
     renderLabelsPanel();
   }
 
+  /** Props câble (Color / Calibre / nom / labels) via wireOpt existant — REA, pas cadre inventé. */
+  function openCableProps(cableId, clientX, clientY) {
+    const state = ensureState();
+    const cab = (state.cables || []).find((c) => c.id === cableId);
+    if (!cab) return;
+    selectCable(cableId);
+    if (cab.wireId && typeof global.openWireOpt === "function") {
+      global.openWireOpt(cab.wireId, clientX, clientY);
+      return;
+    }
+    state.wireOpt = { cableId: cab.id, clientX: clientX, clientY: clientY, t: 0.5 };
+    const panel = document.getElementById("wireOpt");
+    if (panel) {
+      panel.hidden = false;
+      panel.classList.add("open");
+      panel.setAttribute("aria-hidden", "false");
+      if (typeof global.placeWireOpt === "function") global.placeWireOpt(panel, clientX, clientY);
+      else {
+        panel.style.left = Math.max(8, (clientX || 40) - 40) + "px";
+        panel.style.top = Math.max(8, (clientY || 80) - 20) + "px";
+      }
+    }
+    if (typeof global.syncWireOpt === "function") global.syncWireOpt();
+  }
+
   function drawCables(svg, NS, drawPathFn) {
     const state = ensureState();
     if (!state || !svg || !NS) return;
@@ -559,7 +585,12 @@
         if (typeof ev.stopImmediatePropagation === "function") ev.stopImmediatePropagation();
         ev.preventDefault();
         if (ev.button === 2) return;
-            selectCable(cable.id);
+        if (ev.detail >= 2) {
+          openCableProps(cable.id, ev.clientX, ev.clientY);
+          try { if (typeof global.render === "function") global.render(); } catch (_) {}
+          return;
+        }
+        selectCable(cable.id);
         try { if (typeof global.render === "function") global.render(); } catch (_) {}
         renderSegmentsPanel();
         renderLabelsPanel();
@@ -665,9 +696,12 @@
     const btnV = document.getElementById("cableToolV");
     const btnExit = document.getElementById("cableExit");
     const btnSnap = document.getElementById("cableSnapGrid");
+    const btnConfirm = document.getElementById("cableConfirm");
+    const btnCancel = document.getElementById("cableCancel");
     const sel = document.getElementById("cablePreset");
     const banner = document.getElementById("eduvoltCableBanner");
     const btnDuct = document.getElementById("btnWireDuct");
+    const drafting = !!(state.cableDraft && state.cableDraft.points && state.cableDraft.points.length);
     if (btnDuct) btnDuct.hidden = true; /* hors câblage */
     if (btnCable) btnCable.classList.toggle("active", mode === "cable");
     if (btnH) {
@@ -687,6 +721,12 @@
         : "Snap to grid: OFF";
       btnSnap.setAttribute("aria-pressed", state.cableSnapGrid ? "true" : "false");
     }
+    /* REA cable_confirm / cable_cancel — visibles seulement pendant Dibujando Cable */
+    if (btnConfirm) {
+      btnConfirm.hidden = !(mode === "cable" && drafting);
+      btnConfirm.classList.toggle("active", drafting);
+    }
+    if (btnCancel) btnCancel.hidden = !(mode === "cable" && drafting);
     if (sel && state.cablePreset && sel.value !== state.cablePreset) sel.value = state.cablePreset || "v1";
     /* Banner bas d’écran : pas dans EduVolt sur le plan — masqué. */
     if (banner) banner.hidden = true;
@@ -741,6 +781,18 @@
       const state = ensureState();
       if (!state) return;
       state.cableSnapGrid = !state.cableSnapGrid;
+      syncToolbar();
+    };
+    const btnConfirm = document.getElementById("cableConfirm");
+    const btnCancel = document.getElementById("cableCancel");
+    if (btnConfirm) btnConfirm.onclick = () => {
+      finalizeDraft({});
+      try { global.render(); } catch (_) {}
+      syncToolbar();
+    };
+    if (btnCancel) btnCancel.onclick = () => {
+      cancelDraft();
+      try { global.render(); } catch (_) {}
       syncToolbar();
     };
     if (sel) sel.onchange = () => {
@@ -809,6 +861,7 @@
     moveSegment: moveSegment,
     setCableLabels: setCableLabels,
     selectCable: selectCable,
+    openCableProps: openCableProps,
     bindUi: bindUi,
     cablePointsAbsolute: cablePointsAbsolute
   };

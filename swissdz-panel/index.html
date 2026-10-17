@@ -8,7 +8,8 @@
   <link rel="apple-touch-icon" href="brand/logo-wirelab-pro-icon.png?v=official-gemini" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#0f172a" />
-  <meta name="swissdz-rev" content="native-shell-8777-v138-eduvolt-no-overlay-panels" />
+  <meta name="swissdz-rev" content="native-shell-8777-v139-eduvolt-confirm-props" />
+  <!-- v139: REA+vidéo — cable_confirm/cancel toolbar + props câble via wireOpt (pas cadres plan) -->
   <!-- v138: retire cadres flottants (segments/bornes/labels/banner) — REA = modèle, pas overlays plan -->
   <!-- v137: REA câblage — Snap H/V+grille, start/endLabel, éditeur segments (sans goulottes) -->
   <!-- v136: modèle câble EduVolt — Dibujar cable H/V, extrémités libres, presets -->
@@ -5608,6 +5609,8 @@
               <button id="cableToolH" class="btn-ico" type="button" title="Cable horizontal (hWire)" aria-label="Câble horizontal" aria-pressed="false">H</button>
               <button id="cableToolV" class="btn-ico" type="button" title="Cable vertical (vWire)" aria-label="Câble vertical" aria-pressed="false">V</button>
               <button id="cableSnapGrid" class="btn-ico" type="button" title="Snap to grid: ON — Snap horizontal/vertical" aria-label="Snap grille câble" aria-pressed="true" hidden>#</button>
+              <button id="cableConfirm" class="btn-ico" type="button" title="Confirmar cable (cable_confirm)" aria-label="Confirmer câble" hidden>✓</button>
+              <button id="cableCancel" class="btn-ico" type="button" title="Cancel drawing (cable_cancel)" aria-label="Annuler dessin câble" hidden>↶</button>
               <button id="cableExit" class="btn-ico" type="button" title="Salir del modo cable" aria-label="Quitter mode câble" hidden>✕</button>
               <!-- goulottes / wire duct : hors câblage (REA) — bouton retiré -->
             </div>
@@ -6282,7 +6285,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/wirelab-auth.js?v=v90-fluke-exmenu"></script>
   <script src="js/wirelab-auth-vitrine.js?v=vitrine10"></script>
-  <script src="eduvolt-cable-model.js?v=v138"></script>
+  <script src="eduvolt-cable-model.js?v=v139"></script>
   <script>
     /* Assets pré-cadrés (photos studio trop larges → bandes). */
     const COLORS = [
@@ -18077,49 +18080,68 @@
       const panel = document.getElementById("wireOpt");
       if (!panel) return;
       const opt = state.wireOpt;
-      const w = opt && state.wires.find((x) => x.id === opt.id);
-      if (!opt || !w || state.selectedWire !== opt.id) {
+      const cab = opt && opt.cableId && (state.cables || []).find((c) => c.id === opt.cableId);
+      const w = opt && opt.id && state.wires.find((x) => x.id === opt.id);
+      if (!opt || (!w && !cab) || (w && state.selectedWire !== opt.id) || (cab && state.selectedCable !== opt.cableId)) {
         if (!panel.hidden) closeWireOpt();
         return;
       }
-      const sec = wireSectionOf(w);
+      const src = w || cab;
+      const sec = w ? wireSectionOf(w) : (Number(cab.section) || state.section);
       panel.querySelectorAll(".wire-opt-sec").forEach((btn) => {
         btn.classList.toggle("on", Number(btn.dataset.v) === sec);
       });
       panel.querySelectorAll(".wire-opt-swatch").forEach((btn) => {
-        btn.classList.toggle("on", btn.dataset.c === w.color);
+        btn.classList.toggle("on", btn.dataset.c === src.color);
       });
       const lenInp = document.getElementById("wireOptLen");
       if (lenInp && document.activeElement !== lenInp) {
-        lenInp.value = w.lengthM != null ? String(w.lengthM) : "";
+        lenInp.value = w && w.lengthM != null ? String(w.lengthM) : "";
       }
       const nameInp = document.getElementById("wireOptName");
       if (nameInp && document.activeElement !== nameInp) {
-        nameInp.value = w.name != null ? String(w.name) : "";
+        nameInp.value = src.name != null ? String(src.name) : "";
       }
       const tagA = document.getElementById("wireOptTagA");
       const tagB = document.getElementById("wireOptTagB");
-      if (tagA && document.activeElement !== tagA) tagA.value = wireTagText(w, "a");
-      if (tagB && document.activeElement !== tagB) tagB.value = wireTagText(w, "b");
+      if (tagA && document.activeElement !== tagA) {
+        tagA.value = w ? wireTagText(w, "a") : (cab.startLabel || "");
+      }
+      if (tagB && document.activeElement !== tagB) {
+        tagB.value = w ? wireTagText(w, "b") : (cab.endLabel || "");
+      }
     }
     function commitWireOptName() {
       const w = state.selectedWire && state.wires.find((x) => x.id === state.selectedWire);
-      if (!w) return;
+      const cab = state.selectedCable && (state.cables || []).find((c) => c.id === state.selectedCable);
       const inp = document.getElementById("wireOptName");
-      if (!inp) return;
+      if (!inp || (!w && !cab)) return;
       const next = String(inp.value || "").trim().slice(0, 32) || null;
-      const prev = w.name == null ? null : String(w.name);
+      const prev = (w || cab).name == null ? null : String((w || cab).name);
       if (prev === next) return;
       pushHistory();
-      if (next) w.name = next; else delete w.name;
+      if (w) { if (next) w.name = next; else delete w.name; }
+      if (cab) {
+        cab.name = next || cab.name;
+        try { if (window.EduVoltCable) EduVoltCable.syncCableToWire(cab); } catch (_) {}
+      }
       render();
     }
     function commitWireOptTag(end) {
       const w = state.selectedWire && state.wires.find((x) => x.id === state.selectedWire);
-      if (!w) return;
+      const cab = state.selectedCable && (state.cables || []).find((c) => c.id === state.selectedCable);
       const inp = document.getElementById(end === "a" ? "wireOptTagA" : "wireOptTagB");
-      if (!inp) return;
+      if (!inp || (!w && !cab)) return;
       const trimmed = String(inp.value || "").trim().slice(0, 24);
+      if (cab && !w) {
+        pushHistory();
+        if (end === "a") cab.startLabel = trimmed;
+        else cab.endLabel = trimmed;
+        try { if (window.EduVoltCable) EduVoltCable.syncCableToWire(cab); } catch (_) {}
+        render();
+        return;
+      }
+      if (!w) return;
       const def = defaultWireTag(w, end);
       const key = end === "a" ? "tagA" : "tagB";
       const next = (!trimmed || trimmed === def) ? null : trimmed;
@@ -18127,6 +18149,13 @@
       if (prev === next) return;
       pushHistory();
       w[key] = next;
+      if (w.fromCable) {
+        const c2 = (state.cables || []).find((c) => c.id === w.fromCable);
+        if (c2) {
+          if (end === "a") c2.startLabel = next || "";
+          else c2.endLabel = next || "";
+        }
+      }
       render();
     }
     function openWireOpt(id, clientX, clientY) {
