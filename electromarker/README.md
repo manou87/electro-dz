@@ -16,8 +16,6 @@ Puis ouvrir **dans ton navigateur** :
 - EN : http://localhost:8765/
 - FR : http://localhost:8765/fr/
 
-Sur le bureau cloud (Try Live), le même serveur est déjà démarré dans la VM.
-
 ## Contenu
 
 - `index.html` / `fr/index.html` — coques HTML capturées
