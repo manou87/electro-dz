@@ -65,6 +65,13 @@
     <link rel="icon" href="favicon.svg" type=" image/svg+xml">  
     <link rel="icon" href="favicon.png" type="image/png">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+<style id="em-no-auth-css">
+  /* Clone offline: hide auth / login surfaces */
+  .em-no-auth .auth,
+  .em-no-auth .user.signin,
+  .em-no-auth .weusecookie { display: none !important; }
+</style>
 </head>
 
 <body tabindex="0">
@@ -86,8 +93,36 @@
       document.getElementById('ie').style.display = 'block';
     }
     var MAIN_URL = 'https://api.electromarker.com';
+    // Clone: no login required — accept cookies + block auth UI
+    try { localStorage.setItem('cookie', 'true'); } catch (e) {}
+    document.documentElement.classList.add('em-no-auth');
+
   </script>
   <script src="bundle.js"></script>
+
+<script id="em-no-auth-runtime">
+(function () {
+  function killAuth() {
+    try {
+      document.querySelectorAll('.auth, .weusecookie').forEach(function (el) { el.remove(); });
+      var root = document.getElementById('app') || document.querySelector('#app') || document.body;
+      var vue = root && root.__vue__;
+      // walk to $root
+      var v = vue;
+      while (v && v.$parent) v = v.$parent;
+      if (v && v.$store) {
+        v.$store.commit('assign', { showAuth: false });
+        var p = (v.$store.state.user && v.$store.state.user.profile) || {};
+        if (!p.cookie) v.$store.commit('user/assign', { profile: Object.assign({}, p, { cookie: true }) });
+      }
+    } catch (e) {}
+  }
+  setInterval(killAuth, 1000);
+  document.addEventListener('DOMContentLoaded', killAuth);
+  window.addEventListener('load', function () { setTimeout(killAuth, 500); setTimeout(killAuth, 2000); });
+})();
+</script>
+
 
 <!--//-->
   <div align="center" id="pre_loading" style="padding: 10px;">Loading...</div>

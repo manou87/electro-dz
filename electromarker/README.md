@@ -23,6 +23,10 @@ Puis ouvrir **dans ton navigateur** :
 - `fonts/`, `images/`, `i/` — polices, images, PDF privacy
 - Favicons
 
+## Mode sans connexion
+
+La modale Sign In / auth et le bandeau cookies sont désactivés dans ce clone : l’éditeur s’utilise sans compte (sauvegarde cloud / paiements restent liés à l’API live si tu les déclenches).
+
 ## Limites
 
 L’auth, la sauvegarde cloud, Stripe et les APIs backend restent côté `electromarker.com`.
