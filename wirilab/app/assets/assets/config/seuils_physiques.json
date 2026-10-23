@@ -1,0 +1,100 @@
+{
+  "_commentaire": "SOURCE DE VÉRITÉ des seuils physiques et normatifs (Sprint 1 remédiation). Priorité : params composant > ce JSON > fallback Dart. Les clés absentes tombent sur les fallbacks Dart (constantes default*).",
+
+  "breaker": {
+    "_commentaire": "Disjoncteur — seuil thermique conventionnel IEC (1,45 × In) et multiples magnétiques par courbe. delaiSurchargeMs reste le délai FIXE de repli (tests, composant qui impose son délai). La courbe inverse réelle est dans thermique : durées en ms, temps simulé = min(réel, seuilAccelMs) + max(0, réel − seuilAccelMs) / facteurAccel.",
+    "seuilInFactor": 1.45,
+    "delaiSurchargeMs": 2000,
+    "courbes": { "B": 3, "C": 5, "D": 10 },
+    "thermique": {
+      "_commentaire": "Temps RÉELS (ms) selon I/In, décroissants. 1,45 × In ≈ 1 h (conventionnel ≤ 63 A). Le magnétique (B/C/D) coupe avant ces temps dès son multiple. seuilAccelMs : en dessous, le simulateur attend le temps réel et n'affiche pas de badge. Au-dessus, seule la part excédentaire est divisée par facteurAccel.",
+      "seuilAccelMs": 30000,
+      "facteurAccel": 60,
+      "points": [
+        { "multiple": 1.45, "delaiMs": 3600000 },
+        { "multiple": 2, "delaiMs": 90000 },
+        { "multiple": 2.5, "delaiMs": 25000 },
+        { "multiple": 3, "delaiMs": 12000 },
+        { "multiple": 4, "delaiMs": 4000 },
+        { "multiple": 6, "delaiMs": 800 },
+        { "multiple": 8, "delaiMs": 200 }
+      ]
+    }
+  },
+
+  "motorBreaker": {
+    "_commentaire": "Disjoncteur moteur (MPCB type GV2). Se superpose à la section breaker quand le composant porte famille=mpcb. Thermique = celui d'un relais classe 10 (seuil 1,05 × Ir, délai identique à relay.delaisParClasseMs.10) ; magnétique NON réglable par courbe B/C/D mais fixe à ~13 × Ir (norme IEC 60947-4-1 pour la protection moteur).",
+    "seuilInFactor": 1.05,
+    "delaiSurchargeMs": 3000,
+    "magneticFactor": 13
+  },
+
+  "relay": {
+    "_commentaire": "Relais thermique (FR) — seuil de surcharge (I > In × seuilInFactor) et délais de déclenchement PÉDAGOGIQUES par classe (10/20/30 : plus la classe est haute, plus le relais tolère longtemps la surcharge — démarrages difficiles). delaiSurchargeMs = repli si la classe est inconnue. pertePhase : détection différentielle (un pôle à ~0 pendant que ≥ 2 pôles conduisent) — delaiMs volontairement plus court que la surcharge (mécanisme différentiel réel), ratio = seuil « pôle mort » relatif au pôle le plus chargé.",
+    "seuilInFactor": 1.05,
+    "delaiSurchargeMs": 3000,
+    "delaisParClasseMs": { "10": 3000, "20": 6000, "30": 9000 },
+    "pertePhase": { "delaiMs": 2000, "ratio": 0.05 }
+  },
+
+  "tension": {
+    "_commentaire": "Cohérence tension assignée vs réseau — tolérance puis seuil franc de grillage. Disjoncteurs (Ue), bobines (tensionBobine), lampes, voyants et moteurs (tension / tensionV). seuilAllumagePct : en dessous de cette fraction de la plaque, une lampe ou un voyant reste éteint (24 V sur du 230 V). Deux lampes 230 V en série sur du 230 V restent au-dessus, donc allumées.",
+    "toleranceUePct": 10,
+    "burnUePct": 50,
+    "seuilAllumagePct": 40
+  },
+
+  "icc": {
+    "_commentaire": "Plafond d'Icc présumé (A) pour un réseau mono domestique MVP (BreakingCapacityPolicy).",
+    "prospectiveIccAmps": 4500
+  },
+
+  "terre": {
+    "_commentaire": "Modèle de Terre réaliste (Chantier 6). resistancePriseTerreOhm = R_A de la prise de terre de l'installation (borne PE du réseau → sol) ; resistanceNeutreSourceOhm = Rb de la prise de terre du neutre transformateur (régimes TT/TN) ; impedanceNeutreItOhm = Zct neutre impédant du régime IT ; resistanceCorpsOhm = résistance conventionnelle du corps humain (IEC 60479, condition sèche) ; tensionLimiteContactV = tension limite conventionnelle UL (IEC 61140, milieu sec) ; resistanceDefautFrancOhm = résistance d'un défaut d'isolement franc (panne defaut_isolement sans rOhm explicite) ; resistanceLiaisonPenOhm = résistance de la liaison PE↔N à l'origine (régime TN, conducteur PEN). Section absente → modèle de Terre désactivé.",
+    "resistancePriseTerreOhm": 50,
+    "resistanceNeutreSourceOhm": 4,
+    "impedanceNeutreItOhm": 1500,
+    "resistanceCorpsOhm": 2000,
+    "tensionLimiteContactV": 50,
+    "resistanceDefautFrancOhm": 0.5,
+    "resistanceLiaisonPenOhm": 0.05
+  },
+
+  "fil": {
+    "_commentaire": "Métriques pédagogiques du câble (inspecteur Avancé). mmParModule : 1 carreau canvas (28 px) = N mm de fil. resistiviteOhmMm2ParM : ρ à 20 °C (R = ρ × L / S, L en m, S en mm²). awgVersMm2 : sections IEC approximatives des AWG proposés dans l'inspecteur. Absents → fallback Dart FilConducteurNormes.",
+    "mmParModule": 10,
+    "resistiviteOhmMm2ParM": {
+      "copper": 0.0178,
+      "aluminum": 0.0282,
+      "silver": 0.0159
+    },
+    "awgVersMm2": {
+      "18": 0.823,
+      "16": 1.31,
+      "14": 2.08,
+      "12": 3.31,
+      "10": 5.26,
+      "8": 8.37,
+      "6": 13.3
+    }
+  },
+
+  "motor": {
+    "_commentaire": "Plaque moteur asynchrone 3~ — défauts pédagogiques (cos φ, η). Le rapport I_ligne Δ/Y ≈ 3 vient de la topologie (edges Y/Δ + P/3 par enroulement), pas d'un facteur magique. ratioCourantLigneTriangleSurEtoile documente la cible des tests.",
+    "cosPhiDefaut": 0.8,
+    "rendementDefaut": 0.85,
+    "ratioCourantLigneTriangleSurEtoile": 3.0
+  },
+
+  "signatureElectrique": {
+    "_commentaire": "Comparaison des grandeurs aux bornes (correction de TP). plancherTensionV : en dessous, le récepteur est éteint (le bruit du solveur ne compte pas). toleranceRelative : écart admis sur U, I et P une fois au-dessus du plancher. 5 % est loin de l'écart série/parallèle (~50 % sur U).",
+    "plancherTensionV": 0.5,
+    "toleranceRelative": 0.05
+  },
+
+  "ats": {
+    "_commentaire": "Inverseur de source — delaiTransfertMs = temps mort N↔R (break before make). delaiRetourMs = confirmation AUTO : sur R, N doit rester valide autant de ms avant de revenir (assez long pour que l'élève voie Un clignoter). 0 dans un test sans overlay = immédiat.",
+    "delaiTransfertMs": 1000,
+    "delaiRetourMs": 4000
+  }
+}

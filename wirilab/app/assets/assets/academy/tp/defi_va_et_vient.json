@@ -1,0 +1,196 @@
+{
+  "version": 3,
+  "id": "defi_va_et_vient",
+  "titre": {
+    "fr": "Défi — Va-et-vient",
+    "en": "Challenge — Two-way switching"
+  },
+  "niveau": "intermediaire",
+  "guidage": "defi",
+  "typeTp": "defi",
+  "niveauTaxonomie": 6,
+  "niveauAssistance": "diagnostic",
+  "objectif": {
+    "fr": "Sans étapes : réalise un va-et-vient fonctionnel, puis vérifie.",
+    "en": "No steps: build a working two-way switch circuit, then check your work."
+  },
+  "tags": [
+    "domestique",
+    "va-et-vient",
+    "defi"
+  ],
+  "roles": {
+    "reseau": {
+      "typeComposant": "reseau"
+    },
+    "va_et_vient_1": {
+      "typeComposant": "interrupteur",
+      "sousType": "va_et_vient"
+    },
+    "va_et_vient_2": {
+      "typeComposant": "interrupteur",
+      "sousType": "va_et_vient"
+    },
+    "lampe_1": {
+      "typeComposant": "lampe_suspension"
+    }
+  },
+  "etapes": [
+    {
+      "type": "info",
+      "id": "e1",
+      "instruction": {
+        "fr": "Défi : deux va-et-vient, une lampe. Débrouille-toi, puis Vérifie.",
+        "en": "Challenge: two two-way switches, one lamp. Figure it out, then Check."
+      }
+    },
+    {
+      "type": "scenario",
+      "id": "e2",
+      "instruction": {
+        "fr": "Vérifie ton va-et-vient.",
+        "en": "Check your two-way circuit."
+      },
+      "scenarioId": ""
+    }
+  ],
+  "verification": {
+    "scenarios": [
+      {
+        "id": "sc1",
+        "actions": [
+          {
+            "cible": "role:va_et_vient_1",
+            "etat": {
+              "estFerme": false
+            }
+          },
+          {
+            "cible": "role:va_et_vient_2",
+            "etat": {
+              "estFerme": false
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Ton montage présente un défaut avant même de manœuvrer. Vérifie le câblage des navettes.",
+          "en": "Your assembly shows a fault before any switching. Check the traveller wiring."
+        }
+      },
+      {
+        "id": "sc2",
+        "actions": [
+          {
+            "cible": "role:va_et_vient_1",
+            "etat": {
+              "estFerme": true
+            }
+          },
+          {
+            "cible": "role:va_et_vient_2",
+            "etat": {
+              "estFerme": false
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "differeDuScenario",
+            "cible": "role:lampe_1",
+            "params": {
+              "scenario": "sc1"
+            }
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Basculer le premier interrupteur doit changer l'état de la lampe.",
+          "en": "Flipping the first switch must change the lamp's state."
+        }
+      },
+      {
+        "id": "sc3",
+        "actions": [
+          {
+            "cible": "role:va_et_vient_1",
+            "etat": {
+              "estFerme": false
+            }
+          },
+          {
+            "cible": "role:va_et_vient_2",
+            "etat": {
+              "estFerme": true
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "differeDuScenario",
+            "cible": "role:lampe_1",
+            "params": {
+              "scenario": "sc1"
+            }
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Basculer le second interrupteur doit aussi changer l'état de la lampe.",
+          "en": "Flipping the second switch must also change the lamp's state."
+        }
+      },
+      {
+        "id": "sc4",
+        "actions": [
+          {
+            "cible": "role:va_et_vient_1",
+            "etat": {
+              "estFerme": true
+            }
+          },
+          {
+            "cible": "role:va_et_vient_2",
+            "etat": {
+              "estFerme": true
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "differeDuScenario",
+            "cible": "role:lampe_1",
+            "params": {
+              "scenario": "sc2"
+            }
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Les deux interrupteurs basculés : la lampe doit retrouver son état de départ.",
+          "en": "With both switches flipped, the lamp must return to its initial state."
+        }
+      }
+    ]
+  },
+  "messages": {
+    "succes": {
+      "fr": "Défi va-et-vient réussi ! Deux points de commande, une lampe, des navettes bien croisées : tu as reproduit seul le montage d'éclairage le plus courant des habitations.",
+      "en": "Two-way challenge complete! Two control points, one lamp, properly crossed travellers: you rebuilt the most common household lighting circuit on your own."
+    },
+    "indice": {
+      "fr": "Les navettes relient les deux interrupteurs entre eux.",
+      "en": "The travellers link the two switches to each other."
+    }
+  }
+}

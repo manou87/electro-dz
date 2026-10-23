@@ -1,0 +1,238 @@
+{
+  "circuits": [
+    {
+      "id": "temporisateur",
+      "fichier": "temporisateur.json",
+      "categorie": "commande",
+      "titre": {
+        "fr": "Temporisateur",
+        "en": "Timer"
+      },
+      "description": {
+        "fr": "Des voyants commandés par un relais temporisé et un sélecteur. Lance la simulation et observe les tempos.",
+        "en": "Lamps driven by a timing relay and a selector. Run the simulation and watch the delays."
+      }
+    },
+    {
+      "id": "telerupteur",
+      "fichier": "telerupteur.json",
+      "categorie": "commande",
+      "titre": {
+        "fr": "Télérupteur",
+        "en": "Impulse relay"
+      },
+      "description": {
+        "fr": "Éclairage de couloir : deux boutons NO en parallèle, bobine A1–A2, lampe sur le contact 1–2. Simuler, clique un bouton puis relâche : la lampe reste. Un second appui l’éteint.",
+        "en": "Hallway lighting: two NO buttons in parallel, coil A1–A2, lamp on contact 1–2. Simulate, click a button then release: the lamp stays on. A second press turns it off."
+      }
+    },
+    {
+      "id": "moteur_asynchrone",
+      "fichier": "moteur_asynchrone.json",
+      "categorie": "commande",
+      "titre": {
+        "fr": "Moteur asynchrone",
+        "en": "Asynchronous motor"
+      },
+      "description": {
+        "fr": "Un moteur démarre par bouton, contacteur et disjoncteur moteur. Simuler puis appuyer sur le bouton.",
+        "en": "A motor started with a button, a contactor and a motor breaker. Simulate, then press the button."
+      }
+    },
+    {
+      "id": "boite_derivation",
+      "fichier": "boite_derivation.json",
+      "categorie": "domestique",
+      "titre": {
+        "fr": "Boîte de dérivation",
+        "en": "Junction box"
+      },
+      "description": {
+        "fr": "Éclairage, prise et sonnerie répartis dans une boîte de dérivation.",
+        "en": "Lighting, a socket and a bell wired through a junction box."
+      }
+    },
+    {
+      "id": "ats",
+      "fichier": "ats.json",
+      "categorie": "commande",
+      "titre": {
+        "fr": "ATS",
+        "en": "ATS"
+      },
+      "description": {
+        "fr": "Bascule entre le réseau et un groupe électrogène pour alimenter la lampe.",
+        "en": "Switches the lamp between the grid and a generator."
+      }
+    },
+    {
+      "id": "voyant",
+      "fichier": "voyant.json",
+      "categorie": "commande",
+      "titre": {
+        "fr": "Voyant",
+        "en": "Indicator"
+      },
+      "description": {
+        "fr": "Un voyant de signalisation piloté par un sélecteur et un contacteur.",
+        "en": "An indicator lamp driven by a selector and a contactor."
+      }
+    },
+    {
+      "id": "multiprise",
+      "fichier": "multiprise.json",
+      "categorie": "domestique",
+      "titre": {
+        "fr": "Multiprise",
+        "en": "Multi-outlet"
+      },
+      "description": {
+        "fr": "Plusieurs prises sur le même départ, avec compteur et multimètre.",
+        "en": "Several sockets on one circuit, with a meter and a multimeter."
+      }
+    },
+    {
+      "id": "feu_tricolore",
+      "fichier": "feu_tricolore.json",
+      "categorie": "commande",
+      "titre": {
+        "fr": "Feu tricolore",
+        "en": "Traffic light"
+      },
+      "description": {
+        "fr": "Deux temporisateurs en cascade rythment le carrefour : rouge 6 s, vert 4 s, orange 2 s, et ça repart tout seul. Lance la simulation et regarde le cycle tourner.",
+        "en": "Two cascaded timers run the junction: red 6 s, green 4 s, amber 2 s, then it loops on its own. Run the simulation and watch the cycle."
+      }
+    },
+    {
+      "id": "eclairage_simple",
+      "fichier": "eclairage_simple.json",
+      "categorie": "domestique",
+      "titre": {
+        "fr": "Éclairage simple",
+        "en": "Simple lighting"
+      },
+      "description": {
+        "fr": "Le circuit de base : disjoncteur, interrupteur, lampe. Mets sous tension et allume ta première lampe.",
+        "en": "The basic circuit: breaker, switch, lamp. Power it up and light your first lamp."
+      }
+    },
+    {
+      "id": "va_et_vient",
+      "fichier": "va_et_vient.json",
+      "categorie": "domestique",
+      "titre": {
+        "fr": "Va-et-vient",
+        "en": "Two-way switching"
+      },
+      "description": {
+        "fr": "Deux interrupteurs commandent la même lampe — le montage du couloir. Observe les navettes en simulation.",
+        "en": "Two switches control the same lamp — the hallway setup. Watch the travellers during simulation."
+      }
+    },
+    {
+      "id": "lampe_et_voyant",
+      "fichier": "lampe_et_voyant.json",
+      "categorie": "domestique",
+      "titre": {
+        "fr": "Lampe + voyant témoin",
+        "en": "Lamp + pilot light"
+      },
+      "description": {
+        "fr": "Un interrupteur, deux récepteurs en parallèle : la lampe et son voyant témoin s'allument ensemble.",
+        "en": "One switch, two loads in parallel: the lamp and its pilot light turn on together."
+      }
+    },
+    {
+      "id": "bouton_voyant",
+      "fichier": "bouton_voyant.json",
+      "categorie": "commande",
+      "titre": {
+        "fr": "Bouton-poussoir → voyant",
+        "en": "Push button → indicator"
+      },
+      "description": {
+        "fr": "Le principe de la sonnette : contact momentané NO 13-14, le voyant ne reste allumé que bouton appuyé.",
+        "en": "The doorbell principle: momentary NO contact 13-14 — the light stays on only while pressed."
+      }
+    },
+    {
+      "id": "marche_arret_contacteur",
+      "fichier": "marche_arret_contacteur.json",
+      "categorie": "commande",
+      "titre": {
+        "fr": "Marche/arrêt + auto-maintien",
+        "en": "Start/stop with latching"
+      },
+      "description": {
+        "fr": "Le grand classique industriel : arrêt NF en série, marche NO en parallèle du contact auxiliaire du contacteur.",
+        "en": "The industrial classic: NC stop in series, NO start in parallel with the contactor's auxiliary contact."
+      }
+    },
+    {
+      "id": "rf_lampe",
+      "fichier": "rf_lampe.json",
+      "categorie": "commande",
+      "titre": {
+        "fr": "RF 433 — lampe",
+        "en": "RF 433 — lamp"
+      },
+      "description": {
+        "fr": "Télécommande ON/OFF, récepteur L N COM NO, lampe 230 V. Simuler puis ON : la lampe s'allume. OFF l'éteint.",
+        "en": "ON/OFF remote, L N COM NO receiver, 230 V lamp. Simulate then ON: the lamp lights. OFF turns it off."
+      }
+    },
+    {
+      "id": "rf_pompe",
+      "fichier": "rf_pompe.json",
+      "categorie": "commande",
+      "titre": {
+        "fr": "RF 433 — pompe de forage",
+        "en": "RF 433 — borehole pump"
+      },
+      "description": {
+        "fr": "La radio pilote la bobine du contacteur, le contacteur alimente la pompe 3~. Simuler puis ON : la pompe tourne.",
+        "en": "Radio drives the contactor coil; the contactor feeds the 3-phase pump. Simulate then ON: the pump runs."
+      }
+    },
+    {
+      "id": "kt1_ac_y1",
+      "fichier": "kt1_ac_y1.json",
+      "categorie": "commande",
+      "titre": {
+        "fr": "Relais KT1 — fonction Ac (Y1)",
+        "en": "KT1 relay — Ac function (Y1)"
+      },
+      "description": {
+        "fr": "A1–A2 et 15 restent au réseau. Seul Y1 passe par le sélecteur. Simuler : les voyants s'allument. Ouvre SA1 : ils restent ~3 s puis s'éteignent.",
+        "en": "A1–A2 and 15 stay on the supply. Only Y1 goes through the selector. Simulate: lamps on. Open SA1: they hold ~3 s then go off."
+      }
+    },
+    {
+      "id": "moteur_asynchrone_inverseur",
+      "fichier": "moteur_asynchrone_inverseur.json",
+      "categorie": "commande",
+      "titre": {
+        "fr": "Moteur asynchrone — inverseur de sens",
+        "en": "Async motor — reversing"
+      },
+      "description": {
+        "fr": "Réseau tri → Q1 3P + Q2 2P commande. Deux contacteurs (L2/L3 croisées), relais thermique, moteur étoile. STOP rouge, deux verts pour changer le sens.",
+        "en": "3-phase supply → Q1 3P + Q2 2P control. Two contactors (L2/L3 swapped), thermal relay, star motor. Red STOP, two greens to reverse direction."
+      }
+    },
+    {
+      "id": "poire_remplissage",
+      "fichier": "poire_remplissage.json",
+      "categorie": "commande",
+      "titre": {
+        "fr": "Poire de niveau — remplissage",
+        "en": "Float switch — tank filling"
+      },
+      "description": {
+        "fr": "BK est le commun. Poire haute : le voyant « niveau haut » (BN) est allumé. Clique en simulation : la poire descend, la lampe pompe (BU) s'allume et le voyant s'éteint.",
+        "en": "BK is the common. Float up: the high-level lamp (BN) is on. Click in simulation: the float drops, the pump lamp (BU) turns on and the indicator goes off."
+      }
+    }
+  ]
+}

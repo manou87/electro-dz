@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Mesure d'audience Webful (wirilab:webful). -->
+  <script src="../js/webful-wirilab.js"></script>
+
+  <title>Contacteur et voyants — Blog WiriLab</title>
+  <meta name="description" content="Méthode pour analyser un montage industriel : disjoncteur, commande 24 V, contacteurs et voyants avant la mise sous tension.">
+  <link rel="icon" type="image/png" href="../assets/wirilab_icon_512.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=32">
+</head>
+<body class="blog-page blog-article-page">
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="../index.html">
+      <img src="../assets/wirilab_icon_512.png" alt="WiriLab" width="30" height="30">
+      <span>WiriLab</span>
+    </a>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="./">Blog</a>
+      <a href="../app/">Commencer gratuitement</a>
+    </nav>
+  </div>
+</header>
+
+<main class="blog-article-main">
+  <article class="shell blog-article">
+    <p class="blog-article-back"><a href="./">← Retour au blog</a></p>
+    <p class="blog-kicker">Industriel · Commande</p>
+    <h1>Lire un montage contacteur + voyants avant d’appuyer sur Marche</h1>
+    <p class="blog-article-meta">Mis à jour le 27 septembre 2026 · Environ 10 min de lecture</p>
+
+    <p class="blog-lead">Sur une armoire ou un panneau de formation, un départ industriel mélange souvent <strong>puissance</strong> (230 V ou plus), <strong>commande</strong> (24 V DC fréquent) et <strong>signalisation</strong> (voyants). Avant d’actionner le bouton vert « Marche », il faut savoir quoi doit s’allumer, quel contacteur doit coller, et quels fils relient la logique. Cette méthode évite de « tester au hasard ».</p>
+
+    <figure class="blog-figure">
+      <img src="../assets/views/simuler.png" alt="Panneau WiriLab : disjoncteur C16, modules de commande, contacteurs et voyants rouge, vert, orange.">
+      <figcaption>Montage type : protection C16, chaîne de commande, contacteurs et voyants de présence ou d’état. Les couleurs de fils aident à suivre phase, neutre et commande.</figcaption>
+    </figure>
+
+    <h2>1. Séparer trois plans dans votre tête</h2>
+    <p>Un schéma industriel se lit plus vite si vous isolez trois couches :</p>
+    <ul>
+      <li><strong>Distribution</strong> : arrivée, disjoncteur ou fusible, bornes de répartition.</li>
+      <li><strong>Puissance</strong> : ce qui alimente moteurs, résistances, éclairage de machine — souvent via contacteurs.</li>
+      <li><strong>Commande / signalisation</strong> : boutons, relais auxiliaires, bobines 24 V, voyants.</li>
+    </ul>
+    <p>Sur la capture, le <strong>C16</strong> protège le départ. Les modules à côté préparent la logique (temporisations, seuils). Les <strong>contacteurs</strong> font le lien entre « ordre de marche » et « circulation de courant de puissance ». Les <strong>voyants</strong> confirment un état pour l’opérateur.</p>
+
+    <h2>2. Vérification à froid (sans tension)</h2>
+    <p>Avant toute mise sous tension, parcourez le câblage — sur papier ou à l’écran :</p>
+    <ol>
+      <li><strong>Continuité logique</strong> : le fil de commande part-il bien du bouton vers la bobine du bon contacteur ?</li>
+      <li><strong>Neutre / retour</strong> : chaque bobine ou voyant a-t-il son retour (souvent 0 V ou neutre de commande) ?</li>
+      <li><strong>Pas de croisement évident</strong> : phase de puissance sur les bornes « charge », pas sur une borne bobine 24 V.</li>
+      <li><strong>Couleurs</strong> : en France, rouge/marron phase, bleu neutre, vert-jaune terre ; les fils de commande (gris, noir, violet) suivent le schéma du constructeur — ne supposez pas sans légende.</li>
+    </ol>
+    <p>En TP, notez sur votre schéma : « Si j’appuie sur Marche, la bobine K1 doit être alimentée » puis « le contact K1-1 doit fermer la ligne vers la charge ».</p>
+
+    <h2>3. Rôle des voyants</h2>
+    <p>Chaque voyant a un sens métier à définir <em>avant</em> l’essai :</p>
+    <ul>
+      <li><strong>Rouge</strong> : souvent défaut, arrêt d’urgence, ou « marche » selon la machine (lisez la légende du TP).</li>
+      <li><strong>Vert</strong> : fonctionnement normal, marche, disponibilité.</li>
+      <li><strong>Orange / jaune</strong> : avertissement, mode attente, temporisation en cours.</li>
+    </ul>
+    <p>Si un voyant s’allume sans que le contacteur corresponde, le défaut est souvent un fil sur le mauvais contact auxiliaire ou une inversion NO/NF mal comprise.</p>
+
+    <h2>4. Mise sous tension : ordre recommandé</h2>
+    <ol>
+      <li>Disjoncteur général ou départ : <strong>fermé</strong> seulement quand le câblage est validé.</li>
+      <li>Alimentation <strong>commande 24 V</strong> (si séparée) : vérifier la présence aux bornes avec le multimètre en DC si le TP le demande.</li>
+      <li>Actionner <strong>Marche</strong> une seule fois, observer : bruit du contacteur, voyants, aucune odeur ni disjonction immédiate.</li>
+      <li>Si rien ne bouge : couper, reprendre la lecture de la bobine (tension présente aux bornes A1–A2 ?).</li>
+    </ol>
+    <p>En simulation WiriLab, le bouton de marche reproduit cette étape : vous voyez immédiatement quels voyants réagissent et si le câblage de commande est cohérent.</p>
+
+    <h2>5. Pannes typiques vues en formation</h2>
+    <table class="blog-table">
+      <thead>
+        <tr><th>Symptôme</th><th>Cause fréquente</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Contacteur ne colle pas</td><td>Bobine non alimentée, bouton arrêt en série ouvert, mauvaise tension de commande.</td></tr>
+        <tr><td>Disjoncteur saute à la marche</td><td>Court-circuit en puissance, charge mal raccordée, phase sur neutre.</td></tr>
+        <tr><td>Voyant allumé, pas de puissance</td><td>Voyant sur contact auxiliaire OK mais chemin de puissance ouvert sur autre contact.</td></tr>
+        <tr><td>Tout s’allume, rien ne s’éteint</td><td>Retour de commande manquant, bouton arrêt mal câblé en NF.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>6. Compte rendu utile pour le formateur</h2>
+    <p>Un bon rapport de TP ne dit pas seulement « ça marche ». Il indique : schéma de référence, état attendu des voyants, mesures effectuées, écart constaté et correction apportée. C’est ce qui prouve que vous avez <em>compris</em> le montage, pas seulement trouvé la bonne combinaison de clics.</p>
+    <p class="blog-cta-box">
+      <strong>À retenir :</strong> trois plans (distribution, puissance, commande), vérification à froid, sens des voyants défini à l’avance, puis une seule mise sous tension contrôlée.
+    </p>
+    <p><a class="button button-primary" href="../app/">Réaliser le montage dans WiriLab</a></p>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <div class="shell copyright">
+    <p>© 2026 WiriLab · <a href="./">Blog</a></p>
+  </div>
+</footer>
+</body>
+</html>

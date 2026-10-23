@@ -1,0 +1,468 @@
+{
+  "version": 1,
+  "locale": "en",
+  "fiches": {
+    "shortCircuit.phaseNeutre": {
+      "titre": "Short circuit · Phase-neutral",
+      "gravite": "danger",
+      "niveaux": {
+        "expert": {
+          "resume": "Phase-to-neutral short circuit ({composant})."
+        },
+        "standard": {
+          "constat": "Short circuit: phase and neutral meet without passing through a load.",
+          "cause": "A direct path connects phase to neutral around {composant}."
+        },
+        "apprentissage": {
+          "explication": "Your circuit has a short circuit: the current found a shortcut connecting the phase straight to the neutral, without crossing any load (lamp, motor…). With no load to hold it back, the current becomes enormous in a fraction of a second.",
+          "cause": "Somewhere around {composant}, a wire connects phase to neutral with nothing in between.",
+          "indice_1": "Follow the wire leaving the phase: does it meet a load before reaching the neutral?",
+          "indice_2": "Check the wires connected to {composant}, terminal {borne}: one of them creates the shortcut.",
+          "correction": "Remove the direct link between phase and neutral, and always route the current through a load.",
+          "ref_cours": "cours:court_circuit"
+        }
+      }
+    },
+    "shortCircuit.phasePhase": {
+      "titre": "Short circuit · Phase-phase",
+      "gravite": "danger",
+      "niveaux": {
+        "expert": {
+          "resume": "Phase-to-phase short circuit ({composant})."
+        },
+        "standard": {
+          "constat": "Short circuit: two different phases are connected together.",
+          "cause": "Two phases meet at {composant}, with no load between them."
+        },
+        "apprentissage": {
+          "explication": "Two different phases are connected together: this is the most violent short circuit, because the voltage between two phases is even higher than between phase and neutral. In real life, this causes a dangerous electric arc.",
+          "cause": "A direct path connects two phases around {composant}.",
+          "indice_1": "Check your phase order: do two wires coming from different phases end up connected at the same point?",
+          "indice_2": "On the power terminals of {composant}, make sure each phase stays on its own line.",
+          "correction": "Separate the two phases: each phase must feed its own path and never touch another directly.",
+          "ref_cours": "cours:court_circuit"
+        }
+      }
+    },
+    "shortCircuit.autre": {
+      "titre": "Short circuit",
+      "gravite": "danger",
+      "niveaux": {
+        "expert": {
+          "resume": "Short circuit detected ({composant})."
+        },
+        "standard": {
+          "constat": "Short circuit: two opposite potentials meet without a load.",
+          "cause": "A load-free shortcut exists around {composant}."
+        },
+        "apprentissage": {
+          "explication": "The current found a shortcut with no load on its way. With no resistance to limit it, it rises brutally: that is a short circuit.",
+          "cause": "A direct, load-free path exists in the area of {composant}.",
+          "indice_1": "Look at the blinking area: follow each wire and ask yourself whether it goes through a load.",
+          "indice_2": "Disconnect the suspicious wires around {composant} one by one and simulate again: the fault will disappear once the shortcut is gone.",
+          "correction": "Remove the direct path and route the current through a load.",
+          "ref_cours": "cours:court_circuit"
+        }
+      }
+    },
+    "circuitOpen": {
+      "titre": "Open circuit",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "Open circuit: {composants} cannot be powered."
+        },
+        "standard": {
+          "constat": "The circuit is open: {composants} cannot be powered.",
+          "cause": "The electrical loop is not closed all the way to this load."
+        },
+        "apprentissage": {
+          "explication": "Current only flows in a closed loop: it must leave the source, cross the load, and come back. Here, the loop to {composants} is broken somewhere — the current cannot complete the trip.",
+          "cause": "A connection is missing, or a contact is open, on the path leading to {composants}.",
+          "indice_1": "Start from the source and follow the path with your finger up to the load: where does it stop?",
+          "indice_2": "Also check the switches and contacts along the way: an open contact breaks the loop even if every wire is in place.",
+          "correction": "Complete the loop: every terminal on the path must be connected, and the required contacts closed.",
+          "ref_cours": "cours:circuit_ferme"
+        }
+      }
+    },
+    "componentBurned": {
+      "titre": "Burned component",
+      "gravite": "danger",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant} burned out."
+        },
+        "standard": {
+          "constat": "{composant} has burned out: it is out of service.",
+          "cause": "It suffered stress beyond its rating (short circuit, excessive voltage or current)."
+        },
+        "apprentissage": {
+          "explication": "{composant} received more than it can handle and is destroyed. In real life this means smoke, a burning smell, and a component to replace — exactly what protective devices exist to prevent.",
+          "cause": "An excessive stress (short circuit, overvoltage or overcurrent) went through {composant} without a protection stopping it in time.",
+          "indice_1": "Check the journal: which fault happened right before the burnout? That is the culprit.",
+          "indice_2": "Ask yourself which protection should have saved {composant}: is it present, properly rated, properly placed upstream?",
+          "correction": "Fix the original fault, replace {composant}, and make sure a suitable protection sits upstream.",
+          "ref_cours": "cours:protections"
+        }
+      }
+    },
+    "breakerTripped": {
+      "titre": "Breaker tripped",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant} tripped."
+        },
+        "standard": {
+          "constat": "Breaker {composant} tripped: everything downstream is de-energized.",
+          "cause": "It detected a fault on its circuit and cut the power to protect it."
+        },
+        "apprentissage": {
+          "explication": "Breaker {composant} did its job: it detected a problem and cut the power to protect the circuit and the people. Everything connected after it is now de-energized.",
+          "cause": "A fault (usually a short circuit) occurred downstream of {composant}.",
+          "indice_1": "Do not reset it right away: first find WHY it tripped. What happened downstream?",
+          "indice_2": "Check the journal: the fault that caused the trip is recorded right before it.",
+          "correction": "Find and fix the downstream fault, then reset {composant}.",
+          "ref_cours": "cours:disjoncteur"
+        }
+      }
+    },
+    "breakerOverloadTrip": {
+      "titre": "Thermal trip",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant}: thermal trip (overload > {courant_max} A)."
+        },
+        "standard": {
+          "constat": "{composant} tripped on overload: the current stayed above its {calibre} rating for too long.",
+          "cause": "Too much power drawn downstream compared to the breaker rating."
+        },
+        "apprentissage": {
+          "explication": "The current exceeded what {composant} (rating {calibre}) accepts, for too long. Its thermal protection — a bimetal strip heated by the current — eventually cut the power. This is the overload protection: deliberately slow, to tolerate brief peaks but stop lasting excess.",
+          "cause": "The loads downstream draw more current than the rating of {composant} allows ({courant_max} A continuous).",
+          "indice_1": "Add up what your downstream loads consume: is it compatible with a {calibre} rating?",
+          "indice_2": "Two options: reduce the load, or review the rating — but careful, a bigger rating must still match the wire size it protects.",
+          "correction": "Reduce the downstream load or adapt the rating within what the conductors allow, then reset.",
+          "ref_cours": "cours:surcharge"
+        }
+      }
+    },
+    "breakerMagneticTrip": {
+      "titre": "Magnetic trip",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant}: instant magnetic trip (curve {courbe})."
+        },
+        "standard": {
+          "constat": "{composant} tripped instantly: the current exceeded its magnetic threshold.",
+          "cause": "A very high, sudden current (typical of a short circuit) went through the {calibre}, curve {courbe} breaker."
+        },
+        "apprentissage": {
+          "explication": "{composant} cut the power in a split second: that is its magnetic trip unit, the protection against short circuits. Unlike the thermal unit (slow, for overloads), the magnetic unit reacts instantly when the current explodes. Its curve {courbe} sets the reaction threshold.",
+          "cause": "A sudden current, far above the curve {courbe} threshold of the {calibre} rating, went through {composant} — almost always a downstream short circuit.",
+          "indice_1": "An instant trip almost always means a short circuit: look for where phase and neutral (or two phases) meet downstream.",
+          "indice_2": "If the circuit is healthy but a motor is starting, its inrush current can exceed a B curve: that is exactly what C and D curves are for.",
+          "correction": "Remove the downstream short circuit (or match the curve to the load type), then reset.",
+          "ref_cours": "cours:courbes_declenchement"
+        }
+      }
+    },
+    "rcdResidualTrip": {
+      "titre": "RCD tripped",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant}: residual current trip (leakage ≥ IΔn)."
+        },
+        "standard": {
+          "constat": "The residual current device {composant} tripped: part of the current is leaking to earth downstream.",
+          "cause": "The current going out through the phase does not fully come back through the neutral — the difference flows to earth (likely insulation fault)."
+        },
+        "apprentissage": {
+          "explication": "The toroid of {composant} constantly compares the outgoing current (phase) with the returning current (neutral). Normally they are identical. Here part of the current escapes to earth — often through the chassis of an appliance with faulty insulation — and as soon as that leakage reaches the IΔn sensitivity, the RCD cuts the power. This is the protection of PEOPLE against indirect contact.",
+          "cause": "A downstream insulation fault makes current leak to earth through the protective conductor (PE).",
+          "indice_1": "Do not keep resetting: the RCD will trip again as long as the leakage exists. Find WHICH downstream appliance leaks to earth.",
+          "indice_2": "Unplug the loads one by one and reset each time: the one that makes it trip again carries the insulation fault (measure it with an ohmmeter between a terminal and the chassis).",
+          "correction": "Identify the appliance with the insulation fault, repair or replace it, then reset {composant}.",
+          "ref_cours": "cours:differentiel"
+        }
+      }
+    },
+    "breakerVoltageMismatch": {
+      "titre": "Ue mismatch",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant}: network voltage {reseau_u} incompatible with Ue {ue}."
+        },
+        "standard": {
+          "constat": "{composant} is not designed for this voltage: network at {reseau_u}, rated voltage {ue}.",
+          "cause": "The breaker's rated voltage (Ue) does not match the network voltage."
+        },
+        "apprentissage": {
+          "explication": "Every breaker is designed for a specific voltage, its rated voltage Ue. {composant} is rated {ue}, but your network is at {reseau_u}. Under-rated, it can be destroyed; over-rated, it may not break the current properly. In real life, you always read Ue on the front face before installing.",
+          "cause": "The rated voltage of {composant} ({ue}) does not match the network voltage ({reseau_u}).",
+          "indice_1": "Compare the voltage written on the component with your source voltage: same family (230 V? 400 V?)?",
+          "indice_2": "Ask yourself whether your circuit is phase-to-neutral (230 V) or phase-to-phase (400 V): the equipment choice depends on it.",
+          "correction": "Replace {composant} with a model whose rated voltage matches the network.",
+          "ref_cours": "cours:tension_assignee"
+        }
+      }
+    },
+    "breakerBreakingCapacityExceeded": {
+      "titre": "Icn exceeded",
+      "gravite": "danger",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant}: Icc {icc} > breaking capacity Icn {icn}."
+        },
+        "standard": {
+          "constat": "The short-circuit current ({icc}) exceeds the breaking capacity of {composant} ({icn}).",
+          "cause": "The breaker cannot interrupt such a high fault current: it may be destroyed without breaking it."
+        },
+        "apprentissage": {
+          "explication": "Very dangerous situation: the short-circuit current ({icc}) is higher than what {composant} can interrupt (its breaking capacity Icn: {icn}). In real life, the breaker can explode or weld its contacts WITHOUT cutting the current — the protection itself becomes the hazard.",
+          "cause": "The breaking capacity Icn of {composant} is lower than the prospective short-circuit current at this point of the installation.",
+          "indice_1": "The breaking capacity (Icn, in amps or kA) is written on the breaker face: compare it with the calculated fault current.",
+          "indice_2": "The closer to the source, the higher the fault current: equipment near the supply needs a higher Icn.",
+          "correction": "Choose a breaker whose Icn exceeds the prospective short-circuit current at this point.",
+          "ref_cours": "cours:pouvoir_coupure"
+        }
+      }
+    },
+    "oscillation": {
+      "titre": "Oscillation",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "Unstable circuit: oscillation detected."
+        },
+        "standard": {
+          "constat": "The circuit never settles: something switches on and off in a loop.",
+          "cause": "A component cuts its own supply, which re-triggers it, endlessly."
+        },
+        "apprentissage": {
+          "explication": "Your circuit oscillates: something activates, which cuts its own supply, which deactivates it, which powers it again… forever. The circuit never finds a stable state. In real life, you would hear a component chattering non-stop.",
+          "cause": "A feedback loop exists: a component controls (directly or not) its own supply through a contact that opens when it activates.",
+          "indice_1": "Find the chattering component: what powers it, and what does it cut when it activates?",
+          "indice_2": "Check your NO and NC contacts: an NC used where an NO belongs (or the opposite) often creates this loop.",
+          "correction": "Break the loop: the component must not cut its own supply (review the contact type or the holding circuit).",
+          "ref_cours": "cours:auto_maintien"
+        }
+      }
+    },
+    "noSource": {
+      "titre": "No source",
+      "gravite": "remarque",
+      "niveaux": {
+        "expert": {
+          "resume": "No source in the circuit."
+        },
+        "standard": {
+          "constat": "The circuit contains no power source.",
+          "cause": "Without a source, no current can flow."
+        },
+        "apprentissage": {
+          "explication": "Every circuit needs an energy source: it creates the potential difference that sets electrons in motion. Without a source, your assembly is just scenery — nothing can flow.",
+          "cause": "No source (network, power supply) is placed or connected in this circuit.",
+          "indice_1": "Which component provides the energy in your assembly? Find it in the catalog.",
+          "indice_2": "Once the source is placed, locate its terminals: all your wiring will start from them.",
+          "correction": "Add a power source and connect your circuit to its terminals.",
+          "ref_cours": "cours:source"
+        }
+      }
+    },
+    "noLoad": {
+      "titre": "No load",
+      "gravite": "remarque",
+      "niveaux": {
+        "expert": {
+          "resume": "No load in the circuit."
+        },
+        "standard": {
+          "constat": "The circuit contains no load (receiver).",
+          "cause": "Without a load there is nothing to power — and closing the loop would short the source on itself."
+        },
+        "apprentissage": {
+          "explication": "A circuit exists to power something: a lamp, a motor, a coil… that is the load. Without one, not only does your circuit do nothing, but closing the loop would create a short circuit: nothing would hold the current back.",
+          "cause": "No receiver is present in this circuit.",
+          "indice_1": "What do you want to operate? Add that receiver: it gives the current a purpose (and a resistance).",
+          "indice_2": "Place the load on the current path: the current must cross it to go from phase to neutral.",
+          "correction": "Add a load and route the current through it.",
+          "ref_cours": "cours:charge"
+        }
+      }
+    },
+    "relayThermalTrip": {
+      "titre": "Thermal relay tripped",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant}: thermal overload relay tripped (setting {courant_max} A)."
+        },
+        "standard": {
+          "constat": "Thermal relay {composant} tripped: its safety contact (95-96) opened.",
+          "cause": "The motor drew more than the relay setting ({courant_max} A) for too long — a sign of mechanical or electrical overload."
+        },
+        "apprentissage": {
+          "explication": "Thermal relay {composant} protects the MOTOR (not the wires: that is the breaker's job). The motor drew too much current for too long — as if it were straining — and the relay opened its 95-96 contact, cutting the contactor coil: the motor stops before it burns.",
+          "cause": "The absorbed current stayed above the setting of {composant} ({courant_max} A): motor straining, jammed, or setting too low.",
+          "indice_1": "Follow the chain: relay tripped → contact 95-96 open → contactor coil de-energized → motor stopped. Find these links in your diagram.",
+          "indice_2": "Compare the relay setting with the motor's rated current: the setting must match the motor plate, neither too low (nuisance trips) nor too high (no protection).",
+          "correction": "Fix the cause (motor overload or wrong setting), then reset the relay.",
+          "ref_cours": "cours:relais_thermique"
+        }
+      }
+    },
+    "relayPhaseLoss": {
+      "titre": "Thermal relay: phase loss",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant}: differential trip — one pole carries no current while the others conduct."
+        },
+        "standard": {
+          "constat": "Thermal relay {composant} tripped on PHASE LOSS: one of its poles saw no current while the others were conducting.",
+          "cause": "One phase of the motor circuit is broken (wire unplugged, loose terminal, blown fuse) — or, on single-phase, the phase is not looped through all three relay poles."
+        },
+        "apprentissage": {
+          "explication": "A three-phase motor needs all THREE phases, like a stool needs its three legs. If one phase disappears, the motor keeps turning on two phases but strains: the two remaining windings overheat. Relay {composant} detects this by comparing its bimetal strips: the one on the dead phase stays cold while the others heat up — this imbalance trips faster than a classic overload.",
+          "cause": "One power pole of {composant} carries no current at all: phase broken upstream or downstream (unplugged wire, open contact, fuse), while the other poles still conduct.",
+          "indice_1": "Compare the relay's three poles: which one sees no current? Trace that pole's wire back to the source, then down to the motor, to find the break.",
+          "indice_2": "Trade tip: on a SINGLE-PHASE circuit, loop the phase through all three relay poles (in series), otherwise the relay believes a phase is lost — which is exactly what just happened.",
+          "correction": "Restore the missing phase (reconnect the wire, tighten the terminal), or loop the phase through all three poles on single-phase, then reset the relay.",
+          "ref_cours": "cours:relais_thermique"
+        }
+      }
+    },
+    "phaseSansRetour": {
+      "titre": "Phase without return",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant}: phase present, no return path ({borne})."
+        },
+        "standard": {
+          "constat": "{composant} receives the phase, but the current has no return path.",
+          "cause": "The link to the neutral is missing or broken (terminal {borne} involved)."
+        },
+        "apprentissage": {
+          "explication": "Current is like a runner on a track: it must complete the full loop. Here, the phase does reach {composant}, but there is no return path to the neutral — the current is at the start line with no road back. Careful: the wire is still live, so it is dangerous in real life, even though nothing lights up.",
+          "cause": "Terminal {borne} of {composant} is not connected to the neutral (link missing or broken).",
+          "indice_1": "Your current leaves the phase — but how does it come back? Follow the path after {composant}.",
+          "indice_2": "Look at terminal {borne} of {composant}: is it connected to anything that leads to the neutral?",
+          "correction": "Connect the output of {composant} to the neutral to close the loop.",
+          "ref_cours": "cours:circuit_ferme"
+        }
+      }
+    },
+    "retourSansPhase": {
+      "titre": "Return without phase",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant}: neutral present, no supply ({borne})."
+        },
+        "standard": {
+          "constat": "{composant} is connected to the neutral, but no phase feeds it.",
+          "cause": "The phase-side link is missing or broken (terminal {borne} involved)."
+        },
+        "apprentissage": {
+          "explication": "{composant} has its return path (the neutral), but nothing brings it energy: no phase reaches it. It is a return road with no departure — the current has no starting point to flow.",
+          "cause": "Terminal {borne} of {composant} is not connected to any phase (link missing, or an open contact cuts the supply).",
+          "indice_1": "The return is there — but where is the supply? Where should the phase of {composant} come from?",
+          "indice_2": "Follow the path from the source: is there a switch or an open contact blocking the phase before {composant}?",
+          "correction": "Bring the phase to terminal {borne} of {composant} (and close the required contacts along the way).",
+          "ref_cours": "cours:circuit_ferme"
+        }
+      }
+    },
+    "dcSupplySansEntreeAc": {
+      "titre": "DC supply · missing AC input",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant}: ON, but L/N not powered — no 24 V."
+        },
+        "standard": {
+          "constat": "{composant} is on, but the AC input (L and N) is not powered.",
+          "cause": "Without phase and neutral at the top, the 24 V DC output stays at zero."
+        },
+        "apprentissage": {
+          "explication": "A switch-mode power supply turns mains (230 V~ on L and N) into 24 V DC. If you do not bring the mains to the top terminals, the converter has nothing to transform: the + and − outputs at the bottom stay dead. This is not a short circuit — the PSU simply has no AC feed.",
+          "cause": "Terminals L and N of {composant} are not connected to an active mains source (phase + neutral).",
+          "indice_1": "Look at the top of {composant}: is there a phase wire (L) and a neutral wire (N) from the mains?",
+          "indice_2": "Also check that the mains source is active (simulation started) and that any upstream breaker is closed.",
+          "correction": "Wire L and N of {composant} to the mains (phase and neutral), start the simulation, then use + and − at the bottom for your 24 V control circuit.",
+          "ref_cours": "cours:alimentation_dc"
+        }
+      }
+    },
+    "coilVoltageMismatch": {
+      "titre": "Coil mismatch",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant}: coil {bobine}, terminals A1–A2 see {reseau}."
+        },
+        "standard": {
+          "constat": "The coil of {composant} is rated {bobine}, but A1–A2 see {reseau}.",
+          "cause": "The voltage or the kind (AC / DC) at the coil terminals does not match the nameplate."
+        },
+        "apprentissage": {
+          "explication": "A contactor coil only accepts the voltage printed on its nameplate. {composant} is rated {bobine}. Here A1 and A2 receive {reseau}. Overvoltage (e.g. 230 V on a 24 V coil): overheating, smoke, possible destruction — the contactor will not stay pulled in. Undervoltage (e.g. 230 V on a 400 V coil): not enough force, no pull-in. Wrong AC/DC: matching volts is not enough.",
+          "cause": "A1–A2 of {composant} are not fed as the nameplate says ({bobine}).",
+          "indice_1": "Read the voltage engraved on the coil (24 V DC, 230 V AC…). Compare it with what you actually wired on A1 and A2.",
+          "indice_2": "A 24 V DC control circuit comes from the + and − of a power supply, not from the phase and neutral of the 230 V mains.",
+          "correction": "Feed A1–A2 with the nameplate voltage, or replace {composant} with a coil suited to {reseau}.",
+          "ref_cours": "cours:tension_assignee"
+        }
+      }
+    },
+    "loadPlaqueMismatch": {
+      "titre": "Load mismatch",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant}: nameplate {plaque}, receives {recu}."
+        },
+        "standard": {
+          "constat": "{composant} is rated {plaque}, it receives {recu}.",
+          "cause": "The voltage or the kind (AC / DC) does not match the nameplate."
+        },
+        "apprentissage": {
+          "explication": "A lamp, a pilot light or a motor only works at the voltage printed on its nameplate. {composant} is rated {plaque}. Here it receives {recu}. A 230 V AC lamp on 24 V DC stays dark: the number of volts is not enough, and DC is not AC. Two identical lamps in series still see the source voltage and stay on.",
+          "cause": "{composant} is not fed as its nameplate says ({plaque}).",
+          "indice_1": "Read the voltage engraved on {composant}. Compare it with the source you actually wired.",
+          "indice_2": "24 V DC comes from the + and − terminals of a power supply. A 230 V AC lamp belongs on phase and neutral.",
+          "correction": "Replace {composant} with one rated {recu}, or feed it with {plaque}.",
+          "ref_cours": "cours:tension_assignee"
+        }
+      }
+    },
+    "shortCircuit": {
+      "titre": "Short circuit",
+      "gravite": "danger",
+      "niveaux": {
+        "expert": {
+          "resume": "Short circuit detected ({composant})."
+        },
+        "standard": {
+          "constat": "Short circuit: two opposite potentials meet without a load.",
+          "cause": "A load-free shortcut exists around {composant}."
+        },
+        "apprentissage": {
+          "explication": "The current found a shortcut with no load on its way. With no resistance to limit it, it rises brutally: that is a short circuit.",
+          "cause": "A direct, load-free path exists in the area of {composant}.",
+          "indice_1": "Look at the blinking area: follow each wire and ask yourself whether it goes through a load.",
+          "indice_2": "Disconnect the suspicious wires around {composant} one by one and simulate again: the fault will disappear once the shortcut is gone.",
+          "correction": "Remove the direct path and route the current through a load.",
+          "ref_cours": "cours:court_circuit"
+        }
+      }
+    }
+  }
+}

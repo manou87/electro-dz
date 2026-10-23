@@ -1,0 +1,28 @@
+{
+  "type": "disjoncteur",
+  "catalogId": "disj_C16_2P",
+  "category": "protection",
+  "localizationKey": "componentBreaker",
+  "defaultTagPrefix": "Q",
+  "props": {
+    "nbPoles": 2,
+    "calibre": "C16",
+    "tension": "230V~",
+    "courbe": "C",
+    "icn": 6000,
+    "classeLimitation": 3,
+    "toleranceUePct": 10,
+    "burnUePct": 50,
+    "seuilInFactor": 1.45,
+    "delaiSurchargeMs": 2000,
+    "magneticFactorB": 3,
+    "magneticFactorC": 5,
+    "magneticFactorD": 10
+  },
+  "inspector": {
+    "manufacturer": "Generic",
+    "reference": "C16 2P",
+    "voltage": 230,
+    "current": 16
+  }
+}

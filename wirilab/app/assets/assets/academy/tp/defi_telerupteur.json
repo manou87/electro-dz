@@ -1,0 +1,119 @@
+{
+  "version": 3,
+  "id": "defi_telerupteur",
+  "titre": {
+    "fr": "Défi — Télérupteur",
+    "en": "Challenge — Impulse relay"
+  },
+  "niveau": "avance",
+  "guidage": "defi",
+  "typeTp": "defi",
+  "niveauTaxonomie": 7,
+  "niveauAssistance": "diagnostic",
+  "objectif": {
+    "fr": "Sans étapes : télérupteur + poussoir + lampe. Vérifie.",
+    "en": "No steps: impulse relay + push button + lamp. Check your work."
+  },
+  "tags": [
+    "domestique",
+    "telerupteur",
+    "defi"
+  ],
+  "roles": {
+    "reseau": {
+      "typeComposant": "reseau"
+    },
+    "telerupteur_1": {
+      "typeComposant": "telerupteur"
+    },
+    "poussoir_1": {
+      "typeComposant": "bouton_poussoir"
+    },
+    "lampe_1": {
+      "typeComposant": "lampe_suspension"
+    }
+  },
+  "etapes": [
+    {
+      "type": "info",
+      "id": "e1",
+      "instruction": {
+        "fr": "Défi final du parcours : câble un télérupteur, puis Vérifie.",
+        "en": "Final challenge of the course: wire an impulse relay, then Check."
+      }
+    },
+    {
+      "type": "scenario",
+      "id": "e2",
+      "instruction": {
+        "fr": "Vérifie ton télérupteur.",
+        "en": "Check your impulse relay."
+      },
+      "scenarioId": ""
+    }
+  ],
+  "verification": {
+    "scenarios": [
+      {
+        "id": "sc1",
+        "actions": [
+          {
+            "cible": "role:telerupteur_1",
+            "etat": {
+              "estBascule": true
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "composantAllume",
+            "cible": "role:lampe_1",
+            "attendu": true
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Télérupteur fermé : la lampe doit s'allumer.",
+          "en": "Impulse relay closed: the lamp must light up."
+        }
+      },
+      {
+        "id": "sc2",
+        "actions": [
+          {
+            "cible": "role:telerupteur_1",
+            "etat": {
+              "estBascule": false
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "composantAllume",
+            "cible": "role:lampe_1",
+            "attendu": false
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Télérupteur ouvert : la lampe doit s'éteindre.",
+          "en": "Impulse relay open: the lamp must go out."
+        }
+      }
+    ]
+  },
+  "messages": {
+    "succes": {
+      "fr": "Parcours terminé — félicitations ! Tu maîtrises les bases de l'électricité domestique.",
+      "en": "Course complete — congratulations! You have mastered the basics of home wiring."
+    },
+    "indice": {
+      "fr": "Bobine sur A1-A2, puissance sur 1-2.",
+      "en": "Coil on A1-A2, power on 1-2."
+    }
+  }
+}

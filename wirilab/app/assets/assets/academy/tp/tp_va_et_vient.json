@@ -1,0 +1,613 @@
+{
+  "version": 3,
+  "id": "tp_va_et_vient",
+  "titre": {
+    "fr": "Le va-et-vient",
+    "en": "Two-way switching"
+  },
+  "niveau": "intermediaire",
+  "guidage": "guide",
+  "typeTp": "guide",
+  "niveauTaxonomie": 4,
+  "objectif": {
+    "fr": "Commander une même lampe depuis deux endroits différents avec deux interrupteurs va-et-vient.",
+    "en": "Control the same lamp from two different places with two two-way switches."
+  },
+  "tags": [
+    "domestique",
+    "eclairage",
+    "va-et-vient"
+  ],
+  "roles": {
+    "reseau": {
+      "typeComposant": "reseau"
+    },
+    "va_et_vient_1": {
+      "typeComposant": "interrupteur",
+      "sousType": "va_et_vient"
+    },
+    "va_et_vient_2": {
+      "typeComposant": "interrupteur",
+      "sousType": "va_et_vient"
+    },
+    "lampe_1": {
+      "typeComposant": "lampe_suspension"
+    }
+  },
+  "etapes": [
+    {
+      "type": "info",
+      "id": "e1",
+      "instruction": {
+        "fr": "Le va-et-vient : deux interrupteurs, une lampe. Les navettes (1 et 2) relient les deux interrupteurs entre eux.",
+        "en": "Two-way switching: two switches, one lamp. The travellers (1 and 2) link the two switches together."
+      }
+    },
+    {
+      "type": "poserComposant",
+      "id": "e2",
+      "instruction": {
+        "fr": "Pose le réseau.",
+        "en": "Place the supply."
+      },
+      "explicationAvant": {
+        "fr": "On commence toujours par la source : le réseau fournira la phase qui traversera nos deux interrupteurs avant d'atteindre la lampe.",
+        "en": "We always start with the source: the supply will provide the phase that will travel through both switches before reaching the lamp."
+      },
+      "explicationApres": {
+        "fr": "Source posée. Le chemin de la phase sera plus long que d'habitude — il passera par DEUX commandes.",
+        "en": "Source placed. The phase path will be longer than usual — it will go through TWO controls."
+      },
+      "transition": {
+        "fr": "Ajoutons la première commande.",
+        "en": "Let's add the first control."
+      },
+      "role": "reseau",
+      "indices": [
+        {
+          "fr": "Catalogue → Alimentation → Réseau monophasé.",
+          "en": "Catalog → Power supply → Single-phase mains."
+        }
+      ],
+      "messageErreur": {
+        "fr": "Il faut exactement un réseau sur le canvas.",
+        "en": "You need exactly one supply on the canvas."
+      }
+    },
+    {
+      "type": "poserComposant",
+      "id": "e3",
+      "instruction": {
+        "fr": "Pose le premier interrupteur va-et-vient.",
+        "en": "Place the first two-way switch."
+      },
+      "explicationAvant": {
+        "fr": "Le va-et-vient a TROIS bornes : un commun (L) et deux navettes (1 et 2). Il aiguille le courant vers l'une OU l'autre navette — il ne coupe jamais vraiment.",
+        "en": "A two-way switch has THREE terminals: one common (L) and two travellers (1 and 2). It routes the current to one traveller OR the other — it never really cuts."
+      },
+      "explicationApres": {
+        "fr": "Premier aiguillage en place. Seul, il ne sert à rien : il lui faut son jumeau en face.",
+        "en": "First routing switch in place. Alone it is useless: it needs its twin on the other side."
+      },
+      "transition": {
+        "fr": "Pose le second va-et-vient.",
+        "en": "Place the second two-way switch."
+      },
+      "role": "va_et_vient_1",
+      "indices": [
+        {
+          "fr": "Catalogue → Interrupteur va-et-vient (pas le simple).",
+          "en": "Catalog → Two-way switch (not the simple one)."
+        }
+      ],
+      "messageErreur": {
+        "fr": "Il faut un interrupteur VA-ET-VIENT (3 bornes), pas un interrupteur simple.",
+        "en": "You need a TWO-WAY switch (3 terminals), not a simple switch."
+      }
+    },
+    {
+      "type": "poserComposant",
+      "id": "e4",
+      "instruction": {
+        "fr": "Pose le second interrupteur va-et-vient.",
+        "en": "Place the second two-way switch."
+      },
+      "explicationAvant": {
+        "fr": "Le second va-et-vient reçoit les deux navettes du premier et renvoie le courant vers la lampe par son commun. Ensemble, ils forment un double aiguillage.",
+        "en": "The second two-way switch receives the first one's two travellers and sends the current on to the lamp through its common. Together they form a double routing."
+      },
+      "explicationApres": {
+        "fr": "Les deux aiguillages sont prêts. La lampe pourra être commandée depuis l'un OU l'autre.",
+        "en": "Both routing switches are ready. The lamp will be controllable from either one."
+      },
+      "transition": {
+        "fr": "Il manque le récepteur : la lampe.",
+        "en": "The load is missing: the lamp."
+      },
+      "role": "va_et_vient_2",
+      "indices": [
+        {
+          "fr": "Même composant que le premier : va-et-vient, 3 bornes.",
+          "en": "Same component as the first: two-way, 3 terminals."
+        }
+      ],
+      "messageErreur": {
+        "fr": "Il faut exactement deux interrupteurs va-et-vient.",
+        "en": "You need exactly two two-way switches."
+      }
+    },
+    {
+      "type": "poserComposant",
+      "id": "e5",
+      "instruction": {
+        "fr": "Pose la lampe.",
+        "en": "Place the lamp."
+      },
+      "explicationAvant": {
+        "fr": "La lampe reste un récepteur classique : elle s'allumera quand le chemin phase → interrupteurs → lampe → neutre sera continu.",
+        "en": "The lamp is still a regular load: it will light when the path phase → switches → lamp → neutral is continuous."
+      },
+      "explicationApres": {
+        "fr": "Tout le matériel est posé. Passons au câblage — c'est là que le va-et-vient se joue.",
+        "en": "All the hardware is placed. On to the wiring — this is where two-way switching happens."
+      },
+      "transition": {
+        "fr": "Premier fil : la phase vers le commun du premier va-et-vient.",
+        "en": "First wire: the phase to the first switch's common."
+      },
+      "role": "lampe_1",
+      "indices": [
+        {
+          "fr": "Catalogue → Éclairage → Lampe de suspension.",
+          "en": "Catalog → Lighting → Pendant lamp."
+        }
+      ],
+      "messageErreur": {
+        "fr": "Il faut exactement une lampe.",
+        "en": "You need exactly one lamp."
+      }
+    },
+    {
+      "type": "relierBornes",
+      "id": "e6",
+      "instruction": {
+        "fr": "Phase du réseau → commun (L) du premier va-et-vient.",
+        "en": "Supply phase → common (L) of the first switch."
+      },
+      "explicationAvant": {
+        "fr": "Le COMMUN est la porte d'entrée du va-et-vient : la phase y entre, puis l'interrupteur l'aiguille vers la navette 1 ou la navette 2.",
+        "en": "The COMMON is the two-way switch's entry door: the phase comes in, then the switch routes it to traveller 1 or traveller 2."
+      },
+      "explicationApres": {
+        "fr": "La phase est à l'entrée du premier aiguillage. Reste à construire les deux voies possibles.",
+        "en": "The phase is at the first routing point. Now we build the two possible tracks."
+      },
+      "transition": {
+        "fr": "Tirons la première navette.",
+        "en": "Let's run the first traveller."
+      },
+      "a": {
+        "role": "reseau",
+        "borne": "L"
+      },
+      "b": {
+        "role": "va_et_vient_1",
+        "borne": "L"
+      },
+      "indices": [
+        {
+          "fr": "Mode Câblage : borne L du réseau, puis borne L (commun) du premier va-et-vient.",
+          "en": "Wiring mode: the supply's L terminal, then the first switch's L (common) terminal."
+        }
+      ],
+      "messageConseil": {
+        "fr": "Ton fil relie bien {composant_a} et {composant_b}, mais pas par les bonnes bornes : tu as utilisé {borne_trouvee_a}–{borne_trouvee_b} au lieu de {borne_attendue_a}–{borne_attendue_b}. Électriquement, ça peut fonctionner — mais dans le métier, chaque borne a son rôle. Reprends la liaison sur les bonnes bornes.",
+        "en": "Your wire does connect {composant_a} and {composant_b}, but not through the right terminals: you used {borne_trouvee_a}–{borne_trouvee_b} instead of {borne_attendue_a}–{borne_attendue_b}. It may work electrically — but in the trade, every terminal has its role. Redo the link on the correct terminals."
+      }
+    },
+    {
+      "type": "relierBornes",
+      "id": "e7",
+      "instruction": {
+        "fr": "Navette 1 du premier → navette 1 du second.",
+        "en": "Traveller 1 of the first → traveller 1 of the second."
+      },
+      "explicationAvant": {
+        "fr": "Les navettes sont les deux voies parallèles ENTRE les interrupteurs. Le courant empruntera l'une ou l'autre selon la position de chaque levier.",
+        "en": "The travellers are the two parallel tracks BETWEEN the switches. The current will take one or the other depending on each lever's position."
+      },
+      "explicationApres": {
+        "fr": "Première voie construite. Avec une seule navette, un des deux interrupteurs resterait parfois sans effet — il faut la seconde.",
+        "en": "First track built. With only one traveller, one of the switches would sometimes have no effect — we need the second."
+      },
+      "transition": {
+        "fr": "Tirons la seconde navette.",
+        "en": "Let's run the second traveller."
+      },
+      "a": {
+        "role": "va_et_vient_1",
+        "borne": "1"
+      },
+      "b": {
+        "role": "va_et_vient_2",
+        "borne": "1"
+      },
+      "indices": [
+        {
+          "fr": "Borne 1 du premier va-et-vient vers la borne 1 du second.",
+          "en": "Terminal 1 of the first switch to terminal 1 of the second."
+        }
+      ],
+      "messageConseil": {
+        "fr": "Ton fil relie bien {composant_a} et {composant_b}, mais pas par les bonnes bornes : tu as utilisé {borne_trouvee_a}–{borne_trouvee_b} au lieu de {borne_attendue_a}–{borne_attendue_b}. Électriquement, ça peut fonctionner — mais dans le métier, chaque borne a son rôle. Reprends la liaison sur les bonnes bornes.",
+        "en": "Your wire does connect {composant_a} and {composant_b}, but not through the right terminals: you used {borne_trouvee_a}–{borne_trouvee_b} instead of {borne_attendue_a}–{borne_attendue_b}. It may work electrically — but in the trade, every terminal has its role. Redo the link on the correct terminals."
+      }
+    },
+    {
+      "type": "relierBornes",
+      "id": "e8",
+      "instruction": {
+        "fr": "Navette 2 du premier → navette 2 du second.",
+        "en": "Traveller 2 of the first → traveller 2 of the second."
+      },
+      "explicationAvant": {
+        "fr": "La seconde navette complète le double aiguillage : quelle que soit la position des leviers, il existe soit un chemin continu, soit aucun.",
+        "en": "The second traveller completes the double routing: whatever the lever positions, there is either one continuous path or none."
+      },
+      "explicationApres": {
+        "fr": "Le cœur du va-et-vient est câblé. Chaque interrupteur peut maintenant inverser l'état du circuit.",
+        "en": "The heart of the two-way circuit is wired. Each switch can now invert the circuit's state."
+      },
+      "transition": {
+        "fr": "Sortons du second aiguillage vers la lampe.",
+        "en": "Let's run from the second switch to the lamp."
+      },
+      "a": {
+        "role": "va_et_vient_1",
+        "borne": "2"
+      },
+      "b": {
+        "role": "va_et_vient_2",
+        "borne": "2"
+      },
+      "indices": [
+        {
+          "fr": "Borne 2 du premier va-et-vient vers la borne 2 du second.",
+          "en": "Terminal 2 of the first switch to terminal 2 of the second."
+        }
+      ],
+      "messageConseil": {
+        "fr": "Ton fil relie bien {composant_a} et {composant_b}, mais pas par les bonnes bornes : tu as utilisé {borne_trouvee_a}–{borne_trouvee_b} au lieu de {borne_attendue_a}–{borne_attendue_b}. Électriquement, ça peut fonctionner — mais dans le métier, chaque borne a son rôle. Reprends la liaison sur les bonnes bornes.",
+        "en": "Your wire does connect {composant_a} and {composant_b}, but not through the right terminals: you used {borne_trouvee_a}–{borne_trouvee_b} instead of {borne_attendue_a}–{borne_attendue_b}. It may work electrically — but in the trade, every terminal has its role. Redo the link on the correct terminals."
+      }
+    },
+    {
+      "type": "relierBornes",
+      "id": "e9",
+      "instruction": {
+        "fr": "Commun (L) du second → L1 de la lampe.",
+        "en": "Common (L) of the second switch → L1 of the lamp."
+      },
+      "explicationAvant": {
+        "fr": "Le commun du second va-et-vient est la porte de SORTIE : le courant qui a trouvé son chemin par une navette repart d'ici vers la lampe.",
+        "en": "The second switch's common is the EXIT door: the current that found its way through a traveller leaves here towards the lamp."
+      },
+      "explicationApres": {
+        "fr": "La lampe est reliée à la phase commandée. Comme toujours, il lui manque le retour.",
+        "en": "The lamp is connected to the switched phase. As always, it still needs the return path."
+      },
+      "transition": {
+        "fr": "Fermons la boucle par le neutre.",
+        "en": "Let's close the loop with the neutral."
+      },
+      "a": {
+        "role": "va_et_vient_2",
+        "borne": "L"
+      },
+      "b": {
+        "role": "lampe_1",
+        "borne": "L1"
+      },
+      "indices": [
+        {
+          "fr": "Borne L (commun) du SECOND va-et-vient vers L1 de la lampe.",
+          "en": "The SECOND switch's L (common) terminal to the lamp's L1."
+        }
+      ],
+      "messageConseil": {
+        "fr": "Ton fil relie bien {composant_a} et {composant_b}, mais pas par les bonnes bornes : tu as utilisé {borne_trouvee_a}–{borne_trouvee_b} au lieu de {borne_attendue_a}–{borne_attendue_b}. Électriquement, ça peut fonctionner — mais dans le métier, chaque borne a son rôle. Reprends la liaison sur les bonnes bornes.",
+        "en": "Your wire does connect {composant_a} and {composant_b}, but not through the right terminals: you used {borne_trouvee_a}–{borne_trouvee_b} instead of {borne_attendue_a}–{borne_attendue_b}. It may work electrically — but in the trade, every terminal has its role. Redo the link on the correct terminals."
+      }
+    },
+    {
+      "type": "relierBornes",
+      "id": "e10",
+      "instruction": {
+        "fr": "L2 de la lampe → neutre du réseau.",
+        "en": "L2 of the lamp → supply neutral."
+      },
+      "explicationAvant": {
+        "fr": "Le neutre ne passe JAMAIS par les interrupteurs : il va directement de la lampe au réseau. Seule la phase se commande.",
+        "en": "The neutral NEVER goes through the switches: it runs straight from the lamp to the supply. Only the phase is switched."
+      },
+      "explicationApres": {
+        "fr": "Boucle fermée : phase → aiguillage 1 → navette → aiguillage 2 → lampe → neutre. Ton va-et-vient est complet.",
+        "en": "Loop closed: phase → switch 1 → traveller → switch 2 → lamp → neutral. Your two-way circuit is complete."
+      },
+      "transition": {
+        "fr": "Avant la simulation, vérifions que tu as compris le principe.",
+        "en": "Before simulating, let's check you understood the principle."
+      },
+      "a": {
+        "role": "lampe_1",
+        "borne": "L2"
+      },
+      "b": {
+        "role": "reseau",
+        "borne": "N"
+      },
+      "indices": [
+        {
+          "fr": "Borne L2 de la lampe vers la borne N du réseau.",
+          "en": "The lamp's L2 terminal to the supply's N terminal."
+        }
+      ],
+      "messageConseil": {
+        "fr": "Ton fil relie bien {composant_a} et {composant_b}, mais pas par les bonnes bornes : tu as utilisé {borne_trouvee_a}–{borne_trouvee_b} au lieu de {borne_attendue_a}–{borne_attendue_b}. Électriquement, ça peut fonctionner — mais dans le métier, chaque borne a son rôle. Reprends la liaison sur les bonnes bornes.",
+        "en": "Your wire does connect {composant_a} and {composant_b}, but not through the right terminals: you used {borne_trouvee_a}–{borne_trouvee_b} instead of {borne_attendue_a}–{borne_attendue_b}. It may work electrically — but in the trade, every terminal has its role. Redo the link on the correct terminals."
+      }
+    },
+    {
+      "type": "prediction",
+      "id": "e11",
+      "instruction": {
+        "fr": "Avant de vérifier :",
+        "en": "Before checking:"
+      },
+      "question": {
+        "fr": "Basculer UN seul va-et-vient doit…",
+        "en": "Flipping ONE switch alone must…"
+      },
+      "choix": [
+        {
+          "fr": "Changer l'état de la lampe",
+          "en": "Change the lamp's state"
+        },
+        {
+          "fr": "Ne rien changer",
+          "en": "Change nothing"
+        },
+        {
+          "fr": "Créer un court-circuit",
+          "en": "Create a short circuit"
+        }
+      ],
+      "bonneReponse": 0,
+      "explication": {
+        "fr": "C'est le principe du va-et-vient : chaque interrupteur inverse l'état.",
+        "en": "That is the principle of two-way switching: each switch inverts the state."
+      }
+    },
+    {
+      "type": "scenario",
+      "id": "e12",
+      "instruction": {
+        "fr": "Vérifie : chaque interrupteur doit pouvoir basculer la lampe.",
+        "en": "Check: each switch must be able to toggle the lamp."
+      },
+      "scenarioId": ""
+    }
+  ],
+  "verification": {
+    "scenarios": [
+      {
+        "id": "sc1",
+        "actions": [
+          {
+            "cible": "role:va_et_vient_1",
+            "etat": {
+              "estFerme": false
+            }
+          },
+          {
+            "cible": "role:va_et_vient_2",
+            "etat": {
+              "estFerme": false
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Ton montage présente un défaut avant même de manœuvrer. Vérifie que la phase ne rejoint jamais le neutre sans passer par la lampe.",
+          "en": "Your assembly shows a fault before any switching. Make sure the phase never reaches the neutral without going through the lamp."
+        }
+      },
+      {
+        "id": "sc2",
+        "actions": [
+          {
+            "cible": "role:va_et_vient_1",
+            "etat": {
+              "estFerme": true
+            }
+          },
+          {
+            "cible": "role:va_et_vient_2",
+            "etat": {
+              "estFerme": false
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "differeDuScenario",
+            "cible": "role:lampe_1",
+            "params": {
+              "scenario": "sc1"
+            }
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Basculer le PREMIER va-et-vient doit changer l'état de la lampe. Vérifie ses navettes.",
+          "en": "Flipping the FIRST switch must change the lamp's state. Check its travellers."
+        }
+      },
+      {
+        "id": "sc3",
+        "actions": [
+          {
+            "cible": "role:va_et_vient_1",
+            "etat": {
+              "estFerme": false
+            }
+          },
+          {
+            "cible": "role:va_et_vient_2",
+            "etat": {
+              "estFerme": true
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "differeDuScenario",
+            "cible": "role:lampe_1",
+            "params": {
+              "scenario": "sc1"
+            }
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Basculer le SECOND va-et-vient doit aussi changer l'état de la lampe.",
+          "en": "Flipping the SECOND switch must also change the lamp's state."
+        }
+      },
+      {
+        "id": "sc4",
+        "actions": [
+          {
+            "cible": "role:va_et_vient_1",
+            "etat": {
+              "estFerme": true
+            }
+          },
+          {
+            "cible": "role:va_et_vient_2",
+            "etat": {
+              "estFerme": true
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "differeDuScenario",
+            "cible": "role:lampe_1",
+            "params": {
+              "scenario": "sc2"
+            }
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Interrupteurs basculés tous les deux, la lampe doit revenir à son état de départ.",
+          "en": "With both switches flipped, the lamp must return to its initial state."
+        }
+      }
+    ]
+  },
+  "messages": {
+    "succes": {
+      "fr": "Excellent ! Ton va-et-vient fonctionne : la lampe se commande depuis les deux interrupteurs, grâce au double aiguillage formé par les navettes. C'est le montage d'éclairage le plus posé du métier.",
+      "en": "Excellent! Your two-way circuit works: the lamp can be controlled from both switches, thanks to the double routing formed by the travellers. It is the most commonly installed lighting circuit in the trade."
+    },
+    "indice": {
+      "fr": "Les deux navettes relient les interrupteurs ENTRE EUX. La phase entre par le commun du premier, la lampe sort par le commun du second.",
+      "en": "The two travellers link the switches TO EACH OTHER. The phase enters at the first switch's common, the lamp leaves from the second one's common."
+    }
+  },
+  "conclusion": {
+    "synthese": {
+      "fr": "Aujourd'hui tu as appris le va-et-vient :",
+      "en": "Today you learned two-way switching:"
+    },
+    "acquis": [
+      {
+        "fr": "identifier les 3 bornes d'un va-et-vient : commun (L) et navettes (1, 2)",
+        "en": "identifying the 3 terminals of a two-way switch: common (L) and travellers (1, 2)"
+      },
+      {
+        "fr": "câbler les navettes entre les deux interrupteurs",
+        "en": "wiring the travellers between the two switches"
+      },
+      {
+        "fr": "comprendre le double aiguillage : chaque interrupteur inverse l'état de la lampe",
+        "en": "understanding the double routing: each switch inverts the lamp's state"
+      }
+    ],
+    "questions": [
+      {
+        "question": {
+          "fr": "Pourquoi un va-et-vient a-t-il TROIS bornes et non deux ?",
+          "en": "Why does a two-way switch have THREE terminals instead of two?"
+        },
+        "choix": [
+          {
+            "fr": "Pour brancher la terre",
+            "en": "To connect the earth"
+          },
+          {
+            "fr": "Parce qu'il AIGUILLE le courant vers l'une de deux voies au lieu de simplement couper",
+            "en": "Because it ROUTES the current to one of two tracks instead of simply cutting"
+          },
+          {
+            "fr": "Pour supporter plus de puissance",
+            "en": "To handle more power"
+          }
+        ],
+        "bonneReponse": 1,
+        "explication": {
+          "fr": "Un interrupteur simple coupe (ouvert/fermé). Un va-et-vient choisit ENTRE deux navettes : le commun est toujours relié à l'une des deux.",
+          "en": "A simple switch cuts (open/closed). A two-way switch chooses BETWEEN two travellers: the common is always connected to one of them."
+        }
+      },
+      {
+        "question": {
+          "fr": "La lampe est allumée. Que se passe-t-il si on bascule N'IMPORTE LEQUEL des deux interrupteurs ?",
+          "en": "The lamp is on. What happens if you flip EITHER of the two switches?"
+        },
+        "choix": [
+          {
+            "fr": "Elle s'éteint : l'aiguillage casse le chemin continu",
+            "en": "It goes out: the routing breaks the continuous path"
+          },
+          {
+            "fr": "Rien, il faut basculer les deux",
+            "en": "Nothing, you must flip both"
+          },
+          {
+            "fr": "Ça dépend duquel on bascule",
+            "en": "It depends which one you flip"
+          }
+        ],
+        "bonneReponse": 0,
+        "explication": {
+          "fr": "Chaque bascule change la navette utilisée d'un côté : le chemin continu devient discontinu (ou l'inverse). C'est pour ça que CHAQUE point de commande fonctionne.",
+          "en": "Each flip changes which traveller is used on one side: the continuous path becomes broken (or vice-versa). That is why EVERY control point works."
+        }
+      }
+    ],
+    "defiId": "defi_va_et_vient"
+  }
+}

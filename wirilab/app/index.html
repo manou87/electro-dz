@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="/app/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <!--
+    Mobile : sans cette balise le navigateur compose la page comme un bureau
+    (~980 px) puis la réduit. Le clavier recouvre alors le bloc-notes et le
+    bouton Envoyer. interactive-widget réduit la hauteur utile ; Flutter
+    redimensionne le corps, les panneaux suivent.
+  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
+  <!-- Mesure d'audience Webful (wirilab:webful). -->
+  <script src="js/webful-wirilab.js"></script>
+  <script src="js/webful-spa.js" defer></script>
+  <meta name="description" content="WiriLab — Simuler, connecter, comprendre.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="WiriLab">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon (le ?v= force les navigateurs à oublier l'ancien logo Flutter
+       gardé en cache — incrémenter si l'icône change encore). -->
+  <link rel="icon" type="image/png" href="favicon.png?v=2"/>
+
+  <title>WiriLab</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    /* == Écran de chargement WiriLab ==============================
+       Affiché immédiatement (HTML pur, aucun JS requis pour le voir),
+       retiré à l'événement `flutter-first-frame`. Il remplace la page
+       blanche pendant le téléchargement du moteur Flutter (~10 s). */
+    html, body { height: 100%; margin: 0; background: #0F172A; overflow: hidden; }
+    #wirilab-splash {
+      position: fixed; inset: 0; z-index: 9999;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 22px;
+      background: radial-gradient(ellipse at 50% 30%, #16233F 0%, #0F172A 60%);
+      font-family: "Segoe UI", system-ui, sans-serif;
+      transition: opacity .4s ease;
+    }
+    #wirilab-splash.hidden { opacity: 0; pointer-events: none; }
+    #wirilab-splash .brand { display: flex; align-items: center; gap: 12px; }
+    #wirilab-splash .brand img { width: 46px; height: 46px; }
+    #wirilab-splash .brand span {
+      font-size: 26px; font-weight: 700; color: #F1F5F9; letter-spacing: .5px;
+    }
+    #wirilab-splash .bar {
+      width: min(340px, 78vw); height: 5px; border-radius: 3px;
+      background: rgba(148,163,184,.18); overflow: hidden;
+    }
+    /* Barre DÉTERMINÉE : la largeur suit la progression réelle du
+       téléchargement (voir wirilabProgress plus bas). */
+    #wirilab-splash .bar i {
+      display: block; height: 100%; width: 0%; border-radius: 3px;
+      background: linear-gradient(90deg, #2563EB, #38BDF8);
+      transition: width .35s ease-out;
+    }
+    #wirilab-splash .status {
+      display: flex; align-items: baseline; gap: 10px;
+      width: min(340px, 78vw); justify-content: space-between;
+    }
+    #wirilab-splash .label {
+      color: #94A3B8; font-size: 14px; min-height: 20px;
+      transition: opacity .3s ease;
+    }
+    #wirilab-splash .label.fade { opacity: 0; }
+    #wirilab-splash .pct {
+      color: #CBD5E1; font-size: 14px; font-variant-numeric: tabular-nums;
+      font-weight: 600;
+    }
+  </style>
+  <script>
+    window.addEventListener('wheel', function(e) {
+      if (e.ctrlKey) e.preventDefault();
+    }, { passive: false });
+  </script>
+</head>
+<body>
+  <!-- Écran de chargement : logo + barre, puis messages tournants (à la
+       Windows) si le chargement dépasse 3 secondes. -->
+  <div id="wirilab-splash">
+    <div class="brand">
+      <img src="splash/logo.png" alt="">
+      <span>WiriLab</span>
+    </div>
+    <div class="bar"><i id="wirilab-splash-bar"></i></div>
+    <div class="status">
+      <span class="label" id="wirilab-splash-label">Chargement de WiriLab…</span>
+      <span class="pct" id="wirilab-splash-pct">0 %</span>
+    </div>
+  </div>
+  <script>
+    // == Progression de chargement ==============================
+    // Le premier chargement pèse ~10 Mo (JS compilé + moteur graphique
+    // CanvasKit). Une barre qui tourne en boucle n'apprend rien : ici la
+    // progression est HYBRIDE.
+    //   - Réel : PerformanceObserver signale chaque ressource terminée
+    //     (main.dart.js, canvaskit, assets) → la barre saute au palier.
+    //   - Estimé : entre deux paliers, une montée lente et décélérante
+    //     évite la barre figée (aucune API ne donne les octets en vol
+    //     pour un <script src>).
+    // Règles : la barre ne recule JAMAIS et plafonne à 97 % tant que
+    // Flutter n'a pas peint sa première image.
+    (function () {
+      var label = document.getElementById('wirilab-splash-label');
+      var pctEl = document.getElementById('wirilab-splash-pct');
+      var barEl = document.getElementById('wirilab-splash-bar');
+
+      var en = (navigator.language || 'fr').toLowerCase().indexOf('en') === 0;
+      // Messages liés aux PHASES réelles, pas à un minuteur aveugle.
+      var phases = en ? {
+        download: 'Downloading the application…',
+        engine: 'Starting the graphics engine…',
+        assets: 'Preparing the workshop…',
+        almost: 'Almost ready…'
+      } : {
+        download: 'Téléchargement de l\u2019application…',
+        engine: 'Démarrage du moteur graphique…',
+        assets: 'Préparation de l\u2019atelier…',
+        almost: 'Presque prêt…'
+      };
+
+      var affiche = 0;   // pourcentage réellement peint (jamais décroissant)
+      var palier = 0;    // plancher atteint grâce aux ressources terminées
+      var phase = 'download';
+      var fini = false;
+
+      function rendre() {
+        var p = Math.round(affiche);
+        pctEl.textContent = p + ' %';
+        barEl.style.width = p + '%';
+      }
+
+      function texte(nouvelle) {
+        if (phase === nouvelle) return;
+        phase = nouvelle;
+        label.classList.add('fade');
+        setTimeout(function () {
+          label.textContent = phases[nouvelle];
+          label.classList.remove('fade');
+        }, 220);
+      }
+
+      // Poids indicatifs : le JS compilé et le moteur graphique dominent.
+      function poids(nom) {
+        if (/main\.dart(\.[a-f0-9]+)?\.js$/.test(nom)) return 42;
+        if (/canvaskit.*\.(wasm|js)$/.test(nom)) return 38;
+        if (/\/assets\//.test(nom)) return 8;
+        return 0;
+      }
+
+      function ressourceTerminee(nom) {
+        var w = poids(nom);
+        if (w === 0) return;
+        palier = Math.min(95, palier + w);
+        if (/main\.dart/.test(nom)) texte('engine');
+        else if (/canvaskit/.test(nom)) texte('assets');
+        if (palier > affiche) affiche = palier;
+        rendre();
+      }
+
+      try {
+        var obs = new PerformanceObserver(function (list) {
+          list.getEntries().forEach(function (e) { ressourceTerminee(e.name); });
+        });
+        obs.observe({ type: 'resource', buffered: true });
+      } catch (e) { /* navigateur sans PerformanceObserver : estimé seul */ }
+
+      // Montée estimée entre deux paliers. Aucune API ne donne les octets en
+      // vol d'un <script src> : pendant le plus gros téléchargement, aucun
+      // palier ne tombe. D'où une courbe du TEMPS écoulé, asymptotique (≈50 %
+      // à 8 s, ≈65 % à 15 s, jamais au-delà de 75 %) : la barre avance
+      // toujours sans jamais promettre une fin imminente à tort.
+      var debut = Date.now();
+      var tick = setInterval(function () {
+        if (fini) return;
+        var secondes = (Date.now() - debut) / 1000;
+        var estime = 75 * (1 - Math.exp(-secondes / 9));
+        var plafond = Math.min(97, Math.max(palier + 18, estime));
+        if (affiche < plafond) affiche += (plafond - affiche) * 0.08 + 0.1;
+        if (affiche > 90) texte('almost');
+        rendre();
+      }, 120);
+
+      // Premier rendu Flutter → 100 %, fondu de sortie, retrait du DOM.
+      window.addEventListener('flutter-first-frame', function () {
+        fini = true;
+        clearInterval(tick);
+        affiche = 100;
+        rendre();
+        var splash = document.getElementById('wirilab-splash');
+        if (!splash) return;
+        setTimeout(function () {
+          splash.classList.add('hidden');
+          setTimeout(function () { splash.remove(); }, 450);
+        }, 150);
+      });
+
+      rendre();
+    })();
+  </script>
+  <!--
+    You can customize the "flutter_bootstrap.js" script.
+    This is useful to provide a custom configuration to the Flutter loader
+    or to give the user feedback during the initialization process.
+
+    For more details:
+    * https://docs.flutter.dev/platform-integration/web/initialization
+  -->
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>

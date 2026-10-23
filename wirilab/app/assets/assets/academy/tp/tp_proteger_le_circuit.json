@@ -1,0 +1,316 @@
+{
+  "version": 3,
+  "id": "tp_proteger_le_circuit",
+  "titre": {
+    "fr": "Protéger le circuit",
+    "en": "Protecting the circuit"
+  },
+  "niveau": "intermediaire",
+  "guidage": "semiGuide",
+  "typeTp": "assemblage",
+  "niveauTaxonomie": 4,
+  "objectif": {
+    "fr": "Ajouter un disjoncteur en tête de circuit pour protéger l'installation d'éclairage.",
+    "en": "Add a breaker at the head of the circuit to protect the lighting installation."
+  },
+  "tags": [
+    "domestique",
+    "protection",
+    "disjoncteur"
+  ],
+  "roles": {
+    "reseau": {
+      "typeComposant": "reseau"
+    },
+    "disjoncteur_principal": {
+      "typeComposant": "disjoncteur"
+    },
+    "interrupteur_principal": {
+      "typeComposant": "interrupteur",
+      "sousType": "simple"
+    },
+    "lampe_1": {
+      "typeComposant": "lampe_suspension"
+    }
+  },
+  "etapes": [
+    {
+      "type": "info",
+      "id": "e1",
+      "instruction": {
+        "fr": "Le disjoncteur se place EN TÊTE : réseau → disjoncteur → interrupteur → lampe.",
+        "en": "The breaker goes AT THE HEAD: supply → breaker → switch → lamp."
+      }
+    },
+    {
+      "type": "poserComposant",
+      "id": "e2",
+      "instruction": {
+        "fr": "Pose le réseau.",
+        "en": "Place the supply."
+      },
+      "role": "reseau"
+    },
+    {
+      "type": "poserComposant",
+      "id": "e3",
+      "instruction": {
+        "fr": "Pose un disjoncteur bipolaire.",
+        "en": "Place a two-pole breaker."
+      },
+      "role": "disjoncteur_principal",
+      "indices": [
+        {
+          "fr": "Catalogue → Protection → Disjoncteur.",
+          "en": "Catalog → Protection → Breaker."
+        }
+      ]
+    },
+    {
+      "type": "poserComposant",
+      "id": "e4",
+      "instruction": {
+        "fr": "Pose l'interrupteur simple.",
+        "en": "Place the simple switch."
+      },
+      "role": "interrupteur_principal"
+    },
+    {
+      "type": "poserComposant",
+      "id": "e5",
+      "instruction": {
+        "fr": "Pose la lampe.",
+        "en": "Place the lamp."
+      },
+      "role": "lampe_1"
+    },
+    {
+      "type": "info",
+      "id": "e6",
+      "instruction": {
+        "fr": "Câble : L→1 et N→3 du disjoncteur ; sortie 2 → interrupteur → lampe ; neutre bas 4 → lampe. Enclenche le disjoncteur avant de vérifier.",
+        "en": "Wire it: L→1 and N→3 on the breaker; output 2 → switch → lamp; bottom neutral 4 → lamp. Switch the breaker on before checking."
+      }
+    },
+    {
+      "type": "prediction",
+      "id": "e7",
+      "instruction": {
+        "fr": "Avant de vérifier :",
+        "en": "Before checking:"
+      },
+      "question": {
+        "fr": "Si tu déclenches le disjoncteur, la lampe…",
+        "en": "If you trip the breaker, the lamp…"
+      },
+      "choix": [
+        {
+          "fr": "S'éteint même si l'interrupteur est fermé",
+          "en": "Goes out even if the switch is closed"
+        },
+        {
+          "fr": "Reste allumée",
+          "en": "Stays on"
+        },
+        {
+          "fr": "Clignote",
+          "en": "Blinks"
+        }
+      ],
+      "bonneReponse": 0,
+      "explication": {
+        "fr": "Le disjoncteur coupe phase et neutre en tête — tout l'aval est hors tension.",
+        "en": "The breaker cuts phase and neutral at the head — everything downstream is de-energized."
+      }
+    },
+    {
+      "type": "scenario",
+      "id": "e8",
+      "instruction": {
+        "fr": "Vérifie ton montage protégé.",
+        "en": "Check your protected assembly."
+      },
+      "scenarioId": ""
+    }
+  ],
+  "verification": {
+    "scenarios": [
+      {
+        "id": "sc1",
+        "actions": [
+          {
+            "cible": "role:disjoncteur_principal",
+            "etat": {
+              "estEnclenche": true
+            }
+          },
+          {
+            "cible": "role:interrupteur_principal",
+            "etat": {
+              "estFerme": true
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "composantAllume",
+            "cible": "role:lampe_1",
+            "attendu": true
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Disjoncteur enclenché et interrupteur fermé : la lampe doit s'allumer. Vérifie que la phase ET le neutre passent par le disjoncteur.",
+          "en": "Breaker on and switch closed: the lamp must light up. Check that BOTH phase and neutral pass through the breaker."
+        }
+      },
+      {
+        "id": "sc2",
+        "actions": [
+          {
+            "cible": "role:disjoncteur_principal",
+            "etat": {
+              "estEnclenche": false
+            }
+          },
+          {
+            "cible": "role:interrupteur_principal",
+            "etat": {
+              "estFerme": true
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "composantAllume",
+            "cible": "role:lampe_1",
+            "attendu": false
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Disjoncteur DÉCLENCHÉ : la lampe doit s'éteindre même si l'interrupteur est fermé.",
+          "en": "Breaker TRIPPED: the lamp must go out even if the switch is closed."
+        }
+      },
+      {
+        "id": "sc3",
+        "actions": [
+          {
+            "cible": "role:disjoncteur_principal",
+            "etat": {
+              "estEnclenche": true
+            }
+          },
+          {
+            "cible": "role:interrupteur_principal",
+            "etat": {
+              "estFerme": false
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "composantAllume",
+            "cible": "role:lampe_1",
+            "attendu": false
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Interrupteur ouvert : la lampe doit rester éteinte.",
+          "en": "Switch open: the lamp must stay off."
+        }
+      }
+    ]
+  },
+  "messages": {
+    "succes": {
+      "fr": "Parfait ! Ton circuit d'éclairage est maintenant protégé : en cas de surcharge ou de court-circuit, le disjoncteur en tête coupe phase ET neutre et met tout l'aval hors tension.",
+      "en": "Perfect! Your lighting circuit is now protected: on an overload or short circuit, the breaker at the head cuts phase AND neutral, de-energising everything downstream."
+    },
+    "indice": {
+      "fr": "Le disjoncteur se place EN TÊTE : réseau → disjoncteur → (interrupteur → lampe).",
+      "en": "The breaker goes AT THE HEAD: supply → breaker → (switch → lamp)."
+    }
+  },
+  "conclusion": {
+    "synthese": {
+      "fr": "Aujourd'hui tu as appris à protéger une installation :",
+      "en": "Today you learned how to protect an installation:"
+    },
+    "acquis": [
+      {
+        "fr": "placer le disjoncteur EN TÊTE de circuit (réseau → disjoncteur → le reste)",
+        "en": "placing the breaker AT THE HEAD of the circuit (supply → breaker → the rest)"
+      },
+      {
+        "fr": "faire passer phase ET neutre par la protection bipolaire",
+        "en": "routing both phase AND neutral through the two-pole protection"
+      },
+      {
+        "fr": "distinguer le rôle du disjoncteur (protéger) et de l'interrupteur (commander)",
+        "en": "telling apart the breaker's role (protect) and the switch's role (control)"
+      }
+    ],
+    "questions": [
+      {
+        "question": {
+          "fr": "Quelle est la différence entre le disjoncteur et l'interrupteur de ce montage ?",
+          "en": "What is the difference between the breaker and the switch in this circuit?"
+        },
+        "choix": [
+          {
+            "fr": "Aucune : les deux ouvrent et ferment le circuit",
+            "en": "None: both open and close the circuit"
+          },
+          {
+            "fr": "Le disjoncteur PROTÈGE (coupure automatique sur défaut), l'interrupteur COMMANDE (geste volontaire)",
+            "en": "The breaker PROTECTS (automatic cut-off on fault), the switch CONTROLS (deliberate action)"
+          },
+          {
+            "fr": "Le disjoncteur est juste plus gros",
+            "en": "The breaker is just bigger"
+          }
+        ],
+        "bonneReponse": 1,
+        "explication": {
+          "fr": "Les deux coupent le circuit, mais pour des raisons différentes : le disjoncteur déclenche TOUT SEUL en cas de surcharge ou de court-circuit ; l'interrupteur obéit à l'utilisateur.",
+          "en": "Both interrupt the circuit, but for different reasons: the breaker trips ON ITS OWN on overload or short circuit; the switch obeys the user."
+        }
+      },
+      {
+        "question": {
+          "fr": "Pourquoi le disjoncteur doit-il être EN TÊTE du circuit ?",
+          "en": "Why must the breaker be AT THE HEAD of the circuit?"
+        },
+        "choix": [
+          {
+            "fr": "Pour que TOUT le circuit aval soit protégé et puisse être mis hors tension",
+            "en": "So the WHOLE downstream circuit is protected and can be de-energised"
+          },
+          {
+            "fr": "Pour économiser du fil",
+            "en": "To save wire"
+          },
+          {
+            "fr": "C'est purement esthétique",
+            "en": "It is purely cosmetic"
+          }
+        ],
+        "bonneReponse": 0,
+        "explication": {
+          "fr": "Une protection ne protège que ce qui est APRÈS elle. En tête, le disjoncteur couvre l'intégralité du circuit : câbles, interrupteur et lampe.",
+          "en": "A protective device only protects what comes AFTER it. At the head, the breaker covers the entire circuit: cables, switch and lamp."
+        }
+      }
+    ],
+    "defiId": "defi_protection"
+  }
+}

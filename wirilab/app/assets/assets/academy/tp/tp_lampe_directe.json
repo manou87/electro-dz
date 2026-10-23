@@ -1,0 +1,334 @@
+{
+  "version": 3,
+  "id": "tp_lampe_directe",
+  "titre": {
+    "fr": "Alimenter une lampe",
+    "en": "Powering a lamp"
+  },
+  "niveau": "debutant",
+  "guidage": "guide",
+  "typeTp": "assemblage",
+  "niveauTaxonomie": 2,
+  "objectif": {
+    "fr": "Relier une lampe directement au réseau 230 V : phase et neutre. Le circuit le plus simple qui soit.",
+    "en": "Connect a lamp directly to the 230 V supply: phase and neutral. The simplest circuit there is."
+  },
+  "tags": [
+    "domestique",
+    "eclairage",
+    "bases"
+  ],
+  "roles": {
+    "reseau": {
+      "typeComposant": "reseau"
+    },
+    "lampe_1": {
+      "typeComposant": "lampe_suspension"
+    }
+  },
+  "etapes": [
+    {
+      "type": "info",
+      "id": "e1",
+      "instruction": {
+        "fr": "Bienvenue ! Tu vas allumer une lampe sans interrupteur — juste pour voir le chemin du courant.",
+        "en": "Welcome! You are going to light a lamp without a switch — just to see the current's path."
+      }
+    },
+    {
+      "type": "poserComposant",
+      "id": "e2",
+      "instruction": {
+        "fr": "Pose un réseau monophasé 230 V sur le canvas.",
+        "en": "Place a 230 V single-phase supply on the canvas."
+      },
+      "explicationAvant": {
+        "fr": "Le réseau, c'est la source d'énergie : il fournit la phase (L) et le neutre (N). Sans lui, aucun courant ne peut circuler.",
+        "en": "The mains supply is the energy source: it provides the phase (L) and the neutral (N). Without it, no current can flow."
+      },
+      "explicationApres": {
+        "fr": "Bien joué ! Ton circuit a maintenant une source : la phase sort du réseau, le neutre y revient.",
+        "en": "Well done! Your circuit now has a source: the phase leaves the supply, the neutral returns to it."
+      },
+      "transition": {
+        "fr": "Il nous faut maintenant un récepteur : la lampe.",
+        "en": "Now we need a load: the lamp."
+      },
+      "role": "reseau",
+      "indices": [
+        {
+          "fr": "Ouvre le catalogue Composants en bas du Guide.",
+          "en": "Open the Components catalog at the bottom of the Guide."
+        },
+        {
+          "fr": "Cherche « Réseau » dans la catégorie Alimentation.",
+          "en": "Look for \"Mains\" in the Power supply category."
+        }
+      ],
+      "messageErreur": {
+        "fr": "Il faut exactement un réseau sur le canvas.",
+        "en": "You need exactly one supply on the canvas."
+      }
+    },
+    {
+      "type": "poserComposant",
+      "id": "e3",
+      "instruction": {
+        "fr": "Pose une lampe de suspension.",
+        "en": "Place a pendant lamp."
+      },
+      "explicationAvant": {
+        "fr": "La lampe est un RÉCEPTEUR : elle transforme l'énergie électrique en lumière. Ses deux bornes (L1 et L2) laissent le courant la traverser.",
+        "en": "The lamp is a LOAD: it turns electrical energy into light. Its two terminals (L1 and L2) let the current pass through it."
+      },
+      "explicationApres": {
+        "fr": "Parfait. Source et récepteur sont en place — il ne manque plus que le chemin du courant : les fils.",
+        "en": "Perfect. Source and load are in place — all that is missing is the current's path: the wires."
+      },
+      "transition": {
+        "fr": "Passons au câblage : d'abord la phase.",
+        "en": "On to the wiring: the phase first."
+      },
+      "role": "lampe_1",
+      "indices": [
+        {
+          "fr": "Dans le catalogue, cherche « Lampe ».",
+          "en": "In the catalog, look for \"Lamp\"."
+        },
+        {
+          "fr": "Glisse-la à côté du réseau.",
+          "en": "Drag it next to the supply."
+        }
+      ],
+      "messageErreur": {
+        "fr": "Il faut exactement une lampe.",
+        "en": "You need exactly one lamp."
+      }
+    },
+    {
+      "type": "relierBornes",
+      "id": "e4",
+      "instruction": {
+        "fr": "Relie la phase (L) du réseau à la borne L1 de la lampe.",
+        "en": "Connect the supply phase (L) to terminal L1 of the lamp."
+      },
+      "explicationAvant": {
+        "fr": "La phase amène l'énergie vers le récepteur : c'est le fil « aller » du courant. Dans le métier, elle est repérée en rouge ou marron.",
+        "en": "The phase carries the energy to the load: it is the current's outbound wire. In the trade it is colour-coded red or brown."
+      },
+      "explicationApres": {
+        "fr": "Très bien : l'énergie peut maintenant ARRIVER à la lampe. Mais le courant a besoin de repartir…",
+        "en": "Great: the energy can now REACH the lamp. But the current also needs a way back…"
+      },
+      "transition": {
+        "fr": "Fermons la boucle avec le neutre.",
+        "en": "Let's close the loop with the neutral."
+      },
+      "a": {
+        "role": "reseau",
+        "borne": "L"
+      },
+      "b": {
+        "role": "lampe_1",
+        "borne": "L1"
+      },
+      "indices": [
+        {
+          "fr": "Passe en mode Câblage (bouton en bas du Guide).",
+          "en": "Switch to Wiring mode (button at the bottom of the Guide)."
+        },
+        {
+          "fr": "Clique la borne L du réseau, puis L1 de la lampe.",
+          "en": "Click the supply terminal L, then the lamp's L1."
+        }
+      ],
+      "messageConseil": {
+        "fr": "Ton fil relie bien {composant_a} et {composant_b}, mais pas par les bonnes bornes : tu as utilisé {borne_trouvee_a}–{borne_trouvee_b} au lieu de {borne_attendue_a}–{borne_attendue_b}. Électriquement, ça peut fonctionner — mais dans le métier, chaque borne a son rôle. Reprends la liaison sur les bonnes bornes.",
+        "en": "Your wire does connect {composant_a} and {composant_b}, but not through the right terminals: you used {borne_trouvee_a}–{borne_trouvee_b} instead of {borne_attendue_a}–{borne_attendue_b}. It may work electrically — but in the trade, every terminal has its role. Redo the link on the correct terminals."
+      }
+    },
+    {
+      "type": "relierBornes",
+      "id": "e5",
+      "instruction": {
+        "fr": "Relie la borne L2 de la lampe au neutre (N) du réseau.",
+        "en": "Connect terminal L2 of the lamp to the supply neutral (N)."
+      },
+      "explicationAvant": {
+        "fr": "Le neutre est le fil « retour » : il ramène le courant vers le réseau. Sans lui, la boucle est ouverte et rien ne circule. Il est repéré en bleu.",
+        "en": "The neutral is the return wire: it brings the current back to the supply. Without it, the loop is open and nothing flows. It is colour-coded blue."
+      },
+      "explicationApres": {
+        "fr": "La boucle est fermée : phase → lampe → neutre. C'est LE schéma de base de toute l'électricité.",
+        "en": "The loop is closed: phase → lamp → neutral. This is THE fundamental pattern of all electrical work."
+      },
+      "transition": {
+        "fr": "Avant de mettre sous tension, réfléchissons une seconde.",
+        "en": "Before powering up, let's think for a second."
+      },
+      "a": {
+        "role": "lampe_1",
+        "borne": "L2"
+      },
+      "b": {
+        "role": "reseau",
+        "borne": "N"
+      },
+      "indices": [
+        {
+          "fr": "Sans le neutre, le circuit n'est pas fermé — la lampe reste éteinte.",
+          "en": "Without the neutral, the circuit is not closed — the lamp stays off."
+        }
+      ],
+      "messageConseil": {
+        "fr": "Ton fil relie bien {composant_a} et {composant_b}, mais pas par les bonnes bornes : tu as utilisé {borne_trouvee_a}–{borne_trouvee_b} au lieu de {borne_attendue_a}–{borne_attendue_b}. Électriquement, ça peut fonctionner — mais dans le métier, chaque borne a son rôle. Reprends la liaison sur les bonnes bornes.",
+        "en": "Your wire does connect {composant_a} and {composant_b}, but not through the right terminals: you used {borne_trouvee_a}–{borne_trouvee_b} instead of {borne_attendue_a}–{borne_attendue_b}. It may work electrically — but in the trade, every terminal has its role. Redo the link on the correct terminals."
+      }
+    },
+    {
+      "type": "prediction",
+      "id": "e6",
+      "instruction": {
+        "fr": "Avant de vérifier :",
+        "en": "Before checking:"
+      },
+      "question": {
+        "fr": "Que va faire la lampe une fois le circuit fermé ?",
+        "en": "What will the lamp do once the circuit is closed?"
+      },
+      "choix": [
+        {
+          "fr": "Elle s'allume",
+          "en": "It lights up"
+        },
+        {
+          "fr": "Elle reste éteinte",
+          "en": "It stays off"
+        },
+        {
+          "fr": "Court-circuit immédiat",
+          "en": "Immediate short circuit"
+        }
+      ],
+      "bonneReponse": 0,
+      "explication": {
+        "fr": "Phase et neutre forment une boucle fermée à travers la lampe : elle s'allume.",
+        "en": "Phase and neutral form a closed loop through the lamp: it lights up."
+      }
+    },
+    {
+      "type": "scenario",
+      "id": "e7",
+      "instruction": {
+        "fr": "Vérifie ton montage.",
+        "en": "Check your assembly."
+      },
+      "scenarioId": "sc1"
+    }
+  ],
+  "verification": {
+    "scenarios": [
+      {
+        "id": "sc1",
+        "actions": [],
+        "attentes": [
+          {
+            "type": "composantAllume",
+            "cible": "role:lampe_1",
+            "attendu": true
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "La lampe doit s'allumer. Vérifie phase → L1 et L2 → neutre.",
+          "en": "The lamp must light up. Check phase → L1 and L2 → neutral."
+        }
+      }
+    ]
+  },
+  "messages": {
+    "succes": {
+      "fr": "Parfait ! Tu as fermé ton premier circuit : la phase apporte l'énergie, la lampe la transforme en lumière, le neutre ramène le courant. Tout le reste du métier repose sur cette boucle.",
+      "en": "Perfect! You closed your first circuit: the phase delivers the energy, the lamp turns it into light, the neutral carries the current back. Everything else in the trade builds on this loop."
+    },
+    "indice": {
+      "fr": "Phase (L) d'un côté, neutre (N) de l'autre — la lampe au milieu.",
+      "en": "Phase (L) on one side, neutral (N) on the other — the lamp in between."
+    }
+  },
+  "conclusion": {
+    "synthese": {
+      "fr": "Aujourd'hui tu as appris à fermer un circuit électrique complet :",
+      "en": "Today you learned how to close a complete electrical circuit:"
+    },
+    "acquis": [
+      {
+        "fr": "reconnaître la source (réseau 230 V) et le récepteur (lampe)",
+        "en": "recognising the source (230 V mains) and the load (lamp)"
+      },
+      {
+        "fr": "câbler la phase — le fil « aller » de l'énergie",
+        "en": "wiring the phase — the energy's outbound wire"
+      },
+      {
+        "fr": "câbler le neutre — le fil « retour » qui ferme la boucle",
+        "en": "wiring the neutral — the return wire that closes the loop"
+      }
+    ],
+    "questions": [
+      {
+        "question": {
+          "fr": "Pourquoi la lampe s'allume-t-elle ?",
+          "en": "Why does the lamp light up?"
+        },
+        "choix": [
+          {
+            "fr": "Parce que la phase la touche",
+            "en": "Because the phase touches it"
+          },
+          {
+            "fr": "Parce que le courant circule dans une boucle fermée phase → lampe → neutre",
+            "en": "Because current flows in a closed loop: phase → lamp → neutral"
+          },
+          {
+            "fr": "Parce que le canvas est en mode simulation",
+            "en": "Because the canvas is in simulation mode"
+          }
+        ],
+        "bonneReponse": 1,
+        "explication": {
+          "fr": "Un récepteur ne fonctionne que si le courant peut le TRAVERSER : il faut un chemin aller (phase) ET un chemin retour (neutre).",
+          "en": "A load only works if the current can flow THROUGH it: there must be an outbound path (phase) AND a return path (neutral)."
+        }
+      },
+      {
+        "question": {
+          "fr": "Si on débranche le fil de neutre, que se passe-t-il ?",
+          "en": "If you disconnect the neutral wire, what happens?"
+        },
+        "choix": [
+          {
+            "fr": "La lampe s'éteint : la boucle est ouverte",
+            "en": "The lamp goes out: the loop is open"
+          },
+          {
+            "fr": "La lampe reste allumée grâce à la phase",
+            "en": "The lamp stays lit thanks to the phase"
+          },
+          {
+            "fr": "Court-circuit immédiat",
+            "en": "Immediate short circuit"
+          }
+        ],
+        "bonneReponse": 0,
+        "explication": {
+          "fr": "Sans retour, pas de circulation : le circuit est OUVERT. La lampe reste sous tension côté phase mais aucun courant ne la traverse.",
+          "en": "Without a return path there is no flow: the circuit is OPEN. The lamp is still live on the phase side but no current passes through it."
+        }
+      }
+    ],
+    "defiId": "defi_lampe"
+  }
+}

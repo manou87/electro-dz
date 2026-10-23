@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Mesure d'audience Webful (wirilab:webful). -->
+  <script src="../js/webful-wirilab.js"></script>
+
+  <title>Câbler un va-et-vient — Blog WiriLab</title>
+  <meta name="description" content="Comprendre les navettes, les fils voyageurs et vérifier un éclairage commandé par deux interrupteurs.">
+  <link rel="icon" type="image/png" href="../assets/wirilab_icon_512.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=32">
+</head>
+<body class="blog-page blog-article-page">
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="../index.html">
+      <img src="../assets/wirilab_icon_512.png" alt="WiriLab" width="30" height="30">
+      <span>WiriLab</span>
+    </a>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="./">Blog</a>
+      <a href="../app/">Commencer gratuitement</a>
+    </nav>
+  </div>
+</header>
+<main class="blog-article-main">
+  <article class="shell blog-article">
+    <p class="blog-article-back"><a href="./">← Retour au blog</a></p>
+    <p class="blog-kicker">Domestique · Câblage</p>
+    <h1>Câbler un va-et-vient : deux interrupteurs, une lampe</h1>
+    <p class="blog-article-meta">27 septembre 2026 · 9 min de lecture</p>
+    <p class="blog-lead">Le va-et-vient permet d’allumer ou d’éteindre la même lampe depuis deux endroits (escalier, couloir, chambre). Sur le plan, on voit souvent deux interrupteurs et des fils « voyageurs ». En atelier, l’erreur classique est d’inverser une navette ou de confondre le commun avec une borne de lampe.</p>
+    <figure class="blog-figure">
+      <img src="../assets/export/mesure.png" alt="Circuit avec deux interrupteurs et trois points lumineux sur simulateur WiriLab.">
+      <figcaption>Sur un montage d’entraînement, repérez d’abord la phase qui arrive au premier interrupteur, puis les fils qui relient les deux appareils.</figcaption>
+    </figure>
+    <h2>1. Rôle de chaque interrupteur</h2>
+    <p>Un interrupteur va-et-vient possède en général <strong>trois bornes</strong> (L, 1, 2) et un mécanisme interne qui inverse le chemin entre 1 et 2. Le premier interrupteur reçoit la <strong>phase</strong> sur L ; le second renvoie vers la <strong>lampe</strong>. Entre les deux passent deux conducteurs voyageurs (souvent de même couleur dans le TP, repérés sur le schéma).</p>
+    <h2>2. Ordre de lecture du schéma</h2>
+    <ol>
+      <li>Source : disjoncteur ou point de départ phase / neutre.</li>
+      <li>Phase vers L du premier interrupteur.</li>
+      <li>Deux fils entre 1–1 et 2–2 des deux interrupteurs (pas toujours dans cet ordre visuel : suivez les numéros du schéma).</li>
+      <li>Sortie du second interrupteur vers la borne phase de la lampe ; neutre direct au point lumineux.</li>
+    </ol>
+    <h2>3. Vérifications avant mise sous tension</h2>
+    <ul>
+      <li>Aucun fil voyageur ne doit être sur le neutre de la lampe à la place de la phase commandée.</li>
+      <li>Les serrages sont faits ; pas de fil nu visible hors bornes.</li>
+      <li>Les deux interrupteurs sont bien du type va-et-vient (pas un simple allumage sur l’un des deux).</li>
+    </ul>
+    <h2>4. Test fonctionnel</h2>
+    <p>Sous tension : la lampe doit pouvoir s’allumer et s’éteindre depuis <strong>chaque</strong> interrupteur, quelle que soit la position de l’autre. Si un seul poste commande, une navette est mal câblée ou un voyageur est sur la mauvaise borne.</p>
+    <h2>5. S’entraîner sans risque</h2>
+    <p>Dans un simulateur, vous pouvez refaire le câblage plusieurs fois, mesurer 230 V aux bons endroits et observer les lampes sans ouvrir un vrai boîtier. Une fois la logique comprise, le geste sur chantier devient plus rapide.</p>
+    <p class="blog-cta-box"><strong>À retenir :</strong> phase → L du 1er ; deux voyageurs ; sortie du 2e → lampe ; neutre continu.</p>
+    <p><a class="button button-primary" href="../app/">Monter le circuit dans WiriLab</a></p>
+  </article>
+</main>
+<footer class="site-footer"><div class="shell copyright"><p>© 2026 WiriLab · <a href="./">Blog</a></p></div></footer>
+</body>
+</html>

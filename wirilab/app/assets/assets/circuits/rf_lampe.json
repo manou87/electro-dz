@@ -1,0 +1,426 @@
+{
+  "version": 1,
+  "savedAt": "2026-09-20T00:00:00",
+  "components": [
+    {
+      "instanceId": "net_0",
+      "catalogJson": {
+        "type": "reseau",
+        "catalogId": "net_mono_230V",
+        "category": "sources",
+        "localizationKey": "componentNetworkMono",
+        "defaultTagPrefix": "G",
+        "props": {
+          "type": "monophase",
+          "tension": "230",
+          "frequence": 50,
+          "neutrePresent": true
+        },
+        "inspector": {
+          "manufacturer": "Grid",
+          "reference": "Réseau monophasé 230 V AC 50 Hz",
+          "voltage": 230
+        }
+      },
+      "etatJson": {
+        "estActif": true
+      },
+      "worldX": 28.0,
+      "worldY": 56.0,
+      "tagPrefix": "G",
+      "tagNumber": 1
+    },
+    {
+      "instanceId": "disj_0",
+      "catalogJson": {
+        "type": "disjoncteur",
+        "catalogId": "disj_C16_1P",
+        "category": "protection",
+        "localizationKey": "componentBreaker1P",
+        "defaultTagPrefix": "Q",
+        "props": {
+          "nbPoles": 1,
+          "calibre": "C16",
+          "tension": "230V~",
+          "courbe": "C",
+          "icn": 6000,
+          "classeLimitation": 3
+        },
+        "inspector": {
+          "manufacturer": "Generic",
+          "reference": "C16 1P",
+          "voltage": 230,
+          "current": 16
+        }
+      },
+      "etatJson": {
+        "estEnclenche": true
+      },
+      "worldX": 252.0,
+      "worldY": 28.0,
+      "tagPrefix": "Q",
+      "tagNumber": 1
+    },
+    {
+      "instanceId": "rx_0",
+      "catalogJson": {
+        "type": "recepteur_rf",
+        "catalogId": "rec_rf_230",
+        "category": "command",
+        "localizationKey": "componentRecepteurRf",
+        "defaultTagPrefix": "RX",
+        "props": {
+          "tensionV": "230V~",
+          "courantA": 10,
+          "frequenceMhz": 433
+        },
+        "inspector": {
+          "manufacturer": "EduVolt",
+          "reference": "Récepteur relais RF",
+          "voltage": 230
+        }
+      },
+      "etatJson": {},
+      "worldX": 392.0,
+      "worldY": 56.0,
+      "tagPrefix": "RX",
+      "tagNumber": 1
+    },
+    {
+      "instanceId": "lamp_0",
+      "catalogJson": {
+        "type": "lampe_suspension",
+        "catalogId": "lamp_signal_v2",
+        "category": "power",
+        "localizationKey": "componentLamp",
+        "defaultTagPrefix": "EL",
+        "props": {
+          "typeLumiere": "chaud",
+          "puissanceW": 60
+        },
+        "inspector": {
+          "manufacturer": "Generic",
+          "reference": "Lampe de signalisation"
+        }
+      },
+      "etatJson": {},
+      "worldX": 728.0,
+      "worldY": 56.0,
+      "tagPrefix": "EL",
+      "tagNumber": 1
+    },
+    {
+      "instanceId": "tc_0",
+      "catalogJson": {
+        "type": "telecommande_rf",
+        "catalogId": "tele_rf_220",
+        "category": "command",
+        "localizationKey": "componentTelecommandeRf",
+        "defaultTagPrefix": "TC",
+        "props": {
+          "frequenceMhz": 433
+        },
+        "inspector": {
+          "manufacturer": "EduVolt",
+          "reference": "Télécommande radio 433 MHz"
+        }
+      },
+      "etatJson": {},
+      "worldX": 896.0,
+      "worldY": 28.0,
+      "tagPrefix": "TC",
+      "tagNumber": 1
+    }
+  ],
+  "wires": [
+    {
+      "id": "wire_1",
+      "tag": {
+        "prefix": "W",
+        "number": 1
+      },
+      "startEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "net_0",
+        "terminalId": "L"
+      },
+      "endEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "disj_0",
+        "terminalId": "1"
+      },
+      "freePoints": [
+        {
+          "x": 84.0,
+          "y": 308.0
+        },
+        {
+          "x": 280.0,
+          "y": 308.0
+        },
+        {
+          "x": 280.0,
+          "y": -56.0
+        }
+      ],
+      "routeMode": "manual",
+      "color": "#EF4444",
+      "caliber": {
+        "unit": "awg",
+        "value": 18.0
+      },
+      "startShape": "rectangle",
+      "startShapeColor": "#2563EB",
+      "endShape": "rectangle",
+      "endShapeColor": "#2563EB",
+      "startLabel": "L",
+      "endLabel": "1",
+      "label": "L"
+    },
+    {
+      "id": "wire_2",
+      "tag": {
+        "prefix": "W",
+        "number": 2
+      },
+      "startEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "disj_0",
+        "terminalId": "2"
+      },
+      "endEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "rx_0",
+        "terminalId": "L"
+      },
+      "freePoints": [
+        {
+          "x": 280.0,
+          "y": 364.0
+        },
+        {
+          "x": 280.0,
+          "y": 371.0
+        },
+        {
+          "x": 448.0,
+          "y": 371.0
+        }
+      ],
+      "routeMode": "manual",
+      "color": "#EF4444",
+      "caliber": {
+        "unit": "awg",
+        "value": 18.0
+      },
+      "startShape": "rectangle",
+      "startShapeColor": "#2563EB",
+      "endShape": "rectangle",
+      "endShapeColor": "#2563EB",
+      "startLabel": "2",
+      "endLabel": "L",
+      "label": "2"
+    },
+    {
+      "id": "wire_3",
+      "tag": {
+        "prefix": "W",
+        "number": 3
+      },
+      "startEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "disj_0",
+        "terminalId": "2"
+      },
+      "endEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "rx_0",
+        "terminalId": "COM"
+      },
+      "freePoints": [
+        {
+          "x": 280.0,
+          "y": 364.0
+        },
+        {
+          "x": 280.0,
+          "y": 371.0
+        },
+        {
+          "x": 560.0,
+          "y": 371.0
+        }
+      ],
+      "routeMode": "manual",
+      "color": "#EF4444",
+      "caliber": {
+        "unit": "awg",
+        "value": 18.0
+      },
+      "startShape": "rectangle",
+      "startShapeColor": "#2563EB",
+      "endShape": "rectangle",
+      "endShapeColor": "#2563EB",
+      "startLabel": "2",
+      "endLabel": "COM",
+      "label": "2"
+    },
+    {
+      "id": "wire_4",
+      "tag": {
+        "prefix": "W",
+        "number": 4
+      },
+      "startEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "rx_0",
+        "terminalId": "N"
+      },
+      "endEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "net_0",
+        "terminalId": "N"
+      },
+      "freePoints": [
+        {
+          "x": 504.0,
+          "y": 371.0
+        },
+        {
+          "x": 112.0,
+          "y": 371.0
+        },
+        {
+          "x": 112.0,
+          "y": 308.0
+        }
+      ],
+      "routeMode": "manual",
+      "color": "#2563EB",
+      "caliber": {
+        "unit": "awg",
+        "value": 18.0
+      },
+      "startShape": "rectangle",
+      "startShapeColor": "#2563EB",
+      "endShape": "rectangle",
+      "endShapeColor": "#2563EB",
+      "startLabel": "N",
+      "endLabel": "N",
+      "label": "N"
+    },
+    {
+      "id": "wire_5",
+      "tag": {
+        "prefix": "W",
+        "number": 5
+      },
+      "startEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "rx_0",
+        "terminalId": "NO"
+      },
+      "endEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "lamp_0",
+        "terminalId": "L1"
+      },
+      "freePoints": [
+        {
+          "x": 616.0,
+          "y": 371.0
+        },
+        {
+          "x": 756.0,
+          "y": 371.0
+        },
+        {
+          "x": 756.0,
+          "y": 364.0
+        }
+      ],
+      "routeMode": "manual",
+      "color": "#EF4444",
+      "caliber": {
+        "unit": "awg",
+        "value": 18.0
+      },
+      "startShape": "rectangle",
+      "startShapeColor": "#2563EB",
+      "endShape": "rectangle",
+      "endShapeColor": "#2563EB",
+      "startLabel": "NO",
+      "endLabel": "L1",
+      "label": "NO"
+    },
+    {
+      "id": "wire_6",
+      "tag": {
+        "prefix": "W",
+        "number": 6
+      },
+      "startEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "lamp_0",
+        "terminalId": "L2"
+      },
+      "endEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "net_0",
+        "terminalId": "N"
+      },
+      "freePoints": [
+        {
+          "x": 812.0,
+          "y": 364.0
+        },
+        {
+          "x": 812.0,
+          "y": 392.0
+        },
+        {
+          "x": 112.0,
+          "y": 392.0
+        },
+        {
+          "x": 112.0,
+          "y": 308.0
+        }
+      ],
+      "routeMode": "manual",
+      "color": "#2563EB",
+      "caliber": {
+        "unit": "awg",
+        "value": 18.0
+      },
+      "startShape": "rectangle",
+      "startShapeColor": "#2563EB",
+      "endShape": "rectangle",
+      "endShapeColor": "#2563EB",
+      "startLabel": "L2",
+      "endLabel": "N",
+      "label": "L2"
+    }
+  ],
+  "texts": [
+    {
+      "id": "txt_titre",
+      "worldX": 280.0,
+      "worldY": 8.4,
+      "content": "RF 433 — ON allume la lampe, OFF éteint",
+      "style": {
+        "fontFamily": "Inter",
+        "fontSize": 14.0,
+        "bold": true,
+        "italic": false,
+        "underline": false,
+        "colorHex": "#FF1A1D21"
+      }
+    }
+  ],
+  "camera": {
+    "scale": 0.9,
+    "offsetX": 16.0,
+    "offsetY": 8.0
+  }
+}

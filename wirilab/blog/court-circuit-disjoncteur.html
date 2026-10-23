@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Mesure d'audience Webful (wirilab:webful). -->
+  <script src="../js/webful-wirilab.js"></script>
+
+  <title>Court-circuit et disjonction — Blog WiriLab</title>
+  <meta name="description" content="Pourquoi le disjoncteur saute, comment repérer un court-circuit en formation et quoi vérifier avant de réarmer.">
+  <link rel="icon" type="image/png" href="../assets/wirilab_icon_512.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=32">
+</head>
+<body class="blog-page blog-article-page">
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="../index.html">
+      <img src="../assets/wirilab_icon_512.png" alt="WiriLab" width="30" height="30">
+      <span>WiriLab</span>
+    </a>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="./">Blog</a>
+      <a href="../app/">Commencer gratuitement</a>
+    </nav>
+  </div>
+</header>
+<main class="blog-article-main">
+  <article class="shell blog-article">
+    <p class="blog-article-back"><a href="./">← Retour au blog</a></p>
+    <p class="blog-kicker">Sécurité · Diagnostic</p>
+    <h1>Court-circuit : pourquoi le disjoncteur saute et quoi faire</h1>
+    <p class="blog-article-meta">27 septembre 2026 · 8 min de lecture</p>
+    <p class="blog-lead">Un court-circuit, c’est une liaison directe entre deux points qui ne devraient pas l’être — souvent phase et neutre, ou deux phases — avec une résistance très faible. Le courant monte brutalement ; le disjoncteur ou le différentiel ouvre pour protéger les conducteurs et les personnes. En TP, apprendre à <em>reconnaître</em> la cause évite de réarmer bêtement et de recommencer l’incident.</p>
+    <figure class="blog-figure">
+      <img src="../assets/views/simuler.png" alt="Tableau de simulation avec disjoncteur et câblage industriel.">
+      <figcaption>Un défaut de câblage peut faire disjoncter dès la mise sous tension : le simulateur permet de corriger sans danger.</figcaption>
+    </figure>
+    <h2>1. Symptômes typiques</h2>
+    <ul>
+      <li>Disjoncteur qui part <strong>dès</strong> la fermeture, sans charge apparente.</li>
+      <li>Odeur ou trace de chauffe (en réel — à signaler immédiatement au formateur).</li>
+      <li>Dans un logiciel : message de court-circuit, simulation qui s’arrête, voyant de défaut.</li>
+    </ul>
+    <h2>2. Causes fréquentes en formation</h2>
+    <table class="blog-table">
+      <thead><tr><th>Erreur</th><th>Exemple</th></tr></thead>
+      <tbody>
+        <tr><td>Phase sur neutre</td><td>Fil rouge posé sur borne N de la lampe et bleu sur L.</td></tr>
+        <tr><td>Éclateur entre deux phases</td><td>Pointes du multimètre ou fil mal isolé entre L1 et L2.</td></tr>
+        <tr><td>Contacteur mal câblé</td><td>Puissance fermée en permanence sur charge et neutre.</td></tr>
+      </tbody>
+    </table>
+    <h2>3. Méthode de recherche (à froid)</h2>
+    <ol>
+      <li>Couper l’alimentation et verrouiller si le protocole l’exige.</li>
+      <li>Reparcourir le schéma : chaque fil a une origine et une destination logique.</li>
+      <li>Contrôler visuellement les bornes les plus denses (borniers, doubles étages).</li>
+      <li>En simulation : utiliser l’aide au diagnostic si le TP le propose, puis corriger un fil à la fois.</li>
+    </ol>
+    <h2>4. Ne pas faire</h2>
+    <p>Réenclencher plusieurs fois de suite « pour voir » sur une installation réelle. Sur simulateur, c’est acceptable pour apprendre, mais notez chaque essai dans votre compte rendu.</p>
+    <p class="blog-cta-box"><strong>À retenir :</strong> disjonction = protection qui a fonctionné ; la priorité est de trouver le mauvais lien, pas de forcer le disjoncteur.</p>
+    <p><a class="button button-primary" href="../app/">Simuler et corriger dans WiriLab</a></p>
+  </article>
+</main>
+<footer class="site-footer"><div class="shell copyright"><p>© 2026 WiriLab · <a href="./">Blog</a></p></div></footer>
+</body>
+</html>

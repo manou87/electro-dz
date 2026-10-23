@@ -1,0 +1,93 @@
+{
+  "_comment": "Catalogue des pannes injectables par le professeur (mode Dépannage). Source de vérité : AUCUNE panne n'est associée à un composant en dur dans le Dart. FORMAT v2 : 'natures' = ce qu'un composant PEUT ÊTRE (contacts, bobine, charge, protection, source…) → pannes proposables ; 'composants' = type catalogue (catalogJson.type) → natures déclarées. Un composant qui arrive n'a qu'à nommer ses natures (ici, ou dans son propre catalogJson.natures qui prime). Natures vides = composant sans panne injectable (mesure, mécanique). Clé 'fils' = pannes applicables à un fil du canvas. Les FAMILLES (câblage / composant / protection / amont) sont portées par la taxonomie TypePanne.famille.",
+  "version": 2,
+  "fils": [
+    {
+      "type": "fil_coupe",
+      "_comment": "Conducteur sectionné à l'intérieur de la gaine : le fil reste visible sur le canvas mais ne conduit plus."
+    },
+    {
+      "type": "faux_contact",
+      "_comment": "Connexion desserrée : v1 = électriquement coupé (même effet moteur que fil_coupe), conservé comme type distinct pour le rapport et le barème."
+    }
+  ],
+  "natures": {
+    "contacts": [
+      { "type": "contact_bloque_ouvert" },
+      { "type": "contact_bloque_ferme" }
+    ],
+    "poles_protection": [
+      {
+        "type": "contact_bloque_ouvert",
+        "_comment": "Pôle de puissance usé d'un appareil de protection : ne conduit plus. Pas de soudure (un appareil de protection soudé fermé n'est pas modélisé)."
+      }
+    ],
+    "protection": [
+      { "type": "declenchement_impossible" }
+    ],
+    "calibrable": [
+      {
+        "type": "mauvais_calibre",
+        "_comment": "Appareil mal choisi : props remplacées (roue rouge uniquement, jamais tiré au sort)."
+      }
+    ],
+    "bobine": [
+      { "type": "bobine_grillee" }
+    ],
+    "charge": [
+      { "type": "charge_grillee" }
+    ],
+    "masse": [
+      {
+        "type": "defaut_isolement",
+        "_comment": "Fuite enroulement → carcasse. Params optionnels : borne (défaut = première borne de charge) et rOhm (défaut = resistanceDefautFrancOhm de seuils_physiques.json)."
+      }
+    ],
+    "source": [
+      {
+        "type": "phase_manquante",
+        "_comment": "Panne amont : une phase n'arrive plus (params.phase, défaut = première phase). L'élève le constate en tête d'installation ; réparation = remplacement de la source (réseau rétabli)."
+      }
+    ]
+  },
+  "composants": {
+    "reseau": { "natures": ["source"] },
+    "alimentation_dc": { "natures": [] },
+    "compteur": { "natures": [] },
+    "multimetre": { "natures": [] },
+    "rail_din": { "natures": [] },
+    "bornier": { "natures": [] },
+    "disjoncteur": { "natures": ["protection", "calibrable", "poles_protection"] },
+    "disjoncteur_moteur": { "natures": ["protection", "poles_protection"] },
+    "interrupteur_differentiel": { "natures": ["protection", "poles_protection"] },
+    "interrupteur": { "natures": ["contacts"] },
+    "selecteur": { "natures": ["contacts"] },
+    "commutateur_came": { "natures": ["contacts"] },
+    "poire_niveau": { "natures": ["contacts"] },
+    "bouton_poussoir": { "natures": ["contacts"] },
+    "boite_commande": { "natures": ["contacts"] },
+    "telerupteur": { "natures": ["bobine", "contacts"] },
+    "minuterie": { "natures": [] },
+    "contacteur": { "natures": ["bobine", "contacts"] },
+    "relais_thermique": { "natures": ["protection", "poles_protection"] },
+    "relais_temporise": { "natures": ["bobine"] },
+    "lampe": { "natures": ["charge"] },
+    "lampe_suspension": { "natures": ["charge"] },
+    "voyant_signalisation": { "natures": ["charge"] },
+    "sonnerie": { "natures": ["bobine"] },
+    "prise": { "natures": ["charge"] },
+    "boite_derivation": { "natures": [] },
+    "borne_levier": { "natures": [] },
+    "moteur_asynchrone": { "natures": ["charge", "masse"] },
+    "pompe_forage": { "natures": ["charge", "masse"] },
+    "inverseur_source": { "natures": [] },
+    "telecommande_rf": { "natures": [] },
+    "recepteur_rf": { "natures": ["bobine", "contacts"] },
+    "module_wifi": { "natures": ["bobine", "contacts"] },
+    "telephone": { "natures": [] },
+    "arret_urgence": { "natures": ["contacts"] },
+    "groupe_electrogene": { "natures": ["source"] },
+    "barrette_terre": { "natures": [] },
+    "symbole_technique": { "natures": [] }
+  }
+}

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="260" height="230" viewBox="0 0 260 230">
+
+  <!-- Bornes U1, V1, W1 -->
+  <g stroke="#202020" stroke-width="3"
+     fill="none" stroke-linecap="square" stroke-linejoin="round">
+    <path d="M70 12 V55 L91 85"/>
+    <path d="M120 12 V78"/>
+    <path d="M170 12 V55 L149 85"/>
+
+    <!-- Corps du moteur -->
+    <circle cx="120" cy="130" r="50"/>
+
+    <!-- Arc mécanique : même rayon 50, centre décalé (parallèle au cercle) -->
+    <path d="M174 95 A 50 50 0 0 1 174 165"/>
+  </g>
+
+  <!-- Noms des bornes -->
+  <g fill="#202020" font-family="Arial, sans-serif" font-size="17">
+    <text x="77" y="28">U1</text>
+    <text x="127" y="28">V1</text>
+    <text x="177" y="28">W1</text>
+  </g>
+
+  <!-- Symbole moteur triphasé -->
+  <g fill="#202020" text-anchor="middle"
+     font-family="Arial, sans-serif">
+    <text x="120" y="128" font-size="35" font-weight="bold">M</text>
+    <text x="120" y="153" font-size="22" font-weight="bold">3~</text>
+  </g>
+
+  <!-- Point PE sur l'arc (x ? 188) -->
+  <circle cx="196" cy="130" r="6" fill="#18a957"/>
+  <path d="M202 130 H226"
+        stroke="#18a957" stroke-width="3"
+        stroke-dasharray="5 4" fill="none"/>
+  <text x="200" y="117" fill="#18a957"
+        font-family="Arial, sans-serif" font-size="15">PE</text>
+
+</svg>

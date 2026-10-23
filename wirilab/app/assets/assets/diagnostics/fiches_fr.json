@@ -1,0 +1,468 @@
+{
+  "version": 1,
+  "locale": "fr",
+  "fiches": {
+    "shortCircuit.phaseNeutre": {
+      "titre": "Court-circuit · Phase-neutre",
+      "gravite": "danger",
+      "niveaux": {
+        "expert": {
+          "resume": "Court-circuit phase–neutre ({composant})."
+        },
+        "standard": {
+          "constat": "Court-circuit : la phase et le neutre se rejoignent sans passer par une charge.",
+          "cause": "Un chemin direct relie la phase au neutre au niveau de {composant}."
+        },
+        "apprentissage": {
+          "explication": "Ton circuit a un court-circuit : le courant a trouvé un raccourci qui relie la phase directement au neutre, sans traverser aucune charge (lampe, moteur…). Sans charge pour le freiner, le courant devient énorme en une fraction de seconde.",
+          "cause": "Quelque part autour de {composant}, un fil relie la phase au neutre sans rien entre les deux.",
+          "indice_1": "Suis le fil qui part de la phase : est-ce qu'il rencontre une charge avant de rejoindre le neutre ?",
+          "indice_2": "Regarde les fils branchés sur {composant}, borne {borne} : l'un d'eux crée le raccourci.",
+          "correction": "Coupe le lien direct entre phase et neutre, et fais toujours passer le courant par une charge.",
+          "ref_cours": "cours:court_circuit"
+        }
+      }
+    },
+    "shortCircuit.phasePhase": {
+      "titre": "Court-circuit · Phase-phase",
+      "gravite": "danger",
+      "niveaux": {
+        "expert": {
+          "resume": "Court-circuit entre phases ({composant})."
+        },
+        "standard": {
+          "constat": "Court-circuit : deux phases différentes sont reliées entre elles.",
+          "cause": "Deux phases se rejoignent au niveau de {composant}, sans charge entre elles."
+        },
+        "apprentissage": {
+          "explication": "Deux phases différentes sont reliées ensemble : c'est le court-circuit le plus violent, car la tension entre deux phases est encore plus élevée qu'entre phase et neutre. En réel, cela provoque un arc électrique dangereux.",
+          "cause": "Un chemin direct relie deux phases autour de {composant}.",
+          "indice_1": "Vérifie l'ordre de tes phases : est-ce que deux fils venant de phases différentes se retrouvent connectés au même endroit ?",
+          "indice_2": "Sur les bornes de puissance de {composant}, contrôle que chaque phase reste sur sa propre ligne.",
+          "correction": "Sépare les deux phases : chaque phase doit alimenter son propre chemin, jamais se toucher directement.",
+          "ref_cours": "cours:court_circuit"
+        }
+      }
+    },
+    "shortCircuit.autre": {
+      "titre": "Court-circuit",
+      "gravite": "danger",
+      "niveaux": {
+        "expert": {
+          "resume": "Court-circuit détecté ({composant})."
+        },
+        "standard": {
+          "constat": "Court-circuit : deux potentiels opposés se rejoignent sans charge.",
+          "cause": "Un raccourci sans charge existe autour de {composant}."
+        },
+        "apprentissage": {
+          "explication": "Le courant a trouvé un raccourci sans aucune charge sur son passage. Sans résistance pour le limiter, il monte brutalement : c'est un court-circuit.",
+          "cause": "Un chemin direct sans charge existe dans la zone de {composant}.",
+          "indice_1": "Repère la zone qui clignote : suis chaque fil de cette zone et demande-toi s'il traverse une charge.",
+          "indice_2": "Débranche un à un les fils suspects autour de {composant} et resimule : le défaut disparaîtra quand tu auras retiré le raccourci.",
+          "correction": "Supprime le chemin direct et fais passer le courant par une charge.",
+          "ref_cours": "cours:court_circuit"
+        }
+      }
+    },
+    "shortCircuit": {
+      "titre": "Court-circuit",
+      "gravite": "danger",
+      "niveaux": {
+        "expert": {
+          "resume": "Court-circuit détecté ({composant})."
+        },
+        "standard": {
+          "constat": "Court-circuit : deux potentiels opposés se rejoignent sans charge.",
+          "cause": "Un raccourci sans charge existe autour de {composant}."
+        },
+        "apprentissage": {
+          "explication": "Le courant a trouvé un raccourci sans aucune charge sur son passage. Sans résistance pour le limiter, il monte brutalement : c'est un court-circuit.",
+          "cause": "Un chemin direct sans charge existe dans la zone de {composant}.",
+          "indice_1": "Repère la zone qui clignote : suis chaque fil de cette zone et demande-toi s'il traverse une charge.",
+          "indice_2": "Débranche un à un les fils suspects autour de {composant} et resimule : le défaut disparaîtra quand tu auras retiré le raccourci.",
+          "correction": "Supprime le chemin direct et fais passer le courant par une charge.",
+          "ref_cours": "cours:court_circuit"
+        }
+      }
+    },
+    "circuitOpen": {
+      "titre": "Circuit ouvert",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "Circuit ouvert : {composants} non alimentable(s)."
+        },
+        "standard": {
+          "constat": "Le circuit est ouvert : {composants} ne peut pas être alimenté.",
+          "cause": "La boucle électrique n'est pas fermée jusqu'à cette charge."
+        },
+        "apprentissage": {
+          "explication": "Le courant ne circule que dans une boucle fermée : il doit partir de la source, traverser la charge, et revenir. Ici, la boucle vers {composants} est interrompue quelque part — le courant ne peut pas faire le tour.",
+          "cause": "Il manque une liaison, ou un contact est ouvert, sur le chemin qui mène à {composants}.",
+          "indice_1": "Pars de la source et suis le chemin avec ton doigt jusqu'à la charge : où est-ce que ça s'arrête ?",
+          "indice_2": "Vérifie aussi les interrupteurs et contacts sur le trajet : un contact ouvert coupe la boucle même si tous les fils sont là.",
+          "correction": "Complète la boucle : chaque borne sur le trajet doit être reliée, et les contacts nécessaires fermés.",
+          "ref_cours": "cours:circuit_ferme"
+        }
+      }
+    },
+    "componentBurned": {
+      "titre": "Composant grillé",
+      "gravite": "danger",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant} grillé."
+        },
+        "standard": {
+          "constat": "{composant} a grillé : il est hors service.",
+          "cause": "Il a subi une contrainte au-delà de ce qu'il supporte (court-circuit, tension ou courant excessif)."
+        },
+        "apprentissage": {
+          "explication": "{composant} a reçu plus que ce qu'il peut supporter et il est détruit. En réel, cela signifie de la fumée, une odeur de brûlé, et un composant à remplacer — c'est exactement ce que les protections servent à éviter.",
+          "cause": "Une contrainte excessive (court-circuit, surtension ou surintensité) a traversé {composant} sans qu'une protection ne l'arrête à temps.",
+          "indice_1": "Regarde le journal : quel défaut s'est produit juste avant le grillage ? C'est lui le coupable.",
+          "indice_2": "Demande-toi quelle protection aurait dû sauver {composant} : est-elle présente, bien calibrée, bien placée en amont ?",
+          "correction": "Corrige le défaut d'origine, remplace {composant}, et assure-toi qu'une protection adaptée est en amont.",
+          "ref_cours": "cours:protections"
+        }
+      }
+    },
+    "breakerTripped": {
+      "titre": "Disjoncteur déclenché",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant} déclenché."
+        },
+        "standard": {
+          "constat": "Le disjoncteur {composant} a déclenché : tout ce qui est en aval est hors tension.",
+          "cause": "Il a détecté un défaut sur son circuit et a coupé pour protéger."
+        },
+        "apprentissage": {
+          "explication": "Le disjoncteur {composant} a fait son travail : il a détecté un problème et a coupé le courant pour protéger le circuit et les personnes. Tout ce qui est branché après lui est maintenant hors tension.",
+          "cause": "Un défaut (souvent un court-circuit) s'est produit en aval de {composant}.",
+          "indice_1": "Ne réarme pas tout de suite : cherche d'abord POURQUOI il a déclenché. Que s'est-il passé en aval ?",
+          "indice_2": "Regarde le journal : le défaut qui a causé le déclenchement y est inscrit juste avant.",
+          "correction": "Trouve et corrige le défaut en aval, puis réarme {composant}.",
+          "ref_cours": "cours:disjoncteur"
+        }
+      }
+    },
+    "breakerOverloadTrip": {
+      "titre": "Déclenchement thermique",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant} : déclenchement thermique (surcharge > {courant_max} A)."
+        },
+        "standard": {
+          "constat": "{composant} a déclenché en surcharge : le courant dépassait durablement son calibre de {calibre}.",
+          "cause": "Trop de puissance demandée en aval par rapport au calibre du disjoncteur."
+        },
+        "apprentissage": {
+          "explication": "Le courant a dépassé pendant trop longtemps ce que {composant} (calibre {calibre}) accepte. Sa protection thermique — un bilame qui chauffe avec le courant — a fini par couper. C'est la protection contre les surcharges : elle est volontairement lente, pour tolérer les pointes brèves mais couper les excès durables.",
+          "cause": "La somme des charges en aval tire plus de courant que le calibre de {composant} ne le permet ({courant_max} A max en continu).",
+          "indice_1": "Additionne ce que consomment tes charges en aval : est-ce compatible avec un calibre de {calibre} ?",
+          "indice_2": "Deux solutions existent : réduire la charge, ou revoir le calibre — mais attention, un calibre plus gros doit rester adapté à la section des fils qu'il protège.",
+          "correction": "Réduis la charge en aval ou adapte le calibre en respectant ce que les conducteurs supportent, puis réarme.",
+          "ref_cours": "cours:surcharge"
+        }
+      }
+    },
+    "breakerMagneticTrip": {
+      "titre": "Déclenchement magnétique",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant} : déclenchement magnétique instantané (courbe {courbe})."
+        },
+        "standard": {
+          "constat": "{composant} a déclenché instantanément : le courant a dépassé son seuil magnétique.",
+          "cause": "Un courant très élevé et brutal (typique d'un court-circuit) a traversé le disjoncteur de calibre {calibre}, courbe {courbe}."
+        },
+        "apprentissage": {
+          "explication": "{composant} a coupé en une fraction de seconde : c'est son déclencheur magnétique, la protection contre les courts-circuits. Contrairement au thermique (lent, pour les surcharges), le magnétique réagit instantanément quand le courant explose. Sa courbe {courbe} fixe le seuil de réaction.",
+          "cause": "Un courant brutal, bien au-delà du seuil de la courbe {courbe} du calibre {calibre}, a traversé {composant} — presque toujours à cause d'un court-circuit en aval.",
+          "indice_1": "Un déclenchement instantané signifie presque toujours un court-circuit : cherche où phase et neutre (ou deux phases) se rejoignent en aval.",
+          "indice_2": "Si le circuit est sain mais qu'un moteur démarre, son courant d'appel peut dépasser une courbe B : c'est le rôle des courbes C et D de tolérer ces pointes.",
+          "correction": "Élimine le court-circuit en aval (ou adapte la courbe au type de charge), puis réarme.",
+          "ref_cours": "cours:courbes_declenchement"
+        }
+      }
+    },
+    "rcdResidualTrip": {
+      "titre": "Différentiel déclenché",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant} : déclenchement différentiel (courant résiduel ≥ IΔn)."
+        },
+        "standard": {
+          "constat": "L'interrupteur différentiel {composant} a déclenché : une partie du courant fuit vers la terre en aval.",
+          "cause": "Le courant qui part par la phase ne revient pas entièrement par le neutre — la différence s'écoule vers la terre (défaut d'isolement probable)."
+        },
+        "apprentissage": {
+          "explication": "Le tore de {composant} compare en permanence le courant aller (phase) et le courant retour (neutre). Normalement ils sont identiques. Ici une partie du courant s'échappe vers la terre — souvent par la carcasse d'un appareil dont l'isolement est défectueux — et dès que cette fuite atteint la sensibilité IΔn, le différentiel coupe. C'est la protection des PERSONNES contre les contacts indirects.",
+          "cause": "Un défaut d'isolement en aval fait fuir du courant vers la terre par le conducteur de protection (PE).",
+          "indice_1": "Ne réarme pas en boucle : le différentiel redéclenchera tant que la fuite existe. Cherche QUEL appareil en aval fuit vers la terre.",
+          "indice_2": "Débranche les récepteurs un par un puis réarme : celui qui fait redéclencher porte le défaut d'isolement (mesure-le à l'ohmmètre entre une borne et la carcasse).",
+          "correction": "Identifie l'appareil en défaut d'isolement, répare ou remplace-le, puis réarme {composant}.",
+          "ref_cours": "cours:differentiel"
+        }
+      }
+    },
+    "breakerVoltageMismatch": {
+      "titre": "Ue insuffisante",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant} : tension réseau {reseau_u} incompatible avec Ue {ue}."
+        },
+        "standard": {
+          "constat": "{composant} n'est pas prévu pour cette tension : réseau à {reseau_u}, tension assignée {ue}.",
+          "cause": "La tension assignée (Ue) du disjoncteur ne correspond pas à la tension du réseau."
+        },
+        "apprentissage": {
+          "explication": "Chaque disjoncteur est conçu pour une tension précise, sa tension assignée Ue. {composant} est prévu pour {ue}, mais ton réseau est à {reseau_u}. Sous-dimensionné, il peut être détruit ; surdimensionné, il peut mal couper. En réel, on lit toujours Ue sur la face avant avant d'installer.",
+          "cause": "La tension assignée de {composant} ({ue}) ne correspond pas à la tension du réseau ({reseau_u}).",
+          "indice_1": "Compare la tension écrite sur le composant avec celle de ta source : est-ce la même famille (230 V ? 400 V ?) ?",
+          "indice_2": "Demande-toi si ton circuit est en phase-neutre (230 V) ou entre phases (400 V) : le choix du matériel en dépend.",
+          "correction": "Remplace {composant} par un modèle dont la tension assignée correspond au réseau.",
+          "ref_cours": "cours:tension_assignee"
+        }
+      }
+    },
+    "breakerBreakingCapacityExceeded": {
+      "titre": "Icn insuffisant",
+      "gravite": "danger",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant} : Icc {icc} > pouvoir de coupure Icn {icn}."
+        },
+        "standard": {
+          "constat": "Le courant de court-circuit ({icc}) dépasse le pouvoir de coupure de {composant} ({icn}).",
+          "cause": "Le disjoncteur ne peut pas interrompre un courant de défaut aussi élevé : il risque d'être détruit sans couper."
+        },
+        "apprentissage": {
+          "explication": "Situation très dangereuse : le courant de court-circuit ({icc}) est plus fort que ce que {composant} est capable d'interrompre (son pouvoir de coupure Icn : {icn}). En réel, le disjoncteur peut exploser ou souder ses contacts SANS couper le courant — la protection elle-même devient le danger.",
+          "cause": "Le pouvoir de coupure Icn de {composant} est inférieur au courant de court-circuit présumé à cet endroit de l'installation.",
+          "indice_1": "Le pouvoir de coupure (Icn, en ampères ou kA) est écrit sur la face du disjoncteur : compare-le au courant de défaut calculé.",
+          "indice_2": "Plus on est proche de la source, plus l'Icc est élevé : le matériel proche de l'arrivée doit avoir un Icn plus fort.",
+          "correction": "Choisis un disjoncteur dont l'Icn est supérieur au courant de court-circuit présumé à ce point du circuit.",
+          "ref_cours": "cours:pouvoir_coupure"
+        }
+      }
+    },
+    "oscillation": {
+      "titre": "Oscillation",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "Circuit instable : oscillation détectée."
+        },
+        "standard": {
+          "constat": "Le circuit ne se stabilise pas : un élément s'allume et s'éteint en boucle.",
+          "cause": "Un composant coupe sa propre alimentation, ce qui le réenclenche, et ainsi de suite."
+        },
+        "apprentissage": {
+          "explication": "Ton circuit oscille : quelque chose s'active, ce qui coupe sa propre alimentation, ce qui le désactive, ce qui le réalimente… à l'infini. Le circuit ne trouve jamais d'état stable. En réel, on entendrait un composant « claquer » sans arrêt.",
+          "cause": "Une boucle de rétroaction existe : un composant commande (directement ou non) sa propre alimentation avec un contact qui s'ouvre quand il s'active.",
+          "indice_1": "Cherche le composant qui bat : qu'est-ce qui l'alimente, et qu'est-ce qu'il coupe quand il s'active ?",
+          "indice_2": "Vérifie tes contacts NO et NC : un NC utilisé là où il faut un NO (ou l'inverse) crée souvent cette boucle.",
+          "correction": "Casse la boucle : le composant ne doit pas couper sa propre alimentation (revois le type de contact ou le câblage de maintien).",
+          "ref_cours": "cours:auto_maintien"
+        }
+      }
+    },
+    "noSource": {
+      "titre": "Aucune source",
+      "gravite": "remarque",
+      "niveaux": {
+        "expert": {
+          "resume": "Aucune source dans le circuit."
+        },
+        "standard": {
+          "constat": "Le circuit ne contient aucune source d'alimentation.",
+          "cause": "Sans source, aucun courant ne peut circuler."
+        },
+        "apprentissage": {
+          "explication": "Tout circuit a besoin d'une source d'énergie : c'est elle qui crée la différence de potentiel qui met les électrons en mouvement. Sans source, ton montage est un décor — rien ne peut circuler.",
+          "cause": "Aucune source (réseau, alimentation) n'est posée ou reliée dans ce circuit.",
+          "indice_1": "Quel composant fournit l'énergie dans ton montage ? Va le chercher dans le catalogue.",
+          "indice_2": "Une fois la source posée, repère ses bornes : c'est d'elles que partira tout ton câblage.",
+          "correction": "Ajoute une source d'alimentation et relie ton circuit à ses bornes.",
+          "ref_cours": "cours:source"
+        }
+      }
+    },
+    "noLoad": {
+      "titre": "Aucun récepteur",
+      "gravite": "remarque",
+      "niveaux": {
+        "expert": {
+          "resume": "Aucune charge dans le circuit."
+        },
+        "standard": {
+          "constat": "Le circuit ne contient aucune charge (récepteur).",
+          "cause": "Sans charge, le circuit n'a rien à alimenter — et le relier bouclerait la source sur elle-même."
+        },
+        "apprentissage": {
+          "explication": "Un circuit sert à alimenter quelque chose : une lampe, un moteur, une bobine… c'est la charge. Sans charge, non seulement ton circuit ne fait rien, mais fermer la boucle reviendrait à créer un court-circuit : le courant n'aurait rien pour le freiner.",
+          "cause": "Aucun récepteur n'est présent dans ce circuit.",
+          "indice_1": "Que veux-tu faire fonctionner ? Ajoute ce récepteur : c'est lui qui donne un but (et une résistance) au courant.",
+          "indice_2": "Place la charge sur le trajet du courant : le courant doit la traverser pour aller de la phase au neutre.",
+          "correction": "Ajoute une charge et fais passer le courant à travers elle.",
+          "ref_cours": "cours:charge"
+        }
+      }
+    },
+    "relayThermalTrip": {
+      "titre": "Relais thermique déclenché",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant} : relais thermique déclenché (réglage {courant_max} A)."
+        },
+        "standard": {
+          "constat": "Le relais thermique {composant} a déclenché : son contact de sécurité (95-96) s'est ouvert.",
+          "cause": "Le moteur a tiré durablement plus que le réglage du relais ({courant_max} A) — signe de surcharge mécanique ou électrique."
+        },
+        "apprentissage": {
+          "explication": "Le relais thermique {composant} protège le MOTEUR (pas les fils : ça, c'est le disjoncteur). Le moteur a consommé trop de courant trop longtemps — comme s'il forçait — et le relais a ouvert son contact 95-96, coupant la bobine du contacteur : le moteur s'arrête avant de brûler.",
+          "cause": "Le courant absorbé a dépassé durablement le réglage de {composant} ({courant_max} A) : moteur qui force, qui est bloqué, ou réglage trop bas.",
+          "indice_1": "Suis la chaîne : relais déclenché → contact 95-96 ouvert → bobine du contacteur plus alimentée → moteur arrêté. Retrouve ces maillons dans ton schéma.",
+          "indice_2": "Compare le réglage du relais au courant nominal du moteur : le réglage doit correspondre à la plaque du moteur, ni trop bas (déclenche pour rien) ni trop haut (ne protège plus).",
+          "correction": "Traite la cause (surcharge du moteur ou réglage inadapté), puis réarme le relais.",
+          "ref_cours": "cours:relais_thermique"
+        }
+      }
+    },
+    "relayPhaseLoss": {
+      "titre": "Relais thermique : perte de phase",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant} : déclenchement différentiel — un pôle sans courant pendant que les autres conduisent."
+        },
+        "standard": {
+          "constat": "Le relais thermique {composant} a déclenché en PERTE DE PHASE : un de ses pôles ne voyait plus aucun courant pendant que les autres conduisaient.",
+          "cause": "Une phase du circuit moteur est coupée (fil débranché, borne desserrée, fusible fondu) — ou, en monophasé, la phase n'est pas bouclée dans les trois pôles du relais."
+        },
+        "apprentissage": {
+          "explication": "Un moteur triphasé a besoin de ses TROIS phases, comme un tabouret a besoin de ses trois pieds. Si une phase disparaît, le moteur continue de tourner sur deux phases mais il force : les deux enroulements restants surchauffent. Le relais {composant} le détecte en comparant ses bilames : celui de la phase morte reste froid pendant que les autres chauffent — ce déséquilibre fait déclencher plus vite qu'une surcharge classique.",
+          "cause": "Un des pôles de puissance de {composant} n'est plus traversé par aucun courant : phase coupée en amont ou en aval (fil débranché, contact ouvert, fusible), pendant que les autres pôles conduisent encore.",
+          "indice_1": "Compare les trois pôles du relais : lequel ne voit plus de courant ? Remonte le fil de ce pôle vers la source, puis descends vers le moteur, pour trouver la coupure.",
+          "indice_2": "Astuce de métier : si ton circuit est MONOPHASÉ, il faut boucler la phase dans les trois pôles du relais (en série), sinon le relais croit à une perte de phase — c'est exactement ce qui vient de se passer.",
+          "correction": "Rétablis la phase manquante (rebranche le fil, resserre la borne), ou boucle la phase dans les trois pôles si le circuit est monophasé, puis réarme le relais.",
+          "ref_cours": "cours:relais_thermique"
+        }
+      }
+    },
+    "phaseSansRetour": {
+      "titre": "Phase sans retour",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant} : phase présente, aucun retour ({borne})."
+        },
+        "standard": {
+          "constat": "{composant} reçoit la phase, mais le courant n'a aucun chemin de retour.",
+          "cause": "La liaison vers le neutre est absente ou interrompue (borne {borne} concernée)."
+        },
+        "apprentissage": {
+          "explication": "Le courant est comme un coureur sur une piste : il doit faire la boucle complète. Ici, la phase arrive bien jusqu'à {composant}, mais il n'y a pas de chemin de retour vers le neutre — le courant est au départ, sans route pour revenir. Attention : le fil est quand même sous tension, donc dangereux en réel, même si rien ne s'allume.",
+          "cause": "La borne {borne} de {composant} n'est pas reliée au neutre (liaison absente ou coupée).",
+          "indice_1": "Ton courant part bien de la phase — mais par où revient-il ? Suis le chemin après {composant}.",
+          "indice_2": "Regarde la borne {borne} de {composant} : est-elle reliée à quelque chose qui mène au neutre ?",
+          "correction": "Relie la sortie de {composant} au neutre pour fermer la boucle.",
+          "ref_cours": "cours:circuit_ferme"
+        }
+      }
+    },
+    "retourSansPhase": {
+      "titre": "Retour sans phase",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant} : neutre présent, aucune alimentation ({borne})."
+        },
+        "standard": {
+          "constat": "{composant} est relié au neutre, mais aucune phase ne l'alimente.",
+          "cause": "La liaison côté phase est absente ou interrompue (borne {borne} concernée)."
+        },
+        "apprentissage": {
+          "explication": "{composant} a bien son chemin de retour (le neutre), mais rien ne lui apporte l'énergie : aucune phase n'arrive jusqu'à lui. C'est une route de retour sans départ — le courant n'a pas de point de départ pour circuler.",
+          "cause": "La borne {borne} de {composant} n'est reliée à aucune phase (liaison absente, ou un contact ouvert coupe l'arrivée).",
+          "indice_1": "Le retour est là — mais où est l'arrivée ? D'où devrait venir la phase de {composant} ?",
+          "indice_2": "Suis le chemin depuis la source : y a-t-il un interrupteur ou un contact ouvert qui bloque la phase avant {composant} ?",
+          "correction": "Amène la phase jusqu'à la borne {borne} de {composant} (et ferme les contacts nécessaires sur le trajet).",
+          "ref_cours": "cours:circuit_ferme"
+        }
+      }
+    },
+    "dcSupplySansEntreeAc": {
+      "titre": "Alimentation DC · entrée AC absente",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant} : ON, mais L/N non alimentés — pas de 24 V."
+        },
+        "standard": {
+          "constat": "{composant} est en service, mais l'entrée AC (L et N) n'est pas alimentée.",
+          "cause": "Sans phase et neutre en haut, la sortie 24 V DC reste à zéro."
+        },
+        "apprentissage": {
+          "explication": "Une alimentation à découpage convertit le secteur (230 V~ sur L et N) en 24 V continu. Si tu n'amènes pas le réseau sur les bornes du haut, le convertisseur n'a rien à transformer : les bornes + et − du bas restent sans tension. Ce n'est pas un court-circuit — c'est simplement l'alim qui n'est pas alimentée côté AC.",
+          "cause": "Les bornes L et N de {composant} ne sont pas reliées à une source réseau active (phase + neutre).",
+          "indice_1": "Regarde le haut de {composant} : y a-t-il un fil de phase (L) et un fil de neutre (N) venant du réseau ?",
+          "indice_2": "Vérifie aussi que le réseau est bien actif (simulation démarrée) et que le disjoncteur en amont, s'il y en a un, est enclenché.",
+          "correction": "Relie L et N de {composant} au réseau (phase et neutre), lance la simulation, puis utilise + et − en bas pour ta commande 24 V.",
+          "ref_cours": "cours:alimentation_dc"
+        }
+      }
+    },
+    "coilVoltageMismatch": {
+      "titre": "Bobine incompatible",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant} : bobine {bobine}, bornes A1–A2 sous {reseau}."
+        },
+        "standard": {
+          "constat": "La bobine de {composant} est prévue pour {bobine}, mais A1–A2 voient {reseau}.",
+          "cause": "La tension ou le type (alternatif / continu) aux bornes de la bobine ne correspond pas à la plaque."
+        },
+        "apprentissage": {
+          "explication": "Une bobine de contacteur n'accepte que la tension écrite sur sa plaque. {composant} est prévu pour {bobine}. Ici, A1 et A2 reçoivent {reseau}. Surtension (ex. 230 V sur une bobine 24 V) : chauffe, fumée, destruction possible — le contacteur ne reste pas collé. Sous-tension (ex. 230 V sur une bobine 400 V) : pas assez de force, pas de collage. AC/DC différent : même nombre de volts ne suffit pas.",
+          "cause": "A1–A2 de {composant} ne sont pas alimentés comme l'indique la plaque ({bobine}).",
+          "indice_1": "Lis la tension gravée sur la bobine (24 V DC, 230 V AC…). Compare-la à ce que tu as réellement câblé sur A1 et A2.",
+          "indice_2": "Une commande 24 V continu part du + et du − d'une alimentation, pas de la phase et du neutre du 230 V.",
+          "correction": "Alimente A1–A2 avec la tension de la plaque, ou remplace {composant} par une bobine adaptée à {reseau}.",
+          "ref_cours": "cours:tension_assignee"
+        }
+      }
+    },
+    "loadPlaqueMismatch": {
+      "titre": "Charge incompatible",
+      "gravite": "dysfonctionnement",
+      "niveaux": {
+        "expert": {
+          "resume": "{composant} : plaque {plaque}, reçoit {recu}."
+        },
+        "standard": {
+          "constat": "{composant} est prévu pour {plaque}, il reçoit {recu}.",
+          "cause": "La tension ou le type (alternatif / continu) ne correspond pas à la plaque."
+        },
+        "apprentissage": {
+          "explication": "Une lampe, un voyant ou un moteur ne fonctionne qu'avec la tension écrite sur sa plaque. {composant} est prévu pour {plaque}. Ici, il reçoit {recu}. Un 230 V alternatif sur du 24 V continu reste éteint : le nombre de volts ne suffit pas, et le continu n'est pas l'alternatif. En série, deux lampes de même plaque voient encore la tension de la source et restent allumées.",
+          "cause": "{composant} n'est pas alimenté comme l'indique sa plaque ({plaque}).",
+          "indice_1": "Lis la tension gravée sur {composant}. Compare-la à la source réellement branchée.",
+          "indice_2": "Le 24 V continu sort des bornes + et − d'une alimentation. Une lampe 230 V~ se branche sur la phase et le neutre.",
+          "correction": "Remplace {composant} par un modèle prévu pour {recu}, ou alimente-le avec {plaque}.",
+          "ref_cours": "cours:tension_assignee"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,163 @@
+{
+  "version": 3,
+  "id": "defi_protection",
+  "titre": {
+    "fr": "Défi — Circuit protégé",
+    "en": "Challenge — Protected circuit"
+  },
+  "niveau": "intermediaire",
+  "guidage": "defi",
+  "typeTp": "defi",
+  "niveauTaxonomie": 6,
+  "niveauAssistance": "diagnostic",
+  "objectif": {
+    "fr": "Sans étapes : disjoncteur en tête + interrupteur + lampe. Vérifie.",
+    "en": "No steps: breaker at the head + switch + lamp. Check your work."
+  },
+  "tags": [
+    "domestique",
+    "protection",
+    "defi"
+  ],
+  "roles": {
+    "reseau": {
+      "typeComposant": "reseau"
+    },
+    "disjoncteur_principal": {
+      "typeComposant": "disjoncteur"
+    },
+    "interrupteur_principal": {
+      "typeComposant": "interrupteur",
+      "sousType": "simple"
+    },
+    "lampe_1": {
+      "typeComposant": "lampe_suspension"
+    }
+  },
+  "etapes": [
+    {
+      "type": "info",
+      "id": "e1",
+      "instruction": {
+        "fr": "Défi : protège ton circuit d'éclairage, puis Vérifie.",
+        "en": "Challenge: protect your lighting circuit, then Check."
+      }
+    },
+    {
+      "type": "scenario",
+      "id": "e2",
+      "instruction": {
+        "fr": "Vérifie ton montage protégé.",
+        "en": "Check your protected assembly."
+      },
+      "scenarioId": ""
+    }
+  ],
+  "verification": {
+    "scenarios": [
+      {
+        "id": "sc1",
+        "actions": [
+          {
+            "cible": "role:disjoncteur_principal",
+            "etat": {
+              "estEnclenche": true
+            }
+          },
+          {
+            "cible": "role:interrupteur_principal",
+            "etat": {
+              "estFerme": true
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "composantAllume",
+            "cible": "role:lampe_1",
+            "attendu": true
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Tout enclenché : la lampe doit s'allumer.",
+          "en": "Everything switched on: the lamp must light up."
+        }
+      },
+      {
+        "id": "sc2",
+        "actions": [
+          {
+            "cible": "role:disjoncteur_principal",
+            "etat": {
+              "estEnclenche": false
+            }
+          },
+          {
+            "cible": "role:interrupteur_principal",
+            "etat": {
+              "estFerme": true
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "composantAllume",
+            "cible": "role:lampe_1",
+            "attendu": false
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Disjoncteur déclenché : la lampe doit s'éteindre.",
+          "en": "Breaker tripped: the lamp must go out."
+        }
+      },
+      {
+        "id": "sc3",
+        "actions": [
+          {
+            "cible": "role:disjoncteur_principal",
+            "etat": {
+              "estEnclenche": true
+            }
+          },
+          {
+            "cible": "role:interrupteur_principal",
+            "etat": {
+              "estFerme": false
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "composantAllume",
+            "cible": "role:lampe_1",
+            "attendu": false
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Interrupteur ouvert : la lampe doit rester éteinte.",
+          "en": "Switch open: the lamp must stay off."
+        }
+      }
+    ]
+  },
+  "messages": {
+    "succes": {
+      "fr": "Défi protection réussi ! Ton disjoncteur en tête de circuit coupe phase ET neutre : en cas de défaut, tout le circuit aval est mis hors tension. C'est la règle d'or des installations.",
+      "en": "Protection challenge complete! Your breaker at the head of the circuit cuts both phase AND neutral: on a fault, the whole downstream circuit is de-energised. That is the golden rule of installations."
+    },
+    "indice": {
+      "fr": "Disjoncteur en tête, sur la phase et le neutre.",
+      "en": "Breaker at the head, on both phase and neutral."
+    }
+  }
+}

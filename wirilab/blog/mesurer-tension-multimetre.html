@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Mesure d'audience Webful (wirilab:webful). -->
+  <script src="../js/webful-wirilab.js"></script>
+
+  <title>Mesurer 230 V au multimètre — Blog WiriLab</title>
+  <meta name="description" content="Procédure pas à pas : calibre V~, pointes phase-neutre, lecture 230 V, erreurs courantes et sécurité en formation électrique.">
+  <link rel="icon" type="image/png" href="../assets/wirilab_icon_512.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=32">
+</head>
+<body class="blog-page blog-article-page">
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="../index.html">
+      <img src="../assets/wirilab_icon_512.png" alt="WiriLab" width="30" height="30">
+      <span>WiriLab</span>
+    </a>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="./">Blog</a>
+      <a href="../app/">Commencer gratuitement</a>
+    </nav>
+  </div>
+</header>
+
+<main class="blog-article-main">
+  <article class="shell blog-article">
+    <p class="blog-article-back"><a href="./">← Retour au blog</a></p>
+    <p class="blog-kicker">Mesure · Formation domestique</p>
+    <h1>Mesurer 230 V au multimètre sans se tromper de calibre</h1>
+    <p class="blog-article-meta">Mis à jour le 27 septembre 2026 · Environ 8 min de lecture</p>
+
+    <p class="blog-lead">Mesurer une tension entre phase et neutre est l’un des premiers gestes qu’on vous demande en atelier. Ce n’est pas difficile en théorie, mais une mauvaise position du sélecteur ou des pointes mal placées donnent une lecture fausse — ou un risque inutile. Voici une procédure claire, utilisable sur une installation réelle ou dans un simulateur comme WiriLab.</p>
+
+    <figure class="blog-figure">
+      <img src="../assets/export/mesure.png" alt="Circuit d’éclairage : source 230 V, trois lampes, multimètre en V~ affichant 230 V entre phase et neutre.">
+      <figcaption>Exemple dans WiriLab : le multimètre est en volts alternatifs (V~). Les pointes sont sur la phase (fil rouge) et le neutre (fil bleu) en amont des interrupteurs.</figcaption>
+    </figure>
+
+    <h2>1. Ce que vous mesurez vraiment</h2>
+    <p>Entre <strong>phase (L)</strong> et <strong>neutre (N)</strong>, en courant alternatif monophasé, on s’attend en Europe à environ <strong>230 V</strong> (ancien réseau 220 V : même idée, tolérance normative). Vous ne mesurez pas le « courant qui consomme les lampes » avec le calibre volts : vous mesurez la <em>tension disponible</em> entre deux conducteurs.</p>
+    <p>Ne confondez pas :</p>
+    <ul>
+      <li><strong>Phase – neutre</strong> → tension d’alimentation du circuit (≈ 230 V).</li>
+      <li><strong>Phase – terre</strong> → souvent proche de 230 V si la terre est bonne (contrôle de sécurité, pas le remplacement du neutre).</li>
+      <li><strong>Neutre – terre</strong> → doit rester faible en valeur ; une tension élevée ici signale un problème de neutre ou de liaison.</li>
+    </ul>
+
+    <h2>2. Préparer le multimètre</h2>
+    <ol>
+      <li>Choisir <strong>V~</strong> (volts alternatifs) ou <strong>AUTO</strong> si l’appareil reconnaît le AC.</li>
+      <li>Brancher les cordons : <strong>COM</strong> (noir) et <strong>VΩ</strong> (rouge) pour une mesure de tension.</li>
+      <li>Vérifier l’état des pointes et des gaines : pas de fissure, pas de fil dénudé hors des doigts.</li>
+    </ol>
+    <p>Erreur classique en TP : laisser le sélecteur sur <strong>mA</strong> ou sur <strong>Ω</strong>. L’appareil ne sert plus à mesurer une tension, et dans le pire cas on abîme l’instrument ou le circuit.</p>
+
+    <h2>3. Procédure sur un circuit sous tension</h2>
+    <p>En milieu professionnel, seules les personnes habilitées et équipées interviennent sur une installation sous tension. En formation, suivez toujours les consignes de votre centre (EPI, consignation, témoin de présence tension).</p>
+    <ol>
+      <li>Identifier clairement <strong>L</strong> et <strong>N</strong> sur le schéma ou le bornier.</li>
+      <li>Poser une pointe sur le conducteur de phase, l’autre sur le neutre — contact stable, sans court-circuiter deux phases entre elles.</li>
+      <li>Lire l’affichage : valeur stable, symbole <strong>V~</strong> ou <strong>AC</strong> visible.</li>
+      <li>Noter la mesure (carnet de TP, capture d’écran en simulation).</li>
+    </ol>
+    <p>Si l’affichage oscille beaucoup, revérifier le contact des pointes ou la présence d’un défaut (mauvais serrage, neutre coupé en amont).</p>
+
+    <h2>4. Interpréter le résultat</h2>
+    <table class="blog-table">
+      <thead>
+        <tr><th>Lecture</th><th>Piste</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>≈ 230 V (par ex. 225–235 V)</td><td>Alimentation cohérente ; poursuivre le diagnostic du circuit (interrupteurs, charges).</td></tr>
+        <tr><td>0 V ou très faible</td><td>Pas de tension entre ces deux points : disjoncteur ouvert, câble coupé, mauvais point de mesure.</td></tr>
+        <tr><td>Valeur incohérente (ex. 50 V)</td><td>Neutre dégradé, mesure sur une borne flottante, ou mauvais calibre.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>5. Erreurs fréquentes en formation</h2>
+    <ul>
+      <li>Mesurer entre deux phases sur un circuit monophasé en croyant mesurer « l’ampoule ».</li>
+      <li>Oublier que les interrupteurs coupent souvent la <strong>phase</strong> : la tension peut être absente après l’interrupteur même si la lampe est « en aval » du neutre.</li>
+      <li>Ne pas noter le calibre utilisé dans le compte rendu de TP.</li>
+    </ul>
+
+    <h2>6. S’entraîner dans WiriLab</h2>
+    <p>Dans le simulateur, vous pouvez répéter la séquence sans risque physique : même enchaînement calibre → pointes → lecture. Quand l’affichage affiche 230 V et que les lampes s’allument après fermeture des interrupteurs, vous avez validé à la fois la mesure et la cohérence du câblage.</p>
+    <p class="blog-cta-box">
+      <strong>À retenir :</strong> V~, phase et neutre, lecture stable, puis interprétation. Quatre étapes, à refaire jusqu’à ce que ce soit automatique.
+    </p>
+    <p><a class="button button-primary" href="../app/">Ouvrir le simulateur</a></p>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <div class="shell copyright">
+    <p>© 2026 WiriLab · <a href="./">Blog</a></p>
+  </div>
+</footer>
+</body>
+</html>

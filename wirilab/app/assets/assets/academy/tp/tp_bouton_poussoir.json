@@ -1,0 +1,260 @@
+{
+  "version": 3,
+  "id": "tp_bouton_poussoir",
+  "titre": {
+    "fr": "Bouton poussoir et lampe",
+    "en": "Push button and lamp"
+  },
+  "niveau": "intermediaire",
+  "guidage": "semiGuide",
+  "typeTp": "assemblage",
+  "niveauTaxonomie": 3,
+  "objectif": {
+    "fr": "Commander une lampe avec un bouton poussoir momentané (contact maintenu).",
+    "en": "Control a lamp with a momentary push button (held contact)."
+  },
+  "tags": [
+    "domestique",
+    "commande",
+    "poussoir"
+  ],
+  "roles": {
+    "reseau": {
+      "typeComposant": "reseau"
+    },
+    "poussoir_1": {
+      "typeComposant": "bouton_poussoir"
+    },
+    "lampe_1": {
+      "typeComposant": "lampe_suspension"
+    }
+  },
+  "etapes": [
+    {
+      "type": "info",
+      "id": "e1",
+      "instruction": {
+        "fr": "Un bouton poussoir ne reste pas fermé : la lampe s'allume seulement tant que tu appuies.",
+        "en": "A push button does not stay closed: the lamp lights up only while you press it."
+      }
+    },
+    {
+      "type": "poserComposant",
+      "id": "e2",
+      "instruction": {
+        "fr": "Pose le réseau.",
+        "en": "Place the supply."
+      },
+      "role": "reseau"
+    },
+    {
+      "type": "poserComposant",
+      "id": "e3",
+      "instruction": {
+        "fr": "Pose un bouton poussoir.",
+        "en": "Place a push button."
+      },
+      "role": "poussoir_1",
+      "indices": [
+        {
+          "fr": "Catalogue → Commande → Bouton poussoir. Bornes 13-14.",
+          "en": "Catalog → Control → Push button. Terminals 13-14."
+        }
+      ]
+    },
+    {
+      "type": "poserComposant",
+      "id": "e4",
+      "instruction": {
+        "fr": "Pose la lampe.",
+        "en": "Place the lamp."
+      },
+      "role": "lampe_1"
+    },
+    {
+      "type": "info",
+      "id": "e5",
+      "instruction": {
+        "fr": "Câble : phase → 13 du poussoir → 14 → L1 de la lampe → neutre. Puis vérifie.",
+        "en": "Wire it: phase → button 13 → 14 → lamp L1 → neutral. Then check."
+      }
+    },
+    {
+      "type": "prediction",
+      "id": "e6",
+      "instruction": {
+        "fr": "Avant de vérifier :",
+        "en": "Before checking:"
+      },
+      "question": {
+        "fr": "Que fait la lampe quand tu RELÂCHES le poussoir ?",
+        "en": "What does the lamp do when you RELEASE the button?"
+      },
+      "choix": [
+        {
+          "fr": "Elle reste allumée : le contact se maintient",
+          "en": "It stays lit: the contact holds"
+        },
+        {
+          "fr": "Elle s'éteint : le ressort rouvre le contact 13-14",
+          "en": "It goes out: the spring reopens contact 13-14"
+        },
+        {
+          "fr": "Elle clignote",
+          "en": "It blinks"
+        }
+      ],
+      "bonneReponse": 1,
+      "explication": {
+        "fr": "Un poussoir est un contact MOMENTANÉ : un ressort le ramène en position ouverte dès qu'on relâche. C'est sa grande différence avec l'interrupteur.",
+        "en": "A push button is a MOMENTARY contact: a spring returns it to the open position as soon as you let go. That is its key difference from a switch."
+      }
+    },
+    {
+      "type": "scenario",
+      "id": "e7",
+      "instruction": {
+        "fr": "Vérifie : poussoir enfoncé = lampe allumée.",
+        "en": "Check: button pressed = lamp on."
+      },
+      "scenarioId": ""
+    }
+  ],
+  "verification": {
+    "scenarios": [
+      {
+        "id": "sc1",
+        "actions": [
+          {
+            "cible": "role:poussoir_1",
+            "etat": {
+              "estFerme": true
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "composantAllume",
+            "cible": "role:lampe_1",
+            "attendu": true
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Poussoir enfoncé : la lampe doit s'allumer. Vérifie 13-14 dans le chemin de phase.",
+          "en": "Button pressed: the lamp must light up. Check 13-14 in the phase path."
+        }
+      },
+      {
+        "id": "sc2",
+        "actions": [
+          {
+            "cible": "role:poussoir_1",
+            "etat": {
+              "estFerme": false
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "composantAllume",
+            "cible": "role:lampe_1",
+            "attendu": false
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Poussoir relâché : la lampe doit s'éteindre.",
+          "en": "Button released: the lamp must go out."
+        }
+      }
+    ]
+  },
+  "messages": {
+    "succes": {
+      "fr": "Bien joué ! Tu maîtrises le contact momentané : la lampe ne s'allume que tant que le poussoir est enfoncé. C'est la brique de base du télérupteur et de la minuterie.",
+      "en": "Well done! You have mastered the momentary contact: the lamp lights only while the button is held. It is the building block of impulse relays and timers."
+    },
+    "indice": {
+      "fr": "Bornes 13 (entrée) et 14 (sortie) du poussoir, dans le chemin de la phase.",
+      "en": "Push button terminals 13 (input) and 14 (output), in the phase path."
+    }
+  },
+  "conclusion": {
+    "synthese": {
+      "fr": "Aujourd'hui tu as appris la commande par contact momentané :",
+      "en": "Today you learned momentary-contact control:"
+    },
+    "acquis": [
+      {
+        "fr": "différencier poussoir (momentané, à ressort) et interrupteur (maintenu)",
+        "en": "telling apart a push button (momentary, spring-return) and a switch (maintained)"
+      },
+      {
+        "fr": "repérer les bornes normalisées 13-14 d'un contact de commande",
+        "en": "identifying the standard 13-14 terminals of a control contact"
+      },
+      {
+        "fr": "insérer un organe de commande dans le chemin de la phase",
+        "en": "inserting a control device in the phase path"
+      }
+    ],
+    "questions": [
+      {
+        "question": {
+          "fr": "Quelle est la différence entre un poussoir et un interrupteur ?",
+          "en": "What is the difference between a push button and a switch?"
+        },
+        "choix": [
+          {
+            "fr": "Aucune, c'est le même composant",
+            "en": "None, they are the same component"
+          },
+          {
+            "fr": "Le poussoir revient tout seul en position ouverte, l'interrupteur garde sa position",
+            "en": "The push button springs back to open, the switch keeps its position"
+          },
+          {
+            "fr": "Le poussoir supporte plus de courant",
+            "en": "The push button carries more current"
+          }
+        ],
+        "bonneReponse": 1,
+        "explication": {
+          "fr": "Le poussoir est un contact MOMENTANÉ (ressort de rappel) ; l'interrupteur est un contact MAINTENU. On choisit l'un ou l'autre selon l'usage.",
+          "en": "The push button is a MOMENTARY contact (return spring); the switch is a MAINTAINED contact. You pick one or the other depending on the use."
+        }
+      },
+      {
+        "question": {
+          "fr": "Pourquoi place-t-on le poussoir sur la PHASE et pas sur le neutre ?",
+          "en": "Why is the push button placed on the PHASE and not on the neutral?"
+        },
+        "choix": [
+          {
+            "fr": "Pour couper l'arrivée d'énergie : lampe hors tension quand le contact est ouvert",
+            "en": "To cut the incoming energy: the lamp is de-energised when the contact is open"
+          },
+          {
+            "fr": "Parce que le neutre n'existe pas dans ce montage",
+            "en": "Because there is no neutral in this circuit"
+          },
+          {
+            "fr": "Par habitude, ça ne change rien",
+            "en": "Out of habit, it makes no difference"
+          }
+        ],
+        "bonneReponse": 0,
+        "explication": {
+          "fr": "Couper la phase met le récepteur HORS TENSION. Couper seulement le neutre éteindrait la lampe mais la laisserait sous tension — dangereux à la maintenance.",
+          "en": "Cutting the phase DE-ENERGISES the load. Cutting only the neutral would turn the lamp off but leave it live — dangerous during maintenance."
+        }
+      }
+    ],
+    "defiId": "defi_lampe"
+  }
+}

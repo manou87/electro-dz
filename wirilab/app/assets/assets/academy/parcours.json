@@ -1,0 +1,24 @@
+{
+  "parcours": [
+    {
+      "id": "electricite_domestique",
+      "titre": "Électricité domestique",
+      "description": "12 leçons : des circuits guidés aux défis sans filet. Allumer, commander, protéger.",
+      "ordre": 1,
+      "tpIds": [
+        "tp_lampe_directe",
+        "tp_allumer_une_lampe",
+        "tp_double_allumage",
+        "tp_va_et_vient",
+        "tp_voyant",
+        "tp_proteger_le_circuit",
+        "tp_bouton_poussoir",
+        "tp_telerupteur",
+        "defi_lampe",
+        "defi_va_et_vient",
+        "defi_protection",
+        "defi_telerupteur"
+      ]
+    }
+  ]
+}

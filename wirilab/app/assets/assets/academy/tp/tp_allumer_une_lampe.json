@@ -1,0 +1,507 @@
+{
+  "version": 3,
+  "id": "tp_allumer_une_lampe",
+  "titre": {
+    "fr": "Allumer une lampe",
+    "en": "Switching on a lamp"
+  },
+  "niveau": "debutant",
+  "guidage": "guide",
+  "typeTp": "guide",
+  "niveauTaxonomie": 3,
+  "objectif": {
+    "fr": "Câbler le circuit d'éclairage le plus simple : une lampe commandée par un interrupteur.",
+    "en": "Wire the simplest lighting circuit: one lamp controlled by one switch."
+  },
+  "tags": [
+    "domestique",
+    "eclairage"
+  ],
+  "roles": {
+    "reseau": {
+      "typeComposant": "reseau"
+    },
+    "interrupteur_principal": {
+      "typeComposant": "interrupteur",
+      "sousType": "simple"
+    },
+    "lampe_1": {
+      "typeComposant": "lampe_suspension"
+    }
+  },
+  "etapes": [
+    {
+      "type": "info",
+      "id": "e1",
+      "instruction": {
+        "fr": "Aujourd'hui tu vas apprendre à commander une lampe avec un interrupteur simple — comme chez toi. Durée estimée : 10 minutes.",
+        "en": "Today you will learn to control a lamp with a simple switch — just like at home. Estimated time: 10 minutes."
+      }
+    },
+    {
+      "type": "poserComposant",
+      "id": "e2",
+      "explicationAvant": {
+        "fr": "Tout circuit a besoin d'une source d'énergie. Le réseau 230 V fournit la phase (L) et le neutre (N) : c'est entre ces deux bornes que le courant circule.",
+        "en": "Every circuit needs a power source. The 230 V mains supply provides the phase (L) and the neutral (N): current flows between these two terminals."
+      },
+      "instruction": {
+        "fr": "Pose un réseau monophasé 230 V sur le plan de travail.",
+        "en": "Place a 230 V single-phase supply on the workbench."
+      },
+      "explicationApres": {
+        "fr": "La source est en place. Sans elle, aucun courant ne pourrait circuler.",
+        "en": "The source is in place. Without it, no current could flow."
+      },
+      "transition": {
+        "fr": "Ajoutons maintenant l'élément de commande : l'interrupteur.",
+        "en": "Let's now add the control element: the switch."
+      },
+      "role": "reseau",
+      "indices": [
+        {
+          "fr": "Cherche le composant qui fournit l'énergie au circuit.",
+          "en": "Look for the component that supplies energy to the circuit."
+        },
+        {
+          "fr": "Il se trouve dans Catalogue → Alimentation.",
+          "en": "It is under Catalog → Power supply."
+        },
+        {
+          "fr": "Il s'agit du réseau monophasé 230 V.",
+          "en": "It is the 230 V single-phase mains."
+        }
+      ],
+      "messageErreur": {
+        "fr": "Ce composant n'est pas celui attendu. Il faut exactement un réseau monophasé — vérifie le nom du composant ou utilise l'indice.",
+        "en": "This component is not the expected one. You need exactly one single-phase supply — check the component name or use the hint."
+      }
+    },
+    {
+      "type": "poserComposant",
+      "id": "e3",
+      "explicationAvant": {
+        "fr": "Un interrupteur est un organe de commande : il ouvre ou ferme le circuit. Il ne produit pas de courant et ne consomme pas d'énergie.",
+        "en": "A switch is a control device: it opens or closes the circuit. It does not produce current and does not consume energy."
+      },
+      "instruction": {
+        "fr": "Pose un interrupteur simple sur le plan de travail.",
+        "en": "Place a simple switch on the workbench."
+      },
+      "explicationApres": {
+        "fr": "L'interrupteur est posé. C'est lui qui décidera si le courant passe ou non.",
+        "en": "The switch is placed. It will decide whether current flows or not."
+      },
+      "transition": {
+        "fr": "Il nous manque le récepteur : la lampe.",
+        "en": "We are missing the load: the lamp."
+      },
+      "role": "interrupteur_principal",
+      "indices": [
+        {
+          "fr": "Cherche le composant qui sert à ouvrir ou fermer un circuit.",
+          "en": "Look for the component used to open or close a circuit."
+        },
+        {
+          "fr": "Il se trouve dans Catalogue → Commande.",
+          "en": "It is under Catalog → Control."
+        },
+        {
+          "fr": "Il s'agit de l'interrupteur simple.",
+          "en": "It is the simple switch."
+        }
+      ],
+      "messageErreur": {
+        "fr": "Ce composant n'est pas celui attendu. Il faut exactement un interrupteur simple — vérifie le nom ou utilise l'indice.",
+        "en": "This component is not the expected one. You need exactly one simple switch — check the name or use the hint."
+      }
+    },
+    {
+      "type": "poserComposant",
+      "id": "e4",
+      "explicationAvant": {
+        "fr": "Une lampe est un récepteur électrique. Elle transforme l'énergie électrique en lumière lorsqu'un courant peut circuler dans un circuit fermé.",
+        "en": "A lamp is an electrical load. It turns electrical energy into light when current can flow in a closed circuit."
+      },
+      "instruction": {
+        "fr": "Pose une lampe de suspension sur le plan de travail.",
+        "en": "Place a pendant lamp on the workbench."
+      },
+      "explicationApres": {
+        "fr": "La lampe est installée. Elle pourra s'allumer lorsque le circuit sera fermé.",
+        "en": "The lamp is installed. It will be able to light up once the circuit is closed."
+      },
+      "transition": {
+        "fr": "Tous les composants sont là. Passons au câblage : chaque fil établit une liaison électrique entre deux bornes.",
+        "en": "All components are in place. Let's wire them: each wire creates an electrical link between two terminals."
+      },
+      "role": "lampe_1",
+      "indices": [
+        {
+          "fr": "Cherche un composant capable de produire de la lumière.",
+          "en": "Look for a component that can produce light."
+        },
+        {
+          "fr": "Son symbole représente une ampoule.",
+          "en": "Its symbol looks like a bulb."
+        },
+        {
+          "fr": "Il s'agit de la lampe, dans Catalogue → Éclairage.",
+          "en": "It is the lamp, under Catalog → Lighting."
+        }
+      ],
+      "messageErreur": {
+        "fr": "Ce composant n'est pas celui attendu. Il faut exactement une lampe — vérifie le nom ou utilise l'indice.",
+        "en": "This component is not the expected one. You need exactly one lamp — check the name or use the hint."
+      }
+    },
+    {
+      "type": "relierBornes",
+      "id": "e5",
+      "explicationAvant": {
+        "fr": "La phase (L) est le fil qui apporte l'énergie. Pour pouvoir couper la lampe, la phase doit passer PAR l'interrupteur — jamais directement à la lampe.",
+        "en": "The phase (L) is the wire that carries the energy. To be able to switch the lamp off, the phase must go THROUGH the switch — never straight to the lamp."
+      },
+      "instruction": {
+        "fr": "Relie la phase (L) du réseau à l'entrée (L) de l'interrupteur.",
+        "en": "Connect the supply phase (L) to the switch input (L)."
+      },
+      "explicationApres": {
+        "fr": "La phase arrive désormais sur l'interrupteur. Celui-ci pourra ouvrir ou fermer le circuit.",
+        "en": "The phase now reaches the switch. It will be able to open or close the circuit."
+      },
+      "transition": {
+        "fr": "Continuons le chemin du courant : de l'interrupteur vers la lampe.",
+        "en": "Let's follow the current path: from the switch to the lamp."
+      },
+      "a": {
+        "role": "reseau",
+        "borne": "L"
+      },
+      "b": {
+        "role": "interrupteur_principal",
+        "borne": "L"
+      },
+      "indices": [
+        {
+          "fr": "Regarde les lettres inscrites sur les bornes.",
+          "en": "Look at the letters written on the terminals."
+        },
+        {
+          "fr": "Passe en mode Câblage, puis clique borne L du réseau et borne L de l'interrupteur.",
+          "en": "Switch to Wiring mode, then click supply terminal L and switch terminal L."
+        }
+      ],
+      "messageErreur": {
+        "fr": "Cette liaison n'est pas correcte. La phase du réseau doit rejoindre l'entrée L de l'interrupteur.",
+        "en": "This link is not correct. The supply phase must reach the switch input L."
+      },
+      "messageConseil": {
+        "fr": "Ton fil relie bien {composant_a} et {composant_b}, mais pas par les bonnes bornes : tu as utilisé {borne_trouvee_a}–{borne_trouvee_b} au lieu de {borne_attendue_a}–{borne_attendue_b}. Électriquement, ça peut fonctionner — mais dans le métier, chaque borne a son rôle. Reprends la liaison sur les bonnes bornes.",
+        "en": "Your wire does connect {composant_a} and {composant_b}, but not through the right terminals: you used {borne_trouvee_a}–{borne_trouvee_b} instead of {borne_attendue_a}–{borne_attendue_b}. It may work electrically — but in the trade, every terminal has its role. Redo the link on the correct terminals."
+      }
+    },
+    {
+      "type": "relierBornes",
+      "id": "e6",
+      "explicationAvant": {
+        "fr": "La sortie de l'interrupteur envoie la phase vers la lampe, mais seulement quand l'interrupteur est fermé. C'est le retour lumière du circuit.",
+        "en": "The switch output sends the phase to the lamp, but only when the switch is closed. This is the switched-live of the circuit."
+      },
+      "instruction": {
+        "fr": "Relie la sortie (1) de l'interrupteur à la borne L1 de la lampe.",
+        "en": "Connect the switch output (1) to terminal L1 of the lamp."
+      },
+      "explicationApres": {
+        "fr": "Quand l'interrupteur sera fermé, la phase pourra atteindre la lampe.",
+        "en": "When the switch is closed, the phase will be able to reach the lamp."
+      },
+      "transition": {
+        "fr": "Il reste à fermer la boucle : le courant doit retourner à la source par le neutre.",
+        "en": "One link left to close the loop: current must return to the source through the neutral."
+      },
+      "a": {
+        "role": "interrupteur_principal",
+        "borne": "1"
+      },
+      "b": {
+        "role": "lampe_1",
+        "borne": "L1"
+      },
+      "indices": [
+        {
+          "fr": "La sortie de l'interrupteur porte le repère 1.",
+          "en": "The switch output is labelled 1."
+        },
+        {
+          "fr": "Relie la borne 1 de l'interrupteur à la borne L1 de la lampe.",
+          "en": "Connect switch terminal 1 to lamp terminal L1."
+        }
+      ],
+      "messageErreur": {
+        "fr": "Cette liaison n'est pas correcte. La sortie 1 de l'interrupteur doit rejoindre la borne L1 de la lampe.",
+        "en": "This link is not correct. Switch output 1 must reach lamp terminal L1."
+      },
+      "messageConseil": {
+        "fr": "Ton fil relie bien {composant_a} et {composant_b}, mais pas par les bonnes bornes : tu as utilisé {borne_trouvee_a}–{borne_trouvee_b} au lieu de {borne_attendue_a}–{borne_attendue_b}. Électriquement, ça peut fonctionner — mais dans le métier, chaque borne a son rôle. Reprends la liaison sur les bonnes bornes.",
+        "en": "Your wire does connect {composant_a} and {composant_b}, but not through the right terminals: you used {borne_trouvee_a}–{borne_trouvee_b} instead of {borne_attendue_a}–{borne_attendue_b}. It may work electrically — but in the trade, every terminal has its role. Redo the link on the correct terminals."
+      }
+    },
+    {
+      "type": "relierBornes",
+      "id": "e7",
+      "explicationAvant": {
+        "fr": "Le neutre (N) est le fil de retour du courant vers la source. Il va DIRECTEMENT à la lampe — il ne passe jamais par l'interrupteur.",
+        "en": "The neutral (N) is the return path of the current to the source. It goes STRAIGHT to the lamp — it never passes through the switch."
+      },
+      "instruction": {
+        "fr": "Relie la borne L2 de la lampe au neutre (N) du réseau.",
+        "en": "Connect terminal L2 of the lamp to the supply neutral (N)."
+      },
+      "explicationApres": {
+        "fr": "La boucle est complète : phase → interrupteur → lampe → neutre. Le courant a un chemin fermé.",
+        "en": "The loop is complete: phase → switch → lamp → neutral. The current has a closed path."
+      },
+      "transition": {
+        "fr": "Avant de tester, prenons une seconde pour réfléchir à ce qui va se passer.",
+        "en": "Before testing, let's take a second to think about what will happen."
+      },
+      "a": {
+        "role": "lampe_1",
+        "borne": "L2"
+      },
+      "b": {
+        "role": "reseau",
+        "borne": "N"
+      },
+      "indices": [
+        {
+          "fr": "Le neutre va directement à la lampe — il ne passe pas par l'interrupteur.",
+          "en": "The neutral goes straight to the lamp — it does not pass through the switch."
+        },
+        {
+          "fr": "Relie la borne L2 de la lampe à la borne N du réseau.",
+          "en": "Connect lamp terminal L2 to supply terminal N."
+        }
+      ],
+      "messageErreur": {
+        "fr": "Cette liaison n'est pas correcte. La borne L2 de la lampe doit rejoindre le neutre N du réseau.",
+        "en": "This link is not correct. Lamp terminal L2 must reach the supply neutral N."
+      },
+      "messageConseil": {
+        "fr": "Ton fil relie bien {composant_a} et {composant_b}, mais pas par les bonnes bornes : tu as utilisé {borne_trouvee_a}–{borne_trouvee_b} au lieu de {borne_attendue_a}–{borne_attendue_b}. Électriquement, ça peut fonctionner — mais dans le métier, chaque borne a son rôle. Reprends la liaison sur les bonnes bornes.",
+        "en": "Your wire does connect {composant_a} and {composant_b}, but not through the right terminals: you used {borne_trouvee_a}–{borne_trouvee_b} instead of {borne_attendue_a}–{borne_attendue_b}. It may work electrically — but in the trade, every terminal has its role. Redo the link on the correct terminals."
+      }
+    },
+    {
+      "type": "prediction",
+      "id": "e8",
+      "instruction": {
+        "fr": "Avant de vérifier, réfléchis :",
+        "en": "Before checking, think:"
+      },
+      "question": {
+        "fr": "Selon toi, que va-t-il se passer lorsque tu fermeras l'interrupteur ?",
+        "en": "In your opinion, what will happen when you close the switch?"
+      },
+      "choix": [
+        {
+          "fr": "La lampe va s'allumer",
+          "en": "The lamp will light up"
+        },
+        {
+          "fr": "Rien ne va se passer",
+          "en": "Nothing will happen"
+        },
+        {
+          "fr": "Un court-circuit va apparaître",
+          "en": "A short circuit will appear"
+        }
+      ],
+      "bonneReponse": 0,
+      "explication": {
+        "fr": "Fermer l'interrupteur ferme le circuit : le courant circule depuis la source jusqu'à la lampe puis retourne vers la source — la lampe s'allume.",
+        "en": "Closing the switch closes the circuit: current flows from the source to the lamp and back to the source — the lamp lights up."
+      }
+    },
+    {
+      "type": "scenario",
+      "id": "e9",
+      "explicationAvant": {
+        "fr": "La vérification rejoue ton montage : interrupteur fermé, la lampe doit s'allumer ; interrupteur ouvert, elle doit s'éteindre.",
+        "en": "The check replays your assembly: switch closed, the lamp must light up; switch open, it must go out."
+      },
+      "instruction": {
+        "fr": "Vérifie ton montage (interrupteur fermé puis ouvert).",
+        "en": "Check your assembly (switch closed, then open)."
+      },
+      "scenarioId": ""
+    }
+  ],
+  "verification": {
+    "scenarios": [
+      {
+        "id": "sc1",
+        "actions": [
+          {
+            "cible": "role:interrupteur_principal",
+            "etat": {
+              "estFerme": true
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "composantAllume",
+            "cible": "role:lampe_1",
+            "attendu": true
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Quand l'interrupteur est fermé, ta lampe doit s'allumer. Le courant ne peut pas circuler : vérifie le chemin phase → interrupteur → lampe → neutre.",
+          "en": "When the switch is closed, your lamp must light up. Current cannot flow: check the path phase → switch → lamp → neutral."
+        }
+      },
+      {
+        "id": "sc2",
+        "actions": [
+          {
+            "cible": "role:interrupteur_principal",
+            "etat": {
+              "estFerme": false
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "composantAllume",
+            "cible": "role:lampe_1",
+            "attendu": false
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Interrupteur ouvert, la lampe doit s'éteindre. Si elle reste allumée, la phase arrive à la lampe sans passer par l'interrupteur.",
+          "en": "With the switch open, the lamp must go out. If it stays on, the phase reaches the lamp without going through the switch."
+        }
+      }
+    ]
+  },
+  "messages": {
+    "succes": {
+      "fr": "Ton premier circuit d'éclairage fonctionne : le courant part de la phase, traverse l'interrupteur puis la lampe, et retourne à la source par le neutre.",
+      "en": "Your first lighting circuit works: current leaves the phase, goes through the switch then the lamp, and returns to the source through the neutral."
+    },
+    "indice": {
+      "fr": "La phase doit passer PAR l'interrupteur avant d'arriver à la lampe. Le neutre va directement de la lampe au réseau.",
+      "en": "The phase must go THROUGH the switch before reaching the lamp. The neutral goes straight from the lamp to the supply."
+    }
+  },
+  "conclusion": {
+    "synthese": {
+      "fr": "Aujourd'hui tu as appris :",
+      "en": "Today you learned:"
+    },
+    "acquis": [
+      {
+        "fr": "reconnaître une lampe (récepteur) et un interrupteur (commande)",
+        "en": "recognising a lamp (load) and a switch (control)"
+      },
+      {
+        "fr": "raccorder une phase en passant par l'interrupteur",
+        "en": "wiring a phase through the switch"
+      },
+      {
+        "fr": "raccorder un neutre directement au récepteur",
+        "en": "wiring a neutral straight to the load"
+      },
+      {
+        "fr": "comprendre ce qu'est un circuit fermé",
+        "en": "understanding what a closed circuit is"
+      }
+    ],
+    "questions": [
+      {
+        "question": {
+          "fr": "Pourquoi la lampe s'allume-t-elle ?",
+          "en": "Why does the lamp light up?"
+        },
+        "choix": [
+          {
+            "fr": "Parce qu'elle reçoit du courant",
+            "en": "Because it receives current"
+          },
+          {
+            "fr": "Parce que le circuit est fermé",
+            "en": "Because the circuit is closed"
+          },
+          {
+            "fr": "Les deux réponses sont vraies",
+            "en": "Both answers are true"
+          }
+        ],
+        "bonneReponse": 2,
+        "explication": {
+          "fr": "Le circuit fermé permet au courant de circuler, et c'est ce courant qui traverse la lampe et la fait briller — les deux affirmations décrivent le même phénomène.",
+          "en": "The closed circuit lets current flow, and that current goes through the lamp and makes it glow — both statements describe the same phenomenon."
+        }
+      },
+      {
+        "question": {
+          "fr": "Quel est le rôle de l'interrupteur ?",
+          "en": "What is the role of the switch?"
+        },
+        "choix": [
+          {
+            "fr": "Produire du courant",
+            "en": "Producing current"
+          },
+          {
+            "fr": "Ouvrir ou fermer le circuit",
+            "en": "Opening or closing the circuit"
+          },
+          {
+            "fr": "Créer de la lumière",
+            "en": "Creating light"
+          }
+        ],
+        "bonneReponse": 1,
+        "explication": {
+          "fr": "L'interrupteur est un organe de commande : il ne produit ni ne consomme d'énergie, il autorise ou interrompt le passage du courant.",
+          "en": "The switch is a control device: it neither produces nor consumes energy, it allows or interrupts the flow of current."
+        }
+      },
+      {
+        "question": {
+          "fr": "Que se passerait-il si le neutre était débranché ?",
+          "en": "What would happen if the neutral were disconnected?"
+        },
+        "choix": [
+          {
+            "fr": "La lampe s'allumerait quand même",
+            "en": "The lamp would still light up"
+          },
+          {
+            "fr": "La lampe ne s'allumerait plus : le circuit serait ouvert",
+            "en": "The lamp would no longer light: the circuit would be open"
+          },
+          {
+            "fr": "Un court-circuit apparaîtrait",
+            "en": "A short circuit would appear"
+          }
+        ],
+        "bonneReponse": 1,
+        "explication": {
+          "fr": "Sans neutre, le courant n'a plus de chemin de retour vers la source : le circuit est ouvert et la lampe reste éteinte, même interrupteur fermé.",
+          "en": "Without the neutral, current has no return path to the source: the circuit is open and the lamp stays off, even with the switch closed."
+        }
+      }
+    ],
+    "defiId": "defi_lampe"
+  }
+}

@@ -1,0 +1,303 @@
+{
+  "version": 1,
+  "savedAt": "2026-07-21T00:00:00",
+  "components": [
+    {
+      "instanceId": "net_0",
+      "catalogJson": {
+        "type": "reseau",
+        "catalogId": "net_mono_230V",
+        "category": "sources",
+        "localizationKey": "componentNetworkMono",
+        "defaultTagPrefix": "G",
+        "props": {
+          "type": "monophase",
+          "tension": "230",
+          "frequence": 50,
+          "neutrePresent": true
+        },
+        "inspector": {
+          "manufacturer": "Grid",
+          "reference": "Réseau monophasé 230 V AC 50 Hz",
+          "voltage": 230
+        }
+      },
+      "etatJson": {},
+      "worldX": 28,
+      "worldY": 84,
+      "tagPrefix": "G",
+      "tagNumber": 1
+    },
+    {
+      "instanceId": "disj_0",
+      "catalogJson": {
+        "type": "disjoncteur",
+        "catalogId": "disj_C16_1P",
+        "category": "protection",
+        "localizationKey": "componentBreaker1P",
+        "defaultTagPrefix": "Q",
+        "props": {
+          "nbPoles": 1,
+          "calibre": "C16",
+          "tension": "230V~",
+          "courbe": "C",
+          "icn": 6000,
+          "classeLimitation": 3
+        },
+        "inspector": {
+          "manufacturer": "Generic",
+          "reference": "C16 1P",
+          "voltage": 230,
+          "current": 16
+        }
+      },
+      "etatJson": {},
+      "worldX": 252,
+      "worldY": 56,
+      "tagPrefix": "Q",
+      "tagNumber": 1
+    },
+    {
+      "instanceId": "int_0",
+      "catalogJson": {
+        "type": "interrupteur",
+        "catalogId": "int_simple",
+        "category": "command",
+        "localizationKey": "componentSwitchSimple",
+        "defaultTagPrefix": "S",
+        "props": {
+          "type": "simple",
+          "couleur": "blanc",
+          "calibre": "10AX",
+          "tension": "250V~"
+        },
+        "inspector": {
+          "manufacturer": "Generic",
+          "reference": "Interrupteur simple 10AX",
+          "voltage": 250,
+          "current": 10
+        }
+      },
+      "etatJson": {},
+      "worldX": 392,
+      "worldY": 112,
+      "tagPrefix": "S",
+      "tagNumber": 1
+    },
+    {
+      "instanceId": "lamp_0",
+      "catalogJson": {
+        "type": "lampe_suspension",
+        "catalogId": "lamp_signal_v2",
+        "category": "power",
+        "localizationKey": "componentLamp",
+        "defaultTagPrefix": "EL",
+        "props": {
+          "typeLumiere": "chaud",
+          "puissanceW": 60
+        },
+        "inspector": {
+          "manufacturer": "Generic",
+          "reference": "Lampe de signalisation"
+        }
+      },
+      "etatJson": {},
+      "worldX": 588,
+      "worldY": 84,
+      "tagPrefix": "EL",
+      "tagNumber": 1
+    }
+  ],
+  "wires": [
+    {
+      "id": "wire_1",
+      "tag": {
+        "prefix": "W",
+        "number": 1
+      },
+      "startEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "net_0",
+        "terminalId": "L"
+      },
+      "endEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "disj_0",
+        "terminalId": "1"
+      },
+      "freePoints": [
+        {
+          "x": 84.0,
+          "y": 336.0
+        },
+        {
+          "x": 84.0,
+          "y": 322.0
+        },
+        {
+          "x": 210.0,
+          "y": 322.0
+        },
+        {
+          "x": 210.0,
+          "y": -28.0
+        },
+        {
+          "x": 280.0,
+          "y": -28.0
+        }
+      ],
+      "routeMode": "automatic",
+      "color": "#EF4444",
+      "caliber": {
+        "unit": "awg",
+        "value": 18.0
+      },
+      "startShape": "rectangle",
+      "startShapeColor": "#2563EB",
+      "endShape": "rectangle",
+      "endShapeColor": "#2563EB",
+      "startLabel": "",
+      "endLabel": "",
+      "label": ""
+    },
+    {
+      "id": "wire_2",
+      "tag": {
+        "prefix": "W",
+        "number": 2
+      },
+      "startEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "disj_0",
+        "terminalId": "2"
+      },
+      "endEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "int_0",
+        "terminalId": "L"
+      },
+      "freePoints": [
+        {
+          "x": 280.0,
+          "y": 378.0
+        },
+        {
+          "x": 420.0,
+          "y": 378.0
+        },
+        {
+          "x": 420.0,
+          "y": 364.0
+        }
+      ],
+      "routeMode": "automatic",
+      "color": "#EF4444",
+      "caliber": {
+        "unit": "awg",
+        "value": 18.0
+      },
+      "startShape": "rectangle",
+      "startShapeColor": "#2563EB",
+      "endShape": "rectangle",
+      "endShapeColor": "#2563EB",
+      "startLabel": "",
+      "endLabel": "",
+      "label": ""
+    },
+    {
+      "id": "wire_3",
+      "tag": {
+        "prefix": "W",
+        "number": 3
+      },
+      "startEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "int_0",
+        "terminalId": "1"
+      },
+      "endEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "lamp_0",
+        "terminalId": "L1"
+      },
+      "freePoints": [
+        {
+          "x": 476.0,
+          "y": 364.0
+        },
+        {
+          "x": 476.0,
+          "y": 378.0
+        },
+        {
+          "x": 616.0,
+          "y": 378.0
+        }
+      ],
+      "routeMode": "automatic",
+      "color": "#EF4444",
+      "caliber": {
+        "unit": "awg",
+        "value": 18.0
+      },
+      "startShape": "rectangle",
+      "startShapeColor": "#2563EB",
+      "endShape": "rectangle",
+      "endShapeColor": "#2563EB",
+      "startLabel": "",
+      "endLabel": "",
+      "label": ""
+    },
+    {
+      "id": "wire_4",
+      "tag": {
+        "prefix": "W",
+        "number": 4
+      },
+      "startEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "lamp_0",
+        "terminalId": "L2"
+      },
+      "endEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "net_0",
+        "terminalId": "N"
+      },
+      "freePoints": [
+        {
+          "x": 672.0,
+          "y": 392.0
+        },
+        {
+          "x": 112.0,
+          "y": 392.0
+        },
+        {
+          "x": 112.0,
+          "y": 336.0
+        }
+      ],
+      "routeMode": "automatic",
+      "color": "#2563EB",
+      "caliber": {
+        "unit": "awg",
+        "value": 18.0
+      },
+      "startShape": "rectangle",
+      "startShapeColor": "#2563EB",
+      "endShape": "rectangle",
+      "endShapeColor": "#2563EB",
+      "startLabel": "",
+      "endLabel": "",
+      "label": ""
+    }
+  ],
+  "texts": [],
+  "camera": {
+    "scale": 1.0,
+    "offsetX": 0,
+    "offsetY": 0
+  }
+}

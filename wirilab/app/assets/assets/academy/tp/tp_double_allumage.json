@@ -1,0 +1,543 @@
+{
+  "version": 3,
+  "id": "tp_double_allumage",
+  "titre": {
+    "fr": "Deux lampes en parallèle",
+    "en": "Two lamps in parallel"
+  },
+  "niveau": "debutant",
+  "guidage": "guide",
+  "typeTp": "guide",
+  "niveauTaxonomie": 4,
+  "objectif": {
+    "fr": "Commander deux lampes avec un seul interrupteur — montage en parallèle.",
+    "en": "Control two lamps with a single switch — parallel wiring."
+  },
+  "tags": [
+    "domestique",
+    "eclairage",
+    "parallele"
+  ],
+  "roles": {
+    "reseau": {
+      "typeComposant": "reseau"
+    },
+    "interrupteur_principal": {
+      "typeComposant": "interrupteur",
+      "sousType": "simple"
+    },
+    "lampe_1": {
+      "typeComposant": "lampe_suspension"
+    },
+    "lampe_2": {
+      "typeComposant": "lampe_suspension"
+    }
+  },
+  "etapes": [
+    {
+      "type": "info",
+      "id": "e1",
+      "instruction": {
+        "fr": "En parallèle, chaque lampe a son propre chemin vers le neutre. Les deux s'allument ensemble.",
+        "en": "In parallel, each lamp has its own path to the neutral. Both light up together."
+      }
+    },
+    {
+      "type": "poserComposant",
+      "id": "e2",
+      "instruction": {
+        "fr": "Pose le réseau.",
+        "en": "Place the supply."
+      },
+      "explicationAvant": {
+        "fr": "Comme toujours, on commence par la source : le réseau fournit la phase et le neutre à tout le montage.",
+        "en": "As always, we start with the source: the supply provides the phase and the neutral for the whole circuit."
+      },
+      "explicationApres": {
+        "fr": "Source en place. Une seule source suffira pour alimenter NOS DEUX lampes — c'est tout l'intérêt du parallèle.",
+        "en": "Source in place. One single source will power BOTH our lamps — that is the whole point of parallel wiring."
+      },
+      "transition": {
+        "fr": "Ajoutons l'organe de commande.",
+        "en": "Let's add the control device."
+      },
+      "role": "reseau",
+      "indices": [
+        {
+          "fr": "Catalogue → Alimentation → Réseau monophasé.",
+          "en": "Catalog → Power supply → Single-phase mains."
+        }
+      ],
+      "messageErreur": {
+        "fr": "Il faut exactement un réseau sur le canvas.",
+        "en": "You need exactly one supply on the canvas."
+      }
+    },
+    {
+      "type": "poserComposant",
+      "id": "e3",
+      "instruction": {
+        "fr": "Pose l'interrupteur simple.",
+        "en": "Place the simple switch."
+      },
+      "explicationAvant": {
+        "fr": "Un SEUL interrupteur va commander les deux lampes : il coupe la phase AVANT qu'elle ne se divise vers les lampes.",
+        "en": "ONE single switch will control both lamps: it cuts the phase BEFORE it splits towards the lamps."
+      },
+      "explicationApres": {
+        "fr": "Bien. Placé en amont de la division, cet interrupteur agira sur les deux lampes à la fois.",
+        "en": "Good. Placed upstream of the split, this switch will act on both lamps at once."
+      },
+      "transition": {
+        "fr": "Place maintenant les deux récepteurs.",
+        "en": "Now place the two loads."
+      },
+      "role": "interrupteur_principal",
+      "indices": [
+        {
+          "fr": "Catalogue → Commande → Interrupteur simple.",
+          "en": "Catalog → Control → Simple switch."
+        }
+      ],
+      "messageErreur": {
+        "fr": "Il faut exactement un interrupteur simple.",
+        "en": "You need exactly one simple switch."
+      }
+    },
+    {
+      "type": "poserComposant",
+      "id": "e4",
+      "instruction": {
+        "fr": "Pose la première lampe.",
+        "en": "Place the first lamp."
+      },
+      "explicationAvant": {
+        "fr": "Première lampe du montage. En parallèle, chaque lampe recevra la PLEINE tension 230 V — pas une moitié.",
+        "en": "First lamp of the circuit. In parallel, each lamp will receive the FULL 230 V — not half of it."
+      },
+      "explicationApres": {
+        "fr": "Une lampe posée. Sa jumelle recevra exactement le même traitement électrique.",
+        "en": "One lamp placed. Its twin will get exactly the same electrical treatment."
+      },
+      "transition": {
+        "fr": "Au tour de la deuxième lampe.",
+        "en": "Now for the second lamp."
+      },
+      "role": "lampe_1",
+      "indices": [
+        {
+          "fr": "Catalogue → Éclairage → Lampe de suspension.",
+          "en": "Catalog → Lighting → Pendant lamp."
+        }
+      ],
+      "messageErreur": {
+        "fr": "Il faut poser la première lampe (rôle lampe_1).",
+        "en": "You need to place the first lamp (role lampe_1)."
+      }
+    },
+    {
+      "type": "poserComposant",
+      "id": "e5",
+      "instruction": {
+        "fr": "Pose la deuxième lampe.",
+        "en": "Place the second lamp."
+      },
+      "explicationAvant": {
+        "fr": "La deuxième lampe aura son PROPRE chemin vers le neutre : c'est ça, le parallèle. Si l'une grille, l'autre continue.",
+        "en": "The second lamp will get its OWN path to the neutral: that is what parallel means. If one burns out, the other keeps going."
+      },
+      "explicationApres": {
+        "fr": "Tout le matériel est posé. Il reste à créer les chemins du courant : un tronc commun, puis deux branches.",
+        "en": "All the hardware is placed. Now we create the current paths: one common trunk, then two branches."
+      },
+      "transition": {
+        "fr": "Câblons d'abord le tronc commun : la phase vers l'interrupteur.",
+        "en": "First let's wire the common trunk: the phase to the switch."
+      },
+      "role": "lampe_2",
+      "indices": [
+        {
+          "fr": "Même composant que la première : Catalogue → Éclairage → Lampe.",
+          "en": "Same component as the first: Catalog → Lighting → Lamp."
+        }
+      ],
+      "messageErreur": {
+        "fr": "Il faut exactement deux lampes (une pour chaque rôle).",
+        "en": "You need exactly two lamps (one for each role)."
+      }
+    },
+    {
+      "type": "relierBornes",
+      "id": "e6",
+      "instruction": {
+        "fr": "Phase du réseau → entrée L de l'interrupteur.",
+        "en": "Supply phase → switch input L."
+      },
+      "explicationAvant": {
+        "fr": "Ce fil est le tronc commun : TOUTE l'énergie des deux lampes passera par là. L'interrupteur pourra donc tout couper d'un geste.",
+        "en": "This wire is the common trunk: ALL the energy for both lamps will flow through it. The switch will be able to cut everything in one move."
+      },
+      "explicationApres": {
+        "fr": "Tronc commun en place. En aval de l'interrupteur, le courant va maintenant se DIVISER.",
+        "en": "Common trunk done. Downstream of the switch, the current will now SPLIT."
+      },
+      "transition": {
+        "fr": "Créons la première branche.",
+        "en": "Let's create the first branch."
+      },
+      "a": {
+        "role": "reseau",
+        "borne": "L"
+      },
+      "b": {
+        "role": "interrupteur_principal",
+        "borne": "L"
+      },
+      "indices": [
+        {
+          "fr": "Mode Câblage, puis clique la borne L du réseau et la borne L de l'interrupteur.",
+          "en": "Wiring mode, then click the supply's L terminal and the switch's L terminal."
+        }
+      ],
+      "messageConseil": {
+        "fr": "Ton fil relie bien {composant_a} et {composant_b}, mais pas par les bonnes bornes : tu as utilisé {borne_trouvee_a}–{borne_trouvee_b} au lieu de {borne_attendue_a}–{borne_attendue_b}. Électriquement, ça peut fonctionner — mais dans le métier, chaque borne a son rôle. Reprends la liaison sur les bonnes bornes.",
+        "en": "Your wire does connect {composant_a} and {composant_b}, but not through the right terminals: you used {borne_trouvee_a}–{borne_trouvee_b} instead of {borne_attendue_a}–{borne_attendue_b}. It may work electrically — but in the trade, every terminal has its role. Redo the link on the correct terminals."
+      }
+    },
+    {
+      "type": "relierBornes",
+      "id": "e7",
+      "instruction": {
+        "fr": "Sortie 1 de l'interrupteur → L1 de la première lampe.",
+        "en": "Switch output 1 → L1 of the first lamp."
+      },
+      "explicationAvant": {
+        "fr": "Première branche : la phase commandée part vers la lampe 1. Cette branche lui appartient en propre.",
+        "en": "First branch: the switched phase heads to lamp 1. This branch belongs to it alone."
+      },
+      "explicationApres": {
+        "fr": "Branche 1 alimentée côté phase. La lampe 2 va recevoir la même chose, depuis le MÊME point.",
+        "en": "Branch 1 fed on the phase side. Lamp 2 will get the same, from the SAME point."
+      },
+      "transition": {
+        "fr": "Deuxième branche, même point de départ.",
+        "en": "Second branch, same starting point."
+      },
+      "a": {
+        "role": "interrupteur_principal",
+        "borne": "1"
+      },
+      "b": {
+        "role": "lampe_1",
+        "borne": "L1"
+      },
+      "indices": [
+        {
+          "fr": "La sortie de l'interrupteur s'appelle « 1 » ; l'entrée de la lampe « L1 ».",
+          "en": "The switch output is called \"1\"; the lamp input is \"L1\"."
+        }
+      ],
+      "messageConseil": {
+        "fr": "Ton fil relie bien {composant_a} et {composant_b}, mais pas par les bonnes bornes : tu as utilisé {borne_trouvee_a}–{borne_trouvee_b} au lieu de {borne_attendue_a}–{borne_attendue_b}. Électriquement, ça peut fonctionner — mais dans le métier, chaque borne a son rôle. Reprends la liaison sur les bonnes bornes.",
+        "en": "Your wire does connect {composant_a} and {composant_b}, but not through the right terminals: you used {borne_trouvee_a}–{borne_trouvee_b} instead of {borne_attendue_a}–{borne_attendue_b}. It may work electrically — but in the trade, every terminal has its role. Redo the link on the correct terminals."
+      }
+    },
+    {
+      "type": "relierBornes",
+      "id": "e8",
+      "instruction": {
+        "fr": "Sortie 1 de l'interrupteur → L1 de la deuxième lampe (même point).",
+        "en": "Switch output 1 → L1 of the second lamp (same point)."
+      },
+      "explicationAvant": {
+        "fr": "Le point de division : DEUX fils partent de la même borne. Tous les points reliés ensemble forment une même équipotentielle — même tension partout.",
+        "en": "The split point: TWO wires leave the same terminal. All points wired together form one equipotential — same voltage everywhere."
+      },
+      "explicationApres": {
+        "fr": "Les deux lampes reçoivent la phase commandée. Il reste à fermer chaque boucle par le neutre.",
+        "en": "Both lamps now receive the switched phase. Each loop still needs closing through the neutral."
+      },
+      "transition": {
+        "fr": "Retour du courant : le neutre de la lampe 1.",
+        "en": "Current return: lamp 1's neutral."
+      },
+      "a": {
+        "role": "interrupteur_principal",
+        "borne": "1"
+      },
+      "b": {
+        "role": "lampe_2",
+        "borne": "L1"
+      },
+      "indices": [
+        {
+          "fr": "Tu peux aussi relier L1 de la lampe 2 à L1 de la lampe 1 — même équipotentielle.",
+          "en": "You can also connect lamp 2's L1 to lamp 1's L1 — same equipotential."
+        }
+      ],
+      "messageConseil": {
+        "fr": "Ton fil relie bien {composant_a} et {composant_b}, mais pas par les bonnes bornes : tu as utilisé {borne_trouvee_a}–{borne_trouvee_b} au lieu de {borne_attendue_a}–{borne_attendue_b}. Électriquement, ça peut fonctionner — mais dans le métier, chaque borne a son rôle. Reprends la liaison sur les bonnes bornes.",
+        "en": "Your wire does connect {composant_a} and {composant_b}, but not through the right terminals: you used {borne_trouvee_a}–{borne_trouvee_b} instead of {borne_attendue_a}–{borne_attendue_b}. It may work electrically — but in the trade, every terminal has its role. Redo the link on the correct terminals."
+      }
+    },
+    {
+      "type": "relierBornes",
+      "id": "e9",
+      "instruction": {
+        "fr": "L2 de la première lampe → neutre du réseau.",
+        "en": "L2 of the first lamp → supply neutral."
+      },
+      "explicationAvant": {
+        "fr": "Chaque lampe doit fermer SA propre boucle : le neutre de la lampe 1 ne dépend pas de la lampe 2.",
+        "en": "Each lamp must close its OWN loop: lamp 1's neutral does not depend on lamp 2."
+      },
+      "explicationApres": {
+        "fr": "Boucle 1 fermée : la lampe 1 peut s'allumer. La lampe 2, elle, attend encore son retour.",
+        "en": "Loop 1 closed: lamp 1 can light up. Lamp 2 is still waiting for its return path."
+      },
+      "transition": {
+        "fr": "Fermons la seconde boucle.",
+        "en": "Let's close the second loop."
+      },
+      "a": {
+        "role": "lampe_1",
+        "borne": "L2"
+      },
+      "b": {
+        "role": "reseau",
+        "borne": "N"
+      },
+      "indices": [
+        {
+          "fr": "Borne L2 de la lampe 1 vers la borne N du réseau.",
+          "en": "Lamp 1's L2 terminal to the supply's N terminal."
+        }
+      ],
+      "messageConseil": {
+        "fr": "Ton fil relie bien {composant_a} et {composant_b}, mais pas par les bonnes bornes : tu as utilisé {borne_trouvee_a}–{borne_trouvee_b} au lieu de {borne_attendue_a}–{borne_attendue_b}. Électriquement, ça peut fonctionner — mais dans le métier, chaque borne a son rôle. Reprends la liaison sur les bonnes bornes.",
+        "en": "Your wire does connect {composant_a} and {composant_b}, but not through the right terminals: you used {borne_trouvee_a}–{borne_trouvee_b} instead of {borne_attendue_a}–{borne_attendue_b}. It may work electrically — but in the trade, every terminal has its role. Redo the link on the correct terminals."
+      }
+    },
+    {
+      "type": "relierBornes",
+      "id": "e10",
+      "instruction": {
+        "fr": "L2 de la deuxième lampe → neutre du réseau.",
+        "en": "L2 of the second lamp → supply neutral."
+      },
+      "explicationAvant": {
+        "fr": "Dernier fil : la boucle de la lampe 2. Après lui, chaque lampe aura son aller (phase commandée) et son retour (neutre).",
+        "en": "Last wire: lamp 2's loop. After this, each lamp will have its outbound (switched phase) and return (neutral) paths."
+      },
+      "explicationApres": {
+        "fr": "Montage terminé : un tronc commun commandé, deux branches indépendantes. C'est le schéma de TOUTES les installations d'éclairage multiples.",
+        "en": "Circuit complete: one switched common trunk, two independent branches. This is the pattern behind ALL multi-lamp installations."
+      },
+      "transition": {
+        "fr": "Avant la mise sous tension, une question.",
+        "en": "Before powering up, one question."
+      },
+      "a": {
+        "role": "lampe_2",
+        "borne": "L2"
+      },
+      "b": {
+        "role": "reseau",
+        "borne": "N"
+      },
+      "indices": [
+        {
+          "fr": "Tu peux aussi relier L2 de la lampe 2 à L2 de la lampe 1 — même équipotentielle.",
+          "en": "You can also connect lamp 2's L2 to lamp 1's L2 — same equipotential."
+        }
+      ],
+      "messageConseil": {
+        "fr": "Ton fil relie bien {composant_a} et {composant_b}, mais pas par les bonnes bornes : tu as utilisé {borne_trouvee_a}–{borne_trouvee_b} au lieu de {borne_attendue_a}–{borne_attendue_b}. Électriquement, ça peut fonctionner — mais dans le métier, chaque borne a son rôle. Reprends la liaison sur les bonnes bornes.",
+        "en": "Your wire does connect {composant_a} and {composant_b}, but not through the right terminals: you used {borne_trouvee_a}–{borne_trouvee_b} instead of {borne_attendue_a}–{borne_attendue_b}. It may work electrically — but in the trade, every terminal has its role. Redo the link on the correct terminals."
+      }
+    },
+    {
+      "type": "prediction",
+      "id": "e11",
+      "instruction": {
+        "fr": "Avant de vérifier :",
+        "en": "Before checking:"
+      },
+      "question": {
+        "fr": "Si une lampe grille, l'autre continue-t-elle de s'allumer ?",
+        "en": "If one lamp burns out, does the other stay lit?"
+      },
+      "choix": [
+        {
+          "fr": "Oui, montage en parallèle",
+          "en": "Yes, it is a parallel circuit"
+        },
+        {
+          "fr": "Non, les deux s'éteignent",
+          "en": "No, both go out"
+        }
+      ],
+      "bonneReponse": 0,
+      "explication": {
+        "fr": "En parallèle, chaque lampe a son propre chemin — l'autre reste alimentée.",
+        "en": "In parallel, each lamp has its own path — the other one stays powered."
+      }
+    },
+    {
+      "type": "scenario",
+      "id": "e12",
+      "instruction": {
+        "fr": "Vérifie : les deux lampes s'allument ensemble.",
+        "en": "Check: both lamps light up together."
+      },
+      "scenarioId": ""
+    }
+  ],
+  "verification": {
+    "scenarios": [
+      {
+        "id": "sc1",
+        "actions": [
+          {
+            "cible": "role:interrupteur_principal",
+            "etat": {
+              "estFerme": true
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "composantAllume",
+            "cible": "role:lampe_1",
+            "attendu": true
+          },
+          {
+            "type": "composantAllume",
+            "cible": "role:lampe_2",
+            "attendu": true
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Les deux lampes doivent s'allumer. Vérifie que chacune a la phase (via l'interrupteur) et le neutre.",
+          "en": "Both lamps must light up. Check that each has the phase (through the switch) and the neutral."
+        }
+      },
+      {
+        "id": "sc2",
+        "actions": [
+          {
+            "cible": "role:interrupteur_principal",
+            "etat": {
+              "estFerme": false
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "composantAllume",
+            "cible": "role:lampe_1",
+            "attendu": false
+          },
+          {
+            "type": "composantAllume",
+            "cible": "role:lampe_2",
+            "attendu": false
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Interrupteur ouvert : les deux lampes doivent s'éteindre.",
+          "en": "Switch open: both lamps must go out."
+        }
+      }
+    ]
+  },
+  "messages": {
+    "succes": {
+      "fr": "Bien joué ! Deux lampes en parallèle, un seul interrupteur : un tronc commun commandé, puis deux branches indépendantes qui reçoivent chacune la pleine tension.",
+      "en": "Well played! Two lamps in parallel, one switch: a switched common trunk, then two independent branches that each receive the full voltage."
+    },
+    "indice": {
+      "fr": "Les deux L1 partent de la sortie de l'interrupteur ; les deux L2 vont au neutre.",
+      "en": "Both L1 terminals come from the switch output; both L2 terminals go to the neutral."
+    }
+  },
+  "conclusion": {
+    "synthese": {
+      "fr": "Aujourd'hui tu as appris le montage en parallèle :",
+      "en": "Today you learned parallel wiring:"
+    },
+    "acquis": [
+      {
+        "fr": "diviser la phase commandée vers plusieurs récepteurs (équipotentielle)",
+        "en": "splitting the switched phase towards several loads (equipotential)"
+      },
+      {
+        "fr": "fermer une boucle indépendante par récepteur (chacun son neutre)",
+        "en": "closing one independent loop per load (each with its own neutral)"
+      },
+      {
+        "fr": "comprendre pourquoi chaque lampe reçoit la pleine tension 230 V",
+        "en": "understanding why each lamp receives the full 230 V"
+      }
+    ],
+    "questions": [
+      {
+        "question": {
+          "fr": "En parallèle, quelle tension reçoit chaque lampe ?",
+          "en": "In parallel, what voltage does each lamp receive?"
+        },
+        "choix": [
+          {
+            "fr": "La moitié : 115 V chacune",
+            "en": "Half: 115 V each"
+          },
+          {
+            "fr": "La pleine tension : 230 V chacune",
+            "en": "The full voltage: 230 V each"
+          },
+          {
+            "fr": "Ça dépend de la longueur des fils",
+            "en": "It depends on the wire length"
+          }
+        ],
+        "bonneReponse": 1,
+        "explication": {
+          "fr": "Chaque branche parallèle est directement entre phase et neutre : elle voit la tension COMPLÈTE. C'est en SÉRIE que la tension se partage.",
+          "en": "Each parallel branch sits directly between phase and neutral: it sees the FULL voltage. It is in SERIES that voltage is shared."
+        }
+      },
+      {
+        "question": {
+          "fr": "Pourquoi les prises et lampes d'une maison sont-elles câblées en parallèle ?",
+          "en": "Why are the sockets and lamps of a house wired in parallel?"
+        },
+        "choix": [
+          {
+            "fr": "Pour que chaque appareil ait 230 V et fonctionne indépendamment des autres",
+            "en": "So every appliance gets 230 V and works independently of the others"
+          },
+          {
+            "fr": "Parce que c'est moins cher",
+            "en": "Because it is cheaper"
+          },
+          {
+            "fr": "Pour utiliser moins de disjoncteurs",
+            "en": "To use fewer breakers"
+          }
+        ],
+        "bonneReponse": 0,
+        "explication": {
+          "fr": "En parallèle, débrancher ou griller un appareil n'affecte pas les autres, et chacun reçoit sa tension nominale. En série, tout s'éteindrait ensemble.",
+          "en": "In parallel, unplugging or burning out one appliance does not affect the others, and each gets its rated voltage. In series, everything would go out together."
+        }
+      }
+    ],
+    "defiId": "defi_lampe"
+  }
+}

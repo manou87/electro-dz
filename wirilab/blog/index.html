@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Mesure d'audience Webful (wirilab:webful). -->
+  <script src="../js/webful-wirilab.js"></script>
+
+  <title>Blog — WiriLab</title>
+  <meta name="description" content="Guides électricité : multimètre, va-et-vient, schémas, court-circuit, simulateur dans le navigateur. Formation domestique et industrielle.">
+  <link rel="icon" type="image/png" href="../assets/wirilab_icon_512.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=32">
+</head>
+<body class="blog-page">
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="../index.html">
+      <img src="../assets/wirilab_icon_512.png" alt="WiriLab" width="30" height="30">
+      <span>WiriLab</span>
+    </a>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="../index.html#offres">Pricing</a>
+      <a href="../legal/privacy/">Privacy Policy</a>
+      <a href="../legal/terms/">Terms of Use</a>
+      <a class="nav-cta" href="../app/">Commencer gratuitement</a>
+    </nav>
+  </div>
+</header>
+
+<main class="blog-main">
+  <div class="shell">
+    <div class="blog-intro">
+      <h1>Blog</h1>
+      <p>Guides pour réviser les gestes du métier : mesure, câblage, schémas et simulation — avec ou sans WiriLab.</p>
+    </div>
+
+    <div class="blog-toolbar">
+      <span class="blog-toolbar-label">Affichage</span>
+      <div class="blog-view-toggle" role="group" aria-label="Mode d'affichage des articles">
+        <button type="button" class="blog-view-btn is-active" data-view="cards" aria-pressed="true">Cartes</button>
+        <button type="button" class="blog-view-btn" data-view="list" aria-pressed="false">Liste</button>
+      </div>
+    </div>
+
+    <div class="blog-list blog-list--cards" id="blog-list">
+      <article class="blog-teaser">
+        <a class="blog-teaser-media" href="mesurer-tension-multimetre.html">
+          <img src="../assets/export/mesure.png" alt="Multimètre en volts alternatifs sur un circuit d'éclairage.">
+        </a>
+        <div class="blog-teaser-body">
+          <p class="blog-kicker">Mesure · 8 min</p>
+          <h2><a href="mesurer-tension-multimetre.html">Mesurer 230 V au multimètre sans se tromper de calibre</a></h2>
+          <p class="blog-excerpt">Calibre V~, pointes phase–neutre, lecture et interprétation. Erreurs fréquentes en atelier.</p>
+          <a class="blog-read-more" href="mesurer-tension-multimetre.html">Lire l’article</a>
+        </div>
+      </article>
+
+      <article class="blog-teaser">
+        <a class="blog-teaser-media" href="contacteur-voyants-industriel.html">
+          <img src="../assets/views/simuler.png" alt="Montage industriel avec contacteurs et voyants.">
+        </a>
+        <div class="blog-teaser-body">
+          <p class="blog-kicker">Industriel · 10 min</p>
+          <h2><a href="contacteur-voyants-industriel.html">Lire un montage contacteur + voyants avant d’appuyer sur Marche</a></h2>
+          <p class="blog-excerpt">Alimentation, commande 24 V, bobines et voyants : méthode en cinq étapes.</p>
+          <a class="blog-read-more" href="contacteur-voyants-industriel.html">Lire l’article</a>
+        </div>
+      </article>
+
+      <article class="blog-teaser">
+        <a class="blog-teaser-media" href="va-et-vient-cabler.html">
+          <img src="../assets/export/mesure.png" alt="Deux interrupteurs et éclairage sur simulateur.">
+        </a>
+        <div class="blog-teaser-body">
+          <p class="blog-kicker">Domestique · 9 min</p>
+          <h2><a href="va-et-vient-cabler.html">Câbler un va-et-vient : deux interrupteurs, une lampe</a></h2>
+          <p class="blog-excerpt">Navettes, fils voyageurs et test depuis chaque point de commande.</p>
+          <a class="blog-read-more" href="va-et-vient-cabler.html">Lire l’article</a>
+        </div>
+      </article>
+
+      <article class="blog-teaser">
+        <a class="blog-teaser-media" href="court-circuit-disjoncteur.html">
+          <img src="../assets/views/simuler.png" alt="Tableau avec disjoncteur et câblage.">
+        </a>
+        <div class="blog-teaser-body">
+          <p class="blog-kicker">Sécurité · 8 min</p>
+          <h2><a href="court-circuit-disjoncteur.html">Court-circuit : pourquoi le disjoncteur saute et quoi faire</a></h2>
+          <p class="blog-excerpt">Symptômes, causes en TP et recherche du défaut avant de réarmer.</p>
+          <a class="blog-read-more" href="court-circuit-disjoncteur.html">Lire l’article</a>
+        </div>
+      </article>
+
+      <article class="blog-teaser">
+        <a class="blog-teaser-media" href="lire-schema-electrique.html">
+          <img src="../assets/export/schema_1.png" alt="Schéma électrique exporté WiriLab.">
+        </a>
+        <div class="blog-teaser-body">
+          <p class="blog-kicker">Schéma · 7 min</p>
+          <h2><a href="lire-schema-electrique.html">Lire un schéma électrique avant de câbler</a></h2>
+          <p class="blog-excerpt">Du symbole au fil : phase, neutre, protection et correspondance bornes.</p>
+          <a class="blog-read-more" href="lire-schema-electrique.html">Lire l’article</a>
+        </div>
+      </article>
+
+      <article class="blog-teaser">
+        <a class="blog-teaser-media" href="simulateur-electricite-navigateur.html">
+          <img src="../assets/progressez_poster.png" alt="Parcours et progression WiriLab.">
+        </a>
+        <div class="blog-teaser-body">
+          <p class="blog-kicker">Outil · 6 min</p>
+          <h2><a href="simulateur-electricite-navigateur.html">Simulateur d’électricité dans le navigateur : à quoi ça sert ?</a></h2>
+          <p class="blog-excerpt">Répéter le câblage sans plateau, Chromebook, limites et complément au réel.</p>
+          <a class="blog-read-more" href="simulateur-electricite-navigateur.html">Lire l’article</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="shell footer-grid">
+    <div>
+      <a class="footer-brand" href="../index.html">
+        <img src="../assets/wirilab_logo_horizontal_transparent_1200x320.png" alt="WiriLab">
+      </a>
+      <p>Simulateur de câblage électrique domestique et industriel.</p>
+    </div>
+    <nav aria-label="Ressources">
+      <h3>Ressources</h3>
+      <a href="./">Blog</a>
+      <a href="../index.html#offres">Pricing</a>
+      <a href="../legal/privacy/">Privacy Policy</a>
+      <a href="../legal/terms/">Terms of Use</a>
+    </nav>
+  </div>
+  <div class="shell copyright">
+    <p>© 2026 WiriLab</p>
+  </div>
+</footer>
+<script src="blog.js" defer></script>
+</body>
+</html>

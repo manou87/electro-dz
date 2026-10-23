@@ -1,0 +1,256 @@
+{
+  "version": 3,
+  "id": "tp_voyant",
+  "titre": {
+    "fr": "Ajouter un voyant",
+    "en": "Adding an indicator light"
+  },
+  "niveau": "debutant",
+  "guidage": "semiGuide",
+  "typeTp": "assemblage",
+  "niveauTaxonomie": 3,
+  "objectif": {
+    "fr": "Signaler qu'un circuit est sous tension avec un voyant de signalisation.",
+    "en": "Show that a circuit is live using an indicator light."
+  },
+  "tags": [
+    "domestique",
+    "signalisation"
+  ],
+  "roles": {
+    "reseau": {
+      "typeComposant": "reseau"
+    },
+    "interrupteur_principal": {
+      "typeComposant": "interrupteur",
+      "sousType": "simple"
+    },
+    "voyant_1": {
+      "typeComposant": "voyant_signalisation"
+    }
+  },
+  "etapes": [
+    {
+      "type": "info",
+      "id": "e1",
+      "instruction": {
+        "fr": "Un voyant s'allume comme une petite lampe. Pose le circuit, puis vérifie.",
+        "en": "An indicator lights up like a small lamp. Build the circuit, then check."
+      }
+    },
+    {
+      "type": "poserComposant",
+      "id": "e2",
+      "instruction": {
+        "fr": "Pose le réseau.",
+        "en": "Place the supply."
+      },
+      "role": "reseau"
+    },
+    {
+      "type": "poserComposant",
+      "id": "e3",
+      "instruction": {
+        "fr": "Pose un interrupteur simple.",
+        "en": "Place a simple switch."
+      },
+      "role": "interrupteur_principal"
+    },
+    {
+      "type": "poserComposant",
+      "id": "e4",
+      "instruction": {
+        "fr": "Pose un voyant de signalisation.",
+        "en": "Place an indicator light."
+      },
+      "role": "voyant_1",
+      "indices": [
+        {
+          "fr": "Catalogue → Signalisation → Voyant.",
+          "en": "Catalog → Signalling → Indicator."
+        }
+      ]
+    },
+    {
+      "type": "info",
+      "id": "e5",
+      "instruction": {
+        "fr": "Câble toi-même : phase → interrupteur → voyant (X1) → neutre (X2). Moins de micro-étapes — tu sais déjà faire.",
+        "en": "Wire it yourself: phase → switch → indicator (X1) → neutral (X2). Fewer micro-steps — you already know how."
+      }
+    },
+    {
+      "type": "prediction",
+      "id": "e6",
+      "instruction": {
+        "fr": "Avant de vérifier :",
+        "en": "Before checking:"
+      },
+      "question": {
+        "fr": "Le voyant se comporte-t-il comme une lampe ?",
+        "en": "Does the indicator behave like a lamp?"
+      },
+      "choix": [
+        {
+          "fr": "Oui, c'est une charge lumineuse",
+          "en": "Yes, it is a light-emitting load"
+        },
+        {
+          "fr": "Non, c'est juste décoratif",
+          "en": "No, it is just decorative"
+        }
+      ],
+      "bonneReponse": 0,
+      "explication": {
+        "fr": "Le voyant est une petite charge : il s'allume quand il est alimenté.",
+        "en": "The indicator is a small load: it lights up when it is powered."
+      }
+    },
+    {
+      "type": "scenario",
+      "id": "e7",
+      "instruction": {
+        "fr": "Vérifie ton montage.",
+        "en": "Check your assembly."
+      },
+      "scenarioId": ""
+    }
+  ],
+  "verification": {
+    "scenarios": [
+      {
+        "id": "sc1",
+        "actions": [
+          {
+            "cible": "role:interrupteur_principal",
+            "etat": {
+              "estFerme": true
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "composantAllume",
+            "cible": "role:voyant_1",
+            "attendu": true
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Interrupteur fermé : le voyant doit s'allumer. Bornes X1 (phase) et X2 (neutre).",
+          "en": "Switch closed: the indicator must light up. Terminals X1 (phase) and X2 (neutral)."
+        }
+      },
+      {
+        "id": "sc2",
+        "actions": [
+          {
+            "cible": "role:interrupteur_principal",
+            "etat": {
+              "estFerme": false
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "composantAllume",
+            "cible": "role:voyant_1",
+            "attendu": false
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Interrupteur ouvert : le voyant doit s'éteindre.",
+          "en": "Switch open: the indicator must go out."
+        }
+      }
+    ]
+  },
+  "messages": {
+    "succes": {
+      "fr": "Bien ! Tu sais maintenant signaler visuellement qu'un circuit est sous tension : le voyant est une petite charge branchée comme une lampe, X1 côté phase et X2 côté neutre.",
+      "en": "Good! You now know how to visually signal a live circuit: the indicator is a small load wired like a lamp, X1 on the phase side and X2 on the neutral side."
+    },
+    "indice": {
+      "fr": "X1 côté phase (après l'interrupteur), X2 côté neutre.",
+      "en": "X1 on the phase side (after the switch), X2 on the neutral side."
+    }
+  },
+  "conclusion": {
+    "synthese": {
+      "fr": "Aujourd'hui tu as appris la signalisation :",
+      "en": "Today you learned about signalling:"
+    },
+    "acquis": [
+      {
+        "fr": "câbler un voyant de signalisation (bornes X1 / X2)",
+        "en": "wiring an indicator light (terminals X1 / X2)"
+      },
+      {
+        "fr": "comprendre que le voyant est une charge, pas un simple décor",
+        "en": "understanding that the indicator is a load, not just decoration"
+      },
+      {
+        "fr": "câbler avec moins de guidage — tu gagnes en autonomie",
+        "en": "wiring with less guidance — you are gaining autonomy"
+      }
+    ],
+    "questions": [
+      {
+        "question": {
+          "fr": "Le voyant s'allume. Qu'est-ce que ça prouve ?",
+          "en": "The indicator lights up. What does that prove?"
+        },
+        "choix": [
+          {
+            "fr": "Que la portion de circuit où il est branché est sous tension",
+            "en": "That the part of the circuit it is wired to is live"
+          },
+          {
+            "fr": "Que l'installation entière est sans défaut",
+            "en": "That the whole installation is fault-free"
+          },
+          {
+            "fr": "Rien de particulier",
+            "en": "Nothing in particular"
+          }
+        ],
+        "bonneReponse": 0,
+        "explication": {
+          "fr": "Un voyant témoigne de la présence de tension LÀ où il est branché — c'est un indicateur local, pas un contrôle global de l'installation.",
+          "en": "An indicator shows there is voltage WHERE it is wired — a local indicator, not a global check of the installation."
+        }
+      },
+      {
+        "question": {
+          "fr": "Pourquoi le voyant est-il branché entre X1 (phase) et X2 (neutre) ?",
+          "en": "Why is the indicator wired between X1 (phase) and X2 (neutral)?"
+        },
+        "choix": [
+          {
+            "fr": "Parce qu'il lui faut une boucle complète pour être traversé par le courant",
+            "en": "Because it needs a complete loop for current to flow through it"
+          },
+          {
+            "fr": "Parce que X1 et X2 sont les seules bornes libres",
+            "en": "Because X1 and X2 are the only free terminals"
+          },
+          {
+            "fr": "Pour éviter qu'il grille",
+            "en": "To keep it from burning out"
+          }
+        ],
+        "bonneReponse": 0,
+        "explication": {
+          "fr": "Comme toute charge, le voyant obéit à la règle de la boucle fermée : arrivée par la phase, retour par le neutre.",
+          "en": "Like any load, the indicator follows the closed-loop rule: in through the phase, back through the neutral."
+        }
+      }
+    ],
+    "defiId": "defi_lampe"
+  }
+}

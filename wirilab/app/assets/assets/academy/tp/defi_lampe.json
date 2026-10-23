@@ -1,0 +1,117 @@
+{
+  "version": 3,
+  "id": "defi_lampe",
+  "titre": {
+    "fr": "Défi — Lampe et interrupteur",
+    "en": "Challenge — Lamp and switch"
+  },
+  "niveau": "debutant",
+  "guidage": "defi",
+  "typeTp": "defi",
+  "niveauTaxonomie": 6,
+  "niveauAssistance": "diagnostic",
+  "objectif": {
+    "fr": "Sans étapes : câble une lampe commandée par un interrupteur simple, puis vérifie.",
+    "en": "No steps: wire a lamp controlled by a simple switch, then check your work."
+  },
+  "tags": [
+    "domestique",
+    "eclairage",
+    "defi"
+  ],
+  "roles": {
+    "reseau": {
+      "typeComposant": "reseau"
+    },
+    "interrupteur_principal": {
+      "typeComposant": "interrupteur",
+      "sousType": "simple"
+    },
+    "lampe_1": {
+      "typeComposant": "lampe_suspension"
+    }
+  },
+  "etapes": [
+    {
+      "type": "info",
+      "id": "e1",
+      "instruction": {
+        "fr": "Défi : aucun guidage. Monte le circuit, puis clique Vérifier.",
+        "en": "Challenge: no guidance. Build the circuit, then click Check."
+      }
+    },
+    {
+      "type": "scenario",
+      "id": "e2",
+      "instruction": {
+        "fr": "Vérifie ton montage.",
+        "en": "Check your assembly."
+      },
+      "scenarioId": ""
+    }
+  ],
+  "verification": {
+    "scenarios": [
+      {
+        "id": "sc1",
+        "actions": [
+          {
+            "cible": "role:interrupteur_principal",
+            "etat": {
+              "estFerme": true
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "composantAllume",
+            "cible": "role:lampe_1",
+            "attendu": true
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Interrupteur fermé : la lampe doit s'allumer.",
+          "en": "Switch closed: the lamp must light up."
+        }
+      },
+      {
+        "id": "sc2",
+        "actions": [
+          {
+            "cible": "role:interrupteur_principal",
+            "etat": {
+              "estFerme": false
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "composantAllume",
+            "cible": "role:lampe_1",
+            "attendu": false
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Interrupteur ouvert : la lampe doit s'éteindre.",
+          "en": "Switch open: the lamp must go out."
+        }
+      }
+    ]
+  },
+  "messages": {
+    "succes": {
+      "fr": "Défi réussi ! Tu as câblé une lampe commandée sans aucun guidage : phase coupée par l'interrupteur, neutre direct à la lampe. C'est exactement le geste du métier.",
+      "en": "Challenge complete! You wired a controlled lamp without any guidance: phase switched by the switch, neutral straight to the lamp. That is exactly how professionals do it."
+    },
+    "indice": {
+      "fr": "Phase → interrupteur → lampe → neutre.",
+      "en": "Phase → switch → lamp → neutral."
+    }
+  }
+}

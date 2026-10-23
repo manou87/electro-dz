@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Mesure d'audience Webful (wirilab:webful). -->
+  <script src="js/webful-wirilab.js"></script>
+
+  <title>WiriLab — Simulateur de câblage électrique pour la formation</title>
+  <meta name="description" content="Réalisez des montages d'électricité domestique et industrielle avec des composants normalisés, simulez leur fonctionnement réel, mesurez au multimètre et suivez des travaux pratiques guidés. Dans le navigateur, sans installation.">
+
+  <!-- Open Graph : aperçu riche quand le lien est partagé sur les réseaux -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="WiriLab">
+  <meta property="og:title" content="WiriLab — Simulateur de câblage électrique">
+  <meta property="og:description" content="Réaliser des montages d'électricité domestique et industrielle, observer leur fonctionnement réel et apprendre la recherche de défaut. Dans le navigateur, sans installation.">
+  <meta property="og:url" content="https://wirilab.com/">
+  <meta property="og:image" content="https://wirilab.com/assets/wirilab_cover_1500x500.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="WiriLab — Simulateur de câblage électrique">
+  <meta name="twitter:description" content="Réaliser des montages d'électricité domestique et industrielle et apprendre la recherche de défaut, dans le navigateur.">
+  <meta name="twitter:image" content="https://wirilab.com/assets/wirilab_cover_1500x500.png">
+
+  <link rel="icon" type="image/png" href="assets/wirilab_icon_512.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=42">
+</head>
+<body>
+
+<!-- ======================= NAVIGATION ======================= -->
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="#">
+      <img src="assets/wirilab_icon_512.png" alt="WiriLab" width="30" height="30">
+      <span>WiriLab</span>
+    </a>
+    <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Ouvrir le menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Navigation principale">
+      <a href="#fonctionnement" data-i18n="navHow">Comment ça marche</a>
+      <a href="#apprentissage" data-i18n="navLearn">Apprentissage</a>
+      <a href="#formation" data-i18n="navTrain">Formation</a>
+      <a href="#offres" data-i18n="navOffers">Offres</a>
+      <div class="nav-lang">
+        <button type="button" class="nav-lang-btn" id="nav-lang-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Langue">
+          <span aria-hidden="true">🌐</span>
+          <span id="nav-lang-code">FR</span>
+        </button>
+        <ul class="nav-lang-menu" id="nav-lang-menu" role="listbox" hidden>
+          <li><button type="button" data-lang="fr">Français</button></li>
+          <li><button type="button" data-lang="en">English</button></li>
+          <li><button type="button" data-lang="es">Español</button></li>
+        </ul>
+      </div>
+      <a class="nav-cta" href="app/" data-i18n="navStart" data-webful-event="cta_commencer" data-webful-label="Nav — Commencer">Commencer gratuitement</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ======================= HERO ======================= -->
+<section class="hero-section">
+  <div class="shell hero-grid">
+    <div class="hero-copy">
+      <h1>
+        <span>WiriLab</span>
+        <span class="hero-headline-accent">laboratoire électrotechnique virtuel.</span>
+      </h1>
+      <p class="hero-lede">
+        Concevez, câblez, simulez et dépannez des installations électriques
+        réalistes directement dans votre navigateur. Transformez un schéma en
+        une installation virtuelle interactive afin de vous préparer aux
+        conditions réelles du métier avec un accompagnement intelligent
+        alimenté par l'IA.
+      </p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="app/" id="cta-launch" data-i18n="navStart" data-webful-event="cta_commencer" data-webful-label="Hero — Commencer">Commencer gratuitement</a>
+        <a class="button button-secondary" href="#demo">Voir une démonstration</a>
+      </div>
+      <p class="hero-note">Compatible Chromebook, ordinateur de bureau et tablette. Aucune installation requise.</p>
+    </div>
+
+    <!-- Cinématique dans une fenêtre « glass » : le logiciel en train de
+         marcher — le curseur câble un va-et-vient, met sous tension, commande. -->
+    <div class="hero-visual" id="demo" aria-label="Démonstration WiriLab : conception et simulation d'un circuit">
+      <div class="hero-window-chrome" aria-hidden="true">
+        <span class="window-controls"><span></span><span></span><span></span></span>
+      </div>
+      <div class="hero-window">
+        <div class="stage stage-hero-video">
+          <video class="hero-frame on" src="assets/hero/hero_demo.mp4" autoplay muted loop playsinline poster="assets/hero/frame_0.png" aria-label="Démonstration WiriLab en vidéo"></video>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Un bloc blanc : 3 piliers courts séparés par un trait vertical. -->
+  <div class="shell hero-pillars" aria-label="Les trois piliers WiriLab">
+    <article class="hero-pillar">
+      <span class="hero-pillar-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </span>
+      <h3>Simulateur électrique</h3>
+      <ul class="hero-pillar-tags">
+        <li>Câblage</li>
+        <li>Simulation</li>
+        <li>Multimètre</li>
+      </ul>
+    </article>
+    <article class="hero-pillar">
+      <span class="hero-pillar-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3.5v5c0 4.5-3.2 7.9-8 9.5-4.8-1.6-8-5-8-9.5v-5L12 3z"/><path d="M9 12l2 2 4-4.5"/></svg>
+      </span>
+      <h3>Labo de diagnostic</h3>
+      <ul class="hero-pillar-tags">
+        <li>Pannes</li>
+        <li>Mesures</li>
+        <li>Notation</li>
+      </ul>
+    </article>
+    <article class="hero-pillar">
+      <span class="hero-pillar-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3 2.9-4.5 5.5-4.5S13.9 16 14.5 19"/><circle cx="17" cy="9" r="2.4"/><path d="M16 14.7c2.3.2 4 1.5 4.5 3.8"/></svg>
+      </span>
+      <h3>Plateforme pédagogique</h3>
+      <ul class="hero-pillar-tags">
+        <li>Classes</li>
+        <li>Exercices</li>
+        <li>Suivi</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<!-- ============ COMMENT ÇA MARCHE ============ -->
+<section class="section section-light" id="fonctionnement">
+  <div class="shell section-heading how-heading">
+    <p class="eyebrow eyebrow-pill">Comment ça marche</p>
+  </div>
+  <div class="shell panel panel-light workflow-panel">
+    <div class="panel-copy">
+      <div class="step-heading">
+        <div class="step-title">
+          <span class="step-number">01</span>
+          <h2>Concevez votre circuit</h2>
+        </div>
+        <p>Créez votre circuit en plaçant des composants réalistes sur l'espace de
+          travail, puis réalisez le câblage comme vous le feriez sur une véritable
+          installation.</p>
+      </div>
+      <div class="cards">
+        <article class="card card-featured">
+          <span class="card-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          </span>
+          <h3>Composants réalistes</h3>
+          <p>Travaillez avec des composants fidèlement modélisés pour retrouver les
+            mêmes repères que sur le matériel réel.</p>
+        </article>
+        <article class="card">
+          <span class="card-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 L9 15"/><path d="M9 15 L20 4"/><circle cx="4" cy="20" r="1.6"/><circle cx="20" cy="4" r="1.6"/></svg>
+          </span>
+          <h3>Câblage intuitif</h3>
+          <p>Reliez facilement les composants grâce à une interface pensée pour
+            reproduire les gestes du terrain.</p>
+        </article>
+        <article class="card">
+          <span class="card-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/><path d="M9 9h6"/><path d="M9 13h4"/></svg>
+          </span>
+          <h3>Assistance IA</h3>
+          <p>Besoin d'aide&nbsp;? L'IA peut vous guider dans le câblage, expliquer vos
+            choix ou répondre à vos questions pendant la conception.</p>
+        </article>
+      </div>
+    </div>
+    <div class="panel-media">
+      <div class="stage stage-light stage-cablage-video" aria-label="Câblage d'un circuit dans WiriLab">
+        <video class="view-frame on" src="assets/hero/cablage.mp4" autoplay muted loop playsinline poster="assets/hero/frame_0.png" aria-label="Câblage fil par fil dans WiriLab"></video>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 · SIMULER (section sombre) ============ -->
+<section class="section section-dark" id="simulation">
+  <div class="shell simulation-block">
+    <div class="simulation-intro">
+      <div class="step-title">
+        <span class="step-number step-number-dark">02</span>
+        <h2>Simulez votre circuit</h2>
+      </div>
+      <p>Lancez la simulation et observez instantanément le comportement de votre
+        circuit. Analysez son fonctionnement, identifiez les erreurs de câblage et
+        comprenez chaque étape grâce à une simulation interactive.</p>
+    </div>
+
+    <div class="simulation-media">
+      <div class="stage stage-ui stage-light" aria-label="Lancement de la simulation dans WiriLab : clic sur le bouton Lecture">
+        <video class="view-frame on" src="assets/views/simuler.mp4" autoplay muted loop playsinline poster="assets/views/simuler.png" aria-label="Dans WiriLab, un clic sur Lecture lance la simulation d'un circuit industriel câblé"></video>
+        <div class="stage-caption">Clic sur Lecture — la simulation démarre</div>
+      </div>
+    </div>
+
+    <div class="cards cards-dark cards-row">
+      <article class="card card-dark card-dark-featured">
+        <span class="card-icon card-icon-dark" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </span>
+        <h3>Simulation en temps réel</h3>
+        <p>Visualisez la circulation du courant, observez les composants réagir comme
+          sur une installation réelle et effectuez des mesures avec des instruments
+          virtuels comme le multimètre.</p>
+      </article>
+      <article class="card card-dark">
+        <span class="card-icon card-icon-dark" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3.5v5c0 4.5-3.2 7.9-8 9.5-4.8-1.6-8-5-8-9.5v-5L12 3z"/><path d="M9 12l2 2 4-4.5"/></svg>
+        </span>
+        <h3>Détection intelligente des erreurs</h3>
+        <p>Repérez automatiquement les courts-circuits, circuits ouverts, erreurs de
+          câblage et autres anomalies avant de passer au matériel réel.</p>
+      </article>
+      <article class="card card-dark">
+        <span class="card-icon card-icon-dark" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
+        </span>
+        <h3>Comprenez chaque erreur</h3>
+        <p>L'assistant IA explique l'origine des défauts, leurs conséquences et vous
+          guide vers la bonne correction pour transformer chaque erreur en
+          apprentissage.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 · EXPLOITER (section teintée) ============ -->
+<section class="section section-light" id="exploiter">
+  <div class="shell panel panel-light output-panel">
+    <div class="panel-copy">
+      <div class="step-title">
+        <span class="step-number">03</span>
+        <h2>Exploitez votre projet</h2>
+      </div>
+      <p>Une fois votre circuit validé, transformez-le en une ressource exploitable&nbsp;:
+        générez sa documentation, partagez-le avec d'autres utilisateurs ou
+        réutilisez-le dans vos futurs travaux.</p>
+      <div class="cards">
+        <article class="card card-featured">
+          <span class="card-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg>
+          </span>
+          <h3>Génération automatique de schémas</h3>
+          <p>Obtenez des schémas électriques clairs et une documentation technique à
+            partir de votre circuit en quelques secondes.</p>
+        </article>
+        <article class="card">
+          <span class="card-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4"/><path d="m15.4 6.5-6.8 4"/></svg>
+          </span>
+          <h3>Partage simplifié</h3>
+          <p>Partagez vos projets avec vos enseignants, vos étudiants ou vos collègues
+            grâce à un simple lien.</p>
+        </article>
+        <article class="card">
+          <span class="card-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4H6.5A2.5 2.5 0 0 0 4 6.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg>
+          </span>
+          <h3>Bibliothèque de projets</h3>
+          <p>Enregistrez vos circuits, organisez-les dans votre bibliothèque et
+            réutilisez-les ou modifiez-les à tout moment.</p>
+        </article>
+      </div>
+    </div>
+    </div>
+
+  <div class="shell showcase-wrap">
+    <h3 class="showcase-heading">Des projets à ouvrir</h3>
+    <div class="showcase-grid">
+      <a class="showcase-card" href="https://wirilab.com/s/BX9Pnj3EUG">
+        <span class="showcase-preview"><img src="assets/showcase/temporisateur.png" alt="Circuit temporisateur" loading="lazy"></span>
+        <span class="showcase-body">
+          <span class="showcase-title">Temporisateur</span>
+          <span class="showcase-meta">1 circuit</span>
+          <span class="showcase-meta">Modifié le 2026-10-16</span>
+          <span class="showcase-open">Ouvrir dans l'atelier</span>
+        </span>
+      </a>
+      <a class="showcase-card" href="https://wirilab.com/s/cnsuz57pU3">
+        <span class="showcase-preview"><img src="assets/showcase/telerupteur.png" alt="Circuit télérupteur" loading="lazy"></span>
+        <span class="showcase-body">
+          <span class="showcase-title">Télérupteur</span>
+          <span class="showcase-meta">1 circuit</span>
+          <span class="showcase-meta">Modifié le 2026-10-15</span>
+          <span class="showcase-open">Ouvrir dans l'atelier</span>
+        </span>
+      </a>
+      <a class="showcase-card" href="https://wirilab.com/s/L1Xd5EdkZV">
+        <span class="showcase-preview"><img src="assets/showcase/moteur.png" alt="Circuit moteur asynchrone" loading="lazy"></span>
+        <span class="showcase-body">
+          <span class="showcase-title">Moteur asynchrone</span>
+          <span class="showcase-meta">1 circuit</span>
+          <span class="showcase-meta">Modifié le 2026-10-13</span>
+          <span class="showcase-open">Ouvrir dans l'atelier</span>
+        </span>
+      </a>
+      <a class="showcase-card" href="https://wirilab.com/s/a2miMHNwl1">
+        <span class="showcase-preview"><img src="assets/showcase/derivation.png" alt="Circuit boîte de dérivation" loading="lazy"></span>
+        <span class="showcase-body">
+          <span class="showcase-title">Boîte de dérivation</span>
+          <span class="showcase-meta">1 circuit</span>
+          <span class="showcase-meta">Modifié le 2026-10-13</span>
+          <span class="showcase-open">Ouvrir dans l'atelier</span>
+        </span>
+      </a>
+      <a class="showcase-card" href="https://wirilab.com/s/NY7xdtAosO">
+        <span class="showcase-preview"><img src="assets/showcase/ats.png" alt="Circuit ATS" loading="lazy"></span>
+        <span class="showcase-body">
+          <span class="showcase-title">ATS</span>
+          <span class="showcase-meta">1 circuit</span>
+          <span class="showcase-meta">Modifié le 2026-09-22</span>
+          <span class="showcase-open">Ouvrir dans l'atelier</span>
+        </span>
+      </a>
+      <a class="showcase-card" href="https://wirilab.com/s/xkrvwAECuW">
+        <span class="showcase-preview"><img src="assets/showcase/voyant.png" alt="Circuit voyant" loading="lazy"></span>
+        <span class="showcase-body">
+          <span class="showcase-title">Voyant</span>
+          <span class="showcase-meta">1 circuit</span>
+          <span class="showcase-meta">Modifié le 2026-09-15</span>
+          <span class="showcase-open">Ouvrir dans l'atelier</span>
+        </span>
+      </a>
+      <a class="showcase-card" href="https://wirilab.com/s/QeM7whgRpY">
+        <span class="showcase-preview"><img src="assets/showcase/multiprise.png" alt="Circuit multiprise" loading="lazy"></span>
+        <span class="showcase-body">
+          <span class="showcase-title">Multiprise</span>
+          <span class="showcase-meta">1 circuit</span>
+          <span class="showcase-meta">Modifié le 2026-09-19</span>
+          <span class="showcase-open">Ouvrir dans l'atelier</span>
+        </span>
+      </a>
+      <a class="showcase-card" href="https://wirilab.com/s/mxP6jnEwsw">
+        <span class="showcase-preview"><img src="assets/showcase/feux.png" alt="Circuit feux de circulation" loading="lazy"></span>
+        <span class="showcase-body">
+          <span class="showcase-title">Feux de circulation</span>
+          <span class="showcase-meta">1 circuit</span>
+          <span class="showcase-meta">Modifié le 2026-08-10</span>
+          <span class="showcase-open">Ouvrir dans l'atelier</span>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 · PROGRESSER ============ -->
+<section class="section section-light" id="apprentissage">
+  <div class="shell panel panel-light learning-panel">
+    <div class="panel-media">
+      <div class="stage stage-light stage-progressez-video" aria-label="Parcours d'apprentissage guidé dans WiriLab">
+        <video class="view-frame on" src="assets/progressez_demo.mp4" autoplay muted loop playsinline poster="assets/progressez_poster.png" aria-label="Progression et TP guidés dans WiriLab"></video>
+      </div>
+    </div>
+    <div class="panel-copy">
+      <div class="step-title">
+        <span class="step-number">04</span>
+        <h2>Progressez à votre rythme</h2>
+      </div>
+      <p>WiriLab ne se contente pas de simuler des circuits. La plateforme vous
+        accompagne tout au long de votre apprentissage avec des parcours pratiques,
+        des TP de câblage personnalisés et un suivi de votre progression.</p>
+      <div class="cards">
+        <article class="card card-featured">
+          <span class="card-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+          </span>
+          <h3>Travaux pratiques guidés</h3>
+          <p>Réalisez des TP interactifs étape par étape. Chaque manipulation est
+            vérifiée et accompagnée afin de vous aider à acquérir les bons réflexes en
+            conditions réelles.</p>
+        </article>
+        <article class="card">
+          <span class="card-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="3.5"/></svg>
+          </span>
+          <h3>TP de câblage générés par l'IA</h3>
+          <p>L'IA crée automatiquement de nouveaux TP de câblage adaptés à votre niveau, à
+            votre progression et aux difficultés rencontrées, pour un apprentissage
+            personnalisé.</p>
+        </article>
+        <article class="card">
+          <span class="card-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8.5 14 7 22l5-3 5 3-1.5-8"/></svg>
+          </span>
+          <h3>Progression et certifications</h3>
+          <p>Suivez votre évolution grâce aux niveaux, badges et statistiques de
+            progression. Validez vos compétences au fil des parcours et obtenez des
+            certifications à la fin de votre formation.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ POUR LES CENTRES DE FORMATION ============ -->
+<section class="section education-section" id="formation">
+  <div class="shell education-panel">
+    <div class="section-heading">
+      <p class="eyebrow">Pour les centres de formation</p>
+      <h2>Un laboratoire d'électrotechnique intelligent accessible depuis un navigateur.</h2>
+      <p>Offrez à chaque étudiant un environnement pratique où il peut concevoir, câbler,
+        simuler et dépanner des circuits électriques, tandis que les enseignants suivent la
+        progression de leur classe depuis un tableau de bord centralisé.</p>
+    </div>
+    <div class="feature-row">
+      <article class="feature-card">
+        <span class="feature-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="3.5"/></svg>
+        </span>
+        <h3>TP générés automatiquement</h3>
+        <p>Créez des travaux pratiques en quelques secondes grâce à l'IA. Générez plusieurs
+          variantes d'un même TP pour limiter le partage de réponses et adapter les
+          activités à chaque groupe.</p>
+      </article>
+      <article class="feature-card">
+        <span class="feature-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3 2.9-4.5 5.5-4.5S13.9 16 14.5 19"/><circle cx="17" cy="9" r="2.4"/><path d="M16 14.7c2.3.2 4 1.5 4.5 3.8"/></svg>
+        </span>
+        <h3>Un parcours personnalisé pour chaque étudiant</h3>
+        <p>L'IA adapte automatiquement les TP au niveau, aux erreurs et à la
+          progression de chaque apprenant afin que chacun avance à son propre rythme.</p>
+      </article>
+      <article class="feature-card">
+        <span class="feature-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3.5v5c0 4.5-3.2 7.9-8 9.5-4.8-1.6-8-5-8-9.5v-5L12 3z"/><path d="M9 12l2 2 4-4.5"/></svg>
+        </span>
+        <h3>Correction et évaluation automatiques</h3>
+        <p>Les circuits sont analysés automatiquement. Les enseignants gagnent du temps grâce
+          à une correction instantanée, des critères d'évaluation objectifs et un retour
+          détaillé sur les erreurs de chaque étudiant.</p>
+      </article>
+      <article class="feature-card">
+        <span class="feature-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/></svg>
+        </span>
+        <h3>Tableau de bord enseignant</h3>
+        <p>Suivez en temps réel la progression de votre classe&nbsp;: TP réalisés,
+          compétences acquises, difficultés rencontrées, temps passé, taux de réussite et
+          évolution de chaque étudiant.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= OFFRES ======================= -->
+<section class="section section-light" id="offres">
+  <div class="shell">
+    <div class="section-heading section-heading-dark">
+      <p class="eyebrow">Offres</p>
+      <h2>Commencez gratuitement, évoluez avec vos besoins</h2>
+      <p>Découvrez WiriLab gratuitement. Passez à la licence Établissement pour
+        accéder à l'ensemble des parcours, des outils pédagogiques et des
+        fonctionnalités collaboratives.</p>
+    </div>
+
+    <div class="billing-toggle billing-toggle-global" role="group" aria-label="Période" id="billing-global">
+      <button type="button" data-period="month" class="is-active">Mensuel</button>
+      <button type="button" data-period="year">Annuel</button>
+    </div>
+    <p class="billing-discount-hint" id="billing-discount-hint">Premium : économisez 20 % à l'année</p>
+
+    <div class="pricing" id="pricing-grid">
+      <!--
+        MESSAGE AGENT FUTUR : 3 cartes marketing (Communauté / Premium /
+        Établissement). Annuel seulement : Découverte 890 $, Standard
+        2 490 $, Campus sur devis.
+        La Découverte (sans compte) n'a PAS de carte — essai par défaut.
+        Les vrais droits restent dans lib/core/access/plan_acces.dart
+        (decouverte / gratuit / payant). Slugs formateur / etablissement / pro
+        allument la même carte Établissement.
+        Bascule Mensuel/Annuel = Premium seulement (#billing-global, USD −20 %).
+        Établissement est annuel. Campus reste « Sur devis ».
+      -->
+      <article class="price-card price-featured">
+        <span class="chip">Le plus choisi</span>
+        <h3>Communauté</h3>
+        <p class="price-sub">Essayez WiriLab</p>
+        <p class="price-amount price-fixed">0 $</p>
+        <ul class="check-list">
+          <li>Simulateur — illimité</li>
+          <li>TP guidés</li>
+          <li>Assistant IA — 20 questions / jour</li>
+          <li>Sauvegardes illimitées</li>
+        </ul>
+        <a class="button button-primary" href="app/" data-webful-event="cta_creer_compte" data-webful-label="Offre — Créer un compte">Créer un compte</a>
+      </article>
+
+      <article class="price-card">
+        <h3>Premium</h3>
+        <p class="price-sub">Votre coach IA personnel</p>
+        <p class="price-amount price-fixed" data-premium data-monthly="7">
+          <strong data-premium-total>7</strong> $ / <span data-period-label>mois</span>
+        </p>
+        <ul class="check-list">
+          <li>Simulateur avancé</li>
+          <li>Assistant IA — 50 questions / jour</li>
+          <li>Tous les parcours &amp; TP</li>
+          <li>Parcours personnalisés par l'IA</li>
+          <li>IA qui suit votre progression</li>
+          <li>Projets non répertoriés</li>
+          <li>Certifications</li>
+        </ul>
+        <a class="button button-primary" id="cta-premium" href="app/?checkout=premium" data-webful-event="cta_premium" data-webful-label="Offre — S'abonner Premium">S'abonner</a>
+      </article>
+
+      <article class="price-card">
+        <span class="chip chip-soft">Écoles &amp; formateurs</span>
+        <h3>WiriLab — Pack Établissement</h3>
+        <p class="price-sub">Former, entraîner et évaluer vos apprenants en électrotechnique.</p>
+        <!-- Packs annuels : Découverte / Standard / Campus — alignés OffresTarifs -->
+        <script type="application/json" id="etab-pack-config">[
+  {"places":35,"name":"Découverte","annual":890,"slug":"decouverte"},
+  {"places":150,"name":"Standard","annual":2490,"slug":"standard"},
+  {"places":null,"name":"Campus","annual":null,"slug":null}
+]</script>
+        <div class="price-slider pack-slider" data-pack-slider>
+          <p class="pack-learners-label">Nombre d'apprenants</p>
+          <input type="range" min="0" max="2" step="1" value="0" aria-label="Pack établissement">
+          <div class="pack-ticks" aria-hidden="true">
+            <span data-tick="0" class="is-active">35</span>
+            <span data-tick="1">150</span>
+            <span data-tick="2">Illimité</span>
+          </div>
+          <p class="pack-name" data-pack-name>Découverte</p>
+          <p class="pack-places" data-pack-places>Jusqu'à 35 apprenants</p>
+          <p class="price-amount" data-pack-price-line>890 $ / an</p>
+        </div>
+        <ul class="check-list etab-feature-list" aria-label="Fonctionnalités Pack Établissement">
+          <li tabindex="0">
+            <span class="feat-label">Enseignants illimités</span>
+            <span class="feat-detail">Équipez toute votre équipe pédagogique.</span>
+          </li>
+          <li tabindex="0">
+            <span class="feat-label">Câblage électrique &amp; schémas</span>
+            <span class="feat-detail">Permettez aux apprenants de réaliser des circuits électriques du bâtiment et industriels.</span>
+          </li>
+          <li tabindex="0">
+            <span class="feat-label">Multimètre virtuel &amp; mesures électriques</span>
+            <span class="feat-detail">Entraînez les apprenants à effectuer des mesures et à interpréter les résultats.</span>
+          </li>
+          <li tabindex="0">
+            <span class="feat-label">Simulation de pannes</span>
+            <span class="feat-detail">Placez les apprenants face à des défauts électriques à identifier.</span>
+          </li>
+          <li tabindex="0">
+            <span class="feat-label">Diagnostic &amp; dépannage</span>
+            <span class="feat-detail">Développez leurs compétences en recherche de pannes et en résolution de problèmes.</span>
+          </li>
+          <li tabindex="0">
+            <span class="feat-label">Correction automatique des exercices</span>
+            <span class="feat-detail">Évaluez les acquis et réduisez le temps consacré aux corrections.</span>
+          </li>
+          <li tabindex="0">
+            <span class="feat-label">Création de TP &amp; exercices</span>
+            <span class="feat-detail">Concevez des activités adaptées à vos objectifs pédagogiques.</span>
+          </li>
+          <li tabindex="0">
+            <span class="feat-label">Suivi des apprentissages</span>
+            <span class="feat-detail">Visualisez la progression et les résultats de chaque classe.</span>
+          </li>
+          <li tabindex="0">
+            <span class="feat-label">Rapports pédagogiques</span>
+            <span class="feat-detail">Identifiez les difficultés et adaptez l'accompagnement des apprenants.</span>
+          </li>
+          <li tabindex="0">
+            <span class="feat-label">Classes illimitées</span>
+            <span class="feat-detail">Organisez vos groupes de formation sans multiplier les abonnements.</span>
+          </li>
+        </ul>
+        <a class="button button-primary" id="cta-etablissement" data-pack-cta href="app/?checkout=etablissement&amp;pack=decouverte" data-webful-event="cta_etablissement" data-webful-label="Offre — S'abonner Établissement">S'abonner</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= CTA FINAL ======================= -->
+<section class="final-cta" id="lancer">
+  <div class="shell final-cta-inner">
+    <p class="cta-proof">Commencez gratuitement · Aucune installation</p>
+    <h2>Apprenez, pratiquez et progressez avec WiriLab.</h2>
+    <p>Concevez vos circuits, réalisez des travaux pratiques interactifs, simulez des
+      installations électriques réalistes et développez vos compétences, le tout
+      directement depuis votre navigateur.</p>
+    <div class="hero-actions">
+      <a class="button button-primary" href="app/" id="cta-launch-final" data-webful-event="cta_commencer" data-webful-label="CTA final — Commencer">Commencer gratuitement</a>
+      <a class="button button-secondary" href="mailto:contact@wirilab.com?subject=Demande%20de%20d%C3%A9monstration%20WiriLab">Demander une démonstration</a>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= CONTACT / FOOTER ======================= -->
+<footer class="site-footer" id="contact">
+  <div class="shell footer-grid">
+    <div>
+      <a class="footer-brand" href="#">
+        <img src="assets/wirilab_logo_horizontal_transparent_1200x320.png" alt="WiriLab">
+      </a>
+      <p>Simulateur de câblage électrique domestique et industriel.</p>
+    </div>
+    <nav aria-label="Produit">
+      <h3>Produit</h3>
+      <a href="#fonctionnement">Comment ça marche</a>
+      <a href="#apprentissage">Apprentissage guidé</a>
+      <a href="#formation">Centres de formation</a>
+      <a href="#offres">Offres</a>
+    </nav>
+    <nav aria-label="Ressources">
+      <h3>Ressources</h3>
+      <a href="blog/">Blog</a>
+      <a href="#offres">Pricing</a>
+      <a href="legal/privacy/">Privacy Policy</a>
+      <a href="legal/terms/">Terms of Use</a>
+    </nav>
+    <nav aria-label="Contact">
+      <h3>Contact</h3>
+      <a href="mailto:contact@wirilab.com">contact@wirilab.com</a>
+      <a href="tel:+14184787901">+1 418 478 79 01</a>
+      <a href="https://wa.me/14184787901?text=Bonjour%20WiriLab%20!" target="_blank" rel="noopener">WhatsApp</a>
+    </nav>
+  </div>
+  <div class="shell copyright">
+    <p>© 2026 WiriLab</p>
+  </div>
+</footer>
+
+<!-- Coordonnées des bornes pour le curseur animé (généré par l'outil Flutter). -->
+<script src="js/main.js?v=32"></script>
+<script src="js/etab-packs.js?v=2"></script>
+</body>
+</html>

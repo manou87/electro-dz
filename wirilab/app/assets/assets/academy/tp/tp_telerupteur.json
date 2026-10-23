@@ -1,0 +1,586 @@
+{
+  "version": 3,
+  "id": "tp_telerupteur",
+  "titre": {
+    "fr": "Télérupteur et poussoir",
+    "en": "Impulse relay and push button"
+  },
+  "niveau": "intermediaire",
+  "guidage": "guide",
+  "typeTp": "guide",
+  "niveauTaxonomie": 5,
+  "objectif": {
+    "fr": "Commander une lampe à distance avec un télérupteur et un bouton poussoir.",
+    "en": "Control a lamp remotely with an impulse relay and a push button."
+  },
+  "tags": [
+    "domestique",
+    "commande",
+    "telerupteur"
+  ],
+  "roles": {
+    "reseau": {
+      "typeComposant": "reseau"
+    },
+    "telerupteur_1": {
+      "typeComposant": "telerupteur"
+    },
+    "poussoir_1": {
+      "typeComposant": "bouton_poussoir"
+    },
+    "lampe_1": {
+      "typeComposant": "lampe_suspension"
+    }
+  },
+  "etapes": [
+    {
+      "type": "info",
+      "id": "e1",
+      "instruction": {
+        "fr": "Le télérupteur bascule la lampe à chaque appui sur le poussoir. On pose d’abord les composants, puis on câble.",
+        "en": "The impulse relay toggles the lamp with each press of the push button. Place the parts first, then wire."
+      }
+    },
+    {
+      "type": "poserComposant",
+      "id": "e2",
+      "instruction": {
+        "fr": "Pose le réseau.",
+        "en": "Place the supply."
+      },
+      "explicationAvant": {
+        "fr": "La source alimentera DEUX circuits distincts : la commande (bobine du télérupteur) et la puissance (lampe).",
+        "en": "The source will feed TWO distinct circuits: control (the relay coil) and power (the lamp)."
+      },
+      "explicationApres": {
+        "fr": "Source posée. Garde en tête cette séparation commande / puissance — c'est la clé de tout le TP.",
+        "en": "Source placed. Keep the control / power separation in mind — it is the key to this whole lab."
+      },
+      "transition": {
+        "fr": "Pose maintenant la pièce maîtresse : le télérupteur.",
+        "en": "Now place the star of the show: the impulse relay."
+      },
+      "role": "reseau",
+      "indices": [
+        {
+          "fr": "Catalogue → Alimentation → Réseau monophasé.",
+          "en": "Catalog → Power supply → Single-phase mains."
+        }
+      ],
+      "messageErreur": {
+        "fr": "Il faut exactement un réseau sur le canvas.",
+        "en": "You need exactly one supply on the canvas."
+      }
+    },
+    {
+      "type": "poserComposant",
+      "id": "e3",
+      "instruction": {
+        "fr": "Pose un télérupteur.",
+        "en": "Place an impulse relay."
+      },
+      "explicationAvant": {
+        "fr": "Le télérupteur a deux étages : une BOBINE (A1–A2) qui reçoit les impulsions, et un CONTACT de puissance (1–2) qui bascule à chaque impulsion. Il mémorise son état.",
+        "en": "The impulse relay has two stages: a COIL (A1–A2) that receives the pulses, and a power CONTACT (1–2) that flips on each pulse. It remembers its state."
+      },
+      "explicationApres": {
+        "fr": "Télérupteur posé. Repère bien ses deux paires de bornes : ne confonds jamais A1 (bobine) avec 1 (contact).",
+        "en": "Relay placed. Note its two pairs of terminals: never confuse A1 (coil) with 1 (contact)."
+      },
+      "transition": {
+        "fr": "Ajoutons l'organe qui enverra les impulsions.",
+        "en": "Let's add the device that will send the pulses."
+      },
+      "role": "telerupteur_1",
+      "indices": [
+        {
+          "fr": "Catalogue → Commande → Télérupteur. Bornes : 1–2 (haut, puissance), A1–A2 (bas, bobine).",
+          "en": "Catalog → Control → Impulse relay. Terminals: 1–2 (top, power), A1–A2 (bottom, coil)."
+        }
+      ],
+      "messageErreur": {
+        "fr": "Il faut exactement un télérupteur.",
+        "en": "You need exactly one impulse relay."
+      }
+    },
+    {
+      "type": "poserComposant",
+      "id": "e4",
+      "instruction": {
+        "fr": "Pose un bouton poussoir.",
+        "en": "Place a push button."
+      },
+      "explicationAvant": {
+        "fr": "Le poussoir envoie des IMPULSIONS : un appui bref = une impulsion vers la bobine. C'est le télérupteur qui mémorise, pas le poussoir.",
+        "en": "The push button sends PULSES: one short press = one pulse to the coil. The relay does the remembering, not the button."
+      },
+      "explicationApres": {
+        "fr": "Poussoir en place. Dans une vraie maison, on peut en brancher plusieurs en parallèle — tous commanderont la même lampe.",
+        "en": "Button in place. In a real house you can wire several in parallel — all will control the same lamp."
+      },
+      "transition": {
+        "fr": "Dernier composant : la lampe.",
+        "en": "Last component: the lamp."
+      },
+      "role": "poussoir_1",
+      "indices": [
+        {
+          "fr": "Catalogue → Commande → Bouton poussoir. Bornes 13 (haut) et 14 (bas).",
+          "en": "Catalog → Control → Push button. Terminals 13 (top) and 14 (bottom)."
+        }
+      ],
+      "messageErreur": {
+        "fr": "Il faut exactement un bouton poussoir.",
+        "en": "You need exactly one push button."
+      }
+    },
+    {
+      "type": "poserComposant",
+      "id": "e5",
+      "instruction": {
+        "fr": "Pose la lampe.",
+        "en": "Place the lamp."
+      },
+      "explicationAvant": {
+        "fr": "La lampe est le récepteur du circuit de PUISSANCE : elle sera alimentée à travers le contact 1–2 du télérupteur.",
+        "en": "The lamp is the load of the POWER circuit: it will be fed through the relay's 1–2 contact."
+      },
+      "explicationApres": {
+        "fr": "Tout le matériel est posé. Le câblage se fera en deux temps bien séparés : commande d'abord, puissance ensuite.",
+        "en": "All the hardware is placed. Wiring happens in two clearly separated stages: control first, then power."
+      },
+      "transition": {
+        "fr": "Commençons par le circuit de commande.",
+        "en": "Let's start with the control circuit."
+      },
+      "role": "lampe_1",
+      "indices": [
+        {
+          "fr": "Catalogue → Éclairage → Lampe de suspension.",
+          "en": "Catalog → Lighting → Pendant lamp."
+        }
+      ],
+      "messageErreur": {
+        "fr": "Il faut exactement une lampe.",
+        "en": "You need exactly one lamp."
+      }
+    },
+    {
+      "type": "info",
+      "id": "e6",
+      "instruction": {
+        "fr": "On câble d'abord la COMMANDE (poussoir → bobine), puis la PUISSANCE (phase → contact → lampe → neutre).",
+        "en": "Wire CONTROL first (button → coil), then POWER (phase → contact → lamp → neutral)."
+      }
+    },
+    {
+      "type": "relierBornes",
+      "id": "e7",
+      "instruction": {
+        "fr": "COMMANDE — Phase (L) du réseau → borne 13 du poussoir.",
+        "en": "CONTROL — Supply phase (L) → push-button terminal 13."
+      },
+      "explicationAvant": {
+        "fr": "Le circuit de commande commence ici : la phase attend derrière le contact 13-14 du poussoir. Tant que personne n'appuie, rien ne passe.",
+        "en": "The control circuit starts here: the phase waits behind the button's 13-14 contact. Until someone presses, nothing flows."
+      },
+      "explicationApres": {
+        "fr": "La phase est prête à l'entrée du poussoir. Un appui la laissera filer vers la bobine.",
+        "en": "The phase is ready at the button's input. A press will let it through to the coil."
+      },
+      "transition": {
+        "fr": "Relions la sortie du poussoir à la bobine.",
+        "en": "Let's link the button's output to the coil."
+      },
+      "a": {
+        "role": "reseau",
+        "borne": "L"
+      },
+      "b": {
+        "role": "poussoir_1",
+        "borne": "13"
+      },
+      "indices": [
+        {
+          "fr": "Le poussoir reçoit la phase sur 13. Tu pourras aussi brancher la phase sur le contact 1 du télérupteur (autre fil).",
+          "en": "The button gets the phase on 13. You will also feed phase to contact 1 of the relay (another wire)."
+        }
+      ],
+      "messageConseil": {
+        "fr": "Ton fil relie bien {composant_a} et {composant_b}, mais pas par les bonnes bornes : tu as utilisé {borne_trouvee_a}–{borne_trouvee_b} au lieu de {borne_attendue_a}–{borne_attendue_b}. Reprends la liaison : phase L → 13 du poussoir.",
+        "en": "Your wire does connect {composant_a} and {composant_b}, but not through the right terminals: you used {borne_trouvee_a}–{borne_trouvee_b} instead of {borne_attendue_a}–{borne_attendue_b}. Redo: phase L → button 13."
+      }
+    },
+    {
+      "type": "relierBornes",
+      "id": "e8",
+      "instruction": {
+        "fr": "COMMANDE — Borne 14 du poussoir → bobine A1 du télérupteur.",
+        "en": "CONTROL — Push-button terminal 14 → coil A1 of the impulse relay."
+      },
+      "explicationAvant": {
+        "fr": "A1 est l'entrée de la BOBINE : l'électroaimant qui fait basculer le contact. Chaque impulsion reçue = un basculement.",
+        "en": "A1 is the COIL input: the electromagnet that flips the contact. Each pulse received = one toggle."
+      },
+      "explicationApres": {
+        "fr": "L'impulsion du poussoir peut maintenant atteindre la bobine. Il lui manque son retour au neutre pour former une boucle.",
+        "en": "The button's pulse can now reach the coil. It still needs its return to the neutral to form a loop."
+      },
+      "transition": {
+        "fr": "Fermons la boucle de commande.",
+        "en": "Let's close the control loop."
+      },
+      "a": {
+        "role": "poussoir_1",
+        "borne": "14"
+      },
+      "b": {
+        "role": "telerupteur_1",
+        "borne": "A1"
+      },
+      "indices": [
+        {
+          "fr": "Quand tu appuies, la phase arrive sur A1 via le poussoir. A1 est en bas du télérupteur.",
+          "en": "When you press, phase reaches A1 through the button. A1 is at the bottom of the relay."
+        }
+      ],
+      "messageConseil": {
+        "fr": "Ton fil relie bien {composant_a} et {composant_b}, mais pas par les bonnes bornes : tu as utilisé {borne_trouvee_a}–{borne_trouvee_b} au lieu de {borne_attendue_a}–{borne_attendue_b}. Attendu : 14 du poussoir → A1 (pas A2, pas 1 ou 2).",
+        "en": "Your wire does connect {composant_a} and {composant_b}, but not through the right terminals: you used {borne_trouvee_a}–{borne_trouvee_b} instead of {borne_attendue_a}–{borne_attendue_b}. Expected: button 14 → A1 (not A2, not 1 or 2)."
+      }
+    },
+    {
+      "type": "relierBornes",
+      "id": "e9",
+      "instruction": {
+        "fr": "COMMANDE — Bobine A2 du télérupteur → neutre (N) du réseau.",
+        "en": "CONTROL — Coil A2 of the impulse relay → supply neutral (N)."
+      },
+      "explicationAvant": {
+        "fr": "La bobine est une charge comme une autre : elle a besoin de sa boucle complète. A2 → N ferme le circuit de commande.",
+        "en": "The coil is a load like any other: it needs its complete loop. A2 → N closes the control circuit."
+      },
+      "explicationApres": {
+        "fr": "Circuit de commande terminé : appui → impulsion dans la bobine → le contact 1–2 bascule. La lampe, elle, n'est pas encore branchée.",
+        "en": "Control circuit done: press → pulse in the coil → contact 1–2 toggles. The lamp itself is not wired yet."
+      },
+      "transition": {
+        "fr": "Place au circuit de puissance.",
+        "en": "On to the power circuit."
+      },
+      "a": {
+        "role": "telerupteur_1",
+        "borne": "A2"
+      },
+      "b": {
+        "role": "reseau",
+        "borne": "N"
+      },
+      "indices": [
+        {
+          "fr": "La bobine a besoin du neutre sur A2 pour recevoir l'impulsion. Sans A2→N, le poussoir ne bascule rien.",
+          "en": "The coil needs the neutral on A2 to receive the pulse. Without A2→N, the button toggles nothing."
+        }
+      ],
+      "messageConseil": {
+        "fr": "Ton fil relie bien {composant_a} et {composant_b}, mais pas par les bonnes bornes : tu as utilisé {borne_trouvee_a}–{borne_trouvee_b} au lieu de {borne_attendue_a}–{borne_attendue_b}. Attendu : A2 → N.",
+        "en": "Your wire does connect {composant_a} and {composant_b}, but not through the right terminals: you used {borne_trouvee_a}–{borne_trouvee_b} instead of {borne_attendue_a}–{borne_attendue_b}. Expected: A2 → N."
+      }
+    },
+    {
+      "type": "info",
+      "id": "e10",
+      "instruction": {
+        "fr": "Commande terminée. Maintenant la PUISSANCE : la phase traverse le contact 1–2 pour aller à la lampe.",
+        "en": "Control done. Now POWER: phase goes through contact 1–2 to the lamp."
+      }
+    },
+    {
+      "type": "relierBornes",
+      "id": "e11",
+      "instruction": {
+        "fr": "PUISSANCE — Phase (L) du réseau → borne 1 du télérupteur (contact).",
+        "en": "POWER — Supply phase (L) → terminal 1 of the impulse relay (contact)."
+      },
+      "explicationAvant": {
+        "fr": "Le contact 1–2 est un interrupteur piloté par la bobine. La phase de puissance entre en 1 et n'en sortira que si le contact est basculé.",
+        "en": "Contact 1–2 is a switch driven by the coil. The power phase enters at 1 and only gets out if the contact is toggled."
+      },
+      "explicationApres": {
+        "fr": "La phase de puissance attend au contact. Note : c'est ton DEUXIÈME fil depuis L — plusieurs départs sur une borne, c'est normal.",
+        "en": "The power phase is waiting at the contact. Note: this is your SECOND wire from L — several wires on one terminal is normal."
+      },
+      "transition": {
+        "fr": "Sortie du contact vers la lampe.",
+        "en": "From the contact's output to the lamp."
+      },
+      "a": {
+        "role": "reseau",
+        "borne": "L"
+      },
+      "b": {
+        "role": "telerupteur_1",
+        "borne": "1"
+      },
+      "indices": [
+        {
+          "fr": "Deuxième fil depuis L du réseau (le premier allait au poussoir 13). Borne 1 = haut du télérupteur.",
+          "en": "Second wire from supply L (the first went to button 13). Terminal 1 = top of the relay."
+        }
+      ],
+      "messageConseil": {
+        "fr": "Ton fil relie bien {composant_a} et {composant_b}, mais pas par les bonnes bornes : tu as utilisé {borne_trouvee_a}–{borne_trouvee_b} au lieu de {borne_attendue_a}–{borne_attendue_b}. Attendu : L → 1 (puissance), pas A1.",
+        "en": "Your wire does connect {composant_a} and {composant_b}, but not through the right terminals: you used {borne_trouvee_a}–{borne_trouvee_b} instead of {borne_attendue_a}–{borne_attendue_b}. Expected: L → 1 (power), not A1."
+      }
+    },
+    {
+      "type": "relierBornes",
+      "id": "e12",
+      "instruction": {
+        "fr": "PUISSANCE — Borne 2 du télérupteur → L1 de la lampe.",
+        "en": "POWER — Terminal 2 of the impulse relay → lamp L1."
+      },
+      "explicationAvant": {
+        "fr": "Quand le contact est fermé, la phase ressort en 2 : ce fil l'amène à la lampe. C'est la « phase commandée » du montage.",
+        "en": "When the contact is closed, the phase comes out at 2: this wire carries it to the lamp. It is the circuit's switched phase."
+      },
+      "explicationApres": {
+        "fr": "La lampe reçoit la phase commandée par le télérupteur. Dernière liaison : son retour au neutre.",
+        "en": "The lamp receives the phase switched by the relay. Last link: its return to the neutral."
+      },
+      "transition": {
+        "fr": "Fermons la boucle de puissance.",
+        "en": "Let's close the power loop."
+      },
+      "a": {
+        "role": "telerupteur_1",
+        "borne": "2"
+      },
+      "b": {
+        "role": "lampe_1",
+        "borne": "L1"
+      },
+      "indices": [
+        {
+          "fr": "Quand le contact est fermé (basculé), la phase sort en 2 vers la lampe.",
+          "en": "When the contact is closed (toggled), phase leaves on 2 toward the lamp."
+        }
+      ],
+      "messageConseil": {
+        "fr": "Ton fil relie bien {composant_a} et {composant_b}, mais pas par les bonnes bornes : tu as utilisé {borne_trouvee_a}–{borne_trouvee_b} au lieu de {borne_attendue_a}–{borne_attendue_b}. Attendu : 2 → L1.",
+        "en": "Your wire does connect {composant_a} and {composant_b}, but not through the right terminals: you used {borne_trouvee_a}–{borne_trouvee_b} instead of {borne_attendue_a}–{borne_attendue_b}. Expected: 2 → L1."
+      }
+    },
+    {
+      "type": "relierBornes",
+      "id": "e13",
+      "instruction": {
+        "fr": "PUISSANCE — L2 de la lampe → neutre (N) du réseau.",
+        "en": "POWER — Lamp L2 → supply neutral (N)."
+      },
+      "explicationAvant": {
+        "fr": "Dernier fil : le retour de la lampe. Après lui, tes DEUX boucles seront complètes — commande et puissance, indépendantes mais coordonnées.",
+        "en": "Last wire: the lamp's return. After this, BOTH your loops will be complete — control and power, independent yet coordinated."
+      },
+      "explicationApres": {
+        "fr": "Montage complet : le poussoir pilote la bobine, la bobine bascule le contact, le contact alimente la lampe. Trois étages, un seul geste.",
+        "en": "Circuit complete: the button drives the coil, the coil flips the contact, the contact feeds the lamp. Three stages, one gesture."
+      },
+      "transition": {
+        "fr": "Avant la simulation, une question de compréhension.",
+        "en": "Before simulating, a comprehension question."
+      },
+      "a": {
+        "role": "lampe_1",
+        "borne": "L2"
+      },
+      "b": {
+        "role": "reseau",
+        "borne": "N"
+      },
+      "indices": [
+        {
+          "fr": "Le neutre de la lampe rejoint le réseau. Tu as déjà un fil A2→N : c'est normal d'avoir plusieurs fils sur N.",
+          "en": "The lamp neutral joins the supply. You already have A2→N: several wires on N is normal."
+        }
+      ],
+      "messageConseil": {
+        "fr": "Ton fil relie bien {composant_a} et {composant_b}, mais pas par les bonnes bornes : tu as utilisé {borne_trouvee_a}–{borne_trouvee_b} au lieu de {borne_attendue_a}–{borne_attendue_b}. Attendu : L2 → N.",
+        "en": "Your wire does connect {composant_a} and {composant_b}, but not through the right terminals: you used {borne_trouvee_a}–{borne_trouvee_b} instead of {borne_attendue_a}–{borne_attendue_b}. Expected: L2 → N."
+      }
+    },
+    {
+      "type": "prediction",
+      "id": "e14",
+      "instruction": {
+        "fr": "Avant de vérifier :",
+        "en": "Before checking:"
+      },
+      "question": {
+        "fr": "Après une impulsion sur le poussoir, le télérupteur…",
+        "en": "After one pulse on the push button, the impulse relay…"
+      },
+      "choix": [
+        {
+          "fr": "Reste dans son nouvel état (bascule)",
+          "en": "Stays in its new state (toggles)"
+        },
+        {
+          "fr": "Revient immédiatement au repos",
+          "en": "Returns immediately to rest"
+        }
+      ],
+      "bonneReponse": 0,
+      "explication": {
+        "fr": "Le télérupteur mémorise : chaque impulsion inverse le contact de puissance 1–2. Ce n'est pas un poussoir direct sur la lampe.",
+        "en": "The impulse relay remembers: each pulse flips power contact 1–2. It is not a direct push button on the lamp."
+      }
+    },
+    {
+      "type": "scenario",
+      "id": "e15",
+      "instruction": {
+        "fr": "Simule et vérifie : télérupteur basculé → lampe allumée ; ouvert → lampe éteinte.",
+        "en": "Simulate and check: relay toggled → lamp on; open → lamp off."
+      },
+      "scenarioId": ""
+    }
+  ],
+  "verification": {
+    "scenarios": [
+      {
+        "id": "sc1",
+        "actions": [
+          {
+            "cible": "role:telerupteur_1",
+            "etat": {
+              "estBascule": true
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "composantAllume",
+            "cible": "role:lampe_1",
+            "attendu": true
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Télérupteur fermé : la lampe doit s'allumer. Vérifie le chemin de puissance L → 1 → 2 → L1 → L2 → N.",
+          "en": "Impulse relay closed: the lamp must light up. Check the power path L → 1 → 2 → L1 → L2 → N."
+        }
+      },
+      {
+        "id": "sc2",
+        "actions": [
+          {
+            "cible": "role:telerupteur_1",
+            "etat": {
+              "estBascule": false
+            }
+          }
+        ],
+        "attentes": [
+          {
+            "type": "composantAllume",
+            "cible": "role:lampe_1",
+            "attendu": false
+          },
+          {
+            "type": "aucunDefaut"
+          }
+        ],
+        "messageEchec": {
+          "fr": "Télérupteur ouvert : la lampe doit s'éteindre. Le contact 1–2 ne doit plus laisser passer la phase.",
+          "en": "Impulse relay open: the lamp must go out. Contact 1–2 must no longer pass the phase."
+        }
+      }
+    ]
+  },
+  "messages": {
+    "succes": {
+      "fr": "Bravo ! Tu as câblé un télérupteur classique : commande (L → 13 → 14 → A1, A2 → N) et puissance (L → 1 → 2 → lampe → N).",
+      "en": "Well done! You wired a classic impulse relay: control (L → 13 → 14 → A1, A2 → N) and power (L → 1 → 2 → lamp → N)."
+    },
+    "indice": {
+      "fr": "Rappel : poussoir = impulsion sur la bobine A1–A2. Contact 1–2 = puissance vers la lampe. Ne mélange pas A1 avec la borne 1.",
+      "en": "Reminder: push button = pulse on coil A1–A2. Contact 1–2 = power to the lamp. Do not mix A1 with terminal 1."
+    }
+  },
+  "conclusion": {
+    "synthese": {
+      "fr": "Aujourd'hui tu as appris la commande par télérupteur :",
+      "en": "Today you learned impulse-relay control:"
+    },
+    "acquis": [
+      {
+        "fr": "séparer circuit de COMMANDE (poussoir → bobine A1-A2) et circuit de PUISSANCE (contact 1-2 → lampe)",
+        "en": "separating the CONTROL circuit (button → coil A1-A2) from the POWER circuit (contact 1-2 → lamp)"
+      },
+      {
+        "fr": "câbler une bobine d'électroaimant comme une charge (A1 phase impulsée, A2 neutre)",
+        "en": "wiring an electromagnet coil as a load (A1 pulsed phase, A2 neutral)"
+      },
+      {
+        "fr": "comprendre la mémorisation : chaque impulsion inverse le contact",
+        "en": "understanding the memory effect: each pulse inverts the contact"
+      }
+    ],
+    "questions": [
+      {
+        "question": {
+          "fr": "Pourquoi sépare-t-on commande et puissance dans ce montage ?",
+          "en": "Why are control and power separated in this circuit?"
+        },
+        "choix": [
+          {
+            "fr": "Le poussoir ne commute qu'une petite impulsion ; c'est le contact du télérupteur qui porte le courant de la lampe",
+            "en": "The button only switches a small pulse; the relay's contact carries the lamp's current"
+          },
+          {
+            "fr": "C'est juste une convention de dessin",
+            "en": "It is just a drawing convention"
+          },
+          {
+            "fr": "Pour utiliser plus de fils",
+            "en": "To use more wire"
+          }
+        ],
+        "bonneReponse": 0,
+        "explication": {
+          "fr": "La séparation commande/puissance est LE principe des relais et contacteurs : un petit signal pilote un gros courant. En industrie, c'est partout.",
+          "en": "Separating control from power is THE principle behind relays and contactors: a small signal drives a large current. In industry it is everywhere."
+        }
+      },
+      {
+        "question": {
+          "fr": "Quelle est la différence entre A1 et 1 sur le télérupteur ?",
+          "en": "What is the difference between A1 and 1 on the impulse relay?"
+        },
+        "choix": [
+          {
+            "fr": "Aucune, ce sont deux noms de la même borne",
+            "en": "None, they are two names for the same terminal"
+          },
+          {
+            "fr": "A1 est l'entrée de la BOBINE (commande), 1 est l'entrée du CONTACT (puissance)",
+            "en": "A1 is the COIL input (control), 1 is the CONTACT input (power)"
+          },
+          {
+            "fr": "A1 est le neutre, 1 est la phase",
+            "en": "A1 is the neutral, 1 is the phase"
+          }
+        ],
+        "bonneReponse": 1,
+        "explication": {
+          "fr": "Les bornes A1-A2 appartiennent à l'électroaimant ; 1-2 au contact commuté. Les confondre est l'erreur n°1 sur ce composant — et elle empêche tout fonctionnement.",
+          "en": "Terminals A1-A2 belong to the electromagnet; 1-2 to the switched contact. Mixing them up is the #1 mistake on this component — and it stops everything from working."
+        }
+      }
+    ],
+    "defiId": "defi_telerupteur"
+  }
+}

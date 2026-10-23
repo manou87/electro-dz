@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Mesure d'audience Webful (wirilab:webful). -->
+  <script src="../js/webful-wirilab.js"></script>
+
+  <title>Lire un schéma électrique — Blog WiriLab</title>
+  <meta name="description" content="Symboles, fils, repères L/N, du plan papier au montage sur simulateur ou sur le terrain.">
+  <link rel="icon" type="image/png" href="../assets/wirilab_icon_512.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=32">
+</head>
+<body class="blog-page blog-article-page">
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="../index.html">
+      <img src="../assets/wirilab_icon_512.png" alt="WiriLab" width="30" height="30">
+      <span>WiriLab</span>
+    </a>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="./">Blog</a>
+      <a href="../app/">Commencer gratuitement</a>
+    </nav>
+  </div>
+</header>
+<main class="blog-article-main">
+  <article class="shell blog-article">
+    <p class="blog-article-back"><a href="./">← Retour au blog</a></p>
+    <p class="blog-kicker">Schéma · Documentation</p>
+    <h1>Lire un schéma électrique avant de câbler</h1>
+    <p class="blog-article-meta">27 septembre 2026 · 7 min de lecture</p>
+    <p class="blog-lead">Le schéma n’est pas une photo du coffret : c’est une convention. Les symboles représentent les appareils, les traits les conducteurs. Savoir passer du dessin au fil réel — ou au fil virtuel — évite les inversions et fait gagner du temps en examen comme en entreprise.</p>
+    <figure class="blog-figure">
+      <img src="../assets/export/schema_1.png" alt="Schéma domestique exporté depuis WiriLab : disjoncteur, interrupteur, lampe.">
+      <figcaption>Exemple de schéma généré à partir d’un montage : la chaîne disjoncteur → commande → charge est lisible de gauche à droite.</figcaption>
+    </figure>
+    <h2>1. Sens de lecture</h2>
+    <p>En formation domestique, on lit souvent de la <strong>source</strong> (gauche ou haut) vers les <strong>points d’utilisation</strong>. Repérez d’abord le symbole de protection (disjoncteur, différentiel), puis les commandes, puis les charges.</p>
+    <h2>2. Conducteurs à identifier</h2>
+    <ul>
+      <li><strong>Phase</strong> : souvent marquée L, parfois trait plus épais ou couleur indiquée dans la légende.</li>
+      <li><strong>Neutre</strong> : N, retour des charges vers la source.</li>
+      <li><strong>Terre</strong> : PE, symbole vert-jaune en réalisation.</li>
+    </ul>
+    <h2>3. Correspondance schéma ↔ montage</h2>
+    <p>Chaque symbole a des <strong>bornes numérotées</strong> sur le schéma du constructeur. Sur le simulateur ou le plateau, ces numéros doivent correspondre : L du disjoncteur, sortie vers L de l’interrupteur, etc. Cochez mentalement chaque liaison avant de serrer.</p>
+    <figure class="blog-figure">
+      <img src="../assets/export/schema_2.png" alt="Second exemple de schéma électrique WiriLab.">
+      <figcaption>Comparer deux schémas aide à voir ce qui change quand on ajoute une charge ou une commande.</figcaption>
+    </figure>
+    <h2>4. Légende et échelle</h2>
+    <p>Un bon schéma de TP indique la tension, le calibre du disjoncteur et parfois la section des fils. Sans légende, demandez-la : ne devinez pas le calibre de protection.</p>
+    <h2>5. Du schéma à l’export</h2>
+    <p>Après avoir câblé dans WiriLab, vous pouvez générer un schéma aligné sur votre montage — utile pour le dossier de stage ou pour expliquer votre travail au formateur.</p>
+    <p class="blog-cta-box"><strong>À retenir :</strong> source → protection → commande → charge ; une liaison du schéma = un fil à tracer.</p>
+    <p><a class="button button-primary" href="../app/">Câbler puis exporter le schéma</a></p>
+  </article>
+</main>
+<footer class="site-footer"><div class="shell copyright"><p>© 2026 WiriLab · <a href="./">Blog</a></p></div></footer>
+</body>
+</html>
