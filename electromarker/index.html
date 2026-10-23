@@ -70,7 +70,9 @@
   /* Clone offline: hide auth / login surfaces */
   .em-no-auth .auth,
   .em-no-auth .user.signin,
-  .em-no-auth .weusecookie { display: none !important; }
+  .em-no-auth .weusecookie,
+  .em-no-auth .start,
+  .em-no-auth .fader.flex .start { display: none !important; }
 </style>
 </head>
 
@@ -94,7 +96,10 @@
     }
     var MAIN_URL = 'https://api.electromarker.com';
     // Clone: no login required — accept cookies + block auth UI
-    try { localStorage.setItem('cookie', 'true'); } catch (e) {}
+    try {
+      localStorage.setItem('cookie', 'true');
+      localStorage.setItem('firstTimeExamples', JSON.stringify(['main','wiring','connections','legend','id','cables','labels']));
+    } catch (e) {}
     document.documentElement.classList.add('em-no-auth');
 
   </script>
@@ -111,7 +116,9 @@
       var v = vue;
       while (v && v.$parent) v = v.$parent;
       if (v && v.$store) {
-        v.$store.commit('assign', { showAuth: false });
+        v.$store.commit('assign', { showAuth: false, showIndividual: false });
+        var fte = v.$store.state.firstTimeExamples || [];
+        if (fte.indexOf('main') < 0) v.$store.commit('assign', { firstTimeExamples: fte.concat(['main','wiring','connections','legend','id','cables','labels']) });
         var p = (v.$store.state.user && v.$store.state.user.profile) || {};
         if (!p.cookie) v.$store.commit('user/assign', { profile: Object.assign({}, p, { cookie: true }) });
       }
