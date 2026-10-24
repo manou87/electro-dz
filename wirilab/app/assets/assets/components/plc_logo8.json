@@ -1,0 +1,94 @@
+{
+  "type": "module_wifi",
+  "catalogId": "plc_logo8",
+  "category": "command",
+  "localizationKey": "componentPlcLogo8",
+  "defaultTagPrefix": "A",
+  "props": {
+    "plc": true,
+    "plcFamily": "logo",
+    "plcRole": "cpu",
+    "imageAsset": "assets/components/plc_logo8.svg",
+    "wirilabNativeSvg": true,
+    "sourcePhoto": "swissdz-panel/assets/plc-logo8-front.png"
+  },
+  "inspector": {
+    "manufacturer": "Siemens",
+    "reference": "LOGO! 8 12/24RCE",
+    "voltage": 24
+  },
+  "terminals": [
+    {
+      "id": "L",
+      "side": "top"
+    },
+    {
+      "id": "N",
+      "side": "top"
+    },
+    {
+      "id": "I1",
+      "side": "top"
+    },
+    {
+      "id": "I2",
+      "side": "top"
+    },
+    {
+      "id": "I3",
+      "side": "top"
+    },
+    {
+      "id": "I4",
+      "side": "top"
+    },
+    {
+      "id": "I5",
+      "side": "top"
+    },
+    {
+      "id": "I6",
+      "side": "top"
+    },
+    {
+      "id": "I7",
+      "side": "top"
+    },
+    {
+      "id": "I8",
+      "side": "top"
+    },
+    {
+      "id": "Q1.1",
+      "side": "bottom"
+    },
+    {
+      "id": "Q2.1",
+      "side": "bottom"
+    },
+    {
+      "id": "Q3.1",
+      "side": "bottom"
+    },
+    {
+      "id": "Q4.1",
+      "side": "bottom"
+    },
+    {
+      "id": "Q1.2",
+      "side": "bottom"
+    },
+    {
+      "id": "Q2.2",
+      "side": "bottom"
+    },
+    {
+      "id": "Q3.2",
+      "side": "bottom"
+    },
+    {
+      "id": "Q4.2",
+      "side": "bottom"
+    }
+  ]
+}

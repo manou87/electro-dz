@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="336" height="280" viewBox="0 0 336 280">
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d8dde3"/><stop offset="100%" stop-color="#aeb6c0"/>
+    </linearGradient>
+    <linearGradient id="lcd" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a3320"/><stop offset="100%" stop-color="#1a2214"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="10" width="320" height="260" rx="5" fill="url(#body)" stroke="#6f7780" stroke-width="1.4"/>
+  <rect x="16" y="16" width="304" height="20" rx="3" fill="#e7ebef" stroke="#9aa3ad"/>
+  <text x="168.0" y="31" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="700" fill="#2f3540">LOGO! 8</text>
+  <rect x="20" y="44" width="150" height="70" rx="3" fill="url(#lcd)" stroke="#111"/>
+  <rect x="26" y="50" width="138" height="14" rx="2" fill="#c6d36a" opacity="0.9"/>
+  <text x="95" y="90" text-anchor="middle" font-family="monospace" font-size="14" fill="#d7e08a">RUN</text>
+  <g fill="#4a5160" stroke="#2c313a" stroke-width="0.6">
+    <rect x="186" y="48" width="30" height="16" rx="2"/><rect x="222" y="48" width="30" height="16" rx="2"/>
+    <rect x="186" y="70" width="30" height="16" rx="2"/><rect x="222" y="70" width="30" height="16" rx="2"/>
+  </g>
+  <rect x="186" y="96" width="100" height="24" rx="3" fill="#f2f4f6" stroke="#8a929b"/>
+  <text x="236" y="112" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#1f4fa3">LOGO!</text>
+  <circle cx="40" cy="140" r="5" fill="#3ddc84"/><circle cx="58" cy="140" r="5" fill="#f5c542"/>
+  <text x="78" y="144" font-family="Arial,sans-serif" font-size="11" fill="#445">PLC</text>
+<circle cx="24.0" cy="168" r="5.5" fill="#f7f8fa" stroke="#666"/><line x1="20.8" y1="168" x2="27.2" y2="168" stroke="#888"/><text x="24.0" y="186" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="600" fill="#8B4513">L</text>
+<circle cx="56.0" cy="168" r="5.5" fill="#f7f8fa" stroke="#666"/><line x1="52.8" y1="168" x2="59.2" y2="168" stroke="#888"/><text x="56.0" y="186" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="600" fill="#1e5aa8">N</text>
+<circle cx="88.0" cy="168" r="5.5" fill="#f7f8fa" stroke="#666"/><line x1="84.8" y1="168" x2="91.2" y2="168" stroke="#888"/><text x="88.0" y="186" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="600" fill="#333">I1</text>
+<circle cx="120.0" cy="168" r="5.5" fill="#f7f8fa" stroke="#666"/><line x1="116.8" y1="168" x2="123.2" y2="168" stroke="#888"/><text x="120.0" y="186" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="600" fill="#333">I2</text>
+<circle cx="152.0" cy="168" r="5.5" fill="#f7f8fa" stroke="#666"/><line x1="148.8" y1="168" x2="155.2" y2="168" stroke="#888"/><text x="152.0" y="186" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="600" fill="#333">I3</text>
+<circle cx="184.0" cy="168" r="5.5" fill="#f7f8fa" stroke="#666"/><line x1="180.8" y1="168" x2="187.2" y2="168" stroke="#888"/><text x="184.0" y="186" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="600" fill="#333">I4</text>
+<circle cx="216.0" cy="168" r="5.5" fill="#f7f8fa" stroke="#666"/><line x1="212.8" y1="168" x2="219.2" y2="168" stroke="#888"/><text x="216.0" y="186" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="600" fill="#333">I5</text>
+<circle cx="248.0" cy="168" r="5.5" fill="#f7f8fa" stroke="#666"/><line x1="244.8" y1="168" x2="251.2" y2="168" stroke="#888"/><text x="248.0" y="186" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="600" fill="#333">I6</text>
+<circle cx="280.0" cy="168" r="5.5" fill="#f7f8fa" stroke="#666"/><line x1="276.8" y1="168" x2="283.2" y2="168" stroke="#888"/><text x="280.0" y="186" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="600" fill="#333">I7</text>
+<circle cx="312.0" cy="168" r="5.5" fill="#f7f8fa" stroke="#666"/><line x1="308.8" y1="168" x2="315.2" y2="168" stroke="#888"/><text x="312.0" y="186" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="600" fill="#333">I8</text>
+<circle cx="24.0" cy="230" r="5.5" fill="#f7f8fa" stroke="#666"/><line x1="20.8" y1="230" x2="27.2" y2="230" stroke="#888"/><text x="24.0" y="248" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="600" fill="#333">Q1.1</text>
+<circle cx="65.1" cy="230" r="5.5" fill="#f7f8fa" stroke="#666"/><line x1="61.9" y1="230" x2="68.3" y2="230" stroke="#888"/><text x="65.1" y="248" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="600" fill="#333">Q1.2</text>
+<circle cx="106.3" cy="230" r="5.5" fill="#f7f8fa" stroke="#666"/><line x1="103.1" y1="230" x2="109.5" y2="230" stroke="#888"/><text x="106.3" y="248" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="600" fill="#333">Q2.1</text>
+<circle cx="147.4" cy="230" r="5.5" fill="#f7f8fa" stroke="#666"/><line x1="144.2" y1="230" x2="150.6" y2="230" stroke="#888"/><text x="147.4" y="248" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="600" fill="#333">Q2.2</text>
+<circle cx="188.6" cy="230" r="5.5" fill="#f7f8fa" stroke="#666"/><line x1="185.4" y1="230" x2="191.8" y2="230" stroke="#888"/><text x="188.6" y="248" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="600" fill="#333">Q3.1</text>
+<circle cx="229.7" cy="230" r="5.5" fill="#f7f8fa" stroke="#666"/><line x1="226.5" y1="230" x2="232.9" y2="230" stroke="#888"/><text x="229.7" y="248" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="600" fill="#333">Q3.2</text>
+<circle cx="270.9" cy="230" r="5.5" fill="#f7f8fa" stroke="#666"/><line x1="267.7" y1="230" x2="274.1" y2="230" stroke="#888"/><text x="270.9" y="248" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="600" fill="#333">Q4.1</text>
+<circle cx="312.0" cy="230" r="5.5" fill="#f7f8fa" stroke="#666"/><line x1="308.8" y1="230" x2="315.2" y2="230" stroke="#888"/><text x="312.0" y="248" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" font-weight="600" fill="#333">Q4.2</text>
+<circle cx="24.0" cy="12" r="3.5" fill="#eceff2" stroke="#555"/>
+<circle cx="56.0" cy="12" r="3.5" fill="#eceff2" stroke="#555"/>
+<circle cx="88.0" cy="12" r="3.5" fill="#eceff2" stroke="#555"/>
+<circle cx="120.0" cy="12" r="3.5" fill="#eceff2" stroke="#555"/>
+<circle cx="152.0" cy="12" r="3.5" fill="#eceff2" stroke="#555"/>
+<circle cx="184.0" cy="12" r="3.5" fill="#eceff2" stroke="#555"/>
+<circle cx="216.0" cy="12" r="3.5" fill="#eceff2" stroke="#555"/>
+<circle cx="248.0" cy="12" r="3.5" fill="#eceff2" stroke="#555"/>
+<circle cx="280.0" cy="12" r="3.5" fill="#eceff2" stroke="#555"/>
+<circle cx="312.0" cy="12" r="3.5" fill="#eceff2" stroke="#555"/>
+<circle cx="24.0" cy="268" r="3.5" fill="#eceff2" stroke="#555"/>
+<circle cx="65.1" cy="268" r="3.5" fill="#eceff2" stroke="#555"/>
+<circle cx="106.3" cy="268" r="3.5" fill="#eceff2" stroke="#555"/>
+<circle cx="147.4" cy="268" r="3.5" fill="#eceff2" stroke="#555"/>
+<circle cx="188.6" cy="268" r="3.5" fill="#eceff2" stroke="#555"/>
+<circle cx="229.7" cy="268" r="3.5" fill="#eceff2" stroke="#555"/>
+<circle cx="270.9" cy="268" r="3.5" fill="#eceff2" stroke="#555"/>
+<circle cx="312.0" cy="268" r="3.5" fill="#eceff2" stroke="#555"/>
+</svg>

@@ -1,0 +1,193 @@
+{
+  "version": 1,
+  "savedAt": "2026-10-24T01:00:00.000",
+  "title": "PLC LOGO! 230RCE — démo",
+  "components": [
+    {
+      "instanceId": "net_0",
+      "catalogJson": {
+        "type": "reseau",
+        "catalogId": "net_mono_230V",
+        "category": "sources",
+        "localizationKey": "componentNetworkMono",
+        "defaultTagPrefix": "G",
+        "props": {
+          "type": "monophase",
+          "tension": "230",
+          "frequence": 50,
+          "neutrePresent": true
+        },
+        "inspector": {
+          "manufacturer": "Grid",
+          "reference": "Réseau monophasé 230 V AC 50 Hz",
+          "voltage": 230
+        }
+      },
+      "etatJson": {
+        "estActif": true,
+        "estGrille": false
+      },
+      "worldX": 112,
+      "worldY": 140,
+      "tagPrefix": "G",
+      "tagNumber": 1
+    },
+    {
+      "instanceId": "plc_0",
+      "catalogJson": {
+        "type": "module_wifi",
+        "catalogId": "plc_logo_230rce",
+        "category": "command",
+        "localizationKey": "componentPlcLogo230Rce",
+        "defaultTagPrefix": "A",
+        "props": {
+          "plc": true,
+          "plcFamily": "logo",
+          "plcRole": "cpu",
+          "imageAsset": "assets/components/plc_logo_230rce.svg"
+        },
+        "inspector": {
+          "manufacturer": "Siemens",
+          "reference": "LOGO! 230RCE",
+          "voltage": 230
+        }
+      },
+      "etatJson": {
+        "estGrille": false
+      },
+      "worldX": 448,
+      "worldY": 112,
+      "tagPrefix": "A",
+      "tagNumber": 1
+    },
+    {
+      "instanceId": "plc_1",
+      "catalogJson": {
+        "type": "module_wifi",
+        "catalogId": "plc_logo8",
+        "category": "command",
+        "localizationKey": "componentPlcLogo8",
+        "defaultTagPrefix": "A",
+        "props": {
+          "plc": true,
+          "plcFamily": "logo",
+          "plcRole": "cpu",
+          "imageAsset": "assets/components/plc_logo8.svg"
+        },
+        "inspector": {
+          "manufacturer": "Siemens",
+          "reference": "LOGO! 8 12/24RCE",
+          "voltage": 24
+        }
+      },
+      "etatJson": {
+        "estGrille": false
+      },
+      "worldX": 784,
+      "worldY": 112,
+      "tagPrefix": "A",
+      "tagNumber": 2
+    },
+    {
+      "instanceId": "voy_0",
+      "catalogJson": {
+        "type": "voyant_signalisation",
+        "catalogId": "voy_vert_230V",
+        "category": "signaling",
+        "localizationKey": "componentIndicatorGreen",
+        "defaultTagPrefix": "HL",
+        "props": {
+          "couleur": "vert",
+          "tension": "230V~"
+        },
+        "inspector": {
+          "manufacturer": "Generic",
+          "reference": "Voyant vert 230V",
+          "voltage": 230
+        }
+      },
+      "etatJson": {
+        "estAllume": false,
+        "estGrille": false
+      },
+      "worldX": 448,
+      "worldY": 504,
+      "tagPrefix": "HL",
+      "tagNumber": 1
+    }
+  ],
+  "wires": [
+    {
+      "id": "wire_1",
+      "tag": {
+        "prefix": "W",
+        "number": 1
+      },
+      "startEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "net_0",
+        "terminalId": "L"
+      },
+      "endEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "plc_0",
+        "terminalId": "L"
+      },
+      "waypoints": []
+    },
+    {
+      "id": "wire_2",
+      "tag": {
+        "prefix": "W",
+        "number": 2
+      },
+      "startEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "net_0",
+        "terminalId": "N"
+      },
+      "endEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "plc_0",
+        "terminalId": "N"
+      },
+      "waypoints": []
+    },
+    {
+      "id": "wire_3",
+      "tag": {
+        "prefix": "W",
+        "number": 3
+      },
+      "startEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "plc_0",
+        "terminalId": "Q1.1"
+      },
+      "endEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "voy_0",
+        "terminalId": "X1"
+      },
+      "waypoints": []
+    },
+    {
+      "id": "wire_4",
+      "tag": {
+        "prefix": "W",
+        "number": 4
+      },
+      "startEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "plc_0",
+        "terminalId": "Q1.2"
+      },
+      "endEndpoint": {
+        "kind": "bound",
+        "componentInstanceId": "voy_0",
+        "terminalId": "X2"
+      },
+      "waypoints": []
+    }
+  ]
+}

@@ -1,6 +1,19 @@
 {
   "circuits": [
     {
+      "id": "plc_logo_demo",
+      "fichier": "plc_logo_demo.json",
+      "categorie": "commande",
+      "titre": {
+        "fr": "PLC LOGO! 230RCE",
+        "en": "PLC LOGO! 230RCE"
+      },
+      "description": {
+        "fr": "Démo intégration WireLab → WiriLab : LOGO! 230RCE + LOGO! 8 câblés au réseau et à un voyant.",
+        "en": "WireLab → WiriLab integration demo: LOGO! 230RCE + LOGO! 8 wired to supply and indicator."
+      }
+    },
+    {
       "id": "temporisateur",
       "fichier": "temporisateur.json",
       "categorie": "commande",
