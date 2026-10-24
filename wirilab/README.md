@@ -54,6 +54,14 @@ Recherche « PLC LOGO » dans la bibliothèque (catégorie CONTROL / command). D
 
 `http://localhost:8766/app/?c=plc_logo_demo`
 
+## Lampe SwissDz (Electro DZ → WiriLab)
+
+POC 1 composant extrait via **REA** depuis `swissdz-panel` (`LIB.lampe` + `assets/lampe.png`). Image réelle (même sha256) ; bornes source `L`/`N` mappées sur les contacts natifs WiriLab **L1/L2** (`type: lampe_suspension`).
+
+- Catalogue : `swissdz_lampe` (catégorie POWER)
+- Recherche palette : « SwissDz »
+- Démo câblée : `http://localhost:8766/app/?c=swissdz_lampe_demo`
+
 ## Limites (restent live)
 
 - Auth réelle, sync cloud, Stripe / checkout (`?checkout=…`)

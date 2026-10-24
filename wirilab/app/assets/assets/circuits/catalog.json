@@ -1,6 +1,19 @@
 {
   "circuits": [
     {
+      "id": "swissdz_lampe_demo",
+      "fichier": "swissdz_lampe_demo.json",
+      "categorie": "eclairage",
+      "titre": {
+        "fr": "Lampe SwissDz",
+        "en": "SwissDz Lamp"
+      },
+      "description": {
+        "fr": "Démo : photo réelle Electro DZ / WireLab, bornes L1/L2 WiriLab, réseau → disjoncteur → lampe.",
+        "en": "Demo: real Electro DZ / WireLab photo, WiriLab L1/L2 terminals, supply → breaker → lamp."
+      }
+    },
+    {
       "id": "plc_logo_demo",
       "fichier": "plc_logo_demo.json",
       "categorie": "commande",

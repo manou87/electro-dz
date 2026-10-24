@@ -1,0 +1,31 @@
+{
+  "type": "lampe_suspension",
+  "catalogId": "swissdz_lampe",
+  "category": "power",
+  "localizationKey": "componentSwissdzLamp",
+  "defaultTagPrefix": "HL",
+  "props": {
+    "typeLumiere": "chaud",
+    "puissanceW": 60,
+    "imageAsset": "assets/components/swissdz_lampe.svg",
+    "source": "swissdz-panel/assets/lampe.png",
+    "sourceDef": "swissdz-panel/index.html → lampe (L/N → mapped L1/L2)"
+  },
+  "inspector": {
+    "manufacturer": "SwissDz",
+    "reference": "Lampe SwissDz",
+    "voltage": 230
+  },
+  "terminals": [
+    {
+      "id": "L1",
+      "role": "phase",
+      "mappedFrom": "L"
+    },
+    {
+      "id": "L2",
+      "role": "neutre",
+      "mappedFrom": "N"
+    }
+  ]
+}

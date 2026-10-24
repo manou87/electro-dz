@@ -1,0 +1,157 @@
+{
+  "ok": true,
+  "title": "Lampe SwissDz — démo WireLab→WiriLab",
+  "circuit": {
+    "version": 1,
+    "savedAt": "2026-10-24T06:20:00.000",
+    "title": "Lampe SwissDz — démo",
+    "components": [
+      {
+        "instanceId": "net_0",
+        "catalogJson": {
+          "type": "reseau",
+          "catalogId": "net_mono_230V",
+          "category": "sources",
+          "localizationKey": "componentNetworkMono",
+          "defaultTagPrefix": "G",
+          "props": {
+            "type": "monophase",
+            "tension": "230",
+            "frequence": 50,
+            "neutrePresent": true
+          },
+          "inspector": {
+            "manufacturer": "Grid",
+            "reference": "Réseau monophasé 230 V AC 50 Hz",
+            "voltage": 230
+          }
+        },
+        "etatJson": {
+          "estActif": true,
+          "estGrille": false
+        },
+        "worldX": 140,
+        "worldY": 112,
+        "tagPrefix": "G",
+        "tagNumber": 1
+      },
+      {
+        "instanceId": "disj_0",
+        "catalogJson": {
+          "type": "disjoncteur",
+          "catalogId": "disj_C16_1P",
+          "category": "protection",
+          "localizationKey": "componentBreaker1P",
+          "defaultTagPrefix": "Q",
+          "props": {
+            "nbPoles": 1,
+            "calibre": "C16",
+            "tension": "230V~",
+            "courbe": "C",
+            "icn": 6000,
+            "classeLimitation": 3
+          },
+          "inspector": {
+            "manufacturer": "Generic",
+            "reference": "C16 1P",
+            "voltage": 230,
+            "current": 16
+          }
+        },
+        "etatJson": {
+          "estEnclenche": true,
+          "estDeclenche": false,
+          "estGrille": false
+        },
+        "worldX": 336,
+        "worldY": 84,
+        "tagPrefix": "Q",
+        "tagNumber": 1
+      },
+      {
+        "instanceId": "lamp_0",
+        "catalogJson": {
+          "type": "lampe_suspension",
+          "catalogId": "swissdz_lampe",
+          "category": "power",
+          "localizationKey": "componentSwissdzLamp",
+          "defaultTagPrefix": "HL",
+          "props": {
+            "typeLumiere": "chaud",
+            "puissanceW": 60,
+            "imageAsset": "assets/components/swissdz_lampe.svg"
+          },
+          "inspector": {
+            "manufacturer": "SwissDz",
+            "reference": "Lampe SwissDz",
+            "voltage": 230
+          }
+        },
+        "etatJson": {
+          "estAllume": false,
+          "estGrille": false
+        },
+        "worldX": 560,
+        "worldY": 56,
+        "tagPrefix": "HL",
+        "tagNumber": 1
+      }
+    ],
+    "wires": [
+      {
+        "id": "wire_1",
+        "tag": {
+          "prefix": "W",
+          "number": 1
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "net_0",
+          "terminalId": "L"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "disj_0",
+          "terminalId": "1"
+        },
+        "waypoints": []
+      },
+      {
+        "id": "wire_2",
+        "tag": {
+          "prefix": "W",
+          "number": 2
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "disj_0",
+          "terminalId": "2"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "lamp_0",
+          "terminalId": "L1"
+        },
+        "waypoints": []
+      },
+      {
+        "id": "wire_3",
+        "tag": {
+          "prefix": "W",
+          "number": 3
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "lamp_0",
+          "terminalId": "L2"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "net_0",
+          "terminalId": "N"
+        },
+        "waypoints": []
+      }
+    ]
+  }
+}
