@@ -30,14 +30,14 @@ Puis ouvrir dans ton navigateur :
 | `legal/` | Privacy, terms, cookies, refunds, subscription |
 | `app/` | Shell Flutter web (HTML, `main.dart.*.js`, CanvasKit, assets circuits/composants/academy) |
 
-## Mode sans connexion
+## Mode sans restriction
 
 Dans `app/main.dart.4736b44047b0.js` (clone local uniquement) :
 
-- plan découverte : allowlist composants levée + `ala()` toujours vrai → plus de cadenas
-- `bBF` / `adu` no-op → plus de dialogues upgrade / feuille Sign in
-- CTA Sign in (Mes projets / profil) retirés ; textes adoucis
-- prompt « crée un compte pour sauvegarder » soft-skip
+- entitlements découverte/gratuit/premium : flags ouverts + `ala()` toujours vrai
+- `mv` / `cb9` / `aYx` no-op → plus de modale **Les offres WiriLab**
+- `a3L` montre la feature ; badges `Hf` / bandeau `ayn` masqués
+- `bBF` / `adu` no-op ; CTA Sign in retirés ; save-account soft-skip
 
 ## Limites (restent live)
 
