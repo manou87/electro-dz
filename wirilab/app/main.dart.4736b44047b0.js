@@ -212954,7 +212954,7 @@ r.f=!1}},
 A(a){var s,r,q,p=this,o=null,n,m
 s=p.a.d
 if(s!=null&&s.a==="swissdz_lampe"){r=p.a.e
-return new A.ac(r,r,new A.asB(B.Mt,B.bf,new A.a1g("assets/components/swissdz_lampe.svg",o,o,o,o),o,o),o)}
+return new A.ac(r,r,new A.asB(B.aqf,B.as,new A.a1g("assets/components/swissdz_lampe.svg",o,o,o,o),o,o),o)}
 n=p.e
 if(n==null)n=$.cbq().a.a1_(p.gaKI())
 if(n!=null){p.e=n
