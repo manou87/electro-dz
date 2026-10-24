@@ -55999,7 +55999,7 @@ break A}if("symbolSupplyLN"===c){s=a.ga7L()
 break A}if("symbolSupplyLNPe"===c){s=a.ga7M()
 break A}if("componentPlcLogo230Rce"===c){s="PLC LOGO! 230RCE"
 break A}if("componentPlcLogo8"===c){s="PLC LOGO! 8 12/24RCE"
-break A}if("componentSwissdzLamp"===c){s="Lampe SwissDz"
+break A}if("componentSwissdzLamp"===c){s="Lampe SwissDz Lamp"
 break A}s=b
 break A}return s},
 kZ:function kZ(a,b,c,d){var _=this
@@ -213249,7 +213249,8 @@ $0(){var s=this.a
 s.x=s.gaeA()===B.uh?B.ui:B.uh},
 $S:0}
 A.bAa.prototype={
-$1(a){return B.k.n(A.RH(this.b,a.a,a.c).toLowerCase(),this.a.r)},
+$1(a){var s=A.RH(this.b,a.a,a.c).toLowerCase()+" "+J.bw(a.a).toLowerCase()+" "+J.bw(a.c).toLowerCase()
+return B.k.n(s,this.a.r)},
 $S:409}
 A.bAb.prototype={
 $0(){var s=0,r=A.v(t.H),q=this,p
@@ -244782,8 +244783,8 @@ B.cds=new A.Fo(B.ah8,null,null,null,null,null,!0,!0,!0,!0,!0,!0,!0,!0,!0,!0)
 B.ah6=new A.ML(1,"gratuit")
 B.cdt=new A.Fo(B.ah6,null,999,2,null,null,!0,!0,!0,!0,!0,!0,!0,!0,!0,!0)
 B.jB=new A.ML(0,"decouverte")
-B.c5h={net_mono_230V:0,disj_C16_1P:1,int_simple:2,lamp_signal_v2:3,multimetre_dmm21:4}
-B.cl_=new A.fb(B.c5h,5,t.fF)
+B.c5h={net_mono_230V:0,disj_C16_1P:1,int_simple:2,lamp_signal_v2:3,multimetre_dmm21:4,swissdz_lampe:5}
+B.cl_=new A.fb(B.c5h,6,t.fF)
 B.cdu=new A.Fo(B.jB,null,999,2,5,2,!0,!0,!0,!0,!0,!0,!0,!0,!0,!0)
 B.ah7=new A.ML(2,"premium")
 B.cdv=new A.Fo(B.ah7,null,null,null,null,null,!0,!0,!0,!0,!0,!0,!0,!0,!0,!0)
