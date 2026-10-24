@@ -1,0 +1,68 @@
+{
+  "projects": [
+    {
+      "id": "BX9Pnj3EUG",
+      "slug": "temporisateur",
+      "title": "temporisateurs",
+      "components": 6,
+      "wires": 10,
+      "file": "shared/BX9Pnj3EUG.json"
+    },
+    {
+      "id": "cnsuz57pU3",
+      "slug": "telerupteur",
+      "title": "télérupteur",
+      "components": 6,
+      "wires": 10,
+      "file": "shared/cnsuz57pU3.json"
+    },
+    {
+      "id": "L1Xd5EdkZV",
+      "slug": "moteur_asynchrone",
+      "title": "moteur",
+      "components": 6,
+      "wires": 12,
+      "file": "shared/L1Xd5EdkZV.json"
+    },
+    {
+      "id": "a2miMHNwl1",
+      "slug": "boite_derivation",
+      "title": "XXX",
+      "components": 9,
+      "wires": 10,
+      "file": "shared/a2miMHNwl1.json"
+    },
+    {
+      "id": "NY7xdtAosO",
+      "slug": "ats",
+      "title": "ATS",
+      "components": 8,
+      "wires": 16,
+      "file": "shared/NY7xdtAosO.json"
+    },
+    {
+      "id": "xkrvwAECuW",
+      "slug": "voyant",
+      "title": "voyant",
+      "components": 6,
+      "wires": 8,
+      "file": "shared/xkrvwAECuW.json"
+    },
+    {
+      "id": "QeM7whgRpY",
+      "slug": "multiprise",
+      "title": "prise",
+      "components": 15,
+      "wires": 19,
+      "file": "shared/QeM7whgRpY.json"
+    },
+    {
+      "id": "mxP6jnEwsw",
+      "slug": "feu_tricolore",
+      "title": "bon circuit",
+      "components": 18,
+      "wires": 18,
+      "file": "shared/mxP6jnEwsw.json"
+    }
+  ]
+}

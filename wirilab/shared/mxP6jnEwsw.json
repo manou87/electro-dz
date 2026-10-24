@@ -1,0 +1,1334 @@
+{
+  "ok": true,
+  "title": "bon circuit",
+  "circuit": {
+    "version": 1,
+    "savedAt": "2026-08-10T16:48:07.482",
+    "components": [
+      {
+        "instanceId": "net_0",
+        "catalogJson": {
+          "type": "reseau",
+          "catalogId": "net_mono_230V",
+          "category": "sources",
+          "localizationKey": "componentNetworkMono",
+          "defaultTagPrefix": "G",
+          "props": {
+            "type": "monophase",
+            "tension": "230",
+            "frequence": 50,
+            "neutrePresent": true
+          },
+          "inspector": {
+            "manufacturer": "Grid",
+            "reference": "Réseau monophasé 230 V AC 50 Hz",
+            "voltage": 230
+          }
+        },
+        "etatJson": {
+          "estActif": false
+        },
+        "worldX": 56,
+        "worldY": -56,
+        "tagPrefix": "G",
+        "tagNumber": 1
+      },
+      {
+        "instanceId": "disj_0",
+        "catalogJson": {
+          "type": "disjoncteur",
+          "catalogId": "disj_C16_1P",
+          "category": "protection",
+          "localizationKey": "componentBreaker1P",
+          "defaultTagPrefix": "Q",
+          "props": {
+            "nbPoles": 1,
+            "calibre": "C16",
+            "tension": "230V~",
+            "courbe": "C",
+            "icn": 6000,
+            "classeLimitation": 3
+          },
+          "inspector": {
+            "manufacturer": "Generic",
+            "reference": "C16 1P",
+            "voltage": 230,
+            "current": 16
+          }
+        },
+        "etatJson": {
+          "estEnclenche": false
+        },
+        "worldX": 168,
+        "worldY": 238,
+        "tagPrefix": "Q",
+        "tagNumber": 1,
+        "mountedOnRailId": "rd_9",
+        "offsetAlongRailMm": 36,
+        "lockedOnRail": true
+      },
+      {
+        "instanceId": "kt_0",
+        "catalogJson": {
+          "type": "relais_temporise",
+          "catalogId": "kt_re17",
+          "category": "command",
+          "localizationKey": "componentTimerRelay",
+          "defaultTagPrefix": "KT",
+          "mount": {
+            "type": "din_rail"
+          },
+          "props": {
+            "plageTemps": "1-10s",
+            "multiplicateur": 6,
+            "fonction": "D",
+            "tension": "24-240V~"
+          },
+          "inspector": {
+            "manufacturer": "WiriLab",
+            "reference": "Relais temporisé RE17RAMU (fonctions A–Di)",
+            "voltage": 240
+          }
+        },
+        "etatJson": {
+          "ledAllumee": false
+        },
+        "worldX": 392,
+        "worldY": 112,
+        "tagPrefix": "KT",
+        "tagNumber": 1,
+        "mountedOnRailId": "rd_10",
+        "offsetAlongRailMm": 36,
+        "lockedOnRail": true
+      },
+      {
+        "instanceId": "km_0",
+        "catalogJson": {
+          "type": "contacteur",
+          "catalogId": "km_3p_230AC",
+          "category": "command",
+          "localizationKey": "componentContactor3P",
+          "defaultTagPrefix": "KM",
+          "props": {
+            "nbPoles": 3,
+            "tensionBobine": "230AC",
+            "courant": "9",
+            "fabricant": "EduVolt"
+          },
+          "inspector": {
+            "manufacturer": "EduVolt",
+            "reference": "KM 3/4P",
+            "voltage": 230,
+            "current": 9
+          }
+        },
+        "etatJson": {
+          "estBobineCollee": false
+        },
+        "worldX": 504,
+        "worldY": 216.5,
+        "tagPrefix": "KM",
+        "tagNumber": 1,
+        "mountedOnRailId": "rd_10",
+        "offsetAlongRailMm": 108,
+        "lockedOnRail": true
+      },
+      {
+        "instanceId": "kt_1",
+        "catalogJson": {
+          "type": "relais_temporise",
+          "catalogId": "kt_re17",
+          "category": "command",
+          "localizationKey": "componentTimerRelay",
+          "defaultTagPrefix": "KT",
+          "mount": {
+            "type": "din_rail"
+          },
+          "props": {
+            "plageTemps": "1-10s",
+            "multiplicateur": 4,
+            "fonction": "A",
+            "tension": "24-240V~"
+          },
+          "inspector": {
+            "manufacturer": "WiriLab",
+            "reference": "Relais temporisé RE17RAMU (fonctions A–Di)",
+            "voltage": 240
+          }
+        },
+        "etatJson": {
+          "ledAllumee": false
+        },
+        "worldX": 728,
+        "worldY": 112,
+        "tagPrefix": "KT",
+        "tagNumber": 2,
+        "mountedOnRailId": "rd_10",
+        "offsetAlongRailMm": 252,
+        "lockedOnRail": true
+      },
+      {
+        "instanceId": "voy_rouge",
+        "catalogJson": {
+          "type": "voyant_signalisation",
+          "catalogId": "voy_rouge_230V",
+          "category": "signaling",
+          "localizationKey": "componentIndicatorRed",
+          "defaultTagPrefix": "HL",
+          "props": {
+            "couleur": "rouge",
+            "tension": "230V~",
+            "puissanceW": 50
+          },
+          "inspector": {
+            "manufacturer": "Generic",
+            "reference": "Voyant rouge 230V~",
+            "voltage": 230,
+            "current": 0.22
+          }
+        },
+        "etatJson": {
+          "estAllume": false,
+          "luminosite": 0
+        },
+        "worldX": 1120,
+        "worldY": 0,
+        "tagPrefix": "HL",
+        "tagNumber": 1
+      },
+      {
+        "instanceId": "voy_vert",
+        "catalogJson": {
+          "type": "voyant_signalisation",
+          "catalogId": "voy_vert_230V",
+          "category": "signaling",
+          "localizationKey": "componentIndicatorGreen",
+          "defaultTagPrefix": "HL",
+          "props": {
+            "couleur": "vert",
+            "tension": "230V~",
+            "puissanceW": 50
+          },
+          "inspector": {
+            "manufacturer": "Generic",
+            "reference": "Voyant vert 230V~",
+            "voltage": 230,
+            "current": 0.22
+          }
+        },
+        "etatJson": {
+          "estAllume": false,
+          "luminosite": 0
+        },
+        "worldX": 1120,
+        "worldY": 280,
+        "tagPrefix": "HL",
+        "tagNumber": 2
+      },
+      {
+        "instanceId": "voy_orange",
+        "catalogJson": {
+          "type": "voyant_signalisation",
+          "catalogId": "voy_orange_230V",
+          "category": "signaling",
+          "localizationKey": "componentIndicator",
+          "defaultTagPrefix": "HL",
+          "props": {
+            "couleur": "orange",
+            "tension": "230V~",
+            "puissanceW": 50
+          },
+          "inspector": {
+            "manufacturer": "Generic",
+            "reference": "Voyant orange 230V~",
+            "voltage": 230,
+            "current": 0.22
+          }
+        },
+        "etatJson": {
+          "estAllume": false,
+          "luminosite": 0
+        },
+        "worldX": 1120,
+        "worldY": 588,
+        "tagPrefix": "HL",
+        "tagNumber": 3
+      },
+      {
+        "instanceId": "rail_0",
+        "catalogJson": {
+          "type": "rail_din",
+          "catalogId": "rail_din",
+          "category": "connections",
+          "localizationKey": "componentDinRail",
+          "defaultTagPrefix": "RD",
+          "props": {
+            "longueurMm": 216
+          },
+          "inspector": {
+            "manufacturer": "Generic",
+            "reference": "Rail DIN EN 60715 — 21,6 cm"
+          }
+        },
+        "etatJson": [],
+        "worldX": 308,
+        "worldY": 840,
+        "tagPrefix": "RD",
+        "tagNumber": 1
+      },
+      {
+        "instanceId": "bor_1",
+        "catalogJson": {
+          "type": "bornier",
+          "catalogId": "bornier_bleu",
+          "category": "connections",
+          "localizationKey": "componentBornierBleu",
+          "defaultTagPrefix": "N",
+          "mount": {
+            "type": "din_rail"
+          },
+          "props": {
+            "couleur": "bleu",
+            "etiquette": "N",
+            "pontDroite": true
+          },
+          "inspector": {
+            "manufacturer": "EduVolt",
+            "reference": "Bornier DIN neutre N"
+          }
+        },
+        "etatJson": [],
+        "worldX": 364,
+        "worldY": 798,
+        "tagPrefix": "X",
+        "tagNumber": 1,
+        "mountedOnRailId": "rail_0",
+        "offsetAlongRailMm": 36,
+        "lockedOnRail": true
+      },
+      {
+        "instanceId": "bor_2",
+        "catalogJson": {
+          "type": "bornier",
+          "catalogId": "bornier_bleu",
+          "category": "connections",
+          "localizationKey": "componentBornierBleu",
+          "defaultTagPrefix": "N",
+          "mount": {
+            "type": "din_rail"
+          },
+          "props": {
+            "couleur": "bleu",
+            "etiquette": "N",
+            "pontDroite": true
+          },
+          "inspector": {
+            "manufacturer": "EduVolt",
+            "reference": "Bornier DIN neutre N"
+          }
+        },
+        "etatJson": [],
+        "worldX": 392,
+        "worldY": 798,
+        "tagPrefix": "X",
+        "tagNumber": 2,
+        "mountedOnRailId": "rail_0",
+        "offsetAlongRailMm": 54,
+        "lockedOnRail": true
+      },
+      {
+        "instanceId": "bor_3",
+        "catalogJson": {
+          "type": "bornier",
+          "catalogId": "bornier_bleu",
+          "category": "connections",
+          "localizationKey": "componentBornierBleu",
+          "defaultTagPrefix": "N",
+          "mount": {
+            "type": "din_rail"
+          },
+          "props": {
+            "couleur": "bleu",
+            "etiquette": "N",
+            "pontDroite": true
+          },
+          "inspector": {
+            "manufacturer": "EduVolt",
+            "reference": "Bornier DIN neutre N"
+          }
+        },
+        "etatJson": [],
+        "worldX": 420,
+        "worldY": 798,
+        "tagPrefix": "X",
+        "tagNumber": 3,
+        "mountedOnRailId": "rail_0",
+        "offsetAlongRailMm": 72,
+        "lockedOnRail": true
+      },
+      {
+        "instanceId": "bor_4",
+        "catalogJson": {
+          "type": "bornier",
+          "catalogId": "bornier_bleu",
+          "category": "connections",
+          "localizationKey": "componentBornierBleu",
+          "defaultTagPrefix": "N",
+          "mount": {
+            "type": "din_rail"
+          },
+          "props": {
+            "couleur": "bleu",
+            "etiquette": "N",
+            "pontDroite": true
+          },
+          "inspector": {
+            "manufacturer": "EduVolt",
+            "reference": "Bornier DIN neutre N"
+          }
+        },
+        "etatJson": [],
+        "worldX": 448,
+        "worldY": 798,
+        "tagPrefix": "X",
+        "tagNumber": 4,
+        "mountedOnRailId": "rail_0",
+        "offsetAlongRailMm": 90,
+        "lockedOnRail": true
+      },
+      {
+        "instanceId": "bor_5",
+        "catalogJson": {
+          "type": "bornier",
+          "catalogId": "bornier_bleu",
+          "category": "connections",
+          "localizationKey": "componentBornierBleu",
+          "defaultTagPrefix": "N",
+          "mount": {
+            "type": "din_rail"
+          },
+          "props": {
+            "couleur": "bleu",
+            "etiquette": "N",
+            "pontDroite": true
+          },
+          "inspector": {
+            "manufacturer": "EduVolt",
+            "reference": "Bornier DIN neutre N"
+          }
+        },
+        "etatJson": [],
+        "worldX": 476,
+        "worldY": 798,
+        "tagPrefix": "X",
+        "tagNumber": 5,
+        "mountedOnRailId": "rail_0",
+        "offsetAlongRailMm": 108,
+        "lockedOnRail": true
+      },
+      {
+        "instanceId": "bor_6",
+        "catalogJson": {
+          "type": "bornier",
+          "catalogId": "bornier_bleu",
+          "category": "connections",
+          "localizationKey": "componentBornierBleu",
+          "defaultTagPrefix": "N",
+          "mount": {
+            "type": "din_rail"
+          },
+          "props": {
+            "couleur": "bleu",
+            "etiquette": "N",
+            "pontDroite": true
+          },
+          "inspector": {
+            "manufacturer": "EduVolt",
+            "reference": "Bornier DIN neutre N"
+          }
+        },
+        "etatJson": [],
+        "worldX": 504,
+        "worldY": 798,
+        "tagPrefix": "X",
+        "tagNumber": 6,
+        "mountedOnRailId": "rail_0",
+        "offsetAlongRailMm": 126,
+        "lockedOnRail": true
+      },
+      {
+        "instanceId": "bor_7",
+        "catalogJson": {
+          "type": "bornier",
+          "catalogId": "bornier_bleu",
+          "category": "connections",
+          "localizationKey": "componentBornierBleu",
+          "defaultTagPrefix": "N",
+          "mount": {
+            "type": "din_rail"
+          },
+          "props": {
+            "couleur": "bleu",
+            "etiquette": "N"
+          },
+          "inspector": {
+            "manufacturer": "EduVolt",
+            "reference": "Bornier DIN neutre N"
+          }
+        },
+        "etatJson": [],
+        "worldX": 532,
+        "worldY": 798,
+        "tagPrefix": "X",
+        "tagNumber": 7,
+        "mountedOnRailId": "rail_0",
+        "offsetAlongRailMm": 144,
+        "lockedOnRail": true
+      },
+      {
+        "instanceId": "rd_9",
+        "catalogJson": {
+          "type": "rail_din",
+          "catalogId": "rail_din",
+          "category": "connections",
+          "localizationKey": "componentDinRail",
+          "defaultTagPrefix": "RD",
+          "props": {
+            "longueurMm": 108
+          },
+          "inspector": {
+            "manufacturer": "Generic",
+            "reference": "Rail DIN EN 60715 — 25 cm"
+          }
+        },
+        "etatJson": {
+          "estGrille": false
+        },
+        "worldX": 112,
+        "worldY": 336,
+        "tagPrefix": "RD",
+        "tagNumber": 2
+      },
+      {
+        "instanceId": "rd_10",
+        "catalogJson": {
+          "type": "rail_din",
+          "catalogId": "rail_din",
+          "category": "connections",
+          "localizationKey": "componentDinRail",
+          "defaultTagPrefix": "RD",
+          "props": {
+            "longueurMm": 360
+          },
+          "inspector": {
+            "manufacturer": "Generic",
+            "reference": "Rail DIN EN 60715 — 25 cm"
+          }
+        },
+        "etatJson": {
+          "estGrille": false
+        },
+        "worldX": 336,
+        "worldY": 336,
+        "tagPrefix": "RD",
+        "tagNumber": 3
+      }
+    ],
+    "wires": [
+      {
+        "id": "wire_1",
+        "tag": {
+          "prefix": "W",
+          "number": 1
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "net_0",
+          "terminalId": "L"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "disj_0",
+          "terminalId": "1"
+        },
+        "freePoints": [
+          {
+            "x": 112,
+            "y": 175
+          },
+          {
+            "x": 196,
+            "y": 175
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#EF4444",
+        "caliber": {
+          "unit": "awg",
+          "value": 14
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "L",
+        "endLabel": "1",
+        "label": "L"
+      },
+      {
+        "id": "wire_2",
+        "tag": {
+          "prefix": "W",
+          "number": 2
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "disj_0",
+          "terminalId": "2"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "kt_0",
+          "terminalId": "A1"
+        },
+        "freePoints": [
+          {
+            "x": 224,
+            "y": 616
+          },
+          {
+            "x": 308,
+            "y": 616
+          },
+          {
+            "x": 308,
+            "y": -14
+          },
+          {
+            "x": 378,
+            "y": -14
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#EF4444",
+        "caliber": {
+          "unit": "awg",
+          "value": 14
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "2",
+        "endLabel": "A1",
+        "label": "2"
+      },
+      {
+        "id": "wire_3",
+        "tag": {
+          "prefix": "W",
+          "number": 3
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "kt_0",
+          "terminalId": "A1"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "kt_0",
+          "terminalId": "15"
+        },
+        "freePoints": [
+          {
+            "x": 420,
+            "y": 63
+          },
+          {
+            "x": 448,
+            "y": 63
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#EF4444",
+        "caliber": {
+          "unit": "awg",
+          "value": 14
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "A1",
+        "endLabel": "15",
+        "label": "A1"
+      },
+      {
+        "id": "wire_4",
+        "tag": {
+          "prefix": "W",
+          "number": 4
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "kt_0",
+          "terminalId": "15"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "km_0",
+          "terminalId": "1"
+        },
+        "freePoints": [
+          {
+            "x": 497,
+            "y": -21
+          },
+          {
+            "x": 588,
+            "y": -21
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#EF4444",
+        "caliber": {
+          "unit": "awg",
+          "value": 14
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "15",
+        "endLabel": "1",
+        "label": "15"
+      },
+      {
+        "id": "wire_5",
+        "tag": {
+          "prefix": "W",
+          "number": 5
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "km_0",
+          "terminalId": "1"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "km_0",
+          "terminalId": "3"
+        },
+        "freePoints": [
+          {
+            "x": 567,
+            "y": -14
+          },
+          {
+            "x": 616,
+            "y": -14
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#EF4444",
+        "caliber": {
+          "unit": "awg",
+          "value": 14
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "1",
+        "endLabel": "3",
+        "label": "1"
+      },
+      {
+        "id": "wire_6",
+        "tag": {
+          "prefix": "W",
+          "number": 6
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "kt_0",
+          "terminalId": "16"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "km_0",
+          "terminalId": "A1"
+        },
+        "freePoints": [
+          {
+            "x": 392,
+            "y": 728
+          },
+          {
+            "x": 952,
+            "y": 728
+          },
+          {
+            "x": 952,
+            "y": 392
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#8B5CF6",
+        "caliber": {
+          "unit": "awg",
+          "value": 14
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "16",
+        "endLabel": "A1",
+        "label": "16"
+      },
+      {
+        "id": "wire_7",
+        "tag": {
+          "prefix": "W",
+          "number": 7
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "km_0",
+          "terminalId": "2"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "kt_1",
+          "terminalId": "A1"
+        },
+        "freePoints": [
+          {
+            "x": 595,
+            "y": 700
+          },
+          {
+            "x": 868,
+            "y": 700
+          },
+          {
+            "x": 868,
+            "y": 7
+          },
+          {
+            "x": 924,
+            "y": 7
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#8B5CF6",
+        "caliber": {
+          "unit": "awg",
+          "value": 14
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "2",
+        "endLabel": "A1",
+        "label": "2"
+      },
+      {
+        "id": "wire_8",
+        "tag": {
+          "prefix": "W",
+          "number": 8
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "km_0",
+          "terminalId": "4"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "kt_1",
+          "terminalId": "15"
+        },
+        "freePoints": [
+          {
+            "x": 644,
+            "y": 644
+          },
+          {
+            "x": 910,
+            "y": 644
+          },
+          {
+            "x": 910,
+            "y": -35
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#8B5CF6",
+        "caliber": {
+          "unit": "awg",
+          "value": 14
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "4",
+        "endLabel": "15",
+        "label": "4"
+      },
+      {
+        "id": "wire_9",
+        "tag": {
+          "prefix": "W",
+          "number": 9
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "kt_0",
+          "terminalId": "18"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "voy_rouge",
+          "terminalId": "X1"
+        },
+        "freePoints": [
+          {
+            "x": 511,
+            "y": 756
+          },
+          {
+            "x": 1036,
+            "y": 756
+          },
+          {
+            "x": 1036,
+            "y": -42
+          },
+          {
+            "x": 1176,
+            "y": -42
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#EF4444",
+        "caliber": {
+          "unit": "awg",
+          "value": 14
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "18",
+        "endLabel": "X1",
+        "label": "18"
+      },
+      {
+        "id": "wire_10",
+        "tag": {
+          "prefix": "W",
+          "number": 10
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "kt_1",
+          "terminalId": "16"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "voy_vert",
+          "terminalId": "X1"
+        },
+        "freePoints": [
+          {
+            "x": 952,
+            "y": 784
+          },
+          {
+            "x": 1064,
+            "y": 784
+          },
+          {
+            "x": 1064,
+            "y": 231
+          },
+          {
+            "x": 1176,
+            "y": 231
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#16A34A",
+        "caliber": {
+          "unit": "awg",
+          "value": 14
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "16",
+        "endLabel": "X1",
+        "label": "16"
+      },
+      {
+        "id": "wire_11",
+        "tag": {
+          "prefix": "W",
+          "number": 11
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "kt_1",
+          "terminalId": "18"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "voy_orange",
+          "terminalId": "X1"
+        },
+        "freePoints": [
+          {
+            "x": 924,
+            "y": 812
+          },
+          {
+            "x": 1092,
+            "y": 812
+          },
+          {
+            "x": 1092,
+            "y": 518
+          },
+          {
+            "x": 1176,
+            "y": 518
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#F59E0B",
+        "caliber": {
+          "unit": "awg",
+          "value": 14
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "18",
+        "endLabel": "X1",
+        "label": "18"
+      },
+      {
+        "id": "wire_12",
+        "tag": {
+          "prefix": "W",
+          "number": 12
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "net_0",
+          "terminalId": "N"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "bor_1",
+          "terminalId": "1"
+        },
+        "freePoints": [
+          {
+            "x": 189,
+            "y": 735
+          },
+          {
+            "x": 336,
+            "y": 735
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#2563EB",
+        "caliber": {
+          "unit": "awg",
+          "value": 14
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "N",
+        "endLabel": "1",
+        "label": "N"
+      },
+      {
+        "id": "wire_13",
+        "tag": {
+          "prefix": "W",
+          "number": 13
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "kt_0",
+          "terminalId": "A2"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "bor_2",
+          "terminalId": "2"
+        },
+        "freePoints": [
+          {
+            "x": 420,
+            "y": 707
+          },
+          {
+            "x": 287,
+            "y": 707
+          },
+          {
+            "x": 287,
+            "y": 1148
+          },
+          {
+            "x": 434,
+            "y": 1148
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#2563EB",
+        "caliber": {
+          "unit": "awg",
+          "value": 14
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "A2",
+        "endLabel": "2",
+        "label": "A2"
+      },
+      {
+        "id": "wire_14",
+        "tag": {
+          "prefix": "W",
+          "number": 14
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "km_0",
+          "terminalId": "A2"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "bor_3",
+          "terminalId": "2"
+        },
+        "freePoints": [
+          {
+            "x": 840,
+            "y": 679
+          },
+          {
+            "x": 840,
+            "y": 1148
+          },
+          {
+            "x": 462,
+            "y": 1148
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#2563EB",
+        "caliber": {
+          "unit": "awg",
+          "value": 14
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "A2",
+        "endLabel": "2",
+        "label": "A2"
+      },
+      {
+        "id": "wire_15",
+        "tag": {
+          "prefix": "W",
+          "number": 15
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "kt_1",
+          "terminalId": "A2"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "bor_4",
+          "terminalId": "2"
+        },
+        "freePoints": [
+          {
+            "x": 980,
+            "y": 1015
+          },
+          {
+            "x": 490,
+            "y": 1015
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#2563EB",
+        "caliber": {
+          "unit": "awg",
+          "value": 14
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "A2",
+        "endLabel": "2",
+        "label": "A2"
+      },
+      {
+        "id": "wire_16",
+        "tag": {
+          "prefix": "W",
+          "number": 16
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "voy_rouge",
+          "terminalId": "X2"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "bor_5",
+          "terminalId": "2"
+        },
+        "freePoints": [
+          {
+            "x": 1288,
+            "y": 203
+          },
+          {
+            "x": 1288,
+            "y": 1113
+          },
+          {
+            "x": 518,
+            "y": 1113
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#2563EB",
+        "caliber": {
+          "unit": "awg",
+          "value": 14
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "X2",
+        "endLabel": "2",
+        "label": "X2"
+      },
+      {
+        "id": "wire_17",
+        "tag": {
+          "prefix": "W",
+          "number": 17
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "voy_vert",
+          "terminalId": "X2"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "bor_6",
+          "terminalId": "2"
+        },
+        "freePoints": [
+          {
+            "x": 1260,
+            "y": 497
+          },
+          {
+            "x": 1260,
+            "y": 1078
+          },
+          {
+            "x": 546,
+            "y": 1078
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#2563EB",
+        "caliber": {
+          "unit": "awg",
+          "value": 14
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "X2",
+        "endLabel": "2",
+        "label": "X2"
+      },
+      {
+        "id": "wire_18",
+        "tag": {
+          "prefix": "W",
+          "number": 18
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "voy_orange",
+          "terminalId": "X2"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "bor_7",
+          "terminalId": "2"
+        },
+        "freePoints": [
+          {
+            "x": 1176,
+            "y": 1050
+          },
+          {
+            "x": 574,
+            "y": 1050
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#2563EB",
+        "caliber": {
+          "unit": "awg",
+          "value": 14
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "X2",
+        "endLabel": "2",
+        "label": "X2"
+      }
+    ],
+    "texts": [],
+    "camera": {
+      "scale": 0.5415293338136425,
+      "offsetX": 346.89864965755083,
+      "offsetY": 176.53425703875087
+    }
+  }
+}

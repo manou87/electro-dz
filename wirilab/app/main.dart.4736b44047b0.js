@@ -189288,12 +189288,12 @@ c_j(a,a0){var s=0,r=A.v(t.kE),q,p=2,o=[],n=[],m,l,k,j,i,h,g,f,e,d,c,b
 var $async$a_d=A.w(function(a1,a2){if(a1===1){o.push(a2)
 s=p}for(;;)switch(s){case 0:if(a0.length===0){q=null
 s=1
-break}h=A.oK("https://wirilab.com/share.php")
+break}h=A.oK("/shared/"+a0+".json")
 if(h==null){q=null
 s=1
 break}g=t.N
 f=t.z
-m=h.OJ(0,A.B(["id",a0],g,f))
+m=h
 e=A.oY()
 d=e==null?new A.kK(A.a([],t.Y)):e
 l=d

@@ -1,0 +1,684 @@
+{
+  "ok": true,
+  "title": "XXX",
+  "circuit": {
+    "version": 1,
+    "savedAt": "2026-10-13T07:16:20.525",
+    "components": [
+      {
+        "instanceId": "bd_7",
+        "catalogJson": {
+          "type": "boite_derivation",
+          "catalogId": "bd_encastree",
+          "category": "connections",
+          "localizationKey": "componentJunctionBox",
+          "defaultTagPrefix": "XB",
+          "props": [],
+          "inspector": {
+            "manufacturer": "EduVolt",
+            "reference": "Boîte de dérivation encastrée"
+          }
+        },
+        "etatJson": {
+          "estOuverte": false
+        },
+        "worldX": 700,
+        "worldY": 252,
+        "tagPrefix": "XB",
+        "tagNumber": 1
+      },
+      {
+        "instanceId": "bl_8",
+        "catalogJson": {
+          "type": "borne_levier",
+          "catalogId": "borne_levier",
+          "category": "connections",
+          "localizationKey": "componentLeverTerminal",
+          "defaultTagPrefix": "X",
+          "props": {
+            "nbEntrees": 4
+          },
+          "inspector": {
+            "manufacturer": "EduVolt",
+            "reference": "Borne à levier 2–4 entrées"
+          }
+        },
+        "etatJson": {
+          "leviersOuverts": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "worldX": 1008,
+        "worldY": 336,
+        "tagPrefix": "X",
+        "tagNumber": 2,
+        "mountedOnBoxId": "bd_7",
+        "boxSlotIndex": 1021,
+        "lockedInBox": true,
+        "quarterTurns": 1
+      },
+      {
+        "instanceId": "disj_10",
+        "catalogJson": {
+          "type": "disjoncteur",
+          "catalogId": "disj_C16_1P",
+          "category": "protection",
+          "localizationKey": "componentBreaker1P",
+          "defaultTagPrefix": "Q",
+          "props": {
+            "nbPoles": 1,
+            "calibre": "C16",
+            "tension": "230V~",
+            "courbe": "C",
+            "icn": 6000,
+            "classeLimitation": 3
+          },
+          "inspector": {
+            "manufacturer": "Generic",
+            "reference": "C16 1P",
+            "voltage": 230,
+            "current": 16
+          }
+        },
+        "etatJson": {
+          "estEnclenche": true,
+          "estDeclenche": false,
+          "estEnRearmement": false,
+          "estGrille": false
+        },
+        "worldX": 140,
+        "worldY": 168,
+        "tagPrefix": "Q",
+        "tagNumber": 2
+      },
+      {
+        "instanceId": "net_11",
+        "catalogJson": {
+          "type": "reseau",
+          "catalogId": "net_mono_230V",
+          "category": "sources",
+          "localizationKey": "componentNetworkMono",
+          "defaultTagPrefix": "G",
+          "props": {
+            "type": "monophase",
+            "tension": "230",
+            "frequence": 50,
+            "neutrePresent": true
+          },
+          "inspector": {
+            "manufacturer": "Grid",
+            "reference": "Réseau monophasé 230 V AC 50 Hz",
+            "voltage": 230
+          }
+        },
+        "etatJson": {
+          "estActif": false,
+          "estGrille": false
+        },
+        "worldX": 112,
+        "worldY": -112,
+        "tagPrefix": "G",
+        "tagNumber": 2
+      },
+      {
+        "instanceId": "int_12",
+        "catalogJson": {
+          "type": "interrupteur",
+          "catalogId": "int_simple",
+          "category": "command",
+          "localizationKey": "componentSwitchSimple",
+          "defaultTagPrefix": "S",
+          "props": {
+            "type": "simple",
+            "couleur": "blanc",
+            "calibre": "10AX",
+            "tension": "250V~"
+          },
+          "inspector": {
+            "manufacturer": "Generic",
+            "reference": "Interrupteur simple 10AX",
+            "voltage": 250,
+            "current": 10
+          }
+        },
+        "etatJson": {
+          "estFerme": false,
+          "estFerme2": false,
+          "estGrille": false
+        },
+        "worldX": 1288,
+        "worldY": 168,
+        "tagPrefix": "S",
+        "tagNumber": 2
+      },
+      {
+        "instanceId": "lamp_13",
+        "catalogJson": {
+          "type": "lampe_suspension",
+          "catalogId": "lamp_signal_v2",
+          "category": "power",
+          "localizationKey": "componentLamp",
+          "defaultTagPrefix": "EL",
+          "props": {
+            "typeLumiere": "chaud",
+            "puissanceW": 60
+          },
+          "inspector": {
+            "manufacturer": "Generic",
+            "reference": "Lampe de signalisation"
+          }
+        },
+        "etatJson": {
+          "estAllume": false,
+          "estGrille": false,
+          "luminosite": 0
+        },
+        "worldX": 1456,
+        "worldY": 168,
+        "tagPrefix": "EL",
+        "tagNumber": 2
+      },
+      {
+        "instanceId": "xs_14",
+        "catalogJson": {
+          "type": "prise",
+          "catalogId": "prise_2p_t",
+          "category": "power",
+          "localizationKey": "componentWallSocket",
+          "defaultTagPrefix": "XS",
+          "props": {
+            "tension": "230V~",
+            "courantA": 16
+          },
+          "inspector": {
+            "manufacturer": "EduVolt",
+            "reference": "Prise 2P+T Type E 16 A",
+            "voltage": 230,
+            "current": 16
+          }
+        },
+        "etatJson": {
+          "estGrille": false,
+          "estAllume": false,
+          "luminosite": 0
+        },
+        "worldX": 896,
+        "worldY": 868,
+        "tagPrefix": "XS",
+        "tagNumber": 1
+      },
+      {
+        "instanceId": "son_15",
+        "catalogJson": {
+          "type": "sonnerie",
+          "catalogId": "son_carillon_230V",
+          "category": "signaling",
+          "localizationKey": "componentDoorbell",
+          "defaultTagPrefix": "HA",
+          "props": {
+            "tension": "230V~",
+            "puissanceW": 8,
+            "signalSonore": true
+          },
+          "inspector": {
+            "manufacturer": "EduVolt",
+            "reference": "Sonnerie murale carillon 2 tons 230 V~ 50 Hz",
+            "voltage": 230,
+            "current": 0.035
+          }
+        },
+        "etatJson": {
+          "estAppuye": false,
+          "estSousTension": false,
+          "estAllume": false,
+          "estGrille": false,
+          "luminosite": 0
+        },
+        "worldX": 812,
+        "worldY": -112,
+        "tagPrefix": "HA",
+        "tagNumber": 1,
+        "quarterTurns": 2
+      },
+      {
+        "instanceId": "bl_16",
+        "catalogJson": {
+          "type": "borne_levier",
+          "catalogId": "borne_levier",
+          "category": "connections",
+          "localizationKey": "componentLeverTerminal",
+          "defaultTagPrefix": "X",
+          "props": {
+            "nbEntrees": 4
+          },
+          "inspector": {
+            "manufacturer": "EduVolt",
+            "reference": "Borne à levier 2–4 entrées"
+          }
+        },
+        "etatJson": {
+          "leviersOuverts": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "worldX": 784,
+        "worldY": 560,
+        "tagPrefix": "X",
+        "tagNumber": 3,
+        "mountedOnBoxId": "bd_7",
+        "boxSlotIndex": 1109,
+        "lockedInBox": true,
+        "quarterTurns": 2
+      }
+    ],
+    "wires": [
+      {
+        "id": "wire_17",
+        "tag": {
+          "prefix": "W",
+          "number": 18
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "net_11",
+          "terminalId": "L"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "disj_10",
+          "terminalId": "1"
+        },
+        "freePoints": [],
+        "routeMode": "manual",
+        "color": "#EF4444",
+        "caliber": {
+          "unit": "awg",
+          "value": 10
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "",
+        "endLabel": "",
+        "label": ""
+      },
+      {
+        "id": "wire_18",
+        "tag": {
+          "prefix": "W",
+          "number": 19
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "disj_10",
+          "terminalId": "2"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "bl_8",
+          "terminalId": "3"
+        },
+        "freePoints": [
+          {
+            "x": 168,
+            "y": 490
+          },
+          {
+            "x": 847,
+            "y": 490
+          },
+          {
+            "x": 847,
+            "y": 420
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#EF4444",
+        "caliber": {
+          "unit": "awg",
+          "value": 10
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "",
+        "endLabel": "",
+        "label": ""
+      },
+      {
+        "id": "wire_19",
+        "tag": {
+          "prefix": "W",
+          "number": 20
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "son_15",
+          "terminalId": "L"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "bl_8",
+          "terminalId": "1"
+        },
+        "freePoints": [
+          {
+            "x": 952,
+            "y": 168
+          },
+          {
+            "x": 931,
+            "y": 168
+          },
+          {
+            "x": 931,
+            "y": 364
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#EF4444",
+        "caliber": {
+          "unit": "awg",
+          "value": 10
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "",
+        "endLabel": "",
+        "label": ""
+      },
+      {
+        "id": "wire_20",
+        "tag": {
+          "prefix": "W",
+          "number": 21
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "int_12",
+          "terminalId": "L"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "bl_8",
+          "terminalId": "4"
+        },
+        "freePoints": [
+          {
+            "x": 952,
+            "y": 476
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#EF4444",
+        "caliber": {
+          "unit": "awg",
+          "value": 10
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "",
+        "endLabel": "",
+        "label": ""
+      },
+      {
+        "id": "wire_21",
+        "tag": {
+          "prefix": "W",
+          "number": 22
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "int_12",
+          "terminalId": "1"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "lamp_13",
+          "terminalId": "L1"
+        },
+        "freePoints": [
+          {
+            "x": 1372,
+            "y": 476
+          },
+          {
+            "x": 1484,
+            "y": 476
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#EF4444",
+        "caliber": {
+          "unit": "awg",
+          "value": 10
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "",
+        "endLabel": "",
+        "label": ""
+      },
+      {
+        "id": "wire_22",
+        "tag": {
+          "prefix": "W",
+          "number": 23
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "xs_14",
+          "terminalId": "L"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "bl_8",
+          "terminalId": "2"
+        },
+        "freePoints": [
+          {
+            "x": 882,
+            "y": 392
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#EF4444",
+        "caliber": {
+          "unit": "awg",
+          "value": 10
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "",
+        "endLabel": "",
+        "label": ""
+      },
+      {
+        "id": "wire_23",
+        "tag": {
+          "prefix": "W",
+          "number": 24
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "xs_14",
+          "terminalId": "N"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "bl_16",
+          "terminalId": "1"
+        },
+        "freePoints": [
+          {
+            "x": 931,
+            "y": 770
+          },
+          {
+            "x": 931,
+            "y": 525
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#2563EB",
+        "caliber": {
+          "unit": "awg",
+          "value": 10
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "",
+        "endLabel": "",
+        "label": ""
+      },
+      {
+        "id": "wire_24",
+        "tag": {
+          "prefix": "W",
+          "number": 25
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "lamp_13",
+          "terminalId": "L2"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "bl_16",
+          "terminalId": "2"
+        },
+        "freePoints": [
+          {
+            "x": 1540,
+            "y": 483
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#2563EB",
+        "caliber": {
+          "unit": "awg",
+          "value": 10
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "",
+        "endLabel": "",
+        "label": ""
+      },
+      {
+        "id": "wire_26",
+        "tag": {
+          "prefix": "W",
+          "number": 27
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "son_15",
+          "terminalId": "N"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "bl_16",
+          "terminalId": "4"
+        },
+        "freePoints": [
+          {
+            "x": 917,
+            "y": 175
+          },
+          {
+            "x": 917,
+            "y": 364
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#2563EB",
+        "caliber": {
+          "unit": "awg",
+          "value": 10
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "",
+        "endLabel": "",
+        "label": ""
+      },
+      {
+        "id": "wire_27",
+        "tag": {
+          "prefix": "W",
+          "number": 28
+        },
+        "startEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "net_11",
+          "terminalId": "N"
+        },
+        "endEndpoint": {
+          "kind": "bound",
+          "componentInstanceId": "bl_16",
+          "terminalId": "3"
+        },
+        "freePoints": [
+          {
+            "x": 196,
+            "y": 140
+          },
+          {
+            "x": 399,
+            "y": 140
+          },
+          {
+            "x": 399,
+            "y": 469
+          },
+          {
+            "x": 840,
+            "y": 469
+          }
+        ],
+        "routeMode": "manual",
+        "color": "#2563EB",
+        "caliber": {
+          "unit": "awg",
+          "value": 10
+        },
+        "startShape": "rectangle",
+        "startShapeColor": "#2563EB",
+        "endShape": "rectangle",
+        "endShapeColor": "#2563EB",
+        "startLabel": "",
+        "endLabel": "",
+        "label": ""
+      }
+    ],
+    "texts": [],
+    "camera": {
+      "scale": 0.25,
+      "offsetX": -24.833282470703097,
+      "offsetY": 208.08331298828125
+    }
+  }
+}

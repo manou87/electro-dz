@@ -39,7 +39,11 @@ Dans `app/main.dart.4736b44047b0.js` (clone local uniquement) :
 - `a3L` montre la feature ; badges `Hf` / bandeau `ayn` masqués
 - `bBF` / `adu` no-op ; CTA Sign in retirés ; save-account soft-skip
 
+## Projets showcase (locaux)
+
+Les 8 cartes « Des projets à ouvrir » ouvrent `app/?c=<id>` ; le payload est dans `shared/<id>.json` (plus d’appel `wirilab.com/share.php` pour l’ouverture).
+
 ## Limites (restent live)
 
 - Auth réelle, sync cloud, Stripe / checkout (`?checkout=…`)
-- Liens partagés `/s/…`, Webful, Google Fonts (CDN)
+- Création de nouveaux liens `/s/…` (POST share), Webful, Google Fonts (CDN)
