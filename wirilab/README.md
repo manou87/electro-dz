@@ -43,6 +43,17 @@ Dans `app/main.dart.4736b44047b0.js` (clone local uniquement) :
 
 Les 8 cartes « Des projets à ouvrir » ouvrent `app/?c=<id>` ; le payload est dans `shared/<id>.json` (plus d’appel `wirilab.com/share.php` pour l’ouverture).
 
+## PLC WireLab (LOGO!)
+
+Deux automates portés depuis WireLab / swissdz-panel dans le catalogue WiriLab :
+
+- **PLC LOGO! 230RCE** (`plc_logo_230rce`)
+- **PLC LOGO! 8 12/24RCE** (`plc_logo8`)
+
+Recherche « PLC LOGO » dans la bibliothèque (catégorie CONTROL / command). Démo câblée :
+
+`http://localhost:8766/app/?c=plc_logo_demo`
+
 ## Limites (restent live)
 
 - Auth réelle, sync cloud, Stripe / checkout (`?checkout=…`)
