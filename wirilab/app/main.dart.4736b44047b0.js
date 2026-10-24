@@ -177313,10 +177313,7 @@ A.Ms.prototype={}
 A.ML.prototype={
 I(){return"PlanTier."+this.b}}
 A.Fo.prototype={
-ala(a){var s=this.b
-if(s!=null&&!s.n(0,a))return!1
-if(B.aj2.n(0,a))return this.ay
-return!0}}
+ala(a){return!0}}
 A.YA.prototype={
 I(){return"OffreCarteActuelle."+this.b}}
 A.wf.prototype={
@@ -181864,8 +181861,8 @@ gX6(){return"Circuit catalog unavailable."},
 ga2Q(){return"My projects"},
 gaDe(){return"Your saved circuits: open them, tweak them, save them again \u2014 this is your personal workshop."},
 ga2N(){return"No project yet. In the workshop, \u201cSave as\u2026\u201d adds your circuit here."},
-ga2P(){return"Your projects live in your account"},
-ga2O(){return"Saved circuits belong to your account. Sign in to find them here, from any device."},
+ga2P(){return"My projects (local clone)"},
+ga2O(){return"Local clone — project cloud sync optional later."},
 gBH(){return"Sign in"},
 gaDd(){return"Delete this project?"},
 gX3(){return"Circuit opened in the workshop \u2014 use \u201cSave as\u2026\u201d to keep it in My projects."},
@@ -182324,7 +182321,7 @@ gaeQ(){return"Your milestones, unlocked lesson after lesson."},
 gafe(){return"All paths"},
 gafp(){return"Your account at a glance."},
 gVO(){return"You are not signed in"},
-gVN(){return"Sign in to keep your progress, projects and profile on all your devices."},
+gVN(){return"Local clone — cloud account optional later."},
 gaft(){return"Learner"},
 gafu(){return"Trainer"},
 afn(a){return"Profile: "+a},
@@ -185650,8 +185647,8 @@ gX6(){return"Catalogue de circuits indisponible."},
 ga2Q(){return"Mes projets"},
 gaDe(){return"Tes circuits enregistr\xe9s : ouvre-les, modifie-les, r\xe9-enregistre-les \u2014 c'est ton atelier personnel."},
 ga2N(){return"Aucun projet pour l'instant. Dans l'atelier, \xab Enregistrer sous\u2026 \xbb ajoute ton circuit ici."},
-ga2P(){return"Tes projets vivent dans ton compte"},
-ga2O(){return"Les circuits enregistr\xe9s sont rattach\xe9s \xe0 ton compte. Connecte-toi pour les retrouver ici, depuis n'importe quel appareil."},
+ga2P(){return"Mes projets (clone local)"},
+ga2O(){return"Clone local — sync cloud des projets optionnelle plus tard."},
 gBH(){return"Se connecter"},
 gaDd(){return"Supprimer ce projet ?"},
 gX3(){return"Circuit ouvert dans l'atelier \u2014 \xab Enregistrer sous\u2026 \xbb pour le garder dans Mes projets."},
@@ -186110,7 +186107,7 @@ gaeQ(){return"Tes jalons, d\xe9bloqu\xe9s au fil des le\xe7ons."},
 gafe(){return"Tous les parcours"},
 gafp(){return"Ton compte, en un coup d'\u0153il."},
 gVO(){return"Tu n'es pas connect\xe9"},
-gVN(){return"Connecte-toi pour retrouver ta progression, tes projets et ton profil sur tous tes appareils."},
+gVN(){return"Clone local — compte cloud optionnel plus tard."},
 gaft(){return"Apprenant"},
 gafu(){return"Formateur"},
 afn(a){return"Profil : "+a},
@@ -193894,7 +193891,7 @@ s=f.d
 if(s==null){r=f.c
 q=A.L(16)
 p=A.aO(r.w,-1,1)
-return A.cr(new A.i_(B.f_,A.cr(new A.cR(B.l9,A.ad(e,A.Q(A.a([B.LD,B.e6,A.e(d.gVO(),e,e,e,e,e,A.z(e,e,r.x,e,e,e,e,e,e,e,e,17,e,e,B.J,e,e,!0,e,e,e,e,e,e,e,e),B.aW,e,e),B.al,A.e(d.gVN(),e,e,e,e,e,A.z(e,e,r.y,e,e,e,e,e,e,e,e,13,e,e,e,e,1.5,!0,e,e,e,e,e,e,e,e),B.aW,e,e),B.eA,A.hJ(B.lV,e,A.e(d.gAa(),e,e,e,e,e,e,e,e,e),f.e,A.f_(r.z,e,e,e,e,e,e,e,e,B.vK,e,e,e,e,e,e,e))],t.p),B.x,e,B.q,B.ad,0,B.v),B.u,e,e,new A.a0(r.f,e,p,q,e,e,B.E),e,e,e,e,B.f_,e,e,e),e),e,e),e),e,e)}r=A.qb(a)
+return A.cr(new A.i_(B.f_,A.cr(new A.cR(B.l9,A.ad(e,A.Q(A.a([B.LD,B.e6,A.e(d.gVO(),e,e,e,e,e,A.z(e,e,r.x,e,e,e,e,e,e,e,e,17,e,e,B.J,e,e,!0,e,e,e,e,e,e,e,e),B.aW,e,e),B.al,A.e(d.gVN(),e,e,e,e,e,A.z(e,e,r.y,e,e,e,e,e,e,e,e,13,e,e,e,e,1.5,!0,e,e,e,e,e,e,e,e),B.aW,e,e),B.eA,B.ic],t.p),B.x,e,B.q,B.ad,0,B.v),B.u,e,e,new A.a0(r.f,e,p,q,e,e,B.E),e,e,e,e,B.f_,e,e,e),e),e,e),e),e,e)}r=A.qb(a)
 q=f.c
 p=d.gL2()
 o=d.gafp()
@@ -196392,7 +196389,7 @@ q=A.aO(s.w,-1,1)
 p=s.z
 o=p.v(0.1)
 n=A.L(14)
-return A.cr(A.fQ(A.cr(new A.cR(B.l9,A.ad(m,A.Q(A.a([A.ad(m,A.a5(B.lS,p,m,26),B.u,m,m,new A.a0(o,m,m,n,m,m,B.E),m,52,m,m,m,m,m,52),B.e6,A.e(l.ga2P(),m,m,m,m,m,A.z(m,m,s.x,m,m,m,m,m,m,m,m,17,m,m,B.J,m,m,!0,m,m,m,m,m,m,m,m),B.aW,m,m),B.al,A.e(l.ga2O(),m,m,m,m,m,A.z(m,m,s.y,m,m,m,m,m,m,m,m,13,m,m,m,m,1.5,!0,m,m,m,m,m,m,m,m),B.aW,m,m),B.eA,A.hJ(B.lV,m,A.e(l.gBH(),m,m,m,m,m,m,m,m,m),this.d,A.f_(p,m,m,m,m,m,m,m,m,B.vK,m,m,m,m,m,m,m))],t.p),B.x,m,B.q,B.ad,0,B.v),B.u,m,m,new A.a0(s.f,m,q,r,m,m,B.E),m,m,m,m,B.f_,m,m,m),m),m,m),m,B.ac,m,B.f_,m,m,m,B.aX),m,m)}}
+return A.cr(A.fQ(A.cr(new A.cR(B.l9,A.ad(m,A.Q(A.a([A.ad(m,A.a5(B.lS,p,m,26),B.u,m,m,new A.a0(o,m,m,n,m,m,B.E),m,52,m,m,m,m,m,52),B.e6,A.e(l.ga2P(),m,m,m,m,m,A.z(m,m,s.x,m,m,m,m,m,m,m,m,17,m,m,B.J,m,m,!0,m,m,m,m,m,m,m,m),B.aW,m,m),B.al,A.e(l.ga2O(),m,m,m,m,m,A.z(m,m,s.y,m,m,m,m,m,m,m,m,13,m,m,m,m,1.5,!0,m,m,m,m,m,m,m,m),B.aW,m,m),B.eA,B.ic],t.p),B.x,m,B.q,B.ad,0,B.v),B.u,m,m,new A.a0(s.f,m,q,r,m,m,B.E),m,m,m,m,B.f_,m,m,m),m),m,m),m,B.ac,m,B.f_,m,m,m,B.aX),m,m)}}
 A.ayF.prototype={
 A(a){var s,r,q,p,o,n,m,l,k,j,i,h=this,g=null,f=A.a2(a,B.H,t.J)
 f.toString
@@ -196590,7 +196587,7 @@ p=A.aO(q.w,-1,1)
 o=A.e(g.gVO(),h,h,h,h,h,A.z(h,h,q.x,h,h,h,h,h,h,h,h,17,h,h,B.J,h,h,!0,h,h,h,h,h,h,h,h),B.aW,h,h)
 n=A.e(g.gVN(),h,h,h,h,h,A.z(h,h,q.y,h,h,h,h,h,h,h,h,13,h,h,h,h,1.5,!0,h,h,h,h,h,h,h,h),B.aW,h,h)
 m=i.a.e
-return A.cr(new A.i_(B.f_,A.cr(new A.cR(B.l9,A.ad(h,A.Q(A.a([B.LD,B.e6,o,B.al,n,B.eA,A.hJ(B.lV,h,A.e(g.gAa(),h,h,h,h,h,h,h,h,h),m,A.f_(q.z,h,h,h,h,h,h,h,h,B.vK,h,h,h,h,h,h,h))],t.p),B.x,h,B.q,B.ad,0,B.v),B.u,h,h,new A.a0(q.f,h,p,s,h,h,B.E),h,h,h,h,B.f_,h,h,h),h),h,h),h),h,h)}q=s.c
+return A.cr(new A.i_(B.f_,A.cr(new A.cR(B.l9,A.ad(h,A.Q(A.a([B.LD,B.e6,o,B.al,n,B.eA,B.ic],t.p),B.x,h,B.q,B.ad,0,B.v),B.u,h,h,new A.a0(q.f,h,p,s,h,h,B.E),h,h,h,h,B.f_,h,h,h),h),h,h),h),h,h)}q=s.c
 l=A.aP(a,B.c_,t.w).w.a.a>=760
 k=r.gaYG()&&!r.gqI()
 j=!r.gqI()&&!r.gaYG()&&B.k.W(r.e).toLowerCase()!=="premium"
@@ -212630,7 +212627,7 @@ bk6(a,b){var s,r,q,p=this,o=null,n=p.a,m=n.d===B.ug
 if(m&&n.z){n=A.e(a.ga2P(),o,o,o,o,o,A.z(o,o,b.x,o,o,o,o,o,o,o,o,14,o,o,B.J,o,o,!0,o,o,o,o,o,o,o,o),o,o,o)
 m=A.e(a.ga2O(),o,o,o,o,o,A.z(o,o,b.y,o,o,o,o,o,o,o,o,13,o,o,o,o,1.4,!0,o,o,o,o,o,o,o,o),o,o,o)
 s=p.a.Q
-return new A.a7(B.RP,A.Q(A.a([n,B.al,m,B.bM,A.e4(A.e(a.gBH(),o,o,o,o,o,o,o,o,o),B.cxT,s,o)],t.p),B.a0,o,B.q,B.t,0,B.v),o)}if(m){r=p.d
+return new A.a7(B.RP,A.Q(A.a([n,B.al,m],t.p),B.a0,o,B.q,B.t,0,B.v),o)}if(m){r=p.d
 if(r==null)return B.ic
 n=J.X(r)
 if(n.ga7(r))return p.aKz(a.ga2N(),b)
@@ -218877,9 +218874,7 @@ s.toString
 s=A.a2(s,B.H,t.J)
 s.toString
 r.c.an(t.I).f.cB(A.co(q,q,q,q,B.Az,B.T,q,A.e(s.galW(),q,q,q,q,q,q,q,q,q),q,B.aLS,q,q,q,q,q,q,q,q,q,q))},
-adu(a){var s=this,r=s.c
-r.toString
-return A.cYh(r,new A.bWr(s),s.gbRa(),new A.bWs(s),new A.bWt(s),new A.bWu(s),s.ga8W(),a)},
+adu(a){return A.ck(null,t.H)},
 zR(){return this.adu(!1)},
 gaKJ(){var s=this.de
 s=s==null?null:s.e
@@ -218887,14 +218882,7 @@ return A.Rz(s==null?B.G:s)},
 aPI(a){var s=this.gaKJ()
 return s.length!==0&&!B.e.n(s,a.a)},
 bm_(a){return!this.gkG().ala(a.a)},
-bBF(a){var s,r=this,q=null,p=r.c
-p.toString
-p=A.a2(p,B.H,t.J)
-p.toString
-if(r.aPI(a)){r.c.an(t.I).f.cB(A.co(q,q,q,q,q,B.T,q,A.e(p.ganQ(),q,q,q,q,q,q,q,q,q),q,B.aL,q,q,q,q,q,q,q,q,q,q))
-return}if(r.gacw()===B.jB)s=p.gaxn()
-else s=B.aj2.n(0,a.a)?p.gaxo():p.gaxp()
-r.mv(s)},
+bBF(a){return},
 Dg(){var s=0,r=A.v(t.H),q,p=this,o,n,m
 var $async$Dg=A.w(function(a,b){if(a===1)return A.r(b,r)
 for(;;)switch(s){case 0:m=p.i0
@@ -219036,7 +219024,7 @@ e.toString
 e=A.a2(e,B.H,t.J)
 e.toString
 o=p.gkG().c
-if(o===0){p.mv(e.ga0V())
+if(!1&&o===0){p.mv(e.ga0V())
 s=1
 break}n=f.a
 s=3
@@ -219073,7 +219061,7 @@ f.toString
 f=A.a2(f,B.H,t.J)
 f.toString
 o=p.gkG().c
-if(o===0){p.mv(f.ga0V())
+if(!1&&o===0){p.mv(f.ga0V())
 q=!1
 s=1
 break}s=3
@@ -244773,7 +244761,7 @@ B.cdt=new A.Fo(B.ah6,null,null,2,null,null,!1,!0,!0,!1,!1,!1,!0,!1,!1,!1)
 B.jB=new A.ML(0,"decouverte")
 B.c5h={net_mono_230V:0,disj_C16_1P:1,int_simple:2,lamp_signal_v2:3,multimetre_dmm21:4}
 B.cl_=new A.fb(B.c5h,5,t.fF)
-B.cdu=new A.Fo(B.jB,B.cl_,0,2,5,2,!1,!1,!1,!1,!1,!1,!1,!1,!1,!1)
+B.cdu=new A.Fo(B.jB,null,0,2,5,2,!1,!1,!1,!1,!1,!1,!1,!1,!1,!0)
 B.ah7=new A.ML(2,"premium")
 B.cdv=new A.Fo(B.ah7,null,null,null,null,null,!0,!0,!0,!0,!1,!1,!0,!0,!0,!0)
 B.ah9=new A.bak(1,"lowLatency")

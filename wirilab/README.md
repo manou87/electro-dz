@@ -2,7 +2,7 @@
 
 Clone fidèle des assets publics de [wirilab.com](https://wirilab.com) : landing, blog, pages légales, et application Flutter web (`/app/`) telle que servie en accès free.
 
-Aucune modification du design, aucun patch d’auth, aucune invention de contenu.
+Aucune invention de contenu / redesign. Patches **minimaux login-remove** dans `app/main.dart.*.js` pour utiliser composants + câblage sans compte (voir section ci-dessous).
 
 ## Lancer sur ta machine
 
@@ -30,11 +30,16 @@ Puis ouvrir dans ton navigateur :
 | `legal/` | Privacy, terms, cookies, refunds, subscription |
 | `app/` | Shell Flutter web (HTML, `main.dart.*.js`, CanvasKit, assets circuits/composants/academy) |
 
-## Limites (non clonées / restent live)
+## Mode sans connexion
 
-- Auth compte, sauvegarde cloud, paiements / Stripe / checkout (`?checkout=…`)
-- Liens partagés `/s/…` (API PHP live)
-- Mesure d’audience Webful (`webful.fr`)
-- Polices Google Fonts (CDN, comme le site)
+Dans `app/main.dart.4736b44047b0.js` (clone local uniquement) :
 
-Le shell free (UI éditeur, grille, outils, bibliothèque embarquée dans le bundle + JSON circuits/composants publics) se charge **sans login**.
+- plan découverte : allowlist composants levée + `ala()` toujours vrai → plus de cadenas
+- `bBF` / `adu` no-op → plus de dialogues upgrade / feuille Sign in
+- CTA Sign in (Mes projets / profil) retirés ; textes adoucis
+- prompt « crée un compte pour sauvegarder » soft-skip
+
+## Limites (restent live)
+
+- Auth réelle, sync cloud, Stripe / checkout (`?checkout=…`)
+- Liens partagés `/s/…`, Webful, Google Fonts (CDN)
