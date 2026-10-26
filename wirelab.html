@@ -4,13 +4,209 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <script src="js/theme-electric-neon.js?v=chrome1"></script>
-  <meta name="description" content="WireLab — tableau électrique pédagogique (moteurs, sélecteurs, câblage). Accès par code." />
+  <meta name="description" content="WireLab — Plateforme de simulation électrique et électronique (Tableau industriel & Laboratoire de composants)." />
   <meta name="robots" content="noindex, follow" />
   <title>WireLab — Electro DZ</title>
   <link rel="icon" href="assets/app-icon.png" type="image/png" />
   <link rel="stylesheet" href="css/simulation-swissdz.css?v=20260917chrome1" />
   <link rel="stylesheet" href="css/ecole-electricite.css?v=20261007-logo" />
   <link rel="canonical" href="https://electro-dz.com/wirelab.html" />
+  <style>
+    /* Styles spécifiques pour le Hub de sélection WireLab */
+    .wirelab-hub {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 5% 48px;
+      overflow-y: auto;
+      background:
+        radial-gradient(ellipse 70% 45% at 50% -10%, rgba(250, 204, 21, 0.12), transparent 60%),
+        radial-gradient(ellipse 40% 30% at 90% 80%, rgba(227, 6, 19, 0.08), transparent 55%);
+    }
+    .wirelab-hub-header {
+      text-align: center;
+      max-width: 680px;
+      margin-bottom: 32px;
+    }
+    .wirelab-hub-title {
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-weight: 800;
+      color: #f8fafc;
+      margin: 0 0 10px;
+    }
+    .wirelab-hub-lead {
+      color: #94a3b8;
+      font-size: 1.05rem;
+      line-height: 1.5;
+      margin: 0;
+    }
+    .wirelab-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 420px));
+      gap: 24px;
+      width: min(900px, 100%);
+      justify-content: center;
+    }
+    .wirelab-card {
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.06) 0%, rgba(15, 23, 42, 0.94) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: start;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .wirelab-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(250, 204, 21, 0.45);
+      box-shadow: 0 20px 48px rgba(250, 204, 21, 0.15);
+    }
+    .wirelab-card--industrial {
+      border-top: 4px solid #e30613;
+    }
+    .wirelab-card--electronics {
+      border-top: 4px solid #38bdf8;
+    }
+    .wirelab-card-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 14px;
+    }
+    .wirelab-card--industrial .wirelab-card-badge {
+      background: rgba(227, 6, 19, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(227, 6, 19, 0.3);
+    }
+    .wirelab-card--electronics .wirelab-card-badge {
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .wirelab-card-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #f8fafc;
+      margin: 0 0 10px;
+    }
+    .wirelab-card-desc {
+      color: #94a3b8;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin: 0 0 24px;
+      flex: 1;
+    }
+    .wirelab-card-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 24px;
+    }
+    .wirelab-feature-pill {
+      font-size: 0.78rem;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .wirelab-card-btn {
+      width: 100%;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: none;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+    .wirelab-card--industrial .wirelab-card-btn {
+      background: #e30613;
+      color: #fff;
+    }
+    .wirelab-card--industrial .wirelab-card-btn:hover {
+      background: #dc2626;
+    }
+    .wirelab-card--electronics .wirelab-card-btn {
+      background: #0284c7;
+      color: #fff;
+    }
+    .wirelab-card--electronics .wirelab-card-btn:hover {
+      background: #0369a1;
+    }
+
+    /* Barre de bascule supérieure quand une simulation est ouverte */
+    .wirelab-sim-nav {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 3%;
+      background: rgba(15, 23, 42, 0.9);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .wirelab-sim-nav-tabs {
+      display: flex;
+      gap: 6px;
+    }
+    .wirelab-nav-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.05);
+      color: #94a3b8;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.15s ease;
+    }
+    .wirelab-nav-tab:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.09);
+    }
+    .wirelab-nav-tab.active {
+      color: #fff;
+      background: rgba(250, 204, 21, 0.15);
+      border-color: rgba(250, 204, 21, 0.4);
+    }
+    .wirelab-nav-hub-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: transparent;
+      color: #94a3b8;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .wirelab-nav-hub-btn:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+  </style>
 </head>
 <body class="sim-page ecole-page">
   <header class="sim-topbar">
@@ -35,14 +231,34 @@
     </div>
   </header>
 
+  <!-- Barre de bascule rapide entre les 2 simulations quand un simulateur est actif -->
+  <nav class="wirelab-sim-nav" id="wirelabSimNav" hidden>
+    <div class="wirelab-sim-nav-tabs">
+      <button type="button" class="wirelab-nav-tab" id="tabIndustrial" data-sim="industrial">
+        <span>⚡</span>
+        <span data-i18n="tab.industrial">Tableau Industriel</span>
+      </button>
+      <button type="button" class="wirelab-nav-tab" id="tabElectronics" data-sim="electronics">
+        <span>🔬</span>
+        <span data-i18n="tab.electronics">Labo Électronique</span>
+      </button>
+    </div>
+    <button type="button" class="wirelab-nav-hub-btn" id="btnBackToHub" data-i18n="btn.hub">
+      <span>⊞</span>
+      <span>Menu des simulations</span>
+    </button>
+  </nav>
+
   <div class="sim-workspace ecole-workspace">
+    
+    <!-- 1. Formulaire d'accès par code -->
     <section id="ecoleGate" class="ecole-gate" aria-labelledby="ecoleGateTitle">
       <div class="ecole-gate-card">
         <img class="ecole-app-logo" src="swissdz-panel/brand/logo-wirelab-pro-icon.png?v=official-gemini" alt="WireLab Pro" width="96" height="96" decoding="async" />
         <p class="ecole-badge" data-i18n="badge">WireLab</p>
         <h1 id="ecoleGateTitle" data-i18n="title">WireLab</h1>
         <p class="ecole-lead" data-i18n="lead">
-          Accédez à WireLab — tableau électrique pédagogique (câblage, moteurs, sélecteurs).
+          Accédez à la plateforme WireLab (Tableau électrique industriel et laboratoire d'électronique).
         </p>
         <form id="ecoleGateForm" class="ecole-gate-form" autocomplete="off">
           <label for="ecoleCode" data-i18n="codeLabel">Code d’accès</label>
@@ -63,11 +279,62 @@
       </div>
     </section>
 
+    <!-- 2. Hub d'accueil WireLab (Page avec les deux simulations) -->
+    <section id="wirelabHub" class="wirelab-hub" hidden>
+      <div class="wirelab-hub-header">
+        <h1 class="wirelab-hub-title" data-i18n="hub.title">WireLab Simulations</h1>
+        <p class="wirelab-hub-lead" data-i18n="hub.lead">
+          Choisissez l'environnement de simulation interactif que vous souhaitez utiliser :
+        </p>
+      </div>
+
+      <div class="wirelab-cards-grid">
+        
+        <!-- Carte 1 : Tableau Industriel (Simulation Actuelle) -->
+        <article class="wirelab-card wirelab-card--industrial" id="cardIndustrial">
+          <span class="wirelab-card-badge" data-i18n="card.ind.badge">Électricité Industrielle</span>
+          <h2 class="wirelab-card-title" data-i18n="card.ind.title">WireLab Tableau Électrique</h2>
+          <p class="wirelab-card-desc" data-i18n="card.ind.desc">
+            Simulation de tableau électrique pédagogique SwissDZ : contacteurs, disjoncteurs, moteurs triphasés, sélecteurs et schémas de câblage.
+          </p>
+          <div class="wirelab-card-features">
+            <span class="wirelab-feature-pill">Moteurs triphasés</span>
+            <span class="wirelab-feature-pill">Contacteurs & Relais</span>
+            <span class="wirelab-feature-pill">Borniers & Câblage</span>
+          </div>
+          <button type="button" class="wirelab-card-btn">
+            <span data-i18n="card.ind.btn">Ouvrir le Tableau</span>
+            <span>→</span>
+          </button>
+        </article>
+
+        <!-- Carte 2 : Labo Électronique (Nouvelle Simulation) -->
+        <article class="wirelab-card wirelab-card--electronics" id="cardElectronics">
+          <span class="wirelab-card-badge" data-i18n="card.elec.badge">Électronique & Circuits</span>
+          <h2 class="wirelab-card-title" data-i18n="card.elec.title">WireLab Électronique Studio</h2>
+          <p class="wirelab-card-desc" data-i18n="card.elec.desc">
+            Laboratoire complet : plaque d'essai Breadboard, solveur nodal MNA, oscilloscope en direct, Touchless Tap IR, calculateurs CMS, code couleur et loi d'Ohm.
+          </p>
+          <div class="wirelab-card-features">
+            <span class="wirelab-feature-pill">Breadboard & 31 composants</span>
+            <span class="wirelab-feature-pill">Solveur MNA nodal</span>
+            <span class="wirelab-feature-pill">Oscilloscope & Capteurs</span>
+          </div>
+          <button type="button" class="wirelab-card-btn">
+            <span data-i18n="card.elec.btn">Ouvrir le Labo Électronique</span>
+            <span>→</span>
+          </button>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- 3. Conteneur plein écran de la simulation chargée -->
     <div class="sim-frame-wrap ecole-frame-wrap" id="simFrameWrap" hidden>
-      <p class="sim-loading" id="simLoading" data-i18n="loading">Chargement de WireLab…</p>
+      <p class="sim-loading" id="simLoading" data-i18n="loading">Chargement de la simulation…</p>
       <iframe
         id="simFrame"
-        title="WireLab — tableau électrique"
+        title="WireLab Simulation"
         allow="fullscreen"
         allowfullscreen
         loading="lazy"
@@ -85,53 +352,97 @@
       var LANG_STORAGE = "electrodz-site-lang";
       var UNLOCK_KEY = "electrodz-wirelab-unlocked";
       var ACCESS_CODE = "manoud";
-      var PANEL_SRC = "swissdz-panel/index.html?v=native-shell-8777-v176-rail-platine-overlap&wirelab=1";
+
+      // Sources des deux simulations
+      var SRC_INDUSTRIAL = "swissdz-panel/index.html?v=native-shell-8777-v176-rail-platine-overlap&wirelab=1";
+      var SRC_ELECTRONICS = "wirelab-sim/index.html";
+
+      var currentSim = null;
 
       var T = {
         fr: {
           "meta.title": "WireLab — Electro DZ",
-          "meta.desc": "WireLab — tableau électrique pédagogique (moteurs, sélecteurs, câblage). Accès par code.",
+          "meta.desc": "WireLab — Plateforme de simulation électrique et électronique (Tableau industriel & Laboratoire de composants).",
           "nav.home": "Accueil",
           badge: "WireLab",
           title: "WireLab",
-          lead: "Accédez à WireLab — tableau électrique pédagogique (câblage, moteurs, sélecteurs).",
+          lead: "Accédez à la plateforme WireLab (Tableau électrique industriel et laboratoire d'électronique).",
           codeLabel: "Code d’accès",
           enter: "Entrer",
           err: "Code incorrect. Réessayez.",
-          loading: "Chargement de WireLab…",
+          loading: "Chargement de la simulation…",
           "fs.enter": "Plein écran",
           "fs.exit": "Quitter",
           "fs.close": "Fermer",
+          "hub.title": "Simulations WireLab",
+          "hub.lead": "Choisissez l'environnement de simulation interactif que vous souhaitez utiliser :",
+          "card.ind.badge": "Électricité Industrielle",
+          "card.ind.title": "Tableau Électrique WireLab",
+          "card.ind.desc": "Simulation de tableau électrique pédagogique SwissDZ : contacteurs, disjoncteurs, moteurs triphasés, sélecteurs et schémas.",
+          "card.ind.btn": "Ouvrir le Tableau",
+          "card.elec.badge": "Électronique & Circuits",
+          "card.elec.title": "WireLab Électronique Studio",
+          "card.elec.desc": "Laboratoire complet : plaque d'essai Breadboard, solveur nodal MNA, oscilloscope temps réel, Touchless Tap, CMS et calculateurs.",
+          "card.elec.btn": "Ouvrir le Labo Électronique",
+          "tab.industrial": "Tableau Industriel",
+          "tab.electronics": "Labo Électronique",
+          "btn.hub": "Menu des simulations",
         },
         ar: {
           "meta.title": "WireLab — Electro DZ",
-          "meta.desc": "WireLab — لوحة كهربائية تعليمية (محركات، محددات، توصيل). الدخول برمز.",
+          "meta.desc": "WireLab — منصة محاكاة الكهرباء والإلكترونيات (لوحة التحكم الصناعية ومختبر المكونات الإلكترونية).",
           "nav.home": "الرئيسية",
           badge: "WireLab",
           title: "WireLab",
-          lead: "ادخل إلى WireLab — لوحة كهربائية تعليمية (توصيل، محركات، محددات).",
+          lead: "ادخل إلى منصة WireLab (لوحة الكهرباء الصناعية ومختبر الإلكترونيات).",
           codeLabel: "رمز الدخول",
           enter: "دخول",
           err: "رمز غير صحيح. أعد المحاولة.",
-          loading: "جاري تحميل WireLab…",
+          loading: "جاري تحميل المحاكاة…",
           "fs.enter": "ملء الشاشة",
           "fs.exit": "خروج",
           "fs.close": "إغلاق",
+          "hub.title": "محاكيات WireLab",
+          "hub.lead": "اختر بيئة المحاكاة التفاعلية التي ترغب في تشغيلها :",
+          "card.ind.badge": "الكهرباء الصناعية",
+          "card.ind.title": "لوحة الكهرباء الصناعية",
+          "card.ind.desc": "محاكاة اللوحة الكهربائية التعليمية SwissDZ : القواطع، الملامسات، المحركات ثلاثية الطور، والمحددات.",
+          "card.ind.btn": "فتح لوحة الكهرباء",
+          "card.elec.badge": "الإلكترونيات والدوائر",
+          "card.elec.title": "مختبر الإلكترونيات WireLab",
+          "card.elec.desc": "مختبر إلكتروني متكامل : لوحة تجارب Breadboard، حل المدارات العقدية MNA، راسم إشارة فوري، حنفية الأشعة تحت الحمراء وحاسبات المقاومات.",
+          "card.elec.btn": "فتح مختبر الإلكترونيات",
+          "tab.industrial": "اللوحة الصناعية",
+          "tab.electronics": "مختبر الإلكترونيات",
+          "btn.hub": "قائمة المحاكيات",
         },
         en: {
           "meta.title": "WireLab — Electro DZ",
-          "meta.desc": "WireLab — educational electrical panel (motors, selectors, wiring). Access code required.",
+          "meta.desc": "WireLab — Electrical and Electronics Simulation Platform (Industrial Panel & Components Lab).",
           "nav.home": "Home",
           badge: "WireLab",
           title: "WireLab",
-          lead: "Access WireLab — educational electrical panel (wiring, motors, selectors).",
+          lead: "Access WireLab platform (Industrial electrical panel and electronics laboratory).",
           codeLabel: "Access code",
           enter: "Enter",
           err: "Incorrect code. Please try again.",
-          loading: "Loading WireLab…",
+          loading: "Loading simulation…",
           "fs.enter": "Fullscreen",
           "fs.exit": "Exit",
           "fs.close": "Close",
+          "hub.title": "WireLab Simulations",
+          "hub.lead": "Choose the interactive simulation environment you want to run:",
+          "card.ind.badge": "Industrial Electrical",
+          "card.ind.title": "WireLab Electrical Panel",
+          "card.ind.desc": "SwissDZ educational electrical panel simulation: contactors, breakers, 3-phase motors, selectors, and wiring schematics.",
+          "card.ind.btn": "Open Electrical Panel",
+          "card.elec.badge": "Electronics & Circuits",
+          "card.elec.title": "WireLab Electronics Studio",
+          "card.elec.desc": "Complete lab: Breadboard, MNA nodal solver, real-time oscilloscope, IR Touchless Tap, SMD codes, and calculators.",
+          "card.elec.btn": "Open Electronics Lab",
+          "tab.industrial": "Industrial Panel",
+          "tab.electronics": "Electronics Lab",
+          "btn.hub": "Simulations Menu",
         },
       };
 
@@ -195,24 +506,62 @@
         document.querySelectorAll(".sim-lang .lang-btn").forEach(function (btn) {
           btn.classList.toggle("active", btn.getAttribute("data-lang") === lang);
         });
+        try {
+          var f = document.getElementById("simFrame");
+          if (f && f.contentWindow) {
+            f.contentWindow.postMessage({ type: "WIRELAB_SET_LANG", lang: lang }, "*");
+          }
+        } catch (e) {}
       }
 
-      function openPanel() {
+      // Afficher le Hub de choix
+      function showHub() {
         var gate = document.getElementById("ecoleGate");
+        var hub = document.getElementById("wirelabHub");
         var wrap = document.getElementById("simFrameWrap");
+        var nav = document.getElementById("wirelabSimNav");
+        var fsToggle = document.getElementById("simFsToggle");
+
+        if (gate) gate.hidden = true;
+        if (hub) hub.hidden = false;
+        if (wrap) wrap.hidden = true;
+        if (nav) nav.hidden = true;
+        if (fsToggle) fsToggle.hidden = true;
+        currentSim = null;
+      }
+
+      // Lancer une simulation spécifique
+      function launchSimulation(simKey) {
+        var hub = document.getElementById("wirelabHub");
+        var wrap = document.getElementById("simFrameWrap");
+        var nav = document.getElementById("wirelabSimNav");
         var frame = document.getElementById("simFrame");
         var loading = document.getElementById("simLoading");
         var fsToggle = document.getElementById("simFsToggle");
-        if (gate) gate.hidden = true;
+
+        var tabInd = document.getElementById("tabIndustrial");
+        var tabElec = document.getElementById("tabElectronics");
+
+        if (hub) hub.hidden = true;
         if (wrap) wrap.hidden = false;
+        if (nav) nav.hidden = false;
         if (fsToggle) fsToggle.hidden = false;
+
         document.body.classList.add("ecole-unlocked");
-        if (frame && !frame.getAttribute("src")) {
+
+        var targetSrc = simKey === "electronics" ? SRC_ELECTRONICS : SRC_INDUSTRIAL;
+
+        if (tabInd) tabInd.classList.toggle("active", simKey === "industrial");
+        if (tabElec) tabElec.classList.toggle("active", simKey === "electronics");
+
+        if (frame && frame.getAttribute("src") !== targetSrc) {
           if (loading) loading.hidden = false;
-          frame.src = PANEL_SRC;
+          frame.src = targetSrc;
         }
+        currentSim = simKey;
       }
 
+      // Déclencheurs de clic
       document.querySelectorAll(".sim-lang .lang-btn").forEach(function (btn) {
         btn.addEventListener("click", function () {
           applyLang(btn.getAttribute("data-lang"));
@@ -231,7 +580,7 @@
           if (normalizeCode(codeInput && codeInput.value) === ACCESS_CODE) {
             if (errEl) errEl.hidden = true;
             setUnlocked();
-            openPanel();
+            showHub();
             return;
           }
           if (errEl) {
@@ -245,6 +594,43 @@
         });
       }
 
+      // Clic sur les cartes du Hub
+      var cardInd = document.getElementById("cardIndustrial");
+      if (cardInd) {
+        cardInd.addEventListener("click", function () {
+          launchSimulation("industrial");
+        });
+      }
+
+      var cardElec = document.getElementById("cardElectronics");
+      if (cardElec) {
+        cardElec.addEventListener("click", function () {
+          launchSimulation("electronics");
+        });
+      }
+
+      // Clic sur la barre de bascule supérieure
+      var tabInd = document.getElementById("tabIndustrial");
+      if (tabInd) {
+        tabInd.addEventListener("click", function () {
+          launchSimulation("industrial");
+        });
+      }
+
+      var tabElec = document.getElementById("tabElectronics");
+      if (tabElec) {
+        tabElec.addEventListener("click", function () {
+          launchSimulation("electronics");
+        });
+      }
+
+      var btnHub = document.getElementById("btnBackToHub");
+      if (btnHub) {
+        btnHub.addEventListener("click", function () {
+          showHub();
+        });
+      }
+
       if (frame && loading) {
         frame.addEventListener("load", function () {
           loading.hidden = true;
@@ -252,8 +638,11 @@
       }
 
       applyLang(lang);
-      if (isUnlocked()) openPanel();
-      else if (codeInput) codeInput.focus();
+      if (isUnlocked()) {
+        showHub();
+      } else if (codeInput) {
+        codeInput.focus();
+      }
     })();
   </script>
   <script src="js/sim-fullscreen.js?v=20260917chrome1"></script>
