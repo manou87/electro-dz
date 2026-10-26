@@ -3007,7 +3007,8 @@
       transition:none !important;
       animation:none !important;
     }
-    /* v141/v142 : pinch iPhone — masquer calques + photos (re-raster GPU → crash zoom-out façade). */
+    /* v141/v142 : pinch iPhone — masquer calques désactivé pour éviter le flash d'écran */
+    /*
     html.pw-ios #board.is-pinching svg.wire-clips,
     html.pw-ios #board.is-pinching svg.fluke-leads,
     html.pw-ios #board.is-pinching svg.prox-beams,
@@ -3022,6 +3023,7 @@
     html.pw-ios #board.is-pinching #boardWorld .board-ref-layer {
       visibility:hidden !important;
     }
+    */
     html.pw-ios .knx-shutter .slats,
     html.pw-ios .roller-opening .cloth {
       will-change:auto !important;
