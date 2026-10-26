@@ -6427,7 +6427,7 @@
     const BOARD_GRID_KEY = "panelwire-board-grid";
     /* v159 : EduVolt optionnel — OFF par défaut = comportement historique inchangé. */
     const EDUVOLT_ROUTE_KEY = "panelwire-eduvolt-route";
-    let eduVoltRouteOn = false;
+    let eduVoltRouteOn = true;
     /* muted=true → silence. Défaut : sons ON (pas de mute). */
     let soundsMuted = false;
     let boardGridOn = true;
@@ -6542,7 +6542,10 @@
       if (btnGrid) {
         btnGrid.onclick = () => setBoardGridOn(!boardGridOn);
       }
-      try { eduVoltRouteOn = localStorage.getItem(EDUVOLT_ROUTE_KEY) === "1"; } catch (_) { eduVoltRouteOn = false; }
+      try {
+        const stored = localStorage.getItem(EDUVOLT_ROUTE_KEY);
+        eduVoltRouteOn = stored !== null ? stored === "1" : true;
+      } catch (_) { eduVoltRouteOn = true; }
       syncEduVoltButton();
       const btnEv = document.getElementById("btnEduVolt");
       if (btnEv) {
