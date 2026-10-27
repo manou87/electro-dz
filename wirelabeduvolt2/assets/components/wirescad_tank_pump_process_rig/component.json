@@ -1,0 +1,981 @@
+{
+  "schemaVersion": 3,
+  "id": "wirescad_tank_pump_process_rig",
+  "name": {
+    "en": "Tank, Pump & Level Process Simulator",
+    "ar": "محاكي الخزان والمضخة ومستوى السائل"
+  },
+  "category": {
+    "en": "Actuators",
+    "ar": "المشغلات"
+  },
+  "tagPrefix": "TK",
+  "physical": {
+    "widthMm": 600,
+    "heightMm": 400,
+    "depthMm": 420,
+    "pxPerMm": 2.4133,
+    "unit": "mm",
+    "basis": "integrated industrial training skid",
+    "original": {
+      "widthMm": 600.0,
+      "heightMm": 400.0,
+      "depthMm": 420,
+      "basis": "requested process trainer footprint"
+    },
+    "suggested": {
+      "widthMm": 600,
+      "heightMm": 400,
+      "depthMm": 420,
+      "basis": "floor-standing process trainer"
+    },
+    "estimated": true,
+    "dimensionEvidence": {
+      "classification": "teaching_placement_estimate",
+      "basis": "owner_accepted_legacy_teaching_estimate",
+      "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+    }
+  },
+  "graphics": {
+    "preview": "tank-simulator.png",
+    "size": {
+      "width": 1448,
+      "height": 1086
+    },
+    "geometryReview": {
+      "result": "fixed_layout_canvas_retained",
+      "reason": "runtime_overlay_pixel_registration",
+      "transparentAreaFraction": 0.037753
+    }
+  },
+  "terminals": [
+    {
+      "id": "U1",
+      "label": "U1",
+      "signal": "Power",
+      "role": "input",
+      "nx": 0.075,
+      "ny": 0.091,
+      "direction": "top",
+      "guideLength": 60,
+      "pinSize": 13.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 27.3347,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power"
+    },
+    {
+      "id": "V1",
+      "label": "V1",
+      "signal": "Power",
+      "role": "input",
+      "nx": 0.11,
+      "ny": 0.091,
+      "direction": "top",
+      "guideLength": 60,
+      "pinSize": 13.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 27.3347,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power"
+    },
+    {
+      "id": "W1",
+      "label": "W1",
+      "signal": "Power",
+      "role": "input",
+      "nx": 0.143,
+      "ny": 0.091,
+      "direction": "top",
+      "guideLength": 60,
+      "pinSize": 13.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 27.3347,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power"
+    },
+    {
+      "id": "W2",
+      "label": "W2",
+      "signal": "Power",
+      "role": "input",
+      "nx": 0.075,
+      "ny": 0.132,
+      "direction": "bottom",
+      "guideLength": 60,
+      "pinSize": 13.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 27.3347,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power"
+    },
+    {
+      "id": "U2",
+      "label": "U2",
+      "signal": "Power",
+      "role": "input",
+      "nx": 0.11,
+      "ny": 0.132,
+      "direction": "bottom",
+      "guideLength": 60,
+      "pinSize": 13.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 27.3347,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power"
+    },
+    {
+      "id": "V2",
+      "label": "V2",
+      "signal": "Power",
+      "role": "input",
+      "nx": 0.143,
+      "ny": 0.132,
+      "direction": "bottom",
+      "guideLength": 60,
+      "pinSize": 13.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 27.3347,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power"
+    },
+    {
+      "id": "TX+",
+      "label": "TX +24V",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.545,
+      "ny": 0.068,
+      "direction": "right",
+      "guideLength": 60,
+      "pinSize": 13.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 20.6677,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control"
+    },
+    {
+      "id": "TX-",
+      "label": "TX 0V",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.545,
+      "ny": 0.099,
+      "direction": "right",
+      "guideLength": 60,
+      "pinSize": 13.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 20.6677,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "phaseIdentity": "DC_NEGATIVE"
+    },
+    {
+      "id": "TX_OUT",
+      "label": "Flow 4–20mA",
+      "signal": "Signal",
+      "role": "output",
+      "nx": 0.545,
+      "ny": 0.13,
+      "direction": "right",
+      "guideLength": 60,
+      "pinSize": 13.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 20.6677,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "electronics"
+    },
+    {
+      "id": "HIGH_L",
+      "label": "High L/+",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.91,
+      "ny": 0.294,
+      "direction": "right",
+      "guideLength": 60,
+      "pinSize": 11.5,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 18.6676,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control"
+    },
+    {
+      "id": "HIGH_N",
+      "label": "High N/−",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.91,
+      "ny": 0.322,
+      "direction": "right",
+      "guideLength": 60,
+      "pinSize": 11.5,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 18.6676,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "phaseIdentity": "N"
+    },
+    {
+      "id": "HIGH_OUT",
+      "label": "High OUT",
+      "signal": "Signal",
+      "role": "output",
+      "nx": 0.91,
+      "ny": 0.35,
+      "direction": "right",
+      "guideLength": 60,
+      "pinSize": 11.5,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 18.6676,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "electronics"
+    },
+    {
+      "id": "MID_HIGH_L",
+      "label": "Mid-high L/+",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.91,
+      "ny": 0.418,
+      "direction": "right",
+      "guideLength": 60,
+      "pinSize": 11.5,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 18.6676,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control"
+    },
+    {
+      "id": "MID_HIGH_N",
+      "label": "Mid-high N/−",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.91,
+      "ny": 0.446,
+      "direction": "right",
+      "guideLength": 60,
+      "pinSize": 11.5,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 18.6676,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "phaseIdentity": "N"
+    },
+    {
+      "id": "MID_HIGH_OUT",
+      "label": "Mid-high OUT",
+      "signal": "Signal",
+      "role": "output",
+      "nx": 0.91,
+      "ny": 0.474,
+      "direction": "right",
+      "guideLength": 60,
+      "pinSize": 11.5,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 18.6676,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "electronics"
+    },
+    {
+      "id": "MID_LOW_L",
+      "label": "Mid-low L/+",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.91,
+      "ny": 0.533,
+      "direction": "right",
+      "guideLength": 60,
+      "pinSize": 11.5,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 18.6676,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control"
+    },
+    {
+      "id": "MID_LOW_N",
+      "label": "Mid-low N/−",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.91,
+      "ny": 0.561,
+      "direction": "right",
+      "guideLength": 60,
+      "pinSize": 11.5,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 18.6676,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "phaseIdentity": "N"
+    },
+    {
+      "id": "MID_LOW_OUT",
+      "label": "Mid-low OUT",
+      "signal": "Signal",
+      "role": "output",
+      "nx": 0.91,
+      "ny": 0.5890000000000001,
+      "direction": "right",
+      "guideLength": 60,
+      "pinSize": 11.5,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 18.6676,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "electronics"
+    },
+    {
+      "id": "LOW_L",
+      "label": "Low L/+",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.91,
+      "ny": 0.654,
+      "direction": "right",
+      "guideLength": 60,
+      "pinSize": 11.5,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 18.6676,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control"
+    },
+    {
+      "id": "LOW_N",
+      "label": "Low N/−",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.91,
+      "ny": 0.682,
+      "direction": "right",
+      "guideLength": 60,
+      "pinSize": 11.5,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 18.6676,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "phaseIdentity": "N"
+    },
+    {
+      "id": "LOW_OUT",
+      "label": "Low OUT",
+      "signal": "Signal",
+      "role": "output",
+      "nx": 0.91,
+      "ny": 0.7100000000000001,
+      "direction": "right",
+      "guideLength": 60,
+      "pinSize": 11.5,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 18.6676,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "electronics"
+    },
+    {
+      "id": "VALVE_L",
+      "label": "Valve L/+",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.915,
+      "ny": 0.79,
+      "direction": "right",
+      "guideLength": 60,
+      "pinSize": 13.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 22.0011,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control"
+    },
+    {
+      "id": "VALVE_N",
+      "label": "Valve N/−",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.915,
+      "ny": 0.823,
+      "direction": "right",
+      "guideLength": 60,
+      "pinSize": 13.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 22.0011,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "phaseIdentity": "N"
+    },
+    {
+      "id": "VALVE_PE",
+      "label": "Valve PE",
+      "signal": "Power",
+      "role": "ground",
+      "nx": 0.915,
+      "ny": 0.856,
+      "direction": "right",
+      "guideLength": 60,
+      "pinSize": 13.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 22.0011,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "phaseIdentity": "PE"
+    }
+  ],
+  "buttons": [],
+  "rules": {
+    "allowedConnections": {
+      "Power": [
+        "Power"
+      ],
+      "Control": [
+        "Control",
+        "Signal"
+      ],
+      "Signal": [
+        "Signal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "dynamic_process",
+    "enabled": true,
+    "voltage": "ac/dc",
+    "activationRule": "process_tank",
+    "terminalPairs": [
+      {
+        "id": "winding_u",
+        "terminals": [
+          "U1",
+          "U2"
+        ],
+        "simBehavior": "motor_winding",
+        "currentPath": "sink"
+      },
+      {
+        "id": "winding_v",
+        "terminals": [
+          "V1",
+          "V2"
+        ],
+        "simBehavior": "motor_winding",
+        "currentPath": "sink"
+      },
+      {
+        "id": "winding_w",
+        "terminals": [
+          "W1",
+          "W2"
+        ],
+        "simBehavior": "motor_winding",
+        "currentPath": "sink"
+      },
+      {
+        "id": "transmitter_supply",
+        "terminals": [
+          "TX+",
+          "TX-"
+        ],
+        "simBehavior": "process_transmitter_supply",
+        "currentPath": "sink"
+      },
+      {
+        "id": "transmitter_output",
+        "terminals": [
+          "TX_OUT"
+        ],
+        "simBehavior": "source_process_analog",
+        "processSignal": "flowAnalog",
+        "currentPath": "source"
+      },
+      {
+        "id": "sensor_high_supply",
+        "terminals": [
+          "HIGH_L",
+          "HIGH_N"
+        ],
+        "simBehavior": "process_sensor_supply",
+        "currentPath": "sink"
+      },
+      {
+        "id": "sensor_high_output",
+        "terminals": [
+          "HIGH_OUT"
+        ],
+        "simBehavior": "source_process_signal",
+        "processSignal": "high",
+        "currentPath": "source"
+      },
+      {
+        "id": "sensor_midHigh_supply",
+        "terminals": [
+          "MID_HIGH_L",
+          "MID_HIGH_N"
+        ],
+        "simBehavior": "process_sensor_supply",
+        "currentPath": "sink"
+      },
+      {
+        "id": "sensor_midHigh_output",
+        "terminals": [
+          "MID_HIGH_OUT"
+        ],
+        "simBehavior": "source_process_signal",
+        "processSignal": "midHigh",
+        "currentPath": "source"
+      },
+      {
+        "id": "sensor_midLow_supply",
+        "terminals": [
+          "MID_LOW_L",
+          "MID_LOW_N"
+        ],
+        "simBehavior": "process_sensor_supply",
+        "currentPath": "sink"
+      },
+      {
+        "id": "sensor_midLow_output",
+        "terminals": [
+          "MID_LOW_OUT"
+        ],
+        "simBehavior": "source_process_signal",
+        "processSignal": "midLow",
+        "currentPath": "source"
+      },
+      {
+        "id": "sensor_low_supply",
+        "terminals": [
+          "LOW_L",
+          "LOW_N"
+        ],
+        "simBehavior": "process_sensor_supply",
+        "currentPath": "sink"
+      },
+      {
+        "id": "sensor_low_output",
+        "terminals": [
+          "LOW_OUT"
+        ],
+        "simBehavior": "source_process_signal",
+        "processSignal": "low",
+        "currentPath": "source"
+      },
+      {
+        "id": "valve_supply",
+        "terminals": [
+          "VALVE_L",
+          "VALVE_N"
+        ],
+        "simBehavior": "process_valve_supply",
+        "currentPath": "sink"
+      }
+    ],
+    "defaultState": "idle",
+    "states": {
+      "idle": {
+        "image": "tank-simulator.png"
+      },
+      "filling": {
+        "image": "tank-simulator.png"
+      },
+      "draining": {
+        "image": "tank-simulator.png"
+      },
+      "empty": {
+        "image": "tank-simulator.png"
+      },
+      "full": {
+        "image": "tank-simulator.png"
+      }
+    },
+    "motorConfig": {
+      "terminals": 6,
+      "motorType": "trifasico",
+      "defaultConnection": "free",
+      "availableConnections": [
+        "free",
+        "star",
+        "delta"
+      ],
+      "motorPoles": 4
+    },
+    "processTank": {
+      "tankCapacityLiters": 500,
+      "initialTankLevelPct": 0,
+      "ratedMotorFrequencyHz": 50,
+      "ratedMotorRpm": 1450,
+      "ratedPumpFlowLpm": 1500,
+      "drainTimeSeconds": 10,
+      "valveTravelSeconds": 0.25,
+      "sensorSupplyMode": 0,
+      "valveSupplyMode": 0,
+      "sensorThresholdPct": {
+        "low": 25,
+        "midLow": 50,
+        "midHigh": 75,
+        "high": 95
+      },
+      "fluidWindow": {
+        "x": 0.5573204419889503,
+        "y": 0.3462246777163904,
+        "w": 0.15607734806629833,
+        "h": 0.3701657458563536,
+        "radiusX": 0.018,
+        "radiusY": 0.025
+      },
+      "sensorIndicators": [
+        {
+          "id": "high",
+          "x": 0.78,
+          "y": 0.285,
+          "w": 0.035,
+          "h": 0.055,
+          "color": "#ff3b30"
+        },
+        {
+          "id": "midHigh",
+          "x": 0.78,
+          "y": 0.41,
+          "w": 0.035,
+          "h": 0.055,
+          "color": "#ffd60a"
+        },
+        {
+          "id": "midLow",
+          "x": 0.78,
+          "y": 0.525,
+          "w": 0.035,
+          "h": 0.055,
+          "color": "#2997ff"
+        },
+        {
+          "id": "low",
+          "x": 0.78,
+          "y": 0.645,
+          "w": 0.035,
+          "h": 0.055,
+          "color": "#30d158"
+        }
+      ],
+      "motorOverlay": {
+        "x": 0.16,
+        "y": 0.29,
+        "labelY": 0.43
+      }
+    },
+    "rotaryControls": [
+      {
+        "id": "capacity",
+        "label": {
+          "en": "Tank capacity (L)",
+          "ar": "Tank capacity (L)"
+        },
+        "parameterField": "tankCapacityLiters",
+        "valueMin": 20.0,
+        "valueMax": 5000.0,
+        "defaultValue": 500.0
+      },
+      {
+        "id": "initial",
+        "label": {
+          "en": "Initial level (%)",
+          "ar": "Initial level (%)"
+        },
+        "parameterField": "initialTankLevelPct",
+        "valueMin": 0.0,
+        "valueMax": 100.0,
+        "defaultValue": 0.0
+      },
+      {
+        "id": "frequency",
+        "label": {
+          "en": "Rated frequency (Hz)",
+          "ar": "Rated frequency (Hz)"
+        },
+        "parameterField": "ratedMotorFrequencyHz",
+        "valueMin": 10.0,
+        "valueMax": 100.0,
+        "defaultValue": 50.0
+      },
+      {
+        "id": "rpm",
+        "label": {
+          "en": "Rated motor speed (rpm)",
+          "ar": "Rated motor speed (rpm)"
+        },
+        "parameterField": "ratedMotorRpm",
+        "valueMin": 100.0,
+        "valueMax": 6000.0,
+        "defaultValue": 1450.0
+      },
+      {
+        "id": "pump_flow",
+        "label": {
+          "en": "Rated pump flow (L/min)",
+          "ar": "Rated pump flow (L/min)"
+        },
+        "parameterField": "ratedPumpFlowLpm",
+        "valueMin": 0.0,
+        "valueMax": 10000.0,
+        "defaultValue": 1500.0
+      },
+      {
+        "id": "drain_time",
+        "label": {
+          "en": "Drain time (seconds)",
+          "ar": "Drain time (seconds)"
+        },
+        "parameterField": "drainTimeSeconds",
+        "valueMin": 1.0,
+        "valueMax": 120.0,
+        "defaultValue": 10.0
+      },
+      {
+        "id": "valve_travel",
+        "label": {
+          "en": "Valve travel time (s)",
+          "ar": "Valve travel time (s)"
+        },
+        "parameterField": "valveTravelSeconds",
+        "valueMin": 0.1,
+        "valueMax": 20.0,
+        "defaultValue": 0.25
+      },
+      {
+        "id": "sensor_voltage",
+        "label": {
+          "en": "Level sensor supply",
+          "ar": "تغذية حساسات المستوى"
+        },
+        "parameterField": "sensorSupplyMode",
+        "mode": "discrete",
+        "discreteValues": [
+          "24 V DC",
+          "220 V AC"
+        ],
+        "defaultValue": 0
+      },
+      {
+        "id": "valve_voltage",
+        "label": {
+          "en": "Drain valve supply",
+          "ar": "تغذية صمام التصريف"
+        },
+        "parameterField": "valveSupplyMode",
+        "mode": "discrete",
+        "discreteValues": [
+          "24 V DC",
+          "220 V AC"
+        ],
+        "defaultValue": 0
+      }
+    ],
+    "modelLimitations": "Training model: tank starts empty, pump flow is proportional to the energised motor shaft speed, the powered drain actuator empties a full tank in the configured time, level switches use 25/50/75/95 percent thresholds, and the inlet flow transmitter outputs 4–20 mA. Hydraulic transients, cavitation, pipe friction curves and motor electromagnetic transients are outside this educational model.",
+    "motorNameplateStatus": {
+      "evidenceStatus": "OWNER_APPROVED_TEACHING_ESTIMATE",
+      "reason": "Comparable WEG W22 1.5 kW 4P row; see Details > Electrical parameters for each value and its tier."
+    },
+    "ratedPowerKw": 1.5,
+    "efficiency": 0.855,
+    "powerFactor": 0.8,
+    "ratedMotorRpm": 1445.0,
+    "lockedRotorCurrentRatio": 7.4,
+    "motorPhasor": {
+      "contract": "motor_running_equivalent_v1",
+      "sections": [
+        [
+          "U1",
+          "U2"
+        ],
+        [
+          "V1",
+          "V2"
+        ],
+        [
+          "W1",
+          "W2"
+        ]
+      ],
+      "sectionVoltageV": 230,
+      "referenceHz": 50,
+      "statorLossShare": 0.3,
+      "evidenceStatus": "OWNER_APPROVED_TEACHING_ESTIMATE",
+      "provenance": "Owner decision 2026-10-12: generic rig motor; comparable WEG W22 IE3 1.5 kW 4P 90L (code 12862526) 230 D / 400 Y V 50 Hz 5.51/3.17 A, PF 0.80, eff 85.5 %, 1445 rpm, Il/In 7.4, J 0.0066 kg m2. Not the identity of a real pump motor.",
+      "derivation": "Per winding section: Pin = ratedPowerKw / efficiency, Psec = Pin / 3, |Z| = Vsec^2 PF / Psec at 230 V per winding (star at 400 V, delta at 230 V)."
+    },
+    "shaftInertia": {
+      "rotorKgm2": 0.0066,
+      "loadKgm2": 0.0066,
+      "lockedRotorTorqueRatio": 2.6,
+      "breakdownTorqueRatio": 3.0
+    },
+    "parameterEvidence": [
+      {
+        "key": "ratedPowerKw",
+        "label": "Rated output power",
+        "unit": "kW",
+        "value": 1.5,
+        "tier": "estimated",
+        "min": 0.1,
+        "max": 30,
+        "conditions": "230/400 V 50 Hz S1",
+        "source": "WEG W22 IE3 1.5 kW 4P (comparable; rig motor without identity)",
+        "url": "https://inverterdrive.com/group/Motors-AC/ac-Motor-WEG-12862526",
+        "page": "datasheet",
+        "derivation": "4-pole 1450 rpm rig class; pump duty 0.75-2.2 kW"
+      },
+      {
+        "key": "efficiency",
+        "label": "Efficiency",
+        "value": 0.855,
+        "tier": "published",
+        "min": 0.3,
+        "max": 1,
+        "conditions": "100 % load 400 V 50 Hz",
+        "source": "WEG W22 1.5 kW 4P",
+        "url": "https://inverterdrive.com/group/Motors-AC/ac-Motor-WEG-12862526",
+        "page": "datasheet",
+        "derivation": "comparable motor value"
+      },
+      {
+        "key": "powerFactor",
+        "label": "Power factor",
+        "value": 0.8,
+        "tier": "published",
+        "min": 0.2,
+        "max": 1,
+        "conditions": "100 % load 400 V 50 Hz",
+        "source": "WEG W22 1.5 kW 4P",
+        "url": "https://inverterdrive.com/group/Motors-AC/ac-Motor-WEG-12862526",
+        "page": "datasheet",
+        "derivation": "comparable motor value"
+      },
+      {
+        "key": "ratedMotorRpm",
+        "label": "Rated speed",
+        "unit": "rpm",
+        "value": 1445.0,
+        "tier": "published",
+        "min": 100,
+        "max": 3600,
+        "conditions": "50 Hz rated load",
+        "source": "WEG W22 1.5 kW 4P",
+        "url": "https://inverterdrive.com/group/Motors-AC/ac-Motor-WEG-12862526",
+        "page": "datasheet"
+      },
+      {
+        "key": "lockedRotorCurrentRatio",
+        "label": "Locked-rotor current ratio",
+        "value": 7.4,
+        "tier": "published",
+        "min": 1,
+        "max": 12,
+        "conditions": "DOL",
+        "source": "WEG W22 1.5 kW 4P",
+        "url": "https://inverterdrive.com/group/Motors-AC/ac-Motor-WEG-12862526",
+        "page": "datasheet"
+      },
+      {
+        "key": "shaftInertia.rotorKgm2",
+        "label": "Rotor inertia",
+        "unit": "kg·m²",
+        "value": 0.0066,
+        "tier": "published",
+        "min": 0.00001,
+        "max": 10,
+        "source": "WEG W22 1.5 kW 4P J",
+        "url": "https://inverterdrive.com/group/Motors-AC/ac-Motor-WEG-12862526",
+        "page": "datasheet"
+      },
+      {
+        "key": "shaftInertia.loadKgm2",
+        "label": "Load inertia",
+        "unit": "kg·m²",
+        "value": 0.0066,
+        "tier": "estimated",
+        "min": 0,
+        "max": 10,
+        "conditions": "coupled centrifugal pump",
+        "source": "pump impeller typically 0.5-2x motor J",
+        "derivation": "1x motor J"
+      }
+    ],
+    "ownerValueDecision": "Owner decision 2026-10-12: no value may stay unknown. Tier order: official exact-model -> published by another reputable source -> owner-approved teaching estimate (derivation, comparables and range recorded). The user may override every value per instance in Details > Electrical parameters."
+  },
+  "docking": {
+    "mountable": false,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "process_training_rig"
+    },
+    "presentationLayer": "device_front"
+  }
+}

@@ -1,0 +1,563 @@
+{
+  "schemaVersion": 3,
+  "id": "abb_ct_erc_12",
+  "name": {
+    "en": "ABB CT-ERC.12",
+    "ar": "ABB CT-ERC.12"
+  },
+  "category": {
+    "en": "Electronic On-delay Timer",
+    "ar": "Electronic On-delay Timer"
+  },
+  "manufacturer": "ABB",
+  "model": "CT-ERC.12",
+  "tagPrefix": "KT",
+  "physical": {
+    "widthMm": 17.5,
+    "heightMm": 70,
+    "depthMm": 63,
+    "unit": "mm",
+    "estimated": false,
+    "basis": "Exact manufacturer nominal body dimensions; artwork envelope and anchors are not certified by this metadata correction.",
+    "original": {
+      "widthMm": 17.5,
+      "heightMm": 70,
+      "depthMm": 63
+    },
+    "suggested": {
+      "widthMm": 17.5,
+      "heightMm": 70,
+      "depthMm": 63
+    },
+    "dimensionEvidence": {
+      "status": "manufacturer_nominal_body_dimensions_artwork_alignment_unverified",
+      "source": "https://library.e.abb.com/public/4bbb7972e5e940168db718d17e50d739/ERC-Catalog_012025_low_res.pdf",
+      "page": 31,
+      "model": "CT-ERC.12",
+      "previousEvidence": {
+        "classification": "teaching_placement_estimate",
+        "basis": "owner_accepted_legacy_teaching_estimate",
+        "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      },
+      "note": "Nominal exact-model body dimensions are used for placement. All image pixels and normalized terminal coordinates are unchanged; this is not a visual/geometry acceptance claim."
+    },
+    "manufacturerBody": {
+      "widthMm": {
+        "value": 17.5,
+        "unit": "mm",
+        "source": "https://library.e.abb.com/public/4bbb7972e5e940168db718d17e50d739/ERC-Catalog_012025_low_res.pdf",
+        "page": 31,
+        "classification": "manufacturer_published",
+        "model": "CT-ERC.12"
+      },
+      "heightMm": {
+        "value": 70,
+        "unit": "mm",
+        "source": "https://library.e.abb.com/public/4bbb7972e5e940168db718d17e50d739/ERC-Catalog_012025_low_res.pdf",
+        "page": 31,
+        "classification": "manufacturer_published",
+        "model": "CT-ERC.12"
+      },
+      "depthMm": {
+        "value": 63,
+        "unit": "mm",
+        "source": "https://library.e.abb.com/public/4bbb7972e5e940168db718d17e50d739/ERC-Catalog_012025_low_res.pdf",
+        "page": 31,
+        "classification": "manufacturer_published",
+        "model": "CT-ERC.12"
+      }
+    }
+  },
+  "terminals": [
+    {
+      "id": "A1",
+      "label": "A1",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.208,
+      "ny": 0.067,
+      "direction": "top",
+      "pinSize": 5.5,
+      "guideLength": 60,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 8.6921,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control"
+    },
+    {
+      "id": "15",
+      "label": "15 COM",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.506,
+      "ny": 0.067,
+      "direction": "top",
+      "pinSize": 5.5,
+      "guideLength": 60,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 8.6921,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control"
+    },
+    {
+      "id": "18",
+      "label": "18 NO",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.208,
+      "ny": 0.925,
+      "direction": "bottom",
+      "pinSize": 5.5,
+      "guideLength": 60,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 8.6921,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control"
+    },
+    {
+      "id": "16",
+      "label": "16 NC",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.506,
+      "ny": 0.925,
+      "direction": "bottom",
+      "pinSize": 5.0,
+      "guideLength": 60,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 8.4588,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control"
+    },
+    {
+      "id": "A2",
+      "label": "A2",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.796,
+      "ny": 0.925,
+      "direction": "bottom",
+      "pinSize": 5.0,
+      "guideLength": 60,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 8.4588,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control"
+    }
+  ],
+  "buttons": [],
+  "rules": {
+    "allowedConnections": {
+      "Power": [
+        "Power"
+      ],
+      "Control": [
+        "Control",
+        "Signal"
+      ],
+      "Signal": [
+        "Signal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "activationRule": "coil",
+    "terminalPairs": [
+      {
+        "id": "coil",
+        "terminals": [
+          "A1",
+          "A2"
+        ],
+        "simBehavior": "coil",
+        "currentPath": "sink",
+        "terminalTypes": {
+          "A1": "coil_in",
+          "A2": "coil_in"
+        },
+        "supply": {
+          "voltage": "both",
+          "ratedVoltageV": 230.0
+        }
+      },
+      {
+        "id": "timed_no_1",
+        "terminals": [
+          "15",
+          "18"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+          "15": "contact_no",
+          "18": "contact_no"
+        }
+      },
+      {
+        "id": "timed_nc_1",
+        "terminals": [
+          "15",
+          "16"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+          "15": "contact_nc",
+          "16": "contact_nc"
+        }
+      }
+    ],
+    "defaultState": "timing",
+    "states": {
+      "timing": {
+        "image": "preview.webp"
+      },
+      "completed": {
+        "image": "completed.webp"
+      },
+      "unpowered": {
+        "image": "unpowered.webp"
+      },
+      "timing_off": {
+        "image": "unpowered.webp"
+      }
+    },
+    "stateSequence": [
+      "timing",
+      "completed",
+      "unpowered",
+      "timing_off"
+    ],
+    "voltage": "both",
+    "timerMode": "ton",
+    "timerModes": [
+      "ton"
+    ],
+    "timerRangeField": "timerRangeSeconds",
+    "timerFactorField": "timerFactor",
+    "timerRangeSeconds": 10,
+    "timerFactor": 0.5,
+    "timerDelay": 5,
+    "ratedVoltageV": 230,
+    "minOperatingVoltageV": 20.4,
+    "maxOperatingVoltageV": 264,
+    "rotaryControls": [
+      {
+        "id": "range",
+        "label": "Time range (seconds)",
+        "parameterField": "timerRangeSeconds",
+        "valueMin": 1.0,
+        "valueMax": 360000.0,
+        "step": 1.0,
+        "defaultValue": 10.0,
+        "angleStartDeg": -135,
+        "angleEndDeg": 135,
+        "circle": {
+          "cx": 0.34,
+          "cy": 0.43,
+          "r": 0.12
+        },
+        "mode": "discrete",
+        "discreteValues": [
+          1,
+          10,
+          100,
+          600,
+          6000,
+          36000,
+          360000
+        ],
+        "storeValue": true
+      },
+      {
+        "id": "time",
+        "label": "Time factor",
+        "parameterField": "timerFactor",
+        "valueMin": 0.05,
+        "valueMax": 1.0,
+        "step": 0.05,
+        "defaultValue": 0.5,
+        "angleStartDeg": -135,
+        "angleEndDeg": 135,
+        "circle": {
+          "cx": 0.5,
+          "cy": 0.61,
+          "r": 0.12
+        }
+      }
+    ],
+    "indicatorsEmbeddedInStateImages": true,
+    "indicators": [],
+    "inputConsumption": {
+      "model": "universal_electronic",
+      "allowedSupplyKinds": [
+        "ac",
+        "dc"
+      ],
+      "acVoltageMinV": 20.4,
+      "acVoltageMaxV": 264.0,
+      "dcVoltageMinV": 20.4,
+      "dcVoltageMaxV": 52.8,
+      "frequencyMinHz": 47.0,
+      "frequencyMaxHz": 63.0,
+      "consumptionPolicy": "reference_only",
+      "notes": {
+        "en": "Operating voltage ranges and consumption test points are separate. No full-range constant-power assumption or automatic physical damage is certified.",
+        "ar": "حدود جهد التشغيل منفصلة عن نقاط قياس الاستهلاك؛ لا نفترض قدرة ثابتة لكل الجهود أو تلفاً فيزيائياً تلقائياً."
+      }
+    },
+    "supplyConsumption": {
+      "schema": 1,
+      "ratedVoltageV": 230.0,
+      "apparentPowerVa": 2.0,
+      "powerFactor": 0.4,
+      "evidenceFile": "artifacts/device-datasheets-20261012/EVIDENCE.md",
+      "branches": [
+        {
+          "terminals": [
+            "A1",
+            "A2"
+          ]
+        }
+      ],
+      "dcPowerW": 0.5,
+      "dcRatedVoltageV": 24.0,
+      "kind": "both"
+    },
+    "parameterEvidence": [
+      {
+        "key": "supplyConsumption.apparentPowerVa",
+        "label": "Supply apparent power (AC)",
+        "unit": "VA",
+        "value": 2.0,
+        "tier": "estimated",
+        "min": 0,
+        "max": 50,
+        "conditions": "230 V AC steady, output energised",
+        "source": "ABB CT-C range max 3.5 VA (ERC p.26); same-maker CT-ERD.22 typical 1.9 VA AC",
+        "url": "https://www.farnell.com/datasheets/2328305.pdf",
+        "page": "CT-ERD p.3 / ERC p.26",
+        "derivation": "range 1.2-3.5 VA"
+      },
+      {
+        "key": "supplyConsumption.powerFactor",
+        "label": "Supply power factor (AC)",
+        "value": 0.4,
+        "tier": "estimated",
+        "min": 0.05,
+        "max": 1,
+        "conditions": "230 V AC steady, output energised",
+        "source": "electronic timer supply (capacitive dropper / small SMPS) + output relay",
+        "derivation": "range 0.3-0.7"
+      },
+      {
+        "key": "supplyConsumption.dcPowerW",
+        "label": "Supply power (DC)",
+        "unit": "W",
+        "value": 0.5,
+        "tier": "published",
+        "min": 0,
+        "max": 50,
+        "conditions": "24 V DC",
+        "source": "ABB CT-ERD.22 (same CT-D/CT-C electronics class) 0.5 W at 24 V DC",
+        "url": "https://www.farnell.com/datasheets/2328305.pdf",
+        "derivation": "comparable"
+      }
+    ],
+    "ownerValueDecision": "Owner decision 2026-10-12: no value may stay unknown. Tier order: official exact-model -> published by another reputable source -> owner-approved teaching estimate (derivation, comparables and range recorded). The user may override every value per instance in Details > Electrical parameters."
+  },
+  "docking": {
+    "mountable": true,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "timer_ct_erc",
+      "dockSize": {
+        "cols": 1,
+        "rows": 2
+      }
+    },
+    "presentationLayer": "device_front"
+  },
+  "documentation": {
+    "sourceLibrary": "wcc-device-library",
+    "sourceKey": "063_abb_ct_erc_12",
+    "dimensionBasis": "Manufacturer product data, dimensional drawing, or verified exact-model reference.",
+    "terminalBasis": "Visible terminal markings and the referenced OEM wiring diagram.",
+    "timerEvidenceReview": {
+      "reviewDate": "2026-10-05",
+      "model": "CT-ERC.12",
+      "status": "ready_for_review_not_physical_acceptance",
+      "values": {
+        "nominalAcSupply": {
+          "value": [
+            24,
+            240
+          ],
+          "unit": "V RMS",
+          "source": "https://library.e.abb.com/public/4bbb7972e5e940168db718d17e50d739/ERC-Catalog_012025_low_res.pdf",
+          "page": 26,
+          "classification": "manufacturer_published"
+        },
+        "nominalDcSupply": {
+          "value": [
+            24,
+            48
+          ],
+          "unit": "V",
+          "source": "https://library.e.abb.com/public/4bbb7972e5e940168db718d17e50d739/ERC-Catalog_012025_low_res.pdf",
+          "page": 26,
+          "classification": "manufacturer_published"
+        },
+        "operatingAcSupply": {
+          "value": [
+            20.4,
+            264
+          ],
+          "unit": "V RMS",
+          "source": "https://library.e.abb.com/public/4bbb7972e5e940168db718d17e50d739/ERC-Catalog_012025_low_res.pdf",
+          "page": 26,
+          "classification": "mathematically_derived",
+          "derivation": "24*0.85 and 240*1.1 from published -15/+10 percent supply tolerance"
+        },
+        "operatingDcSupply": {
+          "value": [
+            20.4,
+            52.8
+          ],
+          "unit": "V",
+          "source": "https://library.e.abb.com/public/4bbb7972e5e940168db718d17e50d739/ERC-Catalog_012025_low_res.pdf",
+          "page": 26,
+          "classification": "mathematically_derived",
+          "derivation": "Nominal DC endpoints multiplied by 0.85 and 1.1"
+        },
+        "frequency": {
+          "value": [
+            47,
+            63
+          ],
+          "unit": "Hz",
+          "source": "https://library.e.abb.com/public/4bbb7972e5e940168db718d17e50d739/ERC-Catalog_012025_low_res.pdf",
+          "page": 26,
+          "classification": "manufacturer_published",
+          "derivation": "Published range"
+        },
+        "acConsumptionMaximum": {
+          "value": 3.5,
+          "unit": "VA",
+          "source": "https://library.e.abb.com/public/4bbb7972e5e940168db718d17e50d739/ERC-Catalog_012025_low_res.pdf",
+          "page": 26,
+          "classification": "manufacturer_published",
+          "limit": "maximum; not nominal current"
+        },
+        "contacts": {
+          "value": {
+            "count": 1,
+            "topology": "changeover",
+            "AC12_230V_A": 4,
+            "AC15_230V_A": 3,
+            "DC12_24V_A": 4,
+            "DC13_24V_A": 2
+          },
+          "unit": "rating by utilization category",
+          "source": "https://library.e.abb.com/public/4bbb7972e5e940168db718d17e50d739/ERC-Catalog_012025_low_res.pdf",
+          "page": 27,
+          "classification": "manufacturer_published"
+        },
+        "timeRangesSeconds": {
+          "value": [
+            [
+              0.05,
+              1
+            ],
+            [
+              0.5,
+              10
+            ],
+            [
+              5,
+              100
+            ],
+            [
+              30,
+              600
+            ],
+            [
+              300,
+              6000
+            ],
+            [
+              1800,
+              36000
+            ],
+            [
+              18000,
+              360000
+            ]
+          ],
+          "unit": "s",
+          "source": "https://library.e.abb.com/public/4bbb7972e5e940168db718d17e50d739/ERC-Catalog_012025_low_res.pdf",
+          "page": 26,
+          "classification": "manufacturer_published"
+        },
+        "recoveryUpperBound": {
+          "value": 50,
+          "unit": "ms",
+          "source": "https://library.e.abb.com/public/4bbb7972e5e940168db718d17e50d739/ERC-Catalog_012025_low_res.pdf",
+          "page": 26,
+          "classification": "manufacturer_published",
+          "relation": "less_than"
+        }
+      },
+      "limitations": [
+        "Contact resistance, contact arc/transients, PF, R/L/C, harmonic current and thermal/damage curves are not published/calibrated and are not invented.",
+        "Input consumption is only bounded above at 3.5 VA; actual branch current and DC consumption remain unknown. No nominal midpoint is inferred from a one-sided maximum."
+      ]
+    }
+  },
+  "graphics": {
+    "preview": "preview.webp",
+    "original": "preview.webp",
+    "size": {
+      "width": 247,
+      "height": 982
+    },
+    "crop": {
+      "method": "shared_union_alpha_bounds",
+      "sourceCount": 4,
+      "sourceCanvas": {
+        "width": 1536,
+        "height": 2048
+      },
+      "bounds": {
+        "x": 644,
+        "y": 533,
+        "width": 247,
+        "height": 982
+      },
+      "paddingPx": 1,
+      "resized": false
+    }
+  },
+  "electricalInformation": {
+    "Evidence review": "Exact-model supply/timing/contact metadata reviewed 2026-10-05; see documentation.timerEvidenceReview for per-value conditions and sources.",
+    "Simulation limits": "Contact resistance, contact arc/transients, PF, R/L/C, harmonic current and thermal/damage curves are not published/calibrated and are not invented. Input consumption is only bounded above at 3.5 VA; actual branch current and DC consumption remain unknown. No nominal midpoint is inferred from a one-sided maximum."
+  }
+}

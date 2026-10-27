@@ -5,6 +5,10 @@
     "es": "Interuptor simple",
     "en": "Single Switch"
   },
+  "description": {
+    "es": "Interruptor de pared. Estado 0: C-NC cerrado. Estado 1 (ON visible): C-NO cerrado. Topología didáctica elegida por el propietario.",
+    "en": "Wall rocker switch. State 0: C-NC closed. State 1 (ON shown): C-NO closed. Owner-selected teaching topology."
+  },
   "category": {
     "es": "Accionamientos",
     "en": "Drives"
@@ -13,30 +17,80 @@
   "graphics": {
     "preview": "preview.png",
     "size": {
-      "width": 4800,
-      "height": 8400
-    }
+      "width": 1105,
+      "height": 1087
+    },
+    "artworkProvenance": {
+      "source": "owner artwork 2026-10-10, assets/evc/CONTROL DEVICES/Wall Sockets (1254x1254 transparent PNG)",
+      "transform": "per-state opaque-plate crop resampled to one shared family frame",
+      "onLabel": "visual only; never decides circuit behaviour",
+      "rear": "owner artwork 2026-10-11, assets/evc/CONTROL DEVICES/Wall Sockets/single-changeover-rear.png (1254x1254 RGB, white background); plate box cropped and resampled to the front frame with the front alpha silhouette (one shared transform)"
+    },
+    "faces": {
+      "rear": {
+        "off": "rear.png",
+        "on": "rear.png"
+      }
+    },
+    "wireModeFace": "rear"
   },
   "terminals": [
     {
-      "id": "COM",
-      "label": "COM",
+      "id": "C",
+      "label": "C",
       "signal": "Potencia",
       "role": "bidirectional",
-      "nx": 0.0,
-      "ny": 0.5,
-      "direction": "left",
-      "guideLength": 60
+      "nx": 0.49,
+      "ny": 0.325,
+      "direction": "top",
+      "guideLength": 60,
+      "wiringClass": "industrial",
+      "face": "rear",
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 45.4045,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      }
     },
     {
-      "id": "L1",
-      "label": "L1",
+      "id": "NC",
+      "label": "NC",
       "signal": "Potencia",
       "role": "bidirectional",
-      "nx": 1.0,
-      "ny": 0.5,
-      "direction": "right",
-      "guideLength": 60
+      "nx": 0.561,
+      "ny": 0.706,
+      "direction": "bottom",
+      "guideLength": 60,
+      "wiringClass": "industrial",
+      "face": "rear",
+      "pinSize": 10.5,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 16.9236,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      }
+    },
+    {
+      "id": "NO",
+      "label": "NO",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.42,
+      "ny": 0.703,
+      "direction": "bottom",
+      "guideLength": 60,
+      "wiringClass": "industrial",
+      "face": "rear",
+      "pinSize": 10.5,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 16.9236,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      }
     }
   ],
   "rules": {
@@ -61,29 +115,79 @@
     "activationRule": "switch",
     "terminalPairs": [
       {
+        "id": "nc_path",
+        "terminals": [
+          "C",
+          "NC"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+          "C": "contact_nc",
+          "NC": "contact_nc"
+        }
+      },
+      {
         "id": "contact",
         "terminals": [
-          "COM",
-          "L1"
+          "C",
+          "NO"
         ],
         "simBehavior": "contact_no",
         "currentPath": "series",
         "terminalTypes": {
-          "COM": "contact_no",
-          "L1": "contact_no"
+          "C": "contact_no",
+          "NO": "contact_no"
         }
       }
     ],
     "defaultState": "off",
     "states": {
       "off": {
-        "image": "state_off.png",
-        "imageLo": "state_off_lo.png"
+        "image": "single-rocker-off.png"
       },
       "on": {
-        "image": "state_on.png",
-        "imageLo": "state_on_lo.png"
+        "image": "single-rocker-on.png"
       }
     }
+  },
+  "buttons": [
+    {
+      "id": "rocker",
+      "label": "Rocker",
+      "action": "toggle",
+      "hitbox": {
+        "nx": 0.4,
+        "ny": 0.3303,
+        "nw": 0.1955,
+        "nh": 0.3624
+      }
+    }
+  ],
+  "teachingTopology": {
+    "poles": 1,
+    "contacts": "C/NC/NO",
+    "basis": "owner-selected teaching topology, not a manufacturer claim",
+    "state0": "C-NC",
+    "state1": "C-NO"
+  },
+  "physical": {
+    "original": {
+      "widthMm": 71.996,
+      "heightMm": 70.823
+    },
+    "widthMm": 71.996,
+    "heightMm": 70.823,
+    "estimated": true,
+    "dimensionEvidence": {
+      "classification": "teaching_placement_estimate",
+      "basis": "owner_accepted_legacy_teaching_estimate",
+      "derivation": "legacy family width; height from the cropped artwork aspect ratio",
+      "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+    }
+  },
+  "docking": {
+    "zLayer": 2,
+    "presentationLayer": "device_front"
   }
 }

@@ -1,0 +1,219 @@
+{
+  "schemaVersion": 3,
+  "id": "abb_f202_a",
+  "name": {
+    "en": "ABB F202-A",
+    "ar": "ABB F202-A"
+  },
+  "category": {
+    "en": "Rccb Rcbo",
+    "ar": "Rccb Rcbo"
+  },
+  "manufacturer": "ABB",
+  "model": "F202-A",
+  "tagPrefix": "QF",
+  "physical": {
+    "widthMm": 36.0,
+    "heightMm": 85.0,
+    "depthMm": 69.0,
+    "unit": "mm",
+    "estimated": true,
+    "basis": "Manufacturer family dimensional drawing / product datasheet.",
+    "original": {
+      "widthMm": 36.0,
+      "heightMm": 85.0,
+      "depthMm": 69.0
+    },
+    "suggested": {
+      "widthMm": 36.0,
+      "heightMm": 85.0,
+      "depthMm": 69.0
+    },
+    "dimensionEvidence": {
+      "classification": "teaching_placement_estimate",
+      "basis": "owner_accepted_legacy_teaching_estimate",
+      "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+    }
+  },
+  "terminals": [
+    {
+      "id": "1",
+      "label": "1/L1",
+      "signal": "Power",
+      "role": "bidirectional",
+      "direction": "top",
+      "nx": 0.25,
+      "ny": 0.02,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 30.0015,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "phaseIdentity": "L1"
+    },
+    {
+      "id": "2",
+      "label": "2/T1",
+      "signal": "Power",
+      "role": "bidirectional",
+      "direction": "bottom",
+      "nx": 0.25,
+      "ny": 0.98,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 30.0015,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power"
+    },
+    {
+      "id": "3",
+      "label": "3/L2",
+      "signal": "Power",
+      "role": "bidirectional",
+      "direction": "top",
+      "nx": 0.75,
+      "ny": 0.02,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 30.0015,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "phaseIdentity": "L2"
+    },
+    {
+      "id": "4",
+      "label": "4/T2",
+      "signal": "Power",
+      "role": "bidirectional",
+      "direction": "bottom",
+      "nx": 0.75,
+      "ny": 0.98,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 30.0015,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power"
+    }
+  ],
+  "buttons": [],
+  "rules": {
+    "allowedConnections": {
+      "Power": [
+        "Power"
+      ],
+      "Control": [
+        "Control",
+        "Signal"
+      ],
+      "Signal": [
+        "Signal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "ac",
+    "activationRule": "protection",
+    "terminalPairs": [
+      {
+        "id": "pole_1",
+        "terminals": [
+          "1",
+          "2"
+        ],
+        "simBehavior": "protection_diff",
+        "currentPath": "series",
+        "terminalTypes": {
+          "1": "power_ac",
+          "2": "power_ac"
+        }
+      },
+      {
+        "id": "pole_2",
+        "terminals": [
+          "3",
+          "4"
+        ],
+        "simBehavior": "protection_diff",
+        "currentPath": "series",
+        "terminalTypes": {
+          "3": "power_ac",
+          "4": "power_ac"
+        }
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "preview.webp"
+      },
+      "on": {
+        "image": "on.webp"
+      }
+    },
+    "stateSequence": [
+      "off",
+      "on"
+    ],
+    "ratedCurrentA": 63.0,
+    "protectionCurve": "C"
+  },
+  "docking": {
+    "mountable": true,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "rccb_rcbo",
+      "dockSize": {
+        "cols": 2,
+        "rows": 2
+      }
+    },
+    "presentationLayer": "device_front"
+  },
+  "documentation": {
+    "dimensionBasis": "Manufacturer family dimensional drawing / product datasheet.",
+    "simulationModel": "WireCom common rccb rcbo engine"
+  },
+  "graphics": {
+    "preview": "preview.webp",
+    "original": "preview.webp",
+    "size": {
+      "width": 572,
+      "height": 1341
+    },
+    "crop": {
+      "method": "shared_union_alpha_bounds",
+      "sourceCount": 2,
+      "sourceCanvas": {
+        "width": 1024,
+        "height": 1536
+      },
+      "bounds": {
+        "x": 226,
+        "y": 91,
+        "width": 572,
+        "height": 1341
+      },
+      "paddingPx": 1,
+      "resized": false
+    }
+  }
+}

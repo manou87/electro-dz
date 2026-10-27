@@ -1,0 +1,292 @@
+{
+  "schemaVersion": 3,
+  "id": "Tomacorriente doble + PE",
+  "name": "Double Socket Outlet + PE",
+  "category": "Distribution",
+  "manufacturer": "Legrand",
+  "model": "Plexo 069577L",
+  "orderCode": "069577L",
+  "tagPrefix": "XS",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 585,
+      "height": 1024
+    },
+    "original": "original.png"
+  },
+  "terminals": [
+    {
+      "id": "F1",
+      "label": "F1",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "electricalRole": "line_hot_upper",
+      "detail": "Upper socket line conductor; internally common with F2 in the selected prewired factory topology.",
+      "nx": 0.0,
+      "ny": 0.142857,
+      "direction": "left",
+      "guideLength": 60,
+      "pinSize": 7.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 1.8286,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "industrial",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    },
+    {
+      "id": "N1",
+      "label": "N1",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "electricalRole": "neutral_upper",
+      "detail": "Upper socket neutral conductor; internally common with N2. Neutral is never bonded to PE inside the outlet.",
+      "nx": 0.0,
+      "ny": 0.214286,
+      "direction": "left",
+      "guideLength": 60,
+      "pinSize": 7.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 1.8285,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "industrial",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    },
+    {
+      "id": "PE1",
+      "label": "PE1",
+      "signal": "Potencia",
+      "role": "earth",
+      "electricalRole": "protective_earth_upper",
+      "detail": "Upper socket protective-earth conductor; common with PE2 but electrically isolated from neutral and line.",
+      "nx": 0.0,
+      "ny": 0.285714,
+      "direction": "left",
+      "guideLength": 60,
+      "pinSize": 7.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 1.8285,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "industrial",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    },
+    {
+      "id": "F2",
+      "label": "F2",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "electricalRole": "line_hot_lower",
+      "detail": "Lower socket line conductor; internally common with F1 in the selected prewired factory topology.",
+      "nx": 0.0,
+      "ny": 0.857143,
+      "direction": "left",
+      "guideLength": 60,
+      "pinSize": 7.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 1.8286,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "industrial",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    },
+    {
+      "id": "N2",
+      "label": "N2",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "electricalRole": "neutral_lower",
+      "detail": "Lower socket neutral conductor; internally common with N1. Neutral is never bonded to PE inside the outlet.",
+      "nx": 0.0,
+      "ny": 0.785714,
+      "direction": "left",
+      "guideLength": 60,
+      "pinSize": 7.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 1.8285,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "industrial",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    },
+    {
+      "id": "PE2",
+      "label": "PE2",
+      "signal": "Potencia",
+      "role": "earth",
+      "electricalRole": "protective_earth_lower",
+      "detail": "Lower socket protective-earth conductor; common with PE1 but electrically isolated from neutral and line.",
+      "nx": 0.0,
+      "ny": 0.714286,
+      "direction": "left",
+      "guideLength": 60,
+      "pinSize": 7.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 1.8285,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "industrial",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "activationRule": "none",
+    "ratedVoltageV": 250.0,
+    "ratedCurrentA": 16.0,
+    "internalTopology": "factory_pre_wired_common_feed",
+    "terminalPairs": [
+      {
+        "id": "line_common",
+        "terminals": [
+          "F1",
+          "F2"
+        ],
+        "simBehavior": "junction",
+        "currentPath": "series",
+        "terminalTypes": {
+          "F1": "power_ac_line",
+          "F2": "power_ac_line"
+        }
+      },
+      {
+        "id": "neutral_common",
+        "terminals": [
+          "N1",
+          "N2"
+        ],
+        "simBehavior": "junction",
+        "currentPath": "series",
+        "terminalTypes": {
+          "N1": "power_ac_neutral",
+          "N2": "power_ac_neutral"
+        }
+      },
+      {
+        "id": "pe_common",
+        "terminals": [
+          "PE1",
+          "PE2"
+        ],
+        "simBehavior": "junction",
+        "currentPath": "series",
+        "terminalTypes": {
+          "PE1": "protective_earth",
+          "PE2": "protective_earth"
+        }
+      }
+    ],
+    "states": {
+      "off": {
+        "image": "preview.png"
+      }
+    },
+    "defaultState": "off"
+  },
+  "modelBinding": {
+    "schemaVersion": 1,
+    "primaryEngine": "wireona.graph.control_fixedpoint.v1",
+    "capabilities": [
+      "control_topology"
+    ],
+    "requiredParameters": [
+      "orderCode",
+      "ratedVoltageV",
+      "ratedCurrentA",
+      "internalTopology"
+    ],
+    "unknownParameters": [
+      "lineContactResistanceOhm",
+      "neutralContactResistanceOhm",
+      "protectiveEarthContactResistanceOhm"
+    ],
+    "validationFixtureIds": [
+      "legrand_plexo_069577l_common_feed_fixture_v1"
+    ]
+  },
+  "documentation": {
+    "selectedVariant": "Legrand Plexo 069577L double prewired vertical German-standard 2P+E socket outlet, 16 A, 250 V.",
+    "topologyBasis": "Manufacturer states two prewired sockets with only one mechanism to wire. F1-F2, N1-N2 and PE1-PE2 are common; there is no N-PE or L-PE bond.",
+    "sources": [
+      {
+        "publisher": "Legrand",
+        "title": "Plexo double prewired vertical German-standard socket outlet 16 A 250 V",
+        "url": "https://www.legrand.com/ecatalogue/en/legrand-ecat/generatepdf/69396",
+        "conditions": "Reference 069577L; two prewired 2P+E sockets; 16 A 250 V; only one mechanism to wire."
+      }
+    ],
+    "limitations": [
+      "The bundled EduVolt artwork is a clean generic educational face and is not represented as a manufacturer product photograph.",
+      "No contact resistance or thermal/fault curve is invented; the package currently models only the verified internal topology and ratings."
+    ]
+  },
+  "physical": {
+    "original": {
+      "widthMm": 83.0,
+      "heightMm": 145.0,
+      "depthMm": 40.0
+    },
+    "widthMm": 83.0,
+    "heightMm": 145.0,
+    "estimated": true,
+    "dimensionEvidence": {
+      "classification": "teaching_placement_estimate",
+      "basis": "owner_accepted_legacy_teaching_estimate",
+      "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+    },
+    "pxPerMm": 66.67,
+    "depthMm": 40.0,
+    "suggested": {
+      "widthMm": 83.0,
+      "heightMm": 145.0
+    }
+  },
+  "docking": {
+    "zLayer": 2,
+    "presentationLayer": "device_front"
+  },
+  "libraryPath": "Control Devices/Distribution",
+  "buttons": []
+}

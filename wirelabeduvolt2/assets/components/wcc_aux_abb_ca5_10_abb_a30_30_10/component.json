@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 3,
+  "id": "wcc_aux_abb_ca5_10_abb_a30_30_10",
+  "name": "ABB CA5-10 (ABB A30-30-10)",
+  "category": "Auxiliary Contact",
+  "tagPrefix": "KA",
+  "physical": {
+    "widthMm": 11,
+    "heightMm": 47,
+    "depthMm": 32.5,
+    "original": {
+      "widthMm": 11.0,
+      "heightMm": 47.0
+    },
+    "estimated": true,
+    "dimensionEvidence": {
+      "classification": "teaching_placement_estimate",
+      "basis": "owner_accepted_legacy_teaching_estimate",
+      "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+    }
+  },
+  "terminals": [
+    {
+      "id": "3",
+      "label": "3NO",
+      "signal": "Control",
+      "role": "bidirectional",
+      "direction": "top",
+      "nx": 0.5,
+      "ny": 0.21,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 45.4356,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control"
+    },
+    {
+      "id": "4",
+      "label": "4NO",
+      "signal": "Control",
+      "role": "bidirectional",
+      "direction": "bottom",
+      "nx": 0.5,
+      "ny": 0.79,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 45.4356,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control"
+    }
+  ],
+  "buttons": [],
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "any",
+    "activationRule": "docked",
+    "terminalPairs": [
+      {
+        "id": "contact_0",
+        "terminals": [
+          "3",
+          "4"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+          "3": "contact_no",
+          "4": "contact_no"
+        }
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "preview.webp"
+      },
+      "on": {
+        "image": "on.webp"
+      }
+    },
+    "stateSequence": [
+      "off",
+      "on"
+    ]
+  },
+  "docking": {
+    "mountable": true,
+    "zLayer": 3,
+    "attachesAs": {
+      "type": "aux_contact",
+      "dockSize": {
+        "cols": 1,
+        "rows": 1
+      }
+    },
+    "presentationLayer": "parent_overlay"
+  },
+  "provenance": {
+    "source": "C:\\Users\\d0kha\\OneDrive\\Desktop\\wcc\\device-library\\058_abb_a30_30_10/accessories/manifest.json",
+    "compatibleContactor": "ABB A30-30-10",
+    "linking": "Assign any contactor coil tag in Properties"
+  },
+  "graphics": {
+    "preview": "preview.webp",
+    "original": "preview.webp",
+    "size": {
+      "width": 143,
+      "height": 643
+    },
+    "crop": {
+      "method": "shared_union_alpha_bounds",
+      "sourceCount": 2,
+      "sourceCanvas": {
+        "width": 1024,
+        "height": 1536
+      },
+      "bounds": {
+        "x": 439,
+        "y": 595,
+        "width": 143,
+        "height": 643
+      },
+      "paddingPx": 1,
+      "resized": false
+    }
+  }
+}

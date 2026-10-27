@@ -1,0 +1,364 @@
+{
+  "schemaVersion": 3,
+  "id": "Relé encapsulado de 8 pines",
+  "name": "8-pin encapsulated relay",
+  "category": "Control",
+  "tagPrefix": "K",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 1800,
+      "height": 7600
+    }
+  },
+  "terminals": [
+    {
+      "id": "21",
+      "label": "21",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.26175288022887516,
+      "ny": 0.09603340292275576,
+      "direction": "top",
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 23.0503,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    },
+    {
+      "id": "11",
+      "label": "11",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.762222,
+      "ny": 0.09464161447459993,
+      "direction": "top",
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 23.0503,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    },
+    {
+      "id": "24",
+      "label": "24",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.249999999999999,
+      "ny": 0.28804203757828833,
+      "direction": "top",
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 23.0503,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    },
+    {
+      "id": "14",
+      "label": "14",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.7617528802288711,
+      "ny": 0.284690327070285,
+      "direction": "top",
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 23.0503,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    },
+    {
+      "id": "22",
+      "label": "22",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.2558764401144356,
+      "ny": 0.6899894815588045,
+      "direction": "bottom",
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 23.0503,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    },
+    {
+      "id": "12",
+      "label": "12",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.762222,
+      "ny": 0.6899894815588035,
+      "direction": "bottom",
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 23.0503,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    },
+    {
+      "id": "A1",
+      "label": "A1",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.2558764401144356,
+      "ny": 0.8750391739735579,
+      "direction": "bottom",
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 23.0503,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    },
+    {
+      "id": "A2",
+      "label": "A2",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.7504691197711288,
+      "ny": 0.8736473855254026,
+      "direction": "bottom",
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 23.0503,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "any",
+    "activationRule": "coil",
+    "terminalPairs": [
+      {
+        "id": "coil",
+        "terminals": [
+          "A1",
+          "A2"
+        ],
+        "simBehavior": "coil",
+        "currentPath": "sink",
+        "terminalTypes": {
+          "A1": "power_ac",
+          "A2": "power_ac"
+        }
+      },
+      {
+        "id": "contact-1",
+        "terminals": [
+          "21",
+          "24"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+          "21": "contact_no",
+          "24": "contact_no"
+        }
+      },
+      {
+        "id": "contact-2",
+        "terminals": [
+          "21",
+          "22"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+          "21": "contact_nc",
+          "22": "contact_nc"
+        }
+      },
+      {
+        "id": "contact-3",
+        "terminals": [
+          "11",
+          "14"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+          "11": "contact_no",
+          "14": "contact_no"
+        }
+      },
+      {
+        "id": "contact-4",
+        "terminals": [
+          "11",
+          "12"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+          "11": "contact_nc",
+          "12": "contact_nc"
+        }
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+      },
+      "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+      }
+    },
+    "coilPhasor": {
+      "schemaVersion": 1,
+      "referenceVoltageV": 230.0,
+      "referenceFrequencyHz": 50.0,
+      "sealedApparentPowerVa": 2.5,
+      "status": "owner_value_decision_20261012",
+      "provenance": {
+        "evidenceFile": "artifacts/device-datasheets-20261012/EVIDENCE.md",
+        "decision": "Owner decision 2026-10-12: no value may stay unknown. Tier order: official exact-model -> published by another reputable source -> owner-approved teaching estimate (derivation, comparables and range recorded). The user may override every value per instance in Details > Electrical parameters."
+      },
+      "coilResistanceOhm": 7200.0,
+      "dcResistanceOhm": 7200.0
+    },
+    "parameterEvidence": [
+      {
+        "key": "coilPhasor.sealedApparentPowerVa",
+        "label": "Coil holding apparent power",
+        "unit": "VA",
+        "value": 2.5,
+        "tier": "published",
+        "min": 0.05,
+        "max": 500,
+        "conditions": "230 V AC sealed",
+        "source": "Schneider RUMC2AB2P7 average consumption 2-3 VA (midpoint)",
+        "url": "https://batpro-madagascar.com/wp-content/uploads/2020/08/Zelio-Relay_RUMC2AB2P7.pdf",
+        "page": "p.1",
+        "derivation": "artwork shows a Schneider logo without a reference; RUM 230 V AC is the matching plug-in family"
+      },
+      {
+        "key": "coilPhasor.coilResistanceOhm",
+        "label": "Coil resistance",
+        "unit": "Ω",
+        "value": 7200.0,
+        "tier": "published",
+        "min": 1,
+        "max": 1000000.0,
+        "conditions": "20 C",
+        "source": "Schneider RUMC average coil resistance 7200 ohm",
+        "url": "https://batpro-madagascar.com/wp-content/uploads/2020/08/Zelio-Relay_RUMC2AB2P7.pdf",
+        "derivation": "R with |Z| = V^2/S gives PF ~0.34"
+      }
+    ],
+    "ownerValueDecision": "Owner decision 2026-10-12: no value may stay unknown. Tier order: official exact-model -> published by another reputable source -> owner-approved teaching estimate (derivation, comparables and range recorded). The user may override every value per instance in Details > Electrical parameters."
+  },
+  "docking": {
+    "mountable": true,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "general_montable_riel_din",
+      "dockSize": {
+        "cols": 2,
+        "rows": 1
+      },
+      "hideTerminalsOnDock": [],
+      "overlapPx": 0
+    },
+    "zones": [],
+    "presentationLayer": "device_front"
+  },
+  "physical": {
+    "original": {
+      "widthMm": 26.999,
+      "heightMm": 113.994,
+      "depthMm": 40.0
+    },
+    "widthMm": 26.999,
+    "heightMm": 113.994,
+    "estimated": true,
+    "dimensionEvidence": {
+      "classification": "teaching_placement_estimate",
+      "basis": "owner_accepted_legacy_teaching_estimate",
+      "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+    },
+    "pxPerMm": 66.67,
+    "depthMm": 40.0,
+    "suggested": {
+      "widthMm": 26.999,
+      "heightMm": 113.994
+    }
+  },
+  "libraryPath": "Control Devices/Control",
+  "buttons": []
+}

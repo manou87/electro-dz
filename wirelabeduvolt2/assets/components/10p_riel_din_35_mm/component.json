@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 3,
+  "id": "10P-Riel DIN 35 mm",
+  "name": {
+    "es": "10P-Riel DIN 35 mm",
+    "en": "DIN Rail 35 mm 10P"
+  },
+  "category": {
+    "es": "Estructura",
+    "en": "Structure"
+  },
+  "tagPrefix": "X",
+  "graphics": {
+    "preview": "preview.png",
+    "original": "original.png",
+    "size": {
+      "width": 14400,
+      "height": 2400
+    },
+    "display": "display.png",
+    "displayBasis": "Downscaled from 14400x2400 original.png (area average) for the canvas; original kept unchanged."
+  },
+  "terminals": [],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static"
+  },
+  "docking": {
+    "mountable": false,
+    "zLayer": 0,
+    "isDinRail": true,
+    "railAxis": "horizontal",
+    "mountZone": {
+      "nx0": 0,
+      "ny0": 0,
+      "nx1": 1,
+      "ny1": 1
+    },
+    "acceptsMountable": true,
+    "zones": [
+      {
+        "id": "rail_mount",
+        "label": "Zona de montaje",
+        "position": "top",
+        "rect": {
+          "x": 1200,
+          "y": 0,
+          "w": 12000,
+          "h": 2400
+        },
+        "anchor": {
+          "nx": 0.5,
+          "ny": 0.5
+        },
+        "gridSize": {
+          "cols": 10,
+          "rows": 2
+        },
+        "accepts": [
+          "contactor_3p",
+          "itm_1p",
+          "itm_2p",
+          "itm_3p",
+          "itm_4p",
+          "id_2p",
+          "id_4p",
+          "aux_1p",
+          "aux_2p",
+          "aux_4p",
+          "bornera",
+          "rele_fases",
+          "plc",
+          "modulo_plc",
+          "general_montable_riel_din"
+        ],
+        "bridge": null,
+        "childAlignment": "bottom_center",
+        "childZLayer": 2,
+        "hideHostTerminals": null
+      }
+    ],
+    "presentationLayer": "background_structure"
+  },
+  "physical": {
+    "original": {
+      "widthMm": 210.0,
+      "heightMm": 35.0
+    },
+    "widthMm": 210.0,
+    "heightMm": 35.0,
+    "estimated": true,
+    "dimensionEvidence": {
+      "classification": "standard_cross_section_with_artwork_derived_length",
+      "heightMm": {
+        "value": 35.0,
+        "unit": "mm",
+        "provenance": "declared_35_mm_DIN_rail_front_cross_section",
+        "source": "https://www.phoenixcontact.com/en-us/products/din-rail-ns-35-75-perf-1950mm-5406365",
+        "note": "Manufacturer source corroborates the 35 mm rail class named by this generic item; it does not identify this artwork as that manufacturer model."
+      },
+      "widthMm": {
+        "value": 210.0,
+        "unit": "mm",
+        "provenance": "derived_from_original_front_artwork_aspect",
+        "derivation": "14400/2400 * 35 mm",
+        "assumptions": "Original and preview have matching aspect ratio; preview alpha bounds span complete canvas. Artwork depicts the front 35 mm rail body.",
+        "notManufacturerMeasuredLength": true
+      },
+      "depthMm": {
+        "value": null,
+        "provenance": "unknown",
+        "reason": "Part identity states 35 mm only; 7.5 mm versus 15 mm profile is not established."
+      },
+      "claimBoundary": "Generic drawing scale correction; not an exact manufacturer mechanical drawing or physical acceptance.",
+      "supersedes": {
+        "original": {
+          "widthMm": 15.359,
+          "heightMm": 2.565
+        },
+        "widthMm": 15.359,
+        "heightMm": 2.565,
+        "estimated": true,
+        "dimensionEvidence": {
+          "classification": "teaching_placement_estimate",
+          "basis": "owner_accepted_legacy_teaching_estimate",
+          "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+        }
+      }
+    }
+  }
+}

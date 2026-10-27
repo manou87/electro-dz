@@ -26,7 +26,15 @@
       "nx": 0.5,
       "ny": 0.0,
       "direction": "top",
-      "guideLength": 60
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 45.0006,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control"
     },
     {
       "id": "X2",
@@ -36,7 +44,15 @@
       "nx": 0.5,
       "ny": 1.0,
       "direction": "bottom",
-      "guideLength": 60
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 45.0006,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control"
     }
   ],
   "rules": {
@@ -84,6 +100,54 @@
         "image": "state_on.png",
         "imageLo": "state_on_lo.png"
       }
+    },
+    "ratedVoltageV": 230.0,
+    "ratedPowerW": 0.62,
+    "powerFactor": 0.15,
+    "parameterEvidence": [
+      {
+        "key": "ratedPowerW",
+        "label": "Rated power",
+        "unit": "W",
+        "value": 0.62,
+        "tier": "estimated",
+        "min": 0.01,
+        "max": 20,
+        "conditions": "230 V AC",
+        "source": "Schneider XB7EV07MP 16-20 mA at 230 V (comparable 22 mm pilot)",
+        "url": "https://media.cetnaj.com.au/Datasheets/Schneider/Schneider_XB7EV07MP.pdf",
+        "derivation": "18 mA x 230 V x PF 0.15"
+      },
+      {
+        "key": "powerFactor",
+        "label": "Power factor",
+        "value": 0.15,
+        "tier": "estimated",
+        "min": 0.05,
+        "max": 1,
+        "conditions": "230 V AC",
+        "source": "capacitive-dropper pilot LED, PF 0.1-0.3 (leading; modelled as magnitude, lagging sign)",
+        "derivation": "capacitive dropper: |Xc| >> R, PF 0.1-0.3 (leading); 0.15 = P 0.62 W / (230 V x 18 mA), consistent with ABB CL2-523 230 V AC 17 mA (1SFC151054K0201 p.1)"
+      }
+    ],
+    "ownerValueDecision": "Owner decision 2026-10-12: no value may stay unknown. Tier order: official exact-model -> published by another reputable source -> owner-approved teaching estimate (derivation, comparables and range recorded). The user may override every value per instance in Details > Electrical parameters."
+  },
+  "physical": {
+    "original": {
+      "widthMm": 17.999,
+      "heightMm": 26.999
+    },
+    "widthMm": 17.999,
+    "heightMm": 26.999,
+    "estimated": true,
+    "dimensionEvidence": {
+      "classification": "teaching_placement_estimate",
+      "basis": "owner_accepted_legacy_teaching_estimate",
+      "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
     }
+  },
+  "docking": {
+    "zLayer": 2,
+    "presentationLayer": "device_front"
   }
 }

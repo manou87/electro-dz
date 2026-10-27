@@ -1,0 +1,183 @@
+{
+  "schemaVersion": 3,
+  "id": "multifunction_power_meter_ct",
+  "name": "Digital V/A/kW Meter with CT",
+  "category": "Meters & Instruments",
+  "tagPrefix": "P",
+  "physical": {
+    "widthMm": 96,
+    "heightMm": 96,
+    "depthMm": 80,
+    "unit": "mm",
+    "original": {
+      "widthMm": 96.0,
+      "heightMm": 96.0,
+      "depthMm": 80
+    },
+    "suggested": {
+      "widthMm": 96,
+      "heightMm": 96,
+      "depthMm": 80
+    },
+    "estimated": true,
+    "dimensionEvidence": {
+      "classification": "teaching_placement_estimate",
+      "basis": "owner_accepted_legacy_teaching_estimate",
+      "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+    }
+  },
+  "graphics": {
+    "preview": "preview.png",
+    "original": "off.png",
+    "size": {
+      "width": 1161,
+      "height": 1128
+    },
+    "geometryCrop": {
+      "method": "shared_state_alpha_union_v1",
+      "sourceCanvas": {
+        "width": 1200,
+        "height": 1200
+      },
+      "bounds": {
+        "x": 20,
+        "y": 72,
+        "width": 1161,
+        "height": 1128
+      },
+      "physicalEnvelopePreserved": true
+    }
+  },
+  "terminals": [
+    {
+      "id": "VL",
+      "label": "V L",
+      "signal": "Power",
+      "role": "input",
+      "direction": "bottom",
+      "nx": 0.23083548664944015,
+      "ny": 1.0,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 39.6919,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power"
+    },
+    {
+      "id": "VN",
+      "label": "V N",
+      "signal": "Power",
+      "role": "input",
+      "direction": "bottom",
+      "nx": 0.4788975021533161,
+      "ny": 1.0,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 39.6919,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "phaseIdentity": "N"
+    },
+    {
+      "id": "CT",
+      "label": "CT",
+      "signal": "Power",
+      "role": "sensor",
+      "direction": "bottom",
+      "nx": 0.768303186907838,
+      "ny": 1.0,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 46.3072,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power"
+    }
+  ],
+  "buttons": [],
+  "rules": {
+    "allowedConnections": {
+      "Power": [
+        "Power"
+      ],
+      "Control": [
+        "Control",
+        "Signal"
+      ],
+      "Signal": [
+        "Signal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "dynamic",
+    "enabled": true,
+    "voltage": "ac",
+    "activationRule": "meter",
+    "terminalPairs": [
+      {
+        "id": "voltage",
+        "terminals": [
+          "VL",
+          "VN"
+        ],
+        "simBehavior": "meter_voltage",
+        "currentPath": "sink",
+        "terminalTypes": {
+          "VL": "power_ac",
+          "VN": "power_ac"
+        }
+      },
+      {
+        "id": "current",
+        "terminals": [
+          "CT"
+        ],
+        "simBehavior": "meter_ct",
+        "currentPath": "sensor",
+        "terminalTypes": {
+          "CT": "meter_ct"
+        }
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "off_geometry_v1.png"
+      },
+      "on": {
+        "image": "off_geometry_v1.png"
+      }
+    },
+    "screen": {
+      "x": 0.19465977605512486,
+      "y": 0.2127659574468085,
+      "w": 0.6098191214470283,
+      "h": 0.5106382978723404
+    }
+  },
+  "docking": {
+    "mountable": false,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "panel_meter",
+      "dockSize": {
+        "cols": 3,
+        "rows": 3
+      }
+    },
+    "presentationLayer": "device_front"
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 3,
+  "id": "Borne +",
+  "name": {
+    "es": "Borne +",
+    "en": "+ Terminal"
+  },
+  "category": {
+    "es": "Potencia",
+    "en": "Power"
+  },
+  "tagPrefix": "X",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 600,
+      "height": 3600
+    },
+    "original": "original.png"
+  },
+  "terminals": [
+    {
+      "id": "+",
+      "label": "+",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.5,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 25.5996,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "industrial"
+    },
+    {
+      "id": "-",
+      "label": "-",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.5,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 25.5996,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "industrial"
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "dc",
+    "activationRule": "source",
+    "terminalPairs": [
+      {
+        "id": "source_dc_plus",
+        "terminals": [
+          "+",
+          "-"
+        ],
+        "simBehavior": "source_dc_plus",
+        "currentPath": "source",
+        "terminalTypes": {
+          "+": "source_dc_pos",
+          "-": "source_dc_pos"
+        }
+      }
+    ]
+  },
+  "docking": {
+    "mountable": true,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "bornera",
+      "dockSize": {
+        "cols": 1,
+        "rows": 2
+      },
+      "hideTerminalsOnDock": [],
+      "overlapPx": 0
+    },
+    "zones": [],
+    "presentationLayer": "device_front"
+  },
+  "physical": {
+    "original": {
+      "widthMm": 2.565,
+      "heightMm": 15.359
+    },
+    "widthMm": 2.565,
+    "heightMm": 15.359,
+    "estimated": true,
+    "dimensionEvidence": {
+      "classification": "teaching_placement_estimate",
+      "basis": "owner_accepted_legacy_teaching_estimate",
+      "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+    }
+  }
+}

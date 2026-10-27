@@ -1,0 +1,1 @@
+Dynamic pump/tank process trainer for wiresCAD. The original supplied PNG is unchanged. Water is rendered at runtime through its transparent tank window. Configure capacity, initial level, motor/pump ratings, drain flow, valve travel, and 24VDC/220VAC I/O modes in Properties.

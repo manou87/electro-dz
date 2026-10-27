@@ -1,0 +1,4043 @@
+{
+ "schemaVersion": 3,
+ "id": "wireona_family_push_button",
+ "name": {
+  "en": "Push Button"
+ },
+ "category": {
+  "es": "Accionamientos",
+  "en": "Drives"
+ },
+ "tagPrefix": "S",
+ "graphics": {
+  "preview": "f_d9c44d4138a5ea1b4f12.png",
+  "size": {
+   "width": 1800,
+   "height": 2100
+  }
+ },
+ "terminals": [
+  {
+   "id": "3",
+   "label": "3",
+   "signal": "Control",
+   "role": "bidirectional",
+   "nx": 0.296667,
+   "ny": 0.0,
+   "direction": "top",
+   "guideLength": 60,
+   "pinSize": 11.0,
+   "pinPresentation": {
+    "basis": "derived_from_nearest_terminal_pitch",
+    "nearestPitchWorld": 52.4993,
+    "clearanceFactor": 0.62,
+    "runtimeMinimumDiameter": 1.15
+   },
+   "wiringClass": "control"
+  },
+  {
+   "id": "4",
+   "label": "4",
+   "signal": "Control",
+   "role": "bidirectional",
+   "nx": 0.296667,
+   "ny": 1.0,
+   "direction": "bottom",
+   "guideLength": 60,
+   "pinSize": 11.0,
+   "pinPresentation": {
+    "basis": "derived_from_nearest_terminal_pitch",
+    "nearestPitchWorld": 52.4993,
+    "clearanceFactor": 0.62,
+    "runtimeMinimumDiameter": 1.15
+   },
+   "wiringClass": "control"
+  }
+ ],
+ "rules": {
+  "allowedConnections": {
+   "Potencia": [
+    "Potencia"
+   ],
+   "Control": [
+    "Control",
+    "Señal"
+   ],
+   "Señal": [
+    "Señal",
+    "Control"
+   ]
+  }
+ },
+ "simulation": {
+  "type": "static",
+  "enabled": true,
+  "voltage": "any",
+  "activationRule": "pushbutton",
+  "terminalPairs": [
+   {
+    "id": "contact_no",
+    "terminals": [
+     "3",
+     "4"
+    ],
+    "simBehavior": "contact_no",
+    "currentPath": "series",
+    "terminalTypes": {
+     "3": "contact_no",
+     "4": "contact_no"
+    }
+   }
+  ],
+  "defaultState": "off",
+  "states": {
+   "off": {
+    "image": "f_486abc76708a678ebedd.png",
+    "imageLo": "f_d9c44d4138a5ea1b4f12.png"
+   },
+   "on": {
+    "image": "f_ccacbc5b2c8ba513e0e5.png",
+    "imageLo": "f_bf09f37fbc0f2f7987de.png"
+   }
+  }
+ },
+ "physical": {
+  "original": {
+   "widthMm": 26.999,
+   "heightMm": 31.498
+  },
+  "widthMm": 26.999,
+  "heightMm": 31.498,
+  "estimated": true,
+  "dimensionEvidence": {
+   "classification": "teaching_placement_estimate",
+   "basis": "owner_accepted_legacy_teaching_estimate",
+   "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+  }
+ },
+ "docking": {
+  "zLayer": 2,
+  "presentationLayer": "device_front"
+ },
+ "paletteVisible": false,
+ "family": {
+  "schema": "wireona.device-family/1",
+  "id": "wireona_family_push_button",
+  "key": "generic_push_button",
+  "label": "Push Button",
+  "defaultMember": "Pulsador rojo 1NO",
+  "members": [
+   {
+    "id": "Pulsador rojo 1NO",
+    "group": "rojo",
+    "legacyPath": "CONTROL DEVICES/Pulsador rojo 1NO.wc",
+    "legacySha256": [
+     "a9377528af7259c802a2dbfe700433c9699d3ba2c637f69bfc3e3f6086c49105"
+    ],
+    "definition": {
+     "schemaVersion": 3,
+     "id": "Pulsador rojo 1NO",
+     "name": {
+      "es": "Pulsador rojo 1NO",
+      "en": "Red Push Button 1NO"
+     },
+     "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+     },
+     "tagPrefix": "S",
+     "graphics": {
+      "preview": "preview.png",
+      "size": {
+       "width": 1800,
+       "height": 2100
+      }
+     },
+     "terminals": [
+      {
+       "id": "3",
+       "label": "3",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 52.4993,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "4",
+       "label": "4",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 52.4993,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      }
+     ],
+     "rules": {
+      "allowedConnections": {
+       "Potencia": [
+        "Potencia"
+       ],
+       "Control": [
+        "Control",
+        "Señal"
+       ],
+       "Señal": [
+        "Señal",
+        "Control"
+       ]
+      }
+     },
+     "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "pushbutton",
+      "terminalPairs": [
+       {
+        "id": "contact_no",
+        "terminals": [
+         "3",
+         "4"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+         "3": "contact_no",
+         "4": "contact_no"
+        }
+       }
+      ],
+      "defaultState": "off",
+      "states": {
+       "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+       },
+       "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+       }
+      }
+     },
+     "physical": {
+      "original": {
+       "widthMm": 26.999,
+       "heightMm": 31.498
+      },
+      "widthMm": 26.999,
+      "heightMm": 31.498,
+      "estimated": true,
+      "dimensionEvidence": {
+       "classification": "teaching_placement_estimate",
+       "basis": "owner_accepted_legacy_teaching_estimate",
+       "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      }
+     },
+     "docking": {
+      "zLayer": 2,
+      "presentationLayer": "device_front"
+     }
+    },
+    "files": {
+     "preview.png": {
+      "base": "f_d9c44d4138a5ea1b4f12.png"
+     },
+     "state_off.png": {
+      "base": "f_486abc76708a678ebedd.png"
+     },
+     "state_off_lo.png": {
+      "base": "f_d9c44d4138a5ea1b4f12.png"
+     },
+     "state_on.png": {
+      "base": "f_ccacbc5b2c8ba513e0e5.png"
+     },
+     "state_on_lo.png": {
+      "base": "f_bf09f37fbc0f2f7987de.png"
+     }
+    }
+   },
+   {
+    "id": "Pulsador rojo 1NC",
+    "group": "rojo",
+    "legacyPath": "CONTROL DEVICES/Pulsador rojo 1NC.wc",
+    "legacySha256": [
+     "73b9ffdd0869db3cc4e3a130c0809a88e6e7fd1887b8405a5b13ac8cfc117e1d"
+    ],
+    "definition": {
+     "schemaVersion": 3,
+     "id": "Pulsador rojo 1NC",
+     "name": {
+      "es": "Pulsador rojo 1NC",
+      "en": "Red Push Button 1NC"
+     },
+     "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+     },
+     "tagPrefix": "S",
+     "graphics": {
+      "preview": "preview.png",
+      "size": {
+       "width": 1800,
+       "height": 2100
+      }
+     },
+     "terminals": [
+      {
+       "id": "1",
+       "label": "1",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 52.4993,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "2",
+       "label": "2",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 52.4993,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      }
+     ],
+     "rules": {
+      "allowedConnections": {
+       "Potencia": [
+        "Potencia"
+       ],
+       "Control": [
+        "Control",
+        "Señal"
+       ],
+       "Señal": [
+        "Señal",
+        "Control"
+       ]
+      }
+     },
+     "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "pushbutton",
+      "terminalPairs": [
+       {
+        "id": "contact_nc",
+        "terminals": [
+         "1",
+         "2"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+         "1": "contact_nc",
+         "2": "contact_nc"
+        }
+       }
+      ],
+      "defaultState": "off",
+      "states": {
+       "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+       },
+       "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+       }
+      }
+     },
+     "physical": {
+      "original": {
+       "widthMm": 26.999,
+       "heightMm": 31.498
+      },
+      "widthMm": 26.999,
+      "heightMm": 31.498,
+      "estimated": true,
+      "dimensionEvidence": {
+       "classification": "teaching_placement_estimate",
+       "basis": "owner_accepted_legacy_teaching_estimate",
+       "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      }
+     },
+     "docking": {
+      "zLayer": 2,
+      "presentationLayer": "device_front"
+     }
+    },
+    "files": {
+     "preview.png": {
+      "base": "f_d9c44d4138a5ea1b4f12.png",
+      "patches": [
+       {
+        "file": "f_9a934f27c5ec95a0c917.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_53a5280b4e4ef9a0a3dd.png",
+        "x": 224,
+        "y": 192
+       },
+       {
+        "file": "f_cd56ae0870243148fb33.png",
+        "x": 672,
+        "y": 320
+       },
+       {
+        "file": "f_e08d26e860537c4afa7d.png",
+        "x": 672,
+        "y": 608
+       },
+       {
+        "file": "f_822248ec42fcb0790dd4.png",
+        "x": 448,
+        "y": 768
+       },
+       {
+        "file": "f_91d556dcbc870e0c8e08.png",
+        "x": 192,
+        "y": 864
+       }
+      ]
+     },
+     "state_off.png": {
+      "base": "f_486abc76708a678ebedd.png",
+      "patches": [
+       {
+        "file": "f_08638bed21401e0b9c40.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_b75b35c5d739b9ba5e03.png",
+        "x": 896,
+        "y": 352
+       },
+       {
+        "file": "f_439388a0f829a3fa57af.png",
+        "x": 704,
+        "y": 384
+       },
+       {
+        "file": "f_179d6c3939e776db1c1e.png",
+        "x": 256,
+        "y": 416
+       },
+       {
+        "file": "f_1203ca891b085f2b64a1.png",
+        "x": 1248,
+        "y": 480
+       },
+       {
+        "file": "f_fbec714d5b543e509b1a.png",
+        "x": 1408,
+        "y": 672
+       },
+       {
+        "file": "f_d29c08acba9b0be3ebe2.png",
+        "x": 192,
+        "y": 960
+       },
+       {
+        "file": "f_ac6071c514977ccb90cb.png",
+        "x": 224,
+        "y": 1120
+       },
+       {
+        "file": "f_ad1e180f58b21667c8c5.png",
+        "x": 896,
+        "y": 1120
+       },
+       {
+        "file": "f_61195925dc01d4b59ac4.png",
+        "x": 416,
+        "y": 1824
+       }
+      ]
+     },
+     "state_off_lo.png": {
+      "base": "f_d9c44d4138a5ea1b4f12.png",
+      "patches": [
+       {
+        "file": "f_9a934f27c5ec95a0c917.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_53a5280b4e4ef9a0a3dd.png",
+        "x": 224,
+        "y": 192
+       },
+       {
+        "file": "f_cd56ae0870243148fb33.png",
+        "x": 672,
+        "y": 320
+       },
+       {
+        "file": "f_e08d26e860537c4afa7d.png",
+        "x": 672,
+        "y": 608
+       },
+       {
+        "file": "f_822248ec42fcb0790dd4.png",
+        "x": 448,
+        "y": 768
+       },
+       {
+        "file": "f_91d556dcbc870e0c8e08.png",
+        "x": 192,
+        "y": 864
+       }
+      ]
+     },
+     "state_on.png": {
+      "base": "f_ccacbc5b2c8ba513e0e5.png",
+      "patches": [
+       {
+        "file": "f_93e93909846913f7018e.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_5e1a3614b61b74fe35eb.png",
+        "x": 416,
+        "y": 1824
+       }
+      ]
+     },
+     "state_on_lo.png": {
+      "base": "f_bf09f37fbc0f2f7987de.png",
+      "patches": [
+       {
+        "file": "f_c1869c2907643ac10b38.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_e269cc9d0284d121a813.png",
+        "x": 192,
+        "y": 864
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "Pulsador rojo 1NO+1NC",
+    "group": "rojo",
+    "legacyPath": "CONTROL DEVICES/Pulsador rojo 1NO+1NC.wc",
+    "legacySha256": [
+     "823ca45fb8c2c03c125dc38c01afa8af88266ff7c2c75de76b29d82e45a2823e"
+    ],
+    "definition": {
+     "schemaVersion": 3,
+     "id": "Pulsador rojo 1NO+1NC",
+     "name": {
+      "es": "Pulsador rojo 1NO+1NC",
+      "en": "Red Push Button 1NO+1NC"
+     },
+     "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+     },
+     "tagPrefix": "S",
+     "graphics": {
+      "preview": "preview.png",
+      "size": {
+       "width": 1800,
+       "height": 2100
+      }
+     },
+     "terminals": [
+      {
+       "id": "1A",
+       "label": "1A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "3A",
+       "label": "3A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "2A",
+       "label": "2A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "4A",
+       "label": "4A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      }
+     ],
+     "rules": {
+      "allowedConnections": {
+       "Potencia": [
+        "Potencia"
+       ],
+       "Control": [
+        "Control",
+        "Señal"
+       ],
+       "Señal": [
+        "Señal",
+        "Control"
+       ]
+      }
+     },
+     "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "pushbutton",
+      "terminalPairs": [
+       {
+        "id": "contact-nc-a",
+        "terminals": [
+         "1A",
+         "2A"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+         "1A": "contact_nc",
+         "2A": "contact_nc"
+        }
+       },
+       {
+        "id": "contact-no-b",
+        "terminals": [
+         "3A",
+         "4A"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+         "3A": "contact_no",
+         "4A": "contact_no"
+        }
+       }
+      ],
+      "defaultState": "off",
+      "states": {
+       "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+       },
+       "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+       }
+      }
+     },
+     "physical": {
+      "original": {
+       "widthMm": 26.999,
+       "heightMm": 31.498
+      },
+      "widthMm": 26.999,
+      "heightMm": 31.498,
+      "estimated": true,
+      "dimensionEvidence": {
+       "classification": "teaching_placement_estimate",
+       "basis": "owner_accepted_legacy_teaching_estimate",
+       "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      }
+     },
+     "docking": {
+      "zLayer": 2,
+      "presentationLayer": "device_front"
+     }
+    },
+    "files": {
+     "preview.png": {
+      "base": "f_d9c44d4138a5ea1b4f12.png",
+      "patches": [
+       {
+        "file": "f_b197d2ebefb86c9d6741.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_5e5d7eebeef126b74068.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_94cb47079618ce727e20.png",
+        "x": 192,
+        "y": 864
+       },
+       {
+        "file": "f_1ddc2c5e50352845df33.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_off.png": {
+      "base": "f_486abc76708a678ebedd.png",
+      "patches": [
+       {
+        "file": "f_8319a8fa39485cf5bd79.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_bf17a46549970ec45072.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_d8846c8d03498a72d85f.png",
+        "x": 416,
+        "y": 1824
+       },
+       {
+        "file": "f_9e195d721d61f4685c12.png",
+        "x": 1184,
+        "y": 1824
+       }
+      ]
+     },
+     "state_off_lo.png": {
+      "base": "f_d9c44d4138a5ea1b4f12.png",
+      "patches": [
+       {
+        "file": "f_b197d2ebefb86c9d6741.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_5e5d7eebeef126b74068.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_94cb47079618ce727e20.png",
+        "x": 192,
+        "y": 864
+       },
+       {
+        "file": "f_1ddc2c5e50352845df33.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_on.png": {
+      "base": "f_ccacbc5b2c8ba513e0e5.png",
+      "patches": [
+       {
+        "file": "f_e5023d0d845f32f111f4.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_3443b711ced55d76b9a2.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_24f797dfd5b33c0b1d7b.png",
+        "x": 416,
+        "y": 1824
+       },
+       {
+        "file": "f_d4a273499a7ed44ab553.png",
+        "x": 1184,
+        "y": 1824
+       }
+      ]
+     },
+     "state_on_lo.png": {
+      "base": "f_bf09f37fbc0f2f7987de.png",
+      "patches": [
+       {
+        "file": "f_258f1d184b057fdc6418.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_9a5f3c807f471a5a636a.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_88a0153ccc8ca8455c21.png",
+        "x": 192,
+        "y": 864
+       },
+       {
+        "file": "f_15e3140da60d638098a7.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "Pulsador rojo 2NO",
+    "group": "rojo",
+    "legacyPath": "CONTROL DEVICES/Pulsador rojo 2NO.wc",
+    "legacySha256": [
+     "177ab2a4804833c3db673af775141cf498d664f660de500f6ce411506420c876"
+    ],
+    "definition": {
+     "schemaVersion": 3,
+     "id": "Pulsador rojo 2NO",
+     "name": {
+      "es": "Pulsador rojo 2NO",
+      "en": "Red Push Button 2NO"
+     },
+     "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+     },
+     "tagPrefix": "S",
+     "graphics": {
+      "preview": "preview.png",
+      "size": {
+       "width": 1800,
+       "height": 2100
+      }
+     },
+     "terminals": [
+      {
+       "id": "3A",
+       "label": "3A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "3B",
+       "label": "3B",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "4A",
+       "label": "4A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "4B",
+       "label": "4B",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      }
+     ],
+     "rules": {
+      "allowedConnections": {
+       "Potencia": [
+        "Potencia"
+       ],
+       "Control": [
+        "Control",
+        "Señal"
+       ],
+       "Señal": [
+        "Señal",
+        "Control"
+       ]
+      }
+     },
+     "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "pushbutton",
+      "terminalPairs": [
+       {
+        "id": "contact-no-a",
+        "terminals": [
+         "3A",
+         "4A"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+         "3A": "contact_no",
+         "4A": "contact_no"
+        }
+       },
+       {
+        "id": "contact-no-b",
+        "terminals": [
+         "3B",
+         "4B"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+         "3B": "contact_no",
+         "4B": "contact_no"
+        }
+       }
+      ],
+      "defaultState": "off",
+      "states": {
+       "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+       },
+       "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+       }
+      }
+     },
+     "physical": {
+      "original": {
+       "widthMm": 26.999,
+       "heightMm": 31.498
+      },
+      "widthMm": 26.999,
+      "heightMm": 31.498,
+      "estimated": true,
+      "dimensionEvidence": {
+       "classification": "teaching_placement_estimate",
+       "basis": "owner_accepted_legacy_teaching_estimate",
+       "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      }
+     },
+     "docking": {
+      "zLayer": 2,
+      "presentationLayer": "device_front"
+     }
+    },
+    "files": {
+     "preview.png": {
+      "base": "f_d9c44d4138a5ea1b4f12.png",
+      "patches": [
+       {
+        "file": "f_f3e0e9fc9b541f7cbb75.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_150a5ca939c4625fa943.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_off.png": {
+      "base": "f_486abc76708a678ebedd.png",
+      "patches": [
+       {
+        "file": "f_54138c52b724a0d49b90.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_e9edc0663bfc2a38df64.png",
+        "x": 1184,
+        "y": 1824
+       }
+      ]
+     },
+     "state_off_lo.png": {
+      "base": "f_d9c44d4138a5ea1b4f12.png",
+      "patches": [
+       {
+        "file": "f_f3e0e9fc9b541f7cbb75.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_150a5ca939c4625fa943.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_on.png": {
+      "base": "f_ccacbc5b2c8ba513e0e5.png",
+      "patches": [
+       {
+        "file": "f_4dcefab4bf0c264e0627.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_57865c7bd0b22faa5425.png",
+        "x": 1184,
+        "y": 1824
+       }
+      ]
+     },
+     "state_on_lo.png": {
+      "base": "f_bf09f37fbc0f2f7987de.png",
+      "patches": [
+       {
+        "file": "f_53430e4335b70b7b3a5f.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_9cbcb97608f56aa18ece.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "Pulsador rojo 2NC",
+    "group": "rojo",
+    "legacyPath": "CONTROL DEVICES/Pulsador rojo 2NC.wc",
+    "legacySha256": [
+     "3786998c7b666b35ce2f38fff6299eaf5c11b89bb596baa661efe7524edae2e8"
+    ],
+    "definition": {
+     "schemaVersion": 3,
+     "id": "Pulsador rojo 2NC",
+     "name": {
+      "es": "Pulsador rojo 2NC",
+      "en": "Red Push Button 2NC"
+     },
+     "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+     },
+     "tagPrefix": "S",
+     "graphics": {
+      "preview": "preview.png",
+      "size": {
+       "width": 1800,
+       "height": 2100
+      }
+     },
+     "terminals": [
+      {
+       "id": "1A",
+       "label": "1A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "1B",
+       "label": "1B",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "2A",
+       "label": "2A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "2B",
+       "label": "2B",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      }
+     ],
+     "rules": {
+      "allowedConnections": {
+       "Potencia": [
+        "Potencia"
+       ],
+       "Control": [
+        "Control",
+        "Señal"
+       ],
+       "Señal": [
+        "Señal",
+        "Control"
+       ]
+      }
+     },
+     "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "pushbutton",
+      "terminalPairs": [
+       {
+        "id": "contact-nc-a",
+        "terminals": [
+         "1A",
+         "2A"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+         "1A": "contact_nc",
+         "2A": "contact_nc"
+        }
+       },
+       {
+        "id": "contact-nc-b",
+        "terminals": [
+         "1B",
+         "2B"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+         "1B": "contact_nc",
+         "2B": "contact_nc"
+        }
+       }
+      ],
+      "defaultState": "off",
+      "states": {
+       "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+       },
+       "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+       }
+      }
+     },
+     "physical": {
+      "original": {
+       "widthMm": 26.999,
+       "heightMm": 31.498
+      },
+      "widthMm": 26.999,
+      "heightMm": 31.498,
+      "estimated": true,
+      "dimensionEvidence": {
+       "classification": "teaching_placement_estimate",
+       "basis": "owner_accepted_legacy_teaching_estimate",
+       "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      }
+     },
+     "docking": {
+      "zLayer": 2,
+      "presentationLayer": "device_front"
+     }
+    },
+    "files": {
+     "preview.png": {
+      "base": "f_d9c44d4138a5ea1b4f12.png",
+      "patches": [
+       {
+        "file": "f_798a8b39b8f12d2756b9.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_ef41a8668bdad98a1870.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_ff005dad5d6899459056.png",
+        "x": 192,
+        "y": 864
+       },
+       {
+        "file": "f_5f451cdd0a740a200504.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_off.png": {
+      "base": "f_486abc76708a678ebedd.png",
+      "patches": [
+       {
+        "file": "f_9553fdaf0fc8cce16ed0.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_3b75666df9508778f888.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_9d92faa617b610b3f841.png",
+        "x": 416,
+        "y": 1824
+       },
+       {
+        "file": "f_3d328822782cc0b67338.png",
+        "x": 1216,
+        "y": 1824
+       }
+      ]
+     },
+     "state_off_lo.png": {
+      "base": "f_d9c44d4138a5ea1b4f12.png",
+      "patches": [
+       {
+        "file": "f_798a8b39b8f12d2756b9.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_ef41a8668bdad98a1870.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_ff005dad5d6899459056.png",
+        "x": 192,
+        "y": 864
+       },
+       {
+        "file": "f_5f451cdd0a740a200504.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_on.png": {
+      "base": "f_ccacbc5b2c8ba513e0e5.png",
+      "patches": [
+       {
+        "file": "f_247f255d48c24b9047b6.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_4d202982246bbee4ae87.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_da0dfdb03893f621eefa.png",
+        "x": 416,
+        "y": 1824
+       },
+       {
+        "file": "f_25cddcddc8f52ad6873c.png",
+        "x": 1216,
+        "y": 1824
+       }
+      ]
+     },
+     "state_on_lo.png": {
+      "base": "f_bf09f37fbc0f2f7987de.png",
+      "patches": [
+       {
+        "file": "f_091f926787593c6c8ea2.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_6e79c260b5ccc9746c6b.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_e72465efe02e6dcf336a.png",
+        "x": 192,
+        "y": 864
+       },
+       {
+        "file": "f_ba2d55f7b2161108a17e.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "Pulsador verde 1NO",
+    "group": "verde",
+    "legacyPath": "CONTROL DEVICES/Pulsador verde 1NO.wc",
+    "legacySha256": [
+     "4ae927e7c68f6542bfd13edfe4882ee4dd26394fda014e8917a2177f8c3a9c42"
+    ],
+    "definition": {
+     "schemaVersion": 3,
+     "id": "Pulsador verde 1NO",
+     "name": {
+      "es": "Pulsador verde 1NO",
+      "en": "Green Push Button 1NO"
+     },
+     "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+     },
+     "tagPrefix": "S",
+     "graphics": {
+      "preview": "preview.png",
+      "size": {
+       "width": 1800,
+       "height": 2100
+      }
+     },
+     "terminals": [
+      {
+       "id": "3",
+       "label": "3",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 52.4993,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "4",
+       "label": "4",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 52.4993,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      }
+     ],
+     "rules": {
+      "allowedConnections": {
+       "Potencia": [
+        "Potencia"
+       ],
+       "Control": [
+        "Control",
+        "Señal"
+       ],
+       "Señal": [
+        "Señal",
+        "Control"
+       ]
+      }
+     },
+     "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "pushbutton",
+      "terminalPairs": [
+       {
+        "id": "contact_no",
+        "terminals": [
+         "3",
+         "4"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+         "3": "contact_no",
+         "4": "contact_no"
+        }
+       }
+      ],
+      "defaultState": "off",
+      "states": {
+       "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+       },
+       "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+       }
+      }
+     },
+     "physical": {
+      "original": {
+       "widthMm": 26.999,
+       "heightMm": 31.498
+      },
+      "widthMm": 26.999,
+      "heightMm": 31.498,
+      "estimated": true,
+      "dimensionEvidence": {
+       "classification": "teaching_placement_estimate",
+       "basis": "owner_accepted_legacy_teaching_estimate",
+       "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      }
+     },
+     "docking": {
+      "zLayer": 2,
+      "presentationLayer": "device_front"
+     }
+    },
+    "files": {
+     "preview.png": {
+      "base": "f_313786787c5662695501.png"
+     },
+     "state_off.png": {
+      "base": "f_6ae85728a9f74fcecc3f.png"
+     },
+     "state_off_lo.png": {
+      "base": "f_313786787c5662695501.png"
+     },
+     "state_on.png": {
+      "base": "f_81fd5702bb6d296a269c.png"
+     },
+     "state_on_lo.png": {
+      "base": "f_92c81e2b49884708befd.png"
+     }
+    }
+   },
+   {
+    "id": "Pulsador verde 1NC",
+    "group": "verde",
+    "legacyPath": "CONTROL DEVICES/Pulsador verde 1NC.wc",
+    "legacySha256": [
+     "3cf85f3251daaec7278c8a19173f9fd1eac22ac47666a4b356669d1fd9b0fc79"
+    ],
+    "definition": {
+     "schemaVersion": 3,
+     "id": "Pulsador verde 1NC",
+     "name": {
+      "es": "Pulsador verde 1NC",
+      "en": "Green Push Button 1NC"
+     },
+     "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+     },
+     "tagPrefix": "S",
+     "graphics": {
+      "preview": "preview.png",
+      "size": {
+       "width": 1800,
+       "height": 2100
+      }
+     },
+     "terminals": [
+      {
+       "id": "1",
+       "label": "1",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 52.4993,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "2",
+       "label": "2",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 52.4993,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      }
+     ],
+     "rules": {
+      "allowedConnections": {
+       "Potencia": [
+        "Potencia"
+       ],
+       "Control": [
+        "Control",
+        "Señal"
+       ],
+       "Señal": [
+        "Señal",
+        "Control"
+       ]
+      }
+     },
+     "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "pushbutton",
+      "terminalPairs": [
+       {
+        "id": "contact_nc",
+        "terminals": [
+         "1",
+         "2"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+         "1": "contact_nc",
+         "2": "contact_nc"
+        }
+       }
+      ],
+      "defaultState": "off",
+      "states": {
+       "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+       },
+       "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+       }
+      }
+     },
+     "physical": {
+      "original": {
+       "widthMm": 26.999,
+       "heightMm": 31.498
+      },
+      "widthMm": 26.999,
+      "heightMm": 31.498,
+      "estimated": true,
+      "dimensionEvidence": {
+       "classification": "teaching_placement_estimate",
+       "basis": "owner_accepted_legacy_teaching_estimate",
+       "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      }
+     },
+     "docking": {
+      "zLayer": 2,
+      "presentationLayer": "device_front"
+     }
+    },
+    "files": {
+     "preview.png": {
+      "base": "f_313786787c5662695501.png",
+      "patches": [
+       {
+        "file": "f_88b0390f9a15b6dc442a.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_55f50786b66e32318893.png",
+        "x": 192,
+        "y": 864
+       }
+      ]
+     },
+     "state_off.png": {
+      "base": "f_6ae85728a9f74fcecc3f.png",
+      "patches": [
+       {
+        "file": "f_0c3244e945e5d3c4299f.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_f9fe5a191f6a317fa149.png",
+        "x": 416,
+        "y": 1824
+       }
+      ]
+     },
+     "state_off_lo.png": {
+      "base": "f_313786787c5662695501.png",
+      "patches": [
+       {
+        "file": "f_88b0390f9a15b6dc442a.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_55f50786b66e32318893.png",
+        "x": 192,
+        "y": 864
+       }
+      ]
+     },
+     "state_on.png": {
+      "base": "f_81fd5702bb6d296a269c.png",
+      "patches": [
+       {
+        "file": "f_25e2530954fe76ee37bb.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_e9b3556514bb96e2f606.png",
+        "x": 416,
+        "y": 1824
+       }
+      ]
+     },
+     "state_on_lo.png": {
+      "base": "f_92c81e2b49884708befd.png",
+      "patches": [
+       {
+        "file": "f_daf24418c303b9325462.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_f18848e8365976bf8d0b.png",
+        "x": 192,
+        "y": 864
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "Pulsador verde 1NO+1NC",
+    "group": "verde",
+    "legacyPath": "CONTROL DEVICES/Pulsador verde 1NO+1NC.wc",
+    "legacySha256": [
+     "ff75353bb04c0c81a7d3b2778e0f25d6dd210cc222d7bcb1745ff7da0ef5d699"
+    ],
+    "definition": {
+     "schemaVersion": 3,
+     "id": "Pulsador verde 1NO+1NC",
+     "name": {
+      "es": "Pulsador verde 1NO+1NC",
+      "en": "Green Push Button 1NO+1NC"
+     },
+     "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+     },
+     "tagPrefix": "S",
+     "graphics": {
+      "preview": "preview.png",
+      "size": {
+       "width": 1800,
+       "height": 2100
+      }
+     },
+     "terminals": [
+      {
+       "id": "1A",
+       "label": "1A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "3A",
+       "label": "3A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "2A",
+       "label": "2A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "4A",
+       "label": "4A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      }
+     ],
+     "rules": {
+      "allowedConnections": {
+       "Potencia": [
+        "Potencia"
+       ],
+       "Control": [
+        "Control",
+        "Señal"
+       ],
+       "Señal": [
+        "Señal",
+        "Control"
+       ]
+      }
+     },
+     "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "pushbutton",
+      "terminalPairs": [
+       {
+        "id": "contact-nc-a",
+        "terminals": [
+         "1A",
+         "2A"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+         "1A": "contact_nc",
+         "2A": "contact_nc"
+        }
+       },
+       {
+        "id": "contact-no-b",
+        "terminals": [
+         "3A",
+         "4A"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+         "3A": "contact_no",
+         "4A": "contact_no"
+        }
+       }
+      ],
+      "defaultState": "off",
+      "states": {
+       "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+       },
+       "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+       }
+      }
+     },
+     "physical": {
+      "original": {
+       "widthMm": 26.999,
+       "heightMm": 31.498
+      },
+      "widthMm": 26.999,
+      "heightMm": 31.498,
+      "estimated": true,
+      "dimensionEvidence": {
+       "classification": "teaching_placement_estimate",
+       "basis": "owner_accepted_legacy_teaching_estimate",
+       "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      }
+     },
+     "docking": {
+      "zLayer": 2,
+      "presentationLayer": "device_front"
+     }
+    },
+    "files": {
+     "preview.png": {
+      "base": "f_313786787c5662695501.png",
+      "patches": [
+       {
+        "file": "f_210a1d481deedf42a484.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_0a69be6ece084a35064f.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_b1db2ae162566022086e.png",
+        "x": 0,
+        "y": 352
+       },
+       {
+        "file": "f_e3f811602761d8e45782.png",
+        "x": 864,
+        "y": 352
+       },
+       {
+        "file": "f_9a56bb5ccf21bad185d5.png",
+        "x": 192,
+        "y": 864
+       },
+       {
+        "file": "f_74f85e56b4286db1e101.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_off.png": {
+      "base": "f_6ae85728a9f74fcecc3f.png",
+      "patches": [
+       {
+        "file": "f_12a6072c84d1c4da9c6f.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_8954ce84313fe187b77d.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_05862b4c474a0c49b8d3.png",
+        "x": 416,
+        "y": 1824
+       },
+       {
+        "file": "f_5cab05802239ce1a29b0.png",
+        "x": 1184,
+        "y": 1824
+       }
+      ]
+     },
+     "state_off_lo.png": {
+      "base": "f_313786787c5662695501.png",
+      "patches": [
+       {
+        "file": "f_210a1d481deedf42a484.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_0a69be6ece084a35064f.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_b1db2ae162566022086e.png",
+        "x": 0,
+        "y": 352
+       },
+       {
+        "file": "f_e3f811602761d8e45782.png",
+        "x": 864,
+        "y": 352
+       },
+       {
+        "file": "f_9a56bb5ccf21bad185d5.png",
+        "x": 192,
+        "y": 864
+       },
+       {
+        "file": "f_74f85e56b4286db1e101.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_on.png": {
+      "base": "f_81fd5702bb6d296a269c.png",
+      "patches": [
+       {
+        "file": "f_5b5ec79a2161fa75ca61.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_4636afba56e6aa5f53d5.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_942c9e9f6f90e8c220b7.png",
+        "x": 416,
+        "y": 1824
+       },
+       {
+        "file": "f_e2a1af7b97fd2211d22d.png",
+        "x": 1184,
+        "y": 1824
+       }
+      ]
+     },
+     "state_on_lo.png": {
+      "base": "f_92c81e2b49884708befd.png",
+      "patches": [
+       {
+        "file": "f_22d9115052099ccd1c97.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_8c66365abd3c98919f03.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_a212d67092b4ce914833.png",
+        "x": 0,
+        "y": 352
+       },
+       {
+        "file": "f_71899c2445af0587d348.png",
+        "x": 864,
+        "y": 352
+       },
+       {
+        "file": "f_b90f9cca92e546fb3aca.png",
+        "x": 192,
+        "y": 864
+       },
+       {
+        "file": "f_3123cfeca1ec96059cf9.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "Pulsador verde 2NO",
+    "group": "verde",
+    "legacyPath": "CONTROL DEVICES/Pulsador verde 2NO.wc",
+    "legacySha256": [
+     "5c78a786b958f50dc02b60de2af9dd1370fa66fbe94d7a210b0c06ee11ba171e"
+    ],
+    "definition": {
+     "schemaVersion": 3,
+     "id": "Pulsador verde 2NO",
+     "name": {
+      "es": "Pulsador verde 2NO",
+      "en": "Green Push Button 2NO"
+     },
+     "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+     },
+     "tagPrefix": "S",
+     "graphics": {
+      "preview": "preview.png",
+      "size": {
+       "width": 1800,
+       "height": 2100
+      }
+     },
+     "terminals": [
+      {
+       "id": "3A",
+       "label": "3A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "3B",
+       "label": "3B",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "4A",
+       "label": "4A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "4B",
+       "label": "4B",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      }
+     ],
+     "rules": {
+      "allowedConnections": {
+       "Potencia": [
+        "Potencia"
+       ],
+       "Control": [
+        "Control",
+        "Señal"
+       ],
+       "Señal": [
+        "Señal",
+        "Control"
+       ]
+      }
+     },
+     "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "pushbutton",
+      "terminalPairs": [
+       {
+        "id": "contact-no-a",
+        "terminals": [
+         "3A",
+         "4A"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+         "3A": "contact_no",
+         "4A": "contact_no"
+        }
+       },
+       {
+        "id": "contact-no-b",
+        "terminals": [
+         "3B",
+         "4B"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+         "3B": "contact_no",
+         "4B": "contact_no"
+        }
+       }
+      ],
+      "defaultState": "off",
+      "states": {
+       "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+       },
+       "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+       }
+      }
+     },
+     "physical": {
+      "original": {
+       "widthMm": 26.999,
+       "heightMm": 31.498
+      },
+      "widthMm": 26.999,
+      "heightMm": 31.498,
+      "estimated": true,
+      "dimensionEvidence": {
+       "classification": "teaching_placement_estimate",
+       "basis": "owner_accepted_legacy_teaching_estimate",
+       "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      }
+     },
+     "docking": {
+      "zLayer": 2,
+      "presentationLayer": "device_front"
+     }
+    },
+    "files": {
+     "preview.png": {
+      "base": "f_313786787c5662695501.png",
+      "patches": [
+       {
+        "file": "f_75ab7d688017e251e44e.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_7b33764b228b28b7e422.png",
+        "x": 0,
+        "y": 352
+       },
+       {
+        "file": "f_e3f811602761d8e45782.png",
+        "x": 864,
+        "y": 352
+       },
+       {
+        "file": "f_2e50ebfa7f1a2b5caa3c.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_off.png": {
+      "base": "f_6ae85728a9f74fcecc3f.png",
+      "patches": [
+       {
+        "file": "f_b9066c84520d17561bb4.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_36101df5235f9e12d3b7.png",
+        "x": 1184,
+        "y": 1824
+       }
+      ]
+     },
+     "state_off_lo.png": {
+      "base": "f_313786787c5662695501.png",
+      "patches": [
+       {
+        "file": "f_75ab7d688017e251e44e.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_7b33764b228b28b7e422.png",
+        "x": 0,
+        "y": 352
+       },
+       {
+        "file": "f_e3f811602761d8e45782.png",
+        "x": 864,
+        "y": 352
+       },
+       {
+        "file": "f_2e50ebfa7f1a2b5caa3c.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_on.png": {
+      "base": "f_81fd5702bb6d296a269c.png",
+      "patches": [
+       {
+        "file": "f_a7d33480eaebb6394b7f.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_0f94f2245d3052375351.png",
+        "x": 1184,
+        "y": 1824
+       }
+      ]
+     },
+     "state_on_lo.png": {
+      "base": "f_92c81e2b49884708befd.png",
+      "patches": [
+       {
+        "file": "f_303968334f54665953bf.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_ff3ee6a15a6508f3dbaf.png",
+        "x": 0,
+        "y": 352
+       },
+       {
+        "file": "f_82ac3d168c8874d18a82.png",
+        "x": 864,
+        "y": 352
+       },
+       {
+        "file": "f_cf1e1735787bf41ec3cc.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "Pulsador verde 2NC",
+    "group": "verde",
+    "legacyPath": "CONTROL DEVICES/Pulsador verde 2NC.wc",
+    "legacySha256": [
+     "286537975570224bc49038d1ae2bc9d800d3bc57eff17ceb8c060bfe3c66d2e2"
+    ],
+    "definition": {
+     "schemaVersion": 3,
+     "id": "Pulsador verde 2NC",
+     "name": {
+      "es": "Pulsador verde 2NC",
+      "en": "Green Push Button 2NC"
+     },
+     "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+     },
+     "tagPrefix": "S",
+     "graphics": {
+      "preview": "preview.png",
+      "size": {
+       "width": 1800,
+       "height": 2100
+      }
+     },
+     "terminals": [
+      {
+       "id": "1A",
+       "label": "1A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "1B",
+       "label": "1B",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "2A",
+       "label": "2A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "2B",
+       "label": "2B",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      }
+     ],
+     "rules": {
+      "allowedConnections": {
+       "Potencia": [
+        "Potencia"
+       ],
+       "Control": [
+        "Control",
+        "Señal"
+       ],
+       "Señal": [
+        "Señal",
+        "Control"
+       ]
+      }
+     },
+     "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "pushbutton",
+      "terminalPairs": [
+       {
+        "id": "contact-nc-a",
+        "terminals": [
+         "1A",
+         "2A"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+         "1A": "contact_nc",
+         "2A": "contact_nc"
+        }
+       },
+       {
+        "id": "contact-nc-b",
+        "terminals": [
+         "1B",
+         "2B"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+         "1B": "contact_nc",
+         "2B": "contact_nc"
+        }
+       }
+      ],
+      "defaultState": "off",
+      "states": {
+       "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+       },
+       "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+       }
+      }
+     },
+     "physical": {
+      "original": {
+       "widthMm": 26.999,
+       "heightMm": 31.498
+      },
+      "widthMm": 26.999,
+      "heightMm": 31.498,
+      "estimated": true,
+      "dimensionEvidence": {
+       "classification": "teaching_placement_estimate",
+       "basis": "owner_accepted_legacy_teaching_estimate",
+       "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      }
+     },
+     "docking": {
+      "zLayer": 2,
+      "presentationLayer": "device_front"
+     }
+    },
+    "files": {
+     "preview.png": {
+      "base": "f_313786787c5662695501.png",
+      "patches": [
+       {
+        "file": "f_210a1d481deedf42a484.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_e8daae787d4bc18ea490.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_b1db2ae162566022086e.png",
+        "x": 0,
+        "y": 352
+       },
+       {
+        "file": "f_e3f811602761d8e45782.png",
+        "x": 864,
+        "y": 352
+       },
+       {
+        "file": "f_0d34adab274cf7f2f41f.png",
+        "x": 192,
+        "y": 864
+       },
+       {
+        "file": "f_04554f335272805dc73f.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_off.png": {
+      "base": "f_6ae85728a9f74fcecc3f.png",
+      "patches": [
+       {
+        "file": "f_12a6072c84d1c4da9c6f.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_2621edef9c08a9629be6.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_fdeb82ca0052c2b8fc6a.png",
+        "x": 416,
+        "y": 1824
+       },
+       {
+        "file": "f_e16d89711e6ec0761a6c.png",
+        "x": 1216,
+        "y": 1824
+       }
+      ]
+     },
+     "state_off_lo.png": {
+      "base": "f_313786787c5662695501.png",
+      "patches": [
+       {
+        "file": "f_210a1d481deedf42a484.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_e8daae787d4bc18ea490.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_b1db2ae162566022086e.png",
+        "x": 0,
+        "y": 352
+       },
+       {
+        "file": "f_e3f811602761d8e45782.png",
+        "x": 864,
+        "y": 352
+       },
+       {
+        "file": "f_0d34adab274cf7f2f41f.png",
+        "x": 192,
+        "y": 864
+       },
+       {
+        "file": "f_04554f335272805dc73f.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_on.png": {
+      "base": "f_81fd5702bb6d296a269c.png",
+      "patches": [
+       {
+        "file": "f_736efb2b0dc793bd7378.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_6c5d5d289f3f51afd9a9.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_7d5b57638df746b701f2.png",
+        "x": 416,
+        "y": 1824
+       },
+       {
+        "file": "f_3fabc1ca6b138dc27ae3.png",
+        "x": 1216,
+        "y": 1824
+       }
+      ]
+     },
+     "state_on_lo.png": {
+      "base": "f_92c81e2b49884708befd.png",
+      "patches": [
+       {
+        "file": "f_3d56a65d016a56552ce9.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_d4a74a090b66fed9d6c5.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_e2fbef7e450c454250b0.png",
+        "x": 0,
+        "y": 352
+       },
+       {
+        "file": "f_71899c2445af0587d348.png",
+        "x": 864,
+        "y": 352
+       },
+       {
+        "file": "f_bbe1d7b0ed166eca38c5.png",
+        "x": 192,
+        "y": 864
+       },
+       {
+        "file": "f_7d19fcf2acb0492b9704.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "Pulsador azul 1NO",
+    "group": "azul",
+    "legacyPath": "CONTROL DEVICES/Pulsador azul 1NO.wc",
+    "legacySha256": [
+     "4fe3e46b13346bbbfe49334389ad07008810567e4713124e93ec4180f6b23d3c"
+    ],
+    "definition": {
+     "schemaVersion": 3,
+     "id": "Pulsador azul 1NO",
+     "name": {
+      "es": "Pulsador azul 1NO",
+      "en": "Blue Push Button 1NO"
+     },
+     "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+     },
+     "tagPrefix": "S",
+     "graphics": {
+      "preview": "preview.png",
+      "size": {
+       "width": 1800,
+       "height": 2100
+      }
+     },
+     "terminals": [
+      {
+       "id": "3",
+       "label": "3",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 52.4993,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "4",
+       "label": "4",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 52.4993,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      }
+     ],
+     "rules": {
+      "allowedConnections": {
+       "Potencia": [
+        "Potencia"
+       ],
+       "Control": [
+        "Control",
+        "Señal"
+       ],
+       "Señal": [
+        "Señal",
+        "Control"
+       ]
+      }
+     },
+     "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "pushbutton",
+      "terminalPairs": [
+       {
+        "id": "contact_no",
+        "terminals": [
+         "3",
+         "4"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+         "3": "contact_no",
+         "4": "contact_no"
+        }
+       }
+      ],
+      "defaultState": "off",
+      "states": {
+       "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+       },
+       "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+       }
+      }
+     },
+     "physical": {
+      "original": {
+       "widthMm": 26.999,
+       "heightMm": 31.498
+      },
+      "widthMm": 26.999,
+      "heightMm": 31.498,
+      "estimated": true,
+      "dimensionEvidence": {
+       "classification": "teaching_placement_estimate",
+       "basis": "owner_accepted_legacy_teaching_estimate",
+       "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      }
+     },
+     "docking": {
+      "zLayer": 2,
+      "presentationLayer": "device_front"
+     }
+    },
+    "files": {
+     "preview.png": {
+      "base": "f_ca61b9b745b745686dc9.png"
+     },
+     "state_off.png": {
+      "base": "f_ec2448080aae8bfe0689.png"
+     },
+     "state_off_lo.png": {
+      "base": "f_ca61b9b745b745686dc9.png"
+     },
+     "state_on.png": {
+      "base": "f_e04c72555e236930cc9d.png"
+     },
+     "state_on_lo.png": {
+      "base": "f_9f758c4e44f4aa6ab043.png"
+     }
+    }
+   },
+   {
+    "id": "Pulsador azul 1NC",
+    "group": "azul",
+    "legacyPath": "CONTROL DEVICES/Pulsador azul 1NC.wc",
+    "legacySha256": [
+     "19bc50b95bd1d3e201c2f2006ede59c8d43f86b9668b856690f53c77ee56c5b9"
+    ],
+    "definition": {
+     "schemaVersion": 3,
+     "id": "Pulsador azul 1NC",
+     "name": {
+      "es": "Pulsador azul 1NC",
+      "en": "Blue Push Button 1NC"
+     },
+     "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+     },
+     "tagPrefix": "S",
+     "graphics": {
+      "preview": "preview.png",
+      "size": {
+       "width": 1800,
+       "height": 2100
+      }
+     },
+     "terminals": [
+      {
+       "id": "1",
+       "label": "1",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 52.4993,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "2",
+       "label": "2",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 52.4993,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      }
+     ],
+     "rules": {
+      "allowedConnections": {
+       "Potencia": [
+        "Potencia"
+       ],
+       "Control": [
+        "Control",
+        "Señal"
+       ],
+       "Señal": [
+        "Señal",
+        "Control"
+       ]
+      }
+     },
+     "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "pushbutton",
+      "terminalPairs": [
+       {
+        "id": "contact_nc",
+        "terminals": [
+         "1",
+         "2"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+         "1": "contact_nc",
+         "2": "contact_nc"
+        }
+       }
+      ],
+      "defaultState": "off",
+      "states": {
+       "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+       },
+       "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+       }
+      }
+     },
+     "physical": {
+      "original": {
+       "widthMm": 26.999,
+       "heightMm": 31.498
+      },
+      "widthMm": 26.999,
+      "heightMm": 31.498,
+      "estimated": true,
+      "dimensionEvidence": {
+       "classification": "teaching_placement_estimate",
+       "basis": "owner_accepted_legacy_teaching_estimate",
+       "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      }
+     },
+     "docking": {
+      "zLayer": 2,
+      "presentationLayer": "device_front"
+     }
+    },
+    "files": {
+     "preview.png": {
+      "base": "f_ca61b9b745b745686dc9.png",
+      "patches": [
+       {
+        "file": "f_3610d354e152af8eed69.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_08c2f022791c3cc111ea.png",
+        "x": 192,
+        "y": 864
+       }
+      ]
+     },
+     "state_off.png": {
+      "base": "f_ec2448080aae8bfe0689.png",
+      "patches": [
+       {
+        "file": "f_85d8c84e923d3ba82910.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_87ecd445bf198c697cd8.png",
+        "x": 416,
+        "y": 1824
+       }
+      ]
+     },
+     "state_off_lo.png": {
+      "base": "f_ca61b9b745b745686dc9.png",
+      "patches": [
+       {
+        "file": "f_3610d354e152af8eed69.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_08c2f022791c3cc111ea.png",
+        "x": 192,
+        "y": 864
+       }
+      ]
+     },
+     "state_on.png": {
+      "base": "f_e04c72555e236930cc9d.png",
+      "patches": [
+       {
+        "file": "f_f3adadfa01a2d20b11de.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_1eb7209f369d53bcd6f7.png",
+        "x": 416,
+        "y": 1824
+       }
+      ]
+     },
+     "state_on_lo.png": {
+      "base": "f_9f758c4e44f4aa6ab043.png",
+      "patches": [
+       {
+        "file": "f_e15bb4c3fd879e3d0b2a.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_262ec2572fceeb23d034.png",
+        "x": 192,
+        "y": 864
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "Pulsador azul 1NO+1NC",
+    "group": "azul",
+    "legacyPath": "CONTROL DEVICES/Pulsador azul 1NO+1NC.wc",
+    "legacySha256": [
+     "5a44a66646f059d06f777ea5dbc3971d4d9145929a5c9fc1bc212d066c13e269"
+    ],
+    "definition": {
+     "schemaVersion": 3,
+     "id": "Pulsador azul 1NO+1NC",
+     "name": {
+      "es": "Pulsador azul 1NO+1NC",
+      "en": "Blue Push Button 1NO+1NC"
+     },
+     "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+     },
+     "tagPrefix": "S",
+     "graphics": {
+      "preview": "preview.png",
+      "size": {
+       "width": 1800,
+       "height": 2100
+      }
+     },
+     "terminals": [
+      {
+       "id": "1A",
+       "label": "1A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "3A",
+       "label": "3A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "2A",
+       "label": "2A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "4A",
+       "label": "4A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      }
+     ],
+     "rules": {
+      "allowedConnections": {
+       "Potencia": [
+        "Potencia"
+       ],
+       "Control": [
+        "Control",
+        "Señal"
+       ],
+       "Señal": [
+        "Señal",
+        "Control"
+       ]
+      }
+     },
+     "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "pushbutton",
+      "terminalPairs": [
+       {
+        "id": "contact-nc-a",
+        "terminals": [
+         "1A",
+         "2A"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+         "1A": "contact_nc",
+         "2A": "contact_nc"
+        }
+       },
+       {
+        "id": "contact-no-b",
+        "terminals": [
+         "3A",
+         "4A"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+         "3A": "contact_no",
+         "4A": "contact_no"
+        }
+       }
+      ],
+      "defaultState": "off",
+      "states": {
+       "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+       },
+       "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+       }
+      }
+     },
+     "physical": {
+      "original": {
+       "widthMm": 26.999,
+       "heightMm": 31.498
+      },
+      "widthMm": 26.999,
+      "heightMm": 31.498,
+      "estimated": true,
+      "dimensionEvidence": {
+       "classification": "teaching_placement_estimate",
+       "basis": "owner_accepted_legacy_teaching_estimate",
+       "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      }
+     },
+     "docking": {
+      "zLayer": 2,
+      "presentationLayer": "device_front"
+     }
+    },
+    "files": {
+     "preview.png": {
+      "base": "f_ca61b9b745b745686dc9.png",
+      "patches": [
+       {
+        "file": "f_2fc872e814cdf2508647.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_dc02082369a0f9f1747d.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_250002bec4455c62aa2d.png",
+        "x": 0,
+        "y": 352
+       },
+       {
+        "file": "f_a256602bd15dac9d789a.png",
+        "x": 864,
+        "y": 352
+       },
+       {
+        "file": "f_0b6e840c863dd5da8b87.png",
+        "x": 192,
+        "y": 864
+       },
+       {
+        "file": "f_2aba81ced4c527877d49.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_off.png": {
+      "base": "f_ec2448080aae8bfe0689.png",
+      "patches": [
+       {
+        "file": "f_491dc3934a6153241a23.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_88ac59d1be55f9d6b673.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_b64381c1bd06cf899686.png",
+        "x": 416,
+        "y": 1824
+       },
+       {
+        "file": "f_690a1a730c916ebe9f63.png",
+        "x": 1184,
+        "y": 1824
+       }
+      ]
+     },
+     "state_off_lo.png": {
+      "base": "f_ca61b9b745b745686dc9.png",
+      "patches": [
+       {
+        "file": "f_2fc872e814cdf2508647.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_dc02082369a0f9f1747d.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_250002bec4455c62aa2d.png",
+        "x": 0,
+        "y": 352
+       },
+       {
+        "file": "f_a256602bd15dac9d789a.png",
+        "x": 864,
+        "y": 352
+       },
+       {
+        "file": "f_0b6e840c863dd5da8b87.png",
+        "x": 192,
+        "y": 864
+       },
+       {
+        "file": "f_2aba81ced4c527877d49.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_on.png": {
+      "base": "f_e04c72555e236930cc9d.png",
+      "patches": [
+       {
+        "file": "f_ad253027c646479a35ca.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_2d87325da007b1be1025.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_40f77015c93fea90cffe.png",
+        "x": 416,
+        "y": 1824
+       },
+       {
+        "file": "f_b5474cdabab430982803.png",
+        "x": 1184,
+        "y": 1824
+       }
+      ]
+     },
+     "state_on_lo.png": {
+      "base": "f_9f758c4e44f4aa6ab043.png",
+      "patches": [
+       {
+        "file": "f_9bb1c99d10337b787b69.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_6ff2a243e2fa12b79eb6.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_2b4fe2fe4763b037ee4c.png",
+        "x": 0,
+        "y": 352
+       },
+       {
+        "file": "f_e5dbde7f88f2c6f6c28d.png",
+        "x": 864,
+        "y": 352
+       },
+       {
+        "file": "f_7bbda3441760c5c7dd65.png",
+        "x": 192,
+        "y": 864
+       },
+       {
+        "file": "f_1c353010b2b8a156b21e.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "Pulsador azul 2NO",
+    "group": "azul",
+    "legacyPath": "CONTROL DEVICES/Pulsador azul 2NO.wc",
+    "legacySha256": [
+     "8495e06ac90f386fc782dcd47b2613032ecf8eb609e33f90785defc91463bf8e"
+    ],
+    "definition": {
+     "schemaVersion": 3,
+     "id": "Pulsador azul 2NO",
+     "name": {
+      "es": "Pulsador azul 2NO",
+      "en": "Blue Push Button 2NO"
+     },
+     "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+     },
+     "tagPrefix": "S",
+     "graphics": {
+      "preview": "preview.png",
+      "size": {
+       "width": 1800,
+       "height": 2100
+      }
+     },
+     "terminals": [
+      {
+       "id": "3A",
+       "label": "3A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "3B",
+       "label": "3B",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "4A",
+       "label": "4A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "4B",
+       "label": "4B",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      }
+     ],
+     "rules": {
+      "allowedConnections": {
+       "Potencia": [
+        "Potencia"
+       ],
+       "Control": [
+        "Control",
+        "Señal"
+       ],
+       "Señal": [
+        "Señal",
+        "Control"
+       ]
+      }
+     },
+     "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "pushbutton",
+      "terminalPairs": [
+       {
+        "id": "contact-no-a",
+        "terminals": [
+         "3A",
+         "4A"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+         "3A": "contact_no",
+         "4A": "contact_no"
+        }
+       },
+       {
+        "id": "contact-no-b",
+        "terminals": [
+         "3B",
+         "4B"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+         "3B": "contact_no",
+         "4B": "contact_no"
+        }
+       }
+      ],
+      "defaultState": "off",
+      "states": {
+       "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+       },
+       "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+       }
+      }
+     },
+     "physical": {
+      "original": {
+       "widthMm": 26.999,
+       "heightMm": 31.498
+      },
+      "widthMm": 26.999,
+      "heightMm": 31.498,
+      "estimated": true,
+      "dimensionEvidence": {
+       "classification": "teaching_placement_estimate",
+       "basis": "owner_accepted_legacy_teaching_estimate",
+       "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      }
+     },
+     "docking": {
+      "zLayer": 2,
+      "presentationLayer": "device_front"
+     }
+    },
+    "files": {
+     "preview.png": {
+      "base": "f_ca61b9b745b745686dc9.png",
+      "patches": [
+       {
+        "file": "f_5cf0fbb99428dce7cb46.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_b918ffe7e03ba2cb7f31.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_off.png": {
+      "base": "f_ec2448080aae8bfe0689.png",
+      "patches": [
+       {
+        "file": "f_e79cb294bd94c5296683.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_2c7da4d2d4fee03ff90c.png",
+        "x": 1184,
+        "y": 1824
+       }
+      ]
+     },
+     "state_off_lo.png": {
+      "base": "f_ca61b9b745b745686dc9.png",
+      "patches": [
+       {
+        "file": "f_5cf0fbb99428dce7cb46.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_b918ffe7e03ba2cb7f31.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_on.png": {
+      "base": "f_e04c72555e236930cc9d.png",
+      "patches": [
+       {
+        "file": "f_a92c32bfc6cb9ba450cc.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_3a28181b9bddbfa4b2b4.png",
+        "x": 1184,
+        "y": 1824
+       }
+      ]
+     },
+     "state_on_lo.png": {
+      "base": "f_9f758c4e44f4aa6ab043.png",
+      "patches": [
+       {
+        "file": "f_a2b4755b3678d77e23f8.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_61545755b1330ef286e1.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "Pulsador azul 2NC",
+    "group": "azul",
+    "legacyPath": "CONTROL DEVICES/Pulsador azul 2NC.wc",
+    "legacySha256": [
+     "4133bf33da3bc40840a90e1886385bd1b104e3b13a311fa1483ebded62512d0f"
+    ],
+    "definition": {
+     "schemaVersion": 3,
+     "id": "Pulsador azul 2NC",
+     "name": {
+      "es": "Pulsador azul 2NC",
+      "en": "Blue Push Button 2NC"
+     },
+     "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+     },
+     "tagPrefix": "S",
+     "graphics": {
+      "preview": "preview.png",
+      "size": {
+       "width": 1800,
+       "height": 2100
+      }
+     },
+     "terminals": [
+      {
+       "id": "1A",
+       "label": "1A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "1B",
+       "label": "1B",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "2A",
+       "label": "2A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "2B",
+       "label": "2B",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      }
+     ],
+     "rules": {
+      "allowedConnections": {
+       "Potencia": [
+        "Potencia"
+       ],
+       "Control": [
+        "Control",
+        "Señal"
+       ],
+       "Señal": [
+        "Señal",
+        "Control"
+       ]
+      }
+     },
+     "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "pushbutton",
+      "terminalPairs": [
+       {
+        "id": "contact-nc-a",
+        "terminals": [
+         "1A",
+         "2A"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+         "1A": "contact_nc",
+         "2A": "contact_nc"
+        }
+       },
+       {
+        "id": "contact-nc-b",
+        "terminals": [
+         "1B",
+         "2B"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+         "1B": "contact_nc",
+         "2B": "contact_nc"
+        }
+       }
+      ],
+      "defaultState": "off",
+      "states": {
+       "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+       },
+       "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+       }
+      }
+     },
+     "physical": {
+      "original": {
+       "widthMm": 26.999,
+       "heightMm": 31.498
+      },
+      "widthMm": 26.999,
+      "heightMm": 31.498,
+      "estimated": true,
+      "dimensionEvidence": {
+       "classification": "teaching_placement_estimate",
+       "basis": "owner_accepted_legacy_teaching_estimate",
+       "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      }
+     },
+     "docking": {
+      "zLayer": 2,
+      "presentationLayer": "device_front"
+     }
+    },
+    "files": {
+     "preview.png": {
+      "base": "f_ca61b9b745b745686dc9.png",
+      "patches": [
+       {
+        "file": "f_a1ef3ab571c0b3882c7f.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_8ad87b788e0a59c99a9a.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_250002bec4455c62aa2d.png",
+        "x": 0,
+        "y": 352
+       },
+       {
+        "file": "f_a256602bd15dac9d789a.png",
+        "x": 864,
+        "y": 352
+       },
+       {
+        "file": "f_f2fcccfce763a5a7e46b.png",
+        "x": 192,
+        "y": 864
+       },
+       {
+        "file": "f_74b892e3ed9c9aaddd52.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_off.png": {
+      "base": "f_ec2448080aae8bfe0689.png",
+      "patches": [
+       {
+        "file": "f_f28219ed8329e9f7f1f6.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_3fcd24f65c7b98d67505.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_c0bc06e8653898ddd936.png",
+        "x": 416,
+        "y": 1824
+       },
+       {
+        "file": "f_94f1b7c701c5bda97e93.png",
+        "x": 1216,
+        "y": 1824
+       }
+      ]
+     },
+     "state_off_lo.png": {
+      "base": "f_ca61b9b745b745686dc9.png",
+      "patches": [
+       {
+        "file": "f_a1ef3ab571c0b3882c7f.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_8ad87b788e0a59c99a9a.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_250002bec4455c62aa2d.png",
+        "x": 0,
+        "y": 352
+       },
+       {
+        "file": "f_a256602bd15dac9d789a.png",
+        "x": 864,
+        "y": 352
+       },
+       {
+        "file": "f_f2fcccfce763a5a7e46b.png",
+        "x": 192,
+        "y": 864
+       },
+       {
+        "file": "f_74b892e3ed9c9aaddd52.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_on.png": {
+      "base": "f_e04c72555e236930cc9d.png",
+      "patches": [
+       {
+        "file": "f_e491c320012c6bfe1e6e.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_c8e057f46e04b6c7b28b.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_243c2b6e106be3cffdb6.png",
+        "x": 416,
+        "y": 1824
+       },
+       {
+        "file": "f_b5984be5fa91c68de7dd.png",
+        "x": 1216,
+        "y": 1824
+       }
+      ]
+     },
+     "state_on_lo.png": {
+      "base": "f_9f758c4e44f4aa6ab043.png",
+      "patches": [
+       {
+        "file": "f_78c2d5a82ffcde5c8c18.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_d778eac68cb59d7261b1.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_2b4fe2fe4763b037ee4c.png",
+        "x": 0,
+        "y": 352
+       },
+       {
+        "file": "f_e5dbde7f88f2c6f6c28d.png",
+        "x": 864,
+        "y": 352
+       },
+       {
+        "file": "f_161aada6bab2f6f9423f.png",
+        "x": 192,
+        "y": 864
+       },
+       {
+        "file": "f_d4ee3b708db5720f2902.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     }
+    }
+   }
+  ]
+ }
+}

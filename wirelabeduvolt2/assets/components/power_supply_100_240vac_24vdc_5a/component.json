@@ -1,0 +1,359 @@
+{
+  "schemaVersion": 3,
+  "id": "Power Supply 100-240VAC 24VDC 5A",
+  "name": {
+    "es": "Power Supply 100-240VAC 24VDC 5A",
+    "en": "Power Supply 100-240VAC 24VDC 5A"
+  },
+  "category": {
+    "es": "Potencia",
+    "en": "Power"
+  },
+  "tagPrefix": "G",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 4800,
+      "height": 8400
+    }
+  },
+  "terminals": [
+    {
+      "id": "DC+1",
+      "label": "+",
+      "signal": "Control",
+      "role": "output",
+      "nx": 0.125,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 29.9998,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control"
+    },
+    {
+      "id": "DC+2",
+      "label": "+",
+      "signal": "Control",
+      "role": "output",
+      "nx": 0.375,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 29.9998,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control"
+    },
+    {
+      "id": "DC-1",
+      "label": "-",
+      "signal": "Control",
+      "role": "output",
+      "nx": 0.625,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 29.9998,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control"
+    },
+    {
+      "id": "DC-2",
+      "label": "-",
+      "signal": "Control",
+      "role": "output",
+      "nx": 0.875,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 29.9998,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control"
+    },
+    {
+      "id": "PE",
+      "label": "PE",
+      "signal": "Potencia",
+      "role": "input",
+      "nx": 0.25,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 29.9998,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "phaseIdentity": "PE"
+    },
+    {
+      "id": "N",
+      "label": "N",
+      "signal": "Potencia",
+      "role": "input",
+      "nx": 0.5,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 29.9998,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "phaseIdentity": "N"
+    },
+    {
+      "id": "L",
+      "label": "L",
+      "signal": "Potencia",
+      "role": "input",
+      "nx": 0.75,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 29.9998,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "industrial"
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "power_supply_dc",
+    "enabled": true,
+    "voltage": "ac",
+    "activationRule": "power_supply_dc",
+    "terminalPairs": [
+      {
+        "id": "ac_input",
+        "terminals": [
+          "L",
+          "N"
+        ],
+        "simBehavior": "psu_ac_input",
+        "currentPath": "sink"
+      },
+      {
+        "id": "dc_plus",
+        "terminals": [
+          "DC+1",
+          "DC+2"
+        ],
+        "simBehavior": "source_dc_plus",
+        "currentPath": "source",
+        "activeInStates": [
+          "on"
+        ]
+      },
+      {
+        "id": "dc_minus",
+        "terminals": [
+          "DC-1",
+          "DC-2"
+        ],
+        "simBehavior": "source_dc_minus",
+        "currentPath": "source",
+        "activeInStates": [
+          "on"
+        ]
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+      },
+      "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+      }
+    },
+    "sourceVoltageV": 24.0,
+    "ratedOutputCurrentA": 5.0,
+    "inputVoltageRangeV": [
+      100.0,
+      240.0
+    ],
+    "nameplateEvidence": {
+      "classification": "package_nameplate_label",
+      "basis": "Model name and printed artwork legend of this package (OUTPUT DC 24V / 5A; INPUT AC 100-240V 50/60 Hz). Exact brand/model unknown; no datasheet.",
+      "unknowns": [
+        "efficiency at load",
+        "no-load input power",
+        "input power factor and inrush",
+        "output regulation, ripple and internal impedance",
+        "current-limit / overload behaviour"
+      ]
+    },
+    "modelLimitations": "Ideal 24 V DC output (the solved load sets the current). Input: P_in = P_out / efficiency + no-load power at the declared input PF (comparable Mean Well LRS values, see Details). One-tick lag of the input to the output (exact at steady state). Harmonics/true PF, inrush and current-limit foldback are not modelled.",
+    "supplyConsumption": {
+      "schema": 1,
+      "model": "converter",
+      "ratedVoltageV": 230.0,
+      "efficiency": 0.89,
+      "noLoadPowerW": 0.5,
+      "powerFactor": 0.45,
+      "branches": [
+        {
+          "terminals": [
+            "L",
+            "N"
+          ]
+        }
+      ],
+      "evidenceFile": "artifacts/device-datasheets-20261012/EVIDENCE.md"
+    },
+    "parameterEvidence": [
+      {
+        "key": "supplyConsumption.efficiency",
+        "label": "Conversion efficiency",
+        "value": 0.89,
+        "tier": "published",
+        "min": 0.3,
+        "max": 1,
+        "conditions": "230 V AC, rated load",
+        "source": "Mean Well LRS (comparable 24 V class) efficiency 89 % typ.",
+        "url": "https://www.meanwell.com/Upload/PDF/LRS-150/LRS-150-SPEC.PDF",
+        "page": "spec",
+        "derivation": "generic unbranded PSU; comparable datasheet"
+      },
+      {
+        "key": "supplyConsumption.noLoadPowerW",
+        "label": "No-load input power",
+        "unit": "W",
+        "value": 0.5,
+        "tier": "published",
+        "min": 0,
+        "max": 20,
+        "conditions": "230 V AC no load",
+        "source": "Mean Well LRS no-load power (max)",
+        "url": "https://www.meanwell.com/Upload/PDF/LRS-150/LRS-150-SPEC.PDF",
+        "page": "spec"
+      },
+      {
+        "key": "supplyConsumption.powerFactor",
+        "label": "Supply power factor (AC)",
+        "value": 0.45,
+        "tier": "estimated",
+        "min": 0.2,
+        "max": 1,
+        "conditions": "230 V AC rated load",
+        "source": "non-PFC capacitor-input SMPS; derived from Mean Well input current at rated load",
+        "url": "https://www.meanwell.com/Upload/PDF/LRS-150/LRS-150-SPEC.PDF",
+        "page": "spec",
+        "derivation": "P_in / (230 V x I_in); range 0.4-0.6"
+      },
+      {
+        "key": "ratedVoltageRangeV",
+        "label": "AC input range",
+        "unit": "V",
+        "value": [
+          100,
+          240
+        ],
+        "tier": "official",
+        "conditions": "nameplate",
+        "source": "package nameplate 100-240 VAC (generic unbranded PSU)",
+        "derivation": "printed rating; the solver rates the input at the 230 V point"
+      },
+      {
+        "key": "supportedFrequenciesHz",
+        "label": "Input frequency",
+        "unit": "Hz",
+        "value": [
+          50,
+          60
+        ],
+        "tier": "published",
+        "conditions": "AC input",
+        "source": "Mean Well LRS (comparable 24 V class): 47-63 Hz",
+        "url": "https://www.meanwell.com/Upload/PDF/LRS-150/LRS-150-SPEC.PDF",
+        "page": "spec INPUT",
+        "derivation": "generic universal-input SMPS; comparable datasheet"
+      }
+    ],
+    "ownerValueDecision": "Owner decision 2026-10-12: no value may stay unknown. Tier order: official exact-model -> published by another reputable source -> owner-approved teaching estimate (derivation, comparables and range recorded). The user may override every value per instance in Details > Electrical parameters.",
+    "ratedVoltageRangeV": [
+      100,
+      240
+    ],
+    "supportedFrequenciesHz": [
+      50,
+      60
+    ]
+  },
+  "docking": {
+    "mountable": true,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "general_montable_riel_din",
+      "dockSize": {
+        "cols": 4,
+        "rows": 2
+      },
+      "hideTerminalsOnDock": [],
+      "overlapPx": 0
+    },
+    "zones": [],
+    "presentationLayer": "device_front"
+  },
+  "physical": {
+    "original": {
+      "widthMm": 71.996,
+      "heightMm": 125.994
+    },
+    "widthMm": 71.996,
+    "heightMm": 125.994,
+    "estimated": true,
+    "dimensionEvidence": {
+      "classification": "teaching_placement_estimate",
+      "basis": "owner_accepted_legacy_teaching_estimate",
+      "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+    }
+  }
+}

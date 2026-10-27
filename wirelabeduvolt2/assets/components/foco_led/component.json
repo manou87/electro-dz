@@ -26,7 +26,15 @@
       "nx": 0.5,
       "ny": 1.0,
       "direction": "bottom",
-      "guideLength": 60
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 36.178,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "industrial"
     },
     {
       "id": "N",
@@ -36,7 +44,16 @@
       "nx": 0.276458,
       "ny": 0.884405,
       "direction": "left",
-      "guideLength": 60
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 36.178,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "phaseIdentity": "N"
     }
   ],
   "rules": {
@@ -84,6 +101,54 @@
         "image": "state_on.png",
         "imageLo": "state_on_lo.png"
       }
+    },
+    "ratedVoltageV": 230.0,
+    "ratedPowerW": 8.0,
+    "powerFactor": 0.5,
+    "parameterEvidence": [
+      {
+        "key": "ratedPowerW",
+        "label": "Rated power",
+        "unit": "W",
+        "value": 8.0,
+        "tier": "published",
+        "min": 0.1,
+        "max": 200,
+        "conditions": "230 V AC",
+        "source": "Philips LED A60 E27 8 W (comparable generic LED lamp)",
+        "url": "https://www.assets.lighting.philips.com/is/content/PhilipsLighting/fp929002026902-pss-global",
+        "derivation": "generic EduVolt lamp; 806 lm class"
+      },
+      {
+        "key": "powerFactor",
+        "label": "Power factor",
+        "value": 0.5,
+        "tier": "published",
+        "min": 0.05,
+        "max": 1,
+        "conditions": "230 V AC",
+        "source": "Philips LED A60 9 W: PF 0.5 (non-PFC driver, <25 W lamps 0.5-0.6)",
+        "url": "https://mea.lighting.philips.com/consumer/p/led-bulb-9w-a60-e27/8718699"
+      }
+    ],
+    "ownerValueDecision": "Owner decision 2026-10-12: no value may stay unknown. Tier order: official exact-model -> published by another reputable source -> owner-approved teaching estimate (derivation, comparables and range recorded). The user may override every value per instance in Details > Electrical parameters."
+  },
+  "physical": {
+    "original": {
+      "widthMm": 71.996,
+      "heightMm": 125.994
+    },
+    "widthMm": 71.996,
+    "heightMm": 125.994,
+    "estimated": true,
+    "dimensionEvidence": {
+      "classification": "teaching_placement_estimate",
+      "basis": "owner_accepted_legacy_teaching_estimate",
+      "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
     }
+  },
+  "docking": {
+    "zLayer": 2,
+    "presentationLayer": "device_front"
   }
 }

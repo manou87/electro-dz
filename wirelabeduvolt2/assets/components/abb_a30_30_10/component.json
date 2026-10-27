@@ -1,0 +1,621 @@
+{
+  "schemaVersion": 3,
+  "id": "abb_a30_30_10",
+  "name": {
+    "en": "ABB A30-30-10 R80",
+    "ar": "ABB A30-30-10 R80"
+  },
+  "category": {
+    "en": "AC Contactor",
+    "ar": "AC Contactor"
+  },
+  "manufacturer": "ABB",
+  "model": "A30-30-10",
+  "orderCode": "1SBL281001R8010",
+  "coilCode": "R80",
+  "tagPrefix": "KM",
+  "physical": {
+    "widthMm": 54,
+    "heightMm": 90,
+    "depthMm": 108.3,
+    "unit": "mm",
+    "estimated": false,
+    "basis": "Exact manufacturer body dimensions; see electrical.manufacturerBody. Image/terminal coordinates unchanged.",
+    "original": {
+      "widthMm": 54,
+      "heightMm": 90,
+      "depthMm": 108.3
+    },
+    "suggested": {
+      "widthMm": 54,
+      "heightMm": 90,
+      "depthMm": 108.3
+    }
+  },
+  "terminals": [
+    {
+      "id": "1",
+      "label": "1/L1",
+      "signal": "Power",
+      "role": "bidirectional",
+      "nx": 0.134,
+      "ny": 0.325,
+      "direction": "top",
+      "pinSize": 11.0,
+      "guideLength": 60,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 21.4211,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "phaseIdentity": "L1"
+    },
+    {
+      "id": "2",
+      "label": "2/T1",
+      "signal": "Power",
+      "role": "bidirectional",
+      "nx": 0.134,
+      "ny": 0.882,
+      "direction": "bottom",
+      "pinSize": 11.0,
+      "guideLength": 60,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 21.4211,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power"
+    },
+    {
+      "id": "3",
+      "label": "3/L2",
+      "signal": "Power",
+      "role": "bidirectional",
+      "nx": 0.372,
+      "ny": 0.325,
+      "direction": "top",
+      "pinSize": 11.0,
+      "guideLength": 60,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 21.4211,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "phaseIdentity": "L2"
+    },
+    {
+      "id": "4",
+      "label": "4/T2",
+      "signal": "Power",
+      "role": "bidirectional",
+      "nx": 0.372,
+      "ny": 0.882,
+      "direction": "bottom",
+      "pinSize": 11.0,
+      "guideLength": 60,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 21.4211,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power"
+    },
+    {
+      "id": "5",
+      "label": "5/L3",
+      "signal": "Power",
+      "role": "bidirectional",
+      "nx": 0.627,
+      "ny": 0.325,
+      "direction": "top",
+      "pinSize": 11.0,
+      "guideLength": 60,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 21.1511,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "phaseIdentity": "L3"
+    },
+    {
+      "id": "6",
+      "label": "6/T3",
+      "signal": "Power",
+      "role": "bidirectional",
+      "nx": 0.627,
+      "ny": 0.882,
+      "direction": "bottom",
+      "pinSize": 11.0,
+      "guideLength": 60,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 21.1511,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power"
+    },
+    {
+      "id": "A1",
+      "label": "A1",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.225,
+      "ny": 0.087,
+      "direction": "top",
+      "pinSize": 11.0,
+      "guideLength": 60,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 36.6292,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control"
+    },
+    {
+      "id": "A2",
+      "label": "A2",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.768,
+      "ny": 0.087,
+      "direction": "top",
+      "pinSize": 11.0,
+      "guideLength": 60,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 36.6905,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control"
+    },
+    {
+      "id": "13",
+      "label": "13 NO",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.862,
+      "ny": 0.325,
+      "direction": "top",
+      "pinSize": 11.0,
+      "guideLength": 60,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 21.1511,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control"
+    },
+    {
+      "id": "14",
+      "label": "14 NO",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.862,
+      "ny": 0.882,
+      "direction": "bottom",
+      "pinSize": 11.0,
+      "guideLength": 60,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 21.1511,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control"
+    }
+  ],
+  "buttons": [],
+  "rules": {
+    "allowedConnections": {
+      "Power": [
+        "Power"
+      ],
+      "Control": [
+        "Control",
+        "Signal"
+      ],
+      "Signal": [
+        "Signal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "activationRule": "coil",
+    "terminalPairs": [
+      {
+        "id": "coil",
+        "terminals": [
+          "A1",
+          "A2"
+        ],
+        "simBehavior": "coil",
+        "currentPath": "sink",
+        "terminalTypes": {
+          "A1": "coil_in",
+          "A2": "coil_in"
+        },
+        "supply": {
+          "voltage": "ac",
+          "ratedVoltageV": 230.0
+        }
+      },
+      {
+        "id": "pole_1",
+        "terminals": [
+          "1",
+          "2"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+          "1": "power_ac",
+          "2": "power_ac"
+        }
+      },
+      {
+        "id": "pole_2",
+        "terminals": [
+          "3",
+          "4"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+          "3": "power_ac",
+          "4": "power_ac"
+        }
+      },
+      {
+        "id": "pole_3",
+        "terminals": [
+          "5",
+          "6"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+          "5": "power_ac",
+          "6": "power_ac"
+        }
+      },
+      {
+        "id": "aux_no",
+        "terminals": [
+          "13",
+          "14"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+          "13": "contact_no",
+          "14": "contact_no"
+        }
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "preview.webp"
+      },
+      "on": {
+        "image": "on.webp"
+      }
+    },
+    "stateSequence": [
+      "off",
+      "on"
+    ],
+    "ratedCurrentA": 32,
+    "contactTopology": "3 main NO + 1 built-in auxiliary NO",
+    "indicatorsEmbeddedInStateImages": true,
+    "indicators": [],
+    "coilPhasor": {
+      "schemaVersion": 1,
+      "referenceVoltageV": 230.0,
+      "referenceFrequencyHz": 50.0,
+      "sealedApparentPowerVa": 12.0,
+      "sealedRealPowerW": 3.0,
+      "status": "manufacturer_frame_data",
+      "provenance": {
+        "source": "ABB Motor protection and control main catalogue 1SBC100179C0201",
+        "url": "https://library.e.abb.com/public/1fdbe69d541a4dfaafbf24245dc1e9da/1SBC100179C0201_Main_Catalog_Motor_protection_and_control.pdf",
+        "page": "PDF 62,63,68,69 (A30 coil consumption: average holding 12 VA / 3 W, 50/60 Hz)",
+        "derivation": "|Z| = V^2/S; R = |Z|*P/S (or |Z|*cos phi, or published coil R); X = sqrt(|Z|^2 - R^2) at referenceFrequencyHz, scaled with f.",
+        "note": "A-line coil consumption is published per contactor frame for all AC coil codes. R80 coil is 220-230 V 50 Hz; 230 V is used as the reference (Z differs 9% at 220 V). Holding PF 0.25 is W/VA (true PF) used as the sinusoidal displacement PF."
+      },
+      "notModelled": [
+        "inrush (open-armature) impedance",
+        "saturation and temperature dependence"
+      ]
+    }
+  },
+  "modelBinding": {
+    "schemaVersion": 1,
+    "primaryEngine": "wireona.graph.control_fixedpoint.v1",
+    "capabilities": [
+      "control_topology",
+      "state_iteration"
+    ],
+    "requiredParameters": [
+      "orderCode",
+      "coilCode",
+      "ratedVoltageV",
+      "contactTopology"
+    ],
+    "unknownParameters": [
+      "mainContactResistanceOhm",
+      "auxContactResistanceOhm",
+      "deterministicClosingTimeMs",
+      "deterministicOpeningTimeMs"
+    ],
+    "validationFixtureIds": [
+      "abb_a30_r80_identity_topology_fixture_v1"
+    ]
+  },
+  "docking": {
+    "mountable": true,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "contactor",
+      "dockSize": {
+        "cols": 3,
+        "rows": 2
+      }
+    },
+    "presentationLayer": "device_front"
+  },
+  "documentation": {
+    "sourceLibrary": "wcc-device-library",
+    "sourceKey": "058_abb_a30_30_10",
+    "dimensionBasis": "Manufacturer product data, dimensional drawing, or verified exact-model reference.",
+    "terminalBasis": "Visible terminal markings and the referenced OEM wiring diagram.",
+    "selectedVariant": "A30-30-10 R80, 220-230 V 50 Hz / 230-240 V 60 Hz, order code 1SBL281001R8010.",
+    "sources": [
+      {
+        "publisher": "ABB",
+        "title": "A30-30-10 220-230 V 50 Hz / 230-240 V 60 Hz product data",
+        "url": "https://shop.in.abb.com/1sbl281001r8010/a30-30-10-220-230v-50hz-230-240v-60hz-contactor.html",
+        "conditions": "Exact R80 coil marking and order code; three main NO contacts and one built-in auxiliary NO contact."
+      }
+    ],
+    "limitations": [
+      "The runtime topology is active. Exact contact resistance and deterministic travel time remain uncalibrated and are not invented.",
+      "Coil inrush real power and displacement PF are not asserted from VA-only data."
+    ]
+  },
+  "graphics": {
+    "preview": "preview.webp",
+    "original": "preview.webp",
+    "size": {
+      "width": 693,
+      "height": 1230
+    },
+    "crop": {
+      "method": "shared_union_alpha_bounds",
+      "sourceCount": 2,
+      "sourceCanvas": {
+        "width": 1024,
+        "height": 1536
+      },
+      "bounds": {
+        "x": 163,
+        "y": 102,
+        "width": 693,
+        "height": 1230
+      },
+      "paddingPx": 1,
+      "resized": false
+    }
+  },
+  "electrical": {
+    "contactorEvidence": {
+      "reviewedAt": "2026-10-05",
+      "status": "PARTIAL_ELECTRICAL_COMPLETION_NOT_CALIBRATED",
+      "identity": {
+        "manufacturer": "ABB",
+        "model": "A30-30-10 R80",
+        "match": "package names include exact coil code"
+      },
+      "facts": {
+        "mainAc3CurrentA": {
+          "value": 32,
+          "unit": "A",
+          "source": "abbA",
+          "conditions": "AC-3 at 380/400 V, ambient <=55 C",
+          "kind": "published"
+        },
+        "mainThermalCurrentA": {
+          "value": 65,
+          "unit": "A",
+          "source": "abbA",
+          "conditions": "Open contactor; source ambient limit applies, not a coil current",
+          "kind": "published"
+        },
+        "mainAc1CurrentA": {
+          "value": 55,
+          "unit": "A",
+          "source": "abbA",
+          "conditions": "<=690 V, ambient <=40 C",
+          "kind": "published"
+        },
+        "mainPoleLossW": {
+          "value": 2.5,
+          "unit": "W",
+          "source": "abbA",
+          "conditions": "Per pole at rated Ie AC-1",
+          "kind": "published"
+        },
+        "coilRatedVoltage50Hz": {
+          "min": 220,
+          "max": 230,
+          "unit": "V",
+          "source": "abbA",
+          "conditions": "R80/R84 coil code table",
+          "kind": "published_range"
+        },
+        "coilRatedVoltage60Hz": {
+          "min": 230,
+          "max": 240,
+          "unit": "V",
+          "source": "abbA",
+          "conditions": "R80/R84 coil code table",
+          "kind": "published_range"
+        },
+        "inrushAcVa50Hz": {
+          "value": 125,
+          "unit": "VA",
+          "source": "abbA",
+          "conditions": "Dual-frequency coil row; average pull-in at rated voltage",
+          "kind": "published"
+        },
+        "inrushAcVa60Hz": {
+          "value": 120,
+          "unit": "VA",
+          "source": "abbA",
+          "conditions": "Dual-frequency coil row; average pull-in at rated voltage",
+          "kind": "published"
+        },
+        "holdAcVa": {
+          "value": 12,
+          "unit": "VA",
+          "source": "abbA",
+          "conditions": "Dual-frequency coil row; average hold",
+          "kind": "published"
+        },
+        "holdAcW": {
+          "value": 3,
+          "unit": "W",
+          "source": "abbA",
+          "conditions": "Average coil holding active power",
+          "kind": "published"
+        },
+        "operationUcRatio": {
+          "min": 0.85,
+          "max": 1.1,
+          "unit": "Uc",
+          "source": "abbA",
+          "conditions": "ambient <=55 C, mounting positions 1-5; position 6 differs",
+          "kind": "published_range"
+        },
+        "dropoutUcRatio": {
+          "min": 0.4,
+          "max": 0.65,
+          "unit": "Uc",
+          "source": "abbA",
+          "conditions": "Approximate manufacturer range",
+          "kind": "published_range"
+        },
+        "closingTimeMs": {
+          "min": 8,
+          "max": 21,
+          "unit": "ms",
+          "source": "abbA",
+          "conditions": "NO closing",
+          "kind": "published_range"
+        },
+        "openingTimeMs": {
+          "min": 4,
+          "max": 11,
+          "unit": "ms",
+          "source": "abbA",
+          "conditions": "NO opening",
+          "kind": "published_range"
+        }
+      },
+      "conditionalCoilFacts": null,
+      "teachingCandidates": {
+        "closingTimeMs": {
+          "value": 14.5,
+          "unit": "ms",
+          "source": "abbA",
+          "sourceRange": [
+            8,
+            21
+          ],
+          "formula": "(min+max)/2",
+          "kind": "derived_owner_permitted_teaching_value",
+          "notManufacturerNominal": true
+        },
+        "openingTimeMs": {
+          "value": 7.5,
+          "unit": "ms",
+          "source": "abbA",
+          "sourceRange": [
+            4,
+            11
+          ],
+          "formula": "(min+max)/2",
+          "kind": "derived_owner_permitted_teaching_value",
+          "notManufacturerNominal": true
+        },
+        "dropoutUcRatio": {
+          "value": 0.525,
+          "unit": "Uc",
+          "source": "abbA",
+          "sourceRange": [
+            0.4,
+            0.65
+          ],
+          "formula": "(min+max)/2",
+          "kind": "derived_owner_permitted_teaching_value",
+          "notManufacturerNominal": true
+        },
+        "mainContactResistanceOhm": {
+          "value": 0.0008264462809917355,
+          "unit": "ohm",
+          "source": "abbA",
+          "conditions": "Loss-equivalent at rated AC-1 current, not measured DC contact resistance",
+          "kind": "derived",
+          "formula": "2.5/55^2",
+          "notManufacturerNominal": true
+        }
+      },
+      "sources": {
+        "abbA": {
+          "url": "https://library.e.abb.com/public/1fdbe69d541a4dfaafbf24245dc1e9da/1SBC100179C0201_Main_Catalog_Motor_protection_and_control.pdf",
+          "publisher": "ABB",
+          "pages": "PDF 62,63,68,69,118 / printed 3/14,3/15,3/20,3/21,3/70"
+        }
+      },
+      "unresolved": [
+        "inrush displacement cos(phi) at 50/60 Hz",
+        "holding displacement cos(phi): published W/VA is true PF, not independently proven DPF",
+        "auxiliary NO closed-contact resistance"
+      ],
+      "calibratedSimulation": false
+    },
+    "manufacturerBody": {
+      "widthMm": 54,
+      "heightMm": 90,
+      "depthMm": 108.3,
+      "source": "abbA",
+      "conditions": "PDF 53 / printed 3/5; A30/A40 base body, not A26",
+      "unit": "mm",
+      "kind": "published_body_dimensions",
+      "requiresLeadGeometryReview": true,
+      "noImageOrTerminalTransformApplied": true,
+      "sourceDocument": {
+        "url": "https://library.e.abb.com/public/1fdbe69d541a4dfaafbf24245dc1e9da/1SBC100179C0201_Main_Catalog_Motor_protection_and_control.pdf",
+        "publisher": "ABB",
+        "pages": "PDF 62,63,68,69,118 / printed 3/14,3/15,3/20,3/21,3/70"
+      },
+      "appliedToGeometry": true
+    }
+  }
+}

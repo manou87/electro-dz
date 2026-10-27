@@ -1,0 +1,269 @@
+{
+  "schemaVersion": 3,
+  "id": "abb_ms116_16",
+  "name": {
+    "en": "ABB MS116-16",
+    "ar": "ABB MS116-16"
+  },
+  "category": {
+    "en": "Motor Protection Breaker",
+    "ar": "Motor Protection Breaker"
+  },
+  "manufacturer": "ABB",
+  "model": "MS116-16",
+  "tagPrefix": "QM",
+  "physical": {
+    "widthMm": 45.0,
+    "heightMm": 90.0,
+    "depthMm": 81.0,
+    "unit": "mm",
+    "estimated": true,
+    "basis": "Engineering family-size estimate; exact OEM dimensional drawing was not present in the supplied references.",
+    "original": {
+      "widthMm": 45.0,
+      "heightMm": 90.0,
+      "depthMm": 81.0
+    },
+    "suggested": {
+      "widthMm": 45.0,
+      "heightMm": 90.0,
+      "depthMm": 81.0
+    },
+    "dimensionEvidence": {
+      "classification": "teaching_placement_estimate",
+      "basis": "owner_accepted_legacy_teaching_estimate",
+      "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+    }
+  },
+  "terminals": [
+    {
+      "id": "1",
+      "label": "1/L1",
+      "signal": "Power",
+      "role": "bidirectional",
+      "direction": "top",
+      "nx": 0.16666666666666666,
+      "ny": 0.02,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 25.0013,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "phaseIdentity": "L1"
+    },
+    {
+      "id": "2",
+      "label": "2/T1",
+      "signal": "Power",
+      "role": "bidirectional",
+      "direction": "bottom",
+      "nx": 0.16666666666666666,
+      "ny": 0.98,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 25.0013,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power"
+    },
+    {
+      "id": "3",
+      "label": "3/L2",
+      "signal": "Power",
+      "role": "bidirectional",
+      "direction": "top",
+      "nx": 0.5,
+      "ny": 0.02,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 25.0013,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "phaseIdentity": "L2"
+    },
+    {
+      "id": "4",
+      "label": "4/T2",
+      "signal": "Power",
+      "role": "bidirectional",
+      "direction": "bottom",
+      "nx": 0.5,
+      "ny": 0.98,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 25.0013,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power"
+    },
+    {
+      "id": "5",
+      "label": "5/L3",
+      "signal": "Power",
+      "role": "bidirectional",
+      "direction": "top",
+      "nx": 0.8333333333333334,
+      "ny": 0.02,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 25.0013,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "phaseIdentity": "L3"
+    },
+    {
+      "id": "6",
+      "label": "6/T3",
+      "signal": "Power",
+      "role": "bidirectional",
+      "direction": "bottom",
+      "nx": 0.8333333333333334,
+      "ny": 0.98,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 25.0013,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power"
+    }
+  ],
+  "buttons": [],
+  "rules": {
+    "allowedConnections": {
+      "Power": [
+        "Power"
+      ],
+      "Control": [
+        "Control",
+        "Signal"
+      ],
+      "Signal": [
+        "Signal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "ac",
+    "activationRule": "protection",
+    "terminalPairs": [
+      {
+        "id": "pole_1",
+        "terminals": [
+          "1",
+          "2"
+        ],
+        "simBehavior": "protection_mpcb",
+        "currentPath": "series",
+        "terminalTypes": {
+          "1": "power_ac",
+          "2": "power_ac"
+        }
+      },
+      {
+        "id": "pole_2",
+        "terminals": [
+          "3",
+          "4"
+        ],
+        "simBehavior": "protection_mpcb",
+        "currentPath": "series",
+        "terminalTypes": {
+          "3": "power_ac",
+          "4": "power_ac"
+        }
+      },
+      {
+        "id": "pole_3",
+        "terminals": [
+          "5",
+          "6"
+        ],
+        "simBehavior": "protection_mpcb",
+        "currentPath": "series",
+        "terminalTypes": {
+          "5": "power_ac",
+          "6": "power_ac"
+        }
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "preview.webp"
+      },
+      "on": {
+        "image": "on.webp"
+      }
+    },
+    "stateSequence": [
+      "off",
+      "on"
+    ],
+    "ratedCurrentA": 16.0,
+    "protectionCurve": "C"
+  },
+  "docking": {
+    "mountable": true,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "motor_protection_breaker",
+      "dockSize": {
+        "cols": 3,
+        "rows": 2
+      }
+    },
+    "presentationLayer": "device_front"
+  },
+  "documentation": {
+    "dimensionBasis": "Engineering family-size estimate; exact OEM dimensional drawing was not present in the supplied references.",
+    "simulationModel": "WireCom common motor protection breaker engine"
+  },
+  "graphics": {
+    "preview": "preview.webp",
+    "original": "preview.webp",
+    "size": {
+      "width": 691,
+      "height": 1319
+    },
+    "crop": {
+      "method": "shared_union_alpha_bounds",
+      "sourceCount": 2,
+      "sourceCanvas": {
+        "width": 1024,
+        "height": 1536
+      },
+      "bounds": {
+        "x": 166,
+        "y": 103,
+        "width": 691,
+        "height": 1319
+      },
+      "paddingPx": 1,
+      "resized": false
+    }
+  }
+}

@@ -1,20 +1,14 @@
 {
   "schemaVersion": 3,
   "id": "Borne gris",
-  "name": {
-    "es": "Borne gris",
-    "en": "Grey Terminal Block"
-  },
-  "category": {
-    "es": "Distribución",
-    "en": "Distribution"
-  },
+  "name": "Grey Terminal Block",
+  "category": "Distribution",
   "tagPrefix": "X",
   "graphics": {
     "preview": "preview.png",
     "size": {
-      "width": 600,
-      "height": 3600
+      "width": 171,
+      "height": 1024
     },
     "original": "original.png"
   },
@@ -27,7 +21,18 @@
       "nx": 0.5,
       "ny": 0.0,
       "direction": "top",
-      "guideLength": 60
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 25.5996,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "industrial",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
     },
     {
       "id": "2",
@@ -37,7 +42,18 @@
       "nx": 0.5,
       "ny": 1.0,
       "direction": "bottom",
-      "guideLength": 60
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 25.5996,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "industrial",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
     }
   ],
   "rules": {
@@ -74,7 +90,13 @@
           "2": "power_ac"
         }
       }
-    ]
+    ],
+    "states": {
+      "off": {
+        "image": "preview.png"
+      }
+    },
+    "defaultState": "off"
   },
   "docking": {
     "mountable": true,
@@ -88,6 +110,30 @@
       "hideTerminalsOnDock": [],
       "overlapPx": 0
     },
-    "zones": []
-  }
+    "zones": [],
+    "presentationLayer": "device_front"
+  },
+  "physical": {
+    "original": {
+      "widthMm": 12.0,
+      "heightMm": 71.9,
+      "depthMm": 40.0
+    },
+    "widthMm": 12.0,
+    "heightMm": 71.9,
+    "estimated": true,
+    "dimensionEvidence": {
+      "classification": "teaching_placement_estimate",
+      "basis": "owner_accepted_legacy_teaching_estimate",
+      "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+    },
+    "pxPerMm": 66.67,
+    "depthMm": 40.0,
+    "suggested": {
+      "widthMm": 12.0,
+      "heightMm": 71.9
+    }
+  },
+  "libraryPath": "Control Devices/Distribution",
+  "buttons": []
 }

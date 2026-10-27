@@ -1,0 +1,2099 @@
+{
+ "schemaVersion": 3,
+ "id": "wireona_family_selector",
+ "name": {
+  "en": "Selector Switch"
+ },
+ "category": {
+  "es": "Accionamientos",
+  "en": "Drives"
+ },
+ "tagPrefix": "S",
+ "graphics": {
+  "preview": "f_6889740c036e6542289c.png",
+  "size": {
+   "width": 1800,
+   "height": 2100
+  }
+ },
+ "terminals": [
+  {
+   "id": "3",
+   "label": "3",
+   "signal": "Control",
+   "role": "bidirectional",
+   "nx": 0.296667,
+   "ny": 0.0,
+   "direction": "top",
+   "guideLength": 60,
+   "pinSize": 11.0,
+   "pinPresentation": {
+    "basis": "derived_from_nearest_terminal_pitch",
+    "nearestPitchWorld": 52.4993,
+    "clearanceFactor": 0.62,
+    "runtimeMinimumDiameter": 1.15
+   },
+   "wiringClass": "control"
+  },
+  {
+   "id": "4",
+   "label": "4",
+   "signal": "Control",
+   "role": "bidirectional",
+   "nx": 0.296667,
+   "ny": 1.0,
+   "direction": "bottom",
+   "guideLength": 60,
+   "pinSize": 11.0,
+   "pinPresentation": {
+    "basis": "derived_from_nearest_terminal_pitch",
+    "nearestPitchWorld": 52.4993,
+    "clearanceFactor": 0.62,
+    "runtimeMinimumDiameter": 1.15
+   },
+   "wiringClass": "control"
+  }
+ ],
+ "rules": {
+  "allowedConnections": {
+   "Potencia": [
+    "Potencia"
+   ],
+   "Control": [
+    "Control",
+    "Señal"
+   ],
+   "Señal": [
+    "Señal",
+    "Control"
+   ]
+  }
+ },
+ "simulation": {
+  "enabled": true,
+  "voltage": "any",
+  "activationRule": "switch",
+  "terminalPairs": [
+   {
+    "id": "contact_no",
+    "terminals": [
+     "3",
+     "4"
+    ],
+    "simBehavior": "contact_no",
+    "currentPath": "series",
+    "terminalTypes": {
+     "3": "contact_no",
+     "4": "contact_no"
+    }
+   }
+  ],
+  "defaultState": "off",
+  "states": {
+   "off": {
+    "image": "f_3d7b26a420995e99c86f.png",
+    "imageLo": "f_6889740c036e6542289c.png"
+   },
+   "on": {
+    "image": "f_1d657889ee5fd0fe4428.png",
+    "imageLo": "f_cb3d6e7384345ec89d98.png"
+   }
+  }
+ },
+ "physical": {
+  "original": {
+   "widthMm": 26.999,
+   "heightMm": 31.498
+  },
+  "widthMm": 26.999,
+  "heightMm": 31.498,
+  "estimated": true,
+  "dimensionEvidence": {
+   "classification": "teaching_placement_estimate",
+   "basis": "owner_accepted_legacy_teaching_estimate",
+   "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+  }
+ },
+ "docking": {
+  "zLayer": 2,
+  "presentationLayer": "device_front"
+ },
+ "paletteVisible": false,
+ "family": {
+  "schema": "wireona.device-family/1",
+  "id": "wireona_family_selector",
+  "key": "generic_selector",
+  "label": "Selector Switch",
+  "defaultMember": "Selector de 2 posiciones 1NO",
+  "members": [
+   {
+    "id": "Selector de 2 posiciones 1NO",
+    "group": "2",
+    "legacyPath": "CONTROL DEVICES/Selector de 2 posiciones 1NO.wc",
+    "legacySha256": [
+     "939da86ceedc9b44ea99b476537925d269b032eb2facd9e209c5233c0e2b3996"
+    ],
+    "definition": {
+     "schemaVersion": 3,
+     "id": "Selector de 2 posiciones 1NO",
+     "name": {
+      "es": "Selector de 2 posiciones 1NO",
+      "en": "2-Position Selector Switch 1NO"
+     },
+     "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+     },
+     "tagPrefix": "S",
+     "graphics": {
+      "preview": "preview.png",
+      "size": {
+       "width": 1800,
+       "height": 2100
+      }
+     },
+     "terminals": [
+      {
+       "id": "3",
+       "label": "3",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 52.4993,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "4",
+       "label": "4",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 52.4993,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      }
+     ],
+     "rules": {
+      "allowedConnections": {
+       "Potencia": [
+        "Potencia"
+       ],
+       "Control": [
+        "Control",
+        "Señal"
+       ],
+       "Señal": [
+        "Señal",
+        "Control"
+       ]
+      }
+     },
+     "simulation": {
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "switch",
+      "terminalPairs": [
+       {
+        "id": "contact_no",
+        "terminals": [
+         "3",
+         "4"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+         "3": "contact_no",
+         "4": "contact_no"
+        }
+       }
+      ],
+      "defaultState": "off",
+      "states": {
+       "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+       },
+       "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+       }
+      }
+     },
+     "physical": {
+      "original": {
+       "widthMm": 26.999,
+       "heightMm": 31.498
+      },
+      "widthMm": 26.999,
+      "heightMm": 31.498,
+      "estimated": true,
+      "dimensionEvidence": {
+       "classification": "teaching_placement_estimate",
+       "basis": "owner_accepted_legacy_teaching_estimate",
+       "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      }
+     },
+     "docking": {
+      "zLayer": 2,
+      "presentationLayer": "device_front"
+     }
+    },
+    "files": {
+     "preview.png": {
+      "base": "f_6889740c036e6542289c.png"
+     },
+     "state_off.png": {
+      "base": "f_3d7b26a420995e99c86f.png"
+     },
+     "state_off_lo.png": {
+      "base": "f_6889740c036e6542289c.png"
+     },
+     "state_on.png": {
+      "base": "f_1d657889ee5fd0fe4428.png"
+     },
+     "state_on_lo.png": {
+      "base": "f_cb3d6e7384345ec89d98.png"
+     }
+    }
+   },
+   {
+    "id": "Selector de 2 posiciones 1NC",
+    "group": "2",
+    "legacyPath": "CONTROL DEVICES/Selector de 2 posiciones 1NC.wc",
+    "legacySha256": [
+     "8ef564ef3b8f72ede8e7df0c7b036e3abbac47a5176b3b2657e4cf9404689194"
+    ],
+    "definition": {
+     "schemaVersion": 3,
+     "id": "Selector de 2 posiciones 1NC",
+     "name": {
+      "es": "Selector de 2 posiciones 1NC",
+      "en": "2-Position Selector Switch 1NC"
+     },
+     "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+     },
+     "tagPrefix": "S",
+     "graphics": {
+      "preview": "preview.png",
+      "size": {
+       "width": 1800,
+       "height": 2100
+      }
+     },
+     "terminals": [
+      {
+       "id": "1",
+       "label": "1",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 52.4993,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "2",
+       "label": "2",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 52.4993,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      }
+     ],
+     "rules": {
+      "allowedConnections": {
+       "Potencia": [
+        "Potencia"
+       ],
+       "Control": [
+        "Control",
+        "Señal"
+       ],
+       "Señal": [
+        "Señal",
+        "Control"
+       ]
+      }
+     },
+     "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "switch",
+      "terminalPairs": [
+       {
+        "id": "contact_nc",
+        "terminals": [
+         "1",
+         "2"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+         "1": "contact_nc",
+         "2": "contact_nc"
+        }
+       }
+      ],
+      "defaultState": "off",
+      "states": {
+       "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+       },
+       "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+       }
+      }
+     },
+     "physical": {
+      "original": {
+       "widthMm": 26.999,
+       "heightMm": 31.498
+      },
+      "widthMm": 26.999,
+      "heightMm": 31.498,
+      "estimated": true,
+      "dimensionEvidence": {
+       "classification": "teaching_placement_estimate",
+       "basis": "owner_accepted_legacy_teaching_estimate",
+       "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      }
+     },
+     "docking": {
+      "zLayer": 2,
+      "presentationLayer": "device_front"
+     }
+    },
+    "files": {
+     "preview.png": {
+      "base": "f_6889740c036e6542289c.png",
+      "patches": [
+       {
+        "file": "f_9353caec0e8d7a670c14.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_e49bb077492e1d372948.png",
+        "x": 192,
+        "y": 864
+       }
+      ]
+     },
+     "state_off.png": {
+      "base": "f_3d7b26a420995e99c86f.png",
+      "patches": [
+       {
+        "file": "f_deb36c46871ca6f43adf.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_616aa428266c7ae5cfc2.png",
+        "x": 416,
+        "y": 1824
+       }
+      ]
+     },
+     "state_off_lo.png": {
+      "base": "f_6889740c036e6542289c.png",
+      "patches": [
+       {
+        "file": "f_9353caec0e8d7a670c14.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_e49bb077492e1d372948.png",
+        "x": 192,
+        "y": 864
+       }
+      ]
+     },
+     "state_on.png": {
+      "base": "f_1d657889ee5fd0fe4428.png",
+      "patches": [
+       {
+        "file": "f_3b813fbb90d502a37c60.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_54d0731527aeb1c49f0f.png",
+        "x": 416,
+        "y": 1824
+       }
+      ]
+     },
+     "state_on_lo.png": {
+      "base": "f_cb3d6e7384345ec89d98.png",
+      "patches": [
+       {
+        "file": "f_d0e89a1f54c238e25202.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_62129a0d1f89a3c7632b.png",
+        "x": 192,
+        "y": 864
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "Selector de 2 posiciones 1NO+1NC",
+    "group": "2",
+    "legacyPath": "CONTROL DEVICES/Selector de 2 posiciones 1NO+1NC.wc",
+    "legacySha256": [
+     "06047c0570d522b64a908b1be9a56b91c672ea7d77c58a1e21aa3f7212da7090"
+    ],
+    "definition": {
+     "schemaVersion": 3,
+     "id": "Selector de 2 posiciones 1NO+1NC",
+     "name": {
+      "es": "Selector de 2 posiciones 1NO+1NC",
+      "en": "2-Position Selector Switch 1NO+1NC"
+     },
+     "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+     },
+     "tagPrefix": "S",
+     "graphics": {
+      "preview": "preview.png",
+      "size": {
+       "width": 1800,
+       "height": 2100
+      }
+     },
+     "terminals": [
+      {
+       "id": "1A",
+       "label": "1A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "3A",
+       "label": "3A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "2A",
+       "label": "2A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "4A",
+       "label": "4A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      }
+     ],
+     "rules": {
+      "allowedConnections": {
+       "Potencia": [
+        "Potencia"
+       ],
+       "Control": [
+        "Control",
+        "Señal"
+       ],
+       "Señal": [
+        "Señal",
+        "Control"
+       ]
+      }
+     },
+     "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "switch",
+      "terminalPairs": [
+       {
+        "id": "contact-nc-a",
+        "terminals": [
+         "1A",
+         "2A"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+         "1A": "contact_nc",
+         "2A": "contact_nc"
+        }
+       },
+       {
+        "id": "contact-no-b",
+        "terminals": [
+         "3A",
+         "4A"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+         "3A": "contact_no",
+         "4A": "contact_no"
+        }
+       }
+      ],
+      "defaultState": "off",
+      "states": {
+       "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+       },
+       "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+       }
+      }
+     },
+     "physical": {
+      "original": {
+       "widthMm": 26.999,
+       "heightMm": 31.498
+      },
+      "widthMm": 26.999,
+      "heightMm": 31.498,
+      "estimated": true,
+      "dimensionEvidence": {
+       "classification": "teaching_placement_estimate",
+       "basis": "owner_accepted_legacy_teaching_estimate",
+       "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      }
+     },
+     "docking": {
+      "zLayer": 2,
+      "presentationLayer": "device_front"
+     }
+    },
+    "files": {
+     "preview.png": {
+      "base": "f_50a2365dcf181ed85616.png"
+     },
+     "state_off.png": {
+      "base": "f_9f29232390aa89e13e7b.png"
+     },
+     "state_off_lo.png": {
+      "base": "f_50a2365dcf181ed85616.png"
+     },
+     "state_on.png": {
+      "base": "f_3b60212b0c3a92d72083.png"
+     },
+     "state_on_lo.png": {
+      "base": "f_d5ad223056b4aea204e8.png"
+     }
+    }
+   },
+   {
+    "id": "Selector de 2 posiciones 2NO",
+    "group": "2",
+    "legacyPath": "CONTROL DEVICES/Selector de 2 posiciones 2NO.wc",
+    "legacySha256": [
+     "32aa336b6abf13daacaaf651df76b7b7cfbdf7b5503f3b7eb3f6f05e9096d19e"
+    ],
+    "definition": {
+     "schemaVersion": 3,
+     "id": "Selector de 2 posiciones 2NO",
+     "name": {
+      "es": "Selector de 2 posiciones 2NO",
+      "en": "2-Position Selector Switch 2NO"
+     },
+     "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+     },
+     "tagPrefix": "S",
+     "graphics": {
+      "preview": "preview.png",
+      "size": {
+       "width": 1800,
+       "height": 2100
+      }
+     },
+     "terminals": [
+      {
+       "id": "3A",
+       "label": "3A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "3B",
+       "label": "3B",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "4A",
+       "label": "4A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "4B",
+       "label": "4B",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      }
+     ],
+     "rules": {
+      "allowedConnections": {
+       "Potencia": [
+        "Potencia"
+       ],
+       "Control": [
+        "Control",
+        "Señal"
+       ],
+       "Señal": [
+        "Señal",
+        "Control"
+       ]
+      }
+     },
+     "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "switch",
+      "terminalPairs": [
+       {
+        "id": "contact-no-a",
+        "terminals": [
+         "3A",
+         "4A"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+         "3A": "contact_no",
+         "4A": "contact_no"
+        }
+       },
+       {
+        "id": "contact-no-b",
+        "terminals": [
+         "3B",
+         "4B"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+         "3B": "contact_no",
+         "4B": "contact_no"
+        }
+       }
+      ],
+      "defaultState": "off",
+      "states": {
+       "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+       },
+       "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+       }
+      }
+     },
+     "physical": {
+      "original": {
+       "widthMm": 26.999,
+       "heightMm": 31.498
+      },
+      "widthMm": 26.999,
+      "heightMm": 31.498,
+      "estimated": true,
+      "dimensionEvidence": {
+       "classification": "teaching_placement_estimate",
+       "basis": "owner_accepted_legacy_teaching_estimate",
+       "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      }
+     },
+     "docking": {
+      "zLayer": 2,
+      "presentationLayer": "device_front"
+     }
+    },
+    "files": {
+     "preview.png": {
+      "base": "f_6889740c036e6542289c.png",
+      "patches": [
+       {
+        "file": "f_60bed00a97c3645d33b2.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_39be041f3ff263111fb8.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_off.png": {
+      "base": "f_3d7b26a420995e99c86f.png",
+      "patches": [
+       {
+        "file": "f_d842ed6586ce0270be24.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_e031d75c3e1857b203da.png",
+        "x": 1184,
+        "y": 1824
+       }
+      ]
+     },
+     "state_off_lo.png": {
+      "base": "f_6889740c036e6542289c.png",
+      "patches": [
+       {
+        "file": "f_60bed00a97c3645d33b2.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_39be041f3ff263111fb8.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_on.png": {
+      "base": "f_1d657889ee5fd0fe4428.png",
+      "patches": [
+       {
+        "file": "f_103afed38e6112dfc912.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_7b70e0c2be7e88575e6f.png",
+        "x": 1184,
+        "y": 1824
+       }
+      ]
+     },
+     "state_on_lo.png": {
+      "base": "f_cb3d6e7384345ec89d98.png",
+      "patches": [
+       {
+        "file": "f_574c25b1f2038a9b2263.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_59a82c885eb602370b4f.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "Selector de 2 posiciones 2NC",
+    "group": "2",
+    "legacyPath": "CONTROL DEVICES/Selector de 2 posiciones 2NC.wc",
+    "legacySha256": [
+     "6c6fc3045a121593aa6cf6e0bf937be28009d7f2aa67a8c3af186620fd099788"
+    ],
+    "definition": {
+     "schemaVersion": 3,
+     "id": "Selector de 2 posiciones 2NC",
+     "name": {
+      "es": "Selector de 2 posiciones 2NC",
+      "en": "2-Position Selector Switch 2NC"
+     },
+     "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+     },
+     "tagPrefix": "S",
+     "graphics": {
+      "preview": "preview.png",
+      "size": {
+       "width": 1800,
+       "height": 2100
+      }
+     },
+     "terminals": [
+      {
+       "id": "1A",
+       "label": "1A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "1B",
+       "label": "1B",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "2A",
+       "label": "2A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "2B",
+       "label": "2B",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      }
+     ],
+     "rules": {
+      "allowedConnections": {
+       "Potencia": [
+        "Potencia"
+       ],
+       "Control": [
+        "Control",
+        "Señal"
+       ],
+       "Señal": [
+        "Señal",
+        "Control"
+       ]
+      }
+     },
+     "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "switch",
+      "terminalPairs": [
+       {
+        "id": "contact-nc-a",
+        "terminals": [
+         "1A",
+         "2A"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+         "1A": "contact_nc",
+         "2A": "contact_nc"
+        }
+       },
+       {
+        "id": "contact-nc-b",
+        "terminals": [
+         "1B",
+         "2B"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+         "1B": "contact_nc",
+         "2B": "contact_nc"
+        }
+       }
+      ],
+      "defaultState": "off",
+      "states": {
+       "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+       },
+       "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+       }
+      }
+     },
+     "physical": {
+      "original": {
+       "widthMm": 26.999,
+       "heightMm": 31.498
+      },
+      "widthMm": 26.999,
+      "heightMm": 31.498,
+      "estimated": true,
+      "dimensionEvidence": {
+       "classification": "teaching_placement_estimate",
+       "basis": "owner_accepted_legacy_teaching_estimate",
+       "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      }
+     },
+     "docking": {
+      "zLayer": 2,
+      "presentationLayer": "device_front"
+     }
+    },
+    "files": {
+     "preview.png": {
+      "base": "f_6889740c036e6542289c.png",
+      "patches": [
+       {
+        "file": "f_387f6101b9f75d26c1bc.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_81a9276906e32cf7e833.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_fdbe7fb72a3837690ad9.png",
+        "x": 192,
+        "y": 864
+       },
+       {
+        "file": "f_31502ab62da0c6803de1.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_off.png": {
+      "base": "f_3d7b26a420995e99c86f.png",
+      "patches": [
+       {
+        "file": "f_029a936e88006bd900d8.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_8adc7413b19f0b913aa9.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_badae8e1f7d37ec3f98e.png",
+        "x": 416,
+        "y": 1824
+       },
+       {
+        "file": "f_ada6b050e820cf14fce5.png",
+        "x": 1216,
+        "y": 1824
+       }
+      ]
+     },
+     "state_off_lo.png": {
+      "base": "f_6889740c036e6542289c.png",
+      "patches": [
+       {
+        "file": "f_387f6101b9f75d26c1bc.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_81a9276906e32cf7e833.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_fdbe7fb72a3837690ad9.png",
+        "x": 192,
+        "y": 864
+       },
+       {
+        "file": "f_31502ab62da0c6803de1.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_on.png": {
+      "base": "f_1d657889ee5fd0fe4428.png",
+      "patches": [
+       {
+        "file": "f_ba7171a920023a8eb2d0.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_1a0368d0c1a94a6b9c49.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_04a79b977c42a85b20c2.png",
+        "x": 416,
+        "y": 1824
+       },
+       {
+        "file": "f_b21af557c4dc49acf174.png",
+        "x": 1216,
+        "y": 1824
+       }
+      ]
+     },
+     "state_on_lo.png": {
+      "base": "f_cb3d6e7384345ec89d98.png",
+      "patches": [
+       {
+        "file": "f_91f974f0a7d41f9a5f7d.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_766d419ac2c2a9f52669.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_8faee467aa296e1139f5.png",
+        "x": 192,
+        "y": 864
+       },
+       {
+        "file": "f_69947bf5a16fa27e732a.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "Selector de 3 posiciones 1NO+1NC",
+    "group": "3",
+    "legacyPath": "CONTROL DEVICES/Selector de 3 posiciones 1NO+1NC.wc",
+    "legacySha256": [
+     "aaec683b817b68dddeca6254e9475fb0ce1da43c11bd44b0c57faea5a10fd7c1"
+    ],
+    "definition": {
+     "schemaVersion": 3,
+     "id": "Selector de 3 posiciones 1NO+1NC",
+     "name": {
+      "es": "Selector de 3 posiciones 1NO+1NC",
+      "en": "3-Position Selector Switch 1NO+1NC"
+     },
+     "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+     },
+     "tagPrefix": "S",
+     "graphics": {
+      "preview": "preview.png",
+      "size": {
+       "width": 1800,
+       "height": 2100
+      }
+     },
+     "terminals": [
+      {
+       "id": "1A",
+       "label": "1A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "3A",
+       "label": "3A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "2A",
+       "label": "2A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "4A",
+       "label": "4A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      }
+     ],
+     "rules": {
+      "allowedConnections": {
+       "Potencia": [
+        "Potencia"
+       ],
+       "Control": [
+        "Control",
+        "Señal"
+       ],
+       "Señal": [
+        "Señal",
+        "Control"
+       ]
+      }
+     },
+     "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "selector",
+      "terminalPairs": [
+       {
+        "id": "contact-nc-a",
+        "terminals": [
+         "1A",
+         "2A"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+         "1A": "contact_nc",
+         "2A": "contact_nc"
+        },
+        "activeInStates": [
+         "pos0"
+        ]
+       },
+       {
+        "id": "contact-no-b",
+        "terminals": [
+         "3A",
+         "4A"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+         "3A": "contact_no",
+         "4A": "contact_no"
+        },
+        "activeInStates": [
+         "pos2"
+        ]
+       }
+      ],
+      "defaultState": "pos1",
+      "states": {
+       "pos0": {
+        "image": "state_pos0.png",
+        "imageLo": "state_pos0_lo.png"
+       },
+       "pos1": {
+        "image": "state_pos1.png",
+        "imageLo": "state_pos1_lo.png"
+       },
+       "pos2": {
+        "image": "state_pos2.png",
+        "imageLo": "state_pos2_lo.png"
+       }
+      }
+     },
+     "physical": {
+      "original": {
+       "widthMm": 26.999,
+       "heightMm": 31.498
+      },
+      "widthMm": 26.999,
+      "heightMm": 31.498,
+      "estimated": true,
+      "dimensionEvidence": {
+       "classification": "teaching_placement_estimate",
+       "basis": "owner_accepted_legacy_teaching_estimate",
+       "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      }
+     },
+     "docking": {
+      "zLayer": 2,
+      "presentationLayer": "device_front"
+     }
+    },
+    "files": {
+     "preview.png": {
+      "base": "f_c45a5fb1f6e895d85771.png"
+     },
+     "state_pos0.png": {
+      "base": "f_5c419e80d9f93753e9e4.png"
+     },
+     "state_pos0_lo.png": {
+      "base": "f_e0188140b371ae5d12d0.png"
+     },
+     "state_pos1.png": {
+      "base": "f_1f03bad2bbd870e7ba99.png"
+     },
+     "state_pos1_lo.png": {
+      "base": "f_c45a5fb1f6e895d85771.png"
+     },
+     "state_pos2.png": {
+      "base": "f_b5c7fd5ba5c320991814.png"
+     },
+     "state_pos2_lo.png": {
+      "base": "f_2ba0790744064fefbf0e.png"
+     }
+    }
+   },
+   {
+    "id": "Selector de 3 posiciones 2NO",
+    "group": "3",
+    "legacyPath": "CONTROL DEVICES/Selector de 3 posiciones 2NO.wc",
+    "legacySha256": [
+     "d8080ca3e4f12792b80fc82d7415376936ce3996b8fb985bc776265995188783"
+    ],
+    "definition": {
+     "schemaVersion": 3,
+     "id": "Selector de 3 posiciones 2NO",
+     "name": {
+      "es": "Selector de 3 posiciones 2NO",
+      "en": "3-Position Selector Switch 2NO"
+     },
+     "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+     },
+     "tagPrefix": "S",
+     "graphics": {
+      "preview": "preview.png",
+      "size": {
+       "width": 1800,
+       "height": 2100
+      }
+     },
+     "terminals": [
+      {
+       "id": "3A",
+       "label": "3A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "3B",
+       "label": "3B",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "4A",
+       "label": "4A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "4B",
+       "label": "4B",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      }
+     ],
+     "rules": {
+      "allowedConnections": {
+       "Potencia": [
+        "Potencia"
+       ],
+       "Control": [
+        "Control",
+        "Señal"
+       ],
+       "Señal": [
+        "Señal",
+        "Control"
+       ]
+      }
+     },
+     "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "selector",
+      "terminalPairs": [
+       {
+        "id": "contact-no-a",
+        "terminals": [
+         "3A",
+         "4A"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+         "3A": "contact_no",
+         "4A": "contact_no"
+        },
+        "activeInStates": [
+         "pos0"
+        ]
+       },
+       {
+        "id": "contact-no-b",
+        "terminals": [
+         "3B",
+         "4B"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+         "3B": "contact_no",
+         "4B": "contact_no"
+        },
+        "activeInStates": [
+         "pos2"
+        ]
+       }
+      ],
+      "defaultState": "pos1",
+      "states": {
+       "pos0": {
+        "image": "state_pos0.png",
+        "imageLo": "state_pos0_lo.png"
+       },
+       "pos1": {
+        "image": "state_pos1.png",
+        "imageLo": "state_pos1_lo.png"
+       },
+       "pos2": {
+        "image": "state_pos2.png",
+        "imageLo": "state_pos2_lo.png"
+       }
+      }
+     },
+     "physical": {
+      "original": {
+       "widthMm": 26.999,
+       "heightMm": 31.498
+      },
+      "widthMm": 26.999,
+      "heightMm": 31.498,
+      "estimated": true,
+      "dimensionEvidence": {
+       "classification": "teaching_placement_estimate",
+       "basis": "owner_accepted_legacy_teaching_estimate",
+       "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      }
+     },
+     "docking": {
+      "zLayer": 2,
+      "presentationLayer": "device_front"
+     }
+    },
+    "files": {
+     "preview.png": {
+      "base": "f_c45a5fb1f6e895d85771.png",
+      "patches": [
+       {
+        "file": "f_6c4617b98c5f976ef30f.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_e17cc520cd174fa15f9c.png",
+        "x": 192,
+        "y": 864
+       }
+      ]
+     },
+     "state_pos0.png": {
+      "base": "f_5c419e80d9f93753e9e4.png",
+      "patches": [
+       {
+        "file": "f_6e2636851c04b7678f72.png",
+        "x": 352,
+        "y": 0
+       },
+       {
+        "file": "f_fa045d4eaf95c8542d92.png",
+        "x": 1152,
+        "y": 1440
+       },
+       {
+        "file": "f_e498678136df698a6aa0.png",
+        "x": 960,
+        "y": 1632
+       },
+       {
+        "file": "f_f103bd1ab3c29864b46a.png",
+        "x": 416,
+        "y": 1824
+       }
+      ]
+     },
+     "state_pos0_lo.png": {
+      "base": "f_e0188140b371ae5d12d0.png",
+      "patches": [
+       {
+        "file": "f_ed47c1ae60870c431986.png",
+        "x": 160,
+        "y": 0
+       },
+       {
+        "file": "f_5ac46a8985026e76a5ba.png",
+        "x": 608,
+        "y": 704
+       },
+       {
+        "file": "f_530381e7da8602ca4ae8.png",
+        "x": 448,
+        "y": 768
+       },
+       {
+        "file": "f_579c3ccc5679a9e9fd2c.png",
+        "x": 192,
+        "y": 864
+       }
+      ]
+     },
+     "state_pos1.png": {
+      "base": "f_1f03bad2bbd870e7ba99.png",
+      "patches": [
+       {
+        "file": "f_4a15dc9d4127400e266f.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_9a5ce6706880741f5138.png",
+        "x": 416,
+        "y": 1824
+       }
+      ]
+     },
+     "state_pos1_lo.png": {
+      "base": "f_c45a5fb1f6e895d85771.png",
+      "patches": [
+       {
+        "file": "f_6c4617b98c5f976ef30f.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_e17cc520cd174fa15f9c.png",
+        "x": 192,
+        "y": 864
+       }
+      ]
+     },
+     "state_pos2.png": {
+      "base": "f_b5c7fd5ba5c320991814.png",
+      "patches": [
+       {
+        "file": "f_c1c979e1c684fa75aafe.png",
+        "x": 416,
+        "y": 0
+       },
+       {
+        "file": "f_87bbe64cb3b78d35bb9d.png",
+        "x": 736,
+        "y": 288
+       },
+       {
+        "file": "f_f215ee44208829c67c2c.png",
+        "x": 352,
+        "y": 1440
+       },
+       {
+        "file": "f_84037b4a513af3c82ccb.png",
+        "x": 704,
+        "y": 1632
+       },
+       {
+        "file": "f_87235ee0eeecc0971118.png",
+        "x": 416,
+        "y": 1824
+       }
+      ]
+     },
+     "state_pos2_lo.png": {
+      "base": "f_2ba0790744064fefbf0e.png",
+      "patches": [
+       {
+        "file": "f_9f7010e8880b3c605009.png",
+        "x": 192,
+        "y": 0
+       },
+       {
+        "file": "f_6def643896ef2742c747.png",
+        "x": 352,
+        "y": 128
+       },
+       {
+        "file": "f_81283fd93af03ae18c6a.png",
+        "x": 160,
+        "y": 672
+       },
+       {
+        "file": "f_7cd96ee643033dc73850.png",
+        "x": 192,
+        "y": 768
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "Selector de 3 posiciones 2NC",
+    "group": "3",
+    "legacyPath": "CONTROL DEVICES/Selector de 3 posiciones 2NC.wc",
+    "legacySha256": [
+     "b0c015490bb6f45612678aa8faedcc09939515842b638550a4be5b29eefb7236"
+    ],
+    "definition": {
+     "schemaVersion": 3,
+     "id": "Selector de 3 posiciones 2NC",
+     "name": {
+      "es": "Selector de 3 posiciones 2NC",
+      "en": "3-Position Selector Switch 2NC"
+     },
+     "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+     },
+     "tagPrefix": "S",
+     "graphics": {
+      "preview": "preview.png",
+      "size": {
+       "width": 1800,
+       "height": 2100
+      }
+     },
+     "terminals": [
+      {
+       "id": "1A",
+       "label": "1A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "1B",
+       "label": "1B",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 0.0,
+       "direction": "top",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "2A",
+       "label": "2A",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.296667,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      },
+      {
+       "id": "2B",
+       "label": "2B",
+       "signal": "Control",
+       "role": "bidirectional",
+       "nx": 0.727778,
+       "ny": 1.0,
+       "direction": "bottom",
+       "guideLength": 60,
+       "pinSize": 11.0,
+       "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 19.4002,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+       },
+       "wiringClass": "control"
+      }
+     ],
+     "rules": {
+      "allowedConnections": {
+       "Potencia": [
+        "Potencia"
+       ],
+       "Control": [
+        "Control",
+        "Señal"
+       ],
+       "Señal": [
+        "Señal",
+        "Control"
+       ]
+      }
+     },
+     "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "selector",
+      "terminalPairs": [
+       {
+        "id": "contact-nc-a",
+        "terminals": [
+         "1A",
+         "2A"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+         "1A": "contact_nc",
+         "2A": "contact_nc"
+        },
+        "activeInStates": [
+         "pos0"
+        ]
+       },
+       {
+        "id": "contact-nc-b",
+        "terminals": [
+         "1B",
+         "2B"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+         "1B": "contact_nc",
+         "2B": "contact_nc"
+        },
+        "activeInStates": [
+         "pos2"
+        ]
+       }
+      ],
+      "defaultState": "pos1",
+      "states": {
+       "pos0": {
+        "image": "state_pos0.png",
+        "imageLo": "state_pos0_lo.png"
+       },
+       "pos1": {
+        "image": "state_pos1.png",
+        "imageLo": "state_pos1_lo.png"
+       },
+       "pos2": {
+        "image": "state_pos2.png",
+        "imageLo": "state_pos2_lo.png"
+       }
+      }
+     },
+     "physical": {
+      "original": {
+       "widthMm": 26.999,
+       "heightMm": 31.498
+      },
+      "widthMm": 26.999,
+      "heightMm": 31.498,
+      "estimated": true,
+      "dimensionEvidence": {
+       "classification": "teaching_placement_estimate",
+       "basis": "owner_accepted_legacy_teaching_estimate",
+       "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+      }
+     },
+     "docking": {
+      "zLayer": 2,
+      "presentationLayer": "device_front"
+     }
+    },
+    "files": {
+     "preview.png": {
+      "base": "f_c45a5fb1f6e895d85771.png",
+      "patches": [
+       {
+        "file": "f_1f38e3e3d115e1ff0b44.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_7ac8ead54399f1b0a17c.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_pos0.png": {
+      "base": "f_5c419e80d9f93753e9e4.png",
+      "patches": [
+       {
+        "file": "f_a34894977e79e9e031ca.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_b898c8f5521edf4924b3.png",
+        "x": 1184,
+        "y": 1824
+       }
+      ]
+     },
+     "state_pos0_lo.png": {
+      "base": "f_e0188140b371ae5d12d0.png",
+      "patches": [
+       {
+        "file": "f_3e53ac1ba6ee243e9190.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_3e3c7c3681505c97bdbd.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_pos1.png": {
+      "base": "f_1f03bad2bbd870e7ba99.png",
+      "patches": [
+       {
+        "file": "f_29bb79fa730cf9becbca.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_32ab67923e2fa6aeede3.png",
+        "x": 1184,
+        "y": 1824
+       }
+      ]
+     },
+     "state_pos1_lo.png": {
+      "base": "f_c45a5fb1f6e895d85771.png",
+      "patches": [
+       {
+        "file": "f_1f38e3e3d115e1ff0b44.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_7ac8ead54399f1b0a17c.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     },
+     "state_pos2.png": {
+      "base": "f_b5c7fd5ba5c320991814.png",
+      "patches": [
+       {
+        "file": "f_382c77e84b6072dbe138.png",
+        "x": 1216,
+        "y": 0
+       },
+       {
+        "file": "f_2c0c6f8f9fda7cf83e23.png",
+        "x": 1184,
+        "y": 1824
+       }
+      ]
+     },
+     "state_pos2_lo.png": {
+      "base": "f_2ba0790744064fefbf0e.png",
+      "patches": [
+       {
+        "file": "f_86b8b7590dbb9e8e7237.png",
+        "x": 576,
+        "y": 0
+       },
+       {
+        "file": "f_b12ae8715d3425d44d95.png",
+        "x": 576,
+        "y": 864
+       }
+      ]
+     }
+    }
+   }
+  ]
+ }
+}

@@ -1,0 +1,395 @@
+{
+  "schemaVersion": 3,
+  "id": "abb_tf42",
+  "name": "ABB Tf42",
+  "category": {
+    "en": "Overload Relay",
+    "ar": "Overload Relay"
+  },
+  "manufacturer": "ABB",
+  "model": "Tf42",
+  "tagPrefix": "F",
+  "physical": {
+    "widthMm": 45.0,
+    "heightMm": 81.0,
+    "depthMm": 88.0,
+    "unit": "mm",
+    "estimated": true,
+    "basis": "Engineering family-size estimate; exact OEM dimensional drawing was not present in the supplied references.",
+    "original": {
+      "widthMm": 45.0,
+      "heightMm": 81.0,
+      "depthMm": 88.0
+    },
+    "suggested": {
+      "widthMm": 45.0,
+      "heightMm": 81.0,
+      "depthMm": 88.0
+    },
+    "dimensionEvidence": {
+      "classification": "teaching_placement_estimate",
+      "basis": "owner_accepted_legacy_teaching_estimate",
+      "claimBoundary": "drawing placement only; not a manufacturer mechanical drawing"
+    },
+    "pxPerMm": 66.67
+  },
+  "terminals": [
+    {
+      "id": "1",
+      "label": "1/L1",
+      "signal": "Power",
+      "role": "bidirectional",
+      "direction": "top",
+      "nx": 0.22524913468054597,
+      "ny": 0.02,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 25.0013,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "phaseIdentity": "L1",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    },
+    {
+      "id": "2",
+      "label": "2/T1",
+      "signal": "Power",
+      "role": "bidirectional",
+      "direction": "bottom",
+      "nx": 0.2710962835609745,
+      "ny": 0.8032428670842063,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 24.4295,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    },
+    {
+      "id": "3",
+      "label": "3/L2",
+      "signal": "Power",
+      "role": "bidirectional",
+      "direction": "top",
+      "nx": 0.5,
+      "ny": 0.02,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 25.0013,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "phaseIdentity": "L2",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    },
+    {
+      "id": "4",
+      "label": "4/T2",
+      "signal": "Power",
+      "role": "bidirectional",
+      "direction": "bottom",
+      "nx": 0.5178294467868324,
+      "ny": 0.8018510786360499,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 25.0013,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    },
+    {
+      "id": "5",
+      "label": "5/L3",
+      "signal": "Power",
+      "role": "bidirectional",
+      "direction": "top",
+      "nx": 0.777297929146144,
+      "ny": 0.02139178844815586,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 25.0013,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "phaseIdentity": "L3",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    },
+    {
+      "id": "6",
+      "label": "6/T3",
+      "signal": "Power",
+      "role": "bidirectional",
+      "direction": "bottom",
+      "nx": 0.7722038014927625,
+      "ny": 0.8046346555323602,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 24.4295,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "power",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    },
+    {
+      "id": "95",
+      "label": "95 NC",
+      "signal": "Control",
+      "role": "bidirectional",
+      "direction": "left",
+      "nx": 0.19999999999999954,
+      "ny": 0.6655184411969378,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 33.7517,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    },
+    {
+      "id": "96",
+      "label": "96 NC",
+      "signal": "Control",
+      "role": "bidirectional",
+      "direction": "left",
+      "nx": 0.39612391465516683,
+      "ny": 0.6663883089770352,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 24.4295,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    },
+    {
+      "id": "97",
+      "label": "97 NO",
+      "signal": "Control",
+      "role": "bidirectional",
+      "direction": "right",
+      "nx": 0.5962348938647637,
+      "ny": 0.6627348643006264,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 33.7517,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    },
+    {
+      "id": "98",
+      "label": "98 NO",
+      "signal": "Control",
+      "role": "bidirectional",
+      "direction": "right",
+      "nx": 0.7974529361733097,
+      "ny": 0.6608211551844121,
+      "guideLength": 60,
+      "pinSize": 11.0,
+      "pinPresentation": {
+        "basis": "derived_from_nearest_terminal_pitch",
+        "nearestPitchWorld": 24.4295,
+        "clearanceFactor": 0.62,
+        "runtimeMinimumDiameter": 1.15
+      },
+      "wiringClass": "control",
+      "minWireGaugeMm2": null,
+      "defaultWireGaugeMm2": null,
+      "maxWireGaugeMm2": null
+    }
+  ],
+  "buttons": [],
+  "rules": {
+    "allowedConnections": {
+      "Power": [
+        "Power"
+      ],
+      "Control": [
+        "Control",
+        "Signal"
+      ],
+      "Signal": [
+        "Signal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "ac",
+    "activationRule": "protection",
+    "terminalPairs": [
+      {
+        "id": "pole_1",
+        "terminals": [
+          "1",
+          "2"
+        ],
+        "simBehavior": "overload_relay",
+        "currentPath": "series",
+        "terminalTypes": {
+          "1": "power_ac",
+          "2": "power_ac"
+        }
+      },
+      {
+        "id": "pole_2",
+        "terminals": [
+          "3",
+          "4"
+        ],
+        "simBehavior": "overload_relay",
+        "currentPath": "series",
+        "terminalTypes": {
+          "3": "power_ac",
+          "4": "power_ac"
+        }
+      },
+      {
+        "id": "pole_3",
+        "terminals": [
+          "5",
+          "6"
+        ],
+        "simBehavior": "overload_relay",
+        "currentPath": "series",
+        "terminalTypes": {
+          "5": "power_ac",
+          "6": "power_ac"
+        }
+      },
+      {
+        "id": "trip_nc",
+        "terminals": [
+          "95",
+          "96"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+          "95": "contact_nc",
+          "96": "contact_nc"
+        }
+      },
+      {
+        "id": "trip_no",
+        "terminals": [
+          "97",
+          "98"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+          "97": "contact_no",
+          "98": "contact_no"
+        }
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "preview.webp"
+      },
+      "trip": {
+        "image": "trip.webp"
+      }
+    },
+    "stateSequence": [
+      "off",
+      "trip"
+    ],
+    "ratedCurrentA": 25.0
+  },
+  "docking": {
+    "mountable": true,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "overload_relay",
+      "dockSize": {
+        "cols": 3,
+        "rows": 2
+      }
+    },
+    "presentationLayer": "device_front"
+  },
+  "documentation": {
+    "dimensionBasis": "Engineering family-size estimate; exact OEM dimensional drawing was not present in the supplied references.",
+    "simulationModel": "WireCom common overload relay engine"
+  },
+  "graphics": {
+    "preview": "preview.webp",
+    "original": "preview.webp",
+    "size": {
+      "width": 765,
+      "height": 1400
+    },
+    "crop": {
+      "method": "shared_union_alpha_bounds",
+      "sourceCount": 2,
+      "sourceCanvas": {
+        "width": 1024,
+        "height": 1536
+      },
+      "bounds": {
+        "x": 106,
+        "y": 25,
+        "width": 811,
+        "height": 1485
+      },
+      "paddingPx": 1,
+      "resized": false
+    }
+  },
+  "libraryPath": "Control Devices/Overload Relay"
+}

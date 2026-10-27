@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 3,
+  "id": "wireona_large_double_door_control_panel",
+  "name": "Large Double-Door Control Panel",
+  "category": "Enclosures",
+  "libraryPath": "Power Devices/Panel & Mounting",
+  "tagPrefix": "ENC",
+  "physical": {
+    "widthMm": 1200.0,
+    "heightMm": 1045.4,
+    "depthMm": 400.0,
+    "unit": "mm",
+    "sizeBasis": "User-defined drawing dimensions (resizable); no manufacturer enclosure size is claimed."
+  },
+  "terminals": [],
+  "buttons": [],
+  "panelDoor": {
+    "closedState": "closed",
+    "openState": "open",
+    "defaultState": "closed",
+    "behaviour": "Closed: drawn at the door layer, covering and blocking the interior; devices linked to the door stay above it. Open: drawn at the enclosure layer so mounted equipment is visible. Structural only; the electrical solution never changes."
+  },
+  "docking": {
+    "mountClass": "enclosure"
+  },
+  "simulation": {
+    "type": "structural",
+    "enabled": false,
+    "activationRule": "none",
+    "terminalPairs": [],
+    "defaultState": "closed",
+    "states": {
+      "closed": {
+        "image": "closed.png"
+      },
+      "open": {
+        "image": "open.png"
+      }
+    }
+  },
+  "graphics": {
+    "preview": "preview.png",
+    "original": "closed.png",
+    "size": {
+      "width": 1149,
+      "height": 1001
+    },
+    "unionCrop": {
+      "x": 407,
+      "y": 153,
+      "width": 1149,
+      "height": 1001
+    },
+    "registration": "open scaled x1.0607 and offset onto closed by the feet",
+    "slices": {
+      "x": [
+        0.2349869451697128,
+        0.4525674499564839,
+        0.5448215839860748,
+        0.763272410791993
+      ],
+      "xFixed": [
+        true,
+        false,
+        true,
+        false,
+        true
+      ],
+      "y": [
+        0.13486513486513488,
+        0.44655344655344653,
+        0.5564435564435565,
+        0.8461538461538461
+      ],
+      "yFixed": [
+        true,
+        false,
+        true,
+        false,
+        true
+      ],
+      "basis": "Measured on the closed artwork: hinge/leaf columns, handles (x 742-818, y 410-500), top rail and feet keep their aspect."
+    },
+    "sources": {
+      "closed": {
+        "file": "large-control-panel-closed-v1.png",
+        "sha256": "2d38d70882b5d0b76e822f950af6c4202a682772354d442fdf9164091001b809"
+      },
+      "open": {
+        "file": "large-control-panel-open-fullsize-forward-backplate-v5.png",
+        "sha256": "5ab285f2040de8a14013a130ee5838b6b38462f26efa8a1b37cd19b219ede1fb"
+      }
+    }
+  },
+  "engineering": {
+    "readiness": "Development: owner-requested library entry. Not physically accepted. Nine-slice resizing and per-leaf door anchors are NOT implemented (resizing scales the artwork)."
+  }
+}

@@ -1,0 +1,214 @@
+{
+  "schemaVersion": 3,
+  "id": "wireona_generator_source_3p_industrial",
+  "name": {
+    "en": "Industrial generator source 3~ + N (teaching)",
+    "ar": "مصدر مولد صناعي ثلاثي الطور + N (تعليمي)"
+  },
+  "category": {
+    "en": "Sources",
+    "ar": "مصادر"
+  },
+  "libraryPath": "Power Devices/Power Supply",
+  "tagPrefix": "G",
+  "physical": {
+    "widthMm": 344.2,
+    "heightMm": 182.8,
+    "estimated": true,
+    "dimensionEvidence": {
+      "classification": "drawing_only_unknown_real_dimensions",
+      "basis": "drawing scale chosen from the artwork aspect ratio",
+      "claimBoundary": "drawing placement only; real generator dimensions are UNKNOWN and not a manufacturer mechanical drawing"
+    }
+  },
+  "graphics": {
+    "preview": "preview.png",
+    "original": "original.png",
+    "size": {
+      "width": 1721,
+      "height": 914
+    },
+    "provenance": {
+      "kind": "ai_generated_owner_approved_artwork",
+      "sourceFile": "industrial-three-phase.png",
+      "sha256": "a11181b5b29583463765f911f0b40643d80597f47ad504edb8190856dee8a2d3",
+      "approvedBy": "owner",
+      "approvedOn": "2026-10-08",
+      "claimBoundary": "AI-generated, reference-inspired artwork approved by the owner. NOT an exact-model photograph or evidence of any manufacturer, model, nameplate or rating. Any logo-like marking in the art is not a product claim."
+    }
+  },
+  "terminals": [
+    {
+      "id": "L1",
+      "label": "L1",
+      "signal": "Power",
+      "role": "bidirectional",
+      "nx": 0.035,
+      "ny": 0.77,
+      "direction": "bottom",
+      "wiringClass": "power",
+      "detail": "Generator source output L1 (teaching terminal)."
+    },
+    {
+      "id": "L2",
+      "label": "L2",
+      "signal": "Power",
+      "role": "bidirectional",
+      "nx": 0.065,
+      "ny": 0.77,
+      "direction": "bottom",
+      "wiringClass": "power",
+      "detail": "Generator source output L2 (teaching terminal)."
+    },
+    {
+      "id": "L3",
+      "label": "L3",
+      "signal": "Power",
+      "role": "bidirectional",
+      "nx": 0.095,
+      "ny": 0.77,
+      "direction": "bottom",
+      "wiringClass": "power",
+      "detail": "Generator source output L3 (teaching terminal)."
+    },
+    {
+      "id": "N",
+      "label": "N",
+      "signal": "Power",
+      "role": "bidirectional",
+      "nx": 0.125,
+      "ny": 0.77,
+      "direction": "bottom",
+      "wiringClass": "power",
+      "detail": "Generator source output N (teaching terminal)."
+    },
+    {
+      "id": "PE",
+      "label": "PE (frame)",
+      "signal": "Protective earth",
+      "role": "bidirectional",
+      "nx": 0.12,
+      "ny": 0.86,
+      "direction": "bottom",
+      "wiringClass": "power",
+      "detail": "Frame bonding point. Not neutral, not a supply domain; no internal N-PE bond is modelled."
+    }
+  ],
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "ac",
+    "activationRule": "source",
+    "defaultState": "off",
+    "sourceKind": "ac_3p",
+    "sourceVoltageL1V": 230.0,
+    "sourceVoltageL2V": 230.0,
+    "sourceVoltageL3V": 230.0,
+    "sourceFrequencyHz": 50.0,
+    "terminalPairs": [
+      {
+        "id": "phase_l1",
+        "terminals": [
+          "L1"
+        ],
+        "simBehavior": "source_l1",
+        "currentPath": "source"
+      },
+      {
+        "id": "phase_l2",
+        "terminals": [
+          "L2"
+        ],
+        "simBehavior": "source_l2",
+        "currentPath": "source"
+      },
+      {
+        "id": "phase_l3",
+        "terminals": [
+          "L3"
+        ],
+        "simBehavior": "source_l3",
+        "currentPath": "source"
+      },
+      {
+        "id": "neutral",
+        "terminals": [
+          "N"
+        ],
+        "simBehavior": "source_neutral",
+        "currentPath": "source"
+      }
+    ],
+    "rotaryControls": [
+      {
+        "id": "output",
+        "label": "Output (run / stop)",
+        "parameterField": "sourceOutputOn",
+        "mode": "discrete",
+        "storeValue": true,
+        "discreteValues": [
+          true,
+          false
+        ],
+        "discreteLabels": [
+          "Run (output live)",
+          "Stop (output open)"
+        ],
+        "defaultValue": true,
+        "showOnFace": false
+      },
+      {
+        "id": "voltage_l1",
+        "label": "Phase L1 voltage (V L-N)",
+        "parameterField": "sourceVoltageL1V",
+        "valueMin": 0,
+        "valueMax": 240.0
+      },
+      {
+        "id": "voltage_l2",
+        "label": "Phase L2 voltage (V L-N)",
+        "parameterField": "sourceVoltageL2V",
+        "valueMin": 0,
+        "valueMax": 240.0
+      },
+      {
+        "id": "voltage_l3",
+        "label": "Phase L3 voltage (V L-N)",
+        "parameterField": "sourceVoltageL3V",
+        "valueMin": 0,
+        "valueMax": 240.0
+      },
+      {
+        "id": "frequency",
+        "label": "Frequency (Hz)",
+        "parameterField": "sourceFrequencyHz",
+        "valueMin": 0,
+        "valueMax": 60.0
+      }
+    ]
+  },
+  "engineering": {
+    "evidenceStatus": "TEACHING_SOURCE_NOT_EXACT_MODEL",
+    "unsupported": [
+      "Generic teaching source: not a physical genset model.",
+      "No kVA/kW rating, current limit or overload capability is modelled; the source is ideal (zero internal impedance).",
+      "Winding impedance, AVR/excitation, governor, fuel, engine RPM, transient/sub-transient reactance and short-circuit decrement are not modelled.",
+      "Synchronisation/paralleling with another source is not modelled: two independent sources feeding one three-phase machine are reported as unsynchronized.",
+      "PE is the frame bonding point only: no internal N-PE bond and no earthing system (TN/TT/IT) is implied."
+    ]
+  },
+  "documentation": {
+    "teachingMode": "Generic teaching source (three-phase + N). Artwork is illustrative.",
+    "electricalNote": "Teaching settings: 230 V L-N, 50 Hz by default (adjustable). Balanced three-phase line-to-line = sqrt(3) x 230 V = 398.37 V, not 230 V. These are simulation settings, not ratings.",
+    "unsupported": [
+      "Generic teaching source: not a physical genset model.",
+      "No kVA/kW rating, current limit or overload capability is modelled; the source is ideal (zero internal impedance).",
+      "Winding impedance, AVR/excitation, governor, fuel, engine RPM, transient/sub-transient reactance and short-circuit decrement are not modelled.",
+      "Synchronisation/paralleling with another source is not modelled: two independent sources feeding one three-phase machine are reported as unsynchronized.",
+      "PE is the frame bonding point only: no internal N-PE bond and no earthing system (TN/TT/IT) is implied."
+    ]
+  },
+  "docking": {
+    "enabled": false
+  }
+}
