@@ -23155,13 +23155,94 @@
       mid.push(B2);
       return dedupePts([A, ...simplifyOrtho(mid), B]);
     }
-    /* Stub directionnel + Manhattan. Voisins : même U/L arrondi, couloir décalé (pas de tronc partagé).
-     * v113 : restauration pathHitsOtherWires (annule v111 — user « annule dernier changement câblage »). */
+    /* Goulottes intelligentes EduVolt Designer Pro : trouver goulotte d'accueil la plus proche */
+    function findNearbyTrunking(pt, dir) {
+      if (!state || !state.items) return null;
+      const goulottes = state.items.filter((it) => {
+        const d = LIB[it.type];
+        return d && (d.kind === "goulotte" || d.overWires);
+      });
+      if (!goulottes.length) return null;
+      let best = null;
+      let minDist = 320;
+      for (let i = 0; i < goulottes.length; i++) {
+        const g = goulottes[i];
+        const sz = itemSize(g);
+        const isH = sz.w >= sz.h;
+        if (isH) {
+          const cy = g.y + sz.h / 2;
+          const dy = cy - pt.y;
+          // Vérifier que la goulotte est dans la bonne direction d'évacuation (ou proche)
+          const dirOk = (dir === "bottom" && dy > 0) || (dir === "top" && dy < 0) || Math.abs(dy) < 80;
+          if (dirOk && pt.x >= g.x - 20 && pt.x <= g.x + sz.w + 20) {
+            const dist = Math.abs(dy);
+            if (dist < minDist) {
+              minDist = dist;
+              best = { isH: true, x: pt.x, y: cy, gx0: g.x, gx1: g.x + sz.w, gy: cy, item: g };
+            }
+          }
+        } else {
+          const cx = g.x + sz.w / 2;
+          const dx = cx - pt.x;
+          const dirOk = (dir === "right" && dx > 0) || (dir === "left" && dx < 0) || Math.abs(dx) < 80;
+          if (dirOk && pt.y >= g.y - 20 && pt.y <= g.y + sz.h + 20) {
+            const dist = Math.abs(dx);
+            if (dist < minDist) {
+              minDist = dist;
+              best = { isH: false, x: cx, y: pt.y, gy0: g.y, gy1: g.y + sz.h, gx: cx, item: g };
+            }
+          }
+        }
+      }
+      return best;
+    }
+
+    /* Stub directionnel + Manhattan / Goulottes EduVolt */
     function autoRoute(a, b) {
       const da = padUnit(a);
       const db = padUnit(b);
-      const cands = [];
       const stub0 = (typeof wireStubLen === "function") ? wireStubLen() : STUB;
+
+      // Routage intelligent via Goulottes EduVolt si présentes
+      if (typeof isEduVoltRoute === "function" && isEduVoltRoute()) {
+        const gA = findNearbyTrunking(a, a.direction || (da[1] > 0 ? "bottom" : da[1] < 0 ? "top" : da[0] > 0 ? "right" : "left"));
+        const gB = findNearbyTrunking(b, b.direction || (db[1] > 0 ? "bottom" : db[1] < 0 ? "top" : db[0] > 0 ? "right" : "left"));
+        if (gA && gB) {
+          const rawRoute = [];
+          rawRoute.push({ x: a.x, y: a.y });
+          // Entrée perpendiculaire dans la goulotte A
+          if (gA.isH) rawRoute.push({ x: a.x, y: gA.y });
+          else rawRoute.push({ x: gA.x, y: a.y });
+
+          // Cheminement entre goulottes ou au sein de la même goulotte
+          if (gA.item.uid === gB.item.uid) {
+            // Même goulotte : fil entièrement masqué sous le capot
+          } else if (gA.isH && gB.isH) {
+            // Deux goulottes horizontales différentes : couloir de transition vertical
+            const transX = Math.round((Math.max(gA.gx0, gB.gx0) + Math.min(gA.gx1, gB.gx1)) / 2) || (a.x + b.x) / 2;
+            rawRoute.push({ x: transX, y: gA.y });
+            rawRoute.push({ x: transX, y: gB.y });
+          } else if (!gA.isH && !gB.isH) {
+            // Deux goulottes verticales différentes : transition horizontale
+            const transY = Math.round((Math.max(gA.gy0, gB.gy0) + Math.min(gA.gy1, gB.gy1)) / 2) || (a.y + b.y) / 2;
+            rawRoute.push({ x: gA.x, y: transY });
+            rawRoute.push({ x: gB.x, y: transY });
+          } else {
+            // Angle (une H et une V) : jonction directe à l'intersection
+            if (gA.isH && !gB.isH) rawRoute.push({ x: gB.x, y: gA.y });
+            else rawRoute.push({ x: gA.x, y: gB.y });
+          }
+
+          // Sortie de goulotte vers borne B
+          if (gB.isH) rawRoute.push({ x: b.x, y: gB.y });
+          else rawRoute.push({ x: gB.x, y: b.y });
+          rawRoute.push({ x: b.x, y: b.y });
+
+          return withCardinalStubs(dedupePts(simplifyOrtho(rawRoute)), a, b);
+        }
+      }
+
+      const cands = [];
       if (db && da[0] === db[0] && da[1] === db[1]) {
         const span = Math.abs(da[0] ? (b.y - a.y) : (b.x - a.x));
         const along = da[0] * (b.x - a.x) + da[1] * (b.y - a.y);
