@@ -1869,61 +1869,68 @@
 
         wiresSvg.appendChild(path);
 
-        // Dessin des embouts / cosses métalliques EduVolt (Puntera / Ferrule)
-        const drawFerrule = (pt, nextPt) => {
-          const dx = nextPt.x - pt.x;
-          const dy = nextPt.y - pt.y;
+        // Dessin des bagues / bandelettes d'identification thermo-rétractables EduVolt (Punteras / Wire Sleeves)
+        // Dans EduVolt original : 2 manchons blancs/jaunes à chaque extrémité du fil (près des bornes), alignés sur le câble.
+        const drawWireSleeveTag = (pStart, pNext, label) => {
+          const dx = pNext.x - pStart.x;
+          const dy = pNext.y - pStart.y;
           const len = Math.hypot(dx, dy) || 1;
           const ux = dx / len, uy = dy / len;
-          const angle = Math.atan2(uy, ux) * (180 / Math.PI);
+          
+          // Position de la bague : à 14px de la borne, sur le segment
+          const sleeveDist = Math.min(18, len * 0.4);
+          const cx = pStart.x + ux * sleeveDist;
+          const cy = pStart.y + uy * sleeveDist;
+          const deg = Math.atan2(uy, ux) * (180 / Math.PI);
+          // Garder le texte lisible (éviter le texte à l'envers)
+          const textDeg = (deg > 90 || deg < -90) ? deg + 180 : deg;
 
           const g = document.createElementNS(NS, "g");
-          g.setAttribute("transform", `translate(${pt.x}, ${pt.y}) rotate(${angle})`);
+          g.setAttribute("transform", `translate(${cx.toFixed(1)}, ${cy.toFixed(1)}) rotate(${deg.toFixed(1)})`);
+          g.style.cursor = "pointer";
 
-          // Bague isolante plastique EduVolt
-          const collar = document.createElementNS(NS, "rect");
-          collar.setAttribute("x", "0");
-          collar.setAttribute("y", "-5");
-          collar.setAttribute("width", "6");
-          collar.setAttribute("height", "10");
-          collar.setAttribute("rx", "2");
-          collar.setAttribute("fill", w.color);
-          collar.setAttribute("stroke", "rgba(0,0,0,0.5)");
-          collar.setAttribute("stroke-width", "0.8");
-          g.appendChild(collar);
+          // Manchon thermorétractable blanc/jaunâtre standard EduVolt
+          const sleeve = document.createElementNS(NS, "rect");
+          sleeve.setAttribute("x", "-13");
+          sleeve.setAttribute("y", "-5.5");
+          sleeve.setAttribute("width", "26");
+          sleeve.setAttribute("height", "11");
+          sleeve.setAttribute("rx", "2");
+          sleeve.setAttribute("fill", "#fef9c3");
+          sleeve.setAttribute("stroke", "#ca8a04");
+          sleeve.setAttribute("stroke-width", "0.8");
+          sleeve.setAttribute("filter", "drop-shadow(0 1px 2px rgba(0,0,0,0.35))");
+          g.appendChild(sleeve);
 
-          // Embout métallique étamé
-          const tube = document.createElementNS(NS, "rect");
-          tube.setAttribute("x", "6");
-          tube.setAttribute("y", "-3");
-          tube.setAttribute("width", "8");
-          tube.setAttribute("height", "6");
-          tube.setAttribute("fill", "#cbd5e1");
-          tube.setAttribute("stroke", "#475569");
-          tube.setAttribute("stroke-width", "0.6");
-          g.appendChild(tube);
+          // Texte de repérage imprimé sur la bandelette
+          const txt = document.createElementNS(NS, "text");
+          txt.setAttribute("x", "0");
+          txt.setAttribute("y", "3");
+          txt.setAttribute("text-anchor", "middle");
+          txt.setAttribute("fill", "#0f172a");
+          txt.setAttribute("font-size", "7.5px");
+          txt.setAttribute("font-weight", "800");
+          txt.setAttribute("font-family", "ui-monospace, monospace");
+          txt.setAttribute("letter-spacing", "-0.3px");
+          txt.textContent = label;
+          if (deg > 90 || deg < -90) {
+            txt.setAttribute("transform", "rotate(180)");
+            txt.setAttribute("y", "-1.5");
+          }
+          g.appendChild(txt);
+
+          g.addEventListener("dblclick", (e) => {
+            e.stopPropagation();
+            editWireLabel(w.id);
+          });
 
           wiresSvg.appendChild(g);
         };
 
-        // Ajout de l'étiquette thermo-rétractable IEC 81346 au milieu du câble
         if (pts.length >= 2 && tagsVisible) {
-          const midIdx = Math.floor(pts.length / 2);
-          const midPt = pts[midIdx];
-          const tagForeign = document.createElementNS(NS, "foreignObject");
-          tagForeign.setAttribute("x", String(midPt.x - 22));
-          tagForeign.setAttribute("y", String(midPt.y - 10));
-          tagForeign.setAttribute("width", "70");
-          tagForeign.setAttribute("height", "22");
-          
-          const labelText = getWireLabelDefault(w, state.wires.indexOf(w));
-          tagForeign.innerHTML = `<div class="ev-wire-sleeve-label" onclick="editWireLabel('${w.id}')" title="Double-clic pour modifier l'étiquette">${labelText}</div>`;
-          wiresSvg.appendChild(tagForeign);
-        }
-
-        if (pts.length >= 2) {
-          drawFerrule(pts[0], pts[1]);
-          drawFerrule(pts[pts.length - 1], pts[pts.length - 2]);
+          const wireNum = getWireLabelDefault(w, state.wires.indexOf(w));
+          drawWireSleeveTag(pts[0], pts[1], wireNum);
+          drawWireSleeveTag(pts[pts.length - 1], pts[pts.length - 2], wireNum);
         }
 
         // Affichage des points d'angle / poignées de coudes (Handles EduVolt) si sélectionné
