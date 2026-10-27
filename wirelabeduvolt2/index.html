@@ -1091,9 +1091,9 @@
     .ev-door-panel {
       position: absolute;
       top: 60px;
-      left: 2360px; /* À côté de la plaque de montage principale */
-      width: 700px;
-      height: 820px;
+      left: 1360px; /* À côté de la plaque de montage principale */
+      width: 520px;
+      height: 650px;
       background: #1b2028;
       border: 4px solid #334155;
       border-radius: 8px;
@@ -1422,18 +1422,21 @@
     <!-- Armoire & Zone de Câblage -->
     <main class="ev-canvas-container" id="canvasContainer">
       <div class="ev-world" id="world">
-        <!-- Goulottes de câblage fentes plastiques EduVolt -->
-        <div class="ev-wire-duct h" style="top: 80px; left: 80px; width: 2200px;"><div class="ev-wire-duct-slits"></div></div>
-        <div class="ev-wire-duct h" style="top: 380px; left: 80px; width: 2200px;"><div class="ev-wire-duct-slits"></div></div>
-        <div class="ev-wire-duct h" style="top: 680px; left: 80px; width: 2200px;"><div class="ev-wire-duct-slits"></div></div>
-        <div class="ev-wire-duct v" style="top: 80px; left: 80px; height: 648px;"><div class="ev-wire-duct-slits"></div></div>
-        <div class="ev-wire-duct v" style="top: 80px; left: 2232px; height: 648px;"><div class="ev-wire-duct-slits"></div></div>
+        <!-- Lignes et distances d alignement intelligentes EduVolt -->
+        <svg id="evGuidelinesSvg" style="position: absolute; top: 0; left: 0; width: 3500px; height: 2500px; pointer-events: none; z-index: 35;"></svg>
 
-        <!-- Rails DIN 35mm métalliques réels -->
-        <div class="ev-din-rail" style="top: 220px;"></div>
-        <div class="ev-din-rail" style="top: 520px;"></div>
+        <!-- Goulottes de câblage fentes plastiques Industrielles Normalisées (Format compact 1240x648) -->
+        <div class="ev-wire-duct h" style="top: 80px; left: 60px; width: 1240px;"><div class="ev-wire-duct-slits"></div></div>
+        <div class="ev-wire-duct h" style="top: 380px; left: 60px; width: 1240px;"><div class="ev-wire-duct-slits"></div></div>
+        <div class="ev-wire-duct h" style="top: 680px; left: 60px; width: 1240px;"><div class="ev-wire-duct-slits"></div></div>
+        <div class="ev-wire-duct v" style="top: 80px; left: 60px; height: 648px;"><div class="ev-wire-duct-slits"></div></div>
+        <div class="ev-wire-duct v" style="top: 80px; left: 1252px; height: 648px;"><div class="ev-wire-duct-slits"></div></div>
 
-        <!-- Porte d'armoire industrielle (Puerta) pour boutons et voyants -->
+        <!-- Rails DIN 35mm métalliques réels parfaitement centrés -->
+        <div class="ev-din-rail" style="top: 230px; left: 108px; width: 1144px;"></div>
+        <div class="ev-din-rail" style="top: 530px; left: 108px; width: 1144px;"></div>
+
+        <!-- Porte d armoire industrielle (Puerta) pour boutons et voyants -->
         <div class="ev-door-panel" id="doorPanel">
           <div class="ev-door-header">
             <span><i class="fa-solid fa-square-poll-vertical" style="color: #38bdf8; margin-right: 6px;"></i> PUERTA DEL TABLERO (PORTE D'ARMOIRE)</span>
@@ -1852,6 +1855,7 @@
         const dy = (e.clientY - startY) / state.zoom;
         comp.x += dx;
         comp.y += dy;
+        updateAlignmentGuides(comp);
         el.style.left = Math.round(comp.x) + "px";
         el.style.top = Math.round(comp.y) + "px";
         startX = e.clientX;
@@ -1866,6 +1870,7 @@
           comp.y = Math.round(comp.y / 10) * 10;
           el.style.left = comp.x + "px";
           el.style.top = comp.y + "px";
+          clearAlignmentGuides();
           if (typeof snapToDinRail === "function") snapToDinRail(comp, el);
           if (typeof checkAndApplyDocking === "function") checkAndApplyDocking(comp);
           renderWires();
@@ -1954,8 +1959,8 @@
       { y: 680 + 24, top: 680, bottom: 728 }
     ];
     const DUCTS_V = [
-      { x: 80 + 24, left: 80, right: 128 },
-      { x: 2232 + 24, left: 2232, right: 2280 }
+      { x: 60 + 24, left: 60, right: 108 },
+      { x: 1252 + 24, left: 1252, right: 1300 }
     ];
 
     function findClosestDuctH(y, dir) {
@@ -2411,6 +2416,27 @@
 
     window.addEventListener("mouseup", () => state.isPanning = false);
 
+    // Zoom fluide centré sur la position de la souris (Wheel Zoom)
+    canvasContainer.addEventListener("wheel", (e) => {
+      e.preventDefault();
+      const rect = canvasContainer.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      // Position dans le repère monde avant redimensionnement
+      const worldX = (mouseX - state.pan.x) / state.zoom;
+      const worldY = (mouseY - state.pan.y) / state.zoom;
+
+      const zoomFactor = e.deltaY < 0 ? 1.08 : 0.92;
+      const newZoom = Math.min(2.5, Math.max(0.3, state.zoom * zoomFactor));
+
+      state.pan.x = mouseX - worldX * newZoom;
+      state.pan.y = mouseY - worldY * newZoom;
+      state.zoom = newZoom;
+
+      updateTransform();
+    }, { passive: false });
+
     // Initialisation d'un exemple propre sur le rail DIN avec les vrais composants
     
     // =========================================================================
@@ -2680,6 +2706,106 @@
     var _el_btnCloseLadder = document.getElementById("btnCloseLadder"); if (_el_btnCloseLadder) _el_btnCloseLadder.addEventListener("click", () => ladderModal.classList.remove("open"));
 
     // Raccourcis clavier EduVolt officiels (Ctrl+S, Ctrl+Z, Ctrl+Y, Ctrl+D, Ctrl+L)
+    // Gestion de l'affichage de la Bibliothèque (Sidebar)
+    const sidebarEl = document.querySelector(".ev-sidebar");
+    const btnToggleSidebarEl = document.getElementById("btnToggleSidebar");
+    const btnCloseSidebarXEl = document.getElementById("btnCloseSidebarX");
+
+    function toggleSidebar() {
+      if (sidebarEl) {
+        sidebarEl.classList.toggle("collapsed");
+        if (btnToggleSidebarEl) btnToggleSidebarEl.classList.toggle("active", !sidebarEl.classList.contains("collapsed"));
+      }
+    }
+    if (btnToggleSidebarEl) btnToggleSidebarEl.addEventListener("click", toggleSidebar);
+    if (btnCloseSidebarXEl) btnCloseSidebarXEl.addEventListener("click", toggleSidebar);
+
+    // Sauvegarder Projet (Bouton Barre d'outils)
+    const btnSaveProjEl = document.getElementById("btnSaveProj");
+    if (btnSaveProjEl) {
+      btnSaveProjEl.addEventListener("click", () => {
+        const proj = { components: state.components, wires: state.wires };
+        localStorage.setItem("eduvolt_project_v1", JSON.stringify(proj));
+        alert("✓ Projet sauvegardé localement avec succès !");
+      });
+    }
+
+    // Défaire (Undo)
+    const btnUndoEl = document.getElementById("btnUndo");
+    if (btnUndoEl) {
+      btnUndoEl.addEventListener("click", () => {
+        if (state.wires.length) {
+          state.wires.pop();
+          renderWires();
+          updateWireCount();
+        } else if (state.components.length) {
+          const removed = state.components.pop();
+          const domEl = document.getElementById(removed.uid);
+          if (domEl) domEl.remove();
+        }
+      });
+    }
+
+    // Dupliquer composant sélectionné
+    const btnDuplicateEl = document.getElementById("btnDuplicate");
+    if (btnDuplicateEl) {
+      btnDuplicateEl.addEventListener("click", () => {
+        const selComp = (state.selectedComp ? state.components.find(c => c.uid === state.selectedComp) : state.components[state.components.length - 1]);
+        if (selComp) {
+          const proto = COMPONENTS_MANIFEST.find(c => c.folder === selComp.folder);
+          if (proto) placeComponent(proto, selComp.x + 40, selComp.y + 40);
+        }
+      });
+    }
+
+    // Supprimer la sélection
+    const btnDeleteSelectedEl = document.getElementById("btnDeleteSelected");
+    if (btnDeleteSelectedEl) {
+      btnDeleteSelectedEl.addEventListener("click", () => {
+        if (state.selectedWire) {
+          state.wires = state.wires.filter(w => w.id !== state.selectedWire);
+          state.selectedWire = null;
+          renderWires();
+          updateWireCount();
+        } else if (state.selectedComp) {
+          state.components = state.components.filter(c => c.uid !== state.selectedComp);
+          state.wires = state.wires.filter(w => w.from.compUid !== state.selectedComp && w.to.compUid !== state.selectedComp);
+          const domEl = document.getElementById(state.selectedComp);
+          if (domEl) domEl.remove();
+          state.selectedComp = null;
+          renderWires();
+          updateWireCount();
+        }
+      });
+    }
+
+    // Afficher / Masquer la Porte d'armoire
+    const btnToggleDoorEl = document.getElementById("btnToggleDoor");
+    const doorPanelEl = document.getElementById("doorPanel");
+    if (btnToggleDoorEl && doorPanelEl) {
+      btnToggleDoorEl.addEventListener("click", () => {
+        const isHidden = (doorPanelEl.style.display === "none");
+        doorPanelEl.style.display = isHidden ? "flex" : "none";
+        btnToggleDoorEl.classList.toggle("active", isHidden);
+      });
+    }
+
+    // Rotation composant (90°)
+    const btnRotateCompEl = document.getElementById("btnRotateComp");
+    if (btnRotateCompEl) {
+      btnRotateCompEl.addEventListener("click", () => {
+        if (state.selectedComp) {
+          const comp = state.components.find(c => c.uid === state.selectedComp);
+          if (comp) {
+            comp.rotation = ((comp.rotation || 0) + 90) % 360;
+            const el = document.getElementById(comp.uid);
+            if (el) el.style.transform = "rotate(" + comp.rotation + "deg)";
+            renderWires();
+          }
+        }
+      });
+    }
+
     window.addEventListener("keydown", (e) => {
       if (e.ctrlKey || e.metaKey) {
         if (e.key === "s" || e.key === "S") {
@@ -2770,666 +2896,175 @@
     // Ajouter une goulotte de câblage supplémentaire (Agregar canaleta)
     const btnAddDuct = document.getElementById("btnAddDuct");
     if (btnAddDuct) {
-      let ductCount = 0;
+      let extraDuctIndex = 0;
       btnAddDuct.addEventListener("click", () => {
-        ductCount++;
-        const newDuct = document.createElement("div");
-        newDuct.className = "ev-wire-duct h";
-        newDuct.style.top = (220 + ductCount * 120) + "px";
-        newDuct.style.left = "80px";
-        newDuct.style.width = "2200px";
-        newDuct.innerHTML = '<div class="ev-wire-duct-slits"></div>';
-        world.insertBefore(newDuct, componentsLayer);
-        alert("Nouvelle goulotte EduVolt ajoutée sur la plaque de fond !");
-      });
-    }
-
-    // Rotation du composant sélectionné (Rotar 90°)
-    const btnRotateComp = document.getElementById("btnRotateComp");
-    if (btnRotateComp) {
-      btnRotateComp.addEventListener("click", () => {
-        if (!state.selectedComp) {
-          alert("Veuillez d'abord cliquer sur un composant pour le sélectionner.");
+        // Ajout logique et calibré : nouvelle rangée modulaire standard DIN (écart 150px)
+        const newY = 680 + (extraDuctIndex + 1) * 150;
+        if (newY > 1600) {
+          alert("Capacité maximale de l armoire atteinte.");
           return;
         }
-        const comp = state.components.find(c => c.uid === state.selectedComp);
-        if (comp) {
-          comp.rotation = ((comp.rotation || 0) + 90) % 360;
-          const el = document.getElementById(comp.uid);
-          if (el) el.style.transform = `rotate(${comp.rotation}deg)`;
-          renderWires();
-        }
-      });
-    }
+        extraDuctIndex++;
+        
+        // Nouvelle goulotte horizontale parfaitement alignée
+        const newDuct = document.createElement("div");
+        newDuct.className = "ev-wire-duct h";
+        newDuct.style.top = newY + "px";
+        newDuct.style.left = "60px";
+        newDuct.style.width = "1240px";
+        newDuct.innerHTML = '<div class="ev-wire-duct-slits"></div>';
+        world.insertBefore(newDuct, componentsLayer);
 
-    // Supprimer le composant ou fil sélectionné (Eliminar / Suppr)
-    const btnDeleteSelected = document.getElementById("btnDeleteSelected");
-    function deleteCurrentSelection() {
-      if (state.selectedComp) {
-        state.components = state.components.filter(c => c.uid !== state.selectedComp);
-        state.wires = state.wires.filter(w => w.from.compUid !== state.selectedComp && w.to.compUid !== state.selectedComp);
-        const el = document.getElementById(state.selectedComp);
-        if (el) el.remove();
-        state.selectedComp = null;
-        renderWires();
-        updateWireCount();
-      } else if (state.selectedWire) {
-        state.wires = state.wires.filter(w => w.id !== state.selectedWire);
-        state.selectedWire = null;
-        renderWires();
-        updateWireCount();
-      }
-    }
+        // Nouveau Rail DIN au milieu de la nouvelle zone
+        const newRail = document.createElement("div");
+        newRail.className = "ev-din-rail";
+        const railY = newY - 75;
+        newRail.style.top = railY + "px";
+        newRail.style.left = "108px";
+        newRail.style.width = "1144px";
+        world.insertBefore(newRail, componentsLayer);
 
-    if (btnDeleteSelected) btnDeleteSelected.addEventListener("click", deleteCurrentSelection);
-    window.addEventListener("keydown", (e) => {
-      if (e.key === "Delete" || e.key === "Backspace") {
-        if (!["INPUT", "TEXTAREA"].includes(document.activeElement.tagName)) {
-          deleteCurrentSelection();
-        }
-      }
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s") {
-        e.preventDefault();
-        saveProject();
-      }
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z" && !e.shiftKey) {
-        e.preventDefault();
-        undoAction();
-      }
-      if ((e.ctrlKey || e.metaKey) && (e.key.toLowerCase() === "y" || (e.key.toLowerCase() === "z" && e.shiftKey))) {
-        e.preventDefault();
-        redoAction();
-      }
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "l") {
-        e.preventDefault();
-        toggleLockSelected();
-      }
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "d") {
-        e.preventDefault();
-        duplicateSelected();
-      }
-    });
+        // Enregistrer la nouvelle goulotte et le nouveau rail dans les listes de calcul
+        DUCTS_H.push({ y: newY + 24, top: newY, bottom: newY + 48 });
+        DIN_RAILS_Y.push(railY);
 
-    // --- Actions Historique (Undo/Redo), Sauvegarde & Manipulation EduVolt ---
-    const undoStack = [];
-    const redoStack = [];
-
-    function pushHistorySnapshot() {
-      const snap = JSON.stringify({
-        components: state.components,
-        wires: state.wires
-      });
-      undoStack.push(snap);
-      if (undoStack.length > 30) undoStack.shift();
-      redoStack.length = 0;
-    }
-
-    function undoAction() {
-      if (undoStack.length === 0) return;
-      const current = JSON.stringify({ components: state.components, wires: state.wires });
-      redoStack.push(current);
-      const prev = JSON.parse(undoStack.pop());
-      state.components = prev.components;
-      state.wires = prev.wires;
-      state.selectedComp = null;
-      state.selectedWire = null;
-      renderAllComponents();
-      renderWires();
-      updateWireCount();
-    }
-
-    function redoAction() {
-      if (redoStack.length === 0) return;
-      const current = JSON.stringify({ components: state.components, wires: state.wires });
-      undoStack.push(current);
-      const next = JSON.parse(redoStack.pop());
-      state.components = next.components;
-      state.wires = next.wires;
-      state.selectedComp = null;
-      state.selectedWire = null;
-      renderAllComponents();
-      renderWires();
-      updateWireCount();
-    }
-
-    function renderAllComponents() {
-      componentsLayer.innerHTML = "";
-      state.components.forEach(c => {
-        renderComponentDOM(c);
-      });
-    }
-
-    function saveProject() {
-      const data = {
-        name: "Projet WireLab",
-        version: "2.2.10",
-        timestamp: new Date().toISOString(),
-        components: state.components,
-        wires: state.wires
-      };
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = "projet_wirelab_" + Date.now() + ".json";
-      a.click();
-      URL.revokeObjectURL(a.href);
-    }
-
-    function toggleLockSelected() {
-      if (!state.selectedComp) return;
-      const comp = state.components.find(c => c.uid === state.selectedComp);
-      if (comp) {
-        comp.locked = !comp.locked;
-        const el = document.getElementById(comp.uid);
-        if (el) el.style.opacity = comp.locked ? "0.8" : "1";
-        const lockBtn = document.getElementById("btnLock");
-        if (lockBtn) lockBtn.classList.toggle("active", comp.locked);
-      }
-    }
-
-    function duplicateSelected() {
-      if (!state.selectedComp) return;
-      const original = state.components.find(c => c.uid === state.selectedComp);
-      if (!original) return;
-      pushHistorySnapshot();
-      const newUid = "c_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
-      const dup = JSON.parse(JSON.stringify(original));
-      dup.uid = newUid;
-      dup.x += 40;
-      dup.y += 40;
-      state.components.push(dup);
-      renderComponentDOM(dup);
-      selectComponent(newUid);
-    }
-
-    const btnSaveProj = document.getElementById("btnSaveProj");
-    if (btnSaveProj) btnSaveProj.addEventListener("click", saveProject);
-
-    const btnUndo = document.getElementById("btnUndo");
-    if (btnUndo) btnUndo.addEventListener("click", undoAction);
-
-    const btnRedo = document.getElementById("btnRedo");
-    if (btnRedo) btnRedo.addEventListener("click", redoAction);
-
-    const btnLock = document.getElementById("btnLock");
-    if (btnLock) btnLock.addEventListener("click", toggleLockSelected);
-
-    const btnDuplicate = document.getElementById("btnDuplicate");
-    if (btnDuplicate) btnDuplicate.addEventListener("click", duplicateSelected);
-
-    
-    // ==========================================
-    // PORTE D'ARMOIRE & EMBÔITEMENT (DOCKING)
-    // ==========================================
-    const doorPanel = document.getElementById("doorPanel");
-    const btnToggleDoor = document.getElementById("btnToggleDoor");
-    let doorVisible = true;
-
-    if (btnToggleDoor && doorPanel) {
-      btnToggleDoor.addEventListener("click", () => {
-        doorVisible = !doorVisible;
-        btnToggleDoor.classList.toggle("active", doorVisible);
-        doorPanel.style.display = doorVisible ? "flex" : "none";
-      });
-    }
-
-    // Gestion du Docking Magnétique (Ex: Relais thermique sous contacteur, Blocs aux sur contacteur)
-    function checkAndApplyDocking(childComp) {
-      const childFolder = (childComp.folder || "").toLowerCase();
-
-      // Relais thermique -> s'emboîte sous le contacteur
-      if (childFolder.includes("rele_termico")) {
-        const contactor = state.components.find(c => (c.folder || "").toLowerCase().includes("contactor") && Math.abs(c.x - childComp.x) < 80 && Math.abs((c.y + c.height) - childComp.y) < 90);
-        if (contactor) {
-          childComp.x = contactor.x;
-          childComp.y = contactor.y + contactor.height - 8; // Emboîtement physique direct
-          const el = document.getElementById(childComp.uid);
-          if (el) {
-            el.style.left = childComp.x + "px";
-            el.style.top = childComp.y + "px";
-            el.classList.add("ev-dock-ghost");
-            setTimeout(() => el.classList.remove("ev-dock-ghost"), 400);
-          }
-          // Pontage automatique des bornes de puissance (2->1, 4->3, 6->5)
-          setTimeout(() => {
-            createWire({ compUid: contactor.uid, termId: "2" }, { compUid: childComp.uid, termId: "1" });
-            createWire({ compUid: contactor.uid, termId: "4" }, { compUid: childComp.uid, termId: "3" });
-            createWire({ compUid: contactor.uid, termId: "6" }, { compUid: childComp.uid, termId: "5" });
-          }, 150);
-        }
-      }
-
-      // Bloc auxiliaire frontal -> s'emboîte sur la face avant du contacteur
-      if (childFolder.includes("bloque_auxiliar")) {
-        const contactor = state.components.find(c => (c.folder || "").toLowerCase().includes("contactor") && Math.hypot(c.x - childComp.x, c.y - childComp.y) < 70);
-        if (contactor) {
-          childComp.x = contactor.x + 8;
-          childComp.y = contactor.y + 18;
-          const el = document.getElementById(childComp.uid);
-          if (el) {
-            el.style.left = childComp.x + "px";
-            el.style.top = childComp.y + "px";
-            el.style.zIndex = "25";
-            el.classList.add("ev-dock-ghost");
-            setTimeout(() => el.classList.remove("ev-dock-ghost"), 400);
-          }
-        }
-      }
-    }
-
-    
-    // =========================================================================
-    // ZOOM INTERACTIF : MOLETTE SOURIS, TOUCHPAD & BOUTONS FLOTTANTS EDUVOLT
-    // =========================================================================
-    function doZoom(delta, clientX, clientY) {
-      const prevZoom = state.zoom;
-      state.zoom = Math.min(2.5, Math.max(0.3, state.zoom + delta));
-
-      if (clientX !== undefined && clientY !== undefined) {
-        const rect = canvasContainer.getBoundingClientRect();
-        const mouseX = clientX - rect.left;
-        const mouseY = clientY - rect.top;
-        state.pan.x -= (mouseX - state.pan.x) * (state.zoom / prevZoom - 1);
-        state.pan.y -= (mouseY - state.pan.y) * (state.zoom / prevZoom - 1);
-      }
-      updateTransform();
-    }
-
-    // Zoom molette fluide
-    canvasContainer.addEventListener("wheel", (e) => {
-      e.preventDefault();
-      const zoomFactor = e.deltaY < 0 ? 0.08 : -0.08;
-      doZoom(zoomFactor, e.clientX, e.clientY);
-    }, { passive: false });
-
-    // Boutons flottants de zoom
-    const btnFloatZoomIn = document.getElementById("btnFloatZoomIn");
-    const btnFloatZoomOut = document.getElementById("btnFloatZoomOut");
-    const btnFloatZoomReset = document.getElementById("btnFloatZoomReset");
-
-    if (btnFloatZoomIn) btnFloatZoomIn.addEventListener("click", () => doZoom(0.2));
-    if (btnFloatZoomOut) btnFloatZoomOut.addEventListener("click", () => doZoom(-0.2));
-    if (btnFloatZoomReset) btnFloatZoomReset.addEventListener("click", () => {
-      state.zoom = 1.0;
-      state.pan = { x: 0, y: 0 };
-      updateTransform();
-    });
-
-    // =========================================================================
-    // MOTEUR LADDER OFFICIEL EDUVOLT IEC 61131-3 (LOGO! 230RCE)
-    // =========================================================================
-    const ladderState = {
-      rungs: [
-        {
-          id: 1,
-          name: "Rung 1 : Circuit de Commande KM1 (Auto-maintien Marche / Arrêt)",
-          cells: [
-            { type: "contact_no", label: "I1 (BP Marche)", state: false },
-            { type: "contact_nc", label: "I2 (BP Arrêt)", state: true },
-            { type: "coil", label: "Q1 (KM1 Bobine)", state: false }
-          ]
-        },
-        {
-          id: 2,
-          name: "Rung 2 : Temporisateur Étoile-Triangle (TON 5s)",
-          cells: [
-            { type: "contact_no", label: "Q1 (KM1)", state: false },
-            { type: "timer_ton", label: "T1 (TON: 5.0s)", state: false },
-            { type: "coil", label: "Q2 (KM2 Triangle)", state: false }
-          ]
-        }
-      ]
-    };
-
-    function renderLadderEditor() {
-      const container = document.getElementById("ladderRungContainer");
-      if (!container) return;
-      container.innerHTML = "";
-
-      ladderState.rungs.forEach((rung, rIdx) => {
-        const rungDiv = document.createElement("div");
-        rungDiv.className = "ev-ladder-rung";
-
-        let cellsHtml = "";
-        rung.cells.forEach((c, cIdx) => {
-          let sym = "[ ]";
-          if (c.type === "contact_nc") sym = "[ / ]";
-          else if (c.type === "coil") sym = "( )";
-          else if (c.type === "timer_ton") sym = "TON";
-          else if (c.type === "counter_ctu") sym = "CTU";
-
-          cellsHtml += `
-            <div class="ev-ladder-cell ${c.state ? 'active-live' : ''}" data-rung="${rIdx}" data-cell="${cIdx}" title="Cliquer pour changer d'état / tester">
-              <span class="symbol">${sym}</span>
-              <span style="font-weight: 700;">${c.label}</span>
-              <span style="font-size: 9px; color: #94a3b8;">${c.type.toUpperCase()}</span>
-            </div>
-          `;
-          if (cIdx < rung.cells.length - 1) {
-            cellsHtml += '<div class="ev-ladder-wire-lead"></div>';
-          }
-        });
-
-        rungDiv.innerHTML = `
-          <div class="ev-ladder-rung-header">
-            <span class="ev-ladder-rung-title">${rung.name}</span>
-            <div style="display: flex; gap: 6px;">
-              <button class="ev-btn" style="padding: 2px 6px; font-size: 11px;" onclick="duplicateRung(${rIdx})" title="Dupliquer le rung"><i class="fa-solid fa-copy"></i> Dupliquer</button>
-              <button class="ev-btn" style="padding: 2px 6px; font-size: 11px; color: #f87171;" onclick="deleteRung(${rIdx})" title="Supprimer ce rung"><i class="fa-solid fa-trash"></i></button>
-            </div>
-          </div>
-          <div class="ev-ladder-cells-row">
-            <span style="font-weight: 800; color: #64748b; font-size: 14px;">L1 |</span>
-            <div class="ev-ladder-wire-lead"></div>
-            ${cellsHtml}
-            <div class="ev-ladder-wire-lead"></div>
-            <span style="font-weight: 800; color: #64748b; font-size: 14px;">| N</span>
-          </div>
-        `;
-        container.appendChild(rungDiv);
-      });
-
-      // Permettre de cliquer sur un contact dans l'éditeur pour basculer son état en direct (Live Simulation)
-      container.querySelectorAll(".ev-ladder-cell").forEach(cell => {
-        cell.addEventListener("click", () => {
-          const r = cell.dataset.rung;
-          const c = cell.dataset.cell;
-          ladderState.rungs[r].cells[c].state = !ladderState.rungs[r].cells[c].state;
-          renderLadderEditor();
+        // Agrandir les goulottes verticales pour englober la nouvelle rangée
+        document.querySelectorAll(".ev-wire-duct.v").forEach(vd => {
+          vd.style.height = (newY - 80 + 48) + "px";
         });
       });
     }
 
-    window.duplicateRung = function(idx) {
-      const clone = JSON.parse(JSON.stringify(ladderState.rungs[idx]));
-      clone.id = ladderState.rungs.length + 1;
-      clone.name = `Rung ${clone.id} (Copie de Rung ${idx + 1})`;
-      ladderState.rungs.push(clone);
-      renderLadderEditor();
-    };
 
-    window.deleteRung = function(idx) {
-      if (ladderState.rungs.length <= 1) {
-        alert("Le programme doit contenir au moins un Rung.");
-        return;
-      }
-      ladderState.rungs.splice(idx, 1);
-      renderLadderEditor();
-    };
-
-    // Boutons d'ajout d'éléments dans le Rung actif
-    const btnLadderAddContactNO = document.getElementById("btnLadderAddContactNO");
-    const btnLadderAddContactNC = document.getElementById("btnLadderAddContactNC");
-    const btnLadderAddCoil = document.getElementById("btnLadderAddCoil");
-    const btnLadderAddTimerTON = document.getElementById("btnLadderAddTimerTON");
-    const btnLadderAddCounterCTU = document.getElementById("btnLadderAddCounterCTU");
-    const btnLadderAddRung = document.getElementById("btnLadderAddRung");
-
-    if (btnLadderAddContactNO) btnLadderAddContactNO.addEventListener("click", () => {
-      ladderState.rungs[0].cells.splice(ladderState.rungs[0].cells.length - 1, 0, { type: "contact_no", label: "I" + (ladderState.rungs[0].cells.length + 1), state: false });
-      renderLadderEditor();
-    });
-    if (btnLadderAddContactNC) btnLadderAddContactNC.addEventListener("click", () => {
-      ladderState.rungs[0].cells.splice(ladderState.rungs[0].cells.length - 1, 0, { type: "contact_nc", label: "I" + (ladderState.rungs[0].cells.length + 1), state: true });
-      renderLadderEditor();
-    });
-    if (btnLadderAddCoil) btnLadderAddCoil.addEventListener("click", () => {
-      ladderState.rungs[0].cells.push({ type: "coil", label: "Q" + (ladderState.rungs[0].cells.length), state: false });
-      renderLadderEditor();
-    });
-    if (btnLadderAddTimerTON) btnLadderAddTimerTON.addEventListener("click", () => {
-      ladderState.rungs[0].cells.splice(ladderState.rungs[0].cells.length - 1, 0, { type: "timer_ton", label: "T" + (ladderState.rungs[0].cells.length), state: false });
-      renderLadderEditor();
-    });
-    if (btnLadderAddCounterCTU) btnLadderAddCounterCTU.addEventListener("click", () => {
-      ladderState.rungs[0].cells.splice(ladderState.rungs[0].cells.length - 1, 0, { type: "counter_ctu", label: "C1 (CTU: 10)", state: false });
-      renderLadderEditor();
-    });
-    if (btnLadderAddRung) btnLadderAddRung.addEventListener("click", () => {
-      ladderState.rungs.push({
-        id: ladderState.rungs.length + 1,
-        name: `Rung ${ladderState.rungs.length + 1} : Nouveau Segment`,
-        cells: [
-          { type: "contact_no", label: "I1", state: false },
-          { type: "coil", label: "Q" + (ladderState.rungs.length + 1), state: false }
-        ]
-      });
-      renderLadderEditor();
-    });
-
-    // Ouvrir Ladder et rendre
-    const btnOpenLadder = document.getElementById("btnOpenLadder");
-    if (btnOpenLadder) {
-      btnOpenLadder.addEventListener("click", () => {
-        renderLadderEditor();
-      });
-    }
-
-    
     // =========================================================================
-    // 1. ALIGNEMENT MAGNÉTIQUE AUTOMATIQUE SUR RAIL DIN 35MM (SNAP TO RAIL)
+    // LIGNES DE GUIDAGE MAGNÉTIQUES & INDICATEURS DE DISTANCE (Système EduVolt)
     // =========================================================================
-    const DIN_RAILS_Y = [220, 520]; // Hauteurs exactes des rails DIN 35mm
-    const SNAP_TOLERANCE = 45; // Pixels d'aimantation
+    const guidelinesSvg = document.getElementById("evGuidelinesSvg");
+    const SNAP_ALIGN_DIST = 12; // Seuil d aimantation entre composants (px)
 
-    function snapToDinRail(comp, el) {
-      // Si le composant est un bouton de porte, pas de snap sur rail DIN
-      if (comp.x > 2340) return;
+    function updateAlignmentGuides(draggedComp) {
+      if (!guidelinesSvg) return;
+      guidelinesSvg.innerHTML = "";
 
-      const compCenterY = comp.y + (comp.height / 2);
-      for (const railY of DIN_RAILS_Y) {
-        if (Math.abs(compCenterY - railY) < SNAP_TOLERANCE) {
-          // Centrer magnétiquement le composant sur le rail DIN
-          comp.y = railY - Math.round(comp.height / 2);
-          el.style.top = comp.y + "px";
-          
-          // Effet sonore ou vibration visuelle de snap
-          el.style.transition = "top 0.1s ease-out";
-          setTimeout(() => el.style.transition = "", 150);
-          break;
+      const dLeft = draggedComp.x;
+      const dRight = draggedComp.x + draggedComp.width;
+      const dCenterX = draggedComp.x + draggedComp.width / 2;
+      const dTop = draggedComp.y;
+      const dBottom = draggedComp.y + draggedComp.height;
+      const dCenterY = draggedComp.y + draggedComp.height / 2;
+
+      let snappedX = false;
+      let snappedY = false;
+
+      state.components.forEach(other => {
+        if (other.uid === draggedComp.uid) return;
+
+        const oLeft = other.x;
+        const oRight = other.x + other.width;
+        const oCenterX = other.x + other.width / 2;
+        const oTop = other.y;
+        const oBottom = other.y + other.height;
+        const oCenterY = other.y + other.height / 2;
+
+        // 1. Alignement Horizontal (Même ligne Y ou centres Y alignés)
+        if (Math.abs(dCenterY - oCenterY) < SNAP_ALIGN_DIST) {
+          draggedComp.y = oCenterY - draggedComp.height / 2;
+          snappedY = true;
+          drawGuideLine(Math.min(dLeft, oLeft) - 30, oCenterY, Math.max(dRight, oRight) + 30, oCenterY, "#38bdf8");
+        } else if (Math.abs(dTop - oTop) < SNAP_ALIGN_DIST) {
+          draggedComp.y = oTop;
+          snappedY = true;
+          drawGuideLine(Math.min(dLeft, oLeft) - 30, oTop, Math.max(dRight, oRight) + 30, oTop, "#38bdf8");
         }
-      }
-    }
 
-    // =========================================================================
-    // 2. ÉTIQUETTES DE FILS THERMO-RÉTRACTABLES IEC (105+ ETIQUETAS)
-    // =========================================================================
-    function getWireLabelDefault(wire, index) {
-      if (wire.customTag) return wire.customTag;
-      return `-W${index + 1}`;
-    }
-
-    window.editWireLabel = function(wireId) {
-      const w = state.wires.find(x => x.id === wireId);
-      if (!w) return;
-      const current = w.customTag || getWireLabelDefault(w, state.wires.indexOf(w));
-      const newTag = prompt("Editar nombre de cable (Étiquette de fil IEC 81346) :", current);
-      if (newTag !== null && newTag.trim() !== "") {
-        w.customTag = newTag.trim();
-        renderWires();
-      }
-    };
-
-    // =========================================================================
-    // 3. ANALYSE DES PANNES & DÉTECTION DE COURT-CIRCUITS (ANALIZA FALLAS)
-    // =========================================================================
-    function detectShortCircuits() {
-      // Détecte si une Phase (Marron L1, Noir L2, Gris L3) est directement reliée au Neutre (Bleu N) ou Terre (PE)
-      let hasShortCircuit = false;
-      let shortWire = null;
-
-      for (const w of state.wires) {
-        const fromComp = state.components.find(c => c.uid === w.from.compUid);
-        const toComp = state.components.find(c => c.uid === w.to.compUid);
-        if (!fromComp || !toComp) continue;
-
-        const termA = fromComp.terminals.find(t => t.id === w.from.termId);
-        const termB = toComp.terminals.find(t => t.id === w.to.termId);
-        if (!termA || !termB) continue;
-
-        const isPhaseA = (termA.id.includes("L") || termA.signal === "Potencia") && !termA.id.includes("N") && !termA.id.includes("PE");
-        const isNeutralB = termB.id === "N" || termB.signal === "Neutro";
-        const isGroundB = termB.id === "PE" || termB.signal === "Tierra";
-
-        if ((isPhaseA && (isNeutralB || isGroundB)) || (isNeutralB && isPhaseA)) {
-          hasShortCircuit = true;
-          shortWire = w;
-          break;
+        // 2. Alignement Vertical (Même colonne X ou centres X alignés)
+        if (Math.abs(dCenterX - oCenterX) < SNAP_ALIGN_DIST) {
+          draggedComp.x = oCenterX - draggedComp.width / 2;
+          snappedX = true;
+          drawGuideLine(oCenterX, Math.min(dTop, oTop) - 30, oCenterX, Math.max(dBottom, oBottom) + 30, "#ec4899");
+        } else if (Math.abs(dLeft - oLeft) < SNAP_ALIGN_DIST) {
+          draggedComp.x = oLeft;
+          snappedX = true;
+          drawGuideLine(oLeft, Math.min(dTop, oTop) - 30, oLeft, Math.max(dBottom, oBottom) + 30, "#ec4899");
         }
-      }
 
-      if (hasShortCircuit) {
-        triggerShortCircuit(shortWire);
-        return true;
-      }
-      return false;
-    }
-
-    function triggerShortCircuit(wire) {
-      const flash = document.getElementById("scFlash");
-      const banner = document.getElementById("faultBanner");
-      if (flash) {
-        flash.style.display = "block";
-        setTimeout(() => flash.style.display = "none", 700);
-      }
-      if (banner) {
-        banner.style.display = "flex";
-        setTimeout(() => banner.style.display = "none", 4000);
-      }
-
-      // Disjonction automatique immédiate
-      state.isSimulating = false;
-      btnToggleSim.classList.remove("sim-active");
-      btnToggleSim.innerHTML = '<i class="fa-solid fa-play"></i><span>Simuler</span>';
-      simStatusDot.classList.remove("active");
-      simStatusText.textContent = "Simulation : Disjonction (Court-circuit)";
-
-      // Repasser tous les appareils en état OFF (Disjonction)
-      state.components.forEach(comp => {
-        setComponentVisualState(comp, false);
+        // 3. Indicateur de Distance Réelle entre 2 composants voisins sur le même rail
+        if (Math.abs(dCenterY - oCenterY) < 30) {
+          const isLeft = dRight < oLeft;
+          const isRight = oRight < dLeft;
+          if (isLeft && (oLeft - dRight) < 200 && (oLeft - dRight) > 2) {
+            drawDistanceIndicator(dRight, dCenterY, oLeft, oCenterY, Math.round(oLeft - dRight));
+          } else if (isRight && (dLeft - oRight) < 200 && (dLeft - oRight) > 2) {
+            drawDistanceIndicator(oRight, oCenterY, dLeft, dCenterY, Math.round(dLeft - oRight));
+          }
+        }
       });
-      if (typeof updateEnergizedVisuals === "function") updateEnergizedVisuals();
     }
 
-    
-    // =========================================================================
-    // AJUSTEMENT AUTOMATIQUE DE LA VUE TABLETTE (FIT TO SCREEN EDUVOLT)
-    // =========================================================================
-    function fitPlanToScreen() {
-      const containerRect = canvasContainer.getBoundingClientRect();
-      const availableWidth = containerRect.width;
-      const availableHeight = containerRect.height;
-
-      // L'armoire complète fait ~3100px (plaque principale 2300px + porte 700px + marges)
-      const totalPlanWidth = 3150;
-      const totalPlanHeight = 950;
-
-      // Calcul du zoom optimal pour que tout le plan rentre parfaitement dans l'écran
-      const scaleX = (availableWidth - 40) / totalPlanWidth;
-      const scaleY = (availableHeight - 40) / totalPlanHeight;
-      const optimalZoom = Math.min(scaleX, scaleY, 1.0);
-
-      // Sur tablette ou petits écrans (< 1400px), adapter automatiquement le zoom
-      if (window.innerWidth < 1400 || 'ontouchstart' in window) {
-        state.zoom = Math.max(0.35, Math.min(optimalZoom, 0.75));
-        state.pan = { x: 20, y: 20 };
-        updateTransform();
-      }
+    function drawGuideLine(x1, y1, x2, y2, color) {
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      line.setAttribute("x1", x1);
+      line.setAttribute("y1", y1);
+      line.setAttribute("x2", x2);
+      line.setAttribute("y2", y2);
+      line.setAttribute("stroke", color);
+      line.setAttribute("stroke-width", "1.2");
+      line.setAttribute("stroke-dasharray", "4,3");
+      guidelinesSvg.appendChild(line);
     }
 
-    // Bouton flottant "Ajuster à l'écran" (Fit Plan)
-    const btnFitScreen = document.createElement("button");
-    btnFitScreen.id = "btnFitScreen";
-    btnFitScreen.title = "Ajuster tout le plan de travail à l'écran (Tablette / PC)";
-    btnFitScreen.innerHTML = '<i class="fa-solid fa-arrows-to-eye"></i>';
-    btnFitScreen.addEventListener("click", () => {
-      const containerRect = canvasContainer.getBoundingClientRect();
-      const scaleX = (containerRect.width - 40) / 3150;
-      const scaleY = (containerRect.height - 40) / 950;
-      state.zoom = Math.max(0.3, Math.min(scaleX, scaleY));
-      state.pan = { x: 20, y: 20 };
-      updateTransform();
-    });
+    function drawDistanceIndicator(x1, y1, x2, y2, distancePx) {
+      const NS = "http://www.w3.org/2000/svg";
+      const g = document.createElementNS(NS, "g");
 
-    const floatingWidget = document.querySelector(".ev-floating-zoom");
-    if (floatingWidget && !document.getElementById("btnFitScreen")) {
-      floatingWidget.appendChild(btnFitScreen);
+      // Flèche de mesure
+      const line = document.createElementNS(NS, "line");
+      line.setAttribute("x1", x1);
+      line.setAttribute("y1", y1);
+      line.setAttribute("x2", x2);
+      line.setAttribute("y2", y2);
+      line.setAttribute("stroke", "#f59e0b");
+      line.setAttribute("stroke-width", "1.5");
+      g.appendChild(line);
+
+      // Pastille de distance (mm / px)
+      const midX = (x1 + x2) / 2;
+      const midY = (y1 + y2) / 2 - 8;
+      const bg = document.createElementNS(NS, "rect");
+      bg.setAttribute("x", midX - 18);
+      bg.setAttribute("y", midY - 7);
+      bg.setAttribute("width", "36");
+      bg.setAttribute("height", "14");
+      bg.setAttribute("rx", "3");
+      bg.setAttribute("fill", "#1e293b");
+      bg.setAttribute("stroke", "#f59e0b");
+      bg.setAttribute("stroke-width", "0.8");
+      g.appendChild(bg);
+
+      const txt = document.createElementNS(NS, "text");
+      txt.setAttribute("x", midX);
+      txt.setAttribute("y", midY + 3.5);
+      txt.setAttribute("text-anchor", "middle");
+      txt.setAttribute("fill", "#fcd34d");
+      txt.setAttribute("font-size", "8.5px");
+      txt.setAttribute("font-weight", "bold");
+      txt.setAttribute("font-family", "ui-monospace, monospace");
+      txt.textContent = distancePx + "px";
+      g.appendChild(txt);
+
+      guidelinesSvg.appendChild(g);
     }
 
-    // Gestion du Touch / Pinch-to-zoom sur Tablette (iPad / Android)
-    let initialTouchDistance = null;
-    let initialTouchZoom = null;
-
-    canvasContainer.addEventListener("touchstart", (e) => {
-      if (e.touches.length === 2) {
-        e.preventDefault();
-        initialTouchDistance = Math.hypot(
-          e.touches[0].clientX - e.touches[1].clientX,
-          e.touches[0].clientY - e.touches[1].clientY
-        );
-        initialTouchZoom = state.zoom;
-      }
-    }, { passive: false });
-
-    canvasContainer.addEventListener("touchmove", (e) => {
-      if (e.touches.length === 2 && initialTouchDistance) {
-        e.preventDefault();
-        const currentDistance = Math.hypot(
-          e.touches[0].clientX - e.touches[1].clientX,
-          e.touches[0].clientY - e.touches[1].clientY
-        );
-        const factor = currentDistance / initialTouchDistance;
-        state.zoom = Math.min(2.5, Math.max(0.3, initialTouchZoom * factor));
-        updateTransform();
-      }
-    }, { passive: false });
-
-    canvasContainer.addEventListener("touchend", () => {
-      initialTouchDistance = null;
-    });
-
-    // Appeler l'ajustement au démarrage
-    window.addEventListener("resize", fitPlanToScreen);
-
-    
-    // =========================================================================
-    // MASQUER / AFFICHER LA BIBLIOTHÈQUE DE COMPOSANTS (ESPACE MAXIMAL)
-    // =========================================================================
-    const sidebar = document.querySelector(".ev-sidebar");
-    const btnToggleSidebar = document.getElementById("btnToggleSidebar");
-    const btnCloseSidebarX = document.getElementById("btnCloseSidebarX");
-    const btnFloatOpenSidebar = document.getElementById("btnFloatOpenSidebar");
-
-    let sidebarOpen = true;
-
-    function toggleSidebar(open) {
-      sidebarOpen = (open !== undefined) ? open : !sidebarOpen;
-      if (sidebarOpen) {
-        sidebar.classList.remove("collapsed");
-        btnFloatOpenSidebar.style.display = "none";
-        btnToggleSidebar.classList.add("active");
-      } else {
-        sidebar.classList.add("collapsed");
-        btnFloatOpenSidebar.style.display = "flex";
-        btnToggleSidebar.classList.remove("active");
-      }
-      // Ré-ajuster le plan après animation
-      setTimeout(() => {
-        if (typeof fitPlanToScreen === "function") fitPlanToScreen();
-      }, 260);
+    function clearAlignmentGuides() {
+      if (guidelinesSvg) guidelinesSvg.innerHTML = "";
     }
 
-    if (btnToggleSidebar) btnToggleSidebar.addEventListener("click", () => toggleSidebar());
-    if (btnCloseSidebarX) btnCloseSidebarX.addEventListener("click", () => toggleSidebar(false));
-    if (btnFloatOpenSidebar) btnFloatOpenSidebar.addEventListener("click", () => toggleSidebar(true));
-
-    // Sur tablette en mode portrait ou petit écran, masquer par défaut pour donner l'espace de travail
-    if (window.innerWidth < 900) {
-      setTimeout(() => toggleSidebar(false), 200);
+    // Initialisation automatique au chargement
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", loadCatalog);
+    } else {
+      loadCatalog();
     }
-
-    window.addEventListener("DOMContentLoaded", () => { loadCatalog(); setTimeout(fitPlanToScreen, 150); });
   </script>
-
-  </body>
+</body>
 </html>
