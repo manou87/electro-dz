@@ -1,0 +1,454 @@
+{
+  "schemaVersion": 3,
+  "id": "LOGO! 230RCE",
+  "name": "LOGO! 230RCE",
+  "category": "PLC",
+  "tagPrefix": "A",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 7200,
+      "height": 8400
+    },
+    "original": "original.png"
+  },
+  "terminals": [
+    {
+      "id": "L",
+      "label": "L",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.083333,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "N",
+      "label": "N",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.166667,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "I1",
+      "label": "I1",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.25,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "I2",
+      "label": "I2",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.333333,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "I3",
+      "label": "I3",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.416667,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "I4",
+      "label": "I4",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.5,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "I5",
+      "label": "I5",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.666667,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "I6",
+      "label": "I6",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.75,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "I7",
+      "label": "I7",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.833333,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "I8",
+      "label": "I8",
+      "signal": "Control",
+      "role": "input",
+      "nx": 0.916667,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "Q1.1",
+      "label": "Q1.1",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.083333,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "Q1.2",
+      "label": "Q1.2",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.166667,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "Q2.2",
+      "label": "Q2.2",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.416667,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "Q2.1",
+      "label": "Q2.1",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.333333,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "Q3.2",
+      "label": "Q3.2",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.666667,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "Q3.1",
+      "label": "Q3.1",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.583333,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "Q4.2",
+      "label": "Q4.2",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.916667,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "Q4.1",
+      "label": "Q4.1",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.833333,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "PE",
+      "label": "PE",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.666667,
+      "ny": 0.870595,
+      "direction": "bottom",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "plc",
+    "enabled": true,
+    "voltage": "both",
+    "activationRule": "plc",
+    "terminalPairs": [
+      {
+        "id": "supply",
+        "terminals": [
+          "L",
+          "N"
+        ],
+        "simBehavior": "plc_supply",
+        "currentPath": "sink",
+        "terminalTypes": {
+          "L": "plc_l",
+          "N": "plc_n"
+        }
+      },
+      {
+        "id": "input_I1",
+        "terminals": [
+          "I1"
+        ],
+        "simBehavior": "plc_digital_input",
+        "currentPath": "sink",
+        "terminalTypes": {
+          "I1": "plc_input"
+        }
+      },
+      {
+        "id": "input_I2",
+        "terminals": [
+          "I2"
+        ],
+        "simBehavior": "plc_digital_input",
+        "currentPath": "sink",
+        "terminalTypes": {
+          "I2": "plc_input"
+        }
+      },
+      {
+        "id": "input_I3",
+        "terminals": [
+          "I3"
+        ],
+        "simBehavior": "plc_digital_input",
+        "currentPath": "sink",
+        "terminalTypes": {
+          "I3": "plc_input"
+        }
+      },
+      {
+        "id": "input_I4",
+        "terminals": [
+          "I4"
+        ],
+        "simBehavior": "plc_digital_input",
+        "currentPath": "sink",
+        "terminalTypes": {
+          "I4": "plc_input"
+        }
+      },
+      {
+        "id": "input_I5",
+        "terminals": [
+          "I5"
+        ],
+        "simBehavior": "plc_digital_input",
+        "currentPath": "sink",
+        "terminalTypes": {
+          "I5": "plc_input"
+        }
+      },
+      {
+        "id": "input_I6",
+        "terminals": [
+          "I6"
+        ],
+        "simBehavior": "plc_digital_input",
+        "currentPath": "sink",
+        "terminalTypes": {
+          "I6": "plc_input"
+        }
+      },
+      {
+        "id": "input_I7",
+        "terminals": [
+          "I7"
+        ],
+        "simBehavior": "plc_digital_input",
+        "currentPath": "sink",
+        "terminalTypes": {
+          "I7": "plc_input"
+        }
+      },
+      {
+        "id": "input_I8",
+        "terminals": [
+          "I8"
+        ],
+        "simBehavior": "plc_digital_input",
+        "currentPath": "sink",
+        "terminalTypes": {
+          "I8": "plc_input"
+        }
+      },
+      {
+        "id": "output_Q1",
+        "terminals": [
+          "Q1.1",
+          "Q1.2"
+        ],
+        "simBehavior": "plc_relay_output",
+        "currentPath": "series",
+        "terminalTypes": {
+          "Q1.1": "plc_relay_com",
+          "Q1.2": "plc_relay_no"
+        },
+        "activeInStates": [
+          "Q1"
+        ]
+      },
+      {
+        "id": "output_Q2",
+        "terminals": [
+          "Q2.1",
+          "Q2.2"
+        ],
+        "simBehavior": "plc_relay_output",
+        "currentPath": "series",
+        "terminalTypes": {
+          "Q2.1": "plc_relay_com",
+          "Q2.2": "plc_relay_no"
+        },
+        "activeInStates": [
+          "Q2"
+        ]
+      },
+      {
+        "id": "output_Q3",
+        "terminals": [
+          "Q3.1",
+          "Q3.2"
+        ],
+        "simBehavior": "plc_relay_output",
+        "currentPath": "series",
+        "terminalTypes": {
+          "Q3.1": "plc_relay_com",
+          "Q3.2": "plc_relay_no"
+        },
+        "activeInStates": [
+          "Q3"
+        ]
+      },
+      {
+        "id": "output_Q4",
+        "terminals": [
+          "Q4.1",
+          "Q4.2"
+        ],
+        "simBehavior": "plc_relay_output",
+        "currentPath": "series",
+        "terminalTypes": {
+          "Q4.1": "plc_relay_com",
+          "Q4.2": "plc_relay_no"
+        },
+        "activeInStates": [
+          "Q4"
+        ]
+      },
+      {
+        "id": "pe",
+        "terminals": [
+          "PE"
+        ],
+        "simBehavior": "plc_pe",
+        "currentPath": "series",
+        "terminalTypes": {
+          "PE": "source_pe"
+        }
+      }
+    ],
+    "plcModel": "logo_230rce",
+    "screen": {
+      "x": 0.050556,
+      "y": 0.374048,
+      "w": 0.436528,
+      "h": 0.313214
+    }
+  },
+  "docking": {
+    "mountable": false,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "plc",
+      "dockSize": {
+        "cols": 6,
+        "rows": 2
+      },
+      "hideTerminalsOnDock": [],
+      "overlapPx": 0
+    },
+    "zones": [
+      {
+        "id": "modulo_logo8",
+        "label": "modulo_logo8",
+        "position": "right",
+        "rect": {
+          "x": 7200,
+          "y": 0,
+          "w": 8400,
+          "h": 8400
+        },
+        "anchor": {
+          "nx": 1.583333,
+          "ny": 0.5
+        },
+        "gridSize": {
+          "cols": 7,
+          "rows": 7
+        },
+        "accepts": [
+          "modulo_plc"
+        ],
+        "bridge": null,
+        "childAlignment": "left_center",
+        "childZLayer": 2,
+        "hideHostTerminals": null
+      }
+    ]
+  }
+}

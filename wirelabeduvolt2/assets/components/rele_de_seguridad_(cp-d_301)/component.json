@@ -1,0 +1,375 @@
+{
+  "schemaVersion": 3,
+  "id": "Relé de seguridad (CP-D 301)",
+  "name": {
+    "es": "Relé de seguridad (CP-D 301)",
+    "en": "Safety relay (CP-D 301)"
+  },
+  "category": {
+    "es": "Seguridad",
+    "en": "Safety"
+  },
+  "tagPrefix": "K",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 2400,
+      "height": 8400
+    },
+    "original": "original.png"
+  },
+  "terminals": [
+    {
+      "id": "41",
+      "label": "41",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.170417,
+      "ny": 0.029643,
+      "direction": "top",
+      "guideLength": 30
+    },
+    {
+      "id": "13",
+      "label": "13",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.389583,
+      "ny": 0.029643,
+      "direction": "top",
+      "guideLength": 30
+    },
+    {
+      "id": "23",
+      "label": "23",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.609167,
+      "ny": 0.029643,
+      "direction": "top",
+      "guideLength": 30
+    },
+    {
+      "id": "33",
+      "label": "33",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.828333,
+      "ny": 0.029643,
+      "direction": "top",
+      "guideLength": 30
+    },
+    {
+      "id": "A1",
+      "label": "A1",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.170417,
+      "ny": 0.112024,
+      "direction": "top",
+      "guideLength": 20
+    },
+    {
+      "id": "Y1",
+      "label": "Y1",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.389583,
+      "ny": 0.112024,
+      "direction": "top",
+      "guideLength": 20
+    },
+    {
+      "id": "S21",
+      "label": "S21",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.609167,
+      "ny": 0.112024,
+      "direction": "top",
+      "guideLength": 20
+    },
+    {
+      "id": "S22",
+      "label": "S22",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.828333,
+      "ny": 0.112024,
+      "direction": "top",
+      "guideLength": 20
+    },
+    {
+      "id": "S11",
+      "label": "S11",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.170417,
+      "ny": 0.886071,
+      "direction": "bottom",
+      "guideLength": 20
+    },
+    {
+      "id": "S12",
+      "label": "S12",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.4,
+      "ny": 0.886071,
+      "direction": "bottom",
+      "guideLength": 20
+    },
+    {
+      "id": "Y2",
+      "label": "Y2",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.609167,
+      "ny": 0.886071,
+      "direction": "bottom",
+      "guideLength": 20
+    },
+    {
+      "id": "A2",
+      "label": "A2",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.828333,
+      "ny": 0.886071,
+      "direction": "bottom",
+      "guideLength": 20
+    },
+    {
+      "id": "42",
+      "label": "42",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.170417,
+      "ny": 0.967976,
+      "direction": "bottom",
+      "guideLength": 30
+    },
+    {
+      "id": "14",
+      "label": "14",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.4,
+      "ny": 0.967976,
+      "direction": "bottom",
+      "guideLength": 30
+    },
+    {
+      "id": "24",
+      "label": "24",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.609167,
+      "ny": 0.967976,
+      "direction": "bottom",
+      "guideLength": 30
+    },
+    {
+      "id": "34",
+      "label": "34",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.828333,
+      "ny": 0.967976,
+      "direction": "bottom",
+      "guideLength": 30
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "both",
+    "activationRule": "coil",
+    "simModel": "safety_relay_cpd",
+    "terminalPairs": [
+      {
+        "id": "supply",
+        "terminals": [
+          "A1",
+          "A2"
+        ],
+        "simBehavior": "coil",
+        "currentPath": "sink",
+        "terminalTypes": {
+          "A1": "power_ac",
+          "A2": "power_ac"
+        }
+      },
+      {
+        "id": "safety_13_14",
+        "terminals": [
+          "13",
+          "14"
+        ],
+        "simBehavior": "contact_no_safety",
+        "currentPath": "series"
+      },
+      {
+        "id": "safety_23_24",
+        "terminals": [
+          "23",
+          "24"
+        ],
+        "simBehavior": "contact_no_safety",
+        "currentPath": "series"
+      },
+      {
+        "id": "safety_33_34",
+        "terminals": [
+          "33",
+          "34"
+        ],
+        "simBehavior": "contact_no_safety",
+        "currentPath": "series"
+      },
+      {
+        "id": "aux_41_42",
+        "terminals": [
+          "41",
+          "42"
+        ],
+        "simBehavior": "contact_nc_safety",
+        "currentPath": "series"
+      },
+      {
+        "id": "j_s11_a1",
+        "terminals": [
+          "S11",
+          "A1"
+        ],
+        "simBehavior": "junction",
+        "currentPath": "series"
+      },
+      {
+        "id": "j_s21_a2",
+        "terminals": [
+          "S21",
+          "A2"
+        ],
+        "simBehavior": "junction",
+        "currentPath": "series"
+      },
+      {
+        "id": "j_y1_a1",
+        "terminals": [
+          "Y1",
+          "A1"
+        ],
+        "simBehavior": "junction",
+        "currentPath": "series"
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {},
+      "on": {}
+    },
+    "ledIndicators": [
+      {
+        "id": "led_power",
+        "label": {
+          "es": "Pw",
+          "en": "Pw"
+        },
+        "geometry": "circle",
+        "colorOff": "#2E5A2E",
+        "colorOn": "#5FE05F",
+        "stateField": "ledPower",
+        "supportsBlinking": false,
+        "circle": {
+          "cx": 0.253333,
+          "cy": 0.472143,
+          "r": 0.016429
+        }
+      },
+      {
+        "id": "led_s1",
+        "label": {
+          "es": "S1",
+          "en": "S1"
+        },
+        "geometry": "circle",
+        "colorOff": "#2E5A2E",
+        "colorOn": "#5FE05F",
+        "stateField": "ledS1",
+        "supportsBlinking": false,
+        "circle": {
+          "cx": 0.252917,
+          "cy": 0.574048,
+          "r": 0.01619
+        }
+      },
+      {
+        "id": "led_s2",
+        "label": {
+          "es": "S2",
+          "en": "S2"
+        },
+        "geometry": "circle",
+        "colorOff": "#2E5A2E",
+        "colorOn": "#5FE05F",
+        "stateField": "ledS2",
+        "supportsBlinking": false,
+        "circle": {
+          "cx": 0.254167,
+          "cy": 0.523214,
+          "r": 0.01631
+        }
+      },
+      {
+        "id": "led_out",
+        "label": {
+          "es": "Out",
+          "en": "Out"
+        },
+        "geometry": "circle",
+        "colorOff": "#2E5A2E",
+        "colorOn": "#5FE05F",
+        "stateField": "ledOut",
+        "supportsBlinking": false,
+        "circle": {
+          "cx": 0.254167,
+          "cy": 0.625119,
+          "r": 0.01619
+        }
+      }
+    ]
+  },
+  "docking": {
+    "mountable": true,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "general_montable_riel_din",
+      "dockSize": {
+        "cols": 2,
+        "rows": 1
+      },
+      "hideTerminalsOnDock": [],
+      "overlapPx": 0
+    },
+    "zones": []
+  },
+  "extraAssets": [
+    "CP-D-301.png"
+  ]
+}

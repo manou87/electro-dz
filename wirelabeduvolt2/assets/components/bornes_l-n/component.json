@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 5,
+  "id": "Bornes L-N",
+  "name": {
+    "es": "Bornes L-N",
+    "en": ""
+  },
+  "category": {
+    "es": "Potencia",
+    "en": "Power"
+  },
+  "tagPrefix": "X",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 1200,
+      "height": 3600
+    },
+    "original": "original.png"
+  },
+  "terminals": [
+    {
+      "id": "1a",
+      "label": "L",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.25,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 30
+    },
+    {
+      "id": "2a",
+      "label": "L",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.25,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 30
+    },
+    {
+      "id": "1b",
+      "label": "N",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.75,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 30
+    },
+    {
+      "id": "2b",
+      "label": "N",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.75,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 30
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "ac",
+    "activationRule": "source",
+    "supply": {
+      "volts": 220.0,
+      "ref": "ln",
+      "hertz": 60.0
+    },
+    "terminalPairs": [
+      {
+        "id": "source_n",
+        "terminals": [
+          "1b",
+          "2b"
+        ],
+        "simBehavior": "source_neutral",
+        "currentPath": "source",
+        "terminalTypes": {
+          "1b": "source_n",
+          "2b": "source_n"
+        }
+      },
+      {
+        "id": "source_l",
+        "terminals": [
+          "1a",
+          "2a"
+        ],
+        "simBehavior": "source_l",
+        "currentPath": "source",
+        "terminalTypes": {
+          "1a": "source_l",
+          "2a": "source_l"
+        }
+      }
+    ]
+  },
+  "docking": {
+    "mountable": true,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "bornera",
+      "dockSize": {
+        "cols": 2,
+        "rows": 2
+      },
+      "hideTerminalsOnDock": [],
+      "overlapPx": 0
+    },
+    "zones": []
+  }
+}

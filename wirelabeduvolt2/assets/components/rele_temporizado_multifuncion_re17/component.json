@@ -1,0 +1,281 @@
+{
+  "schemaVersion": 3,
+  "id": "Relé temporizado multifunción RE17",
+  "name": {
+    "es": "Relé temporizado multifunción RE17",
+    "en": "RE17 Multifunction Timing Relay"
+  },
+  "category": {
+    "es": "Control",
+    "en": "Control"
+  },
+  "tagPrefix": "KT",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 1800,
+      "height": 8400
+    }
+  },
+  "terminals": [
+    {
+      "id": "A1",
+      "label": "A1",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.196111,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "15",
+      "label": "15",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.5,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "Y1",
+      "label": "Y1",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.806111,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "18",
+      "label": "18",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.196111,
+      "ny": 0.874643,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "16",
+      "label": "16",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.5,
+      "ny": 0.874643,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "A2",
+      "label": "A2",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.806111,
+      "ny": 0.874643,
+      "direction": "bottom",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "any",
+    "activationRule": "coil",
+    "terminalPairs": [
+      {
+        "id": "coil_re17",
+        "terminals": [
+          "A1",
+          "A2"
+        ],
+        "simBehavior": "coil",
+        "currentPath": "sink",
+        "terminalTypes": {
+          "A1": "coil_in",
+          "A2": "coil_in"
+        }
+      },
+      {
+        "id": "control_y1",
+        "terminals": [
+          "Y1",
+          "A2"
+        ],
+        "simBehavior": "control_input",
+        "currentPath": "series",
+        "terminalTypes": {
+          "Y1": "signal_in",
+          "A2": "coil_in"
+        }
+      },
+      {
+        "id": "contact_no_re17",
+        "terminals": [
+          "15",
+          "18"
+        ],
+        "simBehavior": "contact_no_re17",
+        "currentPath": "series",
+        "terminalTypes": {
+          "15": "contact",
+          "18": "contact_no"
+        },
+        "activeInStates": [
+          "on"
+        ]
+      },
+      {
+        "id": "contact_nc_re17",
+        "terminals": [
+          "15",
+          "16"
+        ],
+        "simBehavior": "contact_nc_re17",
+        "currentPath": "series",
+        "terminalTypes": {
+          "15": "contact",
+          "16": "contact_nc"
+        },
+        "activeInStates": [
+          "off"
+        ]
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+      },
+      "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+      }
+    },
+    "rotaryControls": [
+      {
+        "id": "range_selector",
+        "label": {
+          "es": "Rango",
+          "en": "Range"
+        },
+        "circle": {
+          "cx": 0.498889,
+          "cy": 0.348929,
+          "r": 0.035952
+        },
+        "parameterField": "simTimerRange",
+        "valueMin": 0.0,
+        "valueMax": 6.0,
+        "angleStartDeg": -125.0,
+        "angleEndDeg": 125.0,
+        "mode": "discrete",
+        "discreteValues": [
+          "0,1-1s",
+          "1-10s",
+          "6-60s",
+          "1-10min",
+          "6-60min",
+          "1-10h",
+          "10-100h"
+        ]
+      },
+      {
+        "id": "multiplier",
+        "label": {
+          "es": "Multiplicador",
+          "en": "Multiplier"
+        },
+        "circle": {
+          "cx": 0.498889,
+          "cy": 0.473929,
+          "r": 0.035952
+        },
+        "parameterField": "simTimerMultiplier",
+        "valueMin": 0.0,
+        "valueMax": 10.0,
+        "angleStartDeg": -135.0,
+        "angleEndDeg": 135.0
+      },
+      {
+        "id": "function_selector",
+        "label": {
+          "es": "Función",
+          "en": "Function"
+        },
+        "circle": {
+          "cx": 0.498889,
+          "cy": 0.6,
+          "r": 0.035952
+        },
+        "parameterField": "simTimerFunction",
+        "valueMin": 0.0,
+        "valueMax": 6.0,
+        "angleStartDeg": -125.0,
+        "angleEndDeg": 125.0,
+        "mode": "discrete",
+        "discreteValues": [
+          "A",
+          "At",
+          "C",
+          "Ac",
+          "B",
+          "D",
+          "Di"
+        ]
+      }
+    ],
+    "ledIndicators": [
+      {
+        "id": "led_un_r",
+        "label": {
+          "es": "Un/R",
+          "en": "Un/R"
+        },
+        "geometry": "rect",
+        "colorOff": "#FFFFFF",
+        "colorOn": "#00FD00",
+        "stateField": "ledUnR",
+        "supportsBlinking": true,
+        "rect": {
+          "x": 0.799444,
+          "y": 0.685357,
+          "w": 0.081111,
+          "h": 0.024643
+        }
+      }
+    ]
+  },
+  "docking": {
+    "mountable": true,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "general_montable_riel_din",
+      "dockSize": {
+        "cols": 2,
+        "rows": 1
+      },
+      "hideTerminalsOnDock": [],
+      "overlapPx": 0
+    },
+    "zones": []
+  }
+}

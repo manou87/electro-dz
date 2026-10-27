@@ -1,0 +1,7627 @@
+[
+  {
+    "schemaVersion": 3,
+    "id": "Interuptor simple",
+    "name": {
+      "es": "Interuptor simple",
+      "en": "Single Switch"
+    },
+    "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+    },
+    "tagPrefix": "S",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 4800,
+        "height": 8400
+      }
+    },
+    "terminals": [
+      {
+        "id": "COM",
+        "label": "COM",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.0,
+        "ny": 0.5,
+        "direction": "left",
+        "guideLength": 60
+      },
+      {
+        "id": "L1",
+        "label": "L1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 1.0,
+        "ny": 0.5,
+        "direction": "right",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "switch",
+      "terminalPairs": [
+        {
+          "id": "contact",
+          "terminals": [
+            "COM",
+            "L1"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "COM": "contact_no",
+            "L1": "contact_no"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "folder": "interuptor_simple"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Pulsador verde 1NO",
+    "name": {
+      "es": "Pulsador verde 1NO",
+      "en": "Green Push Button 1NO"
+    },
+    "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+    },
+    "tagPrefix": "S",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 1800,
+        "height": 2100
+      }
+    },
+    "terminals": [
+      {
+        "id": "3",
+        "label": "3",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.296667,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.296667,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "pushbutton",
+      "terminalPairs": [
+        {
+          "id": "contact_no",
+          "terminals": [
+            "3",
+            "4"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "3": "contact_no",
+            "4": "contact_no"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "folder": "pulsador_verde_1no"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Pulsador rojo 1NC",
+    "name": {
+      "es": "Pulsador rojo 1NC",
+      "en": "Red Push Button 1NC"
+    },
+    "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+    },
+    "tagPrefix": "S",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 1800,
+        "height": 2100
+      }
+    },
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.296667,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.296667,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "pushbutton",
+      "terminalPairs": [
+        {
+          "id": "contact_nc",
+          "terminals": [
+            "1",
+            "2"
+          ],
+          "simBehavior": "contact_nc",
+          "currentPath": "series",
+          "terminalTypes": {
+            "1": "contact_nc",
+            "2": "contact_nc"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "folder": "pulsador_rojo_1nc"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Interuptor de conmutacion simple",
+    "name": {
+      "es": "Interuptor de conmutacion simple",
+      "en": "Single Two-Way Switch"
+    },
+    "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+    },
+    "tagPrefix": "S",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 4800,
+        "height": 8400
+      }
+    },
+    "terminals": [
+      {
+        "id": "COM",
+        "label": "COM",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.0,
+        "ny": 0.5,
+        "direction": "left",
+        "guideLength": 60
+      },
+      {
+        "id": "L1",
+        "label": "L1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 1.0,
+        "ny": 0.428571,
+        "direction": "right",
+        "guideLength": 60
+      },
+      {
+        "id": "L2",
+        "label": "L2",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 1.0,
+        "ny": 0.571429,
+        "direction": "right",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "switch",
+      "terminalPairs": [
+        {
+          "id": "nc_path",
+          "terminals": [
+            "COM",
+            "L1"
+          ],
+          "simBehavior": "contact_nc",
+          "currentPath": "series",
+          "terminalTypes": {
+            "COM": "contact_nc",
+            "L1": "contact_nc"
+          }
+        },
+        {
+          "id": "no_path",
+          "terminals": [
+            "COM",
+            "L2"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "COM": "contact_no",
+            "L2": "contact_no"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "folder": "interuptor_de_conmutacion_simple"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Selector de 2 posiciones 1NO",
+    "name": {
+      "es": "Selector de 2 posiciones 1NO",
+      "en": "2-Position Selector Switch 1NO"
+    },
+    "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+    },
+    "tagPrefix": "S",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 1800,
+        "height": 2100
+      }
+    },
+    "terminals": [
+      {
+        "id": "3",
+        "label": "3",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.296667,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.296667,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "switch",
+      "terminalPairs": [
+        {
+          "id": "contact_no",
+          "terminals": [
+            "3",
+            "4"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "3": "contact_no",
+            "4": "contact_no"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "folder": "selector_de_2_posiciones_1no"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Parada de emergencia rojo 1NC",
+    "name": {
+      "es": "Parada de emergencia rojo 1NC",
+      "en": "Red Emergency Stop Button 1NC"
+    },
+    "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+    },
+    "tagPrefix": "S",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 1800,
+        "height": 2100
+      }
+    },
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.296667,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.296667,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "switch",
+      "terminalPairs": [
+        {
+          "id": "contact_nc",
+          "terminals": [
+            "1",
+            "2"
+          ],
+          "simBehavior": "contact_nc",
+          "currentPath": "series",
+          "terminalTypes": {
+            "1": "contact_nc",
+            "2": "contact_nc"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "folder": "parada_de_emergencia_rojo_1nc"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Sensor de proximidad inductivo 2 hilos AC-DC",
+    "name": {
+      "es": "Sensor de proximidad inductivo 2 hilos AC/DC",
+      "en": "2-wire AC/DC inductive proximity sensor"
+    },
+    "category": {
+      "es": "Genericos",
+      "en": "Generic items"
+    },
+    "tagPrefix": "",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 8000,
+        "height": 2400
+      },
+      "original": "original.png"
+    },
+    "terminals": [
+      {
+        "id": "BN",
+        "label": "BN",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.0,
+        "ny": 0.432083,
+        "direction": "left",
+        "guideLength": 60
+      },
+      {
+        "id": "BU",
+        "label": "BU",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.0,
+        "ny": 0.767917,
+        "direction": "left",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "both",
+      "activationRule": "sensor",
+      "simModel": "proximity",
+      "terminalPairs": [
+        {
+          "id": "contact",
+          "terminals": [
+            "BN",
+            "BU"
+          ],
+          "simBehavior": "proximity_2wire",
+          "currentPath": "series"
+        }
+      ],
+      "ledIndicators": [
+        {
+          "id": "led_1",
+          "label": {
+            "es": "LED 1",
+            "en": "LED 1"
+          },
+          "geometry": "rect",
+          "colorOff": "#E7AEAE",
+          "colorOn": "#FF0000",
+          "stateField": "led1",
+          "supportsBlinking": true,
+          "rect": {
+            "x": 0.25875,
+            "y": 0.4825,
+            "w": 0.023125,
+            "h": 0.199583
+          }
+        }
+      ]
+    },
+    "extraAssets": [
+      "2W_NC.png",
+      "2W_NO.png"
+    ],
+    "folder": "sensor_de_proximidad_inductivo_2_hilos_ac-dc"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Interruptor de nivel - Flotador",
+    "name": {
+      "es": "Interruptor de nivel - Flotador",
+      "en": "Float level switch"
+    },
+    "category": {
+      "es": "Control",
+      "en": "Control"
+    },
+    "tagPrefix": "SL",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 7200,
+        "height": 10800
+      }
+    },
+    "terminals": [
+      {
+        "id": "BN",
+        "label": "BN",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.0,
+        "ny": 0.407407,
+        "direction": "left",
+        "guideLength": 60
+      },
+      {
+        "id": "BK",
+        "label": "BK",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.0,
+        "ny": 0.505278,
+        "direction": "left",
+        "guideLength": 60
+      },
+      {
+        "id": "BL",
+        "label": "BL",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.0,
+        "ny": 0.607315,
+        "direction": "left",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "switch",
+      "terminalPairs": [
+        {
+          "id": "contac-nc",
+          "terminals": [
+            "BN",
+            "BK"
+          ],
+          "simBehavior": "contact_nc",
+          "currentPath": "series",
+          "terminalTypes": {
+            "BN": "contact_nc",
+            "BK": "contact_nc"
+          }
+        },
+        {
+          "id": "contac-no",
+          "terminals": [
+            "BK",
+            "BL"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "BK": "contact_no",
+            "BL": "contact_no"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "folder": "interruptor_de_nivel_-_flotador"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Fotocelda crepuscular",
+    "name": {
+      "es": "Fotocelda crepuscular",
+      "en": "Photocell (dusk-to-dawn)"
+    },
+    "category": {
+      "es": "Control",
+      "en": "Control"
+    },
+    "tagPrefix": "BL",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 6000,
+        "height": 10800
+      },
+      "original": "original.png"
+    },
+    "terminals": [
+      {
+        "id": "N",
+        "label": "N",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.195333,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 30
+      },
+      {
+        "id": "L",
+        "label": "L",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.369167,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 30
+      },
+      {
+        "id": "R",
+        "label": "R",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.5465,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 30
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "ac",
+      "activationRule": "coil",
+      "simModel": "photocell",
+      "terminalPairs": [
+        {
+          "id": "supply",
+          "terminals": [
+            "L",
+            "N"
+          ],
+          "simBehavior": "coil",
+          "currentPath": "sink"
+        },
+        {
+          "id": "contact_no",
+          "terminals": [
+            "L",
+            "R"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series"
+        }
+      ]
+    },
+    "folder": "fotocelda_crepuscular"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Roller lever limit switch COM",
+    "name": {
+      "es": "Roller lever limit switch COM",
+      "en": "Roller lever limit switch COM"
+    },
+    "category": {
+      "es": "Accionamientos",
+      "en": "Drives"
+    },
+    "tagPrefix": "SQ",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 3000,
+        "height": 8400
+      }
+    },
+    "terminals": [
+      {
+        "id": "12",
+        "label": "12",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.277,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "11",
+        "label": "11",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "13",
+        "label": "13",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.732667,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "selector",
+      "terminalPairs": [
+        {
+          "id": "nc",
+          "terminals": [
+            "12",
+            "11"
+          ],
+          "simBehavior": "contact_nc",
+          "currentPath": "series",
+          "terminalTypes": {
+            "12": "contact_nc",
+            "11": "contact_nc"
+          },
+          "activeInStates": [
+            "pos0",
+            "pos2"
+          ]
+        },
+        {
+          "id": "no",
+          "terminals": [
+            "11",
+            "13"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "11": "contact_no",
+            "13": "contact_no"
+          },
+          "activeInStates": [
+            "pos0",
+            "pos2"
+          ]
+        }
+      ],
+      "defaultState": "pos1",
+      "states": {
+        "pos0": {
+          "image": "state_pos0.png",
+          "imageLo": "state_pos0_lo.png"
+        },
+        "pos1": {
+          "image": "state_pos1.png",
+          "imageLo": "state_pos1_lo.png"
+        },
+        "pos2": {
+          "image": "state_pos2.png",
+          "imageLo": "state_pos2_lo.png"
+        }
+      }
+    },
+    "folder": "roller_lever_limit_switch_com"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "LOGO! 230RCE",
+    "name": "LOGO! 230RCE",
+    "category": "PLC",
+    "tagPrefix": "A",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 7200,
+        "height": 8400
+      },
+      "original": "original.png"
+    },
+    "terminals": [
+      {
+        "id": "L",
+        "label": "L",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.083333,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "N",
+        "label": "N",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.166667,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "I1",
+        "label": "I1",
+        "signal": "Control",
+        "role": "input",
+        "nx": 0.25,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "I2",
+        "label": "I2",
+        "signal": "Control",
+        "role": "input",
+        "nx": 0.333333,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "I3",
+        "label": "I3",
+        "signal": "Control",
+        "role": "input",
+        "nx": 0.416667,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "I4",
+        "label": "I4",
+        "signal": "Control",
+        "role": "input",
+        "nx": 0.5,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "I5",
+        "label": "I5",
+        "signal": "Control",
+        "role": "input",
+        "nx": 0.666667,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "I6",
+        "label": "I6",
+        "signal": "Control",
+        "role": "input",
+        "nx": 0.75,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "I7",
+        "label": "I7",
+        "signal": "Control",
+        "role": "input",
+        "nx": 0.833333,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "I8",
+        "label": "I8",
+        "signal": "Control",
+        "role": "input",
+        "nx": 0.916667,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "Q1.1",
+        "label": "Q1.1",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.083333,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "Q1.2",
+        "label": "Q1.2",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.166667,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "Q2.2",
+        "label": "Q2.2",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.416667,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "Q2.1",
+        "label": "Q2.1",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.333333,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "Q3.2",
+        "label": "Q3.2",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.666667,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "Q3.1",
+        "label": "Q3.1",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.583333,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "Q4.2",
+        "label": "Q4.2",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.916667,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "Q4.1",
+        "label": "Q4.1",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.833333,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "PE",
+        "label": "PE",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.666667,
+        "ny": 0.870595,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "plc",
+      "enabled": true,
+      "voltage": "both",
+      "activationRule": "plc",
+      "terminalPairs": [
+        {
+          "id": "supply",
+          "terminals": [
+            "L",
+            "N"
+          ],
+          "simBehavior": "plc_supply",
+          "currentPath": "sink",
+          "terminalTypes": {
+            "L": "plc_l",
+            "N": "plc_n"
+          }
+        },
+        {
+          "id": "input_I1",
+          "terminals": [
+            "I1"
+          ],
+          "simBehavior": "plc_digital_input",
+          "currentPath": "sink",
+          "terminalTypes": {
+            "I1": "plc_input"
+          }
+        },
+        {
+          "id": "input_I2",
+          "terminals": [
+            "I2"
+          ],
+          "simBehavior": "plc_digital_input",
+          "currentPath": "sink",
+          "terminalTypes": {
+            "I2": "plc_input"
+          }
+        },
+        {
+          "id": "input_I3",
+          "terminals": [
+            "I3"
+          ],
+          "simBehavior": "plc_digital_input",
+          "currentPath": "sink",
+          "terminalTypes": {
+            "I3": "plc_input"
+          }
+        },
+        {
+          "id": "input_I4",
+          "terminals": [
+            "I4"
+          ],
+          "simBehavior": "plc_digital_input",
+          "currentPath": "sink",
+          "terminalTypes": {
+            "I4": "plc_input"
+          }
+        },
+        {
+          "id": "input_I5",
+          "terminals": [
+            "I5"
+          ],
+          "simBehavior": "plc_digital_input",
+          "currentPath": "sink",
+          "terminalTypes": {
+            "I5": "plc_input"
+          }
+        },
+        {
+          "id": "input_I6",
+          "terminals": [
+            "I6"
+          ],
+          "simBehavior": "plc_digital_input",
+          "currentPath": "sink",
+          "terminalTypes": {
+            "I6": "plc_input"
+          }
+        },
+        {
+          "id": "input_I7",
+          "terminals": [
+            "I7"
+          ],
+          "simBehavior": "plc_digital_input",
+          "currentPath": "sink",
+          "terminalTypes": {
+            "I7": "plc_input"
+          }
+        },
+        {
+          "id": "input_I8",
+          "terminals": [
+            "I8"
+          ],
+          "simBehavior": "plc_digital_input",
+          "currentPath": "sink",
+          "terminalTypes": {
+            "I8": "plc_input"
+          }
+        },
+        {
+          "id": "output_Q1",
+          "terminals": [
+            "Q1.1",
+            "Q1.2"
+          ],
+          "simBehavior": "plc_relay_output",
+          "currentPath": "series",
+          "terminalTypes": {
+            "Q1.1": "plc_relay_com",
+            "Q1.2": "plc_relay_no"
+          },
+          "activeInStates": [
+            "Q1"
+          ]
+        },
+        {
+          "id": "output_Q2",
+          "terminals": [
+            "Q2.1",
+            "Q2.2"
+          ],
+          "simBehavior": "plc_relay_output",
+          "currentPath": "series",
+          "terminalTypes": {
+            "Q2.1": "plc_relay_com",
+            "Q2.2": "plc_relay_no"
+          },
+          "activeInStates": [
+            "Q2"
+          ]
+        },
+        {
+          "id": "output_Q3",
+          "terminals": [
+            "Q3.1",
+            "Q3.2"
+          ],
+          "simBehavior": "plc_relay_output",
+          "currentPath": "series",
+          "terminalTypes": {
+            "Q3.1": "plc_relay_com",
+            "Q3.2": "plc_relay_no"
+          },
+          "activeInStates": [
+            "Q3"
+          ]
+        },
+        {
+          "id": "output_Q4",
+          "terminals": [
+            "Q4.1",
+            "Q4.2"
+          ],
+          "simBehavior": "plc_relay_output",
+          "currentPath": "series",
+          "terminalTypes": {
+            "Q4.1": "plc_relay_com",
+            "Q4.2": "plc_relay_no"
+          },
+          "activeInStates": [
+            "Q4"
+          ]
+        },
+        {
+          "id": "pe",
+          "terminals": [
+            "PE"
+          ],
+          "simBehavior": "plc_pe",
+          "currentPath": "series",
+          "terminalTypes": {
+            "PE": "source_pe"
+          }
+        }
+      ],
+      "plcModel": "logo_230rce",
+      "screen": {
+        "x": 0.050556,
+        "y": 0.374048,
+        "w": 0.436528,
+        "h": 0.313214
+      }
+    },
+    "docking": {
+      "mountable": false,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "plc",
+        "dockSize": {
+          "cols": 6,
+          "rows": 2
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": [
+        {
+          "id": "modulo_logo8",
+          "label": "modulo_logo8",
+          "position": "right",
+          "rect": {
+            "x": 7200,
+            "y": 0,
+            "w": 8400,
+            "h": 8400
+          },
+          "anchor": {
+            "nx": 1.583333,
+            "ny": 0.5
+          },
+          "gridSize": {
+            "cols": 7,
+            "rows": 7
+          },
+          "accepts": [
+            "modulo_plc"
+          ],
+          "bridge": null,
+          "childAlignment": "left_center",
+          "childZLayer": 2,
+          "hideHostTerminals": null
+        }
+      ]
+    },
+    "folder": "logo!_230rce"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Guardamotor 1-1,6 A",
+    "name": {
+      "es": "Guardamotor 1-1,6 A",
+      "en": "MPCB 1-1.6 A"
+    },
+    "category": {
+      "es": "Potencia",
+      "en": "Power"
+    },
+    "tagPrefix": "QM",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 3600,
+        "height": 7200
+      }
+    },
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1/L1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.166667,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3/L2",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5/L3",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.833333,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2/T1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.166667,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4/T2",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6/T3",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.833333,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "ac",
+      "activationRule": "protection",
+      "terminalPairs": [
+        {
+          "id": "pole_1",
+          "terminals": [
+            "1",
+            "2"
+          ],
+          "simBehavior": "protection_mpcb",
+          "currentPath": "series",
+          "terminalTypes": {
+            "1": "power_ac",
+            "2": "power_ac"
+          }
+        },
+        {
+          "id": "pole_2",
+          "terminals": [
+            "3",
+            "4"
+          ],
+          "simBehavior": "protection_mpcb",
+          "currentPath": "series",
+          "terminalTypes": {
+            "3": "power_ac",
+            "4": "power_ac"
+          }
+        },
+        {
+          "id": "pole_3",
+          "terminals": [
+            "5",
+            "6"
+          ],
+          "simBehavior": "protection_mpcb",
+          "currentPath": "series",
+          "terminalTypes": {
+            "5": "power_ac",
+            "6": "power_ac"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "docking": {
+      "mountable": true,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "itm_3p",
+        "dockSize": {
+          "cols": 3,
+          "rows": 2
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": [
+        {
+          "id": "left_aux",
+          "label": "Auxiliar izquierdo",
+          "position": "left",
+          "rect": {
+            "x": -1200,
+            "y": 0,
+            "w": 1224,
+            "h": 7181
+          },
+          "anchor": {
+            "nx": -0.163333,
+            "ny": 0.498681
+          },
+          "gridSize": {
+            "cols": 1,
+            "rows": 6
+          },
+          "accepts": [
+            "auxiliary_contact"
+          ],
+          "bridge": null,
+          "childAlignment": "right_center",
+          "childZLayer": 2,
+          "hideHostTerminals": null
+        },
+        {
+          "id": "right_aux",
+          "label": "Auxiliar derecho",
+          "position": "right",
+          "rect": {
+            "x": 3600,
+            "y": 0,
+            "w": 1200,
+            "h": 7200
+          },
+          "anchor": {
+            "nx": 1.166667,
+            "ny": 0.5
+          },
+          "gridSize": {
+            "cols": 1,
+            "rows": 6
+          },
+          "accepts": [
+            "auxiliary_contact"
+          ],
+          "bridge": null,
+          "childAlignment": "left_center",
+          "childZLayer": 2,
+          "hideHostTerminals": null
+        },
+        {
+          "id": "over_aux",
+          "label": "Auxiliar frontal",
+          "position": "over",
+          "rect": {
+            "x": 0,
+            "y": 1500,
+            "w": 3600,
+            "h": 600
+          },
+          "anchor": {
+            "nx": 0.5,
+            "ny": 0.25
+          },
+          "gridSize": {
+            "cols": 3,
+            "rows": 1
+          },
+          "accepts": [
+            "auxiliary_contact"
+          ],
+          "bridge": null,
+          "childAlignment": "center",
+          "childZLayer": 3,
+          "hideHostTerminals": null
+        }
+      ]
+    },
+    "folder": "guardamotor_1-1,6_a"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Guardamotor 2,5-4 A",
+    "name": {
+      "es": "Guardamotor 2,5-4 A",
+      "en": "MPCB 2.5-4 A"
+    },
+    "category": {
+      "es": "Potencia",
+      "en": "Power"
+    },
+    "tagPrefix": "QM",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 3600,
+        "height": 7200
+      }
+    },
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1/L1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.166667,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3/L2",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5/L3",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.833333,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2/T1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.166667,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4/T2",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6/T3",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.833333,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "ac",
+      "activationRule": "protection",
+      "terminalPairs": [
+        {
+          "id": "pole_1",
+          "terminals": [
+            "1",
+            "2"
+          ],
+          "simBehavior": "protection_mpcb",
+          "currentPath": "series",
+          "terminalTypes": {
+            "1": "power_ac",
+            "2": "power_ac"
+          }
+        },
+        {
+          "id": "pole_2",
+          "terminals": [
+            "3",
+            "4"
+          ],
+          "simBehavior": "protection_mpcb",
+          "currentPath": "series",
+          "terminalTypes": {
+            "3": "power_ac",
+            "4": "power_ac"
+          }
+        },
+        {
+          "id": "pole_3",
+          "terminals": [
+            "5",
+            "6"
+          ],
+          "simBehavior": "protection_mpcb",
+          "currentPath": "series",
+          "terminalTypes": {
+            "5": "power_ac",
+            "6": "power_ac"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "docking": {
+      "mountable": true,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "itm_3p",
+        "dockSize": {
+          "cols": 3,
+          "rows": 2
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": [
+        {
+          "id": "left_aux",
+          "label": "Auxiliar izquierdo",
+          "position": "left",
+          "rect": {
+            "x": -1200,
+            "y": 0,
+            "w": 1224,
+            "h": 7181
+          },
+          "anchor": {
+            "nx": -0.163333,
+            "ny": 0.498681
+          },
+          "gridSize": {
+            "cols": 1,
+            "rows": 6
+          },
+          "accepts": [
+            "auxiliary_contact"
+          ],
+          "bridge": null,
+          "childAlignment": "right_center",
+          "childZLayer": 2,
+          "hideHostTerminals": null
+        },
+        {
+          "id": "right_aux",
+          "label": "Auxiliar derecho",
+          "position": "right",
+          "rect": {
+            "x": 3600,
+            "y": 0,
+            "w": 1200,
+            "h": 7200
+          },
+          "anchor": {
+            "nx": 1.166667,
+            "ny": 0.5
+          },
+          "gridSize": {
+            "cols": 1,
+            "rows": 6
+          },
+          "accepts": [
+            "auxiliary_contact"
+          ],
+          "bridge": null,
+          "childAlignment": "left_center",
+          "childZLayer": 2,
+          "hideHostTerminals": null
+        },
+        {
+          "id": "over_aux",
+          "label": "Auxiliar frontal",
+          "position": "over",
+          "rect": {
+            "x": 0,
+            "y": 1500,
+            "w": 3600,
+            "h": 600
+          },
+          "anchor": {
+            "nx": 0.5,
+            "ny": 0.25
+          },
+          "gridSize": {
+            "cols": 3,
+            "rows": 1
+          },
+          "accepts": [
+            "auxiliary_contact"
+          ],
+          "bridge": null,
+          "childAlignment": "center",
+          "childZLayer": 3,
+          "hideHostTerminals": null
+        }
+      ]
+    },
+    "folder": "guardamotor_2,5-4_a"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Rel\u00e9 t\u00e9rmico 0,25-0,4 A",
+    "name": {
+      "es": "Rel\u00e9 t\u00e9rmico 0,25-0,4 A",
+      "en": "Thermal Overload Relay 0.25-0.4 A"
+    },
+    "category": {
+      "es": "Potencia",
+      "en": "Power"
+    },
+    "tagPrefix": "F",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 3600,
+        "height": 4800
+      }
+    },
+    "terminals": [
+      {
+        "id": "2",
+        "label": "2/T1",
+        "signal": "Potencia",
+        "role": "output",
+        "nx": 0.166667,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4/T2",
+        "signal": "Potencia",
+        "role": "output",
+        "nx": 0.5,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6/T3",
+        "signal": "Potencia",
+        "role": "output",
+        "nx": 0.833333,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "1",
+        "label": "1/L1",
+        "signal": "Potencia",
+        "role": "input",
+        "nx": 0.182222,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3/L2",
+        "signal": "Potencia",
+        "role": "input",
+        "nx": 0.5,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5/L3",
+        "signal": "Potencia",
+        "role": "input",
+        "nx": 0.815,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "97",
+        "label": "97",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.124722,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "98",
+        "label": "98",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.377778,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "95",
+        "label": "95",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.630833,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "96",
+        "label": "96",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.883889,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "switch",
+      "terminalPairs": [
+        {
+          "id": "pole_1",
+          "terminals": [
+            "2",
+            "1"
+          ],
+          "simBehavior": "junction",
+          "currentPath": "series",
+          "terminalTypes": {
+            "2": "power_ac",
+            "1": "power_ac"
+          }
+        },
+        {
+          "id": "pole_2",
+          "terminals": [
+            "4",
+            "3"
+          ],
+          "simBehavior": "junction",
+          "currentPath": "series",
+          "terminalTypes": {
+            "4": "power_ac",
+            "3": "power_ac"
+          }
+        },
+        {
+          "id": "pole_3",
+          "terminals": [
+            "6",
+            "5"
+          ],
+          "simBehavior": "junction",
+          "currentPath": "series",
+          "terminalTypes": {
+            "6": "power_ac",
+            "5": "power_ac"
+          }
+        },
+        {
+          "id": "aux_nc",
+          "terminals": [
+            "95",
+            "96"
+          ],
+          "simBehavior": "contact_nc",
+          "currentPath": "series",
+          "terminalTypes": {
+            "95": "contact_nc",
+            "96": "contact_nc"
+          }
+        },
+        {
+          "id": "aux_no",
+          "terminals": [
+            "97",
+            "98"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "97": "contact_no",
+            "98": "contact_no"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "docking": {
+      "mountable": true,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "thermal_relay_3p",
+        "dockSize": {
+          "cols": 3,
+          "rows": 4
+        },
+        "hideTerminalsOnDock": [
+          "1",
+          "3",
+          "5"
+        ],
+        "overlapPx": 0
+      },
+      "zones": []
+    },
+    "folder": "rele_termico_0,25-0,4_a"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Rel\u00e9 t\u00e9rmico 0,4-0,63 A",
+    "name": {
+      "es": "Rel\u00e9 t\u00e9rmico 0,4-0,63 A",
+      "en": "Thermal overload relay 0,4-0,63 A"
+    },
+    "category": {
+      "es": "Potencia",
+      "en": "Power"
+    },
+    "tagPrefix": "F",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 3600,
+        "height": 4800
+      }
+    },
+    "terminals": [
+      {
+        "id": "2",
+        "label": "2/T1",
+        "signal": "Potencia",
+        "role": "output",
+        "nx": 0.166667,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4/T2",
+        "signal": "Potencia",
+        "role": "output",
+        "nx": 0.5,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6/T3",
+        "signal": "Potencia",
+        "role": "output",
+        "nx": 0.833333,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "1",
+        "label": "1/L1",
+        "signal": "Potencia",
+        "role": "input",
+        "nx": 0.182222,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3/L2",
+        "signal": "Potencia",
+        "role": "input",
+        "nx": 0.5,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5/L3",
+        "signal": "Potencia",
+        "role": "input",
+        "nx": 0.815,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "97",
+        "label": "97",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.124722,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "98",
+        "label": "98",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.377778,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "95",
+        "label": "95",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.630833,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "96",
+        "label": "96",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.883889,
+        "ny": 0.693333,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "selector",
+      "terminalPairs": [
+        {
+          "id": "pole_1",
+          "terminals": [
+            "2",
+            "1"
+          ],
+          "simBehavior": "junction",
+          "currentPath": "series",
+          "terminalTypes": {
+            "2": "power_ac",
+            "1": "power_ac"
+          }
+        },
+        {
+          "id": "pole_2",
+          "terminals": [
+            "4",
+            "3"
+          ],
+          "simBehavior": "junction",
+          "currentPath": "series",
+          "terminalTypes": {
+            "4": "power_ac",
+            "3": "power_ac"
+          }
+        },
+        {
+          "id": "pole_3",
+          "terminals": [
+            "6",
+            "5"
+          ],
+          "simBehavior": "junction",
+          "currentPath": "series",
+          "terminalTypes": {
+            "6": "power_ac",
+            "5": "power_ac"
+          }
+        },
+        {
+          "id": "aux_nc",
+          "terminals": [
+            "95",
+            "96"
+          ],
+          "simBehavior": "contact_nc",
+          "currentPath": "series",
+          "terminalTypes": {
+            "95": "contact_nc",
+            "96": "contact_nc"
+          }
+        },
+        {
+          "id": "aux_no",
+          "terminals": [
+            "97",
+            "98"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "97": "contact_no",
+            "98": "contact_no"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "docking": {
+      "mountable": true,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "thermal_relay_3p",
+        "dockSize": {
+          "cols": 3,
+          "rows": 4
+        },
+        "hideTerminalsOnDock": [
+          "1",
+          "3",
+          "5"
+        ],
+        "overlapPx": 0
+      },
+      "zones": []
+    },
+    "folder": "rele_termico_0,4-0,63_a"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "ID 2P 25A 30mA",
+    "name": {
+      "es": "ID 2P 25A 30mA",
+      "en": "RCCB 2P 25A 30mA"
+    },
+    "category": {
+      "es": "Proteccion",
+      "en": "Protection"
+    },
+    "tagPrefix": "QF",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 2400,
+        "height": 7200
+      }
+    },
+    "terminals": [
+      {
+        "id": "N1",
+        "label": "N",
+        "signal": "Potencia",
+        "role": "input",
+        "nx": 0.25,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "role": "input",
+        "nx": 0.75,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "N2",
+        "label": "N",
+        "signal": "Potencia",
+        "role": "output",
+        "nx": 0.25,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "role": "output",
+        "nx": 0.75,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "ac",
+      "activationRule": "protection",
+      "terminalPairs": [
+        {
+          "id": "pole_1",
+          "terminals": [
+            "N1",
+            "N2"
+          ],
+          "simBehavior": "protection_diff",
+          "currentPath": "series",
+          "terminalTypes": {
+            "N1": "power_ac",
+            "N2": "power_ac"
+          }
+        },
+        {
+          "id": "pole_2",
+          "terminals": [
+            "1",
+            "2"
+          ],
+          "simBehavior": "protection_diff",
+          "currentPath": "series",
+          "terminalTypes": {
+            "1": "power_ac",
+            "2": "power_ac"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "docking": {
+      "mountable": false,
+      "zLayer": 2,
+      "isDinRail": true,
+      "railAxis": "horizontal",
+      "mountZone": {
+        "nx0": 0,
+        "ny0": 0,
+        "nx1": 1,
+        "ny1": 1
+      },
+      "acceptsMountable": true,
+      "attachesAs": {
+        "type": "id_2p",
+        "dockSize": {
+          "cols": 2,
+          "rows": 1
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": []
+    },
+    "folder": "id_2p_25a_30ma"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Rel\u00e9 temporizado multifunci\u00f3n RE17",
+    "name": {
+      "es": "Rel\u00e9 temporizado multifunci\u00f3n RE17",
+      "en": "RE17 Multifunction Timing Relay"
+    },
+    "category": {
+      "es": "Control",
+      "en": "Control"
+    },
+    "tagPrefix": "KT",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 1800,
+        "height": 8400
+      }
+    },
+    "terminals": [
+      {
+        "id": "A1",
+        "label": "A1",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.196111,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "15",
+        "label": "15",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "Y1",
+        "label": "Y1",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.806111,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "18",
+        "label": "18",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.196111,
+        "ny": 0.874643,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "16",
+        "label": "16",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 0.874643,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "A2",
+        "label": "A2",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.806111,
+        "ny": 0.874643,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "coil",
+      "terminalPairs": [
+        {
+          "id": "coil_re17",
+          "terminals": [
+            "A1",
+            "A2"
+          ],
+          "simBehavior": "coil",
+          "currentPath": "sink",
+          "terminalTypes": {
+            "A1": "coil_in",
+            "A2": "coil_in"
+          }
+        },
+        {
+          "id": "control_y1",
+          "terminals": [
+            "Y1",
+            "A2"
+          ],
+          "simBehavior": "control_input",
+          "currentPath": "series",
+          "terminalTypes": {
+            "Y1": "signal_in",
+            "A2": "coil_in"
+          }
+        },
+        {
+          "id": "contact_no_re17",
+          "terminals": [
+            "15",
+            "18"
+          ],
+          "simBehavior": "contact_no_re17",
+          "currentPath": "series",
+          "terminalTypes": {
+            "15": "contact",
+            "18": "contact_no"
+          },
+          "activeInStates": [
+            "on"
+          ]
+        },
+        {
+          "id": "contact_nc_re17",
+          "terminals": [
+            "15",
+            "16"
+          ],
+          "simBehavior": "contact_nc_re17",
+          "currentPath": "series",
+          "terminalTypes": {
+            "15": "contact",
+            "16": "contact_nc"
+          },
+          "activeInStates": [
+            "off"
+          ]
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      },
+      "rotaryControls": [
+        {
+          "id": "range_selector",
+          "label": {
+            "es": "Rango",
+            "en": "Range"
+          },
+          "circle": {
+            "cx": 0.498889,
+            "cy": 0.348929,
+            "r": 0.035952
+          },
+          "parameterField": "simTimerRange",
+          "valueMin": 0.0,
+          "valueMax": 6.0,
+          "angleStartDeg": -125.0,
+          "angleEndDeg": 125.0,
+          "mode": "discrete",
+          "discreteValues": [
+            "0,1-1s",
+            "1-10s",
+            "6-60s",
+            "1-10min",
+            "6-60min",
+            "1-10h",
+            "10-100h"
+          ]
+        },
+        {
+          "id": "multiplier",
+          "label": {
+            "es": "Multiplicador",
+            "en": "Multiplier"
+          },
+          "circle": {
+            "cx": 0.498889,
+            "cy": 0.473929,
+            "r": 0.035952
+          },
+          "parameterField": "simTimerMultiplier",
+          "valueMin": 0.0,
+          "valueMax": 10.0,
+          "angleStartDeg": -135.0,
+          "angleEndDeg": 135.0
+        },
+        {
+          "id": "function_selector",
+          "label": {
+            "es": "Funci\u00f3n",
+            "en": "Function"
+          },
+          "circle": {
+            "cx": 0.498889,
+            "cy": 0.6,
+            "r": 0.035952
+          },
+          "parameterField": "simTimerFunction",
+          "valueMin": 0.0,
+          "valueMax": 6.0,
+          "angleStartDeg": -125.0,
+          "angleEndDeg": 125.0,
+          "mode": "discrete",
+          "discreteValues": [
+            "A",
+            "At",
+            "C",
+            "Ac",
+            "B",
+            "D",
+            "Di"
+          ]
+        }
+      ],
+      "ledIndicators": [
+        {
+          "id": "led_un_r",
+          "label": {
+            "es": "Un/R",
+            "en": "Un/R"
+          },
+          "geometry": "rect",
+          "colorOff": "#FFFFFF",
+          "colorOn": "#00FD00",
+          "stateField": "ledUnR",
+          "supportsBlinking": true,
+          "rect": {
+            "x": 0.799444,
+            "y": 0.685357,
+            "w": 0.081111,
+            "h": 0.024643
+          }
+        }
+      ]
+    },
+    "docking": {
+      "mountable": true,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "general_montable_riel_din",
+        "dockSize": {
+          "cols": 2,
+          "rows": 1
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": []
+    },
+    "folder": "rele_temporizado_multifuncion_re17"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Barra de Neutro (N) - 6T A",
+    "name": {
+      "es": "Barra de Neutro (N) - 6T A",
+      "en": "Neutral Busbar (N) - 6T A"
+    },
+    "category": {
+      "es": "Distribuci\u00f3n",
+      "en": "Distribution"
+    },
+    "tagPrefix": "",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 1200,
+        "height": 7200
+      },
+      "original": "original.png"
+    },
+    "terminals": [
+      {
+        "id": "N",
+        "label": "N",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.781667,
+        "ny": 0.083333,
+        "direction": "right",
+        "guideLength": 60
+      },
+      {
+        "id": "N1",
+        "label": "N1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.721667,
+        "ny": 0.25,
+        "direction": "right",
+        "guideLength": 60
+      },
+      {
+        "id": "N2",
+        "label": "N2",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.721667,
+        "ny": 0.416667,
+        "direction": "right",
+        "guideLength": 60
+      },
+      {
+        "id": "N3",
+        "label": "N3",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.721667,
+        "ny": 0.583333,
+        "direction": "right",
+        "guideLength": 60
+      },
+      {
+        "id": "N4",
+        "label": "N4",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.721667,
+        "ny": 0.75,
+        "direction": "right",
+        "guideLength": 60
+      },
+      {
+        "id": "N5",
+        "label": "N5",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.721667,
+        "ny": 0.916667,
+        "direction": "right",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "none",
+      "terminalPairs": [
+        {
+          "id": "bus",
+          "terminals": [
+            "N",
+            "N1",
+            "N2",
+            "N3",
+            "N4",
+            "N5"
+          ],
+          "simBehavior": "junction",
+          "currentPath": "series",
+          "terminalTypes": {
+            "N": "power_ac",
+            "N1": "power_ac",
+            "N2": "power_ac",
+            "N3": "power_ac",
+            "N4": "power_ac",
+            "N5": "power_ac"
+          }
+        }
+      ]
+    },
+    "folder": "barra_de_neutro_(n)_-_6t_a"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Barra de Tierra (PE) - 6T A",
+    "name": {
+      "es": "Barra de Tierra (PE) - 6T A",
+      "en": "Earth Busbar (PE) - 6T A"
+    },
+    "category": {
+      "es": "Distribuci\u00f3n",
+      "en": "Distribution"
+    },
+    "tagPrefix": "",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 1200,
+        "height": 7200
+      },
+      "original": "original.png"
+    },
+    "terminals": [
+      {
+        "id": "PE",
+        "label": "PE",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.781667,
+        "ny": 0.083333,
+        "direction": "right",
+        "guideLength": 60
+      },
+      {
+        "id": "PE1",
+        "label": "PE1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.721667,
+        "ny": 0.25,
+        "direction": "right",
+        "guideLength": 60
+      },
+      {
+        "id": "PE2",
+        "label": "PE2",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.721667,
+        "ny": 0.416667,
+        "direction": "right",
+        "guideLength": 60
+      },
+      {
+        "id": "PE3",
+        "label": "PE3",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.721667,
+        "ny": 0.583333,
+        "direction": "right",
+        "guideLength": 60
+      },
+      {
+        "id": "PE4",
+        "label": "PE4",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.721667,
+        "ny": 0.75,
+        "direction": "right",
+        "guideLength": 60
+      },
+      {
+        "id": "PE5",
+        "label": "PE5",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.721667,
+        "ny": 0.916667,
+        "direction": "right",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "none",
+      "terminalPairs": [
+        {
+          "id": "bus",
+          "terminals": [
+            "PE",
+            "PE1",
+            "PE2",
+            "PE3",
+            "PE4",
+            "PE5"
+          ],
+          "simBehavior": "junction",
+          "currentPath": "series",
+          "terminalTypes": {
+            "PE": "power_ac",
+            "PE1": "power_ac",
+            "PE2": "power_ac",
+            "PE3": "power_ac",
+            "PE4": "power_ac",
+            "PE5": "power_ac"
+          }
+        }
+      ]
+    },
+    "folder": "barra_de_tierra_(pe)_-_6t_a"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Borne gris",
+    "name": {
+      "es": "Borne gris",
+      "en": "Grey Terminal Block"
+    },
+    "category": {
+      "es": "Distribuci\u00f3n",
+      "en": "Distribution"
+    },
+    "tagPrefix": "X",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 600,
+        "height": 3600
+      },
+      "original": "original.png"
+    },
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "none",
+      "terminalPairs": [
+        {
+          "id": "paso",
+          "terminals": [
+            "1",
+            "2"
+          ],
+          "simBehavior": "junction",
+          "currentPath": "series",
+          "terminalTypes": {
+            "1": "power_ac",
+            "2": "power_ac"
+          }
+        }
+      ]
+    },
+    "docking": {
+      "mountable": true,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "bornera",
+        "dockSize": {
+          "cols": 1,
+          "rows": 2
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": []
+    },
+    "folder": "borne_gris"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Borne verde",
+    "name": {
+      "es": "Borne verde",
+      "en": "Green Terminal Block"
+    },
+    "category": {
+      "es": "Distribuci\u00f3n",
+      "en": "Distribution"
+    },
+    "tagPrefix": "PE",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 600,
+        "height": 3600
+      },
+      "original": "original.png"
+    },
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "passive",
+      "borneType": "PE",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "none",
+      "terminalPairs": [
+        {
+          "id": "paso_pe",
+          "terminals": [
+            "1",
+            "2"
+          ],
+          "simBehavior": "junction",
+          "currentPath": "series",
+          "terminalTypes": {
+            "1": "power_ac",
+            "2": "power_ac"
+          }
+        }
+      ]
+    },
+    "docking": {
+      "mountable": true,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "bornera",
+        "dockSize": {
+          "cols": 1,
+          "rows": 2
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": []
+    },
+    "folder": "borne_verde"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Borne azul",
+    "name": {
+      "es": "Borne azul",
+      "en": "Blue Terminal Block"
+    },
+    "category": {
+      "es": "Distribuci\u00f3n",
+      "en": "Distribution"
+    },
+    "tagPrefix": "N",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 600,
+        "height": 3600
+      },
+      "original": "original.png"
+    },
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "none",
+      "terminalPairs": [
+        {
+          "id": "paso_n",
+          "terminals": [
+            "1",
+            "2"
+          ],
+          "simBehavior": "junction",
+          "currentPath": "series",
+          "terminalTypes": {
+            "1": "power_ac",
+            "2": "power_ac"
+          }
+        }
+      ]
+    },
+    "docking": {
+      "mountable": true,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "bornera",
+        "dockSize": {
+          "cols": 1,
+          "rows": 2
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": []
+    },
+    "folder": "borne_azul"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "12P-Riel DIN 35 mm",
+    "name": {
+      "es": "12P-Riel DIN 35 mm",
+      "en": "DIN Rail 35 mm 12P"
+    },
+    "category": {
+      "es": "Estructura",
+      "en": "Structure"
+    },
+    "tagPrefix": "X",
+    "graphics": {
+      "preview": "preview.png",
+      "original": "original.png",
+      "size": {
+        "width": 16800,
+        "height": 2400
+      }
+    },
+    "terminals": [],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static"
+    },
+    "docking": {
+      "mountable": false,
+      "zLayer": 0,
+      "isDinRail": true,
+      "railAxis": "horizontal",
+      "mountZone": {
+        "nx0": 0,
+        "ny0": 0,
+        "nx1": 1,
+        "ny1": 1
+      },
+      "acceptsMountable": true,
+      "zones": [
+        {
+          "id": "rail_mount",
+          "label": "Zona de montaje",
+          "position": "top",
+          "rect": {
+            "x": 1200,
+            "y": 0,
+            "w": 14400,
+            "h": 2400
+          },
+          "anchor": {
+            "nx": 0.5,
+            "ny": 0.5
+          },
+          "gridSize": {
+            "cols": 12,
+            "rows": 2
+          },
+          "accepts": [
+            "contactor_3p",
+            "itm_1p",
+            "itm_2p",
+            "itm_3p",
+            "itm_4p",
+            "id_2p",
+            "id_4p",
+            "aux_1p",
+            "aux_2p",
+            "aux_4p",
+            "bornera",
+            "rele_fases",
+            "plc",
+            "modulo_plc",
+            "general_montable_riel_din"
+          ],
+          "bridge": null,
+          "childAlignment": "bottom_center",
+          "childZLayer": 2,
+          "hideHostTerminals": null
+        }
+      ]
+    },
+    "folder": "12p-riel_din_35_mm"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "8P-Riel DIN 35 mm",
+    "name": {
+      "es": "8P-Riel DIN 35 mm",
+      "en": "DIN Rail 35 mm 8P"
+    },
+    "category": {
+      "es": "Estructura",
+      "en": "Structure"
+    },
+    "tagPrefix": "X",
+    "graphics": {
+      "preview": "preview.png",
+      "original": "original.png",
+      "size": {
+        "width": 12000,
+        "height": 2400
+      }
+    },
+    "terminals": [],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static"
+    },
+    "docking": {
+      "mountable": false,
+      "zLayer": 0,
+      "isDinRail": true,
+      "railAxis": "horizontal",
+      "mountZone": {
+        "nx0": 0,
+        "ny0": 0,
+        "nx1": 1,
+        "ny1": 1
+      },
+      "acceptsMountable": true,
+      "zones": [
+        {
+          "id": "rail_mount",
+          "label": "Zona de montaje",
+          "position": "top",
+          "rect": {
+            "x": 1200,
+            "y": 0,
+            "w": 9600,
+            "h": 2400
+          },
+          "anchor": {
+            "nx": 0.5,
+            "ny": 0.5
+          },
+          "gridSize": {
+            "cols": 8,
+            "rows": 2
+          },
+          "accepts": [
+            "contactor_3p",
+            "itm_1p",
+            "itm_2p",
+            "itm_3p",
+            "itm_4p",
+            "id_2p",
+            "id_4p",
+            "aux_1p",
+            "aux_2p",
+            "aux_4p",
+            "bornera",
+            "rele_fases",
+            "plc",
+            "modulo_plc",
+            "general_montable_riel_din"
+          ],
+          "bridge": null,
+          "childAlignment": "bottom_center",
+          "childZLayer": 2,
+          "hideHostTerminals": null
+        }
+      ]
+    },
+    "folder": "8p-riel_din_35_mm"
+  },
+  {
+    "schemaVersion": 5,
+    "id": "Borne PE",
+    "name": {
+      "es": "Borne PE",
+      "en": ""
+    },
+    "category": {
+      "es": "Potencia",
+      "en": "Power"
+    },
+    "tagPrefix": "X",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 600,
+        "height": 3600
+      },
+      "original": "original.png"
+    },
+    "terminals": [
+      {
+        "id": "1",
+        "label": "PE",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 30
+      },
+      {
+        "id": "2",
+        "label": "PE",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 30
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "ac",
+      "activationRule": "source",
+      "terminalPairs": [
+        {
+          "id": "source_pe",
+          "terminals": [
+            "1",
+            "2"
+          ],
+          "simBehavior": "source_pe",
+          "currentPath": "source",
+          "terminalTypes": {
+            "1": "source_pe",
+            "2": "source_pe"
+          }
+        }
+      ]
+    },
+    "docking": {
+      "mountable": true,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "bornera",
+        "dockSize": {
+          "cols": 1,
+          "rows": 2
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": []
+    },
+    "folder": "borne_pe"
+  },
+  {
+    "schemaVersion": 5,
+    "id": "Bornes L1-L2-L3-N",
+    "name": {
+      "es": "Bornes L1-L2-L3-N",
+      "en": ""
+    },
+    "category": {
+      "es": "Potencia",
+      "en": "Power"
+    },
+    "tagPrefix": "X",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 2400,
+        "height": 3600
+      },
+      "original": "original.png"
+    },
+    "terminals": [
+      {
+        "id": "1a",
+        "label": "L1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.125,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 30
+      },
+      {
+        "id": "2a",
+        "label": "L1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.125,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 30
+      },
+      {
+        "id": "1b",
+        "label": "L2",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.375,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 30
+      },
+      {
+        "id": "2b",
+        "label": "L2",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.375,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 30
+      },
+      {
+        "id": "1c",
+        "label": "L3",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.625,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 30
+      },
+      {
+        "id": "2c",
+        "label": "L3",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.625,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 30
+      },
+      {
+        "id": "1d",
+        "label": "N",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.875,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 30
+      },
+      {
+        "id": "2d",
+        "label": "N",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.875,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 30
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "ac",
+      "activationRule": "source",
+      "supply": {
+        "volts": 380.0,
+        "ref": "ll",
+        "hertz": 60.0
+      },
+      "terminalPairs": [
+        {
+          "id": "source_l1",
+          "terminals": [
+            "1a",
+            "2a"
+          ],
+          "simBehavior": "source_l1",
+          "currentPath": "source",
+          "terminalTypes": {
+            "1a": "source_l1",
+            "2a": "source_l1"
+          }
+        },
+        {
+          "id": "source_l2",
+          "terminals": [
+            "1b",
+            "2b"
+          ],
+          "simBehavior": "source_l2",
+          "currentPath": "source",
+          "terminalTypes": {
+            "1b": "source_l2",
+            "2b": "source_l2"
+          }
+        },
+        {
+          "id": "source_l3",
+          "terminals": [
+            "1c",
+            "2c"
+          ],
+          "simBehavior": "source_l3",
+          "currentPath": "source",
+          "terminalTypes": {
+            "1c": "source_l3",
+            "2c": "source_l3"
+          }
+        },
+        {
+          "id": "source_N",
+          "terminals": [
+            "1d",
+            "2d"
+          ],
+          "simBehavior": "source_neutral",
+          "currentPath": "source",
+          "terminalTypes": {
+            "1d": "source_n",
+            "2d": "source_n"
+          }
+        }
+      ]
+    },
+    "docking": {
+      "mountable": true,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "bornera",
+        "dockSize": {
+          "cols": 3,
+          "rows": 2
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": []
+    },
+    "folder": "bornes_l1-l2-l3-n"
+  },
+  {
+    "schemaVersion": 5,
+    "id": "Bornes L1-L2-L3",
+    "name": {
+      "es": "Bornes L1-L2-L3",
+      "en": ""
+    },
+    "category": {
+      "es": "Potencia",
+      "en": "Power"
+    },
+    "tagPrefix": "X",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 1800,
+        "height": 3600
+      },
+      "original": "original.png"
+    },
+    "terminals": [
+      {
+        "id": "1a",
+        "label": "L1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.166667,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 30
+      },
+      {
+        "id": "2a",
+        "label": "L1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.166667,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 30
+      },
+      {
+        "id": "1b",
+        "label": "L2",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 30
+      },
+      {
+        "id": "2b",
+        "label": "L2",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 30
+      },
+      {
+        "id": "1c",
+        "label": "L3",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.833333,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 30
+      },
+      {
+        "id": "2c",
+        "label": "L3",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.833333,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 30
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "ac",
+      "activationRule": "source",
+      "supply": {
+        "volts": 220.0,
+        "ref": "ll",
+        "hertz": 60.0
+      },
+      "terminalPairs": [
+        {
+          "id": "source_l1",
+          "terminals": [
+            "1a",
+            "2a"
+          ],
+          "simBehavior": "source_l1",
+          "currentPath": "source",
+          "terminalTypes": {
+            "1a": "source_l1",
+            "2a": "source_l1"
+          }
+        },
+        {
+          "id": "source_l2",
+          "terminals": [
+            "1b",
+            "2b"
+          ],
+          "simBehavior": "source_l2",
+          "currentPath": "source",
+          "terminalTypes": {
+            "1b": "source_l2",
+            "2b": "source_l2"
+          }
+        },
+        {
+          "id": "source_l3",
+          "terminals": [
+            "1c",
+            "2c"
+          ],
+          "simBehavior": "source_l3",
+          "currentPath": "source",
+          "terminalTypes": {
+            "1c": "source_l3",
+            "2c": "source_l3"
+          }
+        }
+      ]
+    },
+    "docking": {
+      "mountable": true,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "bornera",
+        "dockSize": {
+          "cols": 3,
+          "rows": 2
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": []
+    },
+    "folder": "bornes_l1-l2-l3"
+  },
+  {
+    "schemaVersion": 5,
+    "id": "Bornes L-N",
+    "name": {
+      "es": "Bornes L-N",
+      "en": ""
+    },
+    "category": {
+      "es": "Potencia",
+      "en": "Power"
+    },
+    "tagPrefix": "X",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 1200,
+        "height": 3600
+      },
+      "original": "original.png"
+    },
+    "terminals": [
+      {
+        "id": "1a",
+        "label": "L",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.25,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 30
+      },
+      {
+        "id": "2a",
+        "label": "L",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.25,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 30
+      },
+      {
+        "id": "1b",
+        "label": "N",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.75,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 30
+      },
+      {
+        "id": "2b",
+        "label": "N",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.75,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 30
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "ac",
+      "activationRule": "source",
+      "supply": {
+        "volts": 220.0,
+        "ref": "ln",
+        "hertz": 60.0
+      },
+      "terminalPairs": [
+        {
+          "id": "source_n",
+          "terminals": [
+            "1b",
+            "2b"
+          ],
+          "simBehavior": "source_neutral",
+          "currentPath": "source",
+          "terminalTypes": {
+            "1b": "source_n",
+            "2b": "source_n"
+          }
+        },
+        {
+          "id": "source_l",
+          "terminals": [
+            "1a",
+            "2a"
+          ],
+          "simBehavior": "source_l",
+          "currentPath": "source",
+          "terminalTypes": {
+            "1a": "source_l",
+            "2a": "source_l"
+          }
+        }
+      ]
+    },
+    "docking": {
+      "mountable": true,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "bornera",
+        "dockSize": {
+          "cols": 2,
+          "rows": 2
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": []
+    },
+    "folder": "bornes_l-n"
+  },
+  {
+    "schemaVersion": 5,
+    "id": "Borne + -",
+    "name": {
+      "es": "Borne + -",
+      "en": ""
+    },
+    "category": {
+      "es": "Potencia",
+      "en": "Power"
+    },
+    "tagPrefix": "X",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 1200,
+        "height": 3600
+      },
+      "original": "original.png"
+    },
+    "terminals": [
+      {
+        "id": "+1",
+        "label": "+",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.25,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 30
+      },
+      {
+        "id": "+2",
+        "label": "+",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.25,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 30
+      },
+      {
+        "id": "-1",
+        "label": "-",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.75,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 30
+      },
+      {
+        "id": "-2",
+        "label": "-",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.75,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 30
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "dc",
+      "activationRule": "source",
+      "supply": {
+        "volts": 24.0,
+        "ref": "dc"
+      },
+      "terminalPairs": [
+        {
+          "id": "source_dc_plus",
+          "terminals": [
+            "+1",
+            "+2"
+          ],
+          "simBehavior": "source_dc_plus",
+          "currentPath": "source",
+          "terminalTypes": {
+            "+1": "source_dc_pos",
+            "+2": "source_dc_pos"
+          }
+        },
+        {
+          "id": "source_dc_minus",
+          "terminals": [
+            "-1",
+            "-2"
+          ],
+          "simBehavior": "source_dc_minus",
+          "currentPath": "source",
+          "terminalTypes": {
+            "-1": "source_dc_neg",
+            "-2": "source_dc_neg"
+          }
+        }
+      ]
+    },
+    "docking": {
+      "mountable": true,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "bornera",
+        "dockSize": {
+          "cols": 1,
+          "rows": 2
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": []
+    },
+    "folder": "borne_+_-"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "ITM 2P C6",
+    "name": {
+      "es": "ITM 2P C6",
+      "en": "MCB 2P C6"
+    },
+    "category": {
+      "es": "Proteccion",
+      "en": "Protection"
+    },
+    "tagPrefix": "Q",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 2400,
+        "height": 7200
+      }
+    },
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "role": "input",
+        "nx": 0.25,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3",
+        "signal": "Potencia",
+        "role": "input",
+        "nx": 0.75,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "role": "output",
+        "nx": 0.25,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4",
+        "signal": "Potencia",
+        "role": "output",
+        "nx": 0.75,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "protection",
+      "terminalPairs": [
+        {
+          "id": "pole_1",
+          "terminals": [
+            "1",
+            "2"
+          ],
+          "simBehavior": "protection_mcb",
+          "currentPath": "series",
+          "terminalTypes": {
+            "1": "power_ac",
+            "2": "power_ac"
+          }
+        },
+        {
+          "id": "pole_2",
+          "terminals": [
+            "3",
+            "4"
+          ],
+          "simBehavior": "protection_mcb",
+          "currentPath": "series",
+          "terminalTypes": {
+            "3": "power_ac",
+            "4": "power_ac"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "docking": {
+      "mountable": true,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "itm_2p",
+        "dockSize": {
+          "cols": 2,
+          "rows": 2
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": []
+    },
+    "folder": "itm_2p_c6"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "ITM 2P C10",
+    "name": {
+      "es": "ITM 2P C10",
+      "en": "MCB 2P C10"
+    },
+    "category": {
+      "es": "Proteccion",
+      "en": "Protection"
+    },
+    "tagPrefix": "Q",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 2400,
+        "height": 7200
+      }
+    },
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "role": "input",
+        "nx": 0.25,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3",
+        "signal": "Potencia",
+        "role": "input",
+        "nx": 0.75,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "role": "output",
+        "nx": 0.25,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4",
+        "signal": "Potencia",
+        "role": "output",
+        "nx": 0.75,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "passive",
+      "borneType": "standard",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "protection",
+      "terminalPairs": [
+        {
+          "id": "pole_1",
+          "terminals": [
+            "1",
+            "2"
+          ],
+          "simBehavior": "protection_mcb",
+          "currentPath": "series",
+          "terminalTypes": {
+            "1": "power_ac",
+            "2": "power_ac"
+          }
+        },
+        {
+          "id": "pole_2",
+          "terminals": [
+            "3",
+            "4"
+          ],
+          "simBehavior": "protection_mcb",
+          "currentPath": "series",
+          "terminalTypes": {
+            "3": "power_ac",
+            "4": "power_ac"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "docking": {
+      "mountable": true,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "itm_2p",
+        "dockSize": {
+          "cols": 2,
+          "rows": 2
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": []
+    },
+    "folder": "itm_2p_c10"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "ITM 3P C6",
+    "name": {
+      "es": "ITM 3P C6",
+      "en": "MCB 3P C6"
+    },
+    "category": {
+      "es": "Proteccion",
+      "en": "Protection"
+    },
+    "tagPrefix": "Q",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 3600,
+        "height": 7200
+      }
+    },
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "role": "input",
+        "nx": 0.166667,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3",
+        "signal": "Potencia",
+        "role": "input",
+        "nx": 0.5,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "role": "output",
+        "nx": 0.166667,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4",
+        "signal": "Potencia",
+        "role": "output",
+        "nx": 0.5,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5",
+        "signal": "Potencia",
+        "role": "input",
+        "nx": 0.833333,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6",
+        "signal": "Potencia",
+        "role": "output",
+        "nx": 0.833333,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "protection",
+      "terminalPairs": [
+        {
+          "id": "pole_1",
+          "terminals": [
+            "1",
+            "2"
+          ],
+          "simBehavior": "protection_mcb",
+          "currentPath": "series",
+          "terminalTypes": {
+            "1": "power_ac",
+            "2": "power_ac"
+          }
+        },
+        {
+          "id": "pole_2",
+          "terminals": [
+            "3",
+            "4"
+          ],
+          "simBehavior": "protection_mcb",
+          "currentPath": "series",
+          "terminalTypes": {
+            "3": "power_ac",
+            "4": "power_ac"
+          }
+        },
+        {
+          "id": "pole_3",
+          "terminals": [
+            "5",
+            "6"
+          ],
+          "simBehavior": "protection_mcb",
+          "currentPath": "series",
+          "terminalTypes": {
+            "5": "power_ac",
+            "6": "power_ac"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "docking": {
+      "mountable": true,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "itm_3p",
+        "dockSize": {
+          "cols": 3,
+          "rows": 2
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": []
+    },
+    "folder": "itm_3p_c6"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "ITM 3P C10",
+    "name": {
+      "es": "ITM 3P C10",
+      "en": "MCB 3P C10"
+    },
+    "category": {
+      "es": "Proteccion",
+      "en": "Protection"
+    },
+    "tagPrefix": "Q",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 3600,
+        "height": 7200
+      }
+    },
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "role": "input",
+        "nx": 0.166667,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3",
+        "signal": "Potencia",
+        "role": "input",
+        "nx": 0.5,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "role": "output",
+        "nx": 0.166667,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4",
+        "signal": "Potencia",
+        "role": "output",
+        "nx": 0.5,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5",
+        "signal": "Potencia",
+        "role": "input",
+        "nx": 0.833333,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6",
+        "signal": "Potencia",
+        "role": "output",
+        "nx": 0.833333,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "protection",
+      "terminalPairs": [
+        {
+          "id": "pole_1",
+          "terminals": [
+            "1",
+            "2"
+          ],
+          "simBehavior": "protection_mcb",
+          "currentPath": "series",
+          "terminalTypes": {
+            "1": "power_ac",
+            "2": "power_ac"
+          }
+        },
+        {
+          "id": "pole_2",
+          "terminals": [
+            "3",
+            "4"
+          ],
+          "simBehavior": "protection_mcb",
+          "currentPath": "series",
+          "terminalTypes": {
+            "3": "power_ac",
+            "4": "power_ac"
+          }
+        },
+        {
+          "id": "pole_3",
+          "terminals": [
+            "5",
+            "6"
+          ],
+          "simBehavior": "protection_mcb",
+          "currentPath": "series",
+          "terminalTypes": {
+            "5": "power_ac",
+            "6": "power_ac"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "docking": {
+      "mountable": true,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "itm_3p",
+        "dockSize": {
+          "cols": 3,
+          "rows": 2
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": []
+    },
+    "folder": "itm_3p_c10"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "ITM 1P C6",
+    "name": {
+      "es": "ITM 1P C6",
+      "en": "MCB 1P C6"
+    },
+    "category": {
+      "es": "Proteccion",
+      "en": "Protection"
+    },
+    "tagPrefix": "Q",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 1200,
+        "height": 7200
+      }
+    },
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "role": "input",
+        "nx": 0.5,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "role": "output",
+        "nx": 0.5,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "protection",
+      "terminalPairs": [
+        {
+          "id": "pole_1",
+          "terminals": [
+            "1",
+            "2"
+          ],
+          "simBehavior": "protection_mcb",
+          "currentPath": "series",
+          "terminalTypes": {
+            "1": "power_ac",
+            "2": "power_ac"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "docking": {
+      "mountable": false,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "itm_1p",
+        "dockSize": {
+          "cols": 1,
+          "rows": 2
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": []
+    },
+    "folder": "itm_1p_c6"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "ITM 1P C10",
+    "name": {
+      "es": "ITM 1P C10",
+      "en": "MCB 1P C10"
+    },
+    "category": {
+      "es": "Proteccion",
+      "en": "Protection"
+    },
+    "tagPrefix": "Q",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 1200,
+        "height": 7200
+      }
+    },
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1",
+        "signal": "Potencia",
+        "role": "input",
+        "nx": 0.5,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2",
+        "signal": "Potencia",
+        "role": "output",
+        "nx": 0.5,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "protection",
+      "terminalPairs": [
+        {
+          "id": "pole_1",
+          "terminals": [
+            "1",
+            "2"
+          ],
+          "simBehavior": "protection_mcb",
+          "currentPath": "series",
+          "terminalTypes": {
+            "1": "power_ac",
+            "2": "power_ac"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "docking": {
+      "mountable": false,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "itm_1p",
+        "dockSize": {
+          "cols": 1,
+          "rows": 2
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": []
+    },
+    "folder": "itm_1p_c10"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Bloque Auxiliar Frontal 1NO+1NC - Guardamotor",
+    "name": {
+      "es": "Bloque Auxiliar Frontal 1NO+1NC - Guardamotor",
+      "en": "Front Auxiliary Block 1NO+1NC - MPCB"
+    },
+    "category": {
+      "es": "Control",
+      "en": "Control"
+    },
+    "tagPrefix": "QM",
+    "tagInherit": true,
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 3600,
+        "height": 600
+      },
+      "original": "original.png"
+    },
+    "terminals": [
+      {
+        "id": "21",
+        "label": "21",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.125,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "22",
+        "label": "22",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.375,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "13",
+        "label": "13",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.625,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "14",
+        "label": "14",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.875,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "docked",
+      "terminalPairs": [
+        {
+          "id": "contact_no",
+          "terminals": [
+            "13",
+            "14"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "13": "contact_no",
+            "14": "contact_no"
+          }
+        },
+        {
+          "id": "contact_nc",
+          "terminals": [
+            "21",
+            "22"
+          ],
+          "simBehavior": "contact_nc",
+          "currentPath": "series",
+          "terminalTypes": {
+            "21": "contact_nc",
+            "22": "contact_nc"
+          }
+        }
+      ]
+    },
+    "docking": {
+      "mountable": false,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "auxiliary_contact",
+        "dockSize": {
+          "cols": 3,
+          "rows": 1
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": []
+    },
+    "folder": "bloque_auxiliar_frontal_1no+1nc_-_guardamotor"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Temporizador retardo a la conexi\u00f3n 1 - 30s",
+    "name": {
+      "es": "Temporizador retardo a la conexi\u00f3n 1 - 30s",
+      "en": "ON DELAY Timer 1 - 30s"
+    },
+    "category": {
+      "es": "Control",
+      "en": "Control"
+    },
+    "tagPrefix": "KM",
+    "tagInherit": true,
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 2900,
+        "height": 3300
+      }
+    },
+    "terminals": [
+      {
+        "id": "55",
+        "label": "55",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.173448,
+        "ny": 0.05303,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "67",
+        "label": "67",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.832414,
+        "ny": 0.05303,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "56",
+        "label": "56",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.173448,
+        "ny": 0.947273,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "68",
+        "label": "68",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.832414,
+        "ny": 0.947273,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "docked",
+      "terminalPairs": [
+        {
+          "id": "contact_no_ton",
+          "terminals": [
+            "67",
+            "68"
+          ],
+          "simBehavior": "contact_no_ton",
+          "currentPath": "series",
+          "terminalTypes": {
+            "67": "contact_no",
+            "68": "contact_no"
+          }
+        },
+        {
+          "id": "contact_nc_ton",
+          "terminals": [
+            "55",
+            "56"
+          ],
+          "simBehavior": "contact_nc_ton",
+          "currentPath": "series",
+          "terminalTypes": {
+            "55": "contact_nc",
+            "56": "contact_nc"
+          }
+        }
+      ],
+      "timerDelay": 5.0,
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      },
+      "rotaryControls": [
+        {
+          "id": "timer_delay",
+          "label": {
+            "es": "Tiempo",
+            "en": "Time"
+          },
+          "circle": {
+            "cx": 0.5,
+            "cy": 0.5,
+            "r": 0.234848
+          },
+          "parameterField": "simTimerDelay",
+          "valueMin": 1.0,
+          "valueMax": 30.0,
+          "angleStartDeg": 2.0,
+          "angleEndDeg": -244.0
+        }
+      ]
+    },
+    "docking": {
+      "mountable": false,
+      "zLayer": 3,
+      "attachesAs": {
+        "type": "timer_block",
+        "dockSize": {
+          "cols": 2,
+          "rows": 3
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": []
+    },
+    "folder": "temporizador_retardo_a_la_conexion_1_-_30s"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Bloque Auxiliar Frontal 3NO + 1NC - Contactor",
+    "name": {
+      "es": "Bloque Auxiliar Frontal 3NO + 1NC - Contactor",
+      "en": "Front Auxiliary Block 3NO+1NC - Contactor"
+    },
+    "category": {
+      "es": "Control",
+      "en": "Control"
+    },
+    "tagPrefix": "KM",
+    "tagInherit": true,
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 2900,
+        "height": 3300
+      }
+    },
+    "terminals": [
+      {
+        "id": "53",
+        "label": "53",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.12931,
+        "ny": 0.05303,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "83",
+        "label": "83",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.872414,
+        "ny": 0.05303,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "54",
+        "label": "54",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.12931,
+        "ny": 0.947273,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "84",
+        "label": "84",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.872414,
+        "ny": 0.947273,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "61",
+        "label": "61",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.375862,
+        "ny": 0.05303,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "73",
+        "label": "73",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.627586,
+        "ny": 0.05303,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "62",
+        "label": "62",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.375862,
+        "ny": 0.947273,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "74",
+        "label": "74",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.627586,
+        "ny": 0.947273,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "any",
+      "activationRule": "docked",
+      "terminalPairs": [
+        {
+          "id": "contact_no_1",
+          "terminals": [
+            "53",
+            "54"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "53": "contact_no",
+            "54": "contact_no"
+          }
+        },
+        {
+          "id": "contact_no_2",
+          "terminals": [
+            "83",
+            "84"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "83": "contact_no",
+            "84": "contact_no"
+          }
+        },
+        {
+          "id": "contact_nc_1",
+          "terminals": [
+            "61",
+            "62"
+          ],
+          "simBehavior": "contact_nc",
+          "currentPath": "series",
+          "terminalTypes": {
+            "61": "contact_nc",
+            "62": "contact_nc"
+          }
+        },
+        {
+          "id": "contact_no_3",
+          "terminals": [
+            "73",
+            "74"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "73": "contact_no",
+            "74": "contact_no"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "docking": {
+      "mountable": false,
+      "zLayer": 3,
+      "attachesAs": {
+        "type": "auxiliary_contact",
+        "dockSize": {
+          "cols": 2,
+          "rows": 3
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": []
+    },
+    "folder": "bloque_auxiliar_frontal_3no_+_1nc_-_contactor"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Rel\u00e9 de seguridad (CP-D 301)",
+    "name": {
+      "es": "Rel\u00e9 de seguridad (CP-D 301)",
+      "en": "Safety relay (CP-D 301)"
+    },
+    "category": {
+      "es": "Seguridad",
+      "en": "Safety"
+    },
+    "tagPrefix": "K",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 2400,
+        "height": 8400
+      },
+      "original": "original.png"
+    },
+    "terminals": [
+      {
+        "id": "41",
+        "label": "41",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.170417,
+        "ny": 0.029643,
+        "direction": "top",
+        "guideLength": 30
+      },
+      {
+        "id": "13",
+        "label": "13",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.389583,
+        "ny": 0.029643,
+        "direction": "top",
+        "guideLength": 30
+      },
+      {
+        "id": "23",
+        "label": "23",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.609167,
+        "ny": 0.029643,
+        "direction": "top",
+        "guideLength": 30
+      },
+      {
+        "id": "33",
+        "label": "33",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.828333,
+        "ny": 0.029643,
+        "direction": "top",
+        "guideLength": 30
+      },
+      {
+        "id": "A1",
+        "label": "A1",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.170417,
+        "ny": 0.112024,
+        "direction": "top",
+        "guideLength": 20
+      },
+      {
+        "id": "Y1",
+        "label": "Y1",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.389583,
+        "ny": 0.112024,
+        "direction": "top",
+        "guideLength": 20
+      },
+      {
+        "id": "S21",
+        "label": "S21",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.609167,
+        "ny": 0.112024,
+        "direction": "top",
+        "guideLength": 20
+      },
+      {
+        "id": "S22",
+        "label": "S22",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.828333,
+        "ny": 0.112024,
+        "direction": "top",
+        "guideLength": 20
+      },
+      {
+        "id": "S11",
+        "label": "S11",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.170417,
+        "ny": 0.886071,
+        "direction": "bottom",
+        "guideLength": 20
+      },
+      {
+        "id": "S12",
+        "label": "S12",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.4,
+        "ny": 0.886071,
+        "direction": "bottom",
+        "guideLength": 20
+      },
+      {
+        "id": "Y2",
+        "label": "Y2",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.609167,
+        "ny": 0.886071,
+        "direction": "bottom",
+        "guideLength": 20
+      },
+      {
+        "id": "A2",
+        "label": "A2",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.828333,
+        "ny": 0.886071,
+        "direction": "bottom",
+        "guideLength": 20
+      },
+      {
+        "id": "42",
+        "label": "42",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.170417,
+        "ny": 0.967976,
+        "direction": "bottom",
+        "guideLength": 30
+      },
+      {
+        "id": "14",
+        "label": "14",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.4,
+        "ny": 0.967976,
+        "direction": "bottom",
+        "guideLength": 30
+      },
+      {
+        "id": "24",
+        "label": "24",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.609167,
+        "ny": 0.967976,
+        "direction": "bottom",
+        "guideLength": 30
+      },
+      {
+        "id": "34",
+        "label": "34",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.828333,
+        "ny": 0.967976,
+        "direction": "bottom",
+        "guideLength": 30
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "both",
+      "activationRule": "coil",
+      "simModel": "safety_relay_cpd",
+      "terminalPairs": [
+        {
+          "id": "supply",
+          "terminals": [
+            "A1",
+            "A2"
+          ],
+          "simBehavior": "coil",
+          "currentPath": "sink",
+          "terminalTypes": {
+            "A1": "power_ac",
+            "A2": "power_ac"
+          }
+        },
+        {
+          "id": "safety_13_14",
+          "terminals": [
+            "13",
+            "14"
+          ],
+          "simBehavior": "contact_no_safety",
+          "currentPath": "series"
+        },
+        {
+          "id": "safety_23_24",
+          "terminals": [
+            "23",
+            "24"
+          ],
+          "simBehavior": "contact_no_safety",
+          "currentPath": "series"
+        },
+        {
+          "id": "safety_33_34",
+          "terminals": [
+            "33",
+            "34"
+          ],
+          "simBehavior": "contact_no_safety",
+          "currentPath": "series"
+        },
+        {
+          "id": "aux_41_42",
+          "terminals": [
+            "41",
+            "42"
+          ],
+          "simBehavior": "contact_nc_safety",
+          "currentPath": "series"
+        },
+        {
+          "id": "j_s11_a1",
+          "terminals": [
+            "S11",
+            "A1"
+          ],
+          "simBehavior": "junction",
+          "currentPath": "series"
+        },
+        {
+          "id": "j_s21_a2",
+          "terminals": [
+            "S21",
+            "A2"
+          ],
+          "simBehavior": "junction",
+          "currentPath": "series"
+        },
+        {
+          "id": "j_y1_a1",
+          "terminals": [
+            "Y1",
+            "A1"
+          ],
+          "simBehavior": "junction",
+          "currentPath": "series"
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {},
+        "on": {}
+      },
+      "ledIndicators": [
+        {
+          "id": "led_power",
+          "label": {
+            "es": "Pw",
+            "en": "Pw"
+          },
+          "geometry": "circle",
+          "colorOff": "#2E5A2E",
+          "colorOn": "#5FE05F",
+          "stateField": "ledPower",
+          "supportsBlinking": false,
+          "circle": {
+            "cx": 0.253333,
+            "cy": 0.472143,
+            "r": 0.016429
+          }
+        },
+        {
+          "id": "led_s1",
+          "label": {
+            "es": "S1",
+            "en": "S1"
+          },
+          "geometry": "circle",
+          "colorOff": "#2E5A2E",
+          "colorOn": "#5FE05F",
+          "stateField": "ledS1",
+          "supportsBlinking": false,
+          "circle": {
+            "cx": 0.252917,
+            "cy": 0.574048,
+            "r": 0.01619
+          }
+        },
+        {
+          "id": "led_s2",
+          "label": {
+            "es": "S2",
+            "en": "S2"
+          },
+          "geometry": "circle",
+          "colorOff": "#2E5A2E",
+          "colorOn": "#5FE05F",
+          "stateField": "ledS2",
+          "supportsBlinking": false,
+          "circle": {
+            "cx": 0.254167,
+            "cy": 0.523214,
+            "r": 0.01631
+          }
+        },
+        {
+          "id": "led_out",
+          "label": {
+            "es": "Out",
+            "en": "Out"
+          },
+          "geometry": "circle",
+          "colorOff": "#2E5A2E",
+          "colorOn": "#5FE05F",
+          "stateField": "ledOut",
+          "supportsBlinking": false,
+          "circle": {
+            "cx": 0.254167,
+            "cy": 0.625119,
+            "r": 0.01619
+          }
+        }
+      ]
+    },
+    "docking": {
+      "mountable": true,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "general_montable_riel_din",
+        "dockSize": {
+          "cols": 2,
+          "rows": 1
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": []
+    },
+    "extraAssets": [
+      "CP-D-301.png"
+    ],
+    "folder": "rele_de_seguridad_(cp-d_301)"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Foco LED",
+    "name": {
+      "es": "Foco LED",
+      "en": "LED Lamp"
+    },
+    "category": {
+      "es": "Genericos",
+      "en": "Generic items"
+    },
+    "tagPrefix": "HL",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 4800,
+        "height": 8400
+      }
+    },
+    "terminals": [
+      {
+        "id": "F",
+        "label": "F",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "N",
+        "label": "N",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.276458,
+        "ny": 0.884405,
+        "direction": "left",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "ac",
+      "activationRule": "load",
+      "terminalPairs": [
+        {
+          "id": "F-N",
+          "terminals": [
+            "F",
+            "N"
+          ],
+          "simBehavior": "load_lamp",
+          "currentPath": "sink",
+          "terminalTypes": {
+            "F": "power_ac",
+            "N": "power_ac"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "folder": "foco_led"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Motor 6 terminales",
+    "name": {
+      "es": "Motor 6 terminales",
+      "en": "6-Terminal Motor"
+    },
+    "category": {
+      "es": "Motores",
+      "en": "Motors"
+    },
+    "tagPrefix": "M",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 9600,
+        "height": 10200
+      },
+      "original": "original.png"
+    },
+    "terminals": [
+      {
+        "id": "U1",
+        "label": "U1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.328125,
+        "ny": 0.117647,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "V1",
+        "label": "V1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.46875,
+        "ny": 0.117647,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "W1",
+        "label": "W1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.609375,
+        "ny": 0.117647,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "U2",
+        "label": "U2",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.46875,
+        "ny": 0.25,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "V2",
+        "label": "V2",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.609375,
+        "ny": 0.25,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "W2",
+        "label": "W2",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.328125,
+        "ny": 0.25,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "PE",
+        "label": "PE",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.238646,
+        "ny": 0.044118,
+        "direction": "top",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "motor",
+      "motorConfig": {
+        "terminals": 6,
+        "motorType": "trifasico",
+        "defaultConnection": "free",
+        "availableConnections": [
+          "free",
+          "star",
+          "delta"
+        ]
+      },
+      "enabled": true,
+      "voltage": "ac",
+      "activationRule": "motor",
+      "terminalPairs": [
+        {
+          "id": "winding_u",
+          "terminals": [
+            "U1",
+            "U2"
+          ],
+          "simBehavior": "motor_winding",
+          "currentPath": "sink",
+          "terminalTypes": {
+            "U1": "motor_u",
+            "U2": "motor_u2"
+          }
+        },
+        {
+          "id": "winding_v",
+          "terminals": [
+            "V1",
+            "V2"
+          ],
+          "simBehavior": "motor_winding",
+          "currentPath": "sink",
+          "terminalTypes": {
+            "V1": "motor_v",
+            "V2": "motor_v2"
+          }
+        },
+        {
+          "id": "winding_w",
+          "terminals": [
+            "W1",
+            "W2"
+          ],
+          "simBehavior": "motor_winding",
+          "currentPath": "sink",
+          "terminalTypes": {
+            "W1": "motor_w",
+            "W2": "motor_w2"
+          }
+        }
+      ],
+      "autoGeneratedPairs": true
+    },
+    "folder": "motor_6_terminales"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Contactor 1211",
+    "name": {
+      "es": "Contactor 1211",
+      "en": "Contactor 1211"
+    },
+    "category": {
+      "es": "Potencia",
+      "en": "Power"
+    },
+    "tagPrefix": "KM",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 3600,
+        "height": 7200
+      }
+    },
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1/L1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.166667,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3/L2",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5/L3",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.833333,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2/T1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.166667,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4/T2",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6/T3",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.833333,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "13",
+        "label": "13",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.343056,
+        "ny": 0.208333,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "21",
+        "label": "21",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.653056,
+        "ny": 0.208333,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "A1",
+        "label": "A1",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.880556,
+        "ny": 0.208333,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "14",
+        "label": "14",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.343056,
+        "ny": 0.791667,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "22",
+        "label": "22",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.653056,
+        "ny": 0.791667,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "A2",
+        "label": "A2",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.880556,
+        "ny": 0.791667,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "ac",
+      "activationRule": "coil",
+      "terminalPairs": [
+        {
+          "id": "coil",
+          "terminals": [
+            "A1",
+            "A2"
+          ],
+          "simBehavior": "coil",
+          "currentPath": "sink",
+          "terminalTypes": {
+            "A1": "coil_in",
+            "A2": "coil_in"
+          }
+        },
+        {
+          "id": "power_1",
+          "terminals": [
+            "1",
+            "2"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "1": "power_ac",
+            "2": "power_ac"
+          }
+        },
+        {
+          "id": "power_2",
+          "terminals": [
+            "3",
+            "4"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "3": "power_ac",
+            "4": "power_ac"
+          }
+        },
+        {
+          "id": "power_3",
+          "terminals": [
+            "5",
+            "6"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "5": "power_ac",
+            "6": "power_ac"
+          }
+        },
+        {
+          "id": "aux_no",
+          "terminals": [
+            "13",
+            "14"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "13": "contact_no",
+            "14": "contact_no"
+          }
+        },
+        {
+          "id": "aux_nc",
+          "terminals": [
+            "21",
+            "22"
+          ],
+          "simBehavior": "contact_nc",
+          "currentPath": "series",
+          "terminalTypes": {
+            "21": "contact_nc",
+            "22": "contact_nc"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "docking": {
+      "mountable": true,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "contactor_3p",
+        "dockSize": {
+          "cols": 3,
+          "rows": 2
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": [
+        {
+          "id": "left_aux",
+          "label": "Auxiliar izquierdo",
+          "position": "left",
+          "rect": {
+            "x": -1200,
+            "y": 0,
+            "w": 1224,
+            "h": 7181
+          },
+          "anchor": {
+            "nx": -0.163333,
+            "ny": 0.498681
+          },
+          "gridSize": {
+            "cols": 1,
+            "rows": 6
+          },
+          "accepts": [
+            "auxiliary_contact"
+          ],
+          "bridge": null,
+          "childAlignment": "right_center",
+          "childZLayer": 2,
+          "hideHostTerminals": null
+        },
+        {
+          "id": "right_aux",
+          "label": "Auxiliar derecho",
+          "position": "right",
+          "rect": {
+            "x": 3600,
+            "y": 0,
+            "w": 1200,
+            "h": 7200
+          },
+          "anchor": {
+            "nx": 1.166667,
+            "ny": 0.5
+          },
+          "gridSize": {
+            "cols": 1,
+            "rows": 6
+          },
+          "accepts": [
+            "auxiliary_contact"
+          ],
+          "bridge": null,
+          "childAlignment": "left_center",
+          "childZLayer": 2,
+          "hideHostTerminals": null
+        },
+        {
+          "id": "bottom_relay",
+          "label": "Rel\u00e9 t\u00e9rmico",
+          "position": "bottom",
+          "rect": {
+            "x": 0,
+            "y": 6400,
+            "w": 3600,
+            "h": 4800
+          },
+          "anchor": {
+            "nx": 0.5,
+            "ny": 1.222222
+          },
+          "gridSize": {
+            "cols": 3,
+            "rows": 4
+          },
+          "accepts": [
+            "thermal_relay_3p"
+          ],
+          "bridge": [
+            {
+              "hostTerminal": "2",
+              "childTerminal": "1"
+            },
+            {
+              "hostTerminal": "4",
+              "childTerminal": "3"
+            },
+            {
+              "hostTerminal": "6",
+              "childTerminal": "5"
+            }
+          ],
+          "childAlignment": "top_center",
+          "childZLayer": 2,
+          "hideHostTerminals": null
+        },
+        {
+          "id": "over_aux",
+          "label": "Auxiliar frontal",
+          "position": "over",
+          "rect": {
+            "x": 700,
+            "y": 1955,
+            "w": 2900,
+            "h": 3300
+          },
+          "anchor": {
+            "nx": 0.597222,
+            "ny": 0.500694
+          },
+          "gridSize": {
+            "cols": 2,
+            "rows": 3
+          },
+          "accepts": [
+            "auxiliary_contact",
+            "timer_block"
+          ],
+          "bridge": null,
+          "childAlignment": "center",
+          "childZLayer": 3,
+          "hideHostTerminals": [
+            "13",
+            "21",
+            "A1",
+            "14",
+            "22",
+            "A2"
+          ]
+        }
+      ]
+    },
+    "folder": "contactor_1211"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Contactor 0911",
+    "name": {
+      "es": "Contactor 0911",
+      "en": "Contactor 0911"
+    },
+    "category": {
+      "es": "Potencia",
+      "en": "Power"
+    },
+    "tagPrefix": "KM",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 3600,
+        "height": 7200
+      }
+    },
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1/L1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.166667,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3/L2",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5/L3",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.833333,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2/T1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.166667,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4/T2",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6/T3",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.833333,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "13",
+        "label": "13",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.343056,
+        "ny": 0.208333,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "21",
+        "label": "21",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.653056,
+        "ny": 0.208333,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "A1",
+        "label": "A1",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.880556,
+        "ny": 0.208333,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "14",
+        "label": "14",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.343056,
+        "ny": 0.791667,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "22",
+        "label": "22",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.653056,
+        "ny": 0.791667,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "A2",
+        "label": "A2",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.880556,
+        "ny": 0.791667,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "ac",
+      "activationRule": "coil",
+      "terminalPairs": [
+        {
+          "id": "coil",
+          "terminals": [
+            "A1",
+            "A2"
+          ],
+          "simBehavior": "coil",
+          "currentPath": "sink",
+          "terminalTypes": {
+            "A1": "coil_in",
+            "A2": "coil_in"
+          }
+        },
+        {
+          "id": "power_1",
+          "terminals": [
+            "1",
+            "2"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "1": "power_ac",
+            "2": "power_ac"
+          }
+        },
+        {
+          "id": "power_2",
+          "terminals": [
+            "3",
+            "4"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "3": "power_ac",
+            "4": "power_ac"
+          }
+        },
+        {
+          "id": "power_3",
+          "terminals": [
+            "5",
+            "6"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "5": "power_ac",
+            "6": "power_ac"
+          }
+        },
+        {
+          "id": "aux_no",
+          "terminals": [
+            "13",
+            "14"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "13": "contact_no",
+            "14": "contact_no"
+          }
+        },
+        {
+          "id": "aux_nc",
+          "terminals": [
+            "21",
+            "22"
+          ],
+          "simBehavior": "contact_nc",
+          "currentPath": "series",
+          "terminalTypes": {
+            "21": "contact_nc",
+            "22": "contact_nc"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "docking": {
+      "mountable": true,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "contactor_3p",
+        "dockSize": {
+          "cols": 3,
+          "rows": 2
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": [
+        {
+          "id": "left_aux",
+          "label": {
+            "es": "Auxiliar izquierdo",
+            "en": "Left auxiliary"
+          },
+          "position": "left",
+          "rect": {
+            "x": -1200,
+            "y": 0,
+            "w": 1224,
+            "h": 7181
+          },
+          "anchor": {
+            "nx": -0.163333,
+            "ny": 0.498681
+          },
+          "gridSize": {
+            "cols": 1,
+            "rows": 6
+          },
+          "accepts": [
+            "auxiliary_contact"
+          ],
+          "bridge": null,
+          "childAlignment": "right_center",
+          "childZLayer": 2,
+          "hideHostTerminals": null
+        },
+        {
+          "id": "right_aux",
+          "label": {
+            "es": "Auxiliar derecho",
+            "en": "Right auxiliary"
+          },
+          "position": "right",
+          "rect": {
+            "x": 3600,
+            "y": 0,
+            "w": 1200,
+            "h": 7200
+          },
+          "anchor": {
+            "nx": 1.166667,
+            "ny": 0.5
+          },
+          "gridSize": {
+            "cols": 1,
+            "rows": 6
+          },
+          "accepts": [
+            "auxiliary_contact"
+          ],
+          "bridge": null,
+          "childAlignment": "left_center",
+          "childZLayer": 2,
+          "hideHostTerminals": null
+        },
+        {
+          "id": "bottom_relay",
+          "label": {
+            "es": "Rel\u00e9 t\u00e9rmico",
+            "en": "Thermal overload relay"
+          },
+          "position": "bottom",
+          "rect": {
+            "x": 0,
+            "y": 6400,
+            "w": 3600,
+            "h": 4800
+          },
+          "anchor": {
+            "nx": 0.5,
+            "ny": 1.222222
+          },
+          "gridSize": {
+            "cols": 3,
+            "rows": 4
+          },
+          "accepts": [
+            "thermal_relay_3p"
+          ],
+          "bridge": [
+            {
+              "hostTerminal": "2",
+              "childTerminal": "1"
+            },
+            {
+              "hostTerminal": "4",
+              "childTerminal": "3"
+            },
+            {
+              "hostTerminal": "6",
+              "childTerminal": "5"
+            }
+          ],
+          "childAlignment": "top_center",
+          "childZLayer": 2,
+          "hideHostTerminals": null
+        },
+        {
+          "id": "over_aux",
+          "label": {
+            "es": "Auxiliar frontal",
+            "en": "Front auxiliary"
+          },
+          "position": "over",
+          "rect": {
+            "x": 700,
+            "y": 1955,
+            "w": 2900,
+            "h": 3300
+          },
+          "anchor": {
+            "nx": 0.597222,
+            "ny": 0.500694
+          },
+          "gridSize": {
+            "cols": 2,
+            "rows": 3
+          },
+          "accepts": [
+            "auxiliary_contact",
+            "timer_block"
+          ],
+          "bridge": null,
+          "childAlignment": "center",
+          "childZLayer": 3,
+          "hideHostTerminals": null
+        }
+      ]
+    },
+    "folder": "contactor_0911"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Contactor 1811",
+    "name": {
+      "es": "Contactor 1811",
+      "en": "Contactor 1811"
+    },
+    "category": {
+      "es": "Potencia",
+      "en": "Power"
+    },
+    "tagPrefix": "KM",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 3600,
+        "height": 7200
+      }
+    },
+    "terminals": [
+      {
+        "id": "1",
+        "label": "1/L1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.166667,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "3",
+        "label": "3/L2",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "5",
+        "label": "5/L3",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.833333,
+        "ny": 0.019306,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "2",
+        "label": "2/T1",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.166667,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "4",
+        "label": "4/T2",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "6",
+        "label": "6/T3",
+        "signal": "Potencia",
+        "role": "bidirectional",
+        "nx": 0.833333,
+        "ny": 0.978333,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "13",
+        "label": "13",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.343056,
+        "ny": 0.208333,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "21",
+        "label": "21",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.653056,
+        "ny": 0.208333,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "A1",
+        "label": "A1",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.880556,
+        "ny": 0.208333,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "14",
+        "label": "14",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.343056,
+        "ny": 0.791667,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "22",
+        "label": "22",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.653056,
+        "ny": 0.791667,
+        "direction": "bottom",
+        "guideLength": 60
+      },
+      {
+        "id": "A2",
+        "label": "A2",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.880556,
+        "ny": 0.791667,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "ac",
+      "activationRule": "coil",
+      "terminalPairs": [
+        {
+          "id": "coil",
+          "terminals": [
+            "A1",
+            "A2"
+          ],
+          "simBehavior": "coil",
+          "currentPath": "sink",
+          "terminalTypes": {
+            "A1": "coil_in",
+            "A2": "coil_in"
+          }
+        },
+        {
+          "id": "power_1",
+          "terminals": [
+            "1",
+            "2"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "1": "power_ac",
+            "2": "power_ac"
+          }
+        },
+        {
+          "id": "power_2",
+          "terminals": [
+            "3",
+            "4"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "3": "power_ac",
+            "4": "power_ac"
+          }
+        },
+        {
+          "id": "power_3",
+          "terminals": [
+            "5",
+            "6"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "5": "power_ac",
+            "6": "power_ac"
+          }
+        },
+        {
+          "id": "aux_no",
+          "terminals": [
+            "13",
+            "14"
+          ],
+          "simBehavior": "contact_no",
+          "currentPath": "series",
+          "terminalTypes": {
+            "13": "contact_no",
+            "14": "contact_no"
+          }
+        },
+        {
+          "id": "aux_nc",
+          "terminals": [
+            "21",
+            "22"
+          ],
+          "simBehavior": "contact_nc",
+          "currentPath": "series",
+          "terminalTypes": {
+            "21": "contact_nc",
+            "22": "contact_nc"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "docking": {
+      "mountable": true,
+      "zLayer": 2,
+      "attachesAs": {
+        "type": "contactor_3p",
+        "dockSize": {
+          "cols": 3,
+          "rows": 2
+        },
+        "hideTerminalsOnDock": [],
+        "overlapPx": 0
+      },
+      "zones": [
+        {
+          "id": "left_aux",
+          "label": "Auxiliar izquierdo",
+          "position": "left",
+          "rect": {
+            "x": -1200,
+            "y": 0,
+            "w": 1224,
+            "h": 7181
+          },
+          "anchor": {
+            "nx": -0.163333,
+            "ny": 0.498681
+          },
+          "gridSize": {
+            "cols": 1,
+            "rows": 6
+          },
+          "accepts": [
+            "auxiliary_contact"
+          ],
+          "bridge": null,
+          "childAlignment": "right_center",
+          "childZLayer": 2,
+          "hideHostTerminals": null
+        },
+        {
+          "id": "right_aux",
+          "label": "Auxiliar derecho",
+          "position": "right",
+          "rect": {
+            "x": 3600,
+            "y": 0,
+            "w": 1200,
+            "h": 7200
+          },
+          "anchor": {
+            "nx": 1.166667,
+            "ny": 0.5
+          },
+          "gridSize": {
+            "cols": 1,
+            "rows": 6
+          },
+          "accepts": [
+            "auxiliary_contact"
+          ],
+          "bridge": null,
+          "childAlignment": "left_center",
+          "childZLayer": 2,
+          "hideHostTerminals": null
+        },
+        {
+          "id": "bottom_relay",
+          "label": "Rel\u00e9 t\u00e9rmico",
+          "position": "bottom",
+          "rect": {
+            "x": 0,
+            "y": 6400,
+            "w": 3600,
+            "h": 4800
+          },
+          "anchor": {
+            "nx": 0.5,
+            "ny": 1.222222
+          },
+          "gridSize": {
+            "cols": 3,
+            "rows": 4
+          },
+          "accepts": [
+            "thermal_relay_3p"
+          ],
+          "bridge": [
+            {
+              "hostTerminal": "2",
+              "childTerminal": "1"
+            },
+            {
+              "hostTerminal": "4",
+              "childTerminal": "3"
+            },
+            {
+              "hostTerminal": "6",
+              "childTerminal": "5"
+            }
+          ],
+          "childAlignment": "top_center",
+          "childZLayer": 2,
+          "hideHostTerminals": null
+        },
+        {
+          "id": "over_aux",
+          "label": "Auxiliar frontal",
+          "position": "over",
+          "rect": {
+            "x": 700,
+            "y": 1955,
+            "w": 2900,
+            "h": 3300
+          },
+          "anchor": {
+            "nx": 0.597222,
+            "ny": 0.500694
+          },
+          "gridSize": {
+            "cols": 2,
+            "rows": 3
+          },
+          "accepts": [
+            "auxiliary_contact",
+            "timer_block"
+          ],
+          "bridge": null,
+          "childAlignment": "center",
+          "childZLayer": 3,
+          "hideHostTerminals": [
+            "13",
+            "21",
+            "A1",
+            "14",
+            "22",
+            "A2"
+          ]
+        }
+      ]
+    },
+    "folder": "contactor_1811"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Piloto LED Verde",
+    "name": {
+      "es": "Piloto LED Verde",
+      "en": "Green LED Pilot Light"
+    },
+    "category": {
+      "es": "Senalizacion",
+      "en": "Signaling"
+    },
+    "tagPrefix": "H",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 1200,
+        "height": 1800
+      }
+    },
+    "terminals": [
+      {
+        "id": "X1",
+        "label": "X1",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "X2",
+        "label": "X2",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "both",
+      "activationRule": "load",
+      "terminalPairs": [
+        {
+          "id": "lamp",
+          "terminals": [
+            "X1",
+            "X2"
+          ],
+          "simBehavior": "load_lamp",
+          "currentPath": "sink",
+          "terminalTypes": {
+            "X1": "power_ac",
+            "X2": "power_ac"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "folder": "piloto_led_verde"
+  },
+  {
+    "schemaVersion": 3,
+    "id": "Piloto LED Rojo",
+    "name": {
+      "es": "Piloto LED Rojo",
+      "en": "Red LED Pilot Light"
+    },
+    "category": {
+      "es": "Senalizacion",
+      "en": "Signaling"
+    },
+    "tagPrefix": "H",
+    "graphics": {
+      "preview": "preview.png",
+      "size": {
+        "width": 1200,
+        "height": 1800
+      }
+    },
+    "terminals": [
+      {
+        "id": "X1",
+        "label": "X1",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 0.0,
+        "direction": "top",
+        "guideLength": 60
+      },
+      {
+        "id": "X2",
+        "label": "X2",
+        "signal": "Control",
+        "role": "bidirectional",
+        "nx": 0.5,
+        "ny": 1.0,
+        "direction": "bottom",
+        "guideLength": 60
+      }
+    ],
+    "rules": {
+      "allowedConnections": {
+        "Potencia": [
+          "Potencia"
+        ],
+        "Control": [
+          "Control",
+          "Se\u00f1al"
+        ],
+        "Se\u00f1al": [
+          "Se\u00f1al",
+          "Control"
+        ]
+      }
+    },
+    "simulation": {
+      "type": "static",
+      "enabled": true,
+      "voltage": "both",
+      "activationRule": "load",
+      "terminalPairs": [
+        {
+          "id": "lamp",
+          "terminals": [
+            "X1",
+            "X2"
+          ],
+          "simBehavior": "load_lamp",
+          "currentPath": "sink",
+          "terminalTypes": {
+            "X1": "power_ac",
+            "X2": "power_ac"
+          }
+        }
+      ],
+      "defaultState": "off",
+      "states": {
+        "off": {
+          "image": "state_off.png",
+          "imageLo": "state_off_lo.png"
+        },
+        "on": {
+          "image": "state_on.png",
+          "imageLo": "state_on_lo.png"
+        }
+      }
+    },
+    "folder": "piloto_led_rojo"
+  }
+]

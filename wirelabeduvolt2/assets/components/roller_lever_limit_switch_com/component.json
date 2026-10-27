@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 3,
+  "id": "Roller lever limit switch COM",
+  "name": {
+    "es": "Roller lever limit switch COM",
+    "en": "Roller lever limit switch COM"
+  },
+  "category": {
+    "es": "Accionamientos",
+    "en": "Drives"
+  },
+  "tagPrefix": "SQ",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 3000,
+      "height": 8400
+    }
+  },
+  "terminals": [
+    {
+      "id": "12",
+      "label": "12",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.277,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "11",
+      "label": "11",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.5,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "13",
+      "label": "13",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.732667,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "any",
+    "activationRule": "selector",
+    "terminalPairs": [
+      {
+        "id": "nc",
+        "terminals": [
+          "12",
+          "11"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+          "12": "contact_nc",
+          "11": "contact_nc"
+        },
+        "activeInStates": [
+          "pos0",
+          "pos2"
+        ]
+      },
+      {
+        "id": "no",
+        "terminals": [
+          "11",
+          "13"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+          "11": "contact_no",
+          "13": "contact_no"
+        },
+        "activeInStates": [
+          "pos0",
+          "pos2"
+        ]
+      }
+    ],
+    "defaultState": "pos1",
+    "states": {
+      "pos0": {
+        "image": "state_pos0.png",
+        "imageLo": "state_pos0_lo.png"
+      },
+      "pos1": {
+        "image": "state_pos1.png",
+        "imageLo": "state_pos1_lo.png"
+      },
+      "pos2": {
+        "image": "state_pos2.png",
+        "imageLo": "state_pos2_lo.png"
+      }
+    }
+  }
+}

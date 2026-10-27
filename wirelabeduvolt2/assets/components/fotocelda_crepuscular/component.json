@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 3,
+  "id": "Fotocelda crepuscular",
+  "name": {
+    "es": "Fotocelda crepuscular",
+    "en": "Photocell (dusk-to-dawn)"
+  },
+  "category": {
+    "es": "Control",
+    "en": "Control"
+  },
+  "tagPrefix": "BL",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 6000,
+      "height": 10800
+    },
+    "original": "original.png"
+  },
+  "terminals": [
+    {
+      "id": "N",
+      "label": "N",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.195333,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 30
+    },
+    {
+      "id": "L",
+      "label": "L",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.369167,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 30
+    },
+    {
+      "id": "R",
+      "label": "R",
+      "signal": "Potencia",
+      "role": "bidirectional",
+      "nx": 0.5465,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 30
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "ac",
+    "activationRule": "coil",
+    "simModel": "photocell",
+    "terminalPairs": [
+      {
+        "id": "supply",
+        "terminals": [
+          "L",
+          "N"
+        ],
+        "simBehavior": "coil",
+        "currentPath": "sink"
+      },
+      {
+        "id": "contact_no",
+        "terminals": [
+          "L",
+          "R"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series"
+      }
+    ]
+  }
+}

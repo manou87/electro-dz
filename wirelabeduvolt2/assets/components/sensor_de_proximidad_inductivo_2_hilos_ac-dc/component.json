@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 3,
+  "id": "Sensor de proximidad inductivo 2 hilos AC-DC",
+  "name": {
+    "es": "Sensor de proximidad inductivo 2 hilos AC/DC",
+    "en": "2-wire AC/DC inductive proximity sensor"
+  },
+  "category": {
+    "es": "Genericos",
+    "en": "Generic items"
+  },
+  "tagPrefix": "",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 8000,
+      "height": 2400
+    },
+    "original": "original.png"
+  },
+  "terminals": [
+    {
+      "id": "BN",
+      "label": "BN",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.0,
+      "ny": 0.432083,
+      "direction": "left",
+      "guideLength": 60
+    },
+    {
+      "id": "BU",
+      "label": "BU",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.0,
+      "ny": 0.767917,
+      "direction": "left",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "both",
+    "activationRule": "sensor",
+    "simModel": "proximity",
+    "terminalPairs": [
+      {
+        "id": "contact",
+        "terminals": [
+          "BN",
+          "BU"
+        ],
+        "simBehavior": "proximity_2wire",
+        "currentPath": "series"
+      }
+    ],
+    "ledIndicators": [
+      {
+        "id": "led_1",
+        "label": {
+          "es": "LED 1",
+          "en": "LED 1"
+        },
+        "geometry": "rect",
+        "colorOff": "#E7AEAE",
+        "colorOn": "#FF0000",
+        "stateField": "led1",
+        "supportsBlinking": true,
+        "rect": {
+          "x": 0.25875,
+          "y": 0.4825,
+          "w": 0.023125,
+          "h": 0.199583
+        }
+      }
+    ]
+  },
+  "extraAssets": [
+    "2W_NC.png",
+    "2W_NO.png"
+  ]
+}

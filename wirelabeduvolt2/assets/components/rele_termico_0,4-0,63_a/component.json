@@ -1,0 +1,239 @@
+{
+  "schemaVersion": 3,
+  "id": "Relé térmico 0,4-0,63 A",
+  "name": {
+    "es": "Relé térmico 0,4-0,63 A",
+    "en": "Thermal overload relay 0,4-0,63 A"
+  },
+  "category": {
+    "es": "Potencia",
+    "en": "Power"
+  },
+  "tagPrefix": "F",
+  "graphics": {
+    "preview": "preview.png",
+    "size": {
+      "width": 3600,
+      "height": 4800
+    }
+  },
+  "terminals": [
+    {
+      "id": "2",
+      "label": "2/T1",
+      "signal": "Potencia",
+      "role": "output",
+      "nx": 0.166667,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "4",
+      "label": "4/T2",
+      "signal": "Potencia",
+      "role": "output",
+      "nx": 0.5,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "6",
+      "label": "6/T3",
+      "signal": "Potencia",
+      "role": "output",
+      "nx": 0.833333,
+      "ny": 1.0,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "1",
+      "label": "1/L1",
+      "signal": "Potencia",
+      "role": "input",
+      "nx": 0.182222,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "3",
+      "label": "3/L2",
+      "signal": "Potencia",
+      "role": "input",
+      "nx": 0.5,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "5",
+      "label": "5/L3",
+      "signal": "Potencia",
+      "role": "input",
+      "nx": 0.815,
+      "ny": 0.0,
+      "direction": "top",
+      "guideLength": 60
+    },
+    {
+      "id": "97",
+      "label": "97",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.124722,
+      "ny": 0.693333,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "98",
+      "label": "98",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.377778,
+      "ny": 0.693333,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "95",
+      "label": "95",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.630833,
+      "ny": 0.693333,
+      "direction": "bottom",
+      "guideLength": 60
+    },
+    {
+      "id": "96",
+      "label": "96",
+      "signal": "Control",
+      "role": "bidirectional",
+      "nx": 0.883889,
+      "ny": 0.693333,
+      "direction": "bottom",
+      "guideLength": 60
+    }
+  ],
+  "rules": {
+    "allowedConnections": {
+      "Potencia": [
+        "Potencia"
+      ],
+      "Control": [
+        "Control",
+        "Señal"
+      ],
+      "Señal": [
+        "Señal",
+        "Control"
+      ]
+    }
+  },
+  "simulation": {
+    "type": "static",
+    "enabled": true,
+    "voltage": "any",
+    "activationRule": "selector",
+    "terminalPairs": [
+      {
+        "id": "pole_1",
+        "terminals": [
+          "2",
+          "1"
+        ],
+        "simBehavior": "junction",
+        "currentPath": "series",
+        "terminalTypes": {
+          "2": "power_ac",
+          "1": "power_ac"
+        }
+      },
+      {
+        "id": "pole_2",
+        "terminals": [
+          "4",
+          "3"
+        ],
+        "simBehavior": "junction",
+        "currentPath": "series",
+        "terminalTypes": {
+          "4": "power_ac",
+          "3": "power_ac"
+        }
+      },
+      {
+        "id": "pole_3",
+        "terminals": [
+          "6",
+          "5"
+        ],
+        "simBehavior": "junction",
+        "currentPath": "series",
+        "terminalTypes": {
+          "6": "power_ac",
+          "5": "power_ac"
+        }
+      },
+      {
+        "id": "aux_nc",
+        "terminals": [
+          "95",
+          "96"
+        ],
+        "simBehavior": "contact_nc",
+        "currentPath": "series",
+        "terminalTypes": {
+          "95": "contact_nc",
+          "96": "contact_nc"
+        }
+      },
+      {
+        "id": "aux_no",
+        "terminals": [
+          "97",
+          "98"
+        ],
+        "simBehavior": "contact_no",
+        "currentPath": "series",
+        "terminalTypes": {
+          "97": "contact_no",
+          "98": "contact_no"
+        }
+      }
+    ],
+    "defaultState": "off",
+    "states": {
+      "off": {
+        "image": "state_off.png",
+        "imageLo": "state_off_lo.png"
+      },
+      "on": {
+        "image": "state_on.png",
+        "imageLo": "state_on_lo.png"
+      }
+    }
+  },
+  "docking": {
+    "mountable": true,
+    "zLayer": 2,
+    "attachesAs": {
+      "type": "thermal_relay_3p",
+      "dockSize": {
+        "cols": 3,
+        "rows": 4
+      },
+      "hideTerminalsOnDock": [
+        "1",
+        "3",
+        "5"
+      ],
+      "overlapPx": 0
+    },
+    "zones": []
+  }
+}
