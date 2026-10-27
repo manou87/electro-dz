@@ -316,6 +316,69 @@
       cursor: pointer;
     }
 
+    
+    /* Sidebar Collapsible (EduVolt Drawer Toggle) */
+    .ev-sidebar {
+      transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1), margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+    .ev-sidebar.collapsed {
+      width: 0 !important;
+      min-width: 0 !important;
+      margin-left: -310px !important;
+      overflow: hidden !important;
+      border-right: none !important;
+    }
+
+    /* Floating Toggle Button when sidebar is collapsed */
+    .ev-sidebar-toggle-btn {
+      width: 32px;
+      height: 32px;
+      background: #1e2633;
+      border: 1px solid var(--ev-border);
+      border-radius: 6px;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.15s ease;
+    }
+    .ev-sidebar-toggle-btn:hover {
+      background: #2b3648;
+      color: #38bdf8;
+      border-color: #38bdf8;
+    }
+
+    /* Floating Pill Button on Canvas to Re-open Sidebar */
+    .ev-floating-open-sidebar {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      background: rgba(26, 30, 36, 0.94);
+      backdrop-filter: blur(8px);
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+      z-index: 45;
+      transition: all 0.15s ease;
+    }
+    .ev-floating-open-sidebar:hover {
+      background: #2563eb;
+      color: white;
+      border-color: #60a5fa;
+      transform: scale(1.05);
+    }
+
     /* Main Workspace */
     .ev-main {
       flex: 1;
@@ -1061,6 +1124,9 @@
       <span class="ev-badge">EDUVOLT PRO</span>
       <span class="ev-title">EduVolt Designer <span style="font-size: 11px; color: #64748b; font-weight: 500;">Pro v2.2.10</span></span>
       <div class="ev-btn-divider"></div>
+      <!-- Bouton Cacher / Afficher Liste Composants (EduVolt Sidebar Toggle) -->
+      <button class="ev-tool-icon-btn" id="btnToggleSidebar" title="Masquer / Afficher la bibliothèque des composants (Plein écran)"><i class="fa-solid fa-bars"></i></button>
+      <div class="ev-btn-divider"></div>
       <button class="ev-tool-icon-btn" id="btnSaveProj" title="Enregistrer le projet (Ctrl+S)"><i class="fa-solid fa-floppy-disk"></i></button>
       <button class="ev-tool-icon-btn" id="btnUndo" title="Annuler (Ctrl+Z)"><i class="fa-solid fa-arrow-rotate-left"></i></button>
       <button class="ev-tool-icon-btn" id="btnRedo" title="Rétablir (Ctrl+Y)"><i class="fa-solid fa-arrow-rotate-right"></i></button>
@@ -1235,6 +1301,9 @@
           <i class="fa-solid fa-boxes-stacked" style="color: #3b82f6;"></i>
           <span>Composants Industriels (377)</span>
         </span>
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <button class="ev-sidebar-toggle-btn" id="btnCloseSidebarX" title="Masquer la bibliothèque et libérer l'espace"><i class="fa-solid fa-chevron-left"></i></button>
+        </div>
         <label class="ev-btn" style="padding: 3px 8px; font-size: 11px; cursor: pointer;" title="Importar .evc (Ajouter un composant personnalisé)">
           <i class="fa-solid fa-file-arrow-up"></i>
           <span>Import .evc</span>
@@ -2697,6 +2766,43 @@
 
     // Appeler l'ajustement au démarrage
     window.addEventListener("resize", fitPlanToScreen);
+
+    
+    // =========================================================================
+    // MASQUER / AFFICHER LA BIBLIOTHÈQUE DE COMPOSANTS (ESPACE MAXIMAL)
+    // =========================================================================
+    const sidebar = document.querySelector(".ev-sidebar");
+    const btnToggleSidebar = document.getElementById("btnToggleSidebar");
+    const btnCloseSidebarX = document.getElementById("btnCloseSidebarX");
+    const btnFloatOpenSidebar = document.getElementById("btnFloatOpenSidebar");
+
+    let sidebarOpen = true;
+
+    function toggleSidebar(open) {
+      sidebarOpen = (open !== undefined) ? open : !sidebarOpen;
+      if (sidebarOpen) {
+        sidebar.classList.remove("collapsed");
+        btnFloatOpenSidebar.style.display = "none";
+        btnToggleSidebar.classList.add("active");
+      } else {
+        sidebar.classList.add("collapsed");
+        btnFloatOpenSidebar.style.display = "flex";
+        btnToggleSidebar.classList.remove("active");
+      }
+      // Ré-ajuster le plan après animation
+      setTimeout(() => {
+        if (typeof fitPlanToScreen === "function") fitPlanToScreen();
+      }, 260);
+    }
+
+    if (btnToggleSidebar) btnToggleSidebar.addEventListener("click", () => toggleSidebar());
+    if (btnCloseSidebarX) btnCloseSidebarX.addEventListener("click", () => toggleSidebar(false));
+    if (btnFloatOpenSidebar) btnFloatOpenSidebar.addEventListener("click", () => toggleSidebar(true));
+
+    // Sur tablette en mode portrait ou petit écran, masquer par défaut pour donner l'espace de travail
+    if (window.innerWidth < 900) {
+      setTimeout(() => toggleSidebar(false), 200);
+    }
 
     window.addEventListener("DOMContentLoaded", () => { loadCatalog(); setTimeout(fitPlanToScreen, 150); });
   </script>
