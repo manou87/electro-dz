@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>WireLab EduVolt 2 - EduVolt Designer Pro Clone</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --ev-bg: #121418;
+      --ev-panel: #1a1e24;
+      --ev-panel-header: #202630;
+      --ev-board: #161a20;
+      --ev-board-grid: #232a35;
+      --ev-accent: #2563eb;
+      --ev-accent-hover: #1d4ed8;
+      --ev-text: #e2e8f0;
+      --ev-text-muted: #94a3b8;
+      --ev-border: #2d3748;
+      --ev-active: #10b981;
+      --ev-warning: #f59e0b;
+      --ev-danger: #ef4444;
+      --ev-wire-l1: #92400e;
+      --ev-wire-l2: #1e293b;
+      --ev-wire-l3: #64748b;
+      --ev-wire-n: #0284c7;
+      --ev-wire-pe: #84cc16;
+      --ev-wire-pe-stripe: #15803d;
+      --ev-wire-dc-plus: #dc2626;
+      --ev-wire-dc-minus: #0f172a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      background: var(--ev-bg);
+      color: var(--ev-text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Flutter App Bar */
+    .ev-appbar {
+      height: 52px;
+      background: var(--ev-panel);
+      border-bottom: 1px solid var(--ev-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      z-index: 50;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .ev-logo-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ev-badge {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      font-weight: 800;
+      font-size: 11px;
+      letter-spacing: 0.8px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      box-shadow: 0 2px 6px rgba(37,99,235,0.4);
+    }
+
+    .ev-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #f8fafc;
+      letter-spacing: 0.3px;
+    }
+
+    .ev-toolbar-center {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ev-btn {
+      background: #252d3a;
+      border: 1px solid var(--ev-border);
+      color: var(--ev-text);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .ev-btn:hover {
+      background: #2e3848;
+      border-color: #3b82f6;
+    }
+
+    .ev-btn.primary {
+      background: var(--ev-accent);
+      border-color: var(--ev-accent);
+      color: white;
+    }
+
+    .ev-btn.primary:hover {
+      background: var(--ev-accent-hover);
+    }
+
+    .ev-btn.danger {
+      background: rgba(239,68,68,0.2);
+      border-color: rgba(239,68,68,0.4);
+      color: #fca5a5;
+    }
+
+    .ev-btn.danger:hover {
+      background: rgba(239,68,68,0.3);
+      border-color: #ef4444;
+    }
+
+    .ev-btn.sim-active {
+      background: #059669;
+      border-color: #10b981;
+      color: white;
+      box-shadow: 0 0 12px rgba(16,185,129,0.5);
+    }
+
+    /* Cable Presets Selector (Barre de câbles Flutter EduVolt) */
+    .ev-cable-bar {
+      display: flex;
+      align-items: center;
+      background: #181d24;
+      padding: 3px 6px;
+      border-radius: 8px;
+      border: 1px solid var(--ev-border);
+      gap: 4px;
+    }
+
+    .ev-cable-swatch {
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.15s;
+      position: relative;
+    }
+
+    .ev-cable-swatch:hover {
+      transform: scale(1.15);
+    }
+
+    .ev-cable-swatch.active {
+      border-color: #38bdf8;
+      box-shadow: 0 0 8px rgba(56,189,248,0.6);
+    }
+
+    .ev-gauge-select {
+      background: #202632;
+      color: #e2e8f0;
+      border: 1px solid var(--ev-border);
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 4px;
+      padding: 2px 6px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Main Workspace Layout */
+    .ev-main {
+      flex: 1;
+      display: flex;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Sidebar - Bibliothèque de Composants EduVolt */
+    .ev-sidebar {
+      width: 280px;
+      background: var(--ev-panel);
+      border-right: 1px solid var(--ev-border);
+      display: flex;
+      flex-direction: column;
+      z-index: 40;
+    }
+
+    .ev-sidebar-header {
+      padding: 12px 14px;
+      background: var(--ev-panel-header);
+      border-bottom: 1px solid var(--ev-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ev-sidebar-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ev-search-box {
+      margin: 10px 14px;
+      position: relative;
+    }
+
+    .ev-search-input {
+      width: 100%;
+      background: #14181f;
+      border: 1px solid var(--ev-border);
+      border-radius: 6px;
+      color: white;
+      padding: 7px 10px 7px 30px;
+      font-size: 12px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .ev-search-input:focus {
+      border-color: #3b82f6;
+    }
+
+    .ev-search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+      font-size: 12px;
+    }
+
+    /* Categories Tabs */
+    .ev-cat-tabs {
+      display: flex;
+      padding: 0 10px;
+      gap: 4px;
+      border-bottom: 1px solid var(--ev-border);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .ev-cat-tab {
+      padding: 8px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ev-text-muted);
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .ev-cat-tab.active {
+      color: #60a5fa;
+      border-color: #3b82f6;
+    }
+
+    /* Component Items List */
+    .ev-component-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .ev-card-comp {
+      background: #202630;
+      border: 1px solid var(--ev-border);
+      border-radius: 8px;
+      padding: 10px;
+      cursor: grab;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .ev-card-comp:hover {
+      background: #26303e;
+      border-color: #3b82f6;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .ev-card-comp:active {
+      cursor: grabbing;
+    }
+
+    .ev-card-comp-icon {
+      width: 44px;
+      height: 44px;
+      background: #14181f;
+      border: 1px solid var(--ev-border);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #60a5fa;
+      font-size: 20px;
+    }
+
+    .ev-card-comp-info {
+      flex: 1;
+    }
+
+    .ev-card-comp-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 2px;
+    }
+
+    .ev-card-comp-desc {
+      font-size: 10px;
+      color: #94a3b8;
+      line-height: 1.3;
+    }
+
+    /* Center Canvas & Board (Armoire / DIN Rail) */
+    .ev-canvas-container {
+      flex: 1;
+      position: relative;
+      background: var(--ev-board);
+      overflow: hidden;
+      cursor: default;
+    }
+
+    .ev-grid-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .ev-world {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4000px;
+      height: 4000px;
+      transform-origin: 0 0;
+    }
+
+    /* Din Rail (Rail DIN 35mm EduVolt) */
+    .ev-din-rail {
+      position: absolute;
+      left: 100px;
+      width: 1600px;
+      height: 35px;
+      background: linear-gradient(180deg, #94a3b8 0%, #cbd5e1 30%, #64748b 70%, #475569 100%);
+      border-top: 2px solid #e2e8f0;
+      border-bottom: 2px solid #334155;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+      border-radius: 2px;
+      z-index: 2;
+    }
+
+    .ev-din-rail::before {
+      content: "";
+      position: absolute;
+      top: 14px;
+      left: 0;
+      right: 0;
+      height: 7px;
+      background: repeating-linear-gradient(90deg, #1e293b 0px, #1e293b 15px, transparent 15px, transparent 35px);
+      opacity: 0.7;
+    }
+
+    /* Wire Duct (Goulotte de câblage EduVolt) */
+    .ev-wire-duct {
+      position: absolute;
+      background: #334155;
+      border: 2px solid #475569;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.4), 0 4px 10px rgba(0,0,0,0.3);
+      z-index: 1;
+    }
+
+    .ev-wire-duct.h {
+      height: 48px;
+    }
+
+    .ev-wire-duct.v {
+      width: 48px;
+    }
+
+    .ev-wire-duct-slits {
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(90deg, transparent 0px, transparent 12px, #1e293b 12px, #1e293b 16px);
+      opacity: 0.6;
+    }
+
+    /* Placed Component on Board */
+    .ev-component-box {
+      position: absolute;
+      background: #1e242c;
+      border: 2px solid #3b4252;
+      border-radius: 6px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+      cursor: move;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+
+    .ev-component-box.selected {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59,130,246,0.5), 0 10px 25px rgba(0,0,0,0.6);
+    }
+
+    .ev-comp-header {
+      background: #28303d;
+      padding: 4px 8px;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #3b4252;
+    }
+
+    .ev-comp-tag {
+      font-size: 11px;
+      font-weight: 800;
+      color: #60a5fa;
+      letter-spacing: 0.5px;
+    }
+
+    .ev-comp-brand {
+      font-size: 9px;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+    }
+
+    .ev-comp-body {
+      flex: 1;
+      padding: 10px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    /* Terminals Rows */
+    .ev-terminals-row {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      padding: 2px 0;
+      position: relative;
+      z-index: 15;
+    }
+
+    .ev-term-slot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .ev-term-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #cbd5e1;
+      font-family: monospace;
+    }
+
+    /* EduVolt Exact Terminal Pad with Ferrule Halo */
+    .ev-terminal-pad {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #374151;
+      border: 2px solid #9ca3af;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.8), 0 1px 3px rgba(0,0,0,0.5);
+      cursor: crosshair;
+      position: relative;
+      transition: all 0.15s ease;
+    }
+
+    .ev-terminal-pad:hover {
+      background: #3b82f6;
+      border-color: #93c5fd;
+      transform: scale(1.25);
+      box-shadow: 0 0 8px rgba(59,130,246,0.8);
+    }
+
+    .ev-terminal-pad.wire-target {
+      animation: pulse-terminal 0.8s infinite alternate;
+    }
+
+    @keyframes pulse-terminal {
+      0% { transform: scale(1.1); box-shadow: 0 0 6px #10b981; border-color: #34d399; }
+      100% { transform: scale(1.35); box-shadow: 0 0 14px #10b981; border-color: #10b981; }
+    }
+
+    /* SVG Layer for EduVolt Quadratic Bezier Wires */
+    .ev-wires-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    .ev-wire-path {
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      cursor: pointer;
+      pointer-events: stroke;
+      transition: stroke-width 0.15s;
+    }
+
+    .ev-wire-path:hover {
+      stroke-width: 6 !important;
+      filter: drop-shadow(0 0 4px rgba(255,255,255,0.6));
+    }
+
+    /* Cable Tag (Bandelette d'identification EduVolt) */
+    .ev-wire-tag {
+      background: #f8fafc;
+      color: #0f172a;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 1px 5px;
+      border-radius: 3px;
+      border: 1px solid #64748b;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+      pointer-events: none;
+      font-family: monospace;
+    }
+
+    /* Floating Status Pill */
+    .ev-status-bar {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(26,30,36,0.92);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--ev-border);
+      border-radius: 30px;
+      padding: 6px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+      z-index: 50;
+    }
+
+    .ev-status-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #94a3b8;
+    }
+
+    .ev-status-item .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #64748b;
+    }
+
+    .ev-status-item .dot.active {
+      background: #10b981;
+      box-shadow: 0 0 8px rgba(16,185,129,0.8);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- App Header / Toolbar -->
+  <header class="ev-appbar">
+    <div class="ev-logo-group">
+      <span class="ev-badge">REA CLONE 2.0</span>
+      <span class="ev-title">WireLab EduVolt 2 <span style="font-size: 11px; color: #64748b; font-weight: 500;">(EduVolt Designer Pro Flutter Engine)</span></span>
+    </div>
+
+    <!-- Center Câble Presets (IEC 60445 extraits avec REA) -->
+    <div class="ev-toolbar-center">
+      <div class="ev-cable-bar">
+        <!-- L1 Marron -->
+        <div class="ev-cable-swatch active" style="background: #92400e;" data-color="#92400e" data-name="L1 (Marron)" title="L1 - Marron (iec_ac_l1)"></div>
+        <!-- L2 Noir -->
+        <div class="ev-cable-swatch" style="background: #111111;" data-color="#111111" data-name="L2 (Noir)" title="L2 - Noir (iec_ac_l2)"></div>
+        <!-- L3 Gris -->
+        <div class="ev-cable-swatch" style="background: #9ca3af;" data-color="#9ca3af" data-name="L3 (Gris)" title="L3 - Gris (iec_ac_l3)"></div>
+        <!-- N Bleu -->
+        <div class="ev-cable-swatch" style="background: #0284c7;" data-color="#0284c7" data-name="Neutre (Bleu)" title="Neutre - Bleu (iec_ac_n)"></div>
+        <!-- PE Jaune-Vert -->
+        <div class="ev-cable-swatch" style="background: linear-gradient(135deg, #c4d600 50%, #008c45 50%);" data-color="#c4d600" data-name="PE (Terre)" title="PE - Terre (iec_ac_pe)"></div>
+        <!-- DC+ Rouge -->
+        <div class="ev-cable-swatch" style="background: #dc2626;" data-color="#dc2626" data-name="DC+ (Rouge)" title="DC+ - Rouge (iec_dc_plus)"></div>
+        <!-- DC- Noir -->
+        <div class="ev-cable-swatch" style="background: #020617;" data-color="#020617" data-name="DC- (Noir)" title="DC- - Noir (iec_dc_minus)"></div>
+        <!-- Commande Orange -->
+        <div class="ev-cable-swatch" style="background: #ea580c;" data-color="#ea580c" data-name="Ctrl (Orange)" title="Commande (iec_ctrl_fase)"></div>
+
+        <select class="ev-gauge-select" id="cableGauge" title="Section de câble (CableGaugeCode)">
+          <option value="1.5">1.5 mm² (16A)</option>
+          <option value="2.5" selected>2.5 mm² (20A)</option>
+          <option value="4.0">4.0 mm² (25A)</option>
+          <option value="6.0">6.0 mm² (32A)</option>
+          <option value="10.0">10 mm² (50A)</option>
+        </select>
+      </div>
+
+      <!-- Simulation Play/Stop -->
+      <button class="ev-btn primary" id="btnToggleSim">
+        <i class="fa-solid fa-play"></i>
+        <span>Simuler</span>
+      </button>
+
+      <button class="ev-btn" id="btnClearBoard" title="Réinitialiser l'armoire">
+        <i class="fa-solid fa-rotate-left"></i>
+        <span>Effacer</span>
+      </button>
+    </div>
+
+    <!-- Actions / Export -->
+    <div style="display: flex; gap: 8px;">
+      <button class="ev-btn" id="btnZoomIn"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+      <button class="ev-btn" id="btnZoomOut"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+      <button class="ev-btn" id="btnZoomReset"><i class="fa-solid fa-compress"></i></button>
+      <a href="../wirelab.html" class="ev-btn" style="text-decoration: none;">
+        <i class="fa-solid fa-house"></i>
+        <span>Hub</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Workspace -->
+  <div class="ev-main">
+
+    <!-- Bibliothèque de Composants (EduVolt Catalog) -->
+    <aside class="ev-sidebar">
+      <div class="ev-sidebar-header">
+        <span class="ev-sidebar-title">
+          <i class="fa-solid fa-boxes-stacked" style="color: #3b82f6;"></i>
+          <span>Composants EduVolt</span>
+        </span>
+        <span style="font-size: 11px; background: #252d3a; padding: 2px 6px; border-radius: 4px; color: #94a3b8;">IEC 81346</span>
+      </div>
+
+      <div class="ev-search-box">
+        <i class="fa-solid fa-magnifying-glass ev-search-icon"></i>
+        <input type="text" class="ev-search-input" id="searchComp" placeholder="Rechercher disjoncteur, contacteur, LOGO!...">
+      </div>
+
+      <div class="ev-cat-tabs">
+        <div class="ev-cat-tab active" data-cat="all">Tous</div>
+        <div class="ev-cat-tab" data-cat="power">Alimentation</div>
+        <div class="ev-cat-tab" data-cat="protection">Protection</div>
+        <div class="ev-cat-tab" data-cat="control">Commande</div>
+        <div class="ev-cat-tab" data-cat="motor">Moteurs</div>
+      </div>
+
+      <div class="ev-component-list" id="compPalette">
+        <!-- Rempli dynamiquement en JS -->
+      </div>
+    </aside>
+
+    <!-- Armoire & Zone de Câblage -->
+    <main class="ev-canvas-container" id="canvasContainer">
+      <div class="ev-world" id="world">
+        <!-- Goulottes de câblage horizontales et verticales (wire_duct) -->
+        <div class="ev-wire-duct h" style="top: 80px; left: 80px; width: 1400px;"><div class="ev-wire-duct-slits"></div></div>
+        <div class="ev-wire-duct h" style="top: 360px; left: 80px; width: 1400px;"><div class="ev-wire-duct-slits"></div></div>
+        <div class="ev-wire-duct h" style="top: 640px; left: 80px; width: 1400px;"><div class="ev-wire-duct-slits"></div></div>
+        <div class="ev-wire-duct v" style="top: 80px; left: 80px; height: 608px;"><div class="ev-wire-duct-slits"></div></div>
+        <div class="ev-wire-duct v" style="top: 80px; left: 1432px; height: 608px;"><div class="ev-wire-duct-slits"></div></div>
+
+        <!-- Rails DIN 35mm -->
+        <div class="ev-din-rail" style="top: 200px;"></div>
+        <div class="ev-din-rail" style="top: 480px;"></div>
+
+        <!-- Composants Placés (DOM) -->
+        <div id="componentsLayer"></div>
+
+        <!-- Couche SVG Wires (Bézier Quadratique EduVolt) -->
+        <svg class="ev-wires-svg" id="wiresSvg" width="4000" height="4000"></svg>
+      </div>
+
+      <!-- Barre de statut flottante -->
+      <div class="ev-status-bar">
+        <div class="ev-status-item">
+          <span class="dot" id="simStatusDot"></span>
+          <span id="simStatusText">Simulation : Arrêtée</span>
+        </div>
+        <div class="ev-status-item">
+          <i class="fa-solid fa-bezier-curve" style="color: #60a5fa;"></i>
+          <span>Routage : Orthogonal 50px + Bézier Skia</span>
+        </div>
+        <div class="ev-status-item">
+          <i class="fa-solid fa-code-fork" style="color: #34d399;"></i>
+          <span id="wiresCount">Fils connectés : 0</span>
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <script>
+    /* =========================================================================
+       WireLab EduVolt 2 - Moteur de Simulation & Câblage REA Clone
+       Algorithme extrait de EduVolt Designer Pro 2.2.10 (libapp.so)
+       ========================================================================= */
+
+    // Catalogue officiel de composants extrait par REA
+    const CATALOG = [
+      {
+        id: "source_tri",
+        name: "Source Triphasée + N + PE",
+        category: "power",
+        width: 140,
+        height: 110,
+        brand: "RÉSEAU 400V",
+        tag: "-Q0",
+        terminals: [
+          { id: "L1", label: "L1", x: 20, y: 88, dir: "bottom", role: "source_l1" },
+          { id: "L2", label: "L2", x: 48, y: 88, dir: "bottom", role: "source_l2" },
+          { id: "L3", label: "L3", x: 76, y: 88, dir: "bottom", role: "source_l3" },
+          { id: "N",  label: "N",  x: 104, y: 88, dir: "bottom", role: "source_n" },
+          { id: "PE", label: "PE", x: 124, y: 88, dir: "bottom", role: "source_pe" }
+        ],
+        icon: "fa-bolt-lightning"
+      },
+      {
+        id: "guardamotor",
+        name: "Disjoncteur Moteur (GV2)",
+        category: "protection",
+        width: 90,
+        height: 120,
+        brand: "SCHNEIDER",
+        tag: "-QM1",
+        terminals: [
+          { id: "1L1", label: "1L1", x: 18, y: 16, dir: "top", role: "in" },
+          { id: "3L2", label: "3L2", x: 45, y: 16, dir: "top", role: "in" },
+          { id: "5L3", label: "5L3", x: 72, y: 16, dir: "top", role: "in" },
+          { id: "2T1", label: "2T1", x: 18, y: 98, dir: "bottom", role: "out" },
+          { id: "4T2", label: "4T2", x: 45, y: 98, dir: "bottom", role: "out" },
+          { id: "6T3", label: "6T3", x: 72, y: 98, dir: "bottom", role: "out" }
+        ],
+        icon: "fa-shield-halved"
+      },
+      {
+        id: "contactor_lc1d",
+        name: "Contacteur Triphasé (LC1D)",
+        category: "control",
+        width: 90,
+        height: 130,
+        brand: "SCHNEIDER",
+        tag: "-KM1",
+        terminals: [
+          { id: "A1", label: "A1", x: 16, y: 16, dir: "top", role: "coil_in" },
+          { id: "1L1", label: "1L1", x: 36, y: 16, dir: "top", role: "main_in" },
+          { id: "3L2", label: "3L2", x: 54, y: 16, dir: "top", role: "main_in" },
+          { id: "5L3", label: "5L3", x: 72, y: 16, dir: "top", role: "main_in" },
+          { id: "A2", label: "A2", x: 16, y: 108, dir: "bottom", role: "coil_out" },
+          { id: "2T1", label: "2T1", x: 36, y: 108, dir: "bottom", role: "main_out" },
+          { id: "4T2", label: "4T2", x: 54, y: 108, dir: "bottom", role: "main_out" },
+          { id: "6T3", label: "6T3", x: 72, y: 108, dir: "bottom", role: "main_out" }
+        ],
+        icon: "fa-toggle-on"
+      },
+      {
+        id: "plc_logo_230rce",
+        name: "Siemens LOGO! 230RCE",
+        category: "control",
+        width: 130,
+        height: 130,
+        brand: "SIEMENS",
+        tag: "-KF1",
+        terminals: [
+          { id: "L1", label: "L1", x: 20, y: 16, dir: "top", role: "power" },
+          { id: "N",  label: "N",  x: 40, y: 16, dir: "top", role: "power" },
+          { id: "I1", label: "I1", x: 70, y: 16, dir: "top", role: "input" },
+          { id: "I2", label: "I2", x: 90, y: 16, dir: "top", role: "input" },
+          { id: "I3", label: "I3", x: 110, y: 16, dir: "top", role: "input" },
+          { id: "Q1_1", label: "1", x: 25, y: 108, dir: "bottom", role: "relay" },
+          { id: "Q1_2", label: "2", x: 45, y: 108, dir: "bottom", role: "relay" },
+          { id: "Q2_1", label: "1", x: 75, y: 108, dir: "bottom", role: "relay" },
+          { id: "Q2_2", label: "2", x: 95, y: 108, dir: "bottom", role: "relay" }
+        ],
+        icon: "fa-microchip"
+      },
+      {
+        id: "motor_tri",
+        name: "Moteur Asynchrone Tri (Y/Δ)",
+        category: "motor",
+        width: 140,
+        height: 120,
+        brand: "ABB 3~",
+        tag: "-M1",
+        terminals: [
+          { id: "U1", label: "U1", x: 25, y: 16, dir: "top", role: "phase" },
+          { id: "V1", label: "V1", x: 70, y: 16, dir: "top", role: "phase" },
+          { id: "W1", label: "W1", x: 115, y: 16, dir: "top", role: "phase" },
+          { id: "W2", label: "W2", x: 25, y: 98, dir: "bottom", role: "plate" },
+          { id: "U2", label: "U2", x: 70, y: 98, dir: "bottom", role: "plate" },
+          { id: "V2", label: "V2", x: 115, y: 98, dir: "bottom", role: "plate" }
+        ],
+        icon: "fa-fan"
+      }
+    ];
+
+    // État de l'application
+    const state = {
+      zoom: 1.0,
+      pan: { x: 0, y: 0 },
+      isPanning: false,
+      panStart: { x: 0, y: 0 },
+      currentColor: "#92400e",
+      currentGauge: "2.5",
+      isSimulating: false,
+      components: [],
+      wires: [],
+      wireStart: null, // Borne en cours de connexion
+      selectedItem: null
+    };
+
+    const world = document.getElementById("world");
+    const componentsLayer = document.getElementById("componentsLayer");
+    const wiresSvg = document.getElementById("wiresSvg");
+    const compPalette = document.getElementById("compPalette");
+
+    // Initialisation Palette
+    function renderPalette(category = "all") {
+      compPalette.innerHTML = "";
+      const filtered = category === "all" ? CATALOG : CATALOG.filter(c => c.category === category);
+      filtered.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "ev-card-comp";
+        card.draggable = true;
+        card.innerHTML = `
+          <div class="ev-card-comp-icon"><i class="fa-solid ${item.icon}"></i></div>
+          <div class="ev-card-comp-info">
+            <div class="ev-card-comp-name">${item.name}</div>
+            <div class="ev-card-comp-desc">${item.brand} • ${item.tag}</div>
+          </div>
+        `;
+        card.addEventListener("dragstart", (e) => {
+          e.dataTransfer.setData("application/json", JSON.stringify(item));
+        });
+        card.addEventListener("click", () => {
+          // Placement automatique au centre du rail
+          placeComponent(item, 250 + state.components.length * 150, 150);
+        });
+        compPalette.appendChild(card);
+      });
+    }
+    renderPalette();
+
+    // Onglets Catégories
+    document.querySelectorAll(".ev-cat-tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".ev-cat-tab").forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+        renderPalette(tab.dataset.cat);
+      });
+    });
+
+    // Sélection Couleurs Câbles
+    document.querySelectorAll(".ev-cable-swatch").forEach(swatch => {
+      swatch.addEventListener("click", () => {
+        document.querySelectorAll(".ev-cable-swatch").forEach(s => s.classList.remove("active"));
+        swatch.classList.add("active");
+        state.currentColor = swatch.dataset.color;
+      });
+    });
+
+    // Drop sur Canvas
+    const canvasContainer = document.getElementById("canvasContainer");
+    canvasContainer.addEventListener("dragover", (e) => e.preventDefault());
+    canvasContainer.addEventListener("drop", (e) => {
+      e.preventDefault();
+      try {
+        const item = JSON.parse(e.dataTransfer.getData("application/json"));
+        const rect = canvasContainer.getBoundingClientRect();
+        const dropX = (e.clientX - rect.left - state.pan.x) / state.zoom;
+        const dropY = (e.clientY - rect.top - state.pan.y) / state.zoom;
+        placeComponent(item, dropX - item.width / 2, dropY - item.height / 2);
+      } catch (_) {}
+    });
+
+    // Placer un composant
+    function placeComponent(proto, x, y) {
+      const compId = "comp_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
+      const comp = {
+        uid: compId,
+        protoId: proto.id,
+        name: proto.name,
+        brand: proto.brand,
+        tag: proto.tag + (state.components.filter(c => c.protoId === proto.id).length + 1),
+        x: Math.round(x / 10) * 10,
+        y: Math.round(y / 10) * 10,
+        width: proto.width,
+        height: proto.height,
+        terminals: proto.terminals
+      };
+      state.components.push(comp);
+      renderComponentDOM(comp);
+    }
+
+    // Rendu DOM d'un composant
+    function renderComponentDOM(comp) {
+      const el = document.createElement("div");
+      el.id = comp.uid;
+      el.className = "ev-component-box";
+      el.style.width = comp.width + "px";
+      el.style.height = comp.height + "px";
+      el.style.left = comp.x + "px";
+      el.style.top = comp.y + "px";
+
+      const topTerms = comp.terminals.filter(t => t.dir === "top");
+      const botTerms = comp.terminals.filter(t => t.dir === "bottom");
+
+      el.innerHTML = `
+        <div class="ev-comp-header">
+          <span class="ev-comp-tag">${comp.tag}</span>
+          <span class="ev-comp-brand">${comp.brand}</span>
+        </div>
+        <div class="ev-comp-body">
+          <div class="ev-terminals-row">
+            ${topTerms.map(t => `
+              <div class="ev-term-slot">
+                <span class="ev-term-label">${t.label}</span>
+                <div class="ev-terminal-pad" data-comp="${comp.uid}" data-term="${t.id}" title="${comp.tag}:${t.label}"></div>
+              </div>
+            `).join("")}
+          </div>
+          <div style="font-size: 11px; font-weight: 700; color: #64748b; margin: auto 0;">
+            ${comp.name}
+          </div>
+          <div class="ev-terminals-row">
+            ${botTerms.map(t => `
+              <div class="ev-term-slot">
+                <div class="ev-terminal-pad" data-comp="${comp.uid}" data-term="${t.id}" title="${comp.tag}:${t.label}"></div>
+                <span class="ev-term-label">${t.label}</span>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `;
+
+      // Déplacement (Drag)
+      let isDragging = false;
+      let startX, startY;
+
+      el.addEventListener("mousedown", (e) => {
+        if (e.target.classList.contains("ev-terminal-pad")) return;
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        document.querySelectorAll(".ev-component-box").forEach(b => b.classList.remove("selected"));
+        el.classList.add("selected");
+        e.stopPropagation();
+      });
+
+      window.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        const dx = (e.clientX - startX) / state.zoom;
+        const dy = (e.clientY - startY) / state.zoom;
+        comp.x += dx;
+        comp.y += dy;
+        el.style.left = Math.round(comp.x) + "px";
+        el.style.top = Math.round(comp.y) + "px";
+        startX = e.clientX;
+        startY = e.clientY;
+        renderWires();
+      });
+
+      window.addEventListener("mouseup", () => {
+        if (isDragging) {
+          isDragging = false;
+          comp.x = Math.round(comp.x / 10) * 10;
+          comp.y = Math.round(comp.y / 10) * 10;
+          el.style.left = comp.x + "px";
+          el.style.top = comp.y + "px";
+          renderWires();
+        }
+      });
+
+      // Gestion des connexions de bornes
+      el.querySelectorAll(".ev-terminal-pad").forEach(pad => {
+        pad.addEventListener("click", (e) => {
+          e.stopPropagation();
+          handleTerminalClick(pad.dataset.comp, pad.dataset.term);
+        });
+      });
+
+      componentsLayer.appendChild(el);
+    }
+
+    // Gestion du clic de borne (Connexion Fil)
+    function handleTerminalClick(compUid, termId) {
+      if (!state.wireStart) {
+        state.wireStart = { compUid, termId };
+        const pad = document.querySelector(`.ev-terminal-pad[data-comp="${compUid}"][data-term="${termId}"]`);
+        if (pad) pad.classList.add("wire-target");
+      } else {
+        if (state.wireStart.compUid === compUid && state.wireStart.termId === termId) {
+          // Annulation
+          clearWireSelection();
+          return;
+        }
+
+        // Créer fil
+        createWire(state.wireStart, { compUid, termId });
+        clearWireSelection();
+      }
+    }
+
+    function clearWireSelection() {
+      document.querySelectorAll(".ev-terminal-pad").forEach(p => p.classList.remove("wire-target"));
+      state.wireStart = null;
+    }
+
+    // Obtenir coordonnées absolues d'une borne
+    function getTerminalPos(compUid, termId) {
+      const comp = state.components.find(c => c.uid === compUid);
+      if (!comp) return { x: 0, y: 0, dir: "bottom" };
+      const term = comp.terminals.find(t => t.id === termId);
+      if (!term) return { x: comp.x + 20, y: comp.y + 20, dir: "bottom" };
+      return {
+        x: comp.x + term.x,
+        y: comp.y + term.y,
+        dir: term.dir
+      };
+    }
+
+    // Créer nouveau fil
+    function createWire(from, to) {
+      const wire = {
+        id: "wire_" + Date.now() + "_" + Math.floor(Math.random() * 1000),
+        from,
+        to,
+        color: state.currentColor,
+        gauge: state.currentGauge
+      };
+      state.wires.push(wire);
+      renderWires();
+      updateWireCount();
+    }
+
+    /* =========================================================================
+       ALGORITHME OFFICIEL EDUVOLT : Routage Orthogonal 50px + Bézier Quadratique
+       Exactement reproduit d'après Skia / Flutter Path::quadraticBezierTo
+       ========================================================================= */
+    function computeEduVoltRoute(A, B) {
+      const step = 50;
+      const pts = [{ x: A.x, y: A.y }];
+
+      // Stubs initiaux selon la direction des bornes
+      const stubA = {
+        x: A.x,
+        y: A.dir === "top" ? A.y - step : A.y + step
+      };
+      const stubB = {
+        x: B.x,
+        y: B.dir === "top" ? B.y - step : B.y + step
+      };
+
+      pts.push(stubA);
+
+      // Cas 1 : Même direction verticale (ex: les deux vers le bas)
+      if (A.dir === B.dir) {
+        const commonY = A.dir === "bottom" ? Math.max(stubA.y, stubB.y) : Math.min(stubA.y, stubB.y);
+        pts.push({ x: stubA.x, y: commonY });
+        pts.push({ x: stubB.x, y: commonY });
+      }
+      // Cas 2 : Directions opposées (ex: sortie bas vers entrée haut)
+      else {
+        const midY = (stubA.y + stubB.y) / 2;
+        pts.push({ x: stubA.x, y: midY });
+        pts.push({ x: stubB.x, y: midY });
+      }
+
+      pts.push(stubB);
+      pts.push({ x: B.x, y: B.y });
+      return pts;
+    }
+
+    // Lissage exact via Bézier quadratique (Flutter quadraticBezierTo)
+    function buildQuadraticBezierSvgPath(pts, radius = 20) {
+      if (!pts || pts.length < 2) return "";
+      if (pts.length === 2) return `M ${pts[0].x} ${pts[0].y} L ${pts[1].x} ${pts[1].y}`;
+
+      let d = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
+      for (let i = 1; i < pts.length - 1; i++) {
+        const prev = pts[i - 1];
+        const curr = pts[i];
+        const next = pts[i + 1];
+
+        const inLen = Math.hypot(curr.x - prev.x, curr.y - prev.y) || 1;
+        const outLen = Math.hypot(next.x - curr.x, next.y - curr.y) || 1;
+
+        const r = Math.min(radius, inLen * 0.45, outLen * 0.45);
+        if (r > 2) {
+          const ux = (curr.x - prev.x) / inLen;
+          const uy = (curr.y - prev.y) / inLen;
+          const vx = (next.x - curr.x) / outLen;
+          const vy = (next.y - curr.y) / outLen;
+
+          const p1x = curr.x - ux * r;
+          const p1y = curr.y - uy * r;
+          const p2x = curr.x + vx * r;
+          const p2y = curr.y + vy * r;
+
+          d += ` L ${p1x.toFixed(1)} ${p1y.toFixed(1)}`;
+          // Arc quadratique Flutter Skia
+          d += ` Q ${curr.x.toFixed(1)} ${curr.y.toFixed(1)} ${p2x.toFixed(1)} ${p2y.toFixed(1)}`;
+        } else {
+          d += ` L ${curr.x.toFixed(1)} ${curr.y.toFixed(1)}`;
+        }
+      }
+      d += ` L ${pts[pts.length - 1].x.toFixed(1)} ${pts[pts.length - 1].y.toFixed(1)}`;
+      return d;
+    }
+
+    // Rendu de tous les fils SVG
+    function renderWires() {
+      wiresSvg.innerHTML = "";
+
+      state.wires.forEach(w => {
+        const A = getTerminalPos(w.from.compUid, w.from.termId);
+        const B = getTerminalPos(w.to.compUid, w.to.termId);
+        const pts = computeEduVoltRoute(A, B);
+        const pathData = buildQuadraticBezierSvgPath(pts);
+
+        // Path du fil
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", pathData);
+        path.setAttribute("class", "ev-wire-path");
+        path.setAttribute("stroke", w.color);
+        path.setAttribute("stroke-width", String(Math.max(3.2, Number(w.gauge) * 1.5)));
+        path.setAttribute("stroke-linecap", "round");
+        path.setAttribute("stroke-linejoin", "round");
+
+        // Clic droit pour supprimer le fil
+        path.addEventListener("contextmenu", (e) => {
+          e.preventDefault();
+          state.wires = state.wires.filter(x => x.id !== w.id);
+          renderWires();
+          updateWireCount();
+        });
+
+        wiresSvg.appendChild(path);
+      });
+    }
+
+    function updateWireCount() {
+      document.getElementById("wiresCount").textContent = `Fils connectés : ${state.wires.length}`;
+    }
+
+    // Effacer l'armoire
+    document.getElementById("btnClearBoard").addEventListener("click", () => {
+      if (confirm("Réinitialiser l'armoire et supprimer tous les composants et câbles ?")) {
+        state.components = [];
+        state.wires = [];
+        componentsLayer.innerHTML = "";
+        wiresSvg.innerHTML = "";
+        updateWireCount();
+      }
+    });
+
+    // Toggle Simulation
+    const btnToggleSim = document.getElementById("btnToggleSim");
+    const simStatusDot = document.getElementById("simStatusDot");
+    const simStatusText = document.getElementById("simStatusText");
+
+    btnToggleSim.addEventListener("click", () => {
+      state.isSimulating = !state.isSimulating;
+      if (state.isSimulating) {
+        btnToggleSim.classList.add("sim-active");
+        btnToggleSim.innerHTML = '<i class="fa-solid fa-stop"></i><span>Arrêter</span>';
+        simStatusDot.classList.add("active");
+        simStatusText.textContent = "Simulation : En marche (Tension active)";
+      } else {
+        btnToggleSim.classList.remove("sim-active");
+        btnToggleSim.innerHTML = '<i class="fa-solid fa-play"></i><span>Simuler</span>';
+        simStatusDot.classList.remove("active");
+        simStatusText.textContent = "Simulation : Arrêtée";
+      }
+    });
+
+    // Zoom & Pan
+    function updateTransform() {
+      world.style.transform = `translate(${state.pan.x}px, ${state.pan.y}px) scale(${state.zoom})`;
+    }
+
+    document.getElementById("btnZoomIn").addEventListener("click", () => {
+      state.zoom = Math.min(2.0, state.zoom + 0.15);
+      updateTransform();
+    });
+
+    document.getElementById("btnZoomOut").addEventListener("click", () => {
+      state.zoom = Math.max(0.4, state.zoom - 0.15);
+      updateTransform();
+    });
+
+    document.getElementById("btnZoomReset").addEventListener("click", () => {
+      state.zoom = 1.0;
+      state.pan = { x: 0, y: 0 };
+      updateTransform();
+    });
+
+    canvasContainer.addEventListener("mousedown", (e) => {
+      if (e.target === canvasContainer || e.target.id === "world") {
+        state.isPanning = true;
+        state.panStart = { x: e.clientX - state.pan.x, y: e.clientY - state.pan.y };
+      }
+    });
+
+    window.addEventListener("mousemove", (e) => {
+      if (state.isPanning) {
+        state.pan.x = e.clientX - state.pan.Start.x;
+        state.pan.y = e.clientY - state.pan.Start.y;
+        updateTransform();
+      }
+    });
+
+    window.addEventListener("mouseup", () => state.isPanning = false);
+
+    // Initialisation composants par défaut (Exemple pédagogique EduVolt)
+    window.addEventListener("DOMContentLoaded", () => {
+      placeComponent(CATALOG[0], 120, 140); // Source Tri
+      placeComponent(CATALOG[1], 300, 140); // GV2
+      placeComponent(CATALOG[2], 420, 140); // Contacteur LC1D
+      placeComponent(CATALOG[4], 560, 420); // Moteur ABB
+
+      // Câblage préétabli propre
+      setTimeout(() => {
+        if (state.components.length >= 4) {
+          createWire({ compUid: state.components[0].uid, termId: "L1" }, { compUid: state.components[1].uid, termId: "1L1" });
+          createWire({ compUid: state.components[0].uid, termId: "L2" }, { compUid: state.components[1].uid, termId: "3L2" });
+          createWire({ compUid: state.components[0].uid, termId: "L3" }, { compUid: state.components[1].uid, termId: "5L3" });
+        }
+      }, 100);
+    });
+  </script>
+</body>
+</html>
