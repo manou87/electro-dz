@@ -1391,15 +1391,18 @@
     }
 
     // Effacer l'armoire
-    document.getElementById("btnClearBoard").addEventListener("click", () => {
-      if (confirm("Réinitialiser l'armoire et supprimer tous les composants et câbles ?")) {
-        state.components = [];
-        state.wires = [];
-        componentsLayer.innerHTML = "";
-        wiresSvg.innerHTML = "";
-        updateWireCount();
-      }
-    });
+    const btnClear = document.getElementById("btnClearBoard");
+    if (btnClear) {
+      btnClear.addEventListener("click", () => {
+        if (confirm("Réinitialiser l'armoire et supprimer tous les composants et câbles ?")) {
+          state.components = [];
+          state.wires = [];
+          if (componentsLayer) componentsLayer.innerHTML = "";
+          if (wiresSvg) wiresSvg.innerHTML = "";
+          updateWireCount();
+        }
+      });
+    }
 
     // Toggle Simulation avec changement d'état visuel (state_on.png)
     const btnToggleSim = document.getElementById("btnToggleSim");
