@@ -1,0 +1,630 @@
+{
+  "version": 1,
+  "name": "tableau-knx-schneider-reg-k",
+  "items": [
+    {
+      "uid": "p1",
+      "type": "compteur_sonelgaz",
+      "tag": "P1",
+      "x": 36,
+      "y": 20,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "qf1",
+      "type": "edz_schneider_acti9_ic60n_2p_c16",
+      "tag": "QF1",
+      "x": 88,
+      "y": 210,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "r1",
+      "type": "rail_din_35",
+      "tag": "X1",
+      "x": 190,
+      "y": 228,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "g1",
+      "type": "edz_schneider_mtn684064",
+      "tag": "G1",
+      "x": 210,
+      "y": 178,
+      "closed": true,
+      "pressed": false,
+      "physAddr": "1.1.0"
+    },
+    {
+      "uid": "ik1",
+      "type": "edz_hager_tyfs120",
+      "tag": "IK1",
+      "x": 368,
+      "y": 178,
+      "closed": true,
+      "pressed": false,
+      "physAddr": "1.1.1"
+    },
+    {
+      "uid": "ip1",
+      "type": "edz_schneider_mtn680329",
+      "tag": "IP1",
+      "x": 422,
+      "y": 178,
+      "closed": true,
+      "pressed": false,
+      "physAddr": "1.1.2"
+    },
+    {
+      "uid": "ka1",
+      "type": "edz_schneider_mtn649204",
+      "tag": "KA1",
+      "x": 520,
+      "y": 178,
+      "closed": true,
+      "pressed": false,
+      "physAddr": "1.1.3",
+      "knxCh": {
+        "1": false,
+        "2": false,
+        "3": false,
+        "4": false
+      },
+      "knxChProg": {
+        "1": {
+          "ga": "1/1/1"
+        },
+        "2": {
+          "ga": "1/1/2"
+        },
+        "3": {
+          "ga": "1/1/3"
+        },
+        "4": {
+          "ga": "1/1/4"
+        }
+      }
+    },
+    {
+      "uid": "s1",
+      "type": "edz_hager_wkt304",
+      "tag": "S1",
+      "x": 700,
+      "y": 40,
+      "closed": true,
+      "pressed": false,
+      "physAddr": "1.1.10",
+      "knxToggle": {
+        "1": false,
+        "2": false,
+        "3": false,
+        "4": false
+      },
+      "knxKeysProg": {
+        "1": {
+          "fn": "switch",
+          "ga": "1/1/1"
+        },
+        "2": {
+          "fn": "switch",
+          "ga": "1/1/2"
+        },
+        "3": {
+          "fn": "switch",
+          "ga": "1/1/3"
+        },
+        "4": {
+          "fn": "switch",
+          "ga": "1/1/4"
+        }
+      }
+    },
+    {
+      "uid": "hl1",
+      "type": "edz_piloto_led_blanco",
+      "tag": "HL1",
+      "x": 700,
+      "y": 230,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "hl2",
+      "type": "edz_piloto_led_blanco",
+      "tag": "HL2",
+      "x": 820,
+      "y": 230,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "hl3",
+      "type": "edz_piloto_led_blanco",
+      "tag": "HL3",
+      "x": 940,
+      "y": 230,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "hl4",
+      "type": "edz_piloto_led_blanco",
+      "tag": "HL4",
+      "x": 1060,
+      "y": 230,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "x2",
+      "type": "borniers",
+      "tag": "X2",
+      "x": 36,
+      "y": 420,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "pe1",
+      "type": "pe",
+      "tag": "PE1",
+      "x": 200,
+      "y": 440,
+      "closed": true,
+      "pressed": false
+    }
+  ],
+  "wires": [
+    {
+      "id": "w1",
+      "no": 1,
+      "a": {
+        "uid": "p1",
+        "term": "L"
+      },
+      "b": {
+        "uid": "qf1",
+        "term": "1"
+      },
+      "color": "#dc2626",
+      "section": 2.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w2",
+      "no": 2,
+      "a": {
+        "uid": "p1",
+        "term": "N"
+      },
+      "b": {
+        "uid": "qf1",
+        "term": "3"
+      },
+      "color": "#0088ce",
+      "section": 2.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w3",
+      "no": 3,
+      "a": {
+        "uid": "qf1",
+        "term": "2"
+      },
+      "b": {
+        "uid": "g1",
+        "term": "L"
+      },
+      "color": "#dc2626",
+      "section": 1.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w4",
+      "no": 4,
+      "a": {
+        "uid": "qf1",
+        "term": "4"
+      },
+      "b": {
+        "uid": "g1",
+        "term": "N"
+      },
+      "color": "#0088ce",
+      "section": 1.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w5",
+      "no": 5,
+      "a": {
+        "uid": "g1",
+        "term": "PE"
+      },
+      "b": {
+        "uid": "pe1",
+        "term": "PE"
+      },
+      "color": "#c4d600",
+      "section": 2.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w6",
+      "no": 6,
+      "a": {
+        "uid": "pe1",
+        "term": "PE"
+      },
+      "b": {
+        "uid": "x2",
+        "term": "PE"
+      },
+      "color": "#c4d600",
+      "section": 2.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w7",
+      "no": 7,
+      "a": {
+        "uid": "qf1",
+        "term": "4"
+      },
+      "b": {
+        "uid": "x2",
+        "term": "N"
+      },
+      "color": "#0088ce",
+      "section": 1.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w8",
+      "no": 8,
+      "a": {
+        "uid": "qf1",
+        "term": "2"
+      },
+      "b": {
+        "uid": "ka1",
+        "term": "L1"
+      },
+      "color": "#dc2626",
+      "section": 1.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w9",
+      "no": 9,
+      "a": {
+        "uid": "qf1",
+        "term": "2"
+      },
+      "b": {
+        "uid": "ka1",
+        "term": "L2"
+      },
+      "color": "#dc2626",
+      "section": 1.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w10",
+      "no": 10,
+      "a": {
+        "uid": "qf1",
+        "term": "2"
+      },
+      "b": {
+        "uid": "ka1",
+        "term": "L3"
+      },
+      "color": "#dc2626",
+      "section": 1.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w11",
+      "no": 11,
+      "a": {
+        "uid": "qf1",
+        "term": "2"
+      },
+      "b": {
+        "uid": "ka1",
+        "term": "L4"
+      },
+      "color": "#dc2626",
+      "section": 1.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w12",
+      "no": 12,
+      "a": {
+        "uid": "ka1",
+        "term": "1"
+      },
+      "b": {
+        "uid": "hl1",
+        "term": "X1"
+      },
+      "color": "#dc2626",
+      "section": 1.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w13",
+      "no": 13,
+      "a": {
+        "uid": "ka1",
+        "term": "2"
+      },
+      "b": {
+        "uid": "hl2",
+        "term": "X1"
+      },
+      "color": "#dc2626",
+      "section": 1.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w14",
+      "no": 14,
+      "a": {
+        "uid": "ka1",
+        "term": "3"
+      },
+      "b": {
+        "uid": "hl3",
+        "term": "X1"
+      },
+      "color": "#dc2626",
+      "section": 1.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w15",
+      "no": 15,
+      "a": {
+        "uid": "ka1",
+        "term": "4"
+      },
+      "b": {
+        "uid": "hl4",
+        "term": "X1"
+      },
+      "color": "#dc2626",
+      "section": 1.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w16",
+      "no": 16,
+      "a": {
+        "uid": "x2",
+        "term": "N"
+      },
+      "b": {
+        "uid": "hl1",
+        "term": "X2"
+      },
+      "color": "#0088ce",
+      "section": 1.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w17",
+      "no": 17,
+      "a": {
+        "uid": "x2",
+        "term": "N"
+      },
+      "b": {
+        "uid": "hl2",
+        "term": "X2"
+      },
+      "color": "#0088ce",
+      "section": 1.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w18",
+      "no": 18,
+      "a": {
+        "uid": "x2",
+        "term": "N"
+      },
+      "b": {
+        "uid": "hl3",
+        "term": "X2"
+      },
+      "color": "#0088ce",
+      "section": 1.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w19",
+      "no": 19,
+      "a": {
+        "uid": "x2",
+        "term": "N"
+      },
+      "b": {
+        "uid": "hl4",
+        "term": "X2"
+      },
+      "color": "#0088ce",
+      "section": 1.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w20",
+      "no": 20,
+      "a": {
+        "uid": "g1",
+        "term": "BUS"
+      },
+      "b": {
+        "uid": "ik1",
+        "term": "BUS"
+      },
+      "color": "#009640",
+      "section": 0.8,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w21",
+      "no": 21,
+      "a": {
+        "uid": "ik1",
+        "term": "BUS"
+      },
+      "b": {
+        "uid": "ip1",
+        "term": "BUS"
+      },
+      "color": "#009640",
+      "section": 0.8,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w22",
+      "no": 22,
+      "a": {
+        "uid": "ip1",
+        "term": "BUS"
+      },
+      "b": {
+        "uid": "ka1",
+        "term": "BUS"
+      },
+      "color": "#009640",
+      "section": 0.8,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w23",
+      "no": 23,
+      "a": {
+        "uid": "ka1",
+        "term": "BUS"
+      },
+      "b": {
+        "uid": "s1",
+        "term": "BUS"
+      },
+      "color": "#009640",
+      "section": 0.8,
+      "live": false,
+      "waypoints": []
+    }
+  ],
+  "knx": {
+    "projectName": "Tableau KNX Schneider REG-K",
+    "lineMedia": "IP",
+    "createLine": true,
+    "lineType": "TP",
+    "gaStyle": "3",
+    "integMode": "S",
+    "mainGroups": [
+      {
+        "id": 1,
+        "name": "ECLAIRAGE",
+        "mid": [
+          {
+            "id": 1,
+            "name": "ON / OFF",
+            "gas": [
+              {
+                "a": "1/1/1",
+                "n": "Lampe 1 — salon"
+              },
+              {
+                "a": "1/1/2",
+                "n": "Lampe 2 — cuisine"
+              },
+              {
+                "a": "1/1/3",
+                "n": "Lampe 3 — chambre"
+              },
+              {
+                "a": "1/1/4",
+                "n": "Lampe 4 — couloir"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "VOLETS / STORES",
+        "mid": []
+      },
+      {
+        "id": 3,
+        "name": "AUTOMATISMES",
+        "mid": []
+      }
+    ],
+    "building": {
+      "name": "Villa démo KNX",
+      "rooms": [
+        {
+          "id": "gtl",
+          "name": "Local Elec / GTL"
+        },
+        {
+          "id": "salon",
+          "name": "Salon"
+        },
+        {
+          "id": "lan",
+          "name": "Local LAN"
+        }
+      ]
+    }
+  },
+  "counts": {
+    "P": 1,
+    "QF": 1,
+    "X": 2,
+    "G": 1,
+    "IK": 1,
+    "IP": 1,
+    "KA": 1,
+    "S": 1,
+    "H": 4,
+    "PE": 1
+  },
+  "seq": 40,
+  "wireNo": 24
+}

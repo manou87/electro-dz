@@ -1,0 +1,341 @@
+/* SwissDZ Fluke 1664 FC — module standalone (appareil + cordons) */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  background: transparent;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: none;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /* espace sous l’appareil pour cordons pendants */
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 0;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.device {
+  position: relative;
+  width: 100%;
+  max-width: none;
+  aspect-ratio: 1533 / 822;
+  flex-shrink: 0;
+  filter: drop-shadow(0 6px 14px rgba(15, 23, 42, 0.28));
+}
+
+body.demo .device {
+  width: min(92vw, 520px);
+  margin-top: 2%;
+  filter: drop-shadow(0 6px 14px rgba(15, 23, 42, 0.28));
+}
+
+.device-face {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+.fluke-brand {
+  position: absolute;
+  left: 17.2%;
+  top: 67.6%;
+  width: 14%;
+  height: 15.5%;
+  object-fit: contain;
+  object-position: center;
+  pointer-events: none;
+  z-index: 6;
+  background: transparent;
+}
+
+.brand-chip {
+  position: absolute;
+  left: 35.5%;
+  top: 14.2%;
+  width: 11%;
+  height: 4.2%;
+  background: #f5c518;
+  color: #111;
+  font-weight: 900;
+  font-size: clamp(7px, 1.55vw, 11px);
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Hotspots alignés sur fluke_parts/hotspots.json (réf. photo front) */
+.hs {
+  position: absolute;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  z-index: 4;
+  border-radius: 50%;
+}
+.hs:focus-visible {
+  outline: 2px solid #38bdf8;
+  outline-offset: 1px;
+}
+.hs-test { left: 7.8%; top: 38%; width: 12%; height: 22%; }
+.hs-f1 { left: 23.3%; top: 29.5%; width: 4%; height: 5.6%; border-radius: 4px; }
+.hs-f2 { left: 23.3%; top: 40.2%; width: 4%; height: 5.6%; border-radius: 4px; }
+.hs-f3 { left: 23.3%; top: 50.9%; width: 4%; height: 5.6%; border-radius: 4px; }
+.hs-f4 { left: 23.3%; top: 61%; width: 4%; height: 5.6%; border-radius: 4px; }
+.hs-power { left: 47.3%; top: 74.7%; width: 3.7%; height: 6.8%; }
+.hs-dial {
+  left: 72%;
+  top: 35%;
+  width: 17%;
+  height: 31%;
+  cursor: grab;
+}
+
+/* LCD overlay — hotspot lcd */
+.lcd {
+  position: absolute;
+  left: 33.01%;
+  top: 24.57%;
+  width: 31.96%;
+  height: 45.13%;
+  z-index: 5;
+  box-sizing: border-box;
+  padding: 4% 5% 3%;
+  background: linear-gradient(165deg, #c8d4b8 0%, #a8b896 45%, #9aab86 100%);
+  border-radius: 3%;
+  box-shadow:
+    inset 0 0 0 1px rgba(30, 41, 20, 0.35),
+    inset 0 2px 6px rgba(255, 255, 255, 0.25);
+  color: #1a1f14;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  pointer-events: none;
+}
+.lcd.is-backlight {
+  background: linear-gradient(165deg, #dce8c8 0%, #c4d6a8 50%, #b4c898 100%);
+}
+
+.lcd-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2%;
+}
+.lcd-poles {
+  display: flex;
+  gap: 0.35em;
+  font-size: clamp(5px, 1.1vw, 9px);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+.lcd-poles span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  color: #b91c1c;
+}
+.lcd-poles span i {
+  display: block;
+  width: 0.85em;
+  height: 0.85em;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  position: relative;
+  box-sizing: border-box;
+}
+.lcd-poles span.ok { color: #15803d; }
+.lcd-poles span.ok i::after {
+  content: "";
+  position: absolute;
+  inset: 18%;
+  background: currentColor;
+  border-radius: 50%;
+}
+.lcd-poles span.bad i::before,
+.lcd-poles span.bad i::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 70%;
+  height: 1.5px;
+  background: currentColor;
+}
+.lcd-poles span.bad i::before { transform: translate(-50%, -50%) rotate(45deg); }
+.lcd-poles span.bad i::after { transform: translate(-50%, -50%) rotate(-45deg); }
+.lcd-poles span.open i { border-style: solid; }
+
+.lcd-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.35em;
+  font-size: clamp(6px, 1.2vw, 10px);
+  font-weight: 800;
+}
+.lcd-unit-mark small { font-size: 0.7em; }
+.lcd-batt {
+  width: 1.1em;
+  height: 0.65em;
+  border: 1.5px solid #1a1f14;
+  border-radius: 1px;
+  position: relative;
+  box-sizing: border-box;
+}
+.lcd-batt::before {
+  content: "";
+  position: absolute;
+  inset: 15% 20% 15% 12%;
+  background: #1a1f14;
+}
+.lcd-batt::after {
+  content: "";
+  position: absolute;
+  right: -3px;
+  top: 25%;
+  width: 2px;
+  height: 50%;
+  background: #1a1f14;
+  border-radius: 0 1px 1px 0;
+}
+
+.lcd-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+}
+.lcd-warn {
+  text-align: center;
+  line-height: 1.05;
+}
+.lcd-warn .tri {
+  width: clamp(16px, 3.2vw, 28px);
+  height: clamp(14px, 2.8vw, 24px);
+  margin: 0 auto 0.15em;
+  background: #dc2626;
+  color: #fff;
+  font-weight: 900;
+  font-size: clamp(9px, 1.8vw, 15px);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 1px;
+  box-sizing: border-box;
+}
+.lcd-warn .msg {
+  color: #b91c1c;
+  font-weight: 900;
+  font-size: clamp(8px, 1.65vw, 13px);
+  letter-spacing: 0.01em;
+}
+.lcd-reading {
+  display: flex;
+  align-items: baseline;
+  gap: 0.2em;
+  font-weight: 800;
+}
+.lcd-reading .val {
+  font-size: clamp(16px, 3.6vw, 30px);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+.lcd-reading .unit {
+  font-size: clamp(10px, 2vw, 16px);
+}
+
+.lcd-bottom {
+  display: flex;
+  justify-content: space-between;
+  font-size: clamp(6px, 1.25vw, 10px);
+  font-weight: 800;
+}
+
+.cables {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  overflow: visible;
+}
+
+.tips {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 6;
+}
+.tip {
+  position: absolute;
+  width: 36px;
+  height: 74px;
+  margin: calc(-74px * 0.96) 0 0 -18px;
+  pointer-events: auto;
+  cursor: grab;
+  touch-action: none;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
+  z-index: 7;
+}
+.tip img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 2px rgba(15, 23, 42, 0.35));
+}
+.tip::after { display: none; }
+.tip[data-id="L"],
+.tip[data-id="N"],
+.tip[data-id="PE"] { background: transparent; }
+.tip:active, .tip.is-drag { cursor: grabbing; }
+.tip.is-connected {
+  outline: 2px solid #22c55e;
+  outline-offset: 1px;
+  border-radius: 4px;
+}
+.tip.is-near {
+  outline: 2px solid #fbbf24;
+  outline-offset: 1px;
+  border-radius: 4px;
+}
+
+/* Mode embed PanelWire : cordons + pointes dessinés sur le board (hors iframe) */
+body.embed-panel .cables,
+body.embed-panel .tips {
+  display: none !important;
+}
+body.demo .stage {
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.5), transparent 55%),
+    repeating-linear-gradient(0deg, transparent, transparent 11px, rgba(148, 163, 184, 0.18) 11px, rgba(148, 163, 184, 0.18) 12px),
+    repeating-linear-gradient(90deg, transparent, transparent 11px, rgba(148, 163, 184, 0.18) 11px, rgba(148, 163, 184, 0.18) 12px),
+    #e8edf4;
+}

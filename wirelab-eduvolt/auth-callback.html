@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="swissdz-rev" content="v140-safari-crash" />
+  <title>Connexion WireLab…</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: system-ui, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 24px;
+      text-align: center;
+    }
+    #status { font-weight: 700; margin-bottom: 8px; }
+    #err { color: #fca5a5; display: none; margin-top: 12px; line-height: 1.4; }
+  </style>
+</head>
+<body>
+  <div>
+    <div id="status">Connexion en cours…</div>
+    <div id="err"></div>
+  </div>
+  <script src="js/supabase.min.js?v=v140-safari-crash"></script>
+  <script src="js/wirelab-auth.js?v=v140-safari-crash"></script>
+  <script>
+    (async function () {
+      var statusEl = document.getElementById('status');
+      var errEl = document.getElementById('err');
+      function fail(msg) {
+        if (statusEl) statusEl.textContent = 'Échec de la connexion';
+        if (errEl) {
+          errEl.style.display = 'block';
+          errEl.textContent = msg || 'Connexion annulée.';
+        }
+        setTimeout(function () {
+          location.replace('index.html');
+        }, 3500);
+      }
+      try {
+        var params = new URLSearchParams(location.search);
+        var oauthError = params.get('error_description') || params.get('error');
+        if (oauthError) {
+          fail(decodeURIComponent(String(oauthError).replace(/\+/g, ' ')));
+          return;
+        }
+        var code = params.get('code');
+        if (code && window.WireLabAuth && window.WireLabAuth.exchangeCode) {
+          await window.WireLabAuth.exchangeCode(code);
+        } else if (location.hash && location.hash.indexOf('access_token') >= 0) {
+          var hash = String(location.hash).replace(/^#/, '');
+          var hp = new URLSearchParams(hash);
+          var at = hp.get('access_token');
+          var rt = hp.get('refresh_token');
+          if (!at || !rt) throw new Error('Jetons OAuth incomplets');
+          if (!window.supabase || !window.WireLabAuth) throw new Error('Auth non initialisée');
+          var cfg = window.__WIRELAB_SUPABASE__ || {};
+          var url = (cfg.url || 'https://wrwnzktssfsffkpzfsgk.supabase.co').trim();
+          var key = (cfg.anonKey || 'sb_publishable_TMXHD1DRNuFwds_se7treg_VKkd1E4W').trim();
+          var sb = window.supabase.createClient(url, key, {
+            auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false },
+          });
+          var res = await sb.auth.setSession({ access_token: at, refresh_token: rt });
+          if (res.error) throw res.error;
+          if (window.WireLabAuth.refresh) await window.WireLabAuth.refresh();
+        } else {
+          fail(
+            'Code OAuth manquant. Ajoutez dans Supabase Redirect URLs : ' +
+              'cette origine …/swissdz-panel/** et wirelab://auth-callback (pas login.html).'
+          );
+          return;
+        }
+        if (statusEl) statusEl.textContent = 'Connexion réussie…';
+        location.replace('index.html');
+      } catch (e) {
+        fail(e && e.message ? e.message : String(e));
+      }
+    })();
+  </script>
+</body>
+</html>

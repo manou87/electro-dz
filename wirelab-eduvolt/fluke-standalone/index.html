@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="SwissDZ Fluke 1664 FC — module appareil + cordons (WireLab)">
+  <title>SwissDZ · Fluke 1664 FC</title>
+  <link rel="stylesheet" href="fluke-meter.css">
+</head>
+<body>
+  <div id="stage" class="stage" aria-label="Testeur Fluke 1664 FC">
+    <div id="device" class="device">
+      <img class="device-face" src="../assets/fluke/fluke_cutout.png" alt="Fluke 1664 FC" draggable="false">
+      <img class="fluke-brand" src="../assets/fluke/logo-wirelab-face.png?v=fluke-section" alt="" draggable="false">
+      <div class="brand-chip" title="SwissDZ">SwissDZ</div>
+      <div id="lcd" class="lcd" role="status" aria-live="polite">
+        <div class="lcd-top">
+          <div class="lcd-poles" id="lcdPoles">
+            <span data-p="L"><i></i>L</span>
+            <span data-p="PE"><i></i>PE</span>
+            <span data-p="N"><i></i>N</span>
+          </div>
+          <div class="lcd-meta">
+            <span class="lcd-unit-mark">V <small>⎓</small></span>
+            <span class="lcd-batt" title="Batterie"></span>
+          </div>
+        </div>
+        <div class="lcd-center" id="lcdCenter">
+          <div class="lcd-warn" id="lcdWarn">
+            <div class="tri" aria-hidden="true">!</div>
+            <div class="msg">CHECK LEADS</div>
+          </div>
+          <div class="lcd-reading" id="lcdReading" hidden>
+            <span class="val" id="lcdVal">----</span>
+            <span class="unit" id="lcdUnit">V</span>
+          </div>
+        </div>
+        <div class="lcd-bottom">
+          <span id="lcdPair">L-PE</span>
+          <span id="lcdHz">Hz</span>
+        </div>
+      </div>
+      <button type="button" class="hs hs-test" data-btn="test" title="TEST — lancer la mesure"></button>
+      <button type="button" class="hs hs-f1" data-btn="f1" title="F1 — paire de mesure"></button>
+      <button type="button" class="hs hs-f2" data-btn="f2" title="F2"></button>
+      <button type="button" class="hs hs-f3" data-btn="f3" title="F3"></button>
+      <button type="button" class="hs hs-f4" data-btn="f4" title="F4"></button>
+      <button type="button" class="hs hs-power" data-btn="power" title="Marche / arrêt"></button>
+      <div class="hs hs-dial" id="dialHit" title="Molette — mode VOLTS"></div>
+    </div>
+
+    <svg id="cables" class="cables" aria-hidden="true"></svg>
+
+    <div class="tips" id="tips">
+      <div class="tip" data-id="L" data-label="L" title="Pointe L (phase)" style="left:22%;top:92%;">
+        <img src="../assets/fluke/cable_L.png" alt="Pointe L" draggable="false">
+      </div>
+      <div class="tip" data-id="N" data-label="N" title="Pointe N (neutre)" style="left:50%;top:98%;">
+        <img src="../assets/fluke/cable_N.png" alt="Pointe N" draggable="false">
+      </div>
+      <div class="tip" data-id="PE" data-label="PE" title="Pointe PE (terre)" style="left:78%;top:92%;">
+        <img src="../assets/fluke/cable_PE.png" alt="Pointe PE" draggable="false">
+      </div>
+    </div>
+  </div>
+
+  <script src="fluke-meter.js"></script>
+</body>
+</html>

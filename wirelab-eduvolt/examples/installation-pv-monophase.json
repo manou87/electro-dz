@@ -1,0 +1,477 @@
+{
+  "version": 1,
+  "name": "installation-pv-monophase",
+  "items": [
+    {
+      "uid": "r1",
+      "type": "pv_support_6",
+      "tag": "X1",
+      "x": 20,
+      "y": 20,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "pv1",
+      "type": "pv_panel_400",
+      "tag": "PV1",
+      "x": 20,
+      "y": 20,
+      "w": 150,
+      "h": 233,
+      "pvHost": "r1",
+      "pvCell": 0,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "pv2",
+      "type": "pv_panel_400",
+      "tag": "PV2",
+      "x": 180,
+      "y": 20,
+      "w": 150,
+      "h": 233,
+      "pvHost": "r1",
+      "pvCell": 1,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "pv3",
+      "type": "pv_panel_400",
+      "tag": "PV3",
+      "x": 340,
+      "y": 20,
+      "w": 150,
+      "h": 233,
+      "pvHost": "r1",
+      "pvCell": 2,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "pv4",
+      "type": "pv_panel_400",
+      "tag": "PV4",
+      "x": 20,
+      "y": 263,
+      "w": 150,
+      "h": 233,
+      "pvHost": "r1",
+      "pvCell": 3,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "pv5",
+      "type": "pv_panel_400",
+      "tag": "PV5",
+      "x": 180,
+      "y": 263,
+      "w": 150,
+      "h": 233,
+      "pvHost": "r1",
+      "pvCell": 4,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "pv6",
+      "type": "pv_panel_400",
+      "tag": "PV6",
+      "x": 340,
+      "y": 263,
+      "w": 150,
+      "h": 233,
+      "pvHost": "r1",
+      "pvCell": 5,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "dc",
+      "type": "pv_coffret_dc",
+      "tag": "FV1",
+      "x": 520,
+      "y": 36,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "qs",
+      "type": "pv_sectionneur_dc",
+      "tag": "QS1",
+      "x": 790,
+      "y": 20,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "inv",
+      "type": "pv_inv_sun2000_3",
+      "tag": "INV1",
+      "x": 520,
+      "y": 250,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "pm",
+      "type": "pv_compteur_bidi",
+      "tag": "P1",
+      "x": 700,
+      "y": 260,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "rail",
+      "type": "rail_din_35",
+      "tag": "X2",
+      "x": 860,
+      "y": 318,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "qi",
+      "type": "edz_abb_f202_a",
+      "tag": "QI1",
+      "x": 880,
+      "y": 268,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "qf",
+      "type": "edz_schneider_acti9_ic60n_2p_c16",
+      "tag": "QF1",
+      "x": 970,
+      "y": 268,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "spd",
+      "type": "spd",
+      "tag": "FV2",
+      "x": 1060,
+      "y": 268,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "grid",
+      "type": "compteur_sonelgaz",
+      "tag": "P2",
+      "x": 1180,
+      "y": 250,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "pe",
+      "type": "pe",
+      "tag": "PE1",
+      "x": 520,
+      "y": 520,
+      "closed": true,
+      "pressed": false
+    },
+    {
+      "uid": "xb",
+      "type": "borniers",
+      "tag": "X3",
+      "x": 600,
+      "y": 510,
+      "closed": true,
+      "pressed": false
+    }
+  ],
+  "wires": [
+    {
+      "id": "w1",
+      "no": 1,
+      "a": { "uid": "pv3", "term": "DC-" },
+      "b": { "uid": "pv2", "term": "DC+" },
+      "color": "#111111",
+      "section": 4,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w2",
+      "no": 2,
+      "a": { "uid": "pv2", "term": "DC-" },
+      "b": { "uid": "pv1", "term": "DC+" },
+      "color": "#111111",
+      "section": 4,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w3",
+      "no": 3,
+      "a": { "uid": "pv1", "term": "DC-" },
+      "b": { "uid": "pv4", "term": "DC+" },
+      "color": "#111111",
+      "section": 4,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w4",
+      "no": 4,
+      "a": { "uid": "pv4", "term": "DC-" },
+      "b": { "uid": "pv5", "term": "DC+" },
+      "color": "#111111",
+      "section": 4,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w5",
+      "no": 5,
+      "a": { "uid": "pv5", "term": "DC-" },
+      "b": { "uid": "pv6", "term": "DC+" },
+      "color": "#111111",
+      "section": 4,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w6",
+      "no": 6,
+      "a": { "uid": "pv3", "term": "DC+" },
+      "b": { "uid": "dc", "term": "PV+" },
+      "color": "#dc2626",
+      "section": 4,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w7",
+      "no": 7,
+      "a": { "uid": "pv6", "term": "DC-" },
+      "b": { "uid": "dc", "term": "PV-" },
+      "color": "#111111",
+      "section": 4,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w8",
+      "no": 8,
+      "a": { "uid": "dc", "term": "PV+" },
+      "b": { "uid": "dc", "term": "PLUS" },
+      "color": "#dc2626",
+      "section": 4,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w9",
+      "no": 9,
+      "a": { "uid": "dc", "term": "PV-" },
+      "b": { "uid": "dc", "term": "MOINS" },
+      "color": "#111111",
+      "section": 4,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w10",
+      "no": 10,
+      "a": { "uid": "dc", "term": "OUT+" },
+      "b": { "uid": "qs", "term": "PV+" },
+      "color": "#dc2626",
+      "section": 4,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w11",
+      "no": 11,
+      "a": { "uid": "dc", "term": "OUT-" },
+      "b": { "uid": "qs", "term": "PV−" },
+      "color": "#111111",
+      "section": 4,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w12",
+      "no": 12,
+      "a": { "uid": "qs", "term": "INV+" },
+      "b": { "uid": "inv", "term": "PV+" },
+      "color": "#dc2626",
+      "section": 4,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w13",
+      "no": 13,
+      "a": { "uid": "qs", "term": "INV−" },
+      "b": { "uid": "inv", "term": "PV-" },
+      "color": "#111111",
+      "section": 4,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w14",
+      "no": 14,
+      "a": { "uid": "inv", "term": "L" },
+      "b": { "uid": "pm", "term": "L↑" },
+      "color": "#dc2626",
+      "section": 2.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w15",
+      "no": 15,
+      "a": { "uid": "inv", "term": "N" },
+      "b": { "uid": "pm", "term": "N↑" },
+      "color": "#0088ce",
+      "section": 2.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w16",
+      "no": 16,
+      "a": { "uid": "pm", "term": "L↓" },
+      "b": { "uid": "qi", "term": "1" },
+      "color": "#dc2626",
+      "section": 2.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w17",
+      "no": 17,
+      "a": { "uid": "pm", "term": "N↓" },
+      "b": { "uid": "qi", "term": "3" },
+      "color": "#0088ce",
+      "section": 2.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w18",
+      "no": 18,
+      "a": { "uid": "qi", "term": "2" },
+      "b": { "uid": "qf", "term": "1" },
+      "color": "#dc2626",
+      "section": 2.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w19",
+      "no": 19,
+      "a": { "uid": "qi", "term": "4" },
+      "b": { "uid": "qf", "term": "3" },
+      "color": "#0088ce",
+      "section": 2.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w20",
+      "no": 20,
+      "a": { "uid": "qf", "term": "2" },
+      "b": { "uid": "grid", "term": "L" },
+      "color": "#dc2626",
+      "section": 2.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w21",
+      "no": 21,
+      "a": { "uid": "qf", "term": "4" },
+      "b": { "uid": "grid", "term": "N" },
+      "color": "#0088ce",
+      "section": 2.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w22",
+      "no": 22,
+      "a": { "uid": "qf", "term": "2" },
+      "b": { "uid": "spd", "term": "1" },
+      "color": "#dc2626",
+      "section": 2.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w23",
+      "no": 23,
+      "a": { "uid": "qf", "term": "4" },
+      "b": { "uid": "spd", "term": "2" },
+      "color": "#0088ce",
+      "section": 2.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w24",
+      "no": 24,
+      "a": { "uid": "inv", "term": "PE" },
+      "b": { "uid": "pe", "term": "PE" },
+      "color": "#c4d600",
+      "section": 2.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w25",
+      "no": 25,
+      "a": { "uid": "dc", "term": "PE" },
+      "b": { "uid": "pe", "term": "PE" },
+      "color": "#c4d600",
+      "section": 2.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w26",
+      "no": 26,
+      "a": { "uid": "spd", "term": "PE" },
+      "b": { "uid": "pe", "term": "PE" },
+      "color": "#c4d600",
+      "section": 2.5,
+      "live": false,
+      "waypoints": []
+    },
+    {
+      "id": "w27",
+      "no": 27,
+      "a": { "uid": "pe", "term": "PE" },
+      "b": { "uid": "xb", "term": "PE" },
+      "color": "#c4d600",
+      "section": 2.5,
+      "live": false,
+      "waypoints": []
+    }
+  ],
+  "counts": {
+    "X": 3,
+    "PV": 6,
+    "FV": 2,
+    "QS": 1,
+    "INV": 1,
+    "P": 2,
+    "QI": 1,
+    "QF": 1,
+    "PE": 1
+  },
+  "seq": 40,
+  "wireNo": 28
+}

@@ -269,16 +269,20 @@
     </div>
   </header>
 
-  <!-- Barre de bascule rapide entre les 2 simulations quand un simulateur est actif -->
+  <!-- Barre de bascule rapide entre les simulations quand un simulateur est actif -->
   <nav class="wirelab-sim-nav" id="wirelabSimNav" hidden>
     <div class="wirelab-sim-nav-tabs">
+      <button type="button" class="wirelab-nav-tab" id="tabEduvolt" data-sim="eduvolt">
+        <span>📐</span>
+        <span data-i18n="tab.eduvolt">WireLab EduVolt</span>
+      </button>
       <button type="button" class="wirelab-nav-tab" id="tabIndustrial" data-sim="industrial">
         <span>⚡</span>
-        <span data-i18n="tab.industrial">Tableau Industriel</span>
+        <span data-i18n="tab.industrial">WireLab Électrique</span>
       </button>
       <button type="button" class="wirelab-nav-tab" id="tabElectronics" data-sim="electronics">
         <span>🔬</span>
-        <span data-i18n="tab.electronics">Labo Électronique</span>
+        <span data-i18n="tab.electronics">WireLab Électronique</span>
       </button>
     </div>
     <button type="button" class="wirelab-nav-hub-btn" id="btnBackToHub" data-i18n="btn.hub">
@@ -328,7 +332,25 @@
 
       <div class="wirelab-cards-grid">
         
-        <!-- Carte 1 : WireLab Électrique -->
+        <!-- Carte 1 : WireLab EduVolt Designer (Clone REA EduVolt) -->
+        <article class="wirelab-card wirelab-card--eduvolt" id="cardEduvolt" style="border-color: rgba(56, 189, 248, 0.4); background: linear-gradient(160deg, rgba(56, 189, 248, 0.1) 0%, rgba(15, 23, 42, 0.94) 100%);">
+          <span class="wirelab-card-badge" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; border-color: rgba(56, 189, 248, 0.4);" data-i18n="card.ev.badge">Édition EduVolt Pro</span>
+          <h2 class="wirelab-card-title" data-i18n="card.ev.title">WireLab EduVolt Designer</h2>
+          <p class="wirelab-card-desc" data-i18n="card.ev.desc">
+            Reproduction intégrale du système EduVolt Designer Pro : câblage sous goulottes, rayons de courbure Béziers, automate Siemens LOGO! 230RCE, relais RE17 et moteurs Y/Δ.
+          </p>
+          <div class="wirelab-card-features">
+            <span class="wirelab-feature-pill">Câblage Béziers & Goulottes</span>
+            <span class="wirelab-feature-pill">Siemens LOGO! 230RCE</span>
+            <span class="wirelab-feature-pill">Schneider Harmony RE17</span>
+          </div>
+          <button type="button" class="wirelab-card-btn" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);">
+            <span data-i18n="card.ev.btn">Ouvrir WireLab EduVolt</span>
+            <span>→</span>
+          </button>
+        </article>
+
+        <!-- Carte 2 : WireLab Électrique -->
         <article class="wirelab-card wirelab-card--industrial" id="cardIndustrial">
           <span class="wirelab-card-badge" data-i18n="card.ind.badge">Électricité & Automatismes</span>
           <h2 class="wirelab-card-title" data-i18n="card.ind.title">WireLab Électrique</h2>
@@ -346,7 +368,7 @@
           </button>
         </article>
 
-        <!-- Carte 2 : Labo Électronique (Nouvelle Simulation) -->
+        <!-- Carte 3 : Labo Électronique (Nouvelle Simulation) -->
         <article class="wirelab-card wirelab-card--electronics" id="cardElectronics">
           <span class="wirelab-card-badge" data-i18n="card.elec.badge">Électronique & Circuits</span>
           <h2 class="wirelab-card-title" data-i18n="card.elec.title">WireLab Électronique Studio</h2>
@@ -391,7 +413,8 @@
       var UNLOCK_KEY = "electrodz-wirelab-unlocked";
       var ACCESS_CODE = "manoud";
 
-      // Sources des deux simulations
+      // Sources des simulations WireLab
+      var SRC_EDUVOLT = "wirelab-eduvolt/index.html?v=eduvolt-rea-pro-v1&eduvolt=1";
       var SRC_INDUSTRIAL = "swissdz-panel/index.html?v=native-shell-8777-v176-rail-platine-overlap&wirelab=1";
       var SRC_ELECTRONICS = "wirelab-sim/index.html";
 
@@ -400,11 +423,11 @@
       var T = {
         fr: {
           "meta.title": "WireLab — Electro DZ",
-          "meta.desc": "WireLab — Plateforme de simulation électrique et électronique (Tableau industriel & Laboratoire de composants).",
+          "meta.desc": "WireLab — Plateforme de simulation électrique et électronique interactive (Tableau industriel et composants).",
           "nav.home": "Accueil",
           badge: "WireLab",
           title: "WireLab",
-          lead: "Accédez à la plateforme WireLab (Tableau électrique industriel et laboratoire d'électronique).",
+          lead: "Accédez à la plateforme WireLab (Simulations interactives et ateliers de câblage).",
           codeLabel: "Code d’accès",
           enter: "Entrer",
           err: "Code incorrect. Réessayez.",
@@ -414,6 +437,10 @@
           "fs.close": "Fermer",
           "hub.title": "Simulations WireLab",
           "hub.lead": "Choisissez l'environnement de simulation interactif que vous souhaitez utiliser :",
+          "card.ev.badge": "Édition EduVolt Pro",
+          "card.ev.title": "WireLab EduVolt Designer",
+          "card.ev.desc": "Reproduction intégrale du système EduVolt Designer Pro : câblage sous goulottes, rayons de courbure Béziers, automate Siemens LOGO! 230RCE, relais RE17 et moteurs Y/Δ.",
+          "card.ev.btn": "Ouvrir WireLab EduVolt",
           "card.ind.badge": "Électricité & Automatismes",
           "card.ind.title": "WireLab Électrique",
           "card.ind.desc": "Simulation électrique pédagogique SwissDZ : contacteurs, disjoncteurs, moteurs triphasés, sélecteurs et schémas.",
@@ -422,6 +449,7 @@
           "card.elec.title": "WireLab Électronique Studio",
           "card.elec.desc": "Laboratoire complet : plaque d'essai Breadboard, solveur nodal MNA, oscilloscope temps réel, Touchless Tap, CMS et calculateurs.",
           "card.elec.btn": "Ouvrir le Labo Électronique",
+          "tab.eduvolt": "WireLab EduVolt",
           "tab.industrial": "WireLab Électrique",
           "tab.electronics": "WireLab Électronique",
           "btn.hub": "Menu des simulations",
@@ -442,6 +470,10 @@
           "fs.close": "إغلاق",
           "hub.title": "محاكيات WireLab",
           "hub.lead": "اختر بيئة المحاكاة التفاعلية التي ترغب في تشغيلها :",
+          "card.ev.badge": "نسخة EduVolt الاحترافية",
+          "card.ev.title": "WireLab EduVolt Designer",
+          "card.ev.desc": "محاكاة نظام EduVolt Designer Pro بالكامل : التوصيل داخل مجاري الأسلاك (Canaletas)، منحنيات بيزييه، PLC Siemens LOGO! 230RCE، مؤقت RE17 والمحركات Y/Δ.",
+          "card.ev.btn": "تشغيل WireLab EduVolt",
           "card.ind.badge": "الكهرباء والتحكم الآلي",
           "card.ind.title": "WireLab الكهرباء الصناعية",
           "card.ind.desc": "محاكاة اللوحة الكهربائية التعليمية SwissDZ : القواطع، الملامسات، المحركات ثلاثية الطور، والمحددات.",
@@ -450,6 +482,7 @@
           "card.elec.title": "WireLab مختبر الإلكترونيات",
           "card.elec.desc": "مختبر إلكتروني متكامل : لوحة تجارب Breadboard، حل المدارات العقدية MNA، راسم إشارة فوري، حنفية الأشعة تحت الحمراء وحاسبات المقاومات.",
           "card.elec.btn": "فتح مختبر الإلكترونيات",
+          "tab.eduvolt": "WireLab EduVolt",
           "tab.industrial": "WireLab الكهربائي",
           "tab.electronics": "WireLab الإلكتروني",
           "btn.hub": "قائمة المحاكيات",
@@ -470,6 +503,10 @@
           "fs.close": "Close",
           "hub.title": "WireLab Simulations",
           "hub.lead": "Choose the interactive simulation environment you want to run:",
+          "card.ev.badge": "EduVolt Pro Edition",
+          "card.ev.title": "WireLab EduVolt Designer",
+          "card.ev.desc": "Complete EduVolt Designer Pro replica: slotted duct wiring, Bézier curve corners, Siemens LOGO! 230RCE, RE17 timers, and Y/Δ motors.",
+          "card.ev.btn": "Open WireLab EduVolt",
           "card.ind.badge": "Electrical & Automation",
           "card.ind.title": "WireLab Electrical",
           "card.ind.desc": "SwissDZ educational electrical simulation: contactors, breakers, 3-phase motors, selectors, and wiring schematics.",
@@ -478,6 +515,7 @@
           "card.elec.title": "WireLab Electronics Studio",
           "card.elec.desc": "Complete lab: Breadboard, MNA nodal solver, real-time oscilloscope, IR Touchless Tap, SMD codes, and calculators.",
           "card.elec.btn": "Open Electronics Lab",
+          "tab.eduvolt": "WireLab EduVolt",
           "tab.industrial": "WireLab Electrical",
           "tab.electronics": "WireLab Electronics",
           "btn.hub": "Simulations Menu",
@@ -577,6 +615,7 @@
         var loading = document.getElementById("simLoading");
         var fsToggle = document.getElementById("simFsToggle");
 
+        var tabEv = document.getElementById("tabEduvolt");
         var tabInd = document.getElementById("tabIndustrial");
         var tabElec = document.getElementById("tabElectronics");
 
@@ -587,8 +626,9 @@
 
         document.body.classList.add("ecole-unlocked");
 
-        var targetSrc = simKey === "electronics" ? SRC_ELECTRONICS : SRC_INDUSTRIAL;
+        var targetSrc = simKey === "eduvolt" ? SRC_EDUVOLT : simKey === "electronics" ? SRC_ELECTRONICS : SRC_INDUSTRIAL;
 
+        if (tabEv) tabEv.classList.toggle("active", simKey === "eduvolt");
         if (tabInd) tabInd.classList.toggle("active", simKey === "industrial");
         if (tabElec) tabElec.classList.toggle("active", simKey === "electronics");
 
@@ -650,10 +690,18 @@
           });
         }
       }
+      bindCardClick("cardEduvolt", "eduvolt");
       bindCardClick("cardIndustrial", "industrial");
       bindCardClick("cardElectronics", "electronics");
 
       // Clic sur la barre de bascule supérieure
+      var tabEv = document.getElementById("tabEduvolt");
+      if (tabEv) {
+        tabEv.addEventListener("click", function () {
+          launchSimulation("eduvolt");
+        });
+      }
+
       var tabInd = document.getElementById("tabIndustrial");
       if (tabInd) {
         tabInd.addEventListener("click", function () {
