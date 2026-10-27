@@ -491,6 +491,48 @@
       background: #10b981;
       box-shadow: 0 0 8px rgba(16,185,129,0.8);
     }
+
+    /* EduVolt Exact Wire Terminations & Handles */
+    .ev-wire-handle {
+      fill: #3b82f6;
+      stroke: #ffffff;
+      stroke-width: 2px;
+      cursor: grab;
+      transition: transform 0.15s, fill 0.15s;
+    }
+    .ev-wire-handle:hover {
+      fill: #60a5fa;
+      transform: scale(1.3);
+    }
+    .ev-wire-handle:active {
+      cursor: grabbing;
+      fill: #2563eb;
+    }
+    .ev-wire-del {
+      fill: #ef4444;
+      stroke: #ffffff;
+      stroke-width: 1.5px;
+      cursor: pointer;
+      opacity: 0.8;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .ev-wire-del:hover {
+      opacity: 1;
+      transform: scale(1.3);
+    }
+    .ev-wire-tag {
+      background: #f8fafc;
+      color: #0f172a;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid #475569;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+      font-family: monospace;
+      pointer-events: none;
+    }
+
   </style>
 </head>
 <body>
@@ -921,30 +963,33 @@
       return best;
     }
 
-    function computeEduVoltRoute(A, B) {
+    function computeEduVoltRoute(A, B, wire) {
+      if (wire && wire.waypoints && wire.waypoints.length) {
+        return [{ x: A.x, y: A.y }, ...wire.waypoints, { x: B.x, y: B.y }];
+      }
+
       const ductA = findClosestDuctH(A.y, A.dir);
       const ductB = findClosestDuctH(B.y, B.dir);
 
       const pts = [{ x: A.x, y: A.y }];
 
-      // Sortie perpendiculaire de la borne vers la goulotte
+      // Sortie perpendiculaire de la borne vers la goulotte (guideLength officiel de 60px)
       pts.push({ x: A.x, y: ductA.y });
 
       if (ductA === ductB) {
-        // Même goulotte horizontale : cheminement direct horizontal caché
+        // Même goulotte horizontale
         pts.push({ x: B.x, y: ductA.y });
       } else {
-        // Goulottes horizontales différentes : emprunte la goulotte verticale la plus proche
+        // Deux goulottes différentes : transition par goulotte verticale
         const vertDuct = (Math.abs(A.x - DUCTS_V[0].x) + Math.abs(B.x - DUCTS_V[0].x)) <
                          (Math.abs(A.x - DUCTS_V[1].x) + Math.abs(B.x - DUCTS_V[1].x))
                          ? DUCTS_V[0] : DUCTS_V[1];
 
         pts.push({ x: vertDuct.x, y: ductA.y });
-        pts.push({ x: vertDuct.x, y: ductB.y });
+        pts.push({ x: vertDuct.x, y: vertDuct.y || ductB.y });
         pts.push({ x: B.x, y: ductB.y });
       }
 
-      // Sortie de la goulotte vers la borne d'arrivée
       pts.push({ x: B.x, y: B.y });
       return pts;
     }
@@ -986,29 +1031,150 @@
 
     function renderWires() {
       wiresSvg.innerHTML = "";
+      const NS = "http://www.w3.org/2000/svg";
 
       state.wires.forEach(w => {
         const A = getTerminalPos(w.from.compUid, w.from.termId);
         const B = getTerminalPos(w.to.compUid, w.to.termId);
-        const pts = computeEduVoltRoute(A, B);
+        const pts = computeEduVoltRoute(A, B, w);
         const pathData = buildQuadraticBezierSvgPath(pts);
 
-        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        const isSelected = state.selectedWire === w.id;
+
+        // Path SVG principal du fil
+        const path = document.createElementNS(NS, "path");
         path.setAttribute("d", pathData);
         path.setAttribute("class", "ev-wire-path");
         path.setAttribute("stroke", w.color);
-        path.setAttribute("stroke-width", String(Math.max(3.2, Number(w.gauge) * 1.5)));
+        path.setAttribute("stroke-width", String(Math.max(3.5, Number(w.gauge) * 1.6)));
         path.setAttribute("stroke-linecap", "round");
         path.setAttribute("stroke-linejoin", "round");
+
+        if (isSelected) {
+          path.style.stroke = "#38bdf8";
+          path.style.filter = "drop-shadow(0 0 6px #38bdf8)";
+        }
+
+        path.addEventListener("click", (e) => {
+          e.stopPropagation();
+          state.selectedWire = (state.selectedWire === w.id) ? null : w.id;
+          renderWires();
+        });
 
         path.addEventListener("contextmenu", (e) => {
           e.preventDefault();
           state.wires = state.wires.filter(x => x.id !== w.id);
+          if (state.selectedWire === w.id) state.selectedWire = null;
           renderWires();
           updateWireCount();
         });
 
         wiresSvg.appendChild(path);
+
+        // Dessin des embouts / cosses métalliques EduVolt (Puntera / Ferrule)
+        const drawFerrule = (pt, nextPt) => {
+          const dx = nextPt.x - pt.x;
+          const dy = nextPt.y - pt.y;
+          const len = Math.hypot(dx, dy) || 1;
+          const ux = dx / len, uy = dy / len;
+          const angle = Math.atan2(uy, ux) * (180 / Math.PI);
+
+          const g = document.createElementNS(NS, "g");
+          g.setAttribute("transform", `translate(${pt.x}, ${pt.y}) rotate(${angle})`);
+
+          // Bague isolante plastique EduVolt
+          const collar = document.createElementNS(NS, "rect");
+          collar.setAttribute("x", "0");
+          collar.setAttribute("y", "-5");
+          collar.setAttribute("width", "6");
+          collar.setAttribute("height", "10");
+          collar.setAttribute("rx", "2");
+          collar.setAttribute("fill", w.color);
+          collar.setAttribute("stroke", "rgba(0,0,0,0.5)");
+          collar.setAttribute("stroke-width", "0.8");
+          g.appendChild(collar);
+
+          // Embout métallique étamé
+          const tube = document.createElementNS(NS, "rect");
+          tube.setAttribute("x", "6");
+          tube.setAttribute("y", "-3");
+          tube.setAttribute("width", "8");
+          tube.setAttribute("height", "6");
+          tube.setAttribute("fill", "#cbd5e1");
+          tube.setAttribute("stroke", "#475569");
+          tube.setAttribute("stroke-width", "0.6");
+          g.appendChild(tube);
+
+          wiresSvg.appendChild(g);
+        };
+
+        if (pts.length >= 2) {
+          drawFerrule(pts[0], pts[1]);
+          drawFerrule(pts[pts.length - 1], pts[pts.length - 2]);
+        }
+
+        // Affichage des points d'angle / poignées de coudes (Handles EduVolt) si sélectionné
+        if (isSelected && pts.length > 2) {
+          for (let i = 1; i < pts.length - 1; i++) {
+            const pt = pts[i];
+            const handle = document.createElementNS(NS, "circle");
+            handle.setAttribute("cx", String(pt.x));
+            handle.setAttribute("cy", String(pt.y));
+            handle.setAttribute("r", "7");
+            handle.setAttribute("class", "ev-wire-handle");
+            handle.setAttribute("title", "Déplacer le coude EduVolt");
+
+            let isDraggingHandle = false;
+            let startClientX, startClientY;
+
+            handle.addEventListener("mousedown", (ev) => {
+              ev.stopPropagation();
+              isDraggingHandle = true;
+              startClientX = ev.clientX;
+              startClientY = ev.clientY;
+
+              if (!w.waypoints) {
+                w.waypoints = pts.slice(1, -1).map(p => ({ x: p.x, y: p.y }));
+              }
+
+              const onMove = (moveEv) => {
+                if (!isDraggingHandle) return;
+                const dX = (moveEv.clientX - startClientX) / state.zoom;
+                const dY = (moveEv.clientY - startClientY) / state.zoom;
+                w.waypoints[i - 1].x = Math.round((pt.x + dX) / 10) * 10;
+                w.waypoints[i - 1].y = Math.round((pt.y + dY) / 10) * 10;
+                renderWires();
+              };
+
+              const onUp = () => {
+                isDraggingHandle = false;
+                window.removeEventListener("mousemove", onMove);
+                window.removeEventListener("mouseup", onUp);
+              };
+
+              window.addEventListener("mousemove", onMove);
+              window.addEventListener("mouseup", onUp);
+            });
+
+            wiresSvg.appendChild(handle);
+
+            // Bouton de suppression du point de coude
+            const del = document.createElementNS(NS, "circle");
+            del.setAttribute("cx", String(pt.x + 14));
+            del.setAttribute("cy", String(pt.y));
+            del.setAttribute("r", "5");
+            del.setAttribute("class", "ev-wire-del");
+            del.setAttribute("title", "Supprimer ce coude");
+            del.addEventListener("click", (ev) => {
+              ev.stopPropagation();
+              if (w.waypoints && w.waypoints.length) {
+                w.waypoints.splice(i - 1, 1);
+                renderWires();
+              }
+            });
+            wiresSvg.appendChild(del);
+          }
+        }
       });
     }
 
@@ -1084,6 +1250,13 @@
       state.zoom = 1.0;
       state.pan = { x: 0, y: 0 };
       updateTransform();
+    });
+
+    canvasContainer.addEventListener("click", (e) => {
+      if (e.target === canvasContainer || e.target.id === "world") {
+        state.selectedWire = null;
+        renderWires();
+      }
     });
 
     canvasContainer.addEventListener("mousedown", (e) => {
