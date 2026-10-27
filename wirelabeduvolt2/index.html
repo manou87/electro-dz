@@ -1708,23 +1708,58 @@
       let isDragging = false;
       let startX, startY;
 
+      const isPushBtn = (comp.folder || "").toLowerCase().includes("pulsador") || (comp.id || "").toLowerCase().includes("pulsador");
+      const isSwitchOrBreaker = (comp.folder || "").toLowerCase().includes("selector") || (comp.folder || "").toLowerCase().includes("interuptor") || (comp.folder || "").toLowerCase().includes("parada") || (comp.folder || "").toLowerCase().includes("guardamotor") || (comp.folder || "").toLowerCase().includes("itm");
+
+      // Clic interactif individuel en mode simulation
       el.addEventListener("click", (e) => {
         if (e.target.classList.contains("ev-terminal-pad")) return;
-        if (state.isSimulating) {
-          toggleComponentManual(comp);
+        if (state.isSimulating && !isPushBtn) {
+          // Commutateur rotatif, disjoncteur, interrupteur : bascule ON/OFF individuelle
+          comp.stateOn = !comp.stateOn;
+          setComponentVisualState(comp, comp.stateOn);
+          if (typeof updateEnergizedVisuals === "function") updateEnergizedVisuals();
         }
       });
 
       el.addEventListener("mousedown", (e) => {
         if (e.target.classList.contains("ev-terminal-pad")) return;
-        state.selectedComp = comp.uid;
-        state.selectedWire = null;
-        isDragging = true;
-        startX = e.clientX;
-        startY = e.clientY;
-        document.querySelectorAll(".ev-component-box").forEach(b => b.classList.remove("selected"));
-        el.classList.add("selected");
+
+        // Bouton poussoir momentané : enclenché tant qu'on maintient appuyé !
+        if (state.isSimulating && isPushBtn) {
+          comp.stateOn = true;
+          setComponentVisualState(comp, true);
+          if (typeof updateEnergizedVisuals === "function") updateEnergizedVisuals();
+          return;
+        }
+
+        if (!state.isSimulating) {
+          state.selectedComp = comp.uid;
+          state.selectedWire = null;
+          isDragging = true;
+          startX = e.clientX;
+          startY = e.clientY;
+          document.querySelectorAll(".ev-component-box").forEach(b => b.classList.remove("selected"));
+          el.classList.add("selected");
+        }
         e.stopPropagation();
+      });
+
+      el.addEventListener("mouseup", () => {
+        // Bouton poussoir relâché : revient immédiatement à l'état OFF !
+        if (state.isSimulating && isPushBtn) {
+          comp.stateOn = false;
+          setComponentVisualState(comp, false);
+          if (typeof updateEnergizedVisuals === "function") updateEnergizedVisuals();
+        }
+      });
+
+      el.addEventListener("mouseleave", () => {
+        if (state.isSimulating && isPushBtn && comp.stateOn) {
+          comp.stateOn = false;
+          setComponentVisualState(comp, false);
+          if (typeof updateEnergizedVisuals === "function") updateEnergizedVisuals();
+        }
       });
 
       window.addEventListener("mousemove", (e) => {
@@ -2184,9 +2219,11 @@
         simStatusDot.classList.add("active");
         simStatusText.textContent = "Simulation : En marche (Tension active)";
 
-        // Passer tous les appareils réactifs en état ON
+        // Démarrage de la simulation : la tension est établie, mais chaque appareil reste dans son état initial réel !
         state.components.forEach(comp => {
-          setComponentVisualState(comp, true);
+          // Si l'appareil a un état déjà mémorisé, on le conserve, sinon off par défaut
+          if (comp.stateOn === undefined) comp.stateOn = false;
+          setComponentVisualState(comp, comp.stateOn);
         });
         if (typeof updateEnergizedVisuals === "function") updateEnergizedVisuals();
       } else {
