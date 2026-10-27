@@ -23243,6 +23243,44 @@
         }
       }
 
+      // Algorithme pur EduVolt Designer Pro : routes directes sans zigzags ni boucles parasites
+      if (typeof isEduVoltRoute === "function" && isEduVoltRoute()) {
+        const step = (typeof boardCoordsStep === "function") ? boardCoordsStep() : 50;
+        const A = { x: a.x, y: a.y };
+        const B = { x: b.x, y: b.y };
+        const stubA = { x: A.x + (da[0] || 0) * step, y: A.y + (da[1] || 0) * step };
+        const stubB = { x: B.x + (db[0] || 0) * step, y: B.y + (db[1] || 0) * step };
+
+        const evPts = [A, stubA];
+
+        // 1. Même direction verticale (ex: les 2 bornes orientées vers le bas ou les 2 vers le haut)
+        if (da[1] !== 0 && da[1] === db[1]) {
+          const commonY = da[1] > 0 ? Math.max(stubA.y, stubB.y) : Math.min(stubA.y, stubB.y);
+          evPts.push({ x: stubA.x, y: commonY });
+          evPts.push({ x: stubB.x, y: commonY });
+        }
+        // 2. Même direction horizontale
+        else if (da[0] !== 0 && da[0] === db[0]) {
+          const commonX = da[0] > 0 ? Math.max(stubA.x, stubB.x) : Math.min(stubA.x, stubB.x);
+          evPts.push({ x: commonX, y: stubA.y });
+          evPts.push({ x: commonX, y: stubB.y });
+        }
+        // 3. Directions opposées (ex: sortie bas vers entrée haut)
+        else if (da[1] !== 0 && db[1] !== 0 && da[1] !== db[1]) {
+          const midY = (stubA.y + stubB.y) / 2;
+          evPts.push({ x: stubA.x, y: midY });
+          evPts.push({ x: stubB.x, y: midY });
+        }
+        // 4. Mixte horizontal / vertical
+        else {
+          evPts.push({ x: stubB.x, y: stubA.y });
+        }
+
+        evPts.push(stubB);
+        evPts.push(B);
+        return dedupePts(forceOrtho(simplifyOrtho(evPts)));
+      }
+
       const cands = [];
       if (db && da[0] === db[0] && da[1] === db[1]) {
         const span = Math.abs(da[0] ? (b.y - a.y) : (b.x - a.x));
