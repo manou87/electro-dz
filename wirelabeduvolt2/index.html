@@ -2340,7 +2340,134 @@
           deleteCurrentSelection();
         }
       }
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s") {
+        e.preventDefault();
+        saveProject();
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z" && !e.shiftKey) {
+        e.preventDefault();
+        undoAction();
+      }
+      if ((e.ctrlKey || e.metaKey) && (e.key.toLowerCase() === "y" || (e.key.toLowerCase() === "z" && e.shiftKey))) {
+        e.preventDefault();
+        redoAction();
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "l") {
+        e.preventDefault();
+        toggleLockSelected();
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "d") {
+        e.preventDefault();
+        duplicateSelected();
+      }
     });
+
+    // --- Actions Historique (Undo/Redo), Sauvegarde & Manipulation EduVolt ---
+    const undoStack = [];
+    const redoStack = [];
+
+    function pushHistorySnapshot() {
+      const snap = JSON.stringify({
+        components: state.components,
+        wires: state.wires
+      });
+      undoStack.push(snap);
+      if (undoStack.length > 30) undoStack.shift();
+      redoStack.length = 0;
+    }
+
+    function undoAction() {
+      if (undoStack.length === 0) return;
+      const current = JSON.stringify({ components: state.components, wires: state.wires });
+      redoStack.push(current);
+      const prev = JSON.parse(undoStack.pop());
+      state.components = prev.components;
+      state.wires = prev.wires;
+      state.selectedComp = null;
+      state.selectedWire = null;
+      renderAllComponents();
+      renderWires();
+      updateWireCount();
+    }
+
+    function redoAction() {
+      if (redoStack.length === 0) return;
+      const current = JSON.stringify({ components: state.components, wires: state.wires });
+      undoStack.push(current);
+      const next = JSON.parse(redoStack.pop());
+      state.components = next.components;
+      state.wires = next.wires;
+      state.selectedComp = null;
+      state.selectedWire = null;
+      renderAllComponents();
+      renderWires();
+      updateWireCount();
+    }
+
+    function renderAllComponents() {
+      componentsLayer.innerHTML = "";
+      state.components.forEach(c => {
+        createComponentElement(c);
+      });
+    }
+
+    function saveProject() {
+      const data = {
+        name: "Projet EduVolt",
+        version: "2.2.10",
+        timestamp: new Date().toISOString(),
+        components: state.components,
+        wires: state.wires
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "projet_eduvolt_" + Date.now() + ".json";
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    function toggleLockSelected() {
+      if (!state.selectedComp) return;
+      const comp = state.components.find(c => c.uid === state.selectedComp);
+      if (comp) {
+        comp.locked = !comp.locked;
+        const el = document.getElementById(comp.uid);
+        if (el) el.style.opacity = comp.locked ? "0.8" : "1";
+        const lockBtn = document.getElementById("btnLock");
+        if (lockBtn) lockBtn.classList.toggle("active", comp.locked);
+      }
+    }
+
+    function duplicateSelected() {
+      if (!state.selectedComp) return;
+      const original = state.components.find(c => c.uid === state.selectedComp);
+      if (!original) return;
+      pushHistorySnapshot();
+      const newUid = "c_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
+      const dup = JSON.parse(JSON.stringify(original));
+      dup.uid = newUid;
+      dup.x += 40;
+      dup.y += 40;
+      state.components.push(dup);
+      createComponentElement(dup);
+      selectComponent(newUid);
+    }
+
+    const btnSaveProj = document.getElementById("btnSaveProj");
+    if (btnSaveProj) btnSaveProj.addEventListener("click", saveProject);
+
+    const btnUndo = document.getElementById("btnUndo");
+    if (btnUndo) btnUndo.addEventListener("click", undoAction);
+
+    const btnRedo = document.getElementById("btnRedo");
+    if (btnRedo) btnRedo.addEventListener("click", redoAction);
+
+    const btnLock = document.getElementById("btnLock");
+    if (btnLock) btnLock.addEventListener("click", toggleLockSelected);
+
+    const btnDuplicate = document.getElementById("btnDuplicate");
+    if (btnDuplicate) btnDuplicate.addEventListener("click", duplicateSelected);
 
     
     // ==========================================
