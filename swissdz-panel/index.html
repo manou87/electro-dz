@@ -23238,7 +23238,8 @@
           else rawRoute.push({ x: gB.x, y: b.y });
           rawRoute.push({ x: b.x, y: b.y });
 
-          return withCardinalStubs(dedupePts(simplifyOrtho(rawRoute)), a, b);
+          // Tracé épuré direct façon EduVolt : pas de cardinal stubs déformants
+          return dedupePts(forceOrtho(simplifyOrtho(rawRoute)));
         }
       }
 
