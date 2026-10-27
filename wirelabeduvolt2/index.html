@@ -317,6 +317,17 @@
     }
 
     
+    
+    /* Bouton Menu toujours visible au premier plan */
+    #btnToggleSidebar {
+      flex-shrink: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      cursor: pointer !important;
+      z-index: 100 !important;
+    }
+
     /* Sidebar Collapsible (EduVolt Drawer Toggle) */
     .ev-sidebar {
       transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1), margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1119,13 +1130,15 @@
 
   <!-- App Header / Toolbar -->
   <header class="ev-appbar">
+    <!-- Bouton Menu Principal / Tiroir Composants en 1er à gauche (Toujours visible) -->
+    <button class="ev-tool-icon-btn primary" id="btnToggleSidebar" style="background: #2563eb; color: white; width: 38px; height: 38px; font-size: 16px; margin-right: 4px;" title="Menu : Masquer / Afficher la bibliothèque des composants">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
     <!-- Groupe Gauche : Logo, Sauvegarde, Undo/Redo -->
     <div class="ev-logo-group">
       <span class="ev-badge">EDUVOLT PRO</span>
       <span class="ev-title">EduVolt Designer <span style="font-size: 11px; color: #64748b; font-weight: 500;">Pro v2.2.10</span></span>
-      <div class="ev-btn-divider"></div>
-      <!-- Bouton Cacher / Afficher Liste Composants (EduVolt Sidebar Toggle) -->
-      <button class="ev-tool-icon-btn" id="btnToggleSidebar" title="Masquer / Afficher la bibliothèque des composants (Plein écran)"><i class="fa-solid fa-bars"></i></button>
       <div class="ev-btn-divider"></div>
       <button class="ev-tool-icon-btn" id="btnSaveProj" title="Enregistrer le projet (Ctrl+S)"><i class="fa-solid fa-floppy-disk"></i></button>
       <button class="ev-tool-icon-btn" id="btnUndo" title="Annuler (Ctrl+Z)"><i class="fa-solid fa-arrow-rotate-left"></i></button>
