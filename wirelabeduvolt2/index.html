@@ -815,11 +815,12 @@
 
       <div class="ev-cat-tabs" id="catTabs">
         <div class="ev-cat-tab active" data-cat="all">Tous</div>
-        <div class="ev-cat-tab" data-cat="Control">Contacteurs</div>
-        <div class="ev-cat-tab" data-cat="Proteccion">Protections</div>
-        <div class="ev-cat-tab" data-cat="Motores">Moteurs</div>
-        <div class="ev-cat-tab" data-cat="Accionamientos">Commandes</div>
-        <div class="ev-cat-tab" data-cat="Distribución">Borniers</div>
+        <div class="ev-cat-tab" data-cat="contacteur">Contacteurs</div>
+        <div class="ev-cat-tab" data-cat="proteccion">Protections</div>
+        <div class="ev-cat-tab" data-cat="motores">Moteurs</div>
+        <div class="ev-cat-tab" data-cat="accionamientos">Commandes</div>
+        <div class="ev-cat-tab" data-cat="distribucion">Borniers</div>
+        <div class="ev-cat-tab" data-cat="plc">Automates</div>
       </div>
 
       <div class="ev-component-list" id="compPalette">
@@ -907,12 +908,33 @@
       if (!palette) return;
       palette.innerHTML = "";
       const query = (filterText || "").toLowerCase().trim();
+      const targetCat = (category || "all").toLowerCase().trim();
 
       const filtered = COMPONENTS_MANIFEST.filter(item => {
-        const cat = typeof item.category === "object" ? (item.category.es || item.category.fr || item.category.en || "") : String(item.category || "");
-        const name = typeof item.name === "object" ? (item.name.fr || item.name.es || item.name.en || "") : String(item.name || item.id || "");
-        const matchCat = category === "all" || cat.toLowerCase().includes(category.toLowerCase());
-        const matchText = !query || name.toLowerCase().includes(query) || cat.toLowerCase().includes(query);
+        const cat = (typeof item.category === "object" ? (item.category.es || item.category.fr || item.category.en || "") : String(item.category || "")).toLowerCase();
+        const name = (typeof item.name === "object" ? (item.name.fr || item.name.es || item.name.en || "") : String(item.name || item.id || "")).toLowerCase();
+        const folder = (item.folder || "").toLowerCase();
+
+        let matchCat = false;
+        if (targetCat === "all") {
+          matchCat = true;
+        } else if (targetCat === "contacteur") {
+          matchCat = folder.includes("contactor") || cat.includes("control") || name.includes("contactor") || name.includes("rele");
+        } else if (targetCat === "proteccion") {
+          matchCat = cat.includes("protec") || cat.includes("seguridad") || folder.includes("guardamotor") || folder.includes("itm") || folder.includes("id_");
+        } else if (targetCat === "motores") {
+          matchCat = cat.includes("motor") || folder.includes("motor");
+        } else if (targetCat === "accionamientos") {
+          matchCat = cat.includes("accion") || folder.includes("pulsador") || folder.includes("interuptor") || folder.includes("selector") || folder.includes("parada");
+        } else if (targetCat === "distribucion") {
+          matchCat = cat.includes("distrib") || cat.includes("estructura") || folder.includes("borne") || folder.includes("barra") || folder.includes("riel");
+        } else if (targetCat === "plc") {
+          matchCat = cat.includes("plc") || folder.includes("logo");
+        } else {
+          matchCat = cat.includes(targetCat) || name.includes(targetCat);
+        }
+
+        const matchText = !query || name.includes(query) || cat.includes(query) || folder.includes(query);
         return matchCat && matchText;
       });
 
