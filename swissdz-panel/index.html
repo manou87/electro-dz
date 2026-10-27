@@ -23405,11 +23405,10 @@
       }
       const A = endpoint(w.a);
       const B = endpoint(w.b);
-      if (w.waypoints && w.waypoints.length) {
+      // Toujours recalculer via l'algorithme net EduVolt, sauf si l'utilisateur a posé un coude manuel explicite
+      if (w.waypoints && w.waypoints.length && w.hasManualCorners) {
         const mids = w.waypoints.map((p) => ({ x: p.x, y: p.y }));
-        /* v85: pointes de virage via withCardinalStubs (réf. 2026-10-01).
-           v42: pas de finalizeFaceRoute / re-route sous un module posé sur le fil. */
-        return withCardinalStubs([{ x: A.x, y: A.y }, ...mids, { x: B.x, y: B.y }], A, B);
+        return forceOrtho(dedupePts([{ x: A.x, y: A.y }, ...mids, { x: B.x, y: B.y }]));
       }
       return autoRoute(A, B);
     }
