@@ -1747,7 +1747,7 @@
           comp.stateOn = !comp.stateOn;
           setComponentVisualState(comp, comp.stateOn);
           if (comp.folder && comp.folder.includes("contactor")) {
-            playContactorClackSound();
+            playContactorClackSound(comp.stateOn);
           } else {
             playSwitchClickSound(comp.stateOn);
           }
@@ -2188,108 +2188,34 @@
 
     // Toggle Simulation avec changement d'état visuel (state_on.png)
             // =========================================================================
-    // MOTEUR AUDIO & BRUITAGES INDUSTRIELS RÉALISTES (Web Audio API)
+    // BRUITAGES D'ACTIONNEMENT AUTHENTIQUES (Vrais Clics & Enclenchements)
     // =========================================================================
-    let audioCtx = null;
-    let motorOsc = null;
-    let motorGain = null;
+    // Sons réels de contacteurs et disjoncteurs
+    const sndContactorOn = new Audio("assets/sounds/contactor_on.wav");
+    const sndContactorOff = new Audio("assets/sounds/contactor_off.wav");
+    sndContactorOn.volume = 0.5;
+    sndContactorOff.volume = 0.5;
 
-    function getAudioContext() {
-      if (!audioCtx) {
-        const AudioCtor = window.AudioContext || window.webkitAudioContext;
-        if (AudioCtor) audioCtx = new AudioCtor();
-      }
-      if (audioCtx && audioCtx.state === "suspended") {
-        audioCtx.resume();
-      }
-      return audioCtx;
-    }
-
-    // Bruit sec de commutation mécanique (Clic franc de bouton / disjoncteur)
+    // Clic net et naturel pour boutons poussoirs et sélecteurs (Enclenchement / Déclenchement)
     function playSwitchClickSound(isClosing = true) {
       try {
-        const ctx = getAudioContext();
-        if (!ctx) return;
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = "triangle";
-        osc.frequency.setValueAtTime(isClosing ? 320 : 220, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.04);
-        gain.gain.setValueAtTime(0.35, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.04);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.05);
+        const snd = isClosing ? sndContactorOn.cloneNode() : sndContactorOff.cloneNode();
+        snd.volume = 0.35;
+        snd.play().catch(() => {});
       } catch (err) {}
     }
 
-    // Bruit lourd de contacteur / relais (Clac électromagnétique puissant)
-    function playContactorClackSound() {
+    // Clac net pour contacteur industriel
+    function playContactorClackSound(isClosing = true) {
       try {
-        const ctx = getAudioContext();
-        if (!ctx) return;
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = "sawtooth";
-        osc.frequency.setValueAtTime(140, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.06);
-        gain.gain.setValueAtTime(0.4, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.07);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.08);
-      } catch (err) {}
-    }
-
-    // Ronronnement continu du moteur électrique (Hum 50Hz industriel avec harmonique 100Hz)
-    function startMotorHumSound() {
-      try {
-        const ctx = getAudioContext();
-        if (!ctx || motorOsc) return;
-        motorOsc = ctx.createOscillator();
-        motorGain = ctx.createGain();
-        motorOsc.type = "sawtooth";
-        motorOsc.frequency.setValueAtTime(50, ctx.currentTime);
-        motorGain.gain.setValueAtTime(0.01, ctx.currentTime);
-        motorGain.gain.linearRampToValueAtTime(0.12, ctx.currentTime + 0.3);
-        motorOsc.connect(motorGain);
-        motorGain.connect(ctx.destination);
-        motorOsc.start();
-      } catch (err) {}
-    }
-
-    function stopMotorHumSound() {
-      try {
-        if (motorGain && audioCtx) {
-          motorGain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.2);
-          setTimeout(() => {
-            if (motorOsc) {
-              try { motorOsc.stop(); motorOsc.disconnect(); } catch (e) {}
-              motorOsc = null;
-              motorGain = null;
-            }
-          }, 250);
-        }
+        const snd = isClosing ? sndContactorOn.cloneNode() : sndContactorOff.cloneNode();
+        snd.volume = 0.6;
+        snd.play().catch(() => {});
       } catch (err) {}
     }
 
     function updateAudioEffects() {
-      if (!state.isSimulating) {
-        stopMotorHumSound();
-        return;
-      }
-      // Vérifier si un moteur est actif
-      const anyMotorRunning = state.components.some(c => {
-        const isMotor = (c.folder || "").toLowerCase().includes("motor") || (c.id || "").toLowerCase().includes("motor");
-        return isMotor && c.stateOn;
-      });
-      if (anyMotorRunning) {
-        startMotorHumSound();
-      } else {
-        stopMotorHumSound();
-      }
+      // Pas de bourdonnement permanent parasite : uniquement des bruits d'actionnement nets !
     }
 
     // Gestion Universelle des États Visuels (On / Off) pour 100% des composants
