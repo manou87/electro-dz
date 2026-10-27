@@ -1889,33 +1889,36 @@
           g.setAttribute("transform", `translate(${cx.toFixed(1)}, ${cy.toFixed(1)}) rotate(${deg.toFixed(1)})`);
           g.style.cursor = "pointer";
 
-          // Manchon thermorétractable blanc/jaunâtre standard EduVolt
+          // Manchon thermorétractable blanc/jaunâtre discret aux dimensions exactes du fil (EduVolt 1:1)
+          const wireStroke = Math.max(3.5, Number(w.gauge) * 1.5);
+          const sleeveHeight = wireStroke + 2.5; // Ajusté précisément à l'épaisseur du fil
+          const sleeveWidth = Math.max(16, label.length * 4.2 + 5);
+
           const sleeve = document.createElementNS(NS, "rect");
-          sleeve.setAttribute("x", "-13");
-          sleeve.setAttribute("y", "-5.5");
-          sleeve.setAttribute("width", "26");
-          sleeve.setAttribute("height", "11");
-          sleeve.setAttribute("rx", "2");
-          sleeve.setAttribute("fill", "#fef9c3");
-          sleeve.setAttribute("stroke", "#ca8a04");
-          sleeve.setAttribute("stroke-width", "0.8");
-          sleeve.setAttribute("filter", "drop-shadow(0 1px 2px rgba(0,0,0,0.35))");
+          sleeve.setAttribute("x", String(-sleeveWidth / 2));
+          sleeve.setAttribute("y", String(-sleeveHeight / 2));
+          sleeve.setAttribute("width", String(sleeveWidth));
+          sleeve.setAttribute("height", String(sleeveHeight));
+          sleeve.setAttribute("rx", "1.5");
+          sleeve.setAttribute("fill", "#fef08a");
+          sleeve.setAttribute("stroke", "#b45309");
+          sleeve.setAttribute("stroke-width", "0.5");
+          sleeve.setAttribute("filter", "drop-shadow(0 0.5px 1.5px rgba(0,0,0,0.3))");
           g.appendChild(sleeve);
 
-          // Texte de repérage imprimé sur la bandelette
+          // Texte compact et propre centré sur le fil
           const txt = document.createElementNS(NS, "text");
           txt.setAttribute("x", "0");
-          txt.setAttribute("y", "3");
+          txt.setAttribute("y", "2");
           txt.setAttribute("text-anchor", "middle");
-          txt.setAttribute("fill", "#0f172a");
-          txt.setAttribute("font-size", "7.5px");
-          txt.setAttribute("font-weight", "800");
-          txt.setAttribute("font-family", "ui-monospace, monospace");
-          txt.setAttribute("letter-spacing", "-0.3px");
+          txt.setAttribute("fill", "#1e293b");
+          txt.setAttribute("font-size", "6px");
+          txt.setAttribute("font-weight", "700");
+          txt.setAttribute("font-family", "system-ui, -apple-system, sans-serif");
           txt.textContent = label;
           if (deg > 90 || deg < -90) {
             txt.setAttribute("transform", "rotate(180)");
-            txt.setAttribute("y", "-1.5");
+            txt.setAttribute("y", "-1");
           }
           g.appendChild(txt);
 
@@ -2414,7 +2417,7 @@
     function renderAllComponents() {
       componentsLayer.innerHTML = "";
       state.components.forEach(c => {
-        createComponentElement(c);
+        renderComponentDOM(c);
       });
     }
 
@@ -2457,7 +2460,7 @@
       dup.x += 40;
       dup.y += 40;
       state.components.push(dup);
-      createComponentElement(dup);
+      renderComponentDOM(dup);
       selectComponent(newUid);
     }
 
