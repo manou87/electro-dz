@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>WireLab EduVolt 2 - Clone Officiel EduVolt Designer Pro</title>
+  <title>WireLab Designer Pro - Simulateur Industriel</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -1138,8 +1138,8 @@
 
     <!-- Groupe Gauche : Logo, Sauvegarde, Undo/Redo -->
     <div class="ev-logo-group">
-      <span class="ev-badge">EDUVOLT PRO</span>
-      <span class="ev-title">EduVolt Designer <span style="font-size: 11px; color: #64748b; font-weight: 500;">Pro v2.2.10</span></span>
+      <span class="ev-badge">WIRELAB PRO</span>
+      <span class="ev-title">WireLab Designer <span style="font-size: 11px; color: #64748b; font-weight: 500;">Pro v2.2.10</span></span>
       <div class="ev-btn-divider"></div>
       <button class="ev-tool-icon-btn" id="btnSaveProj" title="Enregistrer le projet (Ctrl+S)"><i class="fa-solid fa-floppy-disk"></i></button>
       <button class="ev-tool-icon-btn" id="btnUndo" title="Annuler (Ctrl+Z)"><i class="fa-solid fa-arrow-rotate-left"></i></button>
@@ -1244,7 +1244,7 @@
       <div class="ev-modal-header">
         <div class="ev-modal-title">
           <i class="fa-solid fa-list-check" style="color: #38bdf8;"></i>
-          <span>Lista de Materiales (BOM) — EduVolt Designer Pro</span>
+          <span>Nomenclature du Matériel (BOM) — WireLab Designer Pro</span>
         </div>
         <button class="ev-tool-icon-btn" id="btnCloseBom">✕</button>
       </div>
@@ -1386,7 +1386,7 @@
         <!-- Cartouche Normalisé EduVolt / Carátula Técnica IEC 81346 -->
         <div class="ev-title-block" id="titleBlock">
           <div class="ev-tb-header">
-            <span><i class="fa-solid fa-file-contract" style="color: #38bdf8; margin-right: 4px;"></i> EDUVOLT DESIGNER PRO — ESQUEMA TÉCNICO</span>
+            <span><i class="fa-solid fa-file-contract" style="color: #38bdf8; margin-right: 4px;"></i> WIRELAB DESIGNER PRO — SCHÉMA TECHNIQUE</span>
             <span style="color: #10b981; font-weight: 800;">REV 1.0</span>
           </div>
           <div class="ev-tb-body">
@@ -1418,7 +1418,7 @@
         </div>
         <div class="ev-status-item">
           <i class="fa-solid fa-bezier-curve" style="color: #60a5fa;"></i>
-          <span>Routage : EduVolt Skia Quadratic Bezier</span>
+          <span>Routage : WireLab Quadratic Bezier</span>
         </div>
         <div class="ev-status-item">
           <i class="fa-solid fa-code-fork" style="color: #34d399;"></i>
@@ -1639,6 +1639,9 @@
       // Calcul des dimensions calibrées
       const dims = getCalibratedDimensions(item);
 
+      const rawW = (item.graphics && item.graphics.size && item.graphics.size.width) || 3600;
+      const rawH = (item.graphics && item.graphics.size && item.graphics.size.height) || 7200;
+
       const comp = {
         uid: compId,
         protoId: item.id,
@@ -1648,6 +1651,8 @@
         y: Math.round(y / 10) * 10,
         width: dims.w,
         height: dims.h,
+        rawW: rawW,
+        rawH: rawH,
         terminals: item.terminals || [],
         stateOn: false
       };
@@ -1678,7 +1683,7 @@
         <img src="${imgPath}" class="ev-comp-img" onerror="this.src='${fallback1}'; this.onerror=()=>{ this.src='${fallback2}'; this.onerror=()=>{ this.src='${fallback3}'; } };">
       `;
 
-      // Ajouter les pastilles de bornes aux coordonnées normalisées nx, ny officielles d'EduVolt
+      // Ajouter les pastilles de bornes aux coordonnées normalisées projetées sur l'image réelle
       comp.terminals.forEach(term => {
         const pad = document.createElement("div");
         pad.className = "ev-terminal-pad";
@@ -1686,9 +1691,10 @@
         pad.dataset.term = term.id;
         pad.title = `${term.id} (${term.signal || "Borne"})`;
 
-        // Positionnement précis selon nx / ny normalisés (0.0 à 1.0)
-        pad.style.left = (term.nx * 100) + "%";
-        pad.style.top = (term.ny * 100) + "%";
+        // Positionnement au sous-pixel près selon la projection réelle
+        const { px, py } = computeTerminalPixelOffset(comp, term);
+        pad.style.left = px + "px";
+        pad.style.top = py + "px";
 
         pad.addEventListener("click", (e) => {
           e.stopPropagation();
@@ -1766,14 +1772,34 @@
     }
 
     // Obtenir coordonnées absolues d'une borne
+    function computeTerminalPixelOffset(comp, term) {
+      const rw = comp.rawW || 3600;
+      const rh = comp.rawH || 7200;
+      const bw = comp.width;
+      const bh = comp.height;
+
+      // Calcul projection géométrique object-fit: contain
+      const scale = Math.min(bw / rw, bh / rh);
+      const rendW = rw * scale;
+      const rendH = rh * scale;
+      const offX = (bw - rendW) / 2;
+      const offY = (bh - rendH) / 2;
+
+      // Positionnement exact projeté sur l'image réelle de l'appareil
+      const px = offX + term.nx * rendW;
+      const py = offY + term.ny * rendH;
+      return { px, py };
+    }
+
     function getTerminalPos(compUid, termId) {
       const comp = state.components.find(c => c.uid === compUid);
       if (!comp) return { x: 0, y: 0, dir: "bottom" };
       const term = comp.terminals.find(t => t.id === termId);
       if (!term) return { x: comp.x + 20, y: comp.y + 20, dir: "bottom" };
+      const { px, py } = computeTerminalPixelOffset(comp, term);
       return {
-        x: comp.x + term.nx * comp.width,
-        y: comp.y + term.ny * comp.height,
+        x: comp.x + px,
+        y: comp.y + py,
         dir: term.direction || (term.ny < 0.5 ? "top" : "bottom")
       };
     }
@@ -2484,7 +2510,7 @@
 
     function saveProject() {
       const data = {
-        name: "Projet EduVolt",
+        name: "Projet WireLab",
         version: "2.2.10",
         timestamp: new Date().toISOString(),
         components: state.components,
@@ -2493,7 +2519,7 @@
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = "projet_eduvolt_" + Date.now() + ".json";
+      a.download = "projet_wirelab_" + Date.now() + ".json";
       a.click();
       URL.revokeObjectURL(a.href);
     }
