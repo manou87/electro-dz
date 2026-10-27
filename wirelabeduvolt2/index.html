@@ -892,34 +892,59 @@
     }
 
     /* =========================================================================
-       ROUTAGE EXACT EDUVOLT : Orthogonal 50px + Skia Path::quadraticBezierTo
+       ROUTAGE OFFICIEL EDUVOLT : Canalisation sous Goulotte & Courbure Bézier
+       D'après le binaire REA : 'Placa de montaje, canaletas, cableado oculto'
        ========================================================================= */
+    const DUCTS_H = [
+      { y: 80 + 24, top: 80, bottom: 128 },
+      { y: 380 + 24, top: 380, bottom: 428 },
+      { y: 680 + 24, top: 680, bottom: 728 }
+    ];
+    const DUCTS_V = [
+      { x: 80 + 24, left: 80, right: 128 },
+      { x: 2232 + 24, left: 2232, right: 2280 }
+    ];
+
+    function findClosestDuctH(y, dir) {
+      if (dir === "top") {
+        const cands = DUCTS_H.filter(d => d.y < y);
+        if (cands.length) return cands[cands.length - 1];
+      } else if (dir === "bottom") {
+        const cands = DUCTS_H.filter(d => d.y > y);
+        if (cands.length) return cands[0];
+      }
+      let best = DUCTS_H[0], minD = Math.abs(y - DUCTS_H[0].y);
+      for (const d of DUCTS_H) {
+        const dist = Math.abs(y - d.y);
+        if (dist < minD) { minD = dist; best = d; }
+      }
+      return best;
+    }
+
     function computeEduVoltRoute(A, B) {
-      const step = 50;
+      const ductA = findClosestDuctH(A.y, A.dir);
+      const ductB = findClosestDuctH(B.y, B.dir);
+
       const pts = [{ x: A.x, y: A.y }];
 
-      const stubA = {
-        x: A.x,
-        y: A.dir === "top" ? A.y - step : A.y + step
-      };
-      const stubB = {
-        x: B.x,
-        y: B.dir === "top" ? B.y - step : B.y + step
-      };
+      // Sortie perpendiculaire de la borne vers la goulotte
+      pts.push({ x: A.x, y: ductA.y });
 
-      pts.push(stubA);
-
-      if (A.dir === B.dir) {
-        const commonY = A.dir === "bottom" ? Math.max(stubA.y, stubB.y) : Math.min(stubA.y, stubB.y);
-        pts.push({ x: stubA.x, y: commonY });
-        pts.push({ x: stubB.x, y: commonY });
+      if (ductA === ductB) {
+        // Même goulotte horizontale : cheminement direct horizontal caché
+        pts.push({ x: B.x, y: ductA.y });
       } else {
-        const midY = (stubA.y + stubB.y) / 2;
-        pts.push({ x: stubA.x, y: midY });
-        pts.push({ x: stubB.x, y: midY });
+        // Goulottes horizontales différentes : emprunte la goulotte verticale la plus proche
+        const vertDuct = (Math.abs(A.x - DUCTS_V[0].x) + Math.abs(B.x - DUCTS_V[0].x)) <
+                         (Math.abs(A.x - DUCTS_V[1].x) + Math.abs(B.x - DUCTS_V[1].x))
+                         ? DUCTS_V[0] : DUCTS_V[1];
+
+        pts.push({ x: vertDuct.x, y: ductA.y });
+        pts.push({ x: vertDuct.x, y: ductB.y });
+        pts.push({ x: B.x, y: ductB.y });
       }
 
-      pts.push(stubB);
+      // Sortie de la goulotte vers la borne d'arrivée
       pts.push({ x: B.x, y: B.y });
       return pts;
     }
@@ -1085,16 +1110,16 @@
       const motorProto = COMPONENTS_MANIFEST.find(c => c.folder.includes("motor"));
 
       if (gv2Proto && contactorProto && motorProto) {
-        const c1 = placeComponent(gv2Proto, 180, 160);
-        const c2 = placeComponent(contactorProto, 360, 160);
-        const c3 = placeComponent(motorProto, 540, 460);
+        const c1 = placeComponent(gv2Proto, 220, 160);
+        const c2 = placeComponent(contactorProto, 460, 160);
+        const c3 = placeComponent(motorProto, 680, 460);
 
-        // Connexions de démonstration propres
+        // Connexions officielles EduVolt : GV2 sorties (2, 4, 6) vers Contacteur entrées (1, 3, 5)
         setTimeout(() => {
-          createWire({ compUid: c1.uid, termId: "2T1" }, { compUid: c2.uid, termId: "1L1" });
-          createWire({ compUid: c1.uid, termId: "4T2" }, { compUid: c2.uid, termId: "3L2" });
-          createWire({ compUid: c1.uid, termId: "6T3" }, { compUid: c2.uid, termId: "5L3" });
-        }, 150);
+          createWire({ compUid: c1.uid, termId: "2" }, { compUid: c2.uid, termId: "1" });
+          createWire({ compUid: c1.uid, termId: "4" }, { compUid: c2.uid, termId: "3" });
+          createWire({ compUid: c1.uid, termId: "6" }, { compUid: c2.uid, termId: "5" });
+        }, 200);
       }
     }
 
