@@ -2370,14 +2370,22 @@
 
     if (btnOpenPresets && presetsModal) {
       btnOpenPresets.addEventListener("click", () => {
+        presetsModal.classList.add("open");
         presetsModal.classList.add("active");
       });
     }
     if (btnClosePresets && presetsModal) {
       btnClosePresets.addEventListener("click", () => {
-        presetsModal.classList.remove("active");
+        presetsModal.classList.remove("open");
+        presetsModal.classList.remove("open"); presetsModal.classList.remove("active");
       });
     }
+    presetsModal.addEventListener("click", (e) => {
+      if (e.target === presetsModal) {
+        presetsModal.classList.remove("open");
+        presetsModal.classList.remove("open"); presetsModal.classList.remove("active");
+      }
+    });
 
     function clearEntireBoard() {
       state.components = [];
@@ -2404,7 +2412,7 @@
 
     function loadStarDeltaPreset() {
       clearEntireBoard();
-      if (presetsModal) presetsModal.classList.remove("active");
+      if (presetsModal) presetsModal.classList.remove("open"); presetsModal.classList.remove("active");
 
       const gv2Proto = COMPONENTS_MANIFEST.find(c => c.id === "Guardamotor 2,5-4 A" || c.folder.includes("guardamotor"));
       const kmProto = COMPONENTS_MANIFEST.find(c => c.id === "Contactor 0911" || c.folder.includes("contactor"));
@@ -2484,7 +2492,7 @@
 
     function loadDirectPreset() {
       clearEntireBoard();
-      if (presetsModal) presetsModal.classList.remove("active");
+      if (presetsModal) presetsModal.classList.remove("open"); presetsModal.classList.remove("active");
 
       const gv2Proto = COMPONENTS_MANIFEST.find(c => c.id === "Guardamotor 2,5-4 A" || c.folder.includes("guardamotor"));
       const kmProto = COMPONENTS_MANIFEST.find(c => c.id === "Contactor 0911" || c.folder.includes("contactor"));
@@ -2535,7 +2543,7 @@
     document.getElementById("presetDirect1Sens").addEventListener("click", loadDirectPreset);
     document.getElementById("presetClearBoard").addEventListener("click", () => {
       clearEntireBoard();
-      if (presetsModal) presetsModal.classList.remove("active");
+      if (presetsModal) presetsModal.classList.remove("open"); presetsModal.classList.remove("active");
     });
 
     function initDefaultSetup() {
@@ -3369,7 +3377,7 @@
 
   <!-- Modale Schémas d apprentissage Prédéfinis -->
   <div class="ev-modal-overlay" id="presetsModal">
-    <div class="ev-modal-content" style="max-width: 650px;">
+    <div class="ev-modal-card" style="max-width: 650px;">
       <div class="ev-modal-header">
         <div class="ev-modal-title">
           <i class="fa-solid fa-graduation-cap" style="color: #60a5fa; margin-right: 8px;"></i>
