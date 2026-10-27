@@ -1708,6 +1708,13 @@
       let isDragging = false;
       let startX, startY;
 
+      el.addEventListener("click", (e) => {
+        if (e.target.classList.contains("ev-terminal-pad")) return;
+        if (state.isSimulating) {
+          toggleComponentManual(comp);
+        }
+      });
+
       el.addEventListener("mousedown", (e) => {
         if (e.target.classList.contains("ev-terminal-pad")) return;
         state.selectedComp = comp.uid;
@@ -2107,6 +2114,61 @@
     }
 
     // Toggle Simulation avec changement d'état visuel (state_on.png)
+        // Gestion Universelle des États Visuels (On / Off) pour 100% des composants
+    function setComponentVisualState(comp, isOn) {
+      comp.stateOn = isOn;
+      const el = document.getElementById(comp.uid);
+      if (!el) return;
+      const img = el.querySelector(".ev-comp-img");
+      if (!img) return;
+
+      const folder = comp.folder;
+      if (isOn) {
+        // Détection de l'image active selon les formats
+        img.src = `assets/components/${folder}/state_on.png`;
+        img.onerror = () => {
+          img.src = `assets/components/${folder}/on.webp`;
+          img.onerror = () => {
+            img.src = `assets/components/${folder}/completed.webp`;
+            img.onerror = () => {
+              img.src = `assets/components/${folder}/state_pos1.png`;
+              img.onerror = () => {
+                img.src = `assets/components/${folder}/2W_NO.png`;
+                img.onerror = () => {
+                  img.src = `assets/components/${folder}/preview.png`;
+                  img.onerror = () => { img.src = `assets/components/${folder}/preview.webp`; };
+                };
+              };
+            };
+          };
+        };
+        el.classList.add("is-active-on");
+      } else {
+        img.src = `assets/components/${folder}/state_off.png`;
+        img.onerror = () => {
+          img.src = `assets/components/${folder}/unpowered.webp`;
+          img.onerror = () => {
+            img.src = `assets/components/${folder}/state_pos0.png`;
+            img.onerror = () => {
+              img.src = `assets/components/${folder}/2W_NC.png`;
+              img.onerror = () => {
+                img.src = `assets/components/${folder}/preview.png`;
+                img.onerror = () => { img.src = `assets/components/${folder}/preview.webp`; };
+              };
+            };
+          };
+        };
+        el.classList.remove("is-active-on");
+      }
+    }
+
+    function toggleComponentManual(comp) {
+      if (!state.isSimulating) return;
+      const newState = !comp.stateOn;
+      setComponentVisualState(comp, newState);
+      if (typeof updateEnergizedVisuals === "function") updateEnergizedVisuals();
+    }
+
     const btnToggleSim = document.getElementById("btnToggleSim");
     const simStatusDot = document.getElementById("simStatusDot");
     const simStatusText = document.getElementById("simStatusText");
@@ -2122,13 +2184,9 @@
         simStatusDot.classList.add("active");
         simStatusText.textContent = "Simulation : En marche (Tension active)";
 
-        // Passer les contacteurs et relais en state_on.png
+        // Passer tous les appareils réactifs en état ON
         state.components.forEach(comp => {
-          const el = document.getElementById(comp.uid);
-          if (el) {
-            const img = el.querySelector(".ev-comp-img");
-            if (img) img.src = `assets/components/${comp.folder}/state_on.png`;
-          }
+          setComponentVisualState(comp, true);
         });
         if (typeof updateEnergizedVisuals === "function") updateEnergizedVisuals();
       } else {
@@ -2137,13 +2195,9 @@
         simStatusDot.classList.remove("active");
         simStatusText.textContent = "Simulation : Arrêtée";
 
-        // Revenir en state_off.png
+        // Revenir en état OFF
         state.components.forEach(comp => {
-          const el = document.getElementById(comp.uid);
-          if (el) {
-            const img = el.querySelector(".ev-comp-img");
-            if (img) img.src = `assets/components/${comp.folder}/state_off.png`;
-          }
+          setComponentVisualState(comp, false);
         });
         if (typeof updateEnergizedVisuals === "function") updateEnergizedVisuals();
       }
@@ -2913,13 +2967,9 @@
       simStatusDot.classList.remove("active");
       simStatusText.textContent = "Simulation : Disjonction (Court-circuit)";
 
-      // Repasser tous les appareils en state_off.png
+      // Repasser tous les appareils en état OFF (Disjonction)
       state.components.forEach(comp => {
-        const el = document.getElementById(comp.uid);
-        if (el) {
-          const img = el.querySelector(".ev-comp-img");
-          if (img) img.src = `assets/components/${comp.folder}/state_off.png`;
-        }
+        setComponentVisualState(comp, false);
       });
       if (typeof updateEnergizedVisuals === "function") updateEnergizedVisuals();
     }
