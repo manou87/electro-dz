@@ -533,30 +533,149 @@
       pointer-events: none;
     }
 
+
+    /* EduVolt Full Navigation & Toolbars */
+    .ev-tool-icon-btn {
+      width: 34px;
+      height: 34px;
+      background: #202632;
+      border: 1px solid var(--ev-border);
+      border-radius: 6px;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+    .ev-tool-icon-btn:hover {
+      background: #2d3748;
+      color: #38bdf8;
+      border-color: #38bdf8;
+    }
+    .ev-tool-icon-btn.active {
+      background: #1d4ed8;
+      color: white;
+      border-color: #3b82f6;
+    }
+    .ev-btn-divider {
+      width: 1px;
+      height: 24px;
+      background: var(--ev-border);
+      margin: 0 4px;
+    }
+
+    /* Modal dialog (BOM, Ladder, Export) */
+    .ev-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    .ev-modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .ev-modal-card {
+      background: #1e2430;
+      border: 1px solid #3b4252;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 850px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+      overflow: hidden;
+    }
+    .ev-modal-header {
+      padding: 14px 20px;
+      background: #252d3a;
+      border-bottom: 1px solid #3b4252;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .ev-modal-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .ev-modal-body {
+      padding: 20px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .ev-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13px;
+    }
+    .ev-table th {
+      background: #141820;
+      color: #94a3b8;
+      padding: 10px 14px;
+      border-bottom: 2px solid #3b4252;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
+    .ev-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #2d3748;
+      color: #e2e8f0;
+    }
+    .ev-table tr:hover td {
+      background: #252d3a;
+    }
+
   </style>
 </head>
 <body>
 
   <!-- App Header / Toolbar -->
   <header class="ev-appbar">
+    <!-- Groupe Gauche : Logo, Sauvegarde, Undo/Redo -->
     <div class="ev-logo-group">
-      <span class="ev-badge">EDUVOLT PRO CLONE</span>
-      <span class="ev-title">WireLab EduVolt 2 <span style="font-size: 11px; color: #64748b; font-weight: 500;">(Photos & Schémas Officiels EduVolt)</span></span>
+      <span class="ev-badge">EDUVOLT PRO</span>
+      <span class="ev-title">EduVolt Designer <span style="font-size: 11px; color: #64748b; font-weight: 500;">Pro v2.2.10</span></span>
+      <div class="ev-btn-divider"></div>
+      <button class="ev-tool-icon-btn" id="btnSaveProj" title="Enregistrer le projet (Ctrl+S)"><i class="fa-solid fa-floppy-disk"></i></button>
+      <button class="ev-tool-icon-btn" id="btnUndo" title="Annuler (Ctrl+Z)"><i class="fa-solid fa-arrow-rotate-left"></i></button>
+      <button class="ev-tool-icon-btn" id="btnRedo" title="Rétablir (Ctrl+Y)"><i class="fa-solid fa-arrow-rotate-right"></i></button>
+      <button class="ev-tool-icon-btn" id="btnLock" title="Verrouiller/Déverrouiller sélection (Ctrl+L)"><i class="fa-solid fa-lock"></i></button>
+      <button class="ev-tool-icon-btn" id="btnDuplicate" title="Dupliquer le composant sélectionné (Ctrl+D)"><i class="fa-solid fa-clone"></i></button>
     </div>
 
-    <!-- Center Câble Presets -->
+    <!-- Centre : Câbles IEC, Section, Simulation, Goulotte, Outils -->
     <div class="ev-toolbar-center">
       <div class="ev-cable-bar">
-        <div class="ev-cable-swatch active" style="background: #92400e;" data-color="#92400e" title="L1 (Marron)"></div>
-        <div class="ev-cable-swatch" style="background: #111111;" data-color="#111111" title="L2 (Noir)"></div>
-        <div class="ev-cable-swatch" style="background: #9ca3af;" data-color="#9ca3af" title="L3 (Gris)"></div>
-        <div class="ev-cable-swatch" style="background: #0284c7;" data-color="#0284c7" title="N (Bleu)"></div>
-        <div class="ev-cable-swatch" style="background: linear-gradient(135deg, #c4d600 50%, #008c45 50%);" data-color="#c4d600" title="PE (Terre)"></div>
-        <div class="ev-cable-swatch" style="background: #dc2626;" data-color="#dc2626" title="DC+ (Rouge)"></div>
-        <div class="ev-cable-swatch" style="background: #020617;" data-color="#020617" title="DC- (Noir)"></div>
-        <div class="ev-cable-swatch" style="background: #ea580c;" data-color="#ea580c" title="Commande (Orange)"></div>
+        <div class="ev-cable-swatch active" style="background: #92400e;" data-color="#92400e" title="L1 - Marron (iec_ac_l1)"></div>
+        <div class="ev-cable-swatch" style="background: #111111;" data-color="#111111" title="L2 - Noir (iec_ac_l2)"></div>
+        <div class="ev-cable-swatch" style="background: #9ca3af;" data-color="#9ca3af" title="L3 - Gris (iec_ac_l3)"></div>
+        <div class="ev-cable-swatch" style="background: #0284c7;" data-color="#0284c7" title="Neutre - Bleu (iec_ac_n)"></div>
+        <div class="ev-cable-swatch" style="background: linear-gradient(135deg, #c4d600 50%, #008c45 50%);" data-color="#c4d600" title="Terre PE (iec_ac_pe)"></div>
+        <div class="ev-cable-swatch" style="background: #dc2626;" data-color="#dc2626" title="DC+ - Rouge (iec_dc_plus)"></div>
+        <div class="ev-cable-swatch" style="background: #020617;" data-color="#020617" title="DC- - Noir (iec_dc_minus)"></div>
+        <div class="ev-cable-swatch" style="background: #ea580c;" data-color="#ea580c" title="Commande (iec_ctrl_fase)"></div>
 
-        <select class="ev-gauge-select" id="cableGauge" title="Section de câble">
+        <select class="ev-gauge-select" id="cableGauge" title="Section du câble (CableGaugeCode)">
           <option value="1.5">1.5 mm²</option>
           <option value="2.5" selected>2.5 mm²</option>
           <option value="4.0">4.0 mm²</option>
@@ -564,28 +683,113 @@
         </select>
       </div>
 
+      <div class="ev-btn-divider"></div>
+
+      <!-- Actions de Goulottes & Masquage -->
+      <button class="ev-tool-icon-btn active" id="btnToggleDucts" title="Tapar / destapar canaleta (Fermer ou ouvrir les goulottes)"><i class="fa-solid fa-bars-staggered"></i></button>
+      <button class="ev-tool-icon-btn active" id="btnToggleTags" title="Afficher/Masquer étiquettes et repères IEC 81346"><i class="fa-solid fa-tags"></i></button>
+
+      <div class="ev-btn-divider"></div>
+
+      <!-- Bouton de Simulation Principal -->
       <button class="ev-btn primary" id="btnToggleSim">
         <i class="fa-solid fa-play"></i>
         <span>Simuler</span>
       </button>
 
-      <button class="ev-btn" id="btnClearBoard" title="Réinitialiser l'armoire">
-        <i class="fa-solid fa-rotate-left"></i>
-        <span>Effacer</span>
+      <!-- Éditeur Ladder LOGO! Siemens -->
+      <button class="ev-btn" id="btnOpenLadder" title="Abrir editor ladder (LOGO! / PLC)">
+        <i class="fa-solid fa-code"></i>
+        <span>Ladder</span>
+      </button>
+
+      <!-- Liste de Matériel BOM & Export -->
+      <button class="ev-btn" id="btnOpenBom" title="Lista de materiales (BOM / Excel)">
+        <i class="fa-solid fa-list-check"></i>
+        <span>BOM / Excel</span>
+      </button>
+
+      <!-- Export PDF Schéma -->
+      <button class="ev-btn" id="btnExportPdf" title="Exporter le schéma PDF avec cartouche officiel">
+        <i class="fa-solid fa-file-pdf" style="color: #f87171;"></i>
+        <span>PDF</span>
       </button>
     </div>
 
-    <!-- Actions / Export -->
-    <div style="display: flex; gap: 8px;">
-      <button class="ev-btn" id="btnZoomIn"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
-      <button class="ev-btn" id="btnZoomOut"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
-      <button class="ev-btn" id="btnZoomReset"><i class="fa-solid fa-compress"></i></button>
+    <!-- Droite : Zoom & Hub -->
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <button class="ev-tool-icon-btn" id="btnZoomIn" title="Zoom avant"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+      <button class="ev-tool-icon-btn" id="btnZoomOut" title="Zoom arrière"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+      <button class="ev-tool-icon-btn" id="btnZoomReset" title="Réinitialiser zoom"><i class="fa-solid fa-compress"></i></button>
+      <div class="ev-btn-divider"></div>
       <a href="../wirelab.html" class="ev-btn" style="text-decoration: none;">
         <i class="fa-solid fa-house"></i>
         <span>Hub</span>
       </a>
     </div>
   </header>
+
+  <!-- Modale Nomenclature / BOM EduVolt -->
+  <div class="ev-modal-overlay" id="bomModal">
+    <div class="ev-modal-card">
+      <div class="ev-modal-header">
+        <div class="ev-modal-title">
+          <i class="fa-solid fa-list-check" style="color: #38bdf8;"></i>
+          <span>Lista de Materiales (BOM) — EduVolt Designer Pro</span>
+        </div>
+        <button class="ev-tool-icon-btn" id="btnCloseBom">✕</button>
+      </div>
+      <div class="ev-modal-body">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <span style="font-size: 13px; color: #94a3b8;">Inventaire complet des équipements et longueurs de conducteurs</span>
+          <button class="ev-btn primary" id="btnDownloadExcel"><i class="fa-solid fa-file-excel"></i> Télécharger CSV / Excel</button>
+        </div>
+        <table class="ev-table">
+          <thead>
+            <tr>
+              <th>Repère</th>
+              <th>Désignation de l'appareil</th>
+              <th>Catégorie</th>
+              <th>Bornes câblées</th>
+              <th>Fabricant / Référence</th>
+            </tr>
+          </thead>
+          <tbody id="bomTableBody">
+            <!-- Rempli en JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modale Éditeur Ladder EduVolt -->
+  <div class="ev-modal-overlay" id="ladderModal">
+    <div class="ev-modal-card" style="max-width: 950px;">
+      <div class="ev-modal-header">
+        <div class="ev-modal-title">
+          <i class="fa-solid fa-microchip" style="color: #10b981;"></i>
+          <span>Éditeur Ladder (LOGO! 230RCE / Relais Temporisé)</span>
+        </div>
+        <button class="ev-tool-icon-btn" id="btnCloseLadder">✕</button>
+      </div>
+      <div class="ev-modal-body" style="background: #141820; font-family: monospace;">
+        <div style="margin-bottom: 15px; display: flex; gap: 8px;">
+          <button class="ev-btn primary" id="btnLadderAddContact"><i class="fa-solid fa-plus"></i> Contact NO (I1)</button>
+          <button class="ev-btn" id="btnLadderAddCoil"><i class="fa-solid fa-circle"></i> Bobine (Q1)</button>
+          <button class="ev-btn" id="btnLadderAddTimer"><i class="fa-solid fa-clock"></i> Temporisateur (TON)</button>
+        </div>
+        <div style="background: #1c222c; border: 1px solid #334155; border-radius: 8px; padding: 20px; min-height: 250px;">
+          <div style="color: #60a5fa; margin-bottom: 10px;">// Rung 1: Auto-maintien KM1 (Marche / Arrêt)</div>
+          <div style="display: flex; align-items: center; gap: 10px; color: #f8fafc; font-size: 14px;">
+            <span>|---[ I1 (Marche) ]---+---[ /I2 (Arrêt) ]---( Q1: KM1 Bobine )---|</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; color: #f8fafc; font-size: 14px; margin-top: 4px;">
+            <span>|---[ Q1 (Maintien) ]-+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Workspace -->
   <div class="ev-main">
@@ -1297,6 +1501,102 @@
     }
 
     // Démarrage
+    
+    // ==========================================
+    // NOUVELLES FONCTIONNALITÉS EDUVOLT PRO
+    // ==========================================
+
+    // Goulottes fermées ou ouvertes (Tapar / destapar canaleta)
+    let ductsCovered = true;
+    document.getElementById("btnToggleDucts").addEventListener("click", () => {
+      ductsCovered = !ductsCovered;
+      const btn = document.getElementById("btnToggleDucts");
+      btn.classList.toggle("active", ductsCovered);
+      document.querySelectorAll(".ev-wire-duct").forEach(d => {
+        d.style.opacity = ductsCovered ? "1" : "0.3";
+      });
+    });
+
+    // Affichage des repères de composants (Tags IEC 81346)
+    let tagsVisible = true;
+    document.getElementById("btnToggleTags").addEventListener("click", () => {
+      tagsVisible = !tagsVisible;
+      document.getElementById("btnToggleTags").classList.toggle("active", tagsVisible);
+      document.querySelectorAll(".ev-terminal-pad").forEach(p => {
+        p.style.opacity = tagsVisible ? "1" : "0";
+      });
+    });
+
+    // BOM / Liste de Matériel
+    const bomModal = document.getElementById("bomModal");
+    document.getElementById("btnOpenBom").addEventListener("click", () => {
+      const tbody = document.getElementById("bomTableBody");
+      tbody.innerHTML = "";
+      state.components.forEach(comp => {
+        const wiredTerms = state.wires.filter(w => w.from.compUid === comp.uid || w.to.compUid === comp.uid).length;
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td style="font-weight: 700; color: #60a5fa;">${comp.name.slice(0, 4).toUpperCase()}</td>
+          <td>${comp.name}</td>
+          <td>${comp.folder}</td>
+          <td>${wiredTerms} borne(s) raccordée(s)</td>
+          <td>EduVolt Catalog EVC</td>
+        `;
+        tbody.appendChild(tr);
+      });
+      bomModal.classList.add("open");
+    });
+    document.getElementById("btnCloseBom").addEventListener("click", () => bomModal.classList.remove("open"));
+
+    // Télécharger BOM en CSV
+    document.getElementById("btnDownloadExcel").addEventListener("click", () => {
+      let csv = "Repère;Désignation;Dossier EVC;Bornes;Fournisseur\n";
+      state.components.forEach(comp => {
+        csv += `${comp.name.slice(0, 4)};${comp.name};${comp.folder};${comp.terminals.length};EduVolt\n`;
+      });
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "BOM_EduVolt_Pro_Export.csv";
+      a.click();
+    });
+
+    // Éditeur Ladder
+    const ladderModal = document.getElementById("ladderModal");
+    document.getElementById("btnOpenLadder").addEventListener("click", () => ladderModal.classList.add("open"));
+    document.getElementById("btnCloseLadder").addEventListener("click", () => ladderModal.classList.remove("open"));
+
+    // Raccourcis clavier EduVolt officiels (Ctrl+S, Ctrl+Z, Ctrl+Y, Ctrl+D, Ctrl+L)
+    window.addEventListener("keydown", (e) => {
+      if (e.ctrlKey || e.metaKey) {
+        if (e.key === "s" || e.key === "S") {
+          e.preventDefault();
+          const proj = { components: state.components, wires: state.wires };
+          localStorage.setItem("eduvolt_project_v1", JSON.stringify(proj));
+          alert("Projet EduVolt enregistré avec succès (Ctrl+S) !");
+        } else if (e.key === "z" || e.key === "Z") {
+          e.preventDefault();
+          if (state.wires.length) {
+            state.wires.pop();
+            renderWires();
+            updateWireCount();
+          }
+        } else if (e.key === "d" || e.key === "D") {
+          e.preventDefault();
+          const selComp = state.components[state.components.length - 1];
+          if (selComp) {
+            const proto = COMPONENTS_MANIFEST.find(c => c.folder === selComp.folder);
+            if (proto) placeComponent(proto, selComp.x + 30, selComp.y + 30);
+          }
+        }
+      }
+    });
+
+    // Export PDF
+    document.getElementById("btnExportPdf").addEventListener("click", () => {
+      window.print();
+    });
+
     window.addEventListener("DOMContentLoaded", loadCatalog);
   </script>
 </body>
