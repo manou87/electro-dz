@@ -1324,6 +1324,58 @@
       </div>
     </div>
   </div>
+
+  <!-- Modale Schémas d apprentissage Prédéfinis -->
+  <div class="ev-modal-overlay" id="presetsModal">
+    <div class="ev-modal-card" style="max-width: 650px;">
+      <div class="ev-modal-header">
+        <div class="ev-modal-title">
+          <i class="fa-solid fa-graduation-cap" style="color: #60a5fa; margin-right: 8px;"></i>
+          <span>Schémas d apprentissage & Installations Prédéfinies</span>
+        </div>
+        <button class="ev-modal-close" id="btnClosePresets"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div style="padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+        <p style="font-size: 13px; color: #94a3b8;">Sélectionnez une installation industrielle prête pour l apprentissage et l auto-formation :</p>
+        
+        <div style="display: grid; grid-template-columns: 1fr; gap: 10px;">
+          <div class="ev-preset-card" id="presetStarDelta" style="background: #1e2632; border: 1px solid #3b82f6; border-radius: 8px; padding: 14px; cursor: pointer; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <div style="width: 44px; height: 44px; border-radius: 8px; background: rgba(59, 130, 246, 0.15); display: flex; align-items: center; justify-content: center; font-size: 20px; color: #60a5fa;">⚡</div>
+              <div>
+                <div style="font-weight: 700; font-size: 14px; color: #f8fafc;">Démarrage Moteur Étoile-Triangle (Y-Δ)</div>
+                <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">Disjoncteur GV2 + KM1 (Ligne) + KM2 (Triangle) + KM3 (Étoile) + Relais thermique + Moteur 6 bornes + Boutons & Voyants sur porte</div>
+              </div>
+            </div>
+            <button class="ev-btn primary" style="flex-shrink: 0;">Charger</button>
+          </div>
+
+          <div class="ev-preset-card" id="presetDirect1Sens" style="background: #1e2632; border: 1px solid #334155; border-radius: 8px; padding: 14px; cursor: pointer; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <div style="width: 44px; height: 44px; border-radius: 8px; background: rgba(34, 197, 94, 0.15); display: flex; align-items: center; justify-content: center; font-size: 20px; color: #4ade80;">▶️</div>
+              <div>
+                <div style="font-weight: 700; font-size: 14px; color: #f8fafc;">Démarrage Direct 1 Sens de Marche</div>
+                <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">GV2 + Contacteur KM1 + Auto-maintien (13-14) + Boutons Marche/Arrêt + Voyant vert</div>
+              </div>
+            </div>
+            <button class="ev-btn" style="flex-shrink: 0;">Charger</button>
+          </div>
+
+          <div class="ev-preset-card" id="presetClearBoard" style="background: #1e2632; border: 1px solid #334155; border-radius: 8px; padding: 14px; cursor: pointer; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <div style="width: 44px; height: 44px; border-radius: 8px; background: rgba(239, 68, 68, 0.15); display: flex; align-items: center; justify-content: center; font-size: 20px; color: #f87171;">🗑️</div>
+              <div>
+                <div style="font-weight: 700; font-size: 14px; color: #f8fafc;">Tableau Vierge (Projet Vide)</div>
+                <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">Effacer tous les composants et fils pour démarrer un schéma libre</div>
+              </div>
+            </div>
+            <button class="ev-btn" style="flex-shrink: 0;">Vider</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
     </div>
   </div>
 
@@ -1553,7 +1605,7 @@
     }
 
     // Filtre recherche
-    document.getElementById("searchComp").addEventListener("input", (e) => {
+    var _el_searchComp = document.getElementById("searchComp"); if (_el_searchComp) _el_searchComp.addEventListener("input", (e) => {
       const activeCat = document.querySelector(".ev-cat-tab.active").dataset.cat;
       renderPalette(activeCat, e.target.value);
     });
@@ -2319,17 +2371,17 @@
       world.style.transform = `translate(${state.pan.x}px, ${state.pan.y}px) scale(${state.zoom})`;
     }
 
-    document.getElementById("btnZoomIn").addEventListener("click", () => {
+    var _el_btnZoomIn = document.getElementById("btnZoomIn"); if (_el_btnZoomIn) _el_btnZoomIn.addEventListener("click", () => {
       state.zoom = Math.min(2.0, state.zoom + 0.15);
       updateTransform();
     });
 
-    document.getElementById("btnZoomOut").addEventListener("click", () => {
+    var _el_btnZoomOut = document.getElementById("btnZoomOut"); if (_el_btnZoomOut) _el_btnZoomOut.addEventListener("click", () => {
       state.zoom = Math.max(0.4, state.zoom - 0.15);
       updateTransform();
     });
 
-    document.getElementById("btnZoomReset").addEventListener("click", () => {
+    var _el_btnZoomReset = document.getElementById("btnZoomReset"); if (_el_btnZoomReset) _el_btnZoomReset.addEventListener("click", () => {
       state.zoom = 1.0;
       state.pan = { x: 0, y: 0 };
       updateTransform();
@@ -2539,13 +2591,17 @@
       }, 200);
     }
 
-    document.getElementById("presetStarDelta").addEventListener("click", loadStarDeltaPreset);
-    document.getElementById("presetDirect1Sens").addEventListener("click", loadDirectPreset);
-    document.getElementById("presetClearBoard").addEventListener("click", () => {
-      clearEntireBoard();
-      if (presetsModal) presetsModal.classList.remove("open"); presetsModal.classList.remove("active");
-    });
+    const pSD = document.getElementById("presetStarDelta");
+    if (pSD) pSD.addEventListener("click", loadStarDeltaPreset);
 
+    const pDir = document.getElementById("presetDirect1Sens");
+    if (pDir) pDir.addEventListener("click", loadDirectPreset);
+
+    const pClr = document.getElementById("presetClearBoard");
+    if (pClr) pClr.addEventListener("click", () => {
+      clearEntireBoard();
+      if (presetsModal) { presetsModal.classList.remove("open"); presetsModal.classList.remove("active"); }
+    });
     function initDefaultSetup() {
       loadDirectPreset();
     }
@@ -2576,7 +2632,7 @@
 
     // Affichage des repères de composants (Tags IEC 81346)
     let tagsVisible = true;
-    document.getElementById("btnToggleTags").addEventListener("click", () => {
+    var _el_btnToggleTags = document.getElementById("btnToggleTags"); if (_el_btnToggleTags) _el_btnToggleTags.addEventListener("click", () => {
       tagsVisible = !tagsVisible;
       document.getElementById("btnToggleTags").classList.toggle("active", tagsVisible);
       document.querySelectorAll(".ev-terminal-pad").forEach(p => {
@@ -2586,7 +2642,7 @@
 
     // BOM / Liste de Matériel
     const bomModal = document.getElementById("bomModal");
-    document.getElementById("btnOpenBom").addEventListener("click", () => {
+    var _el_btnOpenBom = document.getElementById("btnOpenBom"); if (_el_btnOpenBom) _el_btnOpenBom.addEventListener("click", () => {
       const tbody = document.getElementById("bomTableBody");
       tbody.innerHTML = "";
       state.components.forEach(comp => {
@@ -2603,10 +2659,10 @@
       });
       bomModal.classList.add("open");
     });
-    document.getElementById("btnCloseBom").addEventListener("click", () => bomModal.classList.remove("open"));
+    var _el_btnCloseBom = document.getElementById("btnCloseBom"); if (_el_btnCloseBom) _el_btnCloseBom.addEventListener("click", () => bomModal.classList.remove("open"));
 
     // Télécharger BOM en CSV
-    document.getElementById("btnDownloadExcel").addEventListener("click", () => {
+    var _el_btnDownloadExcel = document.getElementById("btnDownloadExcel"); if (_el_btnDownloadExcel) _el_btnDownloadExcel.addEventListener("click", () => {
       let csv = "Repère;Désignation;Dossier EVC;Bornes;Fournisseur\n";
       state.components.forEach(comp => {
         csv += `${comp.name.slice(0, 4)};${comp.name};${comp.folder};${comp.terminals.length};EduVolt\n`;
@@ -2620,8 +2676,8 @@
 
     // Éditeur Ladder
     const ladderModal = document.getElementById("ladderModal");
-    document.getElementById("btnOpenLadder").addEventListener("click", () => ladderModal.classList.add("open"));
-    document.getElementById("btnCloseLadder").addEventListener("click", () => ladderModal.classList.remove("open"));
+    var _el_btnOpenLadder = document.getElementById("btnOpenLadder"); if (_el_btnOpenLadder) _el_btnOpenLadder.addEventListener("click", () => ladderModal.classList.add("open"));
+    var _el_btnCloseLadder = document.getElementById("btnCloseLadder"); if (_el_btnCloseLadder) _el_btnCloseLadder.addEventListener("click", () => ladderModal.classList.remove("open"));
 
     // Raccourcis clavier EduVolt officiels (Ctrl+S, Ctrl+Z, Ctrl+Y, Ctrl+D, Ctrl+L)
     window.addEventListener("keydown", (e) => {
@@ -2650,7 +2706,7 @@
     });
 
     // Export PDF
-    document.getElementById("btnExportPdf").addEventListener("click", () => {
+    var _el_btnExportPdf = document.getElementById("btnExportPdf"); if (_el_btnExportPdf) _el_btnExportPdf.addEventListener("click", () => {
       window.print();
     });
 
@@ -3375,55 +3431,5 @@
     window.addEventListener("DOMContentLoaded", () => { loadCatalog(); setTimeout(fitPlanToScreen, 150); });
   </script>
 
-  <!-- Modale Schémas d apprentissage Prédéfinis -->
-  <div class="ev-modal-overlay" id="presetsModal">
-    <div class="ev-modal-card" style="max-width: 650px;">
-      <div class="ev-modal-header">
-        <div class="ev-modal-title">
-          <i class="fa-solid fa-graduation-cap" style="color: #60a5fa; margin-right: 8px;"></i>
-          <span>Schémas d apprentissage & Installations Prédéfinies</span>
-        </div>
-        <button class="ev-modal-close" id="btnClosePresets"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <div style="padding: 16px; display: flex; flex-direction: column; gap: 12px;">
-        <p style="font-size: 13px; color: #94a3b8;">Sélectionnez une installation industrielle prête pour l apprentissage et l auto-formation :</p>
-        
-        <div style="display: grid; grid-template-columns: 1fr; gap: 10px;">
-          <div class="ev-preset-card" id="presetStarDelta" style="background: #1e2632; border: 1px solid #3b82f6; border-radius: 8px; padding: 14px; cursor: pointer; display: flex; align-items: center; justify-content: space-between;">
-            <div style="display: flex; align-items: center; gap: 14px;">
-              <div style="width: 44px; height: 44px; border-radius: 8px; background: rgba(59, 130, 246, 0.15); display: flex; align-items: center; justify-content: center; font-size: 20px; color: #60a5fa;">⚡</div>
-              <div>
-                <div style="font-weight: 700; font-size: 14px; color: #f8fafc;">Démarrage Moteur Étoile-Triangle (Y-Δ)</div>
-                <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">Disjoncteur GV2 + KM1 (Ligne) + KM2 (Triangle) + KM3 (Étoile) + Relais thermique + Moteur 6 bornes + Boutons & Voyants sur porte</div>
-              </div>
-            </div>
-            <button class="ev-btn primary" style="flex-shrink: 0;">Charger</button>
-          </div>
-
-          <div class="ev-preset-card" id="presetDirect1Sens" style="background: #1e2632; border: 1px solid #334155; border-radius: 8px; padding: 14px; cursor: pointer; display: flex; align-items: center; justify-content: space-between;">
-            <div style="display: flex; align-items: center; gap: 14px;">
-              <div style="width: 44px; height: 44px; border-radius: 8px; background: rgba(34, 197, 94, 0.15); display: flex; align-items: center; justify-content: center; font-size: 20px; color: #4ade80;">▶️</div>
-              <div>
-                <div style="font-weight: 700; font-size: 14px; color: #f8fafc;">Démarrage Direct 1 Sens de Marche</div>
-                <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">GV2 + Contacteur KM1 + Auto-maintien (13-14) + Boutons Marche/Arrêt + Voyant vert</div>
-              </div>
-            </div>
-            <button class="ev-btn" style="flex-shrink: 0;">Charger</button>
-          </div>
-
-          <div class="ev-preset-card" id="presetClearBoard" style="background: #1e2632; border: 1px solid #334155; border-radius: 8px; padding: 14px; cursor: pointer; display: flex; align-items: center; justify-content: space-between;">
-            <div style="display: flex; align-items: center; gap: 14px;">
-              <div style="width: 44px; height: 44px; border-radius: 8px; background: rgba(239, 68, 68, 0.15); display: flex; align-items: center; justify-content: center; font-size: 20px; color: #f87171;">🗑️</div>
-              <div>
-                <div style="font-weight: 700; font-size: 14px; color: #f8fafc;">Tableau Vierge (Projet Vide)</div>
-                <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">Effacer tous les composants et fils pour démarrer un schéma libre</div>
-              </div>
-            </div>
-            <button class="ev-btn" style="flex-shrink: 0;">Vider</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</body>
+  </body>
 </html>
