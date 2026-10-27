@@ -23675,7 +23675,7 @@
       }
       return best;
     }
-    /* Affichage : quart de cercle EduVolt aux vrais coudes H↔V. Waypoints inchangés. */
+    /* EduVolt Path Smoothing: Quadratic Bézier (Flutter Path::quadraticBezierTo) */
     const WIRE_CORNER_R = 24;
     function isHvElbow(a, b, c) {
       const inLen = Math.hypot(b.x - a.x, b.y - a.y) || 1;
@@ -23704,7 +23704,7 @@
           d += ` L ${b.x.toFixed(1)} ${b.y.toFixed(1)}`;
           continue;
         }
-        /* Stub droit ; congé AU coude. Jamais R=0 juste parce qu’un voisin a raccourci la jambe. */
+        /* Congé doux via Bézier quadratique EduVolt (Path::quadraticBezierTo) */
         const padClear = 10;
         let r = Math.min(WIRE_CORNER_R, inLen * 0.49, outLen * 0.49);
         if (i === 1) r = Math.min(r, Math.max(inLen * 0.42, inLen - padClear));
@@ -23713,12 +23713,10 @@
         const ux = (b.x - a.x) / inLen, uy = (b.y - a.y) / inLen;
         const vx = (c.x - b.x) / outLen, vy = (c.y - b.y) / outLen;
         if (r >= 1.2) {
-        const p1x = b.x - ux * r, p1y = b.y - uy * r;
-        const p2x = b.x + vx * r, p2y = b.y + vy * r;
-          const cross = ux * vy - uy * vx;
-          const sweep = cross >= 0 ? 1 : 0;
+          const p1x = b.x - ux * r, p1y = b.y - uy * r;
+          const p2x = b.x + vx * r, p2y = b.y + vy * r;
           d += ` L ${p1x.toFixed(1)} ${p1y.toFixed(1)}`;
-          d += ` A ${r.toFixed(1)} ${r.toFixed(1)} 0 0 ${sweep} ${p2x.toFixed(1)} ${p2y.toFixed(1)}`;
+          d += ` Q ${b.x.toFixed(1)} ${b.y.toFixed(1)} ${p2x.toFixed(1)} ${p2y.toFixed(1)}`;
         } else {
           d += ` L ${b.x.toFixed(1)} ${b.y.toFixed(1)}`;
         }
