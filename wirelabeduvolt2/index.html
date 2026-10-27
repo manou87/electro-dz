@@ -851,6 +851,127 @@
       100% { filter: drop-shadow(0 0 12px #38bdf8) drop-shadow(0 0 24px #38bdf8); }
     }
 
+    
+    /* Snap Rail DIN Feedback */
+    .ev-din-rail.snapping {
+      box-shadow: 0 0 15px #38bdf8, inset 0 1px 3px rgba(255,255,255,0.4);
+      border-color: #38bdf8;
+    }
+
+    /* Bagues & Étiquettes de Câble Thermo-rétractables (IEC 81346) */
+    .ev-wire-sleeve-label {
+      background: #fef08a;
+      color: #0f172a;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 1px 5px;
+      border-radius: 3px;
+      border: 1px solid #ca8a04;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: transform 0.15s, background 0.15s;
+    }
+    .ev-wire-sleeve-label:hover {
+      transform: scale(1.25);
+      background: #fde047;
+      border-color: #a16207;
+    }
+
+    /* Animation Flash Court-Circuit (Cortocircuito detectado) */
+    @keyframes shortCircuitFlash {
+      0% { opacity: 0; }
+      20% { opacity: 0.9; }
+      40% { opacity: 0.2; }
+      60% { opacity: 1; }
+      80% { opacity: 0.3; }
+      100% { opacity: 0; }
+    }
+    .ev-short-circuit-flash {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(239,68,68,0.85) 0%, rgba(220,38,38,0.4) 60%, transparent 100%);
+      pointer-events: none;
+      z-index: 100;
+      display: none;
+      animation: shortCircuitFlash 0.6s ease-out;
+    }
+    .ev-fault-banner {
+      position: absolute;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ef4444;
+      color: white;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 8px 24px;
+      border-radius: 30px;
+      box-shadow: 0 10px 25px rgba(239,68,68,0.6);
+      display: none;
+      align-items: center;
+      gap: 10px;
+      z-index: 110;
+      animation: pulse 1s infinite alternate;
+    }
+
+    /* Cartouche Normalisé Officiel EduVolt (Title Block / Carátula IEC) */
+    .ev-title-block {
+      position: absolute;
+      bottom: 25px;
+      right: 25px;
+      width: 440px;
+      background: #141820;
+      border: 2px solid #475569;
+      border-radius: 4px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.7);
+      font-family: -apple-system, sans-serif;
+      z-index: 30;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+    .ev-tb-header {
+      background: #1e2633;
+      padding: 6px 12px;
+      border-bottom: 1px solid #475569;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: #94a3b8;
+    }
+    .ev-tb-body {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      font-size: 10px;
+    }
+    .ev-tb-cell {
+      padding: 6px 10px;
+      border-right: 1px solid #334155;
+      border-bottom: 1px solid #334155;
+      color: #cbd5e1;
+    }
+    .ev-tb-cell:nth-child(2n) {
+      border-right: none;
+    }
+    .ev-tb-label {
+      color: #64748b;
+      font-weight: 600;
+      font-size: 9px;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+    .ev-tb-val {
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
     /* Canale de câblage fermé vs ouvert */
     .ev-wire-duct {
       z-index: 15;
@@ -1171,6 +1292,39 @@
 
         <!-- Couche SVG Wires (Bézier Quadratique EduVolt) -->
         <svg class="ev-wires-svg" id="wiresSvg" width="5000" height="5000"></svg>
+
+        <!-- Flash Court-Circuit & Alerte Défaut -->
+        <div class="ev-short-circuit-flash" id="scFlash"></div>
+        <div class="ev-fault-banner" id="faultBanner">
+          <i class="fa-solid fa-triangle-exclamation fa-beat"></i>
+          <span>¡CORTOCIRCUITO DETECTADO! Disyunción magnétothermique automatique.</span>
+        </div>
+
+        <!-- Cartouche Normalisé EduVolt / Carátula Técnica IEC 81346 -->
+        <div class="ev-title-block" id="titleBlock">
+          <div class="ev-tb-header">
+            <span><i class="fa-solid fa-file-contract" style="color: #38bdf8; margin-right: 4px;"></i> EDUVOLT DESIGNER PRO — ESQUEMA TÉCNICO</span>
+            <span style="color: #10b981; font-weight: 800;">REV 1.0</span>
+          </div>
+          <div class="ev-tb-body">
+            <div class="ev-tb-cell">
+              <div class="ev-tb-label">PROYECTO / INSTALLATION</div>
+              <div class="ev-tb-val" id="tbProjectTitle">Armoire Départ Moteur Triphasé</div>
+            </div>
+            <div class="ev-tb-cell">
+              <div class="ev-tb-label">FECHA</div>
+              <div class="ev-tb-val" id="tbDate">27/10/2026</div>
+            </div>
+            <div class="ev-tb-cell">
+              <div class="ev-tb-label">CONCEBIDO POR</div>
+              <div class="ev-tb-val">Ingénieur Électrotechnique</div>
+            </div>
+            <div class="ev-tb-cell">
+              <div class="ev-tb-label">NORMATIVA</div>
+              <div class="ev-tb-val">IEC 81346 / NF C 15-100</div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Barre de statut flottante -->
@@ -1433,6 +1587,7 @@
           comp.y = Math.round(comp.y / 10) * 10;
           el.style.left = comp.x + "px";
           el.style.top = comp.y + "px";
+          if (typeof snapToDinRail === "function") snapToDinRail(comp, el);
           if (typeof checkAndApplyDocking === "function") checkAndApplyDocking(comp);
           renderWires();
         }
@@ -1665,6 +1820,21 @@
           wiresSvg.appendChild(g);
         };
 
+        // Ajout de l'étiquette thermo-rétractable IEC 81346 au milieu du câble
+        if (pts.length >= 2 && tagsVisible) {
+          const midIdx = Math.floor(pts.length / 2);
+          const midPt = pts[midIdx];
+          const tagForeign = document.createElementNS(NS, "foreignObject");
+          tagForeign.setAttribute("x", String(midPt.x - 22));
+          tagForeign.setAttribute("y", String(midPt.y - 10));
+          tagForeign.setAttribute("width", "70");
+          tagForeign.setAttribute("height", "22");
+          
+          const labelText = getWireLabelDefault(w, state.wires.indexOf(w));
+          tagForeign.innerHTML = `<div class="ev-wire-sleeve-label" onclick="editWireLabel('${w.id}')" title="Double-clic pour modifier l'étiquette">${labelText}</div>`;
+          wiresSvg.appendChild(tagForeign);
+        }
+
         if (pts.length >= 2) {
           drawFerrule(pts[0], pts[1]);
           drawFerrule(pts[pts.length - 1], pts[pts.length - 2]);
@@ -1761,6 +1931,9 @@
     btnToggleSim.addEventListener("click", () => {
       state.isSimulating = !state.isSimulating;
       if (state.isSimulating) {
+        if (typeof detectShortCircuits === "function" && detectShortCircuits()) {
+          return;
+        }
         btnToggleSim.classList.add("sim-active");
         btnToggleSim.innerHTML = '<i class="fa-solid fa-stop"></i><span>Arrêter</span>';
         simStatusDot.classList.add("active");
@@ -2329,6 +2502,116 @@
       btnOpenLadder.addEventListener("click", () => {
         renderLadderEditor();
       });
+    }
+
+    
+    // =========================================================================
+    // 1. ALIGNEMENT MAGNÉTIQUE AUTOMATIQUE SUR RAIL DIN 35MM (SNAP TO RAIL)
+    // =========================================================================
+    const DIN_RAILS_Y = [220, 520]; // Hauteurs exactes des rails DIN 35mm
+    const SNAP_TOLERANCE = 45; // Pixels d'aimantation
+
+    function snapToDinRail(comp, el) {
+      // Si le composant est un bouton de porte, pas de snap sur rail DIN
+      if (comp.x > 2340) return;
+
+      const compCenterY = comp.y + (comp.height / 2);
+      for (const railY of DIN_RAILS_Y) {
+        if (Math.abs(compCenterY - railY) < SNAP_TOLERANCE) {
+          // Centrer magnétiquement le composant sur le rail DIN
+          comp.y = railY - Math.round(comp.height / 2);
+          el.style.top = comp.y + "px";
+          
+          // Effet sonore ou vibration visuelle de snap
+          el.style.transition = "top 0.1s ease-out";
+          setTimeout(() => el.style.transition = "", 150);
+          break;
+        }
+      }
+    }
+
+    // =========================================================================
+    // 2. ÉTIQUETTES DE FILS THERMO-RÉTRACTABLES IEC (105+ ETIQUETAS)
+    // =========================================================================
+    function getWireLabelDefault(wire, index) {
+      if (wire.customTag) return wire.customTag;
+      return `-W${index + 1}`;
+    }
+
+    window.editWireLabel = function(wireId) {
+      const w = state.wires.find(x => x.id === wireId);
+      if (!w) return;
+      const current = w.customTag || getWireLabelDefault(w, state.wires.indexOf(w));
+      const newTag = prompt("Editar nombre de cable (Étiquette de fil IEC 81346) :", current);
+      if (newTag !== null && newTag.trim() !== "") {
+        w.customTag = newTag.trim();
+        renderWires();
+      }
+    };
+
+    // =========================================================================
+    // 3. ANALYSE DES PANNES & DÉTECTION DE COURT-CIRCUITS (ANALIZA FALLAS)
+    // =========================================================================
+    function detectShortCircuits() {
+      // Détecte si une Phase (Marron L1, Noir L2, Gris L3) est directement reliée au Neutre (Bleu N) ou Terre (PE)
+      let hasShortCircuit = false;
+      let shortWire = null;
+
+      for (const w of state.wires) {
+        const fromComp = state.components.find(c => c.uid === w.from.compUid);
+        const toComp = state.components.find(c => c.uid === w.to.compUid);
+        if (!fromComp || !toComp) continue;
+
+        const termA = fromComp.terminals.find(t => t.id === w.from.termId);
+        const termB = toComp.terminals.find(t => t.id === w.to.termId);
+        if (!termA || !termB) continue;
+
+        const isPhaseA = (termA.id.includes("L") || termA.signal === "Potencia") && !termA.id.includes("N") && !termA.id.includes("PE");
+        const isNeutralB = termB.id === "N" || termB.signal === "Neutro";
+        const isGroundB = termB.id === "PE" || termB.signal === "Tierra";
+
+        if ((isPhaseA && (isNeutralB || isGroundB)) || (isNeutralB && isPhaseA)) {
+          hasShortCircuit = true;
+          shortWire = w;
+          break;
+        }
+      }
+
+      if (hasShortCircuit) {
+        triggerShortCircuit(shortWire);
+        return true;
+      }
+      return false;
+    }
+
+    function triggerShortCircuit(wire) {
+      const flash = document.getElementById("scFlash");
+      const banner = document.getElementById("faultBanner");
+      if (flash) {
+        flash.style.display = "block";
+        setTimeout(() => flash.style.display = "none", 700);
+      }
+      if (banner) {
+        banner.style.display = "flex";
+        setTimeout(() => banner.style.display = "none", 4000);
+      }
+
+      // Disjonction automatique immédiate
+      state.isSimulating = false;
+      btnToggleSim.classList.remove("sim-active");
+      btnToggleSim.innerHTML = '<i class="fa-solid fa-play"></i><span>Simuler</span>';
+      simStatusDot.classList.remove("active");
+      simStatusText.textContent = "Simulation : Disjonction (Court-circuit)";
+
+      // Repasser tous les appareils en state_off.png
+      state.components.forEach(comp => {
+        const el = document.getElementById(comp.uid);
+        if (el) {
+          const img = el.querySelector(".ev-comp-img");
+          if (img) img.src = `assets/components/${comp.folder}/state_off.png`;
+        }
+      });
+      if (typeof updateEnergizedVisuals === "function") updateEnergizedVisuals();
     }
 
     window.addEventListener("DOMContentLoaded", loadCatalog);
