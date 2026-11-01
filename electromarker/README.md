@@ -23,6 +23,10 @@ Puis ouvrir **dans ton navigateur** :
 - `fonts/`, `images/`, `i/` — polices, images, PDF privacy
 - Favicons
 
+## Intégration Electro DZ
+
+Entrée site : [`dz-marker.html`](../dz-marker.html) (section **DZ Marker**, soft gate par code — voir `docs/dz-marker.md` dans le store projet).
+
 ## Mode sans connexion
 
 La modale Sign In / auth et le bandeau cookies sont désactivés dans ce clone : l’éditeur s’utilise sans compte (sauvegarde cloud / paiements restent liés à l’API live si tu les déclenches).
