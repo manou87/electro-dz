@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <script src="js/theme-electric-neon.js?v=chrome1"></script>
-  <meta name="description" content="DZ Marker — éditeur d’étiquettes de tableaux électriques (clone Electromarker). Accès par code." />
+  <meta name="description" content="DZ Marker — éditeur d’étiquettes de tableaux électriques. Accès par code." />
   <meta name="robots" content="noindex, follow" />
   <title>DZ Marker — Electro DZ</title>
   <link rel="icon" href="assets/app-icon.png" type="image/png" />
@@ -19,7 +19,7 @@
 <body class="sim-page ecole-page">
   <header class="sim-topbar">
     <a href="index-fr.html" class="sim-brand" data-i18n-href-fr="index-fr.html" data-i18n-href-ar="index.html">
-      <img src="electromarker/favicon.png" alt="" width="32" height="32" decoding="async" />
+      <img src="assets/app-icon.png" alt="" width="32" height="32" decoding="async" />
       <span>DZ <span class="accent">Marker</span></span>
     </a>
     <a href="index-fr.html" class="edz-home-link" data-edz-home="1" data-i18n="nav.home">Accueil</a>
@@ -42,7 +42,7 @@
   <div class="sim-workspace ecole-workspace">
     <section id="ecoleGate" class="ecole-gate" aria-labelledby="ecoleGateTitle">
       <div class="ecole-gate-card">
-        <img class="ecole-app-logo" src="electromarker/favicon.png" alt="DZ Marker" width="96" height="96" decoding="async" />
+        <img class="ecole-app-logo" src="assets/app-icon.png" alt="DZ Marker" width="96" height="96" decoding="async" />
         <p class="ecole-badge" data-i18n="badge">DZ Marker</p>
         <h1 id="ecoleGateTitle" data-i18n="title">DZ Marker</h1>
         <p class="ecole-lead" data-i18n="lead">
@@ -194,8 +194,8 @@
       }
 
       function panelSrcForLang() {
-        /* electromarker clone: EN shell + FR shell */
-        return lang === "fr" ? "electromarker/fr/index.html" : "electromarker/index.html";
+        /* DZ Marker: EN shell + FR shell */
+        return lang === "fr" ? "dzmarker-app/fr/index.html" : "dzmarker-app/index.html";
       }
 
       function applyLang(next) {
