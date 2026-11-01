@@ -58,10 +58,12 @@
     } else if (/Trident/.test(navigator.userAgent)) {
       document.getElementById('ie').style.display = 'block';
     }
-    var MAIN_URL = '';
+    var MAIN_URL = '/dzmarker-app';
     // Clone: no login required — accept cookies + block auth UI
     try {
       localStorage.setItem('cookie', 'true');
+      try { localStorage.setItem('locale', 'en'); } catch (e) {}
+      
       localStorage.setItem('firstTimeExamples', JSON.stringify(['main','wiring','connections','legend','id','cables','labels']));
     } catch (e) {}
     document.documentElement.classList.add('em-no-auth');
@@ -71,26 +73,107 @@
 
 <script id="em-no-auth-runtime">
 (function () {
-  function killAuth() {
-    try {
-      document.querySelectorAll('.auth, .weusecookie').forEach(function (el) { el.remove(); });
-      var root = document.getElementById('app') || document.querySelector('#app') || document.body;
-      var vue = root && root.__vue__;
-      // walk to $root
+  function findStore() {
+    var els = document.querySelectorAll("*");
+    for (var i = 0; i < els.length; i++) {
+      var vue = els[i].__vue__;
+      if (!vue) continue;
       var v = vue;
       while (v && v.$parent) v = v.$parent;
-      if (v && v.$store) {
-        v.$store.commit('assign', { showAuth: false, showIndividual: false });
-        var fte = v.$store.state.firstTimeExamples || [];
-        if (fte.indexOf('main') < 0) v.$store.commit('assign', { firstTimeExamples: fte.concat(['main','wiring','connections','legend','id','cables','labels']) });
-        var p = (v.$store.state.user && v.$store.state.user.profile) || {};
-        if (!p.cookie) v.$store.commit('user/assign', { profile: Object.assign({}, p, { cookie: true }) });
+      if (v && v.$store) return v.$store;
+    }
+    return null;
+  }
+
+  function defaultMarking(store) {
+    var groups = [];
+    try {
+      groups = JSON.parse(JSON.stringify((store.state.groups && store.state.groups.items) || []));
+    } catch (e) {}
+    return {
+      name: "marking.name",
+      groups: groups,
+      rails: [
+        {
+          modules: [],
+          din: 12,
+          height: 25,
+          position: "bottom",
+          padding: 0,
+          color: "#ffffff",
+          fontColor: "#000000",
+          shadow: false
+        }
+      ],
+      object: {
+        wrapsX: 300,
+        wrapsY: [125, 125],
+        barbus: [
+          { t: "N", x: 0, p: 26 },
+          { t: "N", x: 4, p: 6 },
+          { t: "N", x: 4, p: 6 },
+          { t: "PE", x: 0, p: 26 }
+        ],
+        cutmarkers: []
+      },
+      connections: [],
+      cablesMarking: [],
+      combs: [],
+      badgeMarking: null,
+      idsMarking: null,
+      labelsMarking: null,
+      legendMarking: null
+    };
+  }
+
+  function killAuth() {
+    try {
+      document.querySelectorAll(".auth, .weusecookie").forEach(function (el) {
+        el.remove();
+      });
+      var store = findStore();
+      if (!store) return;
+      store.commit("assign", { showAuth: false, showIndividual: false });
+      var fte = store.state.firstTimeExamples || [];
+      if (fte.indexOf("main") < 0) {
+        store.commit("assign", {
+          firstTimeExamples: fte.concat([
+            "main",
+            "wiring",
+            "connections",
+            "legend",
+            "id",
+            "cables",
+            "labels"
+          ])
+        });
+      }
+      var p = (store.state.user && store.state.user.profile) || {};
+      if (!p.cookie) {
+        store.commit("user/assign", {
+          profile: Object.assign({}, p, { cookie: true })
+        });
+      }
+      var l10n = store.state.l10n || {};
+      var hasUi = l10n.ui && l10n.ui["tabs.main"];
+      var current = store.state.markings && store.state.markings.current;
+      if (hasUi && !current && !store.state.__dzBootstrapped) {
+        store.state.__dzBootstrapped = true;
+        store
+          .dispatch("markings/current", defaultMarking(store))
+          .catch(function () {
+            store.state.__dzBootstrapped = false;
+          });
       }
     } catch (e) {}
   }
-  setInterval(killAuth, 1000);
-  document.addEventListener('DOMContentLoaded', killAuth);
-  window.addEventListener('load', function () { setTimeout(killAuth, 500); setTimeout(killAuth, 2000); });
+  setInterval(killAuth, 800);
+  document.addEventListener("DOMContentLoaded", killAuth);
+  window.addEventListener("load", function () {
+    setTimeout(killAuth, 400);
+    setTimeout(killAuth, 1200);
+    setTimeout(killAuth, 2500);
+  });
 })();
 </script>
 
