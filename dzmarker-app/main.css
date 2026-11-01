@@ -14,23 +14,23 @@
   }
 
 @font-face {
-  font-family: electromarker;
+  font-family: dzmarker;
   font-feature-settings: "kern" 1, "liga" 1;
-  src: url(fonts/electromarker.ttf);
+  src: url(fonts/dzmarker.ttf);
 }
 
 @font-face {
-  font-family: "electromarker condensed";
+  font-family: "dzmarker condensed";
   font-stretch: condensed;
   font-feature-settings: "kern" 1, "liga" 1;
-  src: url(fonts/electromarker.ttf);
+  src: url(fonts/dzmarker.ttf);
 }
 
 @font-face {
-  font-family: "electromarker expanded";
+  font-family: "dzmarker expanded";
   font-stretch: expanded;
   font-feature-settings: "kern" 1, "liga" 1;
-  src: url(fonts/electromarker.ttf);
+  src: url(fonts/dzmarker.ttf);
 }
 
 @font-face {
@@ -145,8 +145,8 @@ body {
   background-color: #000;
 }
 
-.electromarker {
-  font-family: electromarker, sans-serif;
+.dzmarker {
+  font-family: dzmarker, sans-serif;
 }
 
 .khand {
@@ -318,7 +318,7 @@ dd {
   background: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%3E%0A%20%20%3Cpath%20fill%3D%22%23000%22%20d%3D%22M14.641%2014.139V9.077h-1.055c.104.327.153.669.153%201.024%200%20.654-.167%201.261-.499%201.815a3.629%203.629%200%200%201-1.359%201.315%203.738%203.738%200%200%201-1.875.484%203.662%203.662%200%200%201-2.634-1.059c-.729-.706-1.09-1.559-1.09-2.557%200-.354.05-.696.153-1.024H5.334v5.062c0%20.135.045.25.137.34a.463.463%200%200%200%20.342.136h8.351a.47.47%200%200%200%20.336-.136.448.448%200%200%200%20.141-.338zM12.42%209.977c0-.646-.232-1.197-.707-1.65a2.367%202.367%200%200%200-1.707-.684c-.66%200-1.229.229-1.697.684a2.207%202.207%200%200%200-.709%201.65c0%20.646.237%201.195.709%201.652a2.351%202.351%200%200%200%201.697.682c.667%200%201.236-.228%201.707-.682a2.205%202.205%200%200%200%20.707-1.652zm2.221-2.812v-1.29a.513.513%200%200%200-.157-.378.508.508%200%200%200-.382-.161h-1.359a.52.52%200%200%200-.385.161.516.516%200%200%200-.154.378v1.289a.528.528%200%200%200%20.539.537h1.359c.15%200%20.277-.053.382-.156a.51.51%200%200%200%20.157-.38zM16%205.54v8.92c0%20.423-.149.783-.455%201.087a1.48%201.48%200%200%201-1.084.453H5.538c-.422%200-.782-.15-1.084-.453A1.485%201.485%200%200%201%204%2014.46V5.54c0-.423.151-.787.453-1.088A1.473%201.473%200%200%201%205.538%204h8.923c.422%200%20.784.149%201.084.452.305.302.455.665.455%201.088z%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 
-.electromarkirovka_logo {
+.dzmarker_logo {
   position: relative;
   margin: -1em;
   display: block;
@@ -501,7 +501,7 @@ dd {
   border-left:.25em solid rgb(117, 126, 143);
   padding:0 0 0 1.75em;
   margin:1em 0;
-  font-family:electromarker;
+  font-family:dzmarker;
 }
 .popup ol,
 .popup ul {
@@ -743,7 +743,7 @@ dl.notificationsList dd {
 
 .buyPROorDL {min-width: 380px;}
 .buyPROorDL .column_header {
-  font-family: electromarker, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+  font-family: dzmarker, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
   font-weight: normal;
   font-size: 13pt;
 }
