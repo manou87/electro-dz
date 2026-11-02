@@ -1220,6 +1220,9 @@
       background: var(--ev-board);
       overflow: hidden;
       cursor: grab;
+      touch-action: none; /* Empêche le scroll natif du navigateur sur iPad/iPhone pour permettre le pan fluide */
+      -webkit-user-select: none;
+      user-select: none;
     }
     .ev-canvas-container.panning {
       cursor: grabbing !important;
@@ -8461,13 +8464,29 @@
       floatingWidget.appendChild(btnFitScreen);
     }
 
-    // Gestion du Touch / Pinch-to-zoom sur Tablette (iPad / Android)
+    // Gestion complète du Touch sur iPad, iPhone et tablettes Android :
+    // - 1 doigt sur le plan : déplacement / pan fluide du tableau
+    // - 2 doigts : zoom / pincement (pinch-to-zoom)
     let initialTouchDistance = null;
     let initialTouchZoom = null;
+    let touchPanActive = false;
+    let touchPanStart = { x: 0, y: 0 };
 
     canvasContainer.addEventListener("touchstart", (e) => {
-      if (e.touches.length === 2) {
+      const isInteractive = e.target.closest(".ev-component-box, .ev-terminal-pad, .ev-wire-handle, .ev-cable-gland, .ev-floating-zoom, .ev-status-bar, button, select, input, a, .ev-door-action-btn, #btnDoorQuickToggle");
+
+      if (e.touches.length === 1 && !isInteractive && !state.wireStart) {
+        // Début du déplacement du plan de travail à 1 doigt
+        touchPanActive = true;
+        touchPanStart = {
+          x: e.touches[0].clientX - state.pan.x,
+          y: e.touches[0].clientY - state.pan.y
+        };
+        canvasContainer.classList.add("panning");
+      } else if (e.touches.length === 2) {
+        // Pincement à 2 doigts pour zoomer
         e.preventDefault();
+        touchPanActive = false;
         initialTouchDistance = Math.hypot(
           e.touches[0].clientX - e.touches[1].clientX,
           e.touches[0].clientY - e.touches[1].clientY
@@ -8477,7 +8496,12 @@
     }, { passive: false });
 
     canvasContainer.addEventListener("touchmove", (e) => {
-      if (e.touches.length === 2 && initialTouchDistance) {
+      if (touchPanActive && e.touches.length === 1) {
+        e.preventDefault();
+        state.pan.x = e.touches[0].clientX - touchPanStart.x;
+        state.pan.y = e.touches[0].clientY - touchPanStart.y;
+        updateTransform();
+      } else if (e.touches.length === 2 && initialTouchDistance) {
         e.preventDefault();
         const currentDistance = Math.hypot(
           e.touches[0].clientX - e.touches[1].clientX,
@@ -8489,9 +8513,14 @@
       }
     }, { passive: false });
 
-    canvasContainer.addEventListener("touchend", () => {
+    const endTouch = () => {
+      touchPanActive = false;
       initialTouchDistance = null;
-    });
+      canvasContainer.classList.remove("panning");
+    };
+
+    canvasContainer.addEventListener("touchend", endTouch);
+    canvasContainer.addEventListener("touchcancel", endTouch);
 
     // Appeler l'ajustement au démarrage
     window.addEventListener("resize", fitPlanToScreen);
