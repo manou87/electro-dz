@@ -2387,6 +2387,20 @@
     /* .ev-door-handle hérite de la serrure industrielle 50% */
 
     /* Docking Zones visuelles */
+    .ev-term-hidden {
+      display: none !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+    .ev-dock-snap {
+      animation: dockSnapPulse 0.35s ease-out !important;
+      outline: 2.5px dashed #10b981 !important;
+      filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.7)) !important;
+    }
+    @keyframes dockSnapPulse {
+      0% { transform: scale(1.04); }
+      100% { transform: scale(1.0); }
+    }
     .ev-dock-ghost {
       outline: 2px dashed #10b981 !important;
       background: rgba(16, 185, 129, 0.15) !important;
@@ -4027,17 +4041,24 @@
         const w = Math.round(h * ratio);
         return { w, h };
       }
+      // Relais thermique de protection (Échelle exacte EduVolt REA : 3600x4800, largeur 56px égale au contacteur)
       if (folder.includes("rele_termico") || cid.includes("rele_termico") || cid.includes("thermal_relay") || folder.includes("tf42")) {
-        const h = 90;
-        const w = Math.round(h * ratio);
-        return { w, h };
+        return { w: 56, h: 74 };
       }
 
-      // Bloc auxiliaire frontal
-      if (folder.includes("bloque_auxiliar") || cid.includes("bloque_auxiliar")) {
-        const w = 55;
-        const h = Math.round(w / ratio);
-        return { w, h };
+      // Bloc temporisateur pneumatique frontal (Échelle exacte EduVolt REA : 2900x3300, 45x51px)
+      if (folder.includes("temporizador") || cid.includes("temporizador") || folder.includes("timer_block")) {
+        return { w: 45, h: 51 };
+      }
+
+      // Bloc auxiliaire frontal contacteur (Échelle exacte EduVolt REA : 2900x3300, 45x51px)
+      if (folder.includes("bloque_auxiliar_frontal_3no") || (folder.includes("bloque_auxiliar") && !folder.includes("guardamotor")) || cid.includes("ca5_10")) {
+        return { w: 45, h: 51 };
+      }
+
+      // Bloc auxiliaire frontal disjoncteur moteur GV2 (Échelle exacte EduVolt REA : 3600x600, 56x10px)
+      if (folder.includes("guardamotor") && folder.includes("bloque_auxiliar")) {
+        return { w: 56, h: 10 };
       }
 
       // Rendu fidélité 100% EduVolt pour tous les autres composants
@@ -4502,6 +4523,11 @@
           el.style.top = Math.round(comp.y) + "px";
         }
 
+        // EduVolt REA : Entraînement synchrone des composants enfants encliquetés (ex: relais thermique sous contacteur)
+        if (typeof updateDockedChildrenPositions === "function") {
+          updateDockedChildrenPositions(comp);
+        }
+
         renderWires();
         if (typeof renderDistanceGuides === 'function') renderDistanceGuides(comp);
       });
@@ -4525,8 +4551,13 @@
         el.style.left = comp.x + "px";
         el.style.top = comp.y + "px";
 
-        if (typeof snapToDinRail === "function") snapToDinRail(comp, el);
-        if (typeof checkAndApplyDocking === "function") checkAndApplyDocking(comp);
+        let isDocked = false;
+        if (typeof checkAndApplyDocking === "function") {
+          isDocked = checkAndApplyDocking(comp);
+        }
+        if (!isDocked && typeof snapToDinRail === "function") {
+          snapToDinRail(comp, el);
+        }
         if (typeof applyDoorState === "function") {
           applyDoorState(doorClosedMode);
         } else {
@@ -5772,6 +5803,43 @@
           propagated = false;
           propIter++;
 
+          // Ponts internes automatiques EduVolt REA (ex: Contacteur 2,4,6 -> Relais thermique 1,3,5)
+          state.components.forEach(ch => {
+            if (ch.dockedTo && ch.dockedTo.hostUid) {
+              const host = state.components.find(c => c.uid === ch.dockedTo.hostUid);
+              if (host) {
+                const zones = getComponentDockingZones(host);
+                const zone = zones.find(z => z.id === ch.dockedTo.zoneId);
+                if (zone && zone.bridge && zone.bridge.length) {
+                  zone.bridge.forEach(b => {
+                    transferPotentialAcross(host.uid, b.hostTerminal, ch.uid, b.childTerminal);
+                  });
+                }
+              }
+            }
+          });
+
+          function transferPotentialAcross(u1, t1, u2, t2) {
+            const k1 = `${u1}:${t1}`;
+            const k2 = `${u2}:${t2}`;
+            const s1 = termPotentials.get(k1);
+            const s2 = termPotentials.get(k2);
+            if (s1 && s1.size) {
+              if (!termPotentials.has(k2)) termPotentials.set(k2, new Set());
+              const target = termPotentials.get(k2);
+              const b = target.size;
+              s1.forEach(p => target.add(p));
+              if (target.size > b) propagated = true;
+            }
+            if (s2 && s2.size) {
+              if (!termPotentials.has(k1)) termPotentials.set(k1, new Set());
+              const target = termPotentials.get(k1);
+              const b = target.size;
+              s2.forEach(p => target.add(p));
+              if (target.size > b) propagated = true;
+            }
+          }
+
           // A) Propagation à travers les fils
           state.wires.forEach(w => {
             const k1 = `${w.from.compUid}:${w.from.termId}`;
@@ -5930,13 +5998,90 @@
               if (isOn) transferPotential(comp.uid, "COM", "L1");
             }
 
-            // Relais thermique de protection
-            if (folder.includes("rele_termico")) {
+            // Relais thermique de protection (EduVolt REA)
+            if (folder.includes("rele_termico") || cid.includes("thermal_relay") || folder.includes("tf42")) {
+              // Pôles de puissance principaux
               transferPotential(comp.uid, "1", "2");
               transferPotential(comp.uid, "3", "4");
               transferPotential(comp.uid, "5", "6");
-              if (!isOn) transferPotential(comp.uid, "95", "96");
-              else transferPotential(comp.uid, "97", "98");
+
+              // Contact de sécurité NF 95-96 fermé au repos, contact de signalisation NO 97-98 ouvert
+              if (!isOn) {
+                transferPotential(comp.uid, "95", "96");
+              } else {
+                transferPotential(comp.uid, "97", "98");
+              }
+            }
+
+            // Bloc Temporisateur Pneumatique Frontal (EduVolt REA LAD-T : 1 - 30s)
+            if (folder.includes("temporizador") || cid.includes("temporizador") || folder.includes("timer_block")) {
+              let isHostActive = false;
+              if (comp.dockedTo && comp.dockedTo.hostUid) {
+                const host = state.components.find(c => c.uid === comp.dockedTo.hostUid);
+                if (host && host.stateOn) isHostActive = true;
+              }
+
+              if (isHostActive) {
+                if (!comp.timerStartTime) {
+                  comp.timerStartTime = performance.now();
+                }
+                const delaySec = comp.simTimerDelay || comp.timerDelay || 5;
+                const elapsedSec = (performance.now() - comp.timerStartTime) / 1000;
+
+                if (elapsedSec >= delaySec) {
+                  // Temporisation échue : contact NO 67-68 se ferme, contact NF 55-56 s'ouvre
+                  transferPotential(comp.uid, "67", "68");
+                } else {
+                  // En cours de comptage : contact NF 55-56 maintenu fermé
+                  transferPotential(comp.uid, "55", "56");
+                  // Réévaluer automatiquement dès que le temps est écoulé
+                  if (!comp.timerTimerId) {
+                    comp.timerTimerId = setTimeout(() => {
+                      comp.timerTimerId = null;
+                      if (state.isSimulating) evaluateElectricalCircuit();
+                    }, Math.max(50, Math.round((delaySec - elapsedSec) * 1000)));
+                  }
+                }
+              } else {
+                // Au repos (contacteur éteint) : remise à zéro instantanée
+                comp.timerStartTime = null;
+                if (comp.timerTimerId) {
+                  clearTimeout(comp.timerTimerId);
+                  comp.timerTimerId = null;
+                }
+                // Au repos, le contact NF 55-56 est fermé
+                transferPotential(comp.uid, "55", "56");
+              }
+            }
+
+            // Bloc Auxiliaire Frontal Contacteur (3 NO + 1 NC)
+            if (folder.includes("bloque_auxiliar_frontal_3no") || (folder.includes("bloque_auxiliar") && !folder.includes("guardamotor"))) {
+              let isHostActive = false;
+              if (comp.dockedTo && comp.dockedTo.hostUid) {
+                const host = state.components.find(c => c.uid === comp.dockedTo.hostUid);
+                if (host && host.stateOn) isHostActive = true;
+              }
+              if (isHostActive) {
+                transferPotential(comp.uid, "53", "54");
+                transferPotential(comp.uid, "73", "74");
+                transferPotential(comp.uid, "83", "84");
+              } else {
+                transferPotential(comp.uid, "61", "62");
+              }
+            }
+
+            // Bloc Auxiliaire Frontal Disjoncteur-Moteur GV2 (1 NO + 1 NC)
+            if (folder.includes("guardamotor") && folder.includes("bloque_auxiliar")) {
+              let isHostActive = false;
+              if (comp.dockedTo && comp.dockedTo.hostUid) {
+                const host = state.components.find(c => c.uid === comp.dockedTo.hostUid);
+                if (host && host.stateOn) isHostActive = true;
+              }
+              if (isHostActive) {
+                transferPotential(comp.uid, "13", "14");
+              } else {
+                transferPotential(comp.uid, "21", "22");
+              }
             }
 
             // Relais de sortie du LOGO! Siemens (Q1, Q2, Q3, Q4)
@@ -7759,6 +7904,17 @@ ${wiresList.map(w => `   <Row ss:Height="22">
           compEl.style.opacity = "0";
           setTimeout(() => compEl.remove(), 160);
         }
+        // Libérer ou dissocier les composants encliquetés (EduVolt REA)
+        const targetComp = state.components.find(c => c.uid === compId);
+        if (targetComp && targetComp.dockedTo) {
+          undockComponent(targetComp);
+        }
+        state.components.forEach(c => {
+          if (c.dockedTo && c.dockedTo.hostUid === compId) {
+            undockComponent(c);
+          }
+        });
+
         // Supprimer également tous les fils reliés à ce composant
         state.wires = state.wires.filter(w => w.from.compUid !== compId && w.to.compUid !== compId);
         state.components = state.components.filter(c => c.uid !== compId);
@@ -8554,51 +8710,225 @@ ${wiresList.map(w => `   <Row ss:Height="22">
       });
     }
 
-    // Gestion du Docking Magnétique (Ex: Relais thermique sous contacteur, Blocs aux sur contacteur)
-    function checkAndApplyDocking(childComp) {
-      const childFolder = (childComp.folder || "").toLowerCase();
+    // =========================================================================
+    // MOTEUR UNIVERSEL DE DOCKING (ENCLIQUETAGE PHYSIQUE & ÉLECTRIQUE EDUVOLT REA)
+    // Conforme aux zones, ancrages, bridges et masquages officiels EduVolt
+    // =========================================================================
 
-      // Relais thermique -> s'emboîte sous le contacteur
-      if (childFolder.includes("rele_termico")) {
-        const contactor = state.components.find(c => (c.folder || "").toLowerCase().includes("contactor") && Math.abs(c.x - childComp.x) < 80 && Math.abs((c.y + c.height) - childComp.y) < 90);
-        if (contactor) {
-          childComp.x = contactor.x;
-          childComp.y = contactor.y + contactor.height - 8; // Emboîtement physique direct
-          const el = document.getElementById(childComp.uid);
-          if (el) {
-            el.style.left = childComp.x + "px";
-            el.style.top = childComp.y + "px";
-            el.classList.add("ev-dock-ghost");
-            setTimeout(() => el.classList.remove("ev-dock-ghost"), 400);
+    function getComponentAttachmentType(comp) {
+      if (!comp) return null;
+      if (comp.docking && comp.docking.attachesAs && comp.docking.attachesAs.type) {
+        return comp.docking.attachesAs.type;
+      }
+      const folder = (comp.folder || "").toLowerCase();
+      const cid = (comp.protoId || comp.id || "").toLowerCase();
+      if (folder.includes("rele_termico") || cid.includes("rele_termico") || folder.includes("tf42")) return "thermal_relay_3p";
+      if (folder.includes("temporizador") || cid.includes("temporizador") || folder.includes("timer_block")) return "timer_block";
+      if (folder.includes("bloque_auxiliar") || cid.includes("bloque_auxiliar") || cid.includes("ca5_10")) return "auxiliary_contact";
+      return null;
+    }
+
+    function getComponentDockingZones(hostComp) {
+      if (!hostComp) return [];
+      if (hostComp.docking && hostComp.docking.zones && hostComp.docking.zones.length > 0) {
+        return hostComp.docking.zones;
+      }
+      // Zones EduVolt officielles par défaut si non injectées sur l'instance
+      const folder = (hostComp.folder || "").toLowerCase();
+      const cid = (hostComp.protoId || hostComp.id || "").toLowerCase();
+
+      if (folder.includes("contactor") || cid.includes("contactor") || folder.includes("a30")) {
+        return [
+          {
+            id: "bottom_relay",
+            position: "bottom",
+            rect: { x: 0, y: 6400, w: 3600, h: 4800 },
+            anchor: { nx: 0.5, ny: 1.222222 },
+            accepts: ["thermal_relay_3p", "overload_relay"],
+            bridge: [
+              { hostTerminal: "2", childTerminal: "1" },
+              { hostTerminal: "4", childTerminal: "3" },
+              { hostTerminal: "6", childTerminal: "5" }
+            ],
+            childZLayer: 2
+          },
+          {
+            id: "over_aux",
+            position: "over",
+            rect: { x: 700, y: 1955, w: 2900, h: 3300 },
+            anchor: { nx: 0.597222, ny: 0.500694 },
+            accepts: ["auxiliary_contact", "timer_block", "aux_contact"],
+            childZLayer: 3,
+            hideHostTerminals: ["13", "21", "A1", "14", "22", "A2"]
           }
-          // Pontage automatique des bornes de puissance (2->1, 4->3, 6->5)
-          setTimeout(() => {
-            createWire({ compUid: contactor.uid, termId: "2" }, { compUid: childComp.uid, termId: "1" });
-            createWire({ compUid: contactor.uid, termId: "4" }, { compUid: childComp.uid, termId: "3" });
-            createWire({ compUid: contactor.uid, termId: "6" }, { compUid: childComp.uid, termId: "5" });
-          }, 150);
+        ];
+      }
+
+      if (folder.includes("guardamotor") || cid.includes("guardamotor") || folder.includes("ms116")) {
+        return [
+          {
+            id: "over_aux",
+            position: "over",
+            rect: { x: 0, y: 1500, w: 3600, h: 600 },
+            anchor: { nx: 0.5, ny: 0.25 },
+            accepts: ["auxiliary_contact"],
+            childZLayer: 3
+          }
+        ];
+      }
+
+      return [];
+    }
+
+    function setTerminalVisibility(compUid, termIds, isVisible) {
+      const el = document.getElementById(compUid);
+      if (!el || !termIds || !termIds.length) return;
+      termIds.forEach(tId => {
+        const pad = el.querySelector('.ev-terminal-pad[data-term="' + tId + '"]');
+        if (pad) {
+          if (isVisible) pad.classList.remove("ev-term-hidden");
+          else pad.classList.add("ev-term-hidden");
+        }
+      });
+    }
+
+    function undockComponent(childComp) {
+      if (!childComp || !childComp.dockedTo) return;
+      const host = state.components.find(c => c.uid === childComp.dockedTo.hostUid);
+      const childEl = document.getElementById(childComp.uid);
+      
+      // 1. Restaurer les bornes du composant enfant
+      const childHideTerms = (childComp.docking && childComp.docking.attachesAs && childComp.docking.attachesAs.hideTerminalsOnDock) || 
+                             (childComp.folder.includes("rele_termico") ? ["1", "3", "5"] : []);
+      setTerminalVisibility(childComp.uid, childHideTerms, true);
+
+      // 2. Restaurer les bornes de l'hôte
+      if (host) {
+        const zones = getComponentDockingZones(host);
+        const zone = zones.find(z => z.id === childComp.dockedTo.zoneId);
+        if (zone && zone.hideHostTerminals) {
+          setTerminalVisibility(host.uid, zone.hideHostTerminals, true);
         }
       }
 
-      // Bloc auxiliaire frontal -> s'emboîte sur la face avant du contacteur
-      if (childFolder.includes("bloque_auxiliar")) {
-        const contactor = state.components.find(c => (c.folder || "").toLowerCase().includes("contactor") && Math.hypot(c.x - childComp.x, c.y - childComp.y) < 70);
-        if (contactor) {
-          childComp.x = contactor.x + 8;
-          childComp.y = contactor.y + 18;
-          const el = document.getElementById(childComp.uid);
-          if (el) {
-            el.style.left = childComp.x + "px";
-            el.style.top = childComp.y + "px";
-            el.style.zIndex = "25";
-            el.classList.add("ev-dock-ghost");
-            setTimeout(() => el.classList.remove("ev-dock-ghost"), 400);
-          }
-        }
+      // 3. Réinitialiser le z-index normal
+      if (childEl) {
+        childEl.style.zIndex = "";
+      }
+
+      delete childComp.dockedTo;
+      if (state.isSimulating && typeof evaluateElectricalCircuit === "function") {
+        evaluateElectricalCircuit();
       }
     }
 
-    
+    function checkAndApplyDocking(childComp) {
+      if (!childComp) return false;
+      const childType = getComponentAttachmentType(childComp);
+      if (!childType) return false;
+
+      const childEl = document.getElementById(childComp.uid);
+      const SNAP_DOCK_RADIUS = 68; // Rayon d'attraction magnétique en pixels
+
+      for (const host of state.components) {
+        if (host.uid === childComp.uid) continue;
+        const zones = getComponentDockingZones(host);
+        if (!zones || !zones.length) continue;
+
+        for (const zone of zones) {
+          if (!zone.accepts || !zone.accepts.includes(childType)) continue;
+
+          // Calculer les coordonnées cibles absolues selon la matrice d'ancrage EduVolt REA
+          const rawH = host.rawH || 7200;
+          const scale = host.height / rawH;
+
+          let targetX = host.x;
+          let targetY = host.y;
+
+          if (zone.rect) {
+            targetX = host.x + (zone.rect.x * scale);
+            targetY = host.y + (zone.rect.y * scale);
+          } else if (zone.anchor) {
+            targetX = host.x + (host.width * zone.anchor.nx) - (childComp.width / 2);
+            targetY = host.y + (host.height * zone.anchor.ny) - (childComp.height / 2);
+          }
+
+          const dist = Math.hypot(childComp.x - targetX, childComp.y - targetY);
+
+          if (dist < SNAP_DOCK_RADIUS) {
+            // Emboîtement physique immédiat
+            childComp.x = Math.round(targetX);
+            childComp.y = Math.round(targetY);
+
+            childComp.dockedTo = {
+              hostUid: host.uid,
+              zoneId: zone.id,
+              offsetX: childComp.x - host.x,
+              offsetY: childComp.y - host.y
+            };
+
+            if (childEl) {
+              childEl.style.transition = "left 0.15s ease-out, top 0.15s ease-out";
+              childEl.style.left = childComp.x + "px";
+              childEl.style.top = childComp.y + "px";
+              childEl.style.zIndex = zone.childZLayer === 3 || zone.position === "over" ? "35" : "15";
+              childEl.classList.add("ev-dock-snap");
+              setTimeout(() => {
+                if (childEl) {
+                  childEl.style.transition = "";
+                  childEl.classList.remove("ev-dock-snap");
+                }
+              }, 350);
+            }
+
+            // Masquage des broches enfichées du relais thermique (1, 3, 5 disparaissent dans le contacteur)
+            const childHideTerms = (childComp.docking && childComp.docking.attachesAs && childComp.docking.attachesAs.hideTerminalsOnDock) ||
+                                   (childComp.folder.includes("rele_termico") ? ["1", "3", "5"] : []);
+            setTerminalVisibility(childComp.uid, childHideTerms, false);
+
+            // Masquage des bornes de l'hôte recouvertes par le bloc frontal (13, 21, A1, 14, 22, A2)
+            if (zone.hideHostTerminals) {
+              setTerminalVisibility(host.uid, zone.hideHostTerminals, false);
+            }
+
+            // Notification haptique / visuelle
+            const hostTag = host.label || host.name || "Appareil";
+            const childName = (typeof childComp.name === "object" ? childComp.name.fr : childComp.name) || "Accessoire";
+            showNotificationToast(childName + " clipsé avec succès sur " + hostTag + " !");
+
+            renderWires();
+            if (state.isSimulating && typeof evaluateElectricalCircuit === "function") {
+              evaluateElectricalCircuit();
+            }
+            return true;
+          }
+        }
+      }
+
+      // Si le composant était docké mais qu'on l'a traîné hors de la zone d'accroche (> 70px)
+      if (childComp.dockedTo) {
+        undockComponent(childComp);
+      }
+
+      return false;
+    }
+
+    function updateDockedChildrenPositions(hostComp) {
+      if (!hostComp) return;
+      const children = state.components.filter(c => c.dockedTo && c.dockedTo.hostUid === hostComp.uid);
+      if (!children.length) return;
+
+      children.forEach(ch => {
+        ch.x = hostComp.x + ch.dockedTo.offsetX;
+        ch.y = hostComp.y + ch.dockedTo.offsetY;
+        const chEl = document.getElementById(ch.uid);
+        if (chEl) {
+          chEl.style.left = ch.x + "px";
+          chEl.style.top = ch.y + "px";
+        }
+      });
+    }
+
     // =========================================================================
     // ZOOM INTERACTIF : MOLETTE SOURIS, TOUCHPAD & BOUTONS FLOTTANTS EDUVOLT
     // =========================================================================
