@@ -3998,7 +3998,119 @@
       return { w: dw, h: dh };
     }
 
+    // =========================================================================
+    // GESTIONNAIRE D'HISTORIQUE PAS-À-PAS UNIFIÉ (UNDO / REDO)
+    // Règle stricte : 1 Clic = annule / rétablit exactement 1 mouvement / action
+    // =========================================================================
+    const historyUndoStack = [];
+    const historyRedoStack = [];
+
+    function createHistorySnapshot() {
+      return JSON.stringify({
+        components: state.components.map(c => Object.assign({}, c)),
+        wires: state.wires.map(w => ({
+          ...w,
+          from: { ...w.from },
+          to: { ...w.to },
+          waypoints: w.waypoints ? w.waypoints.map(p => ({ ...p })) : undefined
+        }))
+      });
+    }
+
+    function updateUndoRedoButtons() {
+      const btnUndo = document.getElementById("btnUndo");
+      const btnRedo = document.getElementById("btnRedo");
+      if (btnUndo) {
+        const canUndo = (historyUndoStack.length > 0);
+        btnUndo.style.opacity = canUndo ? "1" : "0.45";
+        btnUndo.style.cursor = canUndo ? "pointer" : "default";
+        btnUndo.title = canUndo
+          ? `Annuler le dernier mouvement (${historyUndoStack.length} disponible${historyUndoStack.length > 1 ? 's' : ''}) (Ctrl+Z)`
+          : "Rien à annuler (Ctrl+Z)";
+      }
+      if (btnRedo) {
+        const canRedo = (historyRedoStack.length > 0);
+        btnRedo.style.opacity = canRedo ? "1" : "0.45";
+        btnRedo.style.cursor = canRedo ? "pointer" : "default";
+        btnRedo.title = canRedo
+          ? `Rétablir le mouvement (${historyRedoStack.length} disponible${historyRedoStack.length > 1 ? 's' : ''}) (Ctrl+Y)`
+          : "Rien à rétablir (Ctrl+Y)";
+      }
+    }
+
+    function pushHistorySnapshot(snapStr) {
+      if (!snapStr) return;
+      if (historyUndoStack.length > 0 && historyUndoStack[historyUndoStack.length - 1] === snapStr) {
+        return;
+      }
+      if (historyUndoStack.length >= 60) historyUndoStack.shift();
+      historyUndoStack.push(snapStr);
+      historyRedoStack.length = 0; // Nouvelle action : purge de la pile Redo
+      updateUndoRedoButtons();
+    }
+
+    function saveHistorySnapshot() {
+      pushHistorySnapshot(createHistorySnapshot());
+    }
+
+    function restoreHistorySnapshot(jsonStr) {
+      if (!jsonStr) return;
+      try {
+        const snap = JSON.parse(jsonStr);
+        if (typeof componentsLayer !== "undefined" && componentsLayer) {
+          componentsLayer.innerHTML = "";
+        }
+        state.components = snap.components || [];
+        state.wires = snap.wires || [];
+        state.selectedComp = null;
+        state.selectedWire = null;
+        state.wireStart = null;
+
+        // Re-rendre chaque composant
+        state.components.forEach(comp => {
+          renderComponentDOM(comp);
+        });
+
+        if (typeof applyDoorState === "function") {
+          applyDoorState(typeof doorClosedMode !== "undefined" ? doorClosedMode : false);
+        } else {
+          renderWires();
+        }
+        updateWireCount();
+
+        if (state.isSimulating && typeof evaluateElectricalCircuit === "function") {
+          evaluateElectricalCircuit();
+        }
+        updateUndoRedoButtons();
+      } catch (err) {
+        console.error("Erreur restauration historique:", err);
+      }
+    }
+
+    function doUndo() {
+      if (!historyUndoStack.length) return;
+      // 1. Sauvegarder l'état actuel sur la pile Redo
+      historyRedoStack.push(createHistorySnapshot());
+      // 2. Extraire le dernier mouvement précédent
+      const previousState = historyUndoStack.pop();
+      // 3. Restaurer fidèlement cet état
+      restoreHistorySnapshot(previousState);
+      updateUndoRedoButtons();
+    }
+
+    function doRedo() {
+      if (!historyRedoStack.length) return;
+      // 1. Sauvegarder l'état actuel sur la pile Undo
+      historyUndoStack.push(createHistorySnapshot());
+      // 2. Extraire le mouvement à rétablir
+      const nextState = historyRedoStack.pop();
+      // 3. Restaurer fidèlement cet état
+      restoreHistorySnapshot(nextState);
+      updateUndoRedoButtons();
+    }
+
     function placeComponent(item, x, y) {
+      saveHistorySnapshot();
       const compId = "comp_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
       const folder = item.folder;
 
@@ -4196,6 +4308,7 @@
         let isPlateDrag = false;
         let pStartX, pStartY;
         let pHasMoved = false;
+        let prePlateSnapshot = null;
 
         plateEl.addEventListener("pointerdown", (e) => {
           if (e.button !== 0) return;
@@ -4204,6 +4317,7 @@
           pHasMoved = false;
           pStartX = e.clientX;
           pStartY = e.clientY;
+          prePlateSnapshot = createHistorySnapshot();
           if (typeof comp.labelDx !== "number") comp.labelDx = 0;
           if (typeof comp.labelDy !== "number") comp.labelDy = 0;
           try { plateEl.setPointerCapture(e.pointerId); } catch (_) {}
@@ -4229,6 +4343,14 @@
           try { plateEl.releasePointerCapture(e.pointerId); } catch (_) {}
           comp.labelDx = Math.round(comp.labelDx);
           comp.labelDy = Math.round(comp.labelDy);
+
+          if (pHasMoved && prePlateSnapshot) {
+            const curSnap = createHistorySnapshot();
+            if (curSnap !== prePlateSnapshot) {
+              pushHistorySnapshot(prePlateSnapshot);
+            }
+          }
+          prePlateSnapshot = null;
         };
         plateEl.addEventListener("pointerup", finishPlateDrag);
         plateEl.addEventListener("pointercancel", finishPlateDrag);
@@ -4237,7 +4359,8 @@
           e.stopPropagation();
           const currentText = comp.label || comp.name || "";
           const newText = prompt("Texte de l'étiquette pour ce composant :", currentText);
-          if (newText !== null) {
+          if (newText !== null && newText.trim() !== currentText) {
+            saveHistorySnapshot();
             comp.label = newText.trim() || comp.name;
             const valSpan = plateEl.querySelector(".plate-text-val");
             if (valSpan) valSpan.textContent = comp.label;
@@ -4270,6 +4393,7 @@
       let isDragging = false;
       let startX, startY;
       let hasMoved = false;
+      let preDragSnapshot = null;
 
       // Sur iPad/tactile, empêcher catégoriquement le touchstart de remonter vers le plan
       el.addEventListener("touchstart", (e) => {
@@ -4281,6 +4405,7 @@
         if (e.button !== undefined && e.button !== 0) return;
         if (comp.isLocked) return; // Composant verrouillé
         
+        preDragSnapshot = createHistorySnapshot();
         state.selectedComp = comp.uid;
         state.selectedWire = null;
         deselectCustomRow();
@@ -4340,6 +4465,7 @@
         try { el.releasePointerCapture(e.pointerId); } catch (_) {}
         
         if (!hasMoved) {
+          preDragSnapshot = null;
           if (state.isSimulating) {
             toggleComponentManual(comp);
           }
@@ -4357,6 +4483,14 @@
           applyDoorState(doorClosedMode);
         } else {
           renderWires();
+        }
+
+        if (preDragSnapshot) {
+          const curSnap = createHistorySnapshot();
+          if (curSnap !== preDragSnapshot) {
+            pushHistorySnapshot(preDragSnapshot);
+          }
+          preDragSnapshot = null;
         }
       };
 
@@ -4493,6 +4627,7 @@
 
     // Créer nouveau fil
     function createWire(from, to) {
+      saveHistorySnapshot();
       const wire = {
         id: "wire_" + Date.now() + "_" + Math.floor(Math.random() * 1000),
         from,
@@ -4503,6 +4638,7 @@
       state.wires.push(wire);
       renderWires();
       updateWireCount();
+      updateUndoRedoButtons();
     }
 
     /* =========================================================================
@@ -4866,10 +5002,12 @@
             });
             segPath.addEventListener("contextmenu", (e) => {
               e.preventDefault();
+              saveHistorySnapshot();
               state.wires = state.wires.filter(x => x.id !== w.id);
               if (state.selectedWire === w.id) state.selectedWire = null;
               renderWires();
               updateWireCount();
+              updateUndoRedoButtons();
             });
             wiresSvg.appendChild(segPath);
           };
@@ -4900,10 +5038,12 @@
 
           path.addEventListener("contextmenu", (e) => {
             e.preventDefault();
+            saveHistorySnapshot();
             state.wires = state.wires.filter(x => x.id !== w.id);
             if (state.selectedWire === w.id) state.selectedWire = null;
             renderWires();
             updateWireCount();
+            updateUndoRedoButtons();
           });
 
           wiresSvg.appendChild(path);
@@ -5007,6 +5147,7 @@
             let isDraggingWire = false;
             let startWireClientX = 0, startWireClientY = 0;
             let originPtX = pt.x, originPtY = pt.y;
+            let preWireSnapshot = null;
 
             handle.addEventListener("touchstart", (ev) => {
               ev.stopPropagation();
@@ -5017,6 +5158,7 @@
               ev.stopPropagation();
               ev.preventDefault();
               isDraggingWire = true;
+              preWireSnapshot = createHistorySnapshot();
               startWireClientX = ev.clientX || (ev.touches && ev.touches[0].clientX) || 0;
               startWireClientY = ev.clientY || (ev.touches && ev.touches[0].clientY) || 0;
               if (!w.waypoints) {
@@ -5045,6 +5187,14 @@
                 window.removeEventListener("touchend", onGlobalWireUp);
                 window.removeEventListener("touchcancel", onGlobalWireUp);
                 renderWires();
+
+                if (preWireSnapshot) {
+                  const curSnap = createHistorySnapshot();
+                  if (curSnap !== preWireSnapshot) {
+                    pushHistorySnapshot(preWireSnapshot);
+                  }
+                  preWireSnapshot = null;
+                }
               };
 
               window.addEventListener("mousemove", onGlobalWireMove);
@@ -5343,11 +5493,13 @@
     if (btnClear) {
       btnClear.addEventListener("click", () => {
         if (confirm("Réinitialiser l'armoire et supprimer tous les composants et câbles ?")) {
+          saveHistorySnapshot();
           state.components = [];
           state.wires = [];
           if (componentsLayer) componentsLayer.innerHTML = "";
           if (wiresSvg) wiresSvg.innerHTML = "";
           updateWireCount();
+          updateUndoRedoButtons();
         }
       });
     }
@@ -6444,74 +6596,6 @@
 
     // Raccourcis clavier EduVolt officiels (Ctrl+S, Ctrl+Z, Ctrl+Y, Ctrl+D, Ctrl+L)
     // =========================================================================
-    // GESTIONNAIRE COMPLET DE L'HISTORIQUE (UNDO / REDO) & ÉTAT
-    // =========================================================================
-    const historyUndoStack = [];
-    const historyRedoStack = [];
-
-    function saveHistorySnapshot() {
-      if (historyUndoStack.length > 50) historyUndoStack.shift();
-      historyUndoStack.push(JSON.stringify({
-        components: state.components,
-        wires: state.wires
-      }));
-      historyRedoStack.length = 0; // Réinitialise le Redo après une nouvelle action
-    }
-
-    function restoreHistorySnapshot(jsonStr) {
-      if (!jsonStr) return;
-      try {
-        const snap = JSON.parse(jsonStr);
-        // Supprimer tous les composants actuels du DOM
-        state.components.forEach(c => {
-          const el = document.getElementById(c.uid);
-          if (el) el.remove();
-        });
-        state.components = snap.components || [];
-        state.wires = snap.wires || [];
-        state.selectedComp = null;
-        state.selectedWire = null;
-
-        // Re-rendre chaque composant
-        state.components.forEach(comp => {
-          renderComponentDOM(comp);
-        });
-        renderWires();
-        updateWireCount();
-      } catch (err) {
-        console.error("Erreur restauration historique:", err);
-      }
-    }
-
-    function doUndo() {
-      if (!historyUndoStack.length) {
-        // Fallback simple : supprimer le dernier fil si pas d'historique complet
-        if (state.wires.length) {
-          state.wires.pop();
-          renderWires();
-          updateWireCount();
-        }
-        return;
-      }
-      historyRedoStack.push(JSON.stringify({
-        components: state.components,
-        wires: state.wires
-      }));
-      const previousState = historyUndoStack.pop();
-      restoreHistorySnapshot(previousState);
-    }
-
-    function doRedo() {
-      if (!historyRedoStack.length) return;
-      historyUndoStack.push(JSON.stringify({
-        components: state.components,
-        wires: state.wires
-      }));
-      const nextState = historyRedoStack.pop();
-      restoreHistorySnapshot(nextState);
-    }
-
-    // =========================================================================
     // ACTION SUPPRIMER (Composant, Fil, ou Rangée modulaire)
     // =========================================================================
     function deleteSelected() {
@@ -6882,6 +6966,7 @@
 
     const btnRedo = document.getElementById("btnRedo");
     if (btnRedo) btnRedo.addEventListener("click", doRedo);
+    updateUndoRedoButtons();
 
     const btnLock = document.getElementById("btnLock");
     if (btnLock) btnLock.addEventListener("click", toggleLockSelected);
@@ -7010,6 +7095,7 @@
       btnAddDuct.title = "Ajouter une rangée modulaire (Goulotte + Rail DIN)";
 
       btnAddDuct.addEventListener("click", () => {
+        saveHistorySnapshot();
         const existingRails = Array.from(document.querySelectorAll(".ev-din-rail.custom-row-element"));
         const newIndex = existingRails.length; // Prochain index 0, 1, 2...
         const rowId = "custom_row_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
@@ -7085,6 +7171,7 @@
 
     // Supprimer une rangée personnalisée complète avec décalage automatique vers le haut des rangées inférieures
     function removeCustomRow(rowId) {
+      saveHistorySnapshot();
       const railToDelete = document.getElementById("rail_" + rowId);
       const ductToDelete = document.getElementById("duct_" + rowId);
       if (!railToDelete || !ductToDelete) return;
