@@ -2958,34 +2958,38 @@
     /* ARBRE DU MOTEUR (BOUT D'ARBRE EN MÉTAL DE SORTIE) */
     .ev-motor-rotor-overlay {
       position: absolute;
-      top: 61.5%;
-      left: 83.5%;
+      top: 70.2%;
+      left: 98.5%;
       transform: translate(-50%, -50%);
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
+      width: 44px;
+      height: 44px;
       pointer-events: none;
-      z-index: 12;
+      z-index: 20;
       display: flex;
       align-items: center;
       justify-content: center;
     }
     .ev-motor-rotor-hub {
-      width: 17px;
-      height: 17px;
+      width: 15px;
+      height: 15px;
       border-radius: 50%;
-      background: radial-gradient(circle, #f1f5f9 0%, #cbd5e1 40%, #64748b 90%, #334155 100%);
+      background: radial-gradient(circle, #ffffff 0%, #cbd5e1 45%, #64748b 85%, #334155 100%);
       border: 1.5px solid #ffffff;
-      box-shadow: inset 0 0 3px rgba(0,0,0,0.8), 0 0 6px rgba(56, 189, 248, 0.9);
-      position: relative;
+      box-shadow: inset 0 0 3px rgba(0,0,0,0.8), 0 0 5px rgba(56, 189, 248, 0.9);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -7.5px;
+      margin-left: -7.5px;
+      z-index: 2;
     }
-    /* Repère en croix (+) sur le cylindre de l'arbre mécanique */
+    /* Repère en croix (+) parfaitement centré sur le bout du cylindre de l'arbre mécanique */
     .ev-motor-rotor-hub::before {
       content: '';
       position: absolute;
       top: 50%;
-      left: 2px;
-      right: 2px;
+      left: 1.5px;
+      right: 1.5px;
       height: 2px;
       background: #0284c7;
       transform: translateY(-50%);
@@ -2996,19 +3000,51 @@
       content: '';
       position: absolute;
       left: 50%;
-      top: 2px;
-      bottom: 2px;
+      top: 1.5px;
+      bottom: 1.5px;
       width: 2px;
       background: #0284c7;
       transform: translateX(-50%);
       border-radius: 1px;
       box-shadow: 0 0 2px #38bdf8;
     }
+    /* Grande flèche de rotation entourant le bout de l'arbre */
+    .ev-motor-arrow-ring {
+      position: absolute;
+      width: 44px;
+      height: 44px;
+      top: 50%;
+      left: 50%;
+      margin-top: -22px;
+      margin-left: -22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 3;
+    }
+    .ev-motor-arrow-svg {
+      width: 44px;
+      height: 44px;
+      display: block;
+    }
+    .ev-motor-arrow-svg.cw {
+      filter: drop-shadow(0 0 5px rgba(34, 197, 94, 0.95));
+    }
+    .ev-motor-arrow-svg.ccw {
+      filter: drop-shadow(0 0 5px rgba(245, 158, 11, 0.95));
+    }
     .ev-motor-rotating-cw .ev-motor-rotor-hub {
-      animation: motorSpinCW 0.22s linear infinite;
+      animation: motorSpinCW var(--motor-period, 0.22s) linear infinite;
     }
     .ev-motor-rotating-ccw .ev-motor-rotor-hub {
-      animation: motorSpinCCW 0.22s linear infinite;
+      animation: motorSpinCCW var(--motor-period, 0.22s) linear infinite;
+    }
+    .ev-motor-rotating-cw .ev-motor-arrow-ring {
+      animation: motorSpinCW var(--motor-period, 0.22s) linear infinite;
+    }
+    .ev-motor-rotating-ccw .ev-motor-arrow-ring {
+      animation: motorSpinCCW var(--motor-period, 0.22s) linear infinite;
     }
     @keyframes motorSpinCW {
       from { transform: rotate(0deg); }
@@ -3020,23 +3056,26 @@
     }
     .ev-motor-hud {
       position: absolute;
-      bottom: -32px;
+      bottom: -34px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(15, 23, 42, 0.94);
-      border: 1px solid #38bdf8;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1.5px solid #38bdf8;
       color: #38bdf8;
-      padding: 2px 7px;
-      border-radius: 4px;
-      font-size: 10px;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 11px;
       font-weight: 700;
       white-space: nowrap;
       pointer-events: none;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.7);
       z-index: 25;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 7px;
+    }
+    .ev-motor-hud i {
+      font-size: 16px;
     }
     .ev-motor-hud.hud-stopped {
       border-color: #64748b;
@@ -3046,9 +3085,17 @@
       border-color: #10b981;
       color: #34d399;
     }
+    .ev-motor-hud.hud-cw i {
+      color: #22c55e;
+      filter: drop-shadow(0 0 5px rgba(34, 197, 94, 0.85));
+    }
     .ev-motor-hud.hud-ccw {
       border-color: #f59e0b;
       color: #fbbf24;
+    }
+    .ev-motor-hud.hud-ccw i {
+      color: #f59e0b;
+      filter: drop-shadow(0 0 5px rgba(245, 158, 11, 0.85));
     }
 
   
@@ -4035,7 +4082,8 @@
       let motorHtml = "";
       if (isMotor) {
         motorHtml = `
-          <div class="ev-motor-rotor-overlay" id="rotor_${comp.uid}">
+          <div class="ev-motor-rotor-overlay" id="rotor_${comp.uid}" title="Arbre moteur (Bout de cylindre)">
+            <div class="ev-motor-arrow-ring" id="arrow_ring_${comp.uid}"></div>
             <div class="ev-motor-rotor-hub"></div>
           </div>
           <div class="ev-motor-hud hud-stopped" id="hud_${comp.uid}">
@@ -5420,22 +5468,40 @@
       if (!hud) return;
 
       const hub = rotor ? rotor.querySelector('.ev-motor-rotor-hub') : null;
+      const arrowRing = rotor ? rotor.querySelector('.ev-motor-arrow-ring') : null;
       if (rotor) {
         rotor.classList.remove('ev-motor-rotating-cw', 'ev-motor-rotating-ccw');
       }
 
       if (speed > 0 && direction) {
+        const isCcw = (direction === 'ccw');
+        const period = Math.max(0.08, (1500 / speed) * 0.22);
         if (rotor) {
-          rotor.classList.add(direction === 'ccw' ? 'ev-motor-rotating-ccw' : 'ev-motor-rotating-cw');
-          if (hub) {
-            const period = Math.max(0.08, (1500 / speed) * 0.22);
-            hub.style.animationDuration = `${period.toFixed(2)}s`;
+          rotor.classList.add(isCcw ? 'ev-motor-rotating-ccw' : 'ev-motor-rotating-cw');
+          rotor.style.setProperty('--motor-period', `${period.toFixed(2)}s`);
+          if (hub) hub.style.animationDuration = `${period.toFixed(2)}s`;
+        }
+        if (arrowRing) {
+          arrowRing.style.animationDuration = `${period.toFixed(2)}s`;
+          if (!isCcw) {
+            arrowRing.innerHTML = `
+              <svg class="ev-motor-arrow-svg cw" viewBox="0 0 44 44">
+                <path d="M 22 7 A 15 15 0 1 1 9 29.5" fill="none" stroke="#22c55e" stroke-width="3.2" stroke-linecap="round"/>
+                <polygon points="5,22.5 12.5,27.5 5.5,31.5" fill="#22c55e"/>
+              </svg>`;
+          } else {
+            arrowRing.innerHTML = `
+              <svg class="ev-motor-arrow-svg ccw" viewBox="0 0 44 44">
+                <path d="M 22 7 A 15 15 0 1 0 35 29.5" fill="none" stroke="#f59e0b" stroke-width="3.2" stroke-linecap="round"/>
+                <polygon points="39,22.5 31.5,27.5 38.5,31.5" fill="#f59e0b"/>
+              </svg>`;
           }
         }
-        hud.className = `ev-motor-hud ${direction === 'ccw' ? 'hud-ccw' : 'hud-cw'}`;
-        const arrow = direction === 'ccw' ? '<i class="fa-solid fa-rotate-left"></i>' : '<i class="fa-solid fa-rotate-right"></i>';
+        hud.className = `ev-motor-hud ${isCcw ? 'hud-ccw' : 'hud-cw'}`;
+        const arrow = isCcw ? '<i class="fa-solid fa-rotate-left"></i>' : '<i class="fa-solid fa-rotate-right"></i>';
         hud.innerHTML = `${arrow} <span>${Math.round(speed)} tr/min</span>`;
       } else {
+        if (arrowRing) arrowRing.innerHTML = '';
         hud.className = 'ev-motor-hud hud-stopped';
         hud.innerHTML = '<i class="fa-solid fa-stop"></i> <span>0 tr/min</span>';
       }
