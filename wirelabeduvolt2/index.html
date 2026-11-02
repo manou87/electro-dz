@@ -4223,9 +4223,14 @@
       let startX, startY;
       let hasMoved = false;
 
+      // Sur iPad/tactile, empêcher catégoriquement le touchstart de remonter vers le plan
+      el.addEventListener("touchstart", (e) => {
+        e.stopPropagation();
+      }, { passive: false });
+
       el.addEventListener("pointerdown", (e) => {
         if (e.target.classList.contains("ev-terminal-pad")) return;
-        if (e.button !== 0) return;
+        if (e.button !== undefined && e.button !== 0) return;
         if (comp.isLocked) return; // Composant verrouillé
         
         state.selectedComp = comp.uid;
@@ -8473,10 +8478,17 @@
     let touchPanStart = { x: 0, y: 0 };
 
     canvasContainer.addEventListener("touchstart", (e) => {
-      const isInteractive = e.target.closest(".ev-component-box, .ev-terminal-pad, .ev-wire-handle, .ev-cable-gland, .ev-floating-zoom, .ev-status-bar, button, select, input, a, .ev-door-action-btn, #btnDoorQuickToggle");
+      // Vérifier de manière stricte si l'élément touché est un composant ou un contrôle interactif
+      const hitElement = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY);
+      const isInteractive = (e.target && e.target.closest(".ev-component-box, .ev-terminal-pad, .ev-wire-handle, .ev-cable-gland, .ev-comp-legend-plate, .ev-floating-zoom, .ev-status-bar, button, select, input, a, .ev-door-action-btn, #btnDoorQuickToggle")) ||
+                            (hitElement && hitElement.closest(".ev-component-box, .ev-terminal-pad, .ev-wire-handle, .ev-cable-gland, .ev-comp-legend-plate, .ev-floating-zoom, .ev-status-bar, button, select, input, a, .ev-door-action-btn, #btnDoorQuickToggle"));
 
-      if (e.touches.length === 1 && !isInteractive && !state.wireStart) {
-        // Début du déplacement du plan de travail à 1 doigt
+      if (e.touches.length === 1) {
+        if (isInteractive || state.wireStart) {
+          touchPanActive = false;
+          return; // Ne jamais faire bouger le plan si on touche un composant ou une borne !
+        }
+        // Début du déplacement du plan de travail à 1 doigt sur le fond libre uniquement
         touchPanActive = true;
         touchPanStart = {
           x: e.touches[0].clientX - state.pan.x,
