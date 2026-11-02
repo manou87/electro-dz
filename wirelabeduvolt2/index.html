@@ -4956,37 +4956,49 @@
             handle.setAttribute("class", "ev-wire-handle");
             handle.setAttribute("title", "Déplacer le coude EduVolt");
 
-            let isDraggingHandle = false;
-            let startClientX, startClientY;
+            let isDraggingWireHandle = false;
+            let lastWireClientX = 0;
+            let lastWireClientY = 0;
 
-            handle.addEventListener("mousedown", (ev) => {
+            handle.addEventListener("touchstart", (ev) => {
               ev.stopPropagation();
-              isDraggingHandle = true;
-              startClientX = ev.clientX;
-              startClientY = ev.clientY;
+            }, { passive: false });
 
+            handle.addEventListener("pointerdown", (ev) => {
+              if (ev.button !== undefined && ev.button !== 0) return;
+              ev.stopPropagation();
+              ev.preventDefault();
+              isDraggingWireHandle = true;
+              lastWireClientX = ev.clientX;
+              lastWireClientY = ev.clientY;
               if (!w.waypoints) {
                 w.waypoints = pts.slice(1, -1).map(p => ({ x: p.x, y: p.y }));
               }
-
-              const onMove = (moveEv) => {
-                if (!isDraggingHandle) return;
-                const dX = (moveEv.clientX - startClientX) / state.zoom;
-                const dY = (moveEv.clientY - startClientY) / state.zoom;
-                w.waypoints[i - 1].x = Math.round((pt.x + dX) / 10) * 10;
-                w.waypoints[i - 1].y = Math.round((pt.y + dY) / 10) * 10;
-                renderWires();
-              };
-
-              const onUp = () => {
-                isDraggingHandle = false;
-                window.removeEventListener("mousemove", onMove);
-                window.removeEventListener("mouseup", onUp);
-              };
-
-              window.addEventListener("mousemove", onMove);
-              window.addEventListener("mouseup", onUp);
+              try { handle.setPointerCapture(ev.pointerId); } catch (_) {}
             });
+
+            handle.addEventListener("pointermove", (ev) => {
+              if (!isDraggingWireHandle || !w.waypoints || !w.waypoints[i - 1]) return;
+              ev.stopPropagation();
+              ev.preventDefault();
+              const dX = (ev.clientX - lastWireClientX) / state.zoom;
+              const dY = (ev.clientY - lastWireClientY) / state.zoom;
+              w.waypoints[i - 1].x = Math.round((w.waypoints[i - 1].x + dX) / 2) * 2;
+              w.waypoints[i - 1].y = Math.round((w.waypoints[i - 1].y + dY) / 2) * 2;
+              lastWireClientX = ev.clientX;
+              lastWireClientY = ev.clientY;
+              renderWires();
+            });
+
+            const stopWireHandleDrag = (ev) => {
+              if (!isDraggingWireHandle) return;
+              isDraggingWireHandle = false;
+              try { handle.releasePointerCapture(ev.pointerId); } catch (_) {}
+              renderWires();
+            };
+
+            handle.addEventListener("pointerup", stopWireHandleDrag);
+            handle.addEventListener("pointercancel", stopWireHandleDrag);
 
             wiresSvg.appendChild(handle);
 
@@ -5100,35 +5112,51 @@
               handle.setAttribute("class", "ev-wire-handle");
               handle.setAttribute("title", "Faire glisser pour orienter la gaine");
 
-              handle.addEventListener("mousedown", (ev) => {
-                if (ev.button !== 0) return; // Uniquement clic gauche
+              // Déplacement fluide, progressif et sans saut par incréments relatifs (Delta Drag)
+              // 100% compatible Souris Mac/PC et Écran tactile iPad / iPhone / Android
+              let isDraggingHandle = false;
+              let lastClientX = 0;
+              let lastClientY = 0;
+
+              handle.addEventListener("touchstart", (ev) => {
+                ev.stopPropagation();
+              }, { passive: false });
+
+              handle.addEventListener("pointerdown", (ev) => {
+                if (ev.button !== undefined && ev.button !== 0) return;
                 ev.stopPropagation();
                 ev.preventDefault();
-
-                const rect = world.getBoundingClientRect();
-                let hasMoved = false;
-
-                const onMouseMove = (moveEv) => {
-                  hasMoved = true;
-                  // Calcul direct et exact de la position sous le curseur dans l'espace world
-                  const curWorldX = (moveEv.clientX - rect.left) / state.zoom;
-                  const curWorldY = (moveEv.clientY - rect.top) / state.zoom;
-                  pt.x = Math.round(curWorldX / 5) * 5;
-                  pt.y = Math.round(curWorldY / 5) * 5;
-                  renderWires();
-                };
-
-                const onMouseUp = (upEv) => {
-                  window.removeEventListener("mousemove", onMouseMove);
-                  window.removeEventListener("mouseup", onMouseUp);
-                  if (hasMoved) {
-                    renderWires();
-                  }
-                };
-
-                window.addEventListener("mousemove", onMouseMove);
-                window.addEventListener("mouseup", onMouseUp);
+                isDraggingHandle = true;
+                lastClientX = ev.clientX;
+                lastClientY = ev.clientY;
+                try { handle.setPointerCapture(ev.pointerId); } catch (_) {}
               });
+
+              handle.addEventListener("pointermove", (ev) => {
+                if (!isDraggingHandle) return;
+                ev.stopPropagation();
+                ev.preventDefault();
+                const dX = (ev.clientX - lastClientX) / state.zoom;
+                const dY = (ev.clientY - lastClientY) / state.zoom;
+                
+                // Déplacement progressif doux sans saut brutal
+                pt.x = Math.round((pt.x + dX) / 2) * 2;
+                pt.y = Math.round((pt.y + dY) / 2) * 2;
+                lastClientX = ev.clientX;
+                lastClientY = ev.clientY;
+
+                renderWires();
+              });
+
+              const stopHandleDrag = (ev) => {
+                if (!isDraggingHandle) return;
+                isDraggingHandle = false;
+                try { handle.releasePointerCapture(ev.pointerId); } catch (_) {}
+                renderWires();
+              };
+
+              handle.addEventListener("pointerup", stopHandleDrag);
+              handle.addEventListener("pointercancel", stopHandleDrag);
 
               wiresSvg.appendChild(handle);
 
