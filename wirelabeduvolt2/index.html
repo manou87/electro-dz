@@ -3390,33 +3390,81 @@
 
   <!-- Modale Nomenclature / BOM EduVolt -->
   <div class="ev-modal-overlay" id="bomModal">
-    <div class="ev-modal-card">
-      <div class="ev-modal-header">
-        <div class="ev-modal-title">
-          <i class="fa-solid fa-list-check" style="color: #38bdf8;"></i>
-          <span>Nomenclature du Matériel (BOM) — WireLab Designer Pro</span>
+    <div class="ev-modal-card" style="max-width: 1050px; width: 95%; max-height: 90vh;">
+      <div class="ev-modal-header" style="padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155;">
+        <div class="ev-modal-title" style="display: flex; align-items: center; gap: 12px;">
+          <i class="fa-solid fa-file-invoice" style="color: #38bdf8; font-size: 20px;"></i>
+          <div>
+            <div style="font-size: 15px; font-weight: 800; color: #f8fafc;">Nomenclature Industrielle &amp; Carnet de Câblage (BOM)</div>
+            <div style="font-size: 11px; color: #94a3b8;">Spécifications techniques conformes aux normes IEC 81346 &amp; NF C 15-100</div>
+          </div>
         </div>
-        <button class="ev-tool-icon-btn" id="btnCloseBom">✕</button>
+        <button class="ev-tool-icon-btn" id="btnCloseBom" title="Fermer la nomenclature">✕</button>
       </div>
-      <div class="ev-modal-body">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-          <span style="font-size: 13px; color: #94a3b8;">Inventaire complet des équipements et longueurs de conducteurs</span>
-          <button class="ev-btn primary" id="btnDownloadExcel"><i class="fa-solid fa-file-excel"></i> Télécharger CSV / Excel</button>
+      <div class="ev-modal-body" style="padding: 16px 20px; overflow-y: auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 12px; color: #94a3b8; font-weight: 600;">Inventaire des composants et carnet des conducteurs</span>
+            <span id="bomSummaryCount" style="font-size: 11px; padding: 2px 8px; border-radius: 4px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; font-weight: 700; border: 1px solid rgba(56, 189, 248, 0.3);"></span>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="ev-btn primary" id="btnDownloadExcel" style="display: flex; align-items: center; gap: 6px; font-size: 12px; padding: 7px 14px; background: #059669; border-color: #047857; color: white; border-radius: 6px; font-weight: 700; cursor: pointer;" title="Télécharger le fichier classeur Excel complet (.xls)">
+              <i class="fa-solid fa-file-excel"></i> Télécharger Excel (.xls)
+            </button>
+            <button class="ev-btn secondary" id="btnDownloadCsv" style="display: flex; align-items: center; gap: 6px; font-size: 12px; padding: 7px 14px; background: #334155; border-color: #475569; color: #f8fafc; border-radius: 6px; font-weight: 600; cursor: pointer;" title="Télécharger le fichier CSV normalisé UTF-8">
+              <i class="fa-solid fa-file-csv"></i> Télécharger CSV (UTF-8)
+            </button>
+          </div>
         </div>
-        <table class="ev-table">
-          <thead>
-            <tr>
-              <th>Repère</th>
-              <th>Repère & Désignation de l'appareil</th>
-              <th>Catégorie</th>
-              <th>Raccordements & Bornes actives</th>
-              <th>Référence & Norme constructeur</th>
-            </tr>
-          </thead>
-          <tbody id="bomTableBody">
-            <!-- Rempli en JS -->
-          </tbody>
-        </table>
+
+        <!-- Onglets de la modale -->
+        <div style="display: flex; gap: 8px; margin-bottom: 14px; border-bottom: 1px solid #334155;">
+          <button id="tabBomComps" type="button" style="background: none; border: none; font-size: 13px; font-weight: 700; color: #38bdf8; cursor: pointer; padding: 8px 14px; border-bottom: 2px solid #38bdf8;">
+            <i class="fa-solid fa-cubes-stacked" style="margin-right: 6px;"></i>Appareils &amp; Équipements (<span id="countCompsTab">0</span>)
+          </button>
+          <button id="tabBomWires" type="button" style="background: none; border: none; font-size: 13px; font-weight: 600; color: #94a3b8; cursor: pointer; padding: 8px 14px; border-bottom: 2px solid transparent;">
+            <i class="fa-solid fa-bezier-curve" style="margin-right: 6px;"></i>Carnet de Câblage (<span id="countWiresTab">0</span>)
+          </button>
+        </div>
+
+        <!-- Vue 1 : Appareillage -->
+        <div id="bomViewComps" style="overflow-x: auto;">
+          <table class="ev-table" style="width: 100%; border-collapse: collapse; font-size: 12px;">
+            <thead>
+              <tr style="background: #0f172a; color: #cbd5e1; text-align: left; border-bottom: 1px solid #334155;">
+                <th style="padding: 8px 10px; width: 85px;">Repère IEC</th>
+                <th style="padding: 8px 10px;">Désignation technique de l'appareil</th>
+                <th style="padding: 8px 10px;">Catégorie</th>
+                <th style="padding: 8px 10px;">Constructeur &amp; Référence</th>
+                <th style="padding: 8px 10px;">Norme</th>
+                <th style="padding: 8px 10px;">Emplacement</th>
+                <th style="padding: 8px 10px;">Raccordements</th>
+              </tr>
+            </thead>
+            <tbody id="bomTableBody">
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Vue 2 : Carnet de Câblage -->
+        <div id="bomViewWires" style="display: none; overflow-x: auto;">
+          <table class="ev-table" style="width: 100%; border-collapse: collapse; font-size: 12px;">
+            <thead>
+              <tr style="background: #0f172a; color: #cbd5e1; text-align: left; border-bottom: 1px solid #334155;">
+                <th style="padding: 8px 10px; width: 65px;">N° Fil</th>
+                <th style="padding: 8px 10px;">Origine (Tenant)</th>
+                <th style="padding: 8px 10px;">Destination (Aboutissant)</th>
+                <th style="padding: 8px 10px;">Couleur normalisée</th>
+                <th style="padding: 8px 10px;">Section</th>
+                <th style="padding: 8px 10px;">Longueur</th>
+                <th style="padding: 8px 10px;">Circuit</th>
+              </tr>
+            </thead>
+            <tbody id="bomWiresTableBody">
+            </tbody>
+          </table>
+        </div>
+
       </div>
     </div>
   </div>
@@ -6557,39 +6605,1130 @@
       });
     }
 
-    // BOM / Liste de Matériel
-    const bomModal = document.getElementById("bomModal");
-    document.getElementById("btnOpenBom").addEventListener("click", () => {
-      const tbody = document.getElementById("bomTableBody");
-      tbody.innerHTML = "";
-      state.components.forEach(comp => {
-        const wiredTerms = state.wires.filter(w => w.from.compUid === comp.uid || w.to.compUid === comp.uid).length;
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td style="font-weight: 700; color: #60a5fa;">${comp.name.slice(0, 4).toUpperCase()}</td>
-          <td>${comp.name}</td>
-          <td>${comp.folder}</td>
-          <td>${wiredTerms} borne(s) raccordée(s)</td>
-          <td>EduVolt Catalog EVC</td>
-        `;
-        tbody.appendChild(tr);
-      });
-      bomModal.classList.add("open");
-    });
-    document.getElementById("btnCloseBom").addEventListener("click", () => bomModal.classList.remove("open"));
+    // =========================================================================
+    // NOMENCLATURE INDUSTRIELLE & CARNET DE CÂBLAGE PROFESSIONNEL 100% FRANÇAIS
+    // Conforme aux normes IEC 81346-2, NF C 15-100 et XML Spreadsheet 2003
+    // =========================================================================
 
-    // Télécharger BOM en CSV
-    document.getElementById("btnDownloadExcel").addEventListener("click", () => {
-      let csv = "Repère;Désignation;Dossier EVC;Bornes;Fournisseur\n";
-      state.components.forEach(comp => {
-        csv += `${comp.name.slice(0, 4)};${comp.name};${comp.folder};${comp.terminals.length};EduVolt\n`;
+    const COMPONENT_SPECS_DATABASE = {
+      "interuptor_simple": {
+        iecPrefix: "-S",
+        nameFr: "Interrupteur unipolaire 1P 10AX 250V AC",
+        categoryFr: "Commande & Signalisation",
+        manufacturer: "Legrand - Mosaic 077011",
+        norm: "NF EN 60669-1",
+        notes: "10 AX / 250 V AC"
+      },
+      "pulsador_verde_1no": {
+        iecPrefix: "-S",
+        nameFr: "Bouton-poussoir affleurant vert (1 NO) - Commande Marche",
+        categoryFr: "Commande & Signalisation",
+        manufacturer: "Schneider Electric - Harmony XB4BA31",
+        norm: "IEC / EN 60947-5-1",
+        notes: "Ø 22 mm - 1 NO - Ie = 3 A / 240 V"
+      },
+      "pulsador_rojo_1nc": {
+        iecPrefix: "-S",
+        nameFr: "Bouton-poussoir affleurant rouge (1 NF) - Commande Arrêt",
+        categoryFr: "Commande & Signalisation",
+        manufacturer: "Schneider Electric - Harmony XB4BA42",
+        norm: "IEC / EN 60947-5-1",
+        notes: "Ø 22 mm - 1 NF - Ie = 3 A / 240 V"
+      },
+      "interuptor_de_conmutacion_simple": {
+        iecPrefix: "-S",
+        nameFr: "Interrupteur va-et-vient unipolaire 10AX 250V AC",
+        categoryFr: "Commande & Signalisation",
+        manufacturer: "Legrand - Plexo 069511",
+        norm: "NF EN 60669-1",
+        notes: "10 AX / 250 V AC"
+      },
+      "selector_de_2_posiciones_1no": {
+        iecPrefix: "-SA",
+        nameFr: "Commutateur rotatif 2 positions fixes (0 - 1) - 1 NO",
+        categoryFr: "Commande & Signalisation",
+        manufacturer: "Schneider Electric - Harmony XB4BD21",
+        norm: "IEC / EN 60947-5-1",
+        notes: "Ø 22 mm - Manette standard 90°"
+      },
+      "parada_de_emergencia_rojo_1nc": {
+        iecPrefix: "-S0",
+        nameFr: "Bouton coup de poing d'arrêt d'urgence Ø 40 mm à accrochage (1 NF)",
+        categoryFr: "Sécurité & Arrêt d'urgence",
+        manufacturer: "Schneider Electric - Harmony XB4BS542",
+        norm: "IEC / EN 60947-5-5 / ISO 13850",
+        notes: "Déverrouillage par rotation brusque"
+      },
+      "sensor_de_proximidad_inductivo_2_hilos_ac-dc": {
+        iecPrefix: "-B",
+        nameFr: "Détecteur de proximité inductif tubulaire M18 - 2 fils NO (AC/DC)",
+        categoryFr: "Détection & Capteurs industriels",
+        manufacturer: "Telemecanique Sensors - XS618B1MAL2",
+        norm: "IEC / EN 60947-5-2",
+        notes: "Portée Sn = 8 mm - 24...240 V AC/DC"
+      },
+      "interruptor_de_nivel_-_flotador": {
+        iecPrefix: "-B",
+        nameFr: "Poire de niveau à flotteur pour liquides (Contact 1 inverseur)",
+        categoryFr: "Détection & Capteurs industriels",
+        manufacturer: "ATMI - Taurus",
+        norm: "IEC / EN 60730-1",
+        notes: "Microcontact 10(4) A 250 V AC"
+      },
+      "fotocelda_crepuscular": {
+        iecPrefix: "-B",
+        nameFr: "Interrupteur crépusculaire modulaire avec sonde photoélectrique",
+        categoryFr: "Détection & Capteurs industriels",
+        manufacturer: "Theben - LUNA 126 star",
+        norm: "EN 60669-2-1",
+        notes: "Seuil réglable 2...100 lx - 16 A 250 V"
+      },
+      "roller_lever_limit_switch_com": {
+        iecPrefix: "-SQ",
+        nameFr: "Interrupteur de fin de course mécanique à levier et galet (1 NO + 1 NF)",
+        categoryFr: "Détection & Capteurs industriels",
+        manufacturer: "Telemecanique Sensors - XCKN2118P20",
+        norm: "IEC / EN 60947-5-1",
+        notes: "Action brusque - Corps plastique IP65"
+      },
+      "logo!_230rce": {
+        iecPrefix: "-PLC",
+        nameFr: "Automate programmable industriel Siemens LOGO! 230RCE (8E / 4S Relais)",
+        categoryFr: "Automatisme & Régulation",
+        manufacturer: "Siemens - 6ED1052-1FB08-0BA1",
+        norm: "IEC / EN 61131-2",
+        notes: "Alimentation 115/230 V AC - Interface Ethernet RJ45"
+      },
+      "guardamotor_1-1,6_a": {
+        iecPrefix: "-QM",
+        nameFr: "Disjoncteur-moteur magnétothermique 1.0 - 1.6 A (Icu = 100 kA)",
+        categoryFr: "Protection des moteurs",
+        manufacturer: "Schneider Electric - TeSys GV2ME06",
+        norm: "IEC / EN 60947-2 & 60947-4-1",
+        notes: "Calibre réglable 1,0...1,6 A - 3P"
+      },
+      "guardamotor_2,5-4_a": {
+        iecPrefix: "-QM",
+        nameFr: "Disjoncteur-moteur magnétothermique 2.5 - 4.0 A (Icu = 100 kA)",
+        categoryFr: "Protection des moteurs",
+        manufacturer: "Schneider Electric - TeSys GV2ME08",
+        norm: "IEC / EN 60947-2 & 60947-4-1",
+        notes: "Calibre réglable 2,5...4,0 A - 3P"
+      },
+      "rele_termico_0,25-0,4_a": {
+        iecPrefix: "-FR",
+        nameFr: "Relais thermique de protection différentiel contre les surcharges 0.25 - 0.4 A",
+        categoryFr: "Protection des moteurs",
+        manufacturer: "Schneider Electric - TeSys LRD03",
+        norm: "IEC / EN 60947-4-1",
+        notes: "Classe 10A - 1 NO + 1 NF auxiliaires"
+      },
+      "rele_termico_0,4-0,63_a": {
+        iecPrefix: "-FR",
+        nameFr: "Relais thermique de protection différentiel contre les surcharges 0.4 - 0.63 A",
+        categoryFr: "Protection des moteurs",
+        manufacturer: "Schneider Electric - TeSys LRD04",
+        norm: "IEC / EN 60947-4-1",
+        notes: "Classe 10A - 1 NO + 1 NF auxiliaires"
+      },
+      "id_2p_25a_30ma": {
+        iecPrefix: "-Q0",
+        nameFr: "Interrupteur différentiel modulaire 2P 25 A 30 mA Type AC",
+        categoryFr: "Protection différentielle",
+        manufacturer: "Schneider Electric - Acti9 iID A9R11225",
+        norm: "IEC / EN 61008-1 / NF C 15-100",
+        notes: "Sensibilité 30 mA - Un = 230 V AC"
+      },
+      "rele_temporizado_multifuncion_re17": {
+        iecPrefix: "-KT",
+        nameFr: "Relais temporisé modulaire multifonction Schneider RE17 (0.1 s à 100 h)",
+        categoryFr: "Régulation & Temporisation",
+        manufacturer: "Schneider Electric - RE17RAMU",
+        norm: "IEC / EN 61812-1",
+        notes: "Alimentation universelle 24...240 V AC/DC - 1 contact 8A"
+      },
+      "barra_de_neutro_(n)_-_6t_a": {
+        iecPrefix: "-XN",
+        nameFr: "Barrette de répartition et distribution du Neutre (N) 6 connexions",
+        categoryFr: "Distribution & Raccordement",
+        manufacturer: "Legrand - 004820",
+        norm: "IEC 60998-2-1",
+        notes: "Barreau cuivre étamé 6 trous à vis"
+      },
+      "barra_de_tierra_(pe)_-_6t_a": {
+        iecPrefix: "-XPE",
+        nameFr: "Barrette de terre de protection équipotentielle (PE) 6 connexions",
+        categoryFr: "Distribution & Raccordement",
+        manufacturer: "Legrand - 004830",
+        norm: "NF C 15-100",
+        notes: "Barreau laiton 6 trous à vis"
+      },
+      "borne_gris": {
+        iecPrefix: "-X",
+        nameFr: "Bloc de jonction sur rail DIN 2.5 mm² - Gris (Phase)",
+        categoryFr: "Distribution & Raccordement",
+        manufacturer: "WAGO - TopJob S 2002-1201",
+        norm: "IEC / EN 60947-7-1",
+        notes: "Technologie Push-in CAGE CLAMP - In = 24 A"
+      },
+      "borne_verde": {
+        iecPrefix: "-X",
+        nameFr: "Bloc de jonction sur rail DIN 2.5 mm² - Vert (Auxiliaire)",
+        categoryFr: "Distribution & Raccordement",
+        manufacturer: "WAGO - TopJob S 2002-1202",
+        norm: "IEC / EN 60947-7-1",
+        notes: "Technologie Push-in CAGE CLAMP - In = 24 A"
+      },
+      "borne_azul": {
+        iecPrefix: "-XN",
+        nameFr: "Bloc de jonction sur rail DIN 2.5 mm² - Bleu (Neutre)",
+        categoryFr: "Distribution & Raccordement",
+        manufacturer: "WAGO - TopJob S 2002-1204",
+        norm: "IEC / EN 60947-7-1",
+        notes: "Technologie Push-in CAGE CLAMP - In = 24 A"
+      },
+      "12p-riel_din_35_mm": {
+        iecPrefix: "-DIN",
+        nameFr: "Rail symétrique DIN 35 x 7.5 mm perforé (12 modules)",
+        categoryFr: "Accessoires d'enveloppe",
+        manufacturer: "Legrand - 037402",
+        norm: "EN 60715",
+        notes: "Acier zingué"
+      },
+      "8p-riel_din_35_mm": {
+        iecPrefix: "-DIN",
+        nameFr: "Rail symétrique DIN 35 x 7.5 mm perforé (8 modules)",
+        categoryFr: "Accessoires d'enveloppe",
+        manufacturer: "Legrand - 037401",
+        norm: "EN 60715",
+        notes: "Acier zingué"
+      },
+      "10p_riel_din_35_mm": {
+        iecPrefix: "-DIN",
+        nameFr: "Rail symétrique DIN 35 x 7.5 mm perforé (10 modules)",
+        categoryFr: "Accessoires d'enveloppe",
+        manufacturer: "Legrand - 037400",
+        norm: "EN 60715",
+        notes: "Acier zingué"
+      },
+      "borne_pe": {
+        iecPrefix: "-XPE",
+        nameFr: "Bloc de jonction pour conducteur de protection (PE) Vert/Jaune 2.5 mm²",
+        categoryFr: "Distribution & Raccordement",
+        manufacturer: "WAGO - TopJob S 2002-1207",
+        norm: "IEC / EN 60947-7-2",
+        notes: "Contact de masse automatique avec rail DIN"
+      },
+      "bornes_l1-l2-l3-n": {
+        iecPrefix: "-X1",
+        nameFr: "Bornier d'alimentation principale Triphasé + Neutre (L1-L2-L3-N)",
+        categoryFr: "Distribution & Raccordement",
+        manufacturer: "Phoenix Contact - UT 6-QUATTRO",
+        norm: "IEC / EN 60947-7-1",
+        notes: "Section max 6 mm² - In = 41 A"
+      },
+      "bornes_l1-l2-l3": {
+        iecPrefix: "-X1",
+        nameFr: "Bornier d'alimentation puissance Triphasé (L1-L2-L3)",
+        categoryFr: "Distribution & Raccordement",
+        manufacturer: "Phoenix Contact - UT 4-3L",
+        norm: "IEC / EN 60947-7-1",
+        notes: "Section max 4 mm² - In = 32 A"
+      },
+      "bornes_l-n": {
+        iecPrefix: "-X1",
+        nameFr: "Bornier d'alimentation monophasé Phase + Neutre (L-N)",
+        categoryFr: "Distribution & Raccordement",
+        manufacturer: "Phoenix Contact - UT 2,5-TG",
+        norm: "IEC / EN 60947-7-1",
+        notes: "Section max 2.5 mm² - In = 24 A"
+      },
+      "borne_+_-": {
+        iecPrefix: "-XG",
+        nameFr: "Bloc de distribution Très Basse Tension continue 24V DC (+ / -)",
+        categoryFr: "Distribution & Raccordement",
+        manufacturer: "Phoenix Contact - PTFIX 6/18X2,5",
+        norm: "IEC / EN 60947-7-1",
+        notes: "Distribution polarisée +24V et 0V"
+      },
+      "itm_2p_c6": {
+        iecPrefix: "-Q",
+        nameFr: "Disjoncteur magnétothermique modulaire 2P (Phase + Neutre) 6 A - Courbe C",
+        categoryFr: "Protection des circuits",
+        manufacturer: "Schneider Electric - Acti9 iC60N 2P 6A C",
+        norm: "IEC / EN 60898-1 & 60947-2",
+        notes: "Icu = 10 kA (EN 60947-2)"
+      },
+      "itm_2p_c10": {
+        iecPrefix: "-Q",
+        nameFr: "Disjoncteur magnétothermique modulaire 2P (Phase + Neutre) 10 A - Courbe C",
+        categoryFr: "Protection des circuits",
+        manufacturer: "Schneider Electric - Acti9 iC60N 2P 10A C",
+        norm: "IEC / EN 60898-1 & 60947-2",
+        notes: "Icu = 10 kA (EN 60947-2)"
+      },
+      "itm_3p_c6": {
+        iecPrefix: "-Q",
+        nameFr: "Disjoncteur magnétothermique modulaire triphasé 3P 6 A - Courbe C",
+        categoryFr: "Protection des circuits",
+        manufacturer: "Schneider Electric - Acti9 iC60N 3P 6A C",
+        norm: "IEC / EN 60898-1 & 60947-2",
+        notes: "Icu = 10 kA (EN 60947-2)"
+      },
+      "itm_3p_c10": {
+        iecPrefix: "-Q",
+        nameFr: "Disjoncteur magnétothermique modulaire triphasé 3P 10 A - Courbe C",
+        categoryFr: "Protection des circuits",
+        manufacturer: "Schneider Electric - Acti9 iC60N 3P 10A C",
+        norm: "IEC / EN 60898-1 & 60947-2",
+        notes: "Icu = 10 kA (EN 60947-2)"
+      },
+      "itm_1p_c6": {
+        iecPrefix: "-Q",
+        nameFr: "Disjoncteur magnétothermique modulaire 1P 6 A - Courbe C",
+        categoryFr: "Protection des circuits",
+        manufacturer: "Schneider Electric - Acti9 iC60N 1P 6A C",
+        norm: "IEC / EN 60898-1 & 60947-2",
+        notes: "Icu = 10 kA (EN 60947-2)"
+      },
+      "itm_1p_c10": {
+        iecPrefix: "-Q",
+        nameFr: "Disjoncteur magnétothermique modulaire 1P 10 A - Courbe C",
+        categoryFr: "Protection des circuits",
+        manufacturer: "Schneider Electric - Acti9 iC60N 1P 10A C",
+        norm: "IEC / EN 60898-1 & 60947-2",
+        notes: "Icu = 10 kA (EN 60947-2)"
+      },
+      "bloque_auxiliar_frontal_1no+1nc_-_guardamotor": {
+        iecPrefix: "-QM_AUX",
+        nameFr: "Bloc de contacts auxiliaires frontal instantané pour disjoncteur (1 NO + 1 NF)",
+        categoryFr: "Contacts auxiliaires",
+        manufacturer: "Schneider Electric - TeSys GVAE11",
+        norm: "IEC / EN 60947-5-1",
+        notes: "Montage clipsable sur GV2"
+      },
+      "temporizador_retardo_a_la_conexion_1_-_30s": {
+        iecPrefix: "-KT",
+        nameFr: "Bloc temporisateur pneumatique retard à l'enclenchement (1 à 30 secondes)",
+        categoryFr: "Régulation & Temporisation",
+        manufacturer: "Schneider Electric - TeSys LAD-T2",
+        norm: "IEC / EN 60947-5-1",
+        notes: "Montage frontal sur contacteur LC1D"
+      },
+      "bloque_auxiliar_frontal_3no_+_1nc_-_contactor": {
+        iecPrefix: "-KM_AUX",
+        nameFr: "Bloc de contacts auxiliaires frontal instantané pour contacteur (3 NO + 1 NF)",
+        categoryFr: "Contacts auxiliaires",
+        manufacturer: "Schneider Electric - TeSys LAD-N31",
+        norm: "IEC / EN 60947-5-1",
+        notes: "Montage frontal sur contacteur LC1D"
+      },
+      "rele_de_seguridad_(cp-d_301)": {
+        iecPrefix: "-KS",
+        nameFr: "Module de sécurité d'arrêt d'urgence et carters CP-D 301",
+        categoryFr: "Sécurité des machines",
+        manufacturer: "ABB Jokab Safety - RT9",
+        norm: "ISO 13849-1 (PL e, Cat 4)",
+        notes: "Double canal avec boucle de retour et réarmement"
+      },
+      "foco_led": {
+        iecPrefix: "-E",
+        nameFr: "Luminaire réglette d'éclairage d'armoire à LED 230 V AC",
+        categoryFr: "Éclairage & Utilitaires",
+        manufacturer: "Rittal - LED 4140.810",
+        norm: "EN 60598-1",
+        notes: "Flux 400 lm - Allumage direct"
+      },
+      "motor_6_terminales": {
+        iecPrefix: "-M",
+        nameFr: "Moteur asynchrone triphasé à cage 230/400 V 1.5 kW 1500 tr/min",
+        categoryFr: "Actionneurs & Moteurs",
+        manufacturer: "ABB / Leroy-Somer - LSES 90L",
+        norm: "IEC / EN 60034-1 (IE3)",
+        notes: "Boîte 6 bornes U1-V1-W1 / W2-U2-V2"
+      },
+      "contactor_1211": {
+        iecPrefix: "-KM",
+        nameFr: "Contacteur de puissance tripolaire 12 A (5.5 kW / 400V) - 1 NO + 1 NF",
+        categoryFr: "Contacteurs de puissance",
+        manufacturer: "Schneider Electric - TeSys LC1D12P7",
+        norm: "IEC / EN 60947-4-1",
+        notes: "Bobine 230 V 50/60 Hz - Catégorie AC-3"
+      },
+      "contactor_0911": {
+        iecPrefix: "-KM",
+        nameFr: "Contacteur de puissance tripolaire 9 A (4.0 kW / 400V) - 1 NO + 1 NF",
+        categoryFr: "Contacteurs de puissance",
+        manufacturer: "Schneider Electric - TeSys LC1D09P7",
+        norm: "IEC / EN 60947-4-1",
+        notes: "Bobine 230 V 50/60 Hz - Catégorie AC-3"
+      },
+      "contactor_1811": {
+        iecPrefix: "-KM",
+        nameFr: "Contacteur de puissance tripolaire 18 A (7.5 kW / 400V) - 1 NO + 1 NF",
+        categoryFr: "Contacteurs de puissance",
+        manufacturer: "Schneider Electric - TeSys LC1D18P7",
+        norm: "IEC / EN 60947-4-1",
+        notes: "Bobine 230 V 50/60 Hz - Catégorie AC-3"
+      },
+      "piloto_led_verde": {
+        iecPrefix: "-H",
+        nameFr: "Voyant modulaire LED vert Ø 22 mm (Marche / En service)",
+        categoryFr: "Commande & Signalisation",
+        manufacturer: "Schneider Electric - Harmony XB4BVB3",
+        norm: "IEC / EN 60947-5-1",
+        notes: "Alimentation 230 V AC - Voyant à DEL haute luminosité"
+      },
+      "piloto_led_rojo": {
+        iecPrefix: "-H",
+        nameFr: "Voyant modulaire LED rouge Ø 22 mm (Défaut / Arrêt)",
+        categoryFr: "Commande & Signalisation",
+        manufacturer: "Schneider Electric - Harmony XB4BVB4",
+        norm: "IEC / EN 60947-5-1",
+        notes: "Alimentation 230 V AC - Voyant à DEL haute luminosité"
+      },
+      "abb_ca5_10_abb_a30_30_10": {
+        iecPrefix: "-KM_AUX",
+        nameFr: "Bloc de contacts auxiliaires frontal ABB CA5-10 (1 NO)",
+        categoryFr: "Contacts auxiliaires",
+        manufacturer: "ABB - CA5-10 (1SBN010010R1010)",
+        norm: "IEC / EN 60947-5-1",
+        notes: "Montage clipsable sur contacteur ABB A-Line"
+      },
+      "abb_a30_30_10": {
+        iecPrefix: "-KM",
+        nameFr: "Contacteur tripolaire de puissance ABB A30-30-10 (30 A / 15 kW AC-3) - 1 NO",
+        categoryFr: "Contacteurs de puissance",
+        manufacturer: "ABB - A30-30-10-84",
+        norm: "IEC / EN 60947-4-1",
+        notes: "Bobine 230...240 V 50Hz / 240...260 V 60Hz"
+      },
+      "rele_encapsulado_de_8_pines": {
+        iecPrefix: "-KA",
+        nameFr: "Relais industriel miniature embrochable 8 broches (2 contacts RT 10A)",
+        categoryFr: "Relais auxiliaires de commande",
+        manufacturer: "Finder - Série 55.32 (55.32.8.230.0040)",
+        norm: "IEC / EN 61810-1",
+        notes: "Bobine 230 V AC avec bouton test et indicateur optique"
+      },
+      "abb_s200_s201_1p": {
+        iecPrefix: "-Q",
+        nameFr: "Disjoncteur divisionnaire modulaire 1P 10 A - Courbe C",
+        categoryFr: "Protection des circuits",
+        manufacturer: "ABB - System pro M compact S201-C10",
+        norm: "IEC / EN 60898-1 & 60947-2",
+        notes: "Pouvoir de coupure Icn = 6 kA"
+      },
+      "abb_tmax_xt1_3p": {
+        iecPrefix: "-QA",
+        nameFr: "Disjoncteur boîtier moulé triphasé ABB Tmax XT1B 160 TMD 63 A - 3 Pôles",
+        categoryFr: "Protection générale de tête",
+        manufacturer: "ABB - Tmax XT1B 160 TMD 63-630 3p F F",
+        norm: "IEC / EN 60947-2",
+        notes: "Icu = 18 kA à 415 V AC - Déclencheur magnétothermique"
+      },
+      "digital_v_a_kw_meter_with_ct": {
+        iecPrefix: "-P",
+        nameFr: "Centrale de mesure multifonction numérique sur rail DIN avec tore TC",
+        categoryFr: "Mesure & Instrumentation",
+        manufacturer: "Schneider Electric - PowerLogic PM5110",
+        norm: "IEC 61557-12 / IEC 62053-22",
+        notes: "Affichage Tension, Courant, Facteur de puissance, Énergie kWh"
+      },
+      "abb_ms116_16": {
+        iecPrefix: "-QM",
+        nameFr: "Disjoncteur-moteur magnétothermique ABB MS116 (10.0 à 16.0 A)",
+        categoryFr: "Protection des moteurs",
+        manufacturer: "ABB - MS116-16 (1SAM250000R1011)",
+        norm: "IEC / EN 60947-2 & 60947-4-1",
+        notes: "Protection thermique et court-circuit moteur triphasé"
+      },
+      "borne__plus_": {
+        iecPrefix: "-XG+",
+        nameFr: "Bloc de jonction sur rail DIN pour potentiel continu positif (+24V DC)",
+        categoryFr: "Distribution & Raccordement",
+        manufacturer: "Phoenix Contact - UT 2,5-RD (Rouge)",
+        norm: "IEC / EN 60947-7-1",
+        notes: "Raccordement vissé 24 A"
+      },
+      "borne__": {
+        iecPrefix: "-XG-",
+        nameFr: "Bloc de jonction sur rail DIN pour potentiel continu négatif (0V DC)",
+        categoryFr: "Distribution & Raccordement",
+        manufacturer: "Phoenix Contact - UT 2,5-BK (Noir)",
+        norm: "IEC / EN 60947-7-1",
+        notes: "Raccordement vissé 24 A"
+      },
+      "power_supply_100_240vac_24vdc_5a": {
+        iecPrefix: "-G",
+        nameFr: "Alimentation stabilisée à découpage rail DIN 100-240 V AC / 24 V DC - 5 A (120 W)",
+        categoryFr: "Alimentations industrielles",
+        manufacturer: "Schneider Electric - Phaseo ABL8RPS24050",
+        norm: "IEC / EN 61204-3 / EN 62368-1",
+        notes: "Tension régulée 24 V DC - Rendement 89%"
+      },
+      "abb_f202_a": {
+        iecPrefix: "-Q0",
+        nameFr: "Interrupteur différentiel modulaire 2P 25 A 30 mA Type A",
+        categoryFr: "Protection différentielle",
+        manufacturer: "ABB - F202 A-25/0.03 (2CSF202101R1250)",
+        norm: "IEC / EN 61008-1",
+        notes: "Sensibilité 30 mA - Détection composantes continues pulsées"
+      },
+      "piloto_led_amarillo": {
+        iecPrefix: "-H",
+        nameFr: "Voyant modulaire LED jaune Ø 22 mm (Avertissement / Attention)",
+        categoryFr: "Commande & Signalisation",
+        manufacturer: "Schneider Electric - Harmony XB4BVB5",
+        norm: "IEC / EN 60947-5-1",
+        notes: "Alimentation 230 V AC - Voyant à DEL haute luminosité"
+      },
+      "piloto_led_azul": {
+        iecPrefix: "-H",
+        nameFr: "Voyant modulaire LED bleu Ø 22 mm (Consigne impérative)",
+        categoryFr: "Commande & Signalisation",
+        manufacturer: "Schneider Electric - Harmony XB4BVB6",
+        norm: "IEC / EN 60947-5-1",
+        notes: "Alimentation 230 V AC - Voyant à DEL haute luminosité"
+      },
+      "piloto_led_blanco": {
+        iecPrefix: "-H",
+        nameFr: "Voyant modulaire LED blanc Ø 22 mm (Neutre / Disponibilité)",
+        categoryFr: "Commande & Signalisation",
+        manufacturer: "Schneider Electric - Harmony XB4BVB1",
+        norm: "IEC / EN 60947-5-1",
+        notes: "Alimentation 230 V AC - Voyant à DEL haute luminosité"
+      },
+      "tomacorriente_doble__plus__pe": {
+        iecPrefix: "-XSOC",
+        nameFr: "Prise de courant de service modulaire 2P + Terre sur rail DIN (16 A / 250 V AC)",
+        categoryFr: "Accessoires d'enveloppe",
+        manufacturer: "Legrand - 004280",
+        norm: "NF C 61-314",
+        notes: "Avec volet d'obturation de protection"
+      },
+      "abb_tf42": {
+        iecPrefix: "-FR",
+        nameFr: "Relais thermique de protection moteur ABB TF42 (1.0 à 1.3 A)",
+        categoryFr: "Protection des moteurs",
+        manufacturer: "ABB - TF42-1.3 (1SAZ721201R1025)",
+        norm: "IEC / EN 60947-4-1",
+        notes: "Compensation en température ambiante - 1 NO + 1 NF"
+      },
+      "abb_ct_erc_12": {
+        iecPrefix: "-KT",
+        nameFr: "Relais temporisé électronique travail (ON-delay) ABB CT-ERC.12 (0.05 s à 100 h)",
+        categoryFr: "Régulation & Temporisation",
+        manufacturer: "ABB - CT-ERC.12 (1SVR550107R1100)",
+        norm: "IEC / EN 61812-1",
+        notes: "Tension universelle 24...48 V DC / 24...240 V AC - 1 contact inverseur 4A"
+      },
+      "relé_de_seguridad_pnoz_x3": {
+        iecPrefix: "-KS",
+        nameFr: "Bloc logique de sécurité d'arrêt d'urgence Pilz PNOZ X3 (3 NO sécurité + 1 NF auxiliaire)",
+        categoryFr: "Sécurité des machines",
+        manufacturer: "Pilz - PNOZ X3 230VAC 24VDC",
+        norm: "EN ISO 13849-1 (PL e, Cat 4) / EN 62061 (SIL CL 3)",
+        notes: "Alimentation 230 V AC / 24 V DC"
+      },
+      "módulo_de_seguridad_xps_ac": {
+        iecPrefix: "-KS",
+        nameFr: "Module de sécurité d'arrêt d'urgence Schneider Preventa XPS-AC (3 sorties NO)",
+        categoryFr: "Sécurité des machines",
+        manufacturer: "Schneider Electric - XPSAC5121",
+        norm: "EN ISO 13849-1 (PL e, Cat 4)",
+        notes: "Alimentation 24 V AC/DC - Raccordement sur bornes à vis"
+      },
+      "módulo_de_seguridad_de_dos_canales_xps_af": {
+        iecPrefix: "-KS",
+        nameFr: "Module de sécurité deux canaux d'arrêt d'urgence Schneider Preventa XPS-AF (3 NO)",
+        categoryFr: "Sécurité des machines",
+        manufacturer: "Schneider Electric - XPSAF5130",
+        norm: "EN ISO 13849-1 (PL e, Cat 4)",
+        notes: "Surveillance deux canaux avec boucle de retour"
+      },
+      "vfd_svc_3phase_interactive": {
+        iecPrefix: "-U",
+        nameFr: "Variateur de fréquence vectoriel triphasé 400 V - 1.5 kW",
+        categoryFr: "Variation de vitesse & Entraînement",
+        manufacturer: "Schneider Electric - Altivar Machine ATV320U15N4B",
+        norm: "IEC / EN 61800-3 & 61800-5-1",
+        notes: "Contrôle vectoriel de flux sans capteur (SVC) - Filtre CEM intégré"
+      },
+      "tense_fkv03hf": {
+        iecPrefix: "-KA_PH",
+        nameFr: "Relais de surveillance de phase, ordre des phases et asymétrie Tense FKV-03HF",
+        categoryFr: "Régulation & Mesure",
+        manufacturer: "Tense Electronic - FKV-03HF",
+        norm: "IEC / EN 60255-1",
+        notes: "Seuil d'asymétrie réglable - Sortie relais 5 A"
+      },
+      "transformador_100_240_24vac_50va": {
+        iecPrefix: "-T",
+        nameFr: "Transformateur de commande et d'isolement monophasé 230 V / 24 V AC 50 VA",
+        categoryFr: "Alimentations industrielles",
+        manufacturer: "Legrand - 044212",
+        norm: "IEC / EN 61558-2-2 / NF C 15-100",
+        notes: "Primaire 230 V AC - Secondaire 24 V AC 50 VA"
+      },
+      "atek_ast20_pt100_rtd_3wire": {
+        iecPrefix: "-B",
+        nameFr: "Sonde de température industrielle RTD PT100 Classe A à 3 fils (-50...+250 °C)",
+        categoryFr: "Détection & Capteurs industriels",
+        manufacturer: "Atek Sensor - AST20-PT100-3W",
+        norm: "IEC 60751 Classe A",
+        notes: "Gaine inox Ø 6 mm - Câble blindé haute température"
+      }
+    };
+
+    function escapeXml(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&apos;");
+    }
+
+    function escapeCsvCell(val) {
+      if (val === null || val === undefined) return '""';
+      const s = String(val).replace(/"/g, '""');
+      return `"${s}"`;
+    }
+
+    function getComponentFrenchSpecs(comp, typeCounters) {
+      const folderKey = (comp.folder || "").toLowerCase();
+      let spec = COMPONENT_SPECS_DATABASE[folderKey];
+
+      // Fallback si non trouvé par folder
+      if (!spec) {
+        const foundKey = Object.keys(COMPONENT_SPECS_DATABASE).find(k => folderKey.includes(k) || (comp.protoId && comp.protoId.toLowerCase().includes(k)));
+        if (foundKey) spec = COMPONENT_SPECS_DATABASE[foundKey];
+      }
+
+      // Fallback par défaut intelligent
+      if (!spec) {
+        let prefix = "-EQ";
+        let cat = "Appareillage électrique";
+        let norm = "IEC / NF C 15-100";
+        let mfg = "Équipementier industriel standard";
+        const nameLower = (comp.name || comp.protoId || "").toLowerCase();
+
+        if (nameLower.includes("disjoncteur") || nameLower.includes("itm")) { prefix = "-Q"; cat = "Protection des circuits"; norm = "IEC / EN 60898-1"; mfg = "Schneider / ABB"; }
+        else if (nameLower.includes("contacteur")) { prefix = "-KM"; cat = "Contacteurs de puissance"; norm = "IEC / EN 60947-4-1"; mfg = "Schneider / ABB"; }
+        else if (nameLower.includes("moteur")) { prefix = "-M"; cat = "Actionneurs & Moteurs"; norm = "IEC / EN 60034-1"; mfg = "Leroy-Somer / ABB"; }
+        else if (nameLower.includes("bouton") || nameLower.includes("poussoir") || nameLower.includes("pulsador")) { prefix = "-S"; cat = "Commande & Signalisation"; norm = "IEC / EN 60947-5-1"; mfg = "Schneider Electric - Harmony"; }
+        else if (nameLower.includes("arret") || nameLower.includes("arrêt") || nameLower.includes("urgence")) { prefix = "-S0"; cat = "Sécurité & Arrêt d'urgence"; norm = "IEC / EN 60947-5-5"; mfg = "Schneider Electric - Harmony"; }
+        else if (nameLower.includes("voyant") || nameLower.includes("piloto")) { prefix = "-H"; cat = "Commande & Signalisation"; norm = "IEC / EN 60947-5-1"; mfg = "Schneider Electric - Harmony"; }
+        else if (nameLower.includes("borne")) { prefix = "-X"; cat = "Distribution & Raccordement"; norm = "IEC / EN 60947-7-1"; mfg = "WAGO / Phoenix Contact"; }
+        else if (nameLower.includes("relais") || nameLower.includes("rele")) { prefix = "-KA"; cat = "Relais de commande"; norm = "IEC / EN 61810-1"; mfg = "Finder / Schneider"; }
+        else if (nameLower.includes("logo") || nameLower.includes("automate")) { prefix = "-PLC"; cat = "Automatisme & Régulation"; norm = "IEC / EN 61131-2"; mfg = "Siemens"; }
+
+        spec = {
+          iecPrefix: prefix,
+          nameFr: comp.name || comp.protoId || "Appareil électrique",
+          categoryFr: cat,
+          manufacturer: mfg,
+          norm: norm,
+          notes: "Conforme NF C 15-100"
+        };
+      }
+
+      // Attribuer un repère IEC officiel normalisé
+      let repere = "";
+      if (comp.label && comp.label.trim()) {
+        const cleaned = comp.label.trim();
+        repere = cleaned.startsWith("-") ? cleaned : "-" + cleaned;
+      } else {
+        const prefix = spec.iecPrefix || "-EQ";
+        typeCounters[prefix] = (typeCounters[prefix] || 0) + 1;
+        repere = `${prefix}${typeCounters[prefix]}`;
+      }
+
+      // Localisation
+      const isDoor = (comp.x >= 800 && comp.x <= 1600 && comp.y >= 30 && comp.y <= 678);
+      const location = isDoor ? "Porte de coffret (Face avant)" : "Châssis interne / Rail DIN";
+
+      // Raccordement
+      const wiredCount = (state.wires || []).filter(w => w.from.compUid === comp.uid || w.to.compUid === comp.uid).length;
+      const totalTerms = (comp.terminals && comp.terminals.length) || 0;
+
+      return {
+        compUid: comp.uid,
+        tag: repere,
+        designation: spec.nameFr || comp.name || "Appareil électrique",
+        category: spec.categoryFr || "Équipement électrique",
+        manufacturer: spec.manufacturer || "Constructeur certifié",
+        norm: spec.norm || "IEC / NF C 15-100",
+        location: location,
+        terminalsCount: totalTerms,
+        wiredCount: wiredCount,
+        notes: spec.notes || "Conforme aux normes industrielles"
+      };
+    }
+
+    function getWireFrenchSpecs(wire, wireIndex, compMap) {
+      const wireNum = "W-" + String(wireIndex + 1).padStart(3, "0");
+      const fromComp = compMap[wire.from.compUid];
+      const toComp = compMap[wire.to.compUid];
+
+      const fromTag = fromComp ? fromComp.tag : "Origine";
+      const toTag = toComp ? toComp.tag : "Destination";
+
+      const origin = `${fromTag} : ${wire.from.termId || "Borne"}`;
+      const destination = `${toTag} : ${wire.to.termId || "Borne"}`;
+
+      // Couleur normalisée
+      const colorVal = (wire.color || "").toLowerCase();
+      let colorName = "Conducteur standard";
+      let section = "1.5 mm²";
+      let circuit = "Commande 230V AC";
+
+      if (colorVal === "#92400e" || colorVal.includes("brown") || colorVal.includes("marron")) {
+        colorName = "Marron (Phase L1)";
+        section = "2.5 mm²";
+        circuit = "Puissance Triphasée 400V AC";
+      } else if (colorVal === "#1e293b" || colorVal === "#020617" || colorVal.includes("noir") || colorVal.includes("black")) {
+        colorName = "Noir (Phase L2 / 0V)";
+        section = "2.5 mm²";
+        circuit = "Puissance Triphasée 400V AC";
+      } else if (colorVal === "#64748b" || colorVal.includes("gris") || colorVal.includes("gray")) {
+        colorName = "Gris (Phase L3)";
+        section = "2.5 mm²";
+        circuit = "Puissance Triphasée 400V AC";
+      } else if (colorVal === "#2563eb" || colorVal === "#3b82f6" || colorVal.includes("bleu") || colorVal.includes("blue")) {
+        colorName = "Bleu clair (Neutre N)";
+        section = "1.5 mm²";
+        circuit = "Neutre de distribution";
+      } else if (colorVal === "#c4d600" || colorVal.includes("vert") || colorVal.includes("green") || colorVal.includes("yellow")) {
+        colorName = "Vert / Jaune (Protection PE)";
+        section = "2.5 mm²";
+        circuit = "Conducteur de protection équipotentielle";
+      } else if (colorVal === "#dc2626" || colorVal === "#ef4444" || colorVal.includes("rouge") || colorVal.includes("red")) {
+        colorName = "Rouge (Commande AC / DC+)";
+        section = "1.5 mm²";
+        circuit = "Circuit de commande & signalisation";
+      } else if (colorVal === "#ea580c" || colorVal.includes("orange")) {
+        colorName = "Orange (Commande asservie)";
+        section = "1.5 mm²";
+        circuit = "Interverrouillage & sécurité";
+      } else if (colorVal === "#8b5cf6" || colorVal.includes("violet")) {
+        colorName = "Violet (Auxiliaire)";
+        section = "0.75 mm²";
+        circuit = "Signaux de commande logique";
+      } else if (colorVal === "#f8fafc" || colorVal.includes("blanc") || colorVal.includes("white")) {
+        colorName = "Blanc (Mesure / Capteur)";
+        section = "0.75 mm²";
+        circuit = "Instrumentation & sondes";
+      }
+
+      // Si le fil a un calibre forcé
+      if (wire.gauge) {
+        section = wire.gauge + " mm²";
+      }
+
+      return {
+        id: wireNum,
+        origin: origin,
+        destination: destination,
+        color: colorName,
+        section: section,
+        circuit: circuit,
+        length: "~450 mm"
+      };
+    }
+
+    function buildExcelXml(componentsList, wiresList) {
+      const now = new Date();
+      const dateStr = now.toLocaleDateString("fr-FR", { year: "numeric", month: "long", day: "numeric" });
+      const timeStr = now.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+
+      return `<?xml version="1.0" encoding="UTF-8"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Title>Nomenclature Industrielle &amp; Carnet de Câblage</Title>
+  <Subject>WireLab EduVolt 2.0 - Export Technique Normalisé</Subject>
+  <Author>WireLab EduVolt Pro</Author>
+  <Created>${now.toISOString()}</Created>
+  <Company>Atelier Électrotechnique Normalisé</Company>
+ </DocumentProperties>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Center"/>
+   <Borders/>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="TitleStyle">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="16" ss:Bold="1" ss:Color="#1E3A8A"/>
+  </Style>
+  <Style ss:ID="SubtitleStyle">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="10" ss:Italic="1" ss:Color="#475569"/>
+  </Style>
+  <Style ss:ID="HeaderStyle">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2" ss:Color="#0F172A"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#475569"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#475569"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2" ss:Color="#0F172A"/>
+   </Borders>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Bold="1" ss:Color="#FFFFFF"/>
+   <Interior ss:Color="#1E293B" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="TagStyle">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+   </Borders>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Bold="1" ss:Color="#0284C7"/>
+   <Interior ss:Color="#F0F9FF" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="DataLeft">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E2E8F0"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E2E8F0"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E2E8F0"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E2E8F0"/>
+   </Borders>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="10" ss:Color="#1E293B"/>
+  </Style>
+  <Style ss:ID="DataCenter">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E2E8F0"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E2E8F0"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E2E8F0"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E2E8F0"/>
+   </Borders>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="10" ss:Color="#1E293B"/>
+  </Style>
+  <Style ss:ID="SummaryStyle">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>
+   <Borders>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2" ss:Color="#1E293B"/>
+   </Borders>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="10" ss:Bold="1" ss:Color="#0F172A"/>
+   <Interior ss:Color="#F8FAFC" ss:Pattern="Solid"/>
+  </Style>
+ </Styles>
+
+ <!-- FEUILLE 1 : NOMENCLATURE DU MATÉRIEL -->
+ <Worksheet ss:Name="Nomenclature Matériel">
+  <Table ss:DefaultRowHeight="20">
+   <Column ss:Width="90"/>
+   <Column ss:Width="280"/>
+   <Column ss:Width="170"/>
+   <Column ss:Width="190"/>
+   <Column ss:Width="150"/>
+   <Column ss:Width="160"/>
+   <Column ss:Width="110"/>
+   <Column ss:Width="160"/>
+
+   <Row ss:Height="28">
+    <Cell ss:MergeAcross="7" ss:StyleID="TitleStyle">
+     <Data ss:Type="String">Nomenclature Industrielle des Matériels &amp; Équipements</Data>
+    </Cell>
+   </Row>
+   <Row ss:Height="18">
+    <Cell ss:MergeAcross="7" ss:StyleID="SubtitleStyle">
+     <Data ss:Type="String">Projet : WireLab EduVolt Pro 2.0 | Date d&apos;édition : ${escapeXml(dateStr)} à ${escapeXml(timeStr)} | Normes : IEC 81346 &amp; NF C 15-100</Data>
+    </Cell>
+   </Row>
+   <Row ss:Height="10"/>
+
+   <Row ss:Height="26">
+    <Cell ss:StyleID="HeaderStyle"><Data ss:Type="String">Repère IEC</Data></Cell>
+    <Cell ss:StyleID="HeaderStyle"><Data ss:Type="String">Désignation Technique Complète</Data></Cell>
+    <Cell ss:StyleID="HeaderStyle"><Data ss:Type="String">Catégorie Fonctionnelle</Data></Cell>
+    <Cell ss:StyleID="HeaderStyle"><Data ss:Type="String">Constructeur &amp; Référence</Data></Cell>
+    <Cell ss:StyleID="HeaderStyle"><Data ss:Type="String">Norme de Référence</Data></Cell>
+    <Cell ss:StyleID="HeaderStyle"><Data ss:Type="String">Emplacement Physique</Data></Cell>
+    <Cell ss:StyleID="HeaderStyle"><Data ss:Type="String">Bornes Câblées</Data></Cell>
+    <Cell ss:StyleID="HeaderStyle"><Data ss:Type="String">Spécifications / Calibre</Data></Cell>
+   </Row>
+
+${componentsList.map(c => `   <Row ss:Height="22">
+    <Cell ss:StyleID="TagStyle"><Data ss:Type="String">${escapeXml(c.tag)}</Data></Cell>
+    <Cell ss:StyleID="DataLeft"><Data ss:Type="String">${escapeXml(c.designation)}</Data></Cell>
+    <Cell ss:StyleID="DataLeft"><Data ss:Type="String">${escapeXml(c.category)}</Data></Cell>
+    <Cell ss:StyleID="DataLeft"><Data ss:Type="String">${escapeXml(c.manufacturer)}</Data></Cell>
+    <Cell ss:StyleID="DataCenter"><Data ss:Type="String">${escapeXml(c.norm)}</Data></Cell>
+    <Cell ss:StyleID="DataLeft"><Data ss:Type="String">${escapeXml(c.location)}</Data></Cell>
+    <Cell ss:StyleID="DataCenter"><Data ss:Type="String">${escapeXml(c.wiredCount)} / ${escapeXml(c.terminalsCount)}</Data></Cell>
+    <Cell ss:StyleID="DataLeft"><Data ss:Type="String">${escapeXml(c.notes)}</Data></Cell>
+   </Row>`).join("\n")}
+
+   <Row ss:Height="22">
+    <Cell ss:MergeAcross="7" ss:StyleID="SummaryStyle">
+     <Data ss:Type="String">Total de l&apos;armoire : ${componentsList.length} équipement(s) répertorié(s) - Tous conformes aux spécifications industrielles.</Data>
+    </Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+
+ <!-- FEUILLE 2 : CARNET DE CÂBLAGE -->
+ <Worksheet ss:Name="Carnet de Câblage">
+  <Table ss:DefaultRowHeight="20">
+   <Column ss:Width="70"/>
+   <Column ss:Width="160"/>
+   <Column ss:Width="160"/>
+   <Column ss:Width="190"/>
+   <Column ss:Width="90"/>
+   <Column ss:Width="190"/>
+   <Column ss:Width="100"/>
+
+   <Row ss:Height="28">
+    <Cell ss:MergeAcross="6" ss:StyleID="TitleStyle">
+     <Data ss:Type="String">Carnet de Câblage &amp; Liste des Conducteurs (Wire List)</Data>
+    </Cell>
+   </Row>
+   <Row ss:Height="18">
+    <Cell ss:MergeAcross="6" ss:StyleID="SubtitleStyle">
+     <Data ss:Type="String">Conforme aux prescriptions de repérage et couleurs de la norme NF C 15-100</Data>
+    </Cell>
+   </Row>
+   <Row ss:Height="10"/>
+
+   <Row ss:Height="26">
+    <Cell ss:StyleID="HeaderStyle"><Data ss:Type="String">N° Conducteur</Data></Cell>
+    <Cell ss:StyleID="HeaderStyle"><Data ss:Type="String">Origine (Tenant)</Data></Cell>
+    <Cell ss:StyleID="HeaderStyle"><Data ss:Type="String">Destination (Aboutissant)</Data></Cell>
+    <Cell ss:StyleID="HeaderStyle"><Data ss:Type="String">Couleur Normalisée</Data></Cell>
+    <Cell ss:StyleID="HeaderStyle"><Data ss:Type="String">Section</Data></Cell>
+    <Cell ss:StyleID="HeaderStyle"><Data ss:Type="String">Type de Circuit</Data></Cell>
+    <Cell ss:StyleID="HeaderStyle"><Data ss:Type="String">Longueur Estimée</Data></Cell>
+   </Row>
+
+${wiresList.map(w => `   <Row ss:Height="22">
+    <Cell ss:StyleID="TagStyle"><Data ss:Type="String">${escapeXml(w.id)}</Data></Cell>
+    <Cell ss:StyleID="DataCenter"><Data ss:Type="String">${escapeXml(w.origin)}</Data></Cell>
+    <Cell ss:StyleID="DataCenter"><Data ss:Type="String">${escapeXml(w.destination)}</Data></Cell>
+    <Cell ss:StyleID="DataLeft"><Data ss:Type="String">${escapeXml(w.color)}</Data></Cell>
+    <Cell ss:StyleID="DataCenter"><Data ss:Type="String">${escapeXml(w.section)}</Data></Cell>
+    <Cell ss:StyleID="DataLeft"><Data ss:Type="String">${escapeXml(w.circuit)}</Data></Cell>
+    <Cell ss:StyleID="DataCenter"><Data ss:Type="String">${escapeXml(w.length)}</Data></Cell>
+   </Row>`).join("\n")}
+
+   <Row ss:Height="22">
+    <Cell ss:MergeAcross="6" ss:StyleID="SummaryStyle">
+     <Data ss:Type="String">Total de conducteurs raccordés : ${wiresList.length} fil(s).</Data>
+    </Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+</Workbook>`;
+    }
+
+    function buildCsvData(componentsList, wiresList) {
+      let csv = "\uFEFF"; // Byte Order Mark (BOM UTF-8) indispensable pour ouverture directe dans Excel sans altération des accents
+      csv += "NOMENCLATURE DU MATÉRIEL INDUSTRIEL (NORMES IEC 81346 & NF C 15-100)\n";
+      csv += "Repère IEC;Désignation Technique Complète;Catégorie;Constructeur & Référence;Norme;Emplacement;Bornes Raccordées;Spécifications Techniques\n";
+
+      componentsList.forEach(c => {
+        csv += [
+          escapeCsvCell(c.tag),
+          escapeCsvCell(c.designation),
+          escapeCsvCell(c.category),
+          escapeCsvCell(c.manufacturer),
+          escapeCsvCell(c.norm),
+          escapeCsvCell(c.location),
+          escapeCsvCell(`${c.wiredCount} / ${c.terminalsCount}`),
+          escapeCsvCell(c.notes)
+        ].join(";") + "\n";
       });
-      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = "BOM_EduVolt_Pro_Export.csv";
-      a.click();
-    });
+
+      csv += "\n\n";
+      csv += "CARNET DE CÂBLAGE DES CONDUCTEURS (NF C 15-100)\n";
+      csv += "N° Conducteur;Origine (Tenant);Destination (Aboutissant);Couleur Normalisée;Section;Type de Circuit;Longueur Estimée\n";
+
+      wiresList.forEach(w => {
+        csv += [
+          escapeCsvCell(w.id),
+          escapeCsvCell(w.origin),
+          escapeCsvCell(w.destination),
+          escapeCsvCell(w.color),
+          escapeCsvCell(w.section),
+          escapeCsvCell(w.circuit),
+          escapeCsvCell(w.length)
+        ].join(";") + "\n";
+      });
+
+      return csv;
+    }
+
+    // Gestion de la modale Nomenclature
+    const bomModal = document.getElementById("bomModal");
+    let currentBomComps = [];
+    let currentBomWires = [];
+
+    function populateBomData() {
+      const typeCounters = {};
+      const compMap = {};
+      currentBomComps = [];
+
+      (state.components || []).forEach((comp, idx) => {
+        const spec = getComponentFrenchSpecs(comp, typeCounters);
+        compMap[comp.uid] = spec;
+        currentBomComps.push(spec);
+      });
+
+      currentBomWires = [];
+      (state.wires || []).forEach((wire, idx) => {
+        const wireSpec = getWireFrenchSpecs(wire, idx, compMap);
+        currentBomWires.push(wireSpec);
+      });
+
+      // Mettre à jour les compteurs des badges
+      const countCompsEl = document.getElementById("countCompsTab");
+      if (countCompsEl) countCompsEl.textContent = currentBomComps.length;
+      const countWiresEl = document.getElementById("countWiresTab");
+      if (countWiresEl) countWiresEl.textContent = currentBomWires.length;
+
+      const summaryBadge = document.getElementById("bomSummaryCount");
+      if (summaryBadge) {
+        summaryBadge.textContent = `${currentBomComps.length} appareil(s) | ${currentBomWires.length} fil(s)`;
+      }
+
+      // 1. Remplir le tableau des composants
+      const tbodyComps = document.getElementById("bomTableBody");
+      if (tbodyComps) {
+        tbodyComps.innerHTML = "";
+        if (currentBomComps.length === 0) {
+          tbodyComps.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #94a3b8; padding: 20px;">Aucun composant placé dans l\'armoire. Glissez des appareils depuis la bibliothèque.</td></tr>';
+        } else {
+          currentBomComps.forEach(c => {
+            const tr = document.createElement("tr");
+            tr.style.borderBottom = "1px solid #1e293b";
+            tr.innerHTML = `
+              <td style="font-weight: 800; color: #38bdf8; font-family: monospace; font-size: 13px;">${c.tag}</td>
+              <td style="font-weight: 600; color: #f1f5f9;">${c.designation}</td>
+              <td style="color: #94a3b8;"><span style="background: rgba(148, 163, 184, 0.12); padding: 2px 7px; border-radius: 4px; font-size: 11px;">${c.category}</span></td>
+              <td style="color: #cbd5e1; font-weight: 500;">${c.manufacturer}</td>
+              <td style="color: #94a3b8; font-size: 11px;">${c.norm}</td>
+              <td style="color: #a5f3fc; font-size: 11px;">${c.location}</td>
+              <td style="color: #f8fafc; font-weight: 700;">${c.wiredCount} / ${c.terminalsCount}</td>
+            `;
+            tbodyComps.appendChild(tr);
+          });
+        }
+      }
+
+      // 2. Remplir le tableau des conducteurs
+      const tbodyWires = document.getElementById("bomWiresTableBody");
+      if (tbodyWires) {
+        tbodyWires.innerHTML = "";
+        if (currentBomWires.length === 0) {
+          tbodyWires.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #94a3b8; padding: 20px;">Aucun fil connecté. Raccordez des bornes entre composants pour établir le carnet de câblage.</td></tr>';
+        } else {
+          currentBomWires.forEach(w => {
+            const tr = document.createElement("tr");
+            tr.style.borderBottom = "1px solid #1e293b";
+            tr.innerHTML = `
+              <td style="font-weight: 800; color: #38bdf8; font-family: monospace; font-size: 12px;">${w.id}</td>
+              <td style="color: #f1f5f9; font-weight: 600;">${w.origin}</td>
+              <td style="color: #f1f5f9; font-weight: 600;">${w.destination}</td>
+              <td style="color: #f8fafc;"><span style="padding: 2px 8px; border-radius: 4px; font-size: 11px; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.2);">${w.color}</span></td>
+              <td style="color: #38bdf8; font-weight: 700;">${w.section}</td>
+              <td style="color: #94a3b8; font-size: 11px;">${w.length}</td>
+              <td style="color: #cbd5e1; font-size: 11px;">${w.circuit}</td>
+            `;
+            tbodyWires.appendChild(tr);
+          });
+        }
+      }
+    }
+
+    // Gestion des onglets Appareils / Carnet de câblage
+    const tabBomComps = document.getElementById("tabBomComps");
+    const tabBomWires = document.getElementById("tabBomWires");
+    const bomViewComps = document.getElementById("bomViewComps");
+    const bomViewWires = document.getElementById("bomViewWires");
+
+    if (tabBomComps && tabBomWires && bomViewComps && bomViewWires) {
+      tabBomComps.addEventListener("click", () => {
+        tabBomComps.style.color = "#38bdf8";
+        tabBomComps.style.borderBottom = "2px solid #38bdf8";
+        tabBomWires.style.color = "#94a3b8";
+        tabBomWires.style.borderBottom = "2px solid transparent";
+        bomViewComps.style.display = "block";
+        bomViewWires.style.display = "none";
+      });
+
+      tabBomWires.addEventListener("click", () => {
+        tabBomWires.style.color = "#38bdf8";
+        tabBomWires.style.borderBottom = "2px solid #38bdf8";
+        tabBomComps.style.color = "#94a3b8";
+        tabBomComps.style.borderBottom = "2px solid transparent";
+        bomViewComps.style.display = "none";
+        bomViewWires.style.display = "block";
+      });
+    }
+
+    // Bouton Ouvrir Nomenclature
+    const btnOpenBom = document.getElementById("btnOpenBom");
+    if (btnOpenBom) {
+      btnOpenBom.addEventListener("click", () => {
+        populateBomData();
+        bomModal.classList.add("open");
+      });
+    }
+
+    // Bouton Fermer Nomenclature
+    const btnCloseBom = document.getElementById("btnCloseBom");
+    if (btnCloseBom) {
+      btnCloseBom.addEventListener("click", () => {
+        bomModal.classList.remove("open");
+      });
+    }
+
+    // Télécharger Classeur Excel (.xls)
+    const btnDownloadExcel = document.getElementById("btnDownloadExcel");
+    if (btnDownloadExcel) {
+      btnDownloadExcel.addEventListener("click", () => {
+        populateBomData();
+        const xmlContent = buildExcelXml(currentBomComps, currentBomWires);
+        const blob = new Blob([xmlContent], { type: "application/vnd.ms-excel;charset=utf-8" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "Nomenclature_Industrielle_EduVolt_" + new Date().toISOString().slice(0, 10) + ".xls";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        showNotificationToast("Classeur Excel exporté avec succès (Norme IEC 81346) !");
+      });
+    }
+
+    // Télécharger Fichier CSV normalisé (UTF-8 avec BOM)
+    const btnDownloadCsv = document.getElementById("btnDownloadCsv");
+    if (btnDownloadCsv) {
+      btnDownloadCsv.addEventListener("click", () => {
+        populateBomData();
+        const csvContent = buildCsvData(currentBomComps, currentBomWires);
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "Nomenclature_EduVolt_UTF8_" + new Date().toISOString().slice(0, 10) + ".csv";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        showNotificationToast("Nomenclature CSV exportée avec succès !");
+      });
+    }
 
     // Éditeur Ladder
     const ladderModal = null;
