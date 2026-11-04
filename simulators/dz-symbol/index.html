@@ -1184,7 +1184,7 @@ dialog#pv-learning-notice,#pv-learning-notice{
 
         try {
             const savedScale = parseFloat(localStorage.getItem('simudz_floating_scale'));
-            if (savedScale && savedScale >= 0.60 && savedScale <= 1.8) {
+            if (savedScale && savedScale >= 0.10 && savedScale <= 3.0) {
                 floatingPaletteScale = savedScale;
                 palette.style.transform = 'scale(' + floatingPaletteScale + ')';
             }
@@ -1227,24 +1227,40 @@ dialog#pv-learning-notice,#pv-learning-notice{
             });
         }
 
-        // 2. Redimensionnement fluide par le coin inférieur droit (touch & mouse) sans tremblement
+        // 2. Redimensionnement ultra-fluide au pourcent près (10% à 300%, pas de saut, pas de vibration)
         if (resizeHandle) {
             let startScale = 1.0;
+            let startPointerX = 0;
+            let startPointerY = 0;
             let originLeft = 0;
             let originTop = 0;
             let initialDiagonal = 1;
+            let activePointerId = null;
 
             const onPointerMove = (e) => {
-                // Utiliser la position fixe du coin supérieur gauche au début du drag
+                if (activePointerId !== null && e.pointerId !== activePointerId) return;
+                // Calcul direct de la distance entre le point d'origine fixé (top-left) et le doigt
                 const currentDist = Math.hypot(e.clientX - originLeft, e.clientY - originTop);
-                let newScale = startScale * (currentDist / initialDiagonal);
-                newScale = Math.min(1.8, Math.max(0.60, newScale));
-                floatingPaletteScale = newScale;
-                palette.style.transform = 'scale(' + floatingPaletteScale + ')';
+                let rawScale = startScale * (currentDist / initialDiagonal);
+
+                // Arrondi précis au 1% près (pas de 0.01 / 1%) pour une fluidité absolue
+                let pct = Math.round(rawScale * 100);
+                pct = Math.min(300, Math.max(10, pct)); // Borne : de 10% à 300%
+
+                const newScale = pct / 100;
+                if (newScale !== floatingPaletteScale) {
+                    floatingPaletteScale = newScale;
+                    palette.style.transform = 'scale(' + floatingPaletteScale + ')';
+                }
             };
 
             const onPointerUp = (e) => {
-                window.removeEventListener('pointermove', onPointerMove);
+                if (activePointerId !== null && e.pointerId !== activePointerId) return;
+                try {
+                    resizeHandle.releasePointerCapture(e.pointerId);
+                } catch (_) {}
+                activePointerId = null;
+                window.removeEventListener('pointermove', onPointerMove, { passive: false });
                 window.removeEventListener('pointerup', onPointerUp);
                 window.removeEventListener('pointercancel', onPointerUp);
                 try {
@@ -1255,12 +1271,20 @@ dialog#pv-learning-notice,#pv-learning-notice{
             resizeHandle.addEventListener('pointerdown', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                // Verrouiller la position d'origine (top-left) au moment du clic/toucher
+                activePointerId = e.pointerId;
+                try {
+                    resizeHandle.setPointerCapture(e.pointerId);
+                } catch (_) {}
+
+                // Figer l'origine absolue (top-left) au démarrage du geste
                 const rect = palette.getBoundingClientRect();
                 originLeft = rect.left;
                 originTop = rect.top;
-                initialDiagonal = Math.hypot(e.clientX - originLeft, e.clientY - originTop) || 1;
+                startPointerX = e.clientX;
+                startPointerY = e.clientY;
+                initialDiagonal = Math.hypot(startPointerX - originLeft, startPointerY - originTop) || 1;
                 startScale = floatingPaletteScale;
+
                 window.addEventListener('pointermove', onPointerMove, { passive: false });
                 window.addEventListener('pointerup', onPointerUp);
                 window.addEventListener('pointercancel', onPointerUp);
