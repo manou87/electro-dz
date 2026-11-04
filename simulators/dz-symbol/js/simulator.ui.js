@@ -2418,8 +2418,7 @@ function openSelectedComponentEditMobile() {
     }
     
     // Si aucun composant n'est sélectionné, demander à l'utilisateur de cliquer sur un composant
-    alert('يرجى تحديد عنصر أولاً لتعديل اسمه (K1, K2...) أو أطرافه
-Veuillez d'abord cliquer sur un composant pour modifier son repère (K1, K2...).');
+    alert("Veuillez d'abord selectionner un composant (K1, K2...).");
     return false;
 }
 
