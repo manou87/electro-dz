@@ -307,3 +307,10 @@
         display: none !important;
     }
 }
+
+/* Masquer totalement et définitivement le panneau debug Modo Engenharia */
+#engineering-panel, .engineering-panel {
+    display: none !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+}
