@@ -130,47 +130,27 @@ dialog#pv-learning-notice,#pv-learning-notice{
             <button id="btn-borracha" class="btn-tool" onclick="ativarFerramenta('borracha')" title="Supprimer / Gomme"><i class="fa-solid fa-eraser"></i></button>
             <button id="btn-pan" class="btn-tool" onclick="ativarFerramenta('pan')" title="Déplacer la feuille (Pan)"><i class="fa-solid fa-hand"></i></button>
         </div>
-        <div class="control-group toolbar-actions">
-            <button id="btn-undo" onclick="undoAcao()" title="Voltar (Ctrl+Z)"><i class="fa-solid fa-rotate-left"></i></button>
-            <button id="btn-redo" onclick="redoAcao()" title="Avancar (Ctrl+Y)"><i class="fa-solid fa-rotate-right"></i></button>
-            <button id="btn-copy" onclick="copiarSelecaoCircuito()" title="Copiar sele&ccedil;&atilde;o (Ctrl+C)"><i class="fa-solid fa-copy"></i></button>
-            <button id="btn-paste" onclick="colarSelecaoCircuito()" title="Colar sele&ccedil;&atilde;o (Ctrl+V)" disabled><i class="fa-solid fa-paste"></i></button>
-            <div class="sep"></div>
-            <button id="btn-commands-tools-toggle" onclick="toggleSidebarPanel('tools')" title="Outils de modification"><i class="fa-solid fa-screwdriver-wrench"></i></button>
-            <button id="btn-pan" class="btn-tool" onclick="ativarFerramenta('pan')" title="Déplacer la feuille (Pan)"><i class="fa-solid fa-hand"></i></button>
-            <button id="btn-pdf-export-native" class="btn-tool" onclick="window.exportarPdf({ mode: 'active' })" title="Imprimer le schéma en PDF"><i class="fa-solid fa-file-pdf" style="color:#ef4444;"></i></button>
-            <button id="btn-mobile-edit-selected" class="mobile-quick-btn" onclick="openSelectedComponentEditMobile()" title="Editar componente selecionado" hidden><i class="fa-solid fa-pen-to-square"></i><span class="label">Editar</span></button>
-            <button id="btn-mobile-finish-wire" class="mobile-quick-btn" onclick="finishCurrentWireFromMobileShortcut()" title="Terminar cabo" hidden><i class="fa-solid fa-check"></i><span class="label">Terminar</span></button>
-            <button id="btn-edit-drawing" onclick="abrirModalEdicaoDesenho()" title="Editar forma selecionada" disabled><i class="fa-solid fa-pen-to-square"></i></button>
-            <button id="btn-drawing-down" onclick="descerCamadaDesenho()" disabled title="Descer camada da forma"><i class="fa-solid fa-arrow-down"></i></button>
-            <button id="btn-drawing-up" onclick="subirCamadaDesenho()" disabled title="Subir camada da forma"><i class="fa-solid fa-arrow-up"></i></button>
-            <button id="btn-more-tools" onclick="toggleTopbarToolsMenu()" title="Ferramentas de desenho"><i class="fa-solid fa-pencil-ruler"></i></button>
-            <div id="draw-controls-container" class="draw-controls-container">
-                <div class="sep"></div>
-                <button id="btn-draw-line" class="btn-tool" onclick="ativarFerramenta('draw-line')" title="Desenhar linha"><i class="fa-solid fa-minus"></i></button>
-                <button id="btn-draw-rect" class="btn-tool" onclick="ativarFerramenta('draw-rect')" title="Desenhar ret&acirc;ngulo"><i class="fa-regular fa-square"></i></button>
-                <button id="btn-draw-circle" class="btn-tool" onclick="ativarFerramenta('draw-circle')" title="Desenhar c&iacute;rculo"><i class="fa-regular fa-circle"></i></button>
-                <button id="btn-draw-polygon" class="btn-tool" onclick="ativarFerramenta('draw-polygon')" title="Desenhar pol&iacute;gono"><i class="fa-solid fa-draw-polygon"></i></button>
-                <button id="btn-draw-text" class="btn-tool" onclick="ativarFerramenta('draw-text')" title="Inserir texto"><i class="fa-solid fa-font"></i></button>
-                <input id="draw-color-input" class="draw-color-input" type="color" value="#2c3e50" title="Cor do desenho" onchange="setCorDesenho(this.value)">
-                <input id="draw-fill-color-input" class="draw-color-input" type="color" value="#74b9ff" title="Cor de preenchimento" onchange="setCorPreenchimentoDesenho(this.value)">
-                <label class="draw-fill-toggle" title="Ativar preenchimento">
-                    <input id="draw-fill-toggle-input" type="checkbox" onchange="setPreenchimentoDesenhoAtivo(this.checked)">
-                    Fill
-                </label>
-                <select id="draw-width-select" class="draw-width-select" title="Espessura do desenho" onchange="setEspessuraDesenho(this.value)">
-                    <option value="1">1px</option>
-                    <option value="2" selected>2px</option>
-                    <option value="3">3px</option>
-                    <option value="4">4px</option>
-                </select>
+                <div class="control-group toolbar-actions">
+            <!-- Grille des outils essentiels comme sur la photo -->
+            <div class="quick-tools-grid">
+                <button type="button" class="btn-tool active" onclick="ativarFerramenta('select')" title="Sélectionner / Déplacer"><i class="fa-solid fa-arrow-pointer"></i><span>Sélection</span></button>
+                <button type="button" class="btn-tool" onclick="ativarFerramenta('rotacao')" title="Pivoter le symbole (90°)"><i class="fa-solid fa-rotate-right"></i><span>Pivoter</span></button>
+                <button type="button" class="btn-tool danger" onclick="ativarFerramenta('borracha')" title="Supprimer symbole ou fil"><i class="fa-solid fa-trash-can"></i><span>Supprimer</span></button>
+                <button type="button" class="btn-tool" onclick="undoAcao()" title="Annuler (Ctrl+Z)"><i class="fa-solid fa-rotate-left"></i><span>Annuler</span></button>
+                <button type="button" class="btn-tool" onclick="redoAcao()" title="Rétablir (Ctrl+Y)"><i class="fa-solid fa-rotate-right"></i><span>Rétablir</span></button>
+                <button type="button" class="btn-tool" onclick="copiarSelecaoCircuito()" title="Copier (Ctrl+C)"><i class="fa-solid fa-copy"></i><span>Copier</span></button>
+                <button type="button" class="btn-tool" onclick="colarSelecaoCircuito()" title="Coller (Ctrl+V)"><i class="fa-solid fa-paste"></i><span>Coller</span></button>
+                <button type="button" class="btn-tool" onclick="openSelectedComponentEditMobile()" title="Modifier les propriétés"><i class="fa-solid fa-pen-to-square"></i><span>Modifier</span></button>
+                <button type="button" class="btn-tool" onclick="ativarFerramenta('info')" title="Informations"><i class="fa-solid fa-circle-info"></i><span>Info</span></button>
+                <button type="button" class="btn-tool" onclick="ativarFerramenta('pan')" title="Déplacer la vue (Pan)"><i class="fa-solid fa-hand"></i><span>Déplacer</span></button>
             </div>
             <div class="sep"></div>
-            <button id="btn-zoom-out" onclick="setZoom(zoomLevel - 0.1)" title="Diminuir zoom"><i class="fa-solid fa-minus"></i></button>
+            <button id="btn-zoom-out" onclick="setZoom(zoomLevel - 0.1)" title="Diminuer zoom"><i class="fa-solid fa-minus"></i></button>
             <span id="zoom-display">100%</span>
             <button id="btn-zoom-in" onclick="setZoom(zoomLevel + 0.1)" title="Aumentar zoom"><i class="fa-solid fa-plus"></i></button>
-            <button id="btn-fullscreen" onclick="toggleFullscreenMode()" title="Tela cheia" aria-pressed="false"><i class="fa-solid fa-expand"></i></button>
+            <button id="btn-fullscreen" onclick="toggleFullscreenMode()" title="Tela cheia"><i class="fa-solid fa-expand"></i></button>
         </div>
+    </div>
     </div>
 
     <div class="sheet-bar">
@@ -1037,6 +1017,66 @@ dialog#pv-learning-notice,#pv-learning-notice{
             }
         }
     </script>
+
+    <!-- Palette d'outils flottante exacte de la photo, directement sous la main -->
+    <div id="floating-user-tools">
+        <div class="floating-tools-header">
+            <span>Outils</span>
+            <i class="fa-solid fa-hand-pointer" style="font-size:12px;color:#38bdf8;"></i>
+        </div>
+        <div class="floating-tools-grid">
+            <!-- Ligne 1 : Sélection & Supprimer -->
+            <button type="button" class="floating-tool-btn active" onclick="ativarFerramenta('select')" title="Sélectionner / Déplacer">
+                <i class="fa-solid fa-arrow-pointer"></i>
+                <span>Sélection</span>
+            </button>
+            <button type="button" class="floating-tool-btn btn-danger" onclick="ativarFerramenta('borracha')" title="Supprimer symbole ou fil">
+                <i class="fa-solid fa-trash-can"></i>
+                <span>Supprimer</span>
+            </button>
+
+            <!-- Ligne 2 : Pivoter & Annuler -->
+            <button type="button" class="floating-tool-btn" onclick="ativarFerramenta('rotacao')" title="Pivoter à 90°">
+                <i class="fa-solid fa-rotate-right"></i>
+                <span>Pivoter</span>
+            </button>
+            <button type="button" class="floating-tool-btn" onclick="undoAcao()" title="Annuler (Ctrl+Z)">
+                <i class="fa-solid fa-rotate-left"></i>
+                <span>Annuler</span>
+            </button>
+
+            <!-- Ligne 3 : Rétablir & Copier -->
+            <button type="button" class="floating-tool-btn" onclick="redoAcao()" title="Rétablir (Ctrl+Y)">
+                <i class="fa-solid fa-rotate-right"></i>
+                <span>Rétablir</span>
+            </button>
+            <button type="button" class="floating-tool-btn" onclick="copiarSelecaoCircuito()" title="Copier">
+                <i class="fa-solid fa-copy"></i>
+                <span>Copier</span>
+            </button>
+
+            <!-- Ligne 4 : Coller & Info -->
+            <button type="button" class="floating-tool-btn" onclick="colarSelecaoCircuito()" title="Coller">
+                <i class="fa-solid fa-paste"></i>
+                <span>Coller</span>
+            </button>
+            <button type="button" class="floating-tool-btn" onclick="ativarFerramenta('info')" title="Informations">
+                <i class="fa-solid fa-circle-info"></i>
+                <span>Info</span>
+            </button>
+
+            <!-- Ligne 5 : Modifier & Déplacer feuille -->
+            <button type="button" class="floating-tool-btn" onclick="openSelectedComponentEditMobile()" title="Modifier repère (KM1, etc.)">
+                <i class="fa-solid fa-pen-to-square"></i>
+                <span>Modifier</span>
+            </button>
+            <button type="button" class="floating-tool-btn" onclick="ativarFerramenta('pan')" title="Déplacer feuille">
+                <i class="fa-solid fa-hand"></i>
+                <span>Déplacer</span>
+            </button>
+        </div>
+    </div>
+
 </body>
 </html>
 
