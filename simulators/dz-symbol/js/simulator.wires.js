@@ -2186,6 +2186,9 @@ function createWireFromPoints(points, opts = {}) {
         window.construirNosEletricos();
     }
     renderWireJunctions();
+    if (typeof window.scheduleHistoryCheckpoint === 'function') {
+        window.scheduleHistoryCheckpoint('add_wire');
+    }
     return wireObj;
 }
 function clearAutoWireGuides() {

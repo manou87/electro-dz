@@ -1896,22 +1896,49 @@ function restoreHistorySnapshot(snapshotString) {
     }
 }
 
+let lastUndoRedoTime = 0;
 function undoAcao() {
     if (historyRestoreInProgress) return;
+    // Empêcher les déclenchements multiples involontaires (rebond tactile ou double-clic rapide)
+    const now = Date.now();
+    if (now - lastUndoRedoTime < 200) return;
+    lastUndoRedoTime = now;
+
+    // Annuler tout enregistrement différé en cours
+    if (historyCheckpointTimer) {
+        clearTimeout(historyCheckpointTimer);
+        historyCheckpointTimer = null;
+    }
+
     if (historyUndoStack.length <= 1) return;
     const current = historyUndoStack.pop();
     if (current) historyRedoStack.push(current);
+
+    // Récupérer le snapshot précédent strict
     const prev = historyUndoStack[historyUndoStack.length - 1];
-    restoreHistorySnapshot(prev);
+    if (prev) {
+        restoreHistorySnapshot(prev);
+    }
 }
 
 function redoAcao() {
     if (historyRestoreInProgress) return;
+    const now = Date.now();
+    if (now - lastUndoRedoTime < 200) return;
+    lastUndoRedoTime = now;
+
+    if (historyCheckpointTimer) {
+        clearTimeout(historyCheckpointTimer);
+        historyCheckpointTimer = null;
+    }
+
     if (!historyRedoStack.length) return;
     const next = historyRedoStack.pop();
     if (!next) return;
     const ok = restoreHistorySnapshot(next);
-    if (ok) historyUndoStack.push(next);
+    if (ok) {
+        historyUndoStack.push(next);
+    }
 }
 
 function initHistoryManager() {
@@ -5169,6 +5196,7 @@ function adicionarComponente(k, id, t, l, opts = {}) {
             const r = (parseInt(d.dataset.rot || 0) + 90) % 360;
             d.dataset.rot = r;
             d.style.transform = `rotate(${r}deg)`;
+            scheduleHistoryCheckpoint('rotate_component');
             return;
         }
 
@@ -5270,6 +5298,7 @@ function adicionarComponente(k, id, t, l, opts = {}) {
             }
             if (moved) {
                 finalizeDraggedComponentsAndWires(dragGroup, () => anchorStart);
+                scheduleHistoryCheckpoint('move_component');
             }
             if (typeof window.resumeWireSelectionAutoClear === 'function') {
                 window.resumeWireSelectionAutoClear();
