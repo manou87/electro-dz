@@ -1013,6 +1013,44 @@ dialog#pv-learning-notice,#pv-learning-notice{
             <i class="fa-solid fa-up-down-left-right" style="font-size:11px;color:#38bdf8;"></i>
         </div>
         <div class="floating-tools-grid">
+            <!-- Ligne 0 : Bouton Lecture Simulation (Plein rang ou double) -->
+            <button id="floating-btn-play" type="button" class="floating-tool-btn floating-play-btn" onclick="toggleSimulacao()" title="Lancer / Arrêter la simulation" style="grid-column: span 2; height: 38px; background: #16a34a; border-color: #22c55e;">
+                <div style="display:flex;align-items:center;justify-content:center;gap:6px;width:100%;">
+                    <i class="fa-solid fa-play" style="font-size:13px;"></i>
+                    <span id="floating-play-text" style="font-size:11px;font-weight:700;">محاكاة</span>
+                </div>
+            </button>
+
+            <!-- Ligne Câblage : Bouton Fil + Couleur & Epaisseur -->
+            <button type="button" class="floating-tool-btn" onclick="ativarFerramenta('fio')" title="Outil Fil (Câblage)" data-tool="fio">
+                <i class="fa-solid fa-pen-nib"></i>
+                <span>سلك</span>
+            </button>
+            <div class="floating-wire-config" style="position:relative;display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:center;background:#1e293b;border:1px solid #334155;border-radius:6px;height:42px;box-sizing:border-box;">
+                <!-- Sélecteur de couleur -->
+                <div style="display:flex;align-items:center;gap:4px;">
+                    <div id="floating-active-color-dot" onclick="toggleFloatingColorPicker(event)" title="Choisir la couleur du fil" style="width:16px;height:16px;border-radius:50%;background:#b71c1c;border:2px solid #fff;cursor:pointer;box-shadow:0 0 4px rgba(0,0,0,0.4);"></div>
+                    <span style="font-size:8px;color:#94a3b8;font-weight:600;">لون</span>
+                </div>
+                <!-- Sélecteur d'épaisseur cyclique -->
+                <div onclick="cycleFloatingWireThickness(event)" title="Changer l'épaisseur du fil" style="display:flex;align-items:center;gap:3px;cursor:pointer;background:#0f172a;padding:1px 4px;border-radius:4px;border:1px solid #334155;">
+                    <span id="floating-wire-thick-indicator" style="display:inline-block;width:14px;height:3px;background:#38bdf8;border-radius:2px;"></span>
+                    <span id="floating-wire-thick-label" style="font-size:8px;font-weight:700;color:#e2e8f0;">2</span>
+                </div>
+
+                <!-- Popup flottante des couleurs qui se ferme en cliquant ailleurs -->
+                <div id="floating-color-popup" style="display:none;position:absolute;bottom:48px;right:0;background:#0f172a;border:1px solid #3b82f6;border-radius:8px;padding:6px;box-shadow:0 8px 20px rgba(0,0,0,0.6);z-index:1500;gap:6px;grid-template-columns:repeat(4, 20px);">
+                    <div class="color-dot" data-color="#b71c1c" style="width:20px;height:20px;border-radius:50%;background:#b71c1c;cursor:pointer;" onclick="selectFloatingWireColor('#b71c1c')"></div>
+                    <div class="color-dot" data-color="#333" style="width:20px;height:20px;border-radius:50%;background:#333;border:1px solid #64748b;cursor:pointer;" onclick="selectFloatingWireColor('#333')"></div>
+                    <div class="color-dot" data-color="#3498db" style="width:20px;height:20px;border-radius:50%;background:#3498db;cursor:pointer;" onclick="selectFloatingWireColor('#3498db')"></div>
+                    <div class="color-dot" data-color="#2ecc71" style="width:20px;height:20px;border-radius:50%;background:#2ecc71;cursor:pointer;" onclick="selectFloatingWireColor('#2ecc71')"></div>
+                    <div class="color-dot" data-color="#f39c12" style="width:20px;height:20px;border-radius:50%;background:#f39c12;cursor:pointer;" onclick="selectFloatingWireColor('#f39c12')"></div>
+                    <div class="color-dot" data-color="#f1c40f" style="width:20px;height:20px;border-radius:50%;background:#f1c40f;cursor:pointer;" onclick="selectFloatingWireColor('#f1c40f')"></div>
+                    <div class="color-dot" data-color="#9b59b6" style="width:20px;height:20px;border-radius:50%;background:#9b59b6;cursor:pointer;" onclick="selectFloatingWireColor('#9b59b6')"></div>
+                    <div class="color-dot" data-color="#ffffff" style="width:20px;height:20px;border-radius:50%;background:#ffffff;border:1px solid #64748b;cursor:pointer;" onclick="selectFloatingWireColor('#ffffff')"></div>
+                </div>
+            </div>
+
             <!-- Ligne 1 : Sélection & Supprimer -->
             <button type="button" class="floating-tool-btn active" onclick="ativarFerramenta('select')" title="Sélectionner / Déplacer">
                 <i class="fa-solid fa-arrow-pointer"></i>
