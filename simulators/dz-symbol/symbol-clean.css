@@ -614,3 +614,32 @@
 #multimeter-fab {
     display: none !important; /* On utilise notre bouton propre dans la barre du haut */
 }
+
+/* S'assurer que les fils du multimetre sont visibles et nets */
+#multimeter-scene {
+    width: 5000px !important;
+    height: 5000px !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    pointer-events: none !important;
+    z-index: 900 !important;
+}
+#multimeter-scene svg.multimeter-leads {
+    width: 5000px !important;
+    height: 5000px !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    pointer-events: none !important;
+    overflow: visible !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 5 !important;
+}
+#multimeter-scene path.multimeter-wire {
+    display: inline !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}

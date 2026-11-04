@@ -702,7 +702,7 @@ body.engineering-mode #multimeter-scene .multimeter-scale-hit {
 
     function buildSceneMarkup() {
         return `
-            <svg class="multimeter-leads" aria-hidden="true">
+            <svg class="multimeter-leads" width="5000" height="5000" viewBox="0 0 5000 5000" aria-hidden="true" style="position:absolute;left:0;top:0;width:5000px;height:5000px;pointer-events:none;overflow:visible;z-index:3;">
                 <path class="multimeter-wire outer red" data-wire="red-outer"></path>
                 <path class="multimeter-wire inner red" data-wire="red-inner"></path>
                 <path class="multimeter-wire outer black" data-wire="black-outer"></path>
