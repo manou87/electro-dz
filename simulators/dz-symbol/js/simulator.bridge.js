@@ -1263,7 +1263,7 @@ function triggerJsonDownload(payload) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = window.SimuDzProjectFiles ? window.SimuDzProjectFiles.fileName('json') : 'projeto-cade.json';
+    const _now = new Date(); const _dStr = _now.getFullYear() + "-" + String(_now.getMonth()+1).padStart(2,"0") + "-" + String(_now.getDate()).padStart(2,"0"); a.download = `schema-electrique-${_dStr}.dz`;
     document.body.appendChild(a);
     a.click();
     a.remove();

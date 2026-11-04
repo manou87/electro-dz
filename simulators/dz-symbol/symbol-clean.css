@@ -550,3 +550,55 @@
 #btn-play, #btn-rotacao, #btn-borracha, #btn-pan, #btn-select {
     display: none !important;
 }
+
+
+/* Boutons de sauvegarde et ouverture .dz dans la barre superieure */
+.top-dz-file-actions {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+}
+
+.btn-top-dz {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    height: 30px !important;
+    padding: 0 9px !important;
+    border-radius: 6px !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    border: 1px solid transparent !important;
+    white-space: nowrap !important;
+}
+
+.btn-top-dz-save {
+    background: #0284c7 !important;
+    border-color: #38bdf8 !important;
+    color: #ffffff !important;
+}
+.btn-top-dz-save:hover {
+    background: #0369a1 !important;
+}
+
+.btn-top-dz-open {
+    background: #334155 !important;
+    border-color: #64748b !important;
+    color: #f8fafc !important;
+}
+.btn-top-dz-open:hover {
+    background: #475569 !important;
+}
+
+@media (max-width: 768px) {
+    .btn-top-dz {
+        height: 28px !important;
+        padding: 0 6px !important;
+        font-size: 10px !important;
+    }
+    .btn-top-dz span {
+        font-size: 10px !important;
+    }
+}
