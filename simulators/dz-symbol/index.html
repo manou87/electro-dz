@@ -94,11 +94,12 @@ dialog#pv-learning-notice,#pv-learning-notice{
 <link rel="stylesheet" href="symbol-clean.css">
 <script src="js/i18n.fr.pure.js"></script>
 <script>
-    // Forcer le mode symbole IEC au chargement initial
-    window.addEventListener('DOMContentLoaded', () => {
-        if (typeof setMenuMode === 'function') {
-            setMenuMode('simbologia');
-        }
+    window.addEventListener('load', () => {
+        try {
+            if (typeof setMenuMode === 'function') {
+                setMenuMode('simbologia');
+            }
+        } catch(e) {}
         const logo = document.querySelector('.logo');
         if (logo) logo.innerHTML = 'DZ SYMBOL <small>Schémas IEC</small>';
     });
@@ -129,12 +130,9 @@ dialog#pv-learning-notice,#pv-learning-notice{
             <button id="btn-copy" onclick="copiarSelecaoCircuito()" title="Copiar sele&ccedil;&atilde;o (Ctrl+C)"><i class="fa-solid fa-copy"></i></button>
             <button id="btn-paste" onclick="colarSelecaoCircuito()" title="Colar sele&ccedil;&atilde;o (Ctrl+V)" disabled><i class="fa-solid fa-paste"></i></button>
             <div class="sep"></div>
-            <div class="sep"></div>
-            <button id="btn-commands-tools-toggle" onclick="toggleSidebarPanel('tools')" title="Outils de modification (Pivoter, Supprimer, etc.)"><i class="fa-solid fa-screwdriver-wrench"></i></button>
+            <button id="btn-commands-tools-toggle" onclick="toggleSidebarPanel('tools')" title="Outils de modification"><i class="fa-solid fa-screwdriver-wrench"></i></button>
             <button id="btn-pan" class="btn-tool" onclick="ativarFerramenta('pan')" title="Déplacer la feuille (Pan)"><i class="fa-solid fa-hand"></i></button>
             <button id="btn-pdf-export-native" class="btn-tool" onclick="window.exportarPdf({ mode: 'active' })" title="Imprimer le schéma en PDF"><i class="fa-solid fa-file-pdf" style="color:#ef4444;"></i></button>
-            <div class="sep"></div>
-            <button id="btn-pan" class="btn-tool" onclick="ativarFerramenta('pan')" title="Déplacer la feuille (Pan)"><i class="fa-solid fa-hand"></i></button>
             <button id="btn-mobile-edit-selected" class="mobile-quick-btn" onclick="openSelectedComponentEditMobile()" title="Editar componente selecionado" hidden><i class="fa-solid fa-pen-to-square"></i><span class="label">Editar</span></button>
             <button id="btn-mobile-finish-wire" class="mobile-quick-btn" onclick="finishCurrentWireFromMobileShortcut()" title="Terminar cabo" hidden><i class="fa-solid fa-check"></i><span class="label">Terminar</span></button>
             <button id="btn-edit-drawing" onclick="abrirModalEdicaoDesenho()" title="Editar forma selecionada" disabled><i class="fa-solid fa-pen-to-square"></i></button>
@@ -596,7 +594,11 @@ dialog#pv-learning-notice,#pv-learning-notice{
         </div>
     </div>
 
+    
     <div id="engineering-panel" class="engineering-panel">
+        <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
+            <button type="button" onclick="if(typeof toggleEngineeringMode==='function')toggleEngineeringMode();else document.getElementById('engineering-panel').style.display='none';" style="background:#ef4444;color:#fff;border:none;padding:5px 12px;border-radius:6px;cursor:pointer;font-weight:700;">✕ Fermer</button>
+        </div>
         <div class="engineering-header">
             <strong>Modo Engenharia</strong>
             <span id="engineering-target">Selecione 1 componente</span>
