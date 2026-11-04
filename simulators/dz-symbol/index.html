@@ -186,11 +186,6 @@ dialog#pv-learning-notice,#pv-learning-notice{
             <button id="btn-play" onclick="toggleSimulacao()"><i class="fa-solid fa-play"></i> SIMULAR</button>
             <span id="sim-clock" class="sim-clock" title="Durée de simulation">00:00:00.0</span>
             <div class="sep"></div>
-            <!-- Outils officiels directement sous la main -->
-            <button id="btn-select" class="btn-tool active" onclick="ativarFerramenta('select')" title="Sélectionner / Déplacer"><i class="fa-solid fa-arrow-pointer"></i></button>
-            <button id="btn-rotacao" class="btn-tool" onclick="ativarFerramenta('rotacao')" title="Pivoter le symbole (90°)"><i class="fa-solid fa-rotate-right"></i></button>
-            <button id="btn-borracha" class="btn-tool" onclick="ativarFerramenta('borracha')" title="Supprimer / Gomme"><i class="fa-solid fa-eraser"></i></button>
-            <button id="btn-pan" class="btn-tool" onclick="ativarFerramenta('pan')" title="Déplacer la feuille (Pan)"><i class="fa-solid fa-hand"></i></button>
         </div>
                 <div class="control-group toolbar-actions">
             <!-- Grille des outils essentiels comme sur la photo -->
@@ -293,9 +288,6 @@ dialog#pv-learning-notice,#pv-learning-notice{
                 <div class="tool-group">
                     <p>Edi&ccedil;&atilde;o</p>
                     <div class="tools-grid">
-                        <button id="btn-select" onclick="ativarFerramenta('select')" class="btn-tool" title="Sele&ccedil;&atilde;o" data-tool="select" data-label="Sele&ccedil;&atilde;o"><i class="fa-solid fa-arrow-pointer"></i></button>
-                        <button id="btn-borracha" onclick="ativarFerramenta('borracha')" class="btn-tool" title="Apagar" data-tool="borracha" data-label="Apagar"><i class="fa-solid fa-eraser"></i></button>
-                        <button id="btn-rotacao" onclick="ativarFerramenta('rotacao')" class="btn-tool" title="Girar" data-tool="rotacao" data-label="Girar"><i class="fa-solid fa-rotate-right"></i></button>
                         <button type="button" onclick="undoAcao()" title="Voltar (Ctrl+Z)" data-label="Desfazer"><i class="fa-solid fa-rotate-left"></i></button>
                         <button type="button" onclick="redoAcao()" title="Avan&ccedil;ar (Ctrl+Y)" data-label="Refazer"><i class="fa-solid fa-rotate-right"></i></button>
                         <button type="button" onclick="copiarSelecaoCircuito()" title="Copiar sele&ccedil;&atilde;o (Ctrl+C)" data-label="Copiar"><i class="fa-solid fa-copy"></i></button>
