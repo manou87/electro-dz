@@ -1,0 +1,237 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Termos de Uso</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            padding: 22px;
+            font-family: "Segoe UI", Tahoma, sans-serif;
+            color: #18324c;
+            background: #fff;
+        }
+        .terms-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            max-width: 820px;
+            margin: 0 auto 18px;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            min-height: 34px;
+            padding: 7px 10px;
+            border: 1px solid #cbd9e8;
+            border-radius: 6px;
+            color: #174f7d;
+            background: #f8fbff;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .language-selector {
+            position: relative;
+            display: inline-flex;
+            flex: 0 0 auto;
+            align-items: center;
+            z-index: 20;
+        }
+        .language-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 46px;
+            min-width: 46px;
+            min-height: 34px;
+            padding: 4px 5px;
+            border: 1px solid #cbd9e8;
+            border-radius: 6px;
+            background: #f8fbff;
+            color: inherit;
+            cursor: pointer;
+        }
+        .language-toggle-btn:hover,
+        .language-toggle-btn:focus-visible,
+        .language-selector.is-open .language-toggle-btn {
+            background: #eef6ff;
+            outline: none;
+        }
+        .language-toggle-flag,
+        .language-flag-img {
+            display: block;
+            width: 34px;
+            height: 24px;
+            border-radius: 3px;
+            box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.18);
+        }
+        .language-options {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            display: none;
+            min-width: 190px;
+            padding: 6px;
+            border: 1px solid rgba(15, 23, 42, 0.16);
+            border-radius: 8px;
+            background: #ffffff;
+            color: #1f2a37;
+            box-shadow: 0 14px 32px rgba(15, 23, 42, 0.22);
+        }
+        .language-selector.is-open .language-options {
+            display: grid;
+            gap: 4px;
+        }
+        .language-option {
+            display: grid;
+            grid-template-columns: 18px 38px 1fr;
+            align-items: center;
+            gap: 8px;
+            min-height: 34px;
+            padding: 5px 7px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
+        }
+        .language-option:hover,
+        .language-option:focus-within {
+            background: #eef4ff;
+        }
+        .language-option input { margin: 0; }
+        .language-name { white-space: nowrap; }
+        article { max-width: 820px; margin: 0 auto; }
+        h1 { margin: 0 0 6px; color: #102a43; font-size: 28px; }
+        .updated { margin: 0 0 24px; color: #64748b; font-size: 13px; }
+        section { padding: 16px 0; border-top: 1px solid #dbe5ef; }
+        h2 { margin: 0 0 9px; color: #174f7d; font-size: 18px; }
+        p, li { font-size: 15px; line-height: 1.6; }
+        p { margin: 0 0 9px; }
+        ul { margin: 8px 0; padding-left: 22px; }
+        @media (max-width: 600px) {
+            body { padding: 16px; }
+            h1 { font-size: 24px; }
+            .terms-topbar { margin-bottom: 14px; }
+            .back-link { max-width: calc(100vw - 86px); overflow: hidden; text-overflow: ellipsis; }
+            .language-options { right: 0; }
+        }
+    </style>
+    <script defer src="js/i18n.terms.js?v=20260810-terms-fr1"></script>
+</head>
+<body>
+    <nav class="terms-topbar" aria-label="Termos">
+        <a class="back-link" href="index.html" data-i18n-term="back.simulator">Voltar ao simulador</a>
+        <div id="terms-language-selector" class="language-selector"></div>
+    </nav>
+
+    <article>
+        <h1 data-i18n-term="page.title">Termos de Uso</h1>
+        <p class="updated" data-i18n-term="page.updated">Center Tech Engenharia - última atualização: 02/04/2026</p>
+
+        <section>
+            <h2 data-i18n-term="s1.title">1. Aceitação dos termos</h2>
+            <p data-i18n-term="s1.p1">Ao acessar e utilizar o simulador desenvolvido pela Center Tech Engenharia, o usuário declara estar de acordo com os presentes Termos de Uso.</p>
+            <p data-i18n-term="s1.p2">Caso não concorde com qualquer condição, o uso da plataforma deve ser imediatamente interrompido.</p>
+        </section>
+        <section>
+            <h2 data-i18n-term="s2.title">2. Objeto</h2>
+            <p data-i18n-term="s2.p1">Este termo regula o uso do simulador de comandos elétricos, disponibilizado em ambiente online, com finalidade educacional, profissional e de treinamento técnico.</p>
+        </section>
+        <section>
+            <h2 data-i18n-term="s3.title">3. Licença de uso</h2>
+            <p data-i18n-term="s3.p1">O usuário recebe uma licença:</p>
+            <ul>
+                <li data-i18n-term="s3.li1">Não exclusiva</li>
+                <li data-i18n-term="s3.li2">Intransferível</li>
+                <li data-i18n-term="s3.li3">Limitada</li>
+            </ul>
+            <p data-i18n-term="s3.p2">Para uso do simulador exclusivamente dentro da plataforma oficial.</p>
+            <p data-i18n-term="s3.p3">É proibido:</p>
+            <ul>
+                <li data-i18n-term="s3.li4">Copiar, modificar ou distribuir o simulador</li>
+                <li data-i18n-term="s3.li5">Tentar reproduzir o funcionamento ou lógica do sistema</li>
+                <li data-i18n-term="s3.li6">Criar produtos derivados com base no simulador</li>
+            </ul>
+        </section>
+        <section>
+            <h2 data-i18n-term="s4.title">4. Uso para criação de conteúdo</h2>
+            <p data-i18n-term="s4.p1">É permitido:</p>
+            <ul>
+                <li data-i18n-term="s4.li1">Gravar vídeos utilizando o simulador</li>
+                <li data-i18n-term="s4.li2">Criar conteúdos educativos</li>
+                <li data-i18n-term="s4.li3">Publicar em redes sociais e plataformas digitais</li>
+            </ul>
+            <p data-i18n-term="s4.p2">Desde que:</p>
+            <ul>
+                <li data-i18n-term="s4.li4">Seja citado claramente o nome do simulador ou da empresa (Center Tech Engenharia)</li>
+                <li data-i18n-term="s4.li5">Não haja tentativa de ocultar a origem da ferramenta</li>
+            </ul>
+        </section>
+        <section>
+            <h2 data-i18n-term="s5.title">5. Uso comercial</h2>
+            <p data-i18n-term="s5.p1">É proibido, sem autorização prévia e por escrito:</p>
+            <ul>
+                <li data-i18n-term="s5.li1">Vender cursos, treinamentos ou conteúdos pagos utilizando o simulador</li>
+                <li data-i18n-term="s5.li2">Utilizar o simulador como parte de produtos comerciais</li>
+                <li data-i18n-term="s5.li3">Revender acesso à plataforma</li>
+            </ul>
+            <p data-i18n-term="s5.p2">Para parcerias comerciais, o contato deve ser feito diretamente com a empresa.</p>
+        </section>
+        <section>
+            <h2 data-i18n-term="s6.title">6. Propriedade intelectual</h2>
+            <p data-i18n-term="s6.p1">Todo o conteúdo da plataforma, incluindo:</p>
+            <ul>
+                <li data-i18n-term="s6.li1">Código-fonte</li>
+                <li data-i18n-term="s6.li2">Interface</li>
+                <li data-i18n-term="s6.li3">Simulações</li>
+                <li data-i18n-term="s6.li4">Layout</li>
+                <li data-i18n-term="s6.li5">Recursos visuais</li>
+            </ul>
+            <p data-i18n-term="s6.p2">É protegido pela legislação vigente, especialmente pela Lei nº 9.610/98 (Direitos Autorais).</p>
+            <p data-i18n-term="s6.p3">O uso indevido poderá resultar em medidas legais.</p>
+        </section>
+        <section>
+            <h2 data-i18n-term="s7.title">7. Registro de marca</h2>
+            <p data-i18n-term="s7.p1">A marca e identidade visual encontram-se em processo de registro junto ao Instituto Nacional da Propriedade Industrial.</p>
+            <p data-i18n-term="s7.p2">É proibido:</p>
+            <ul>
+                <li data-i18n-term="s7.li1">Utilizar a marca sem autorização</li>
+                <li data-i18n-term="s7.li2">Criar marcas semelhantes que gerem confusão</li>
+            </ul>
+        </section>
+        <section>
+            <h2 data-i18n-term="s8.title">8. Limitação de responsabilidade</h2>
+            <p data-i18n-term="s8.p1">A plataforma é fornecida “como está”, com finalidade educacional.</p>
+            <p data-i18n-term="s8.p2">A empresa não se responsabiliza por:</p>
+            <ul>
+                <li data-i18n-term="s8.li1">Uso incorreto das informações</li>
+                <li data-i18n-term="s8.li2">Decisões técnicas baseadas exclusivamente no simulador</li>
+                <li data-i18n-term="s8.li3">Eventuais falhas temporárias no sistema</li>
+            </ul>
+        </section>
+        <section>
+            <h2 data-i18n-term="s9.title">9. Suspensão ou cancelamento</h2>
+            <p data-i18n-term="s9.p1">A empresa se reserva o direito de:</p>
+            <ul>
+                <li data-i18n-term="s9.li1">Suspender ou cancelar o acesso de usuários que violem estes termos</li>
+                <li data-i18n-term="s9.li2">Remover conteúdos ou acessos indevidos sem aviso prévio</li>
+            </ul>
+        </section>
+        <section>
+            <h2 data-i18n-term="s10.title">10. Modificações dos termos</h2>
+            <p data-i18n-term="s10.p1">Os termos poderão ser alterados a qualquer momento.</p>
+            <p data-i18n-term="s10.p2">Recomenda-se a revisão periódica desta página.</p>
+        </section>
+        <section>
+            <h2 data-i18n-term="s11.title">11. Contato</h2>
+            <p data-i18n-term="s11.p1">Para autorizações, parcerias comerciais ou dúvidas, utilize os canais oficiais da Center Tech Engenharia.</p>
+        </section>
+    </article>
+</body>
+</html>
+

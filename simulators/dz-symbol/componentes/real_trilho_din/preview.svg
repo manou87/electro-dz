@@ -1,0 +1,27 @@
+<svg width="80" height="40" viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="metalGradPreview" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" style="stop-color:#999" />
+        <stop offset="15%" style="stop-color:#ccc" />
+        <stop offset="30%" style="stop-color:#eee" />
+        <stop offset="45%" style="stop-color:#ddd" />
+        <stop offset="55%" style="stop-color:#ddd" />
+        <stop offset="70%" style="stop-color:#eee" />
+        <stop offset="85%" style="stop-color:#ccc" />
+        <stop offset="100%" style="stop-color:#999" />
+    </linearGradient>
+  </defs>
+  <!-- Sombra -->
+  <rect x="5" y="8" width="70" height="26" fill="rgba(0,0,0,0.15)" rx="2" />
+  <!-- Corpo -->
+  <rect x="5" y="4" width="70" height="26" fill="url(#metalGradPreview)" rx="2" stroke="#888" stroke-width="0.5" />
+  <!-- Vincos -->
+  <line x1="5" y1="8" x2="75" y2="8" stroke="rgba(255,255,255,0.4)" stroke-width="0.5" />
+  <line x1="5" y1="12" x2="75" y2="12" stroke="rgba(0,0,0,0.1)" stroke-width="0.5" />
+  <line x1="5" y1="22" x2="75" y2="22" stroke="rgba(0,0,0,0.1)" stroke-width="0.5" />
+  <line x1="5" y1="26" x2="75" y2="26" stroke="rgba(255,255,255,0.4)" stroke-width="0.5" />
+  <!-- Rasgos -->
+  <rect x="15" y="14" width="8" height="6" rx="3" fill="rgba(0,0,0,0.2)" />
+  <rect x="36" y="14" width="8" height="6" rx="3" fill="rgba(0,0,0,0.2)" />
+  <rect x="57" y="14" width="8" height="6" rx="3" fill="rgba(0,0,0,0.2)" />
+</svg>

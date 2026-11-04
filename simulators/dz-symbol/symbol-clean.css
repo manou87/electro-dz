@@ -1,0 +1,309 @@
+/* =========================================================================
+   DZ Symbol — Mode Symboles Pur avec Barre de Manipulation Complète
+   ========================================================================= */
+
+/* Masquer le sélecteur Mode 2D : forcer le Mode Symboles unique */
+.mode-tabs {
+    display: none !important;
+}
+
+/* Masquer les menus superflus */
+#btn-more-tools,
+#draw-controls-container,
+.sheet-bar,
+/* sidebar-tools-panel actif */
+
+/* Styliser le titre de l'application */
+.logo {
+    font-weight: 700 !important;
+    font-size: 15px !important;
+    letter-spacing: 0.5px !important;
+    color: #fff !important;
+}
+
+/* Barre de manipulation des composants dans le top-bar */
+.manipulation-bar {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    background: #1a2234 !important;
+    padding: 3px 6px !important;
+    border-radius: 6px !important;
+    border: 1px solid #334155 !important;
+}
+
+.manipulation-bar button {
+    background: #243048 !important;
+    border: 1px solid #3b4d6b !important;
+    color: #e2e8f0 !important;
+    height: 32px !important;
+    padding: 0 10px !important;
+    border-radius: 5px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+}
+
+.manipulation-bar button:hover {
+    background: #3b82f6 !important;
+    border-color: #60a5fa !important;
+    color: #fff !important;
+}
+
+.manipulation-bar button.active {
+    background: #2563eb !important;
+    border-color: #3b82f6 !important;
+    color: #fff !important;
+}
+
+/* Styliser les boutons ÉPISSURE et AUTO FIL */
+#wire-primary-tools {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    margin-bottom: 10px !important;
+}
+
+#wire-primary-tools button {
+    background: #202b42 !important;
+    border: 1px solid #3b4d6b !important;
+    color: #fff !important;
+    height: 36px !important;
+    font-weight: 700 !important;
+    border-radius: 6px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    cursor: pointer !important;
+}
+
+#wire-primary-tools button:hover, #wire-primary-tools button.active {
+    background: #2563eb !important;
+    border-color: #60a5fa !important;
+}
+
+/* Grille des cartes des symboles IEC comme sur la photo */
+.cat-content {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+    padding: 8px !important;
+}
+
+.component-item {
+    background: #f1f5f9 !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    color: #0f172a !important;
+    min-height: 95px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 8px !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
+    transition: all 0.15s ease !important;
+    cursor: grab !important;
+}
+
+.component-item:hover {
+    border-color: #2563eb !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 10px rgba(37,99,235,0.18) !important;
+}
+
+.component-item img, .component-item svg {
+    max-height: 50px !important;
+    max-width: 100% !important;
+    margin-bottom: 6px !important;
+}
+
+.component-item .comp-name, .component-item span {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    color: #1e293b !important;
+    line-height: 1.2 !important;
+}
+
+/* Bouton SIMULER vert */
+#btn-play {
+    background: #16a34a !important;
+    border-color: #22c55e !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    border-radius: 6px !important;
+    padding: 6px 16px !important;
+}
+
+/* Bouton Imprimer PDF mis en valeur */
+.btn-pdf-export {
+    background: #1e293b !important;
+    border: 1px solid #ef4444 !important;
+    color: #f8fafc !important;
+    font-weight: 700 !important;
+}
+
+.btn-pdf-export:hover {
+    background: #ef4444 !important;
+    color: #fff !important;
+}
+.btn-pdf-export:hover i {
+    color: #fff !important;
+}
+
+/* =========================================================================
+   ADAPTATION TACTILE & RESPONSIVE SPÉCIALE MOBILE (Smartphone Android / iOS)
+   ========================================================================= */
+
+@media (max-width: 768px) {
+    /* 1. Barre supérieure compacte & optimisée pouce */
+    .top-bar {
+        height: 48px !important;
+        padding: 0 8px !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    .logo {
+        font-size: 13px !important;
+    }
+    .logo small {
+        display: none !important;
+    }
+
+    .manipulation-bar {
+        gap: 2px !important;
+        padding: 2px 4px !important;
+    }
+
+    .manipulation-bar button {
+        height: 28px !important;
+        padding: 0 6px !important;
+        font-size: 11px !important;
+    }
+
+    #btn-play {
+        padding: 4px 10px !important;
+        font-size: 11px !important;
+    }
+
+    /* 2. Tiroir inférieur rétractable (Bottom Drawer / Sheet) */
+    #sidebar-menu-panel {
+        position: fixed !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        top: auto !important;
+        width: 100vw !important;
+        height: 260px !important;
+        max-height: 45vh !important;
+        border-right: none !important;
+        border-top: 2px solid #3b82f6 !important;
+        border-radius: 16px 16px 0 0 !important;
+        box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.45) !important;
+        z-index: 1000 !important;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    /* Poignée tactile de rétractation (Drag handle) */
+    #sidebar-menu-panel::before {
+        content: "" !important;
+        display: block !important;
+        width: 44px !important;
+        height: 5px !important;
+        background: #64748b !important;
+        border-radius: 4px !important;
+        margin: 6px auto !important;
+    }
+
+    /* Quand rétracté */
+    #sidebar-menu-panel.mobile-collapsed {
+        transform: translateY(calc(100% - 36px)) !important;
+    }
+
+    /* Outils de câblage adaptés mobile */
+    #wire-primary-tools {
+        margin-bottom: 6px !important;
+    }
+
+    #wire-primary-tools button {
+        height: 32px !important;
+        font-size: 12px !important;
+    }
+
+    /* Palette de couleurs tactile */
+    .color-palette {
+        gap: 6px !important;
+        justify-content: center !important;
+    }
+
+    .color-swatch {
+        width: 24px !important;
+        height: 24px !important;
+    }
+
+    /* Grille de symboles mobile : carrousel horizontal tactile */
+    .cat-content {
+        display: flex !important;
+        flex-direction: row !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        scroll-snap-type: x mandatory !important;
+        gap: 10px !important;
+        padding: 6px 10px 14px 10px !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    .component-item {
+        flex: 0 0 110px !important;
+        min-height: 85px !important;
+        scroll-snap-align: start !important;
+    }
+
+    .component-item img, .component-item svg {
+        max-height: 40px !important;
+    }
+
+    .component-item .comp-name, .component-item span {
+        font-size: 10px !important;
+    }
+
+    /* Zone de travail agrandie à 100% */
+    #workspace-container, #viewport {
+        width: 100vw !important;
+        height: calc(100vh - 48px) !important;
+    }
+
+    /* Bouton Flottant d'Ouverture Rapide du Tiroir */
+    #mobile-drawer-toggle {
+        display: flex !important;
+        position: fixed !important;
+        bottom: 24px !important;
+        left: 20px !important;
+        width: 48px !important;
+        height: 48px !important;
+        border-radius: 50% !important;
+        background: #2563eb !important;
+        color: #fff !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4) !important;
+        z-index: 1005 !important;
+        border: none !important;
+        font-size: 18px !important;
+        cursor: pointer !important;
+    }
+}
+
+/* Sur grand écran PC / Tablette : masquer le bouton tiroir mobile */
+@media (min-width: 769px) {
+    #mobile-drawer-toggle {
+        display: none !important;
+    }
+}

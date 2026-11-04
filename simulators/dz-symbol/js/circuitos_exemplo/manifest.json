@@ -1,0 +1,23 @@
+{
+  "basePath": "js/circuitos_exemplo/",
+  "circuits": [
+    {
+      "id": "partida-direta",
+      "file": "partida-direta.json",
+      "name": "Partida Direta / D\u00e9marrage direct",
+      "description": "Circuit de d\u00e9marrage direct de moteur triphas\u00e9."
+    },
+    {
+      "id": "partida-direta-reversao",
+      "file": "partida-direta-reversao.json",
+      "name": "Partida Direta com Revers\u00e3o",
+      "description": "Circuit avec inversion de sens de rotation."
+    },
+    {
+      "id": "partida-estrela-triangulo",
+      "file": "partida-estrela-triangulo.json",
+      "name": "Partida Estrela-Tri\u00e2ngulo / \u00c9toile-Triangle",
+      "description": "Circuit de d\u00e9marrage \u00e9toile-triangle."
+    }
+  ]
+}
