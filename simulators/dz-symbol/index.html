@@ -122,7 +122,13 @@ dialog#pv-learning-notice,#pv-learning-notice{
         </div>
         <div class="control-group simulation-controls">
             <button id="btn-play" onclick="toggleSimulacao()"><i class="fa-solid fa-play"></i> SIMULAR</button>
-            <span id="sim-clock" class="sim-clock" title="Tempo de simula&ccedil;&atilde;o">00:00:00.0</span>
+            <span id="sim-clock" class="sim-clock" title="Durée de simulation">00:00:00.0</span>
+            <div class="sep"></div>
+            <!-- Outils officiels directement sous la main -->
+            <button id="btn-select" class="btn-tool active" onclick="ativarFerramenta('select')" title="Sélectionner / Déplacer"><i class="fa-solid fa-arrow-pointer"></i></button>
+            <button id="btn-rotacao" class="btn-tool" onclick="ativarFerramenta('rotacao')" title="Pivoter le symbole (90°)"><i class="fa-solid fa-rotate-right"></i></button>
+            <button id="btn-borracha" class="btn-tool" onclick="ativarFerramenta('borracha')" title="Supprimer / Gomme"><i class="fa-solid fa-eraser"></i></button>
+            <button id="btn-pan" class="btn-tool" onclick="ativarFerramenta('pan')" title="Déplacer la feuille (Pan)"><i class="fa-solid fa-hand"></i></button>
         </div>
         <div class="control-group toolbar-actions">
             <button id="btn-undo" onclick="undoAcao()" title="Voltar (Ctrl+Z)"><i class="fa-solid fa-rotate-left"></i></button>
@@ -173,21 +179,26 @@ dialog#pv-learning-notice,#pv-learning-notice{
         </button>
         <div id="sheet-tabs" class="sheet-tabs"></div>
         <div class="sheet-actions">
-            <button id="sheet-config-btn" class="sheet-action-btn" type="button" title="Configurar folha ativa">
-                <i class="fa-solid fa-gear"></i>
-                <span>Configurar</span>
-            </button>
-            <button id="sheet-rename-btn" class="sheet-action-btn" type="button" title="Renomear folha ativa">
-                <i class="fa-solid fa-pen"></i>
-                <span>Renomear</span>
-            </button>
-            <button id="sheet-delete-btn" class="sheet-action-btn danger" type="button" title="Apagar folha ativa">
-                <i class="fa-solid fa-trash"></i>
-                <span>Apagar</span>
-            </button>
-            <button id="sheet-add-btn" class="sheet-action-btn" type="button" title="Nova folha">
+            <button id="sheet-add-btn" class="sheet-action-btn" type="button" title="Ajouter un nouveau folio / feuille">
                 <i class="fa-solid fa-plus"></i>
-                <span>Nova folha</span>
+                <span>Nouvelle feuille</span>
+            </button>
+            <button id="sheet-config-btn" class="sheet-action-btn" type="button" title="Paramètres du folio (format, cartouche)">
+                <i class="fa-solid fa-gear"></i>
+                <span>Cartouche & Format</span>
+            </button>
+            <button id="sheet-rename-btn" class="sheet-action-btn" type="button" title="Renommer le folio">
+                <i class="fa-solid fa-pen"></i>
+                <span>Renommer</span>
+            </button>
+            <button id="sheet-delete-btn" class="sheet-action-btn danger" type="button" title="Supprimer le folio actif">
+                <i class="fa-solid fa-trash"></i>
+                <span>Supprimer</span>
+            </button>
+            <div class="sep" style="margin:0 4px;height:20px;border-left:1px solid #475569;"></div>
+            <button id="sheet-pdf-btn" class="sheet-action-btn" type="button" onclick="window.exportarPdf({ mode: 'active' })" style="color:#38bdf8;" title="Imprimer / Exporter le schéma en PDF">
+                <i class="fa-solid fa-file-pdf" style="color:#ef4444;"></i>
+                <span>Imprimer PDF</span>
             </button>
         </div>
     </div>
