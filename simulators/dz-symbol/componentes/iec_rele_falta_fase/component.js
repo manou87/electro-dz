@@ -69,7 +69,7 @@
 
     window.COMPONENTES[LIB_KEY] = {
         cat: 'Simbologia IEC',
-        nome: 'Relé de Falta de Fase',
+        nome: 'مرحل سقوط الطور',
         icone: 'fa-wave-square',
         tipo: 'rele',
         showTag: true,

@@ -1,6 +1,6 @@
 ﻿window.COMPONENTES['iec_contato_nf'] = {
     cat: 'Simbologia IEC',
-    nome: 'Contato NF',
+    nome: 'تماس مغلق (NC)',
     icone: 'fa-toggle-off',
     tipo: 'contato',
     showTag: true,

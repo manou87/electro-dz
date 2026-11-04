@@ -1,6 +1,6 @@
 window.COMPONENTES['iec_bobina_temp'] = {
     cat: 'Simbologia IEC',
-    nome: 'Bobina Temporizadora',
+    nome: 'وشيعة مؤقت زمني',
     icone: 'fa-clock',
     tipo: 'bobina_temporizada',
     showTag: true,

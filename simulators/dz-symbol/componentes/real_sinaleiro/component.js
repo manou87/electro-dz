@@ -1,6 +1,6 @@
 window.COMPONENTES['real_sinaleiro'] = {
     cat: 'Componentes Reais',
-    nome: 'Sinaleiro',
+    nome: 'مصباح إشارة',
     icone: 'fa-lightbulb',
     tipo: 'sinaleiro',
     tagDefault: 'H1',

@@ -1,6 +1,6 @@
 window.COMPONENTES['iec_sensor_indutivo_na'] = {
     cat: 'Simbologia IEC',
-    nome: 'Sensor Indutivo NA',
+    nome: 'حساس تقاربي حثي (NO)',
     icone: 'fa-bullseye',
     tipo: 'sensor',
     showTag: true,

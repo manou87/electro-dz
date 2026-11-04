@@ -1,6 +1,6 @@
 ﻿window.COMPONENTES['iec_chave_seletora_na'] = {
     cat: 'Simbologia IEC',
-    nome: 'Chave Seletora NA',
+    nome: 'مفتاح اختيار مفتوح (NO)',
     icone: 'fa-arrows-rotate',
     tipo: 'chave',
     showTag: true,

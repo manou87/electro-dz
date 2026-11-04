@@ -1,6 +1,6 @@
 window.COMPONENTES['iec_fusiveis'] = {
     cat: 'Simbologia IEC',
-    nome: 'Conjunto de Fusíveis',
+    nome: 'طقم مصهرات',
     icone: 'fa-fire',
     tipo: 'protecao',
     tagDefault: 'FU1',

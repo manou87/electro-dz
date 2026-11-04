@@ -94,7 +94,7 @@
 
     window.COMPONENTES[LIB_KEY] = {
         cat: 'Componentes Reais',
-        nome: 'Relé de Falta de Fase',
+        nome: 'مرحل سقوط الطور',
         icone: 'fa-bolt-lightning',
         tipo: 'rele',
         showTag: true,

@@ -1,6 +1,6 @@
 window.COMPONENTES['iec_motor_6_pontas'] = {
     cat: 'Simbologia IEC',
-    nome: 'Motor 3F (6 pontas)',
+    nome: 'محرك 3 أطوار (6 أطراف)',
     icone: 'fa-fan',
     tipo: 'motor',
     tagDefault: 'M1',

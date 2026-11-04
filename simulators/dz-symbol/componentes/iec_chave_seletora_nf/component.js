@@ -1,6 +1,6 @@
 ﻿window.COMPONENTES['iec_chave_seletora_nf'] = {
     cat: 'Simbologia IEC',
-    nome: 'Chave Seletora NF',
+    nome: 'مفتاح اختيار مغلق (NC)',
     icone: 'fa-arrows-rotate',
     tipo: 'chave',
     showTag: true,

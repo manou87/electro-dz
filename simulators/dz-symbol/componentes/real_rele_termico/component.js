@@ -1,6 +1,6 @@
 ﻿window.COMPONENTES['real_rele_termico'] = {
     cat: 'Componentes Reais',
-    nome: 'Relé Térmico',
+    nome: 'مرحل حراري',
     icone: 'fa-temperature-half',
     tipo: 'protecao',
     tagDefault: 'K1',

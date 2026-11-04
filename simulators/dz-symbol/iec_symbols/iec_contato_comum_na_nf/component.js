@@ -1,6 +1,6 @@
 window.COMPONENTES['iec_contato_comum_na_nf'] = {
     cat: 'Simbologia IEC',
-    nome: 'Contato Comum NA/NF',
+    nome: 'تماس مشترك NO/NC',
     icone: 'fa-toggle-on',
     tipo: 'contato',
     showTag: true,

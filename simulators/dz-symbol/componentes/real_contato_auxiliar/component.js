@@ -1,6 +1,6 @@
 ﻿window.COMPONENTES['real_contato_auxiliar'] = {
     cat: 'Componentes Reais',
-    nome: 'Contato Auxiliar',
+    nome: 'تماس مساعد',
     icone: 'fa-plug-circle-check',
     tipo: 'contato',
     showTag: true,

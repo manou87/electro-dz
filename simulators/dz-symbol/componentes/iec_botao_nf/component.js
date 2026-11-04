@@ -1,6 +1,6 @@
 ﻿window.COMPONENTES['iec_botao_nf'] = {
     cat: 'Simbologia IEC',
-    nome: 'Botão NF',
+    nome: 'زر ضاغط مغلق (NC)',
     icone: 'fa-circle',
     tipo: 'botao',
     pressable: 'momentary',

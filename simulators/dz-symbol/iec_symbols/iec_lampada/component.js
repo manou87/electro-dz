@@ -1,6 +1,6 @@
 ﻿window.COMPONENTES['iec_lampada'] = {
     cat: 'Simbologia IEC',
-    nome: 'Sinaleiro',
+    nome: 'مصباح إشارة',
     icone: 'fa-lightbulb',
     foto: './componentes/iec_lampada/info.svg',
     tipo: 'carga',

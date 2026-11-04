@@ -1,6 +1,6 @@
 window.COMPONENTES['iec_contato_temp_nf'] = {
     cat: 'Simbologia IEC',
-    nome: 'Contato Temp NF',
+    nome: 'تماس مؤقت مغلق (NC)',
     icone: 'fa-clock-rotate-left',
     tipo: 'contato',
     showTag: true,

@@ -1,6 +1,6 @@
 window.COMPONENTES['iec_motor_tripolar'] = {
     cat: 'Simbologia IEC',
-    nome: 'Motor Tripolar IEC',
+    nome: 'محرك ثلاثي الأطوار IEC',
     icone: 'fa-fan',
     tipo: 'motor',
     tagDefault: 'M1',

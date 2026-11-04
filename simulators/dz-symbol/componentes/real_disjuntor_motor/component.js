@@ -1,6 +1,6 @@
 window.COMPONENTES['real_disjuntor_motor'] = {
     cat: 'Componentes Reais',
-    nome: 'Disjuntor Motor',
+    nome: 'قاطع محرك IEC',
     icone: 'fa-shield-halved',
     tipo: 'protecao',
     tagDefault: 'Q1',

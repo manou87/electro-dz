@@ -1,6 +1,6 @@
 window.COMPONENTES['iec_bobina_contator'] = {
     cat: 'Simbologia IEC',
-    nome: 'Bobina Contator',
+    nome: 'وشيعة كونتاكتور',
     icone: 'fa-magnet',
     tipo: 'bobina',
     showTag: true,

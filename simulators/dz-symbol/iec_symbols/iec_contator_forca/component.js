@@ -1,6 +1,6 @@
 window.COMPONENTES['iec_contator_forca'] = {
     cat: 'Simbologia IEC',
-    nome: 'Contator Força',
+    nome: 'كونتاكتور استطاعة',
     icone: 'fa-bolt',
     tipo: 'contato',
     showTag: true,

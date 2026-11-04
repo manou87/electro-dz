@@ -1,6 +1,6 @@
 window.COMPONENTES['real_contator_forca'] = {
     cat: 'Componentes Reais',
-    nome: 'Contator Força',
+    nome: 'كونتاكتور استطاعة',
     icone: 'fa-industry',
     tipo: 'contator',
     tagDefault: 'K1',

@@ -1,6 +1,6 @@
 window.COMPONENTES['iec_disjuntor_bipolar'] = {
     cat: 'Simbologia IEC',
-    nome: 'Disjuntor Bipolar IEC',
+    nome: 'قاطع ثنائي القطب IEC',
     icone: 'fa-toggle-on',
     tipo: 'protecao',
     tagDefault: 'Q1',

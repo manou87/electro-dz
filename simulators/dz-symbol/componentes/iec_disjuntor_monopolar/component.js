@@ -1,6 +1,6 @@
 ﻿window.COMPONENTES['iec_disjuntor_monopolar'] = {
     cat: 'Simbologia IEC',
-    nome: 'Disjuntor Monopolar IEC',
+    nome: 'قاطع أحادي القطب IEC',
     icone: 'fa-toggle-on',
     tipo: 'protecao',
     tagDefault: 'Q1',

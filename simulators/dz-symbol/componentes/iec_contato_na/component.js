@@ -1,6 +1,6 @@
 window.COMPONENTES['iec_contato_na'] = {
     cat: 'Simbologia IEC',
-    nome: 'Contato NA',
+    nome: 'تماس مفتوح (NO)',
     icone: 'fa-toggle-on',
     tipo: 'contato',
     showTag: true,

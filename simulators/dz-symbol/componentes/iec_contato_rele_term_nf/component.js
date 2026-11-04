@@ -1,6 +1,6 @@
 ﻿window.COMPONENTES['iec_contato_rele_term_nf'] = {
     cat: 'Simbologia IEC',
-    nome: 'Contato Relé Térmico NF',
+    nome: 'تماس مرحل حراري مغلق (NC)',
     icone: 'fa-toggle-off',
     tipo: 'contato',
     showTag: true,

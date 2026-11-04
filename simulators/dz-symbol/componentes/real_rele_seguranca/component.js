@@ -130,7 +130,7 @@
 
     window.COMPONENTES[LIB_KEY] = {
         cat: 'Componentes Reais',
-        nome: 'Relé de Segurança',
+        nome: 'مرحل أمان',
         icone: 'fa-shield-halved',
         tipo: 'rele',
         tagDefault: 'SR1',

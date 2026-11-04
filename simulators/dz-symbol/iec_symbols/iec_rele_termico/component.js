@@ -1,6 +1,6 @@
 window.COMPONENTES['iec_rele_termico'] = {
     cat: 'Simbologia IEC',
-    nome: 'Relé Térmico',
+    nome: 'مرحل حراري',
     icone: 'fa-temperature-high',
     tipo: 'contato',
     showTag: true,

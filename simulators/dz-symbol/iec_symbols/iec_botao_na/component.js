@@ -1,6 +1,6 @@
 ﻿window.COMPONENTES['iec_botao_na'] = {
     cat: 'Simbologia IEC',
-    nome: 'Botão NA',
+    nome: 'زر ضاغط مفتوح (NO)',
     icone: 'fa-circle-dot',
     tipo: 'botao',
     pressable: 'momentary',

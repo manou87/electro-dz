@@ -1,6 +1,6 @@
 window.COMPONENTES['iec_botao_pulsador_na_nf'] = {
     cat: 'Simbologia IEC',
-    nome: 'Botao Pulsador NA/NF',
+    nome: 'زر ضاغط مزدوج NO/NC',
     icone: 'fa-circle-half-stroke',
     tipo: 'botao',
     pressable: 'momentary',

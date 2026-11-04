@@ -1,6 +1,6 @@
 window.COMPONENTES['iec_contato_temp_na'] = {
     cat: 'Simbologia IEC',
-    nome: 'Contato Temp NA',
+    nome: 'تماس مؤقت مفتوح (NO)',
     icone: 'fa-clock',
     tipo: 'contato',
     showTag: true,

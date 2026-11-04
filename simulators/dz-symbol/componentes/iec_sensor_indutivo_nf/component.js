@@ -1,6 +1,6 @@
 window.COMPONENTES['iec_sensor_indutivo_nf'] = {
     cat: 'Simbologia IEC',
-    nome: 'Sensor Indutivo NF',
+    nome: 'حساس تقاربي حثي (NC)',
     icone: 'fa-bullseye',
     tipo: 'sensor',
     showTag: true,

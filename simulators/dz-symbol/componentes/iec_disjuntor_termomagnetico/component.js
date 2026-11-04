@@ -1,6 +1,6 @@
 window.COMPONENTES['iec_disjuntor_termomagnetico'] = {
     cat: 'Simbologia IEC',
-    nome: 'Disjuntor Termomagnético IEC',
+    nome: 'قاطع مغناطيسي حراري IEC',
     icone: 'fa-shield-halved',
     tipo: 'protecao',
     tagDefault: 'Q1',

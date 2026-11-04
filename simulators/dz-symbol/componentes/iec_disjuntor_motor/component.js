@@ -1,6 +1,6 @@
 window.COMPONENTES['iec_disjuntor_motor'] = {
     cat: 'Simbologia IEC',
-    nome: 'Disjuntor Motor IEC',
+    nome: 'قاطع محرك IEC',
     icone: 'fa-shield-halved',
     tipo: 'protecao',
     tagDefault: 'Q1',
