@@ -132,7 +132,20 @@ dialog#pv-learning-notice,#pv-learning-notice{
         const err = document.getElementById('dz-access-error');
         const AUTH_KEY = 'dz_symbol_unlocked_manoud';
 
-        // Vérifier si déjà déverrouillé dans la session
+        // Détection de l'application Android (Google Play / TWA / Standalone)
+        const isAndroidApp = window.matchMedia('(display-mode: standalone)').matches 
+            || navigator.standalone === true 
+            || document.referrer.includes('android-app://')
+            || window.location.search.includes('source=googleplay')
+            || window.location.search.includes('source=app');
+
+        // Si l'utilisateur est sur l'application Google Play (fichier .aab), pas de code d'accès !
+        if (isAndroidApp) {
+            if (overlay) overlay.style.display = 'none';
+            return;
+        }
+
+        // Vérifier si déjà déverrouillé dans la session web
         if (sessionStorage.getItem(AUTH_KEY) === 'true') {
             if (overlay) overlay.style.display = 'none';
             return;
