@@ -194,7 +194,7 @@
     }
 
     /* 2. Tiroir inférieur rétractable (Bottom Drawer / Sheet) */
-    #sidebar-menu-panel {
+    #sidebar-main-panel {
         position: fixed !important;
         left: 0 !important;
         right: 0 !important;
@@ -212,7 +212,7 @@
     }
 
     /* Poignée tactile de rétractation (Drag handle) */
-    #sidebar-menu-panel::before {
+    #sidebar-main-panel::before {
         content: "" !important;
         display: block !important;
         width: 44px !important;
@@ -223,7 +223,7 @@
     }
 
     /* Quand rétracté */
-    #sidebar-menu-panel.mobile-collapsed {
+    #sidebar-main-panel.mobile-collapsed {
         transform: translateY(calc(100% - 36px)) !important;
     }
 
@@ -250,20 +250,17 @@
 
     /* Grille de symboles mobile : carrousel horizontal tactile */
     .cat-content {
-        display: flex !important;
-        flex-direction: row !important;
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        scroll-snap-type: x mandatory !important;
-        gap: 10px !important;
-        padding: 6px 10px 14px 10px !important;
-        -webkit-overflow-scrolling: touch !important;
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+        padding: 8px 6px !important;
+        overflow: visible !important;
     }
 
-    .component-item {
-        flex: 0 0 110px !important;
+    .component-item, .menu-component-btn {
         min-height: 85px !important;
-        scroll-snap-align: start !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
     }
 
     .component-item img, .component-item svg {
@@ -280,24 +277,33 @@
         height: calc(100vh - 48px) !important;
     }
 
-    /* Bouton Flottant d'Ouverture Rapide du Tiroir */
+    /* Bouton Flottant d'Ouverture Rapide du Tiroir (Discret & Bien visible sans gêner) */
     #mobile-drawer-toggle {
         display: flex !important;
         position: fixed !important;
         bottom: 24px !important;
-        left: 20px !important;
-        width: 48px !important;
-        height: 48px !important;
+        left: 16px !important;
+        width: 40px !important;
+        height: 40px !important;
         border-radius: 50% !important;
-        background: #2563eb !important;
-        color: #fff !important;
+        background: rgba(30, 41, 59, 0.85) !important;
+        backdrop-filter: blur(4px) !important;
+        border: 1.5px solid #38bdf8 !important;
+        color: #38bdf8 !important;
         align-items: center !important;
         justify-content: center !important;
-        box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4) !important;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35) !important;
         z-index: 1005 !important;
-        border: none !important;
-        font-size: 18px !important;
+        font-size: 15px !important;
         cursor: pointer !important;
+        opacity: 0.85 !important;
+        transition: all 0.2s ease !important;
+    }
+    #mobile-drawer-toggle:active {
+        transform: scale(0.92) !important;
+        opacity: 1 !important;
+        background: #2563eb !important;
+        color: #fff !important;
     }
 }
 

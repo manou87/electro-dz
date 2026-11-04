@@ -6542,6 +6542,34 @@ function gerarMenus() {
 
     container.innerHTML = '';
 
+    // Barre de recherche de composants
+    const searchWrap = document.createElement('div');
+    searchWrap.className = 'menu-search-wrap';
+    searchWrap.style.cssText = 'position:sticky;top:0;z-index:10;background:#0f172a;padding:8px;border-bottom:1px solid #334155;display:flex;align-items:center;gap:6px;';
+    searchWrap.innerHTML = '<i class="fa-solid fa-magnifying-glass" style="color:#38bdf8;font-size:13px;"></i><input id="menu-comp-search-input" type="text" placeholder="بحث عن عنصر / Rechercher un composant..." style="width:100%;height:32px;background:#1e293b;border:1px solid #475569;border-radius:6px;color:#f8fafc;padding:0 8px;font-size:12px;outline:none;">';
+    container.appendChild(searchWrap);
+
+    const searchInput = searchWrap.querySelector('#menu-comp-search-input');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const query = String(e.target.value || '').trim().toLowerCase();
+            document.querySelectorAll('#menu-container .menu-component-btn').forEach(btn => {
+                const name = String(btn.textContent || '').toLowerCase();
+                const lib = String(btn.dataset.lib || '').toLowerCase();
+                const match = !query || name.includes(query) || lib.includes(query);
+                btn.style.display = match ? 'flex' : 'none';
+            });
+            document.querySelectorAll('#menu-container .menu-category').forEach(cat => {
+                const visibleButtons = cat.querySelectorAll('.menu-component-btn:not([style*="display: none"])');
+                cat.style.display = (!query || visibleButtons.length > 0) ? 'block' : 'none';
+                const content = cat.querySelector('.cat-content');
+                if (content && query) {
+                    content.classList.add('open');
+                }
+            });
+        });
+    }
+
     const actions = document.createElement('div');
     actions.className = 'menu-actions menu-class-actions';
     const toggleAllBtn = document.createElement('button');
