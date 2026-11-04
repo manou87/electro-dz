@@ -1,41 +1,34 @@
-# Fiche Store & Réglages Officiels Google Play
-## Application : SimuDz — Schémas Électriques IEC
+# Fiche Store & Configuration Officielle Google Play
+## Application : SimuDz - Schémas Électriques
 
 ---
 
-### 1. Paramètres de Base de l'Application
+### 1. Identifiants & Paramètres de Base
 
-* **Nom de l'application (Titre - Max 30 caractères) :**
-  > `SimuDz - Schémas Électriques`
+* **Nom de l'application (Titre officiel Google Play) :**
+  > `SimuDz - Schémas Électriques`  
   *(En Arabe : `SimuDz - مخططات كهربائية`)*
 
-* **Description courte (Sous-titre - Max 80 caractères) :**
+* **Package Name (ID Android unique) :**
+  > `com.simudz.SchemasElectriques`
+
+* **Description courte (80 caractères max) :**
   > `Simulateur de schémas électriques industriels et automatismes selon la norme IEC.`
-  *(En Arabe : `محاكي المخططات والرموز الكهربائية الصناعية وفق المعايير الدولية IEC.`)*
 
-* **ID de l'application (Package Name recommandé) :**
-  > `com.electrodz.simudz.symbol`
-
-* **Catégorie de l'application :**
-  > **Enseignement** (Education) ou **Outils** (Tools)
-
-* **Tags / Balises recommandées :**
-  > Électricité, Schémas Électriques, Automatismes, Électrotechnique, Multimètre, Norme IEC.
-
-* **Modèle économique :**
-  > Application gratuite (ou avec achat selon votre stratégie).
+* **Catégorie Play Store :**
+  > **Enseignement** (Éducation) ou **Outils**
 
 * **Classification du contenu :**
-  > PEGI 3 / Tout public (Aucun contenu sensible, violence ou données personnelles collectées).
+  > **PEGI 3 (Tout public)**
 
 ---
 
-### 2. Description Complète (Texte pour la fiche Google Play)
+### 2. Description Longue (Fiche Google Play Store)
 
 ```text
-SimuDz est le premier simulateur professionnel dédié aux schémas électriques industriels et aux automatismes, respectant scrupuleusement les normes internationales IEC.
+SimuDz est le simulateur professionnel dédié aux schémas électriques industriels et aux automatismes, conçu dans le respect strict des normes internationales IEC.
 
-Conçu pour les électriciens, techniciens, ingénieurs, formateurs et étudiants, SimuDz vous permet de concevoir, tester et simuler vos installations de commande et de puissance en temps réel sur smartphone et tablette.
+Destiné aux électriciens, techniciens, ingénieurs, enseignants et étudiants, SimuDz vous permet de concevoir, tester et simuler vos installations de commande et de puissance en temps réel sur smartphone et tablette.
 
 ⚡ FONCTIONNALITÉS CLÉS :
 
@@ -74,15 +67,15 @@ Conçu pour les électriciens, techniciens, ingénieurs, formateurs et étudiant
 
 * **URL du site Web :** `https://electro-dz.com`
 * **Adresse e-mail d'assistance :** `contact@electro-dz.com`
-* **Lien vers la Politique de Confidentialité (Privacy Policy) :**
+* **Lien vers la Politique de Confidentialité :**
   `https://electro-dz.com/privacy.html`
-* **Accès à l'application (Identifiants de test pour les équipes Google) :**
-  Dans la section *Accès aux applications* de Google Play Console :
-  > Indiquer : « Code d'accès : `manoud` »
+* **Accès à l'application (Pour l'équipe de review Google) :**
+  Dans *Contenu de l'application > Accès aux applications* :
+  > Indiquer le code d'accès : `manoud`
 
 ---
 
-### 4. Ressources Visuelles (Générées dans `store-assets/`)
+### 4. Ressources Visuelles du Dossier `store-assets/`
 
-* **Icône de l'application :** `store-assets/icon-512.png` (512x512 pixels, 32-bit PNG)
-* **Graphique de fonction :** À créer au format 1024x500 pixels (Bannière de présentation)
+* **Icône du Store :** `store-assets/icon-512.png` (512 x 512 px, PNG 32-bit sans transparence)
+* **Bannière (Graphique de fonction) :** `store-assets/feature-graphic-1024x500.png` (1024 x 500 px)

@@ -1,8 +1,10 @@
 {
-  "name": "SimuDz Schémas IEC",
+  "name": "SimuDz - Schémas Électriques",
   "short_name": "SimuDz",
   "description": "Simulateur de schémas électriques industriels et automatismes norme IEC",
+  "id": "com.simudz.SchemasElectriques",
   "start_url": "/simulators/dz-symbol/index.html",
+  "scope": "/simulators/dz-symbol/",
   "display": "standalone",
   "orientation": "landscape-primary",
   "background_color": "#0a0f1d",
