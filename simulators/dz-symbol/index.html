@@ -1075,81 +1075,74 @@ dialog#pv-learning-notice,#pv-learning-notice{
             <i class="fa-solid fa-up-down-left-right" style="font-size:11px;color:#38bdf8;"></i>
         </div>
         <div class="floating-tools-grid">
-            <!-- Ligne 0 : Bouton Lecture Simulation (Plein rang ou double) -->
-            <button id="floating-btn-play" type="button" class="floating-tool-btn floating-play-btn" onclick="toggleSimulacao()" title="Lancer / Arrêter la simulation" style="grid-column: span 2; height: 38px; background: #16a34a; border-color: #22c55e;">
+            <!-- Ligne 0 : Bouton Lecture Simulation (Plein rang 2 colonnes) -->
+            <button id="floating-btn-play" type="button" class="floating-tool-btn floating-play-btn" onclick="toggleSimulacao()" title="تشغيل المحاكاة (Lancer)" style="grid-column: span 2; height: 38px; background: #16a34a !important; border: 1px solid #22c55e !important;">
                 <div style="display:flex;align-items:center;justify-content:center;gap:6px;width:100%;">
                     <i class="fa-solid fa-play" style="font-size:13px;"></i>
-                    <span id="floating-play-text" style="font-size:11px;font-weight:700;">محاكاة</span>
+                    <span id="floating-play-text" style="font-size:11px;font-weight:700;">تشغيل</span>
                 </div>
             </button>
 
-            <!-- Ligne Câblage : Bouton Fil + Couleur & Epaisseur -->
-            <button type="button" class="floating-tool-btn" onclick="ativarFerramenta('fio')" title="Outil Fil (Câblage)" data-tool="fio">
+            <!-- Ligne 1 : Bouton Fil & Bouton Couleur de fil -->
+            <button type="button" class="floating-tool-btn" onclick="ativarFerramenta('fio')" title="أداة رسم الأسلاك (Câblage)" data-tool="fio">
                 <i class="fa-solid fa-pen-nib"></i>
                 <span>سلك</span>
             </button>
-            <!-- Bouton Couleur de fil -->
             <button id="floating-wire-color-btn" type="button" class="floating-tool-btn" onclick="openFloatingWireColorModal(event)" title="اختيار لون السلك">
                 <div id="floating-active-color-dot" style="width:18px;height:18px;border-radius:50%;background:#b71c1c;border:2px solid #ffffff;box-shadow:0 0 4px rgba(0,0,0,0.5);"></div>
                 <span id="floating-wire-color-label" style="font-size:9px;font-weight:700;">لون السلك</span>
             </button>
 
-            <!-- Bouton Épaisseur / Section de fil -->
+            <!-- Ligne 2 : Section / Épaisseur & Sélection -->
             <button id="floating-wire-thick-btn" type="button" class="floating-tool-btn" onclick="cycleFloatingWireThickness(event)" title="تغيير مقطع السلك (رفيع / متوسط / سميك)">
                 <div style="display:flex;align-items:center;justify-content:center;height:16px;">
                     <span id="floating-wire-thick-bar" style="display:inline-block;width:24px;height:3px;background:#38bdf8;border-radius:2px;"></span>
                 </div>
                 <span id="floating-wire-thick-text" style="font-size:9px;font-weight:700;">المقطع 2</span>
             </button>
-
-            <!-- Ligne 1 : Sélection & Supprimer -->
-            <button type="button" class="floating-tool-btn active" onclick="ativarFerramenta('select')" title="Sélectionner / Déplacer">
+            <button type="button" class="floating-tool-btn active" onclick="ativarFerramenta('select')" title="تحديد ونقل (Sélectionner / Déplacer)">
                 <i class="fa-solid fa-arrow-pointer"></i>
-                <span>Sélection</span>
+                <span>تحديد</span>
             </button>
-            <button type="button" class="floating-tool-btn btn-danger" onclick="ativarFerramenta('borracha')" title="Supprimer symbole ou fil">
+
+            <!-- Ligne 3 : Supprimer & Pivoter -->
+            <button type="button" class="floating-tool-btn btn-danger" onclick="ativarFerramenta('borracha')" title="حذف عنصر أو سلك (Supprimer)">
                 <i class="fa-solid fa-trash-can"></i>
-                <span>Supprimer</span>
+                <span>حذف</span>
+            </button>
+            <button type="button" class="floating-tool-btn" onclick="ativarFerramenta('rotacao')" title="تدوير 90 درجة (Pivoter)">
+                <i class="fa-solid fa-rotate-right"></i>
+                <span>تدوير (90°)</span>
             </button>
 
-            <!-- Ligne 2 : Pivoter & Annuler -->
-            <button type="button" class="floating-tool-btn" onclick="ativarFerramenta('rotacao')" title="Pivoter à 90°">
-                <i class="fa-solid fa-rotate-right"></i>
-                <span>Pivoter</span>
-            </button>
-            <button type="button" class="floating-tool-btn" onclick="undoAcao()" title="Annuler (Ctrl+Z)">
+            <!-- Ligne 4 : Annuler & Rétablir -->
+            <button type="button" class="floating-tool-btn" onclick="undoAcao()" title="تراجع خطوة واحدة (Ctrl+Z)">
                 <i class="fa-solid fa-rotate-left"></i>
-                <span>Annuler</span>
+                <span>تراجع</span>
             </button>
-
-            <!-- Ligne 3 : Rétablir & Copier -->
-            <button type="button" class="floating-tool-btn" onclick="redoAcao()" title="Rétablir (Ctrl+Y)">
+            <button type="button" class="floating-tool-btn" onclick="redoAcao()" title="إعادة خطوة واحدة (Ctrl+Y)">
                 <i class="fa-solid fa-rotate-right"></i>
-                <span>Rétablir</span>
+                <span>إعادة</span>
             </button>
-            <button type="button" class="floating-tool-btn" onclick="copiarSelecaoCircuito()" title="Copier">
+
+            <!-- Ligne 5 : Copier & Coller -->
+            <button type="button" class="floating-tool-btn" onclick="copiarSelecaoCircuito()" title="نسخ (Copier)">
                 <i class="fa-solid fa-copy"></i>
-                <span>Copier</span>
+                <span>نسخ</span>
             </button>
-
-            <!-- Ligne 4 : Coller & Info -->
-            <button type="button" class="floating-tool-btn" onclick="colarSelecaoCircuito()" title="Coller">
+            <button type="button" class="floating-tool-btn" onclick="colarSelecaoCircuito()" title="لصق (Coller)">
                 <i class="fa-solid fa-paste"></i>
-                <span>Coller</span>
-            </button>
-            <button type="button" class="floating-tool-btn" onclick="ativarFerramenta('info')" title="Informations">
-                <i class="fa-solid fa-circle-info"></i>
-                <span>Info</span>
+                <span>لصق</span>
             </button>
 
-            <!-- Ligne 5 : Modifier & Déplacer feuille -->
-            <button type="button" class="floating-tool-btn" onclick="openSelectedComponentEditMobile()" title="Modifier repère (KM1, etc.)">
+            <!-- Ligne 6 : Modifier repère & Déplacer feuille -->
+            <button type="button" class="floating-tool-btn" onclick="openSelectedComponentEditMobile()" title="تعديل المرجع (Modifier repère)">
                 <i class="fa-solid fa-pen-to-square"></i>
-                <span>Modifier</span>
+                <span>تعديل</span>
             </button>
-            <button type="button" class="floating-tool-btn" onclick="ativarFerramenta('pan')" title="Déplacer feuille">
+            <button type="button" class="floating-tool-btn" onclick="ativarFerramenta('pan')" title="تحريك مساحة العمل (Déplacer)">
                 <i class="fa-solid fa-hand"></i>
-                <span>Déplacer</span>
+                <span>تحريك</span>
             </button>
         </div>
     </div>
@@ -1280,6 +1273,27 @@ dialog#pv-learning-notice,#pv-learning-notice{
     window.closeFloatingWireColorModal = closeFloatingWireColorModal;
     window.setWireColorFromFloating = setWireColorFromFloating;
     window.cycleFloatingWireThickness = cycleFloatingWireThickness;
+
+    // Synchronisation robuste du bouton lecture flottant
+    setInterval(function syncFloatingPlayState() {
+        const isRunning = !!(window.simulando || (typeof simulando !== 'undefined' ? simulando : false));
+        const floatingBtn = document.getElementById('floating-btn-play');
+        if (!floatingBtn) return;
+        const hasRunningClass = floatingBtn.classList.contains('is-running');
+        if (isRunning && !hasRunningClass) {
+            floatingBtn.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;gap:6px;width:100%;"><i class="fa-solid fa-stop" style="font-size:13px;"></i><span id="floating-play-text" style="font-size:11px;font-weight:700;">إيقاف</span></div>';
+            floatingBtn.classList.add('is-running');
+            floatingBtn.style.setProperty('background', '#dc2626', 'important');
+            floatingBtn.style.setProperty('border-color', '#ef4444', 'important');
+            floatingBtn.title = "إيقاف المحاكاة (Arrêter)";
+        } else if (!isRunning && hasRunningClass) {
+            floatingBtn.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;gap:6px;width:100%;"><i class="fa-solid fa-play" style="font-size:13px;"></i><span id="floating-play-text" style="font-size:11px;font-weight:700;">تشغيل</span></div>';
+            floatingBtn.classList.remove('is-running');
+            floatingBtn.style.setProperty('background', '#16a34a', 'important');
+            floatingBtn.style.setProperty('border-color', '#22c55e', 'important');
+            floatingBtn.title = "تشغيل المحاكاة (Lancer)";
+        }
+    }, 200);
     </script>
 
 </body>

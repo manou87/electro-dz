@@ -108,13 +108,35 @@ window.getSimulationActiveComponents = getSimulationActiveComponents;
 // =====================================================
 // TOGGLE SIMULAÃƒÆ’Ã¢â‚¬Â¡ÃƒÆ’Ã†â€™O
 // =====================================================
+function updateFloatingPlayButtonUI(isRunning) {
+    const floatingBtn = document.getElementById('floating-btn-play');
+    if (!floatingBtn) return;
+    if (isRunning) {
+        floatingBtn.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;gap:6px;width:100%;"><i class="fa-solid fa-stop" style="font-size:13px;"></i><span id="floating-play-text" style="font-size:11px;font-weight:700;">إيقاف</span></div>';
+        floatingBtn.classList.add('is-running');
+        floatingBtn.style.setProperty('background', '#dc2626', 'important');
+        floatingBtn.style.setProperty('border-color', '#ef4444', 'important');
+        floatingBtn.title = "إيقاف المحاكاة (Arrêter)";
+    } else {
+        floatingBtn.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;gap:6px;width:100%;"><i class="fa-solid fa-play" style="font-size:13px;"></i><span id="floating-play-text" style="font-size:11px;font-weight:700;">تشغيل</span></div>';
+        floatingBtn.classList.remove('is-running');
+        floatingBtn.style.setProperty('background', '#16a34a', 'important');
+        floatingBtn.style.setProperty('border-color', '#22c55e', 'important');
+        floatingBtn.title = "تشغيل المحاكاة (Lancer)";
+    }
+}
+window.updateFloatingPlayButtonUI = updateFloatingPlayButtonUI;
+
 function toggleSimulacao() {
     const btn = document.getElementById('btn-play');
     simulando = !simulando;
 
     if (simulando) {
-        btn.innerHTML = '<i class="fa-solid fa-stop"></i> PARAR';
-        btn.classList.add('simulando');
+        if (btn) {
+            btn.innerHTML = '<i class="fa-solid fa-stop"></i> إيقاف';
+            btn.classList.add('simulando');
+        }
+        updateFloatingPlayButtonUI(true);
         document.body.classList.add('simulando');
         pulseSimulationStartHints(2000);
         if (typeof window.clearComponentSelection === 'function') window.clearComponentSelection();
@@ -149,8 +171,11 @@ function toggleSimulacao() {
         if (typeof window.refreshAllComponentCursors === 'function') window.refreshAllComponentCursors();
         if (typeof window.updateSimulationInteractionLockUi === 'function') window.updateSimulationInteractionLockUi();
     } else {
-        btn.innerHTML = '<i class="fa-solid fa-play"></i> SIMULAR';
-        btn.classList.remove('simulando');
+        if (btn) {
+            btn.innerHTML = '<i class="fa-solid fa-play"></i> تشغيل';
+            btn.classList.remove('simulando');
+        }
+        updateFloatingPlayButtonUI(false);
         document.body.classList.remove('simulando');
         setSimulationStartHintsVisible(false);
         if (typeof window.hideMouseGuides === 'function') window.hideMouseGuides();
