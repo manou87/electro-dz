@@ -179,7 +179,7 @@ dialog#pv-learning-notice,#pv-learning-notice{
             <button id="btn-commands-tools-toggle" onclick="toggleSidebarPanel('tools')" title="Abrir painel de ferramentas"><i class="fa-solid fa-screwdriver-wrench"></i></button>
             <span class="logo">SimuDz <small>Comandos v1.0</small></span>
             
-            <!-- Boutons Sauvegarder (.dz) et Ouvrir (.dz) sur la même ligne que la langue -->
+            <!-- Boutons Sauvegarder (.dz), Ouvrir (.dz) et Multimètre sur la même ligne que la langue -->
             <div class="top-dz-file-actions" style="display:inline-flex;align-items:center;gap:4px;margin:0 4px;">
                 <button type="button" class="btn-top-dz btn-top-dz-save" onclick="salvarProjeto()" title="حفظ العمل كملف .dz (Sauvegarder le projet .dz)">
                     <i class="fa-solid fa-floppy-disk"></i>
@@ -188,6 +188,10 @@ dialog#pv-learning-notice,#pv-learning-notice{
                 <button type="button" class="btn-top-dz btn-top-dz-open" onclick="document.getElementById('file-input').click()" title="فتح ملف .dz (Ouvrir / Charger un fichier .dz)">
                     <i class="fa-solid fa-folder-open"></i>
                     <span>فتح .dz</span>
+                </button>
+                <button type="button" class="btn-top-dz btn-top-dz-multimeter" onclick="if(typeof toggleMultimetro === 'function') toggleMultimetro();" title="المتر المتعدد / الملتيميتر (Multimètre de mesure)">
+                    <i class="fa-solid fa-gauge-high"></i>
+                    <span>الملتيميتر</span>
                 </button>
             </div>
         </div>

@@ -600,3 +600,17 @@
         font-size: 10px !important;
     }
 }
+
+.btn-top-dz-multimeter {
+    background: #eab308 !important;
+    border-color: #facc15 !important;
+    color: #1e293b !important;
+    font-weight: 800 !important;
+}
+.btn-top-dz-multimeter:hover {
+    background: #ca8a04 !important;
+    color: #fff !important;
+}
+#multimeter-fab {
+    display: none !important; /* On utilise notre bouton propre dans la barre du haut */
+}

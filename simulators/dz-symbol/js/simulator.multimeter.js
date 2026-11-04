@@ -209,10 +209,7 @@
     }
 
     function is2DActive() {
-        if (typeof window.is2DWorkspaceActive === 'function') return !!window.is2DWorkspaceActive();
-        const datasetMode = String(document.documentElement?.dataset?.workspaceMode || '').trim();
-        if (datasetMode) return datasetMode === '2d';
-        return String(window.activeWorkspaceMode || 'simbologia') === '2d';
+        return true;
     }
 
     function isEngineeringModeActive() {
@@ -256,8 +253,7 @@
     }
 
     function getWorkbench2D() {
-        return document.querySelector('.mode-workspace[data-mode="2d"] .mode-bancada')
-            || document.querySelector('.mode-workspace[data-mode="2d"] .workbench');
+        return document.getElementById('bancada') || document.querySelector('.workbench');
     }
 
     function injectStyles() {
@@ -1553,7 +1549,14 @@ body.engineering-mode #multimeter-scene .multimeter-scale-hit {
     }
 
     function exposeMultimeterApi() {
-        window.RESIDENCIAL_MULTIMETRO = {
+        window.toggleMultimetro = function() {
+        if (!state.mounted) ensureMounted();
+        placeDefaultLayout();
+        state.visible = !state.visible;
+        render();
+        return state.visible;
+    };
+    window.RESIDENCIAL_MULTIMETRO = {
             getMode: () => state.mode,
             isVisible: () => !!state.visible,
             getProbeTipPoint: (color) => ({ ...getProbeTipPoint(color) }),
