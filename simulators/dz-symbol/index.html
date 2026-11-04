@@ -1068,71 +1068,74 @@ dialog#pv-learning-notice,#pv-learning-notice{
 
     <!-- Script de déplacement fluide (Drag & Drop tactile et souris) de la barre d'outils -->
     <script>
-    (function initFloatingToolsDrag() {
-        const el = document.getElementById('floating-user-tools');
-        const handle = document.getElementById('floating-tools-drag-handle') || el;
-        if (!el || !handle) return;
+    (function setupDraggableFloatingPalette() {
+        const palette = document.getElementById('floating-user-tools');
+        const handle = document.getElementById('floating-tools-drag-handle');
+        if (!palette || !handle) return;
 
-        let isDragging = false;
-        let startX = 0, startY = 0;
-        let initialLeft = 0, initialTop = 0;
+        // Position initiale par défaut
+        palette.style.top = '140px';
+        palette.style.left = 'calc(100vw - 140px)';
+        palette.style.right = 'auto';
+        palette.style.bottom = 'auto';
 
-        function onStart(e) {
-            // Uniquement clic gauche ou touch
-            if (e.type === 'mousedown' && e.button !== 0) return;
-            const touch = e.touches ? e.touches[0] : e;
-            isDragging = true;
-            startX = touch.clientX;
-            startY = touch.clientY;
+        let isDown = false;
+        let startClientX = 0;
+        let startClientY = 0;
+        let startElemX = 0;
+        let startElemY = 0;
 
-            const rect = el.getBoundingClientRect();
-            initialLeft = rect.left;
-            initialTop = rect.top;
+        function onPointerDown(e) {
+            // Clic gauche ou toucher uniquement
+            if (e.pointerType === 'mouse' && e.button !== 0) return;
+            isDown = true;
+            startClientX = e.clientX;
+            startClientY = e.clientY;
 
-            // Fixer les coordonnées absolues pour détacher du 'right' / 'bottom'
-            el.style.right = 'auto';
-            el.style.bottom = 'auto';
-            el.style.left = initialLeft + 'px';
-            el.style.top = initialTop + 'px';
+            const rect = palette.getBoundingClientRect();
+            startElemX = rect.left;
+            startElemY = rect.top;
 
-            document.addEventListener('mousemove', onMove, { passive: false });
-            document.addEventListener('mouseup', onEnd);
-            document.addEventListener('touchmove', onMove, { passive: false });
-            document.addEventListener('touchend', onEnd);
+            palette.style.left = startElemX + 'px';
+            palette.style.top = startElemY + 'px';
+            palette.style.right = 'auto';
+            palette.style.bottom = 'auto';
+
+            try { handle.setPointerCapture(e.pointerId); } catch (_) {}
             e.preventDefault();
+            e.stopPropagation();
         }
 
-        function onMove(e) {
-            if (!isDragging) return;
-            const touch = e.touches ? e.touches[0] : e;
-            const dx = touch.clientX - startX;
-            const dy = touch.clientY - startY;
+        function onPointerMove(e) {
+            if (!isDown) return;
+            const dx = e.clientX - startClientX;
+            const dy = e.clientY - startClientY;
 
-            let newLeft = initialLeft + dx;
-            let newTop = initialTop + dy;
+            let nx = startElemX + dx;
+            let ny = startElemY + dy;
 
-            // Limiter aux bordures de l'écran
-            const maxLeft = window.innerWidth - el.offsetWidth - 5;
-            const maxTop = window.innerHeight - el.offsetHeight - 5;
+            // Restreindre dans les limites visibles de l'écran
+            const maxW = window.innerWidth - palette.offsetWidth - 8;
+            const maxH = window.innerHeight - palette.offsetHeight - 8;
+            nx = Math.max(8, Math.min(nx, maxW));
+            ny = Math.max(8, Math.min(ny, maxH));
 
-            newLeft = Math.max(5, Math.min(newLeft, maxLeft));
-            newTop = Math.max(5, Math.min(newTop, maxTop));
-
-            el.style.left = newLeft + 'px';
-            el.style.top = newTop + 'px';
+            palette.style.left = nx + 'px';
+            palette.style.top = ny + 'px';
             e.preventDefault();
+            e.stopPropagation();
         }
 
-        function onEnd() {
-            isDragging = false;
-            document.removeEventListener('mousemove', onMove);
-            document.removeEventListener('mouseup', onEnd);
-            document.removeEventListener('touchmove', onMove);
-            document.removeEventListener('touchend', onEnd);
+        function onPointerUp(e) {
+            if (!isDown) return;
+            isDown = false;
+            try { handle.releasePointerCapture(e.pointerId); } catch (_) {}
         }
 
-        handle.addEventListener('mousedown', onStart);
-        handle.addEventListener('touchstart', onStart, { passive: false });
+        handle.addEventListener('pointerdown', onPointerDown);
+        handle.addEventListener('pointermove', onPointerMove);
+        handle.addEventListener('pointerup', onPointerUp);
+        handle.addEventListener('pointercancel', onPointerUp);
     })();
     </script>
 

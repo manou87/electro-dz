@@ -351,113 +351,6 @@
     border-color: #f87171 !important;
 }
 
-/* =========================================================================
-   PALETTE FLOTTANTE D'OUTILS (EXACTEMENT LES BOUTONS DE LA PHOTO)
-   TOUJOURS ACCESSIBLE SOUS LES DOIGTS SANS BOUGER L'ÉCRAN
-   ========================================================================= */
-
-#floating-user-tools {
-    position: fixed !important;
-    right: 18px !important;
-    bottom: 24px !important;
-    background: rgba(30, 41, 59, 0.96) !important;
-    backdrop-filter: blur(12px) !important;
-    border: 1px solid #3b4d6b !important;
-    border-radius: 12px !important;
-    padding: 8px !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
-    z-index: 1200 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 6px !important;
-    user-select: none !important;
-}
-
-.floating-tools-header {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    padding: 2px 6px 6px 6px !important;
-    border-bottom: 1px solid #334155 !important;
-    font-size: 11px !important;
-    font-weight: 700 !important;
-    color: #94a3b8 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
-}
-
-.floating-tools-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, 72px) !important;
-    gap: 6px !important;
-}
-
-.floating-tool-btn {
-    background: #1e293b !important;
-    border: 1px solid #334155 !important;
-    color: #f1f5f9 !important;
-    height: 54px !important;
-    border-radius: 8px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 4px !important;
-    cursor: pointer !important;
-    transition: all 0.15s ease !important;
-}
-
-.floating-tool-btn:hover {
-    background: #2563eb !important;
-    border-color: #60a5fa !important;
-    color: #fff !important;
-    transform: translateY(-1px) !important;
-}
-
-.floating-tool-btn:active {
-    transform: scale(0.95) !important;
-}
-
-.floating-tool-btn.active {
-    background: #2563eb !important;
-    border-color: #60a5fa !important;
-    box-shadow: 0 0 10px rgba(37, 99, 235, 0.5) !important;
-}
-
-.floating-tool-btn i {
-    font-size: 16px !important;
-}
-
-.floating-tool-btn span {
-    font-size: 10px !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.3px !important;
-}
-
-.floating-tool-btn.btn-danger {
-    color: #f87171 !important;
-}
-
-.floating-tool-btn.btn-danger:hover {
-    background: #dc2626 !important;
-    color: #fff !important;
-    border-color: #ef4444 !important;
-}
-
-/* Sur mobile / petit écran : boutons plus tactiles et rétractables */
-@media (max-width: 768px) {
-    #floating-user-tools {
-        right: 12px !important;
-        bottom: 70px !important;
-    }
-    .floating-tools-grid {
-        grid-template-columns: repeat(2, 64px) !important;
-    }
-    .floating-tool-btn {
-        height: 48px !important;
-    }
-}
-
 /* Désactiver le volet d'outils secondaire qui fait flotter la colonne noire */
 #sidebar-tools-panel,
 .sidebar-panel-tools,
@@ -472,16 +365,17 @@
     gap: 6px !important;
 }
 
-/* =========================================================================
-   PALETTE FLOTTANTE D'OUTILS DÉPLAÇABLE (DRAGGABLE & COMPACTE)
-   ========================================================================= */
 
+/* =========================================================================
+   PALETTE FLOTTANTE COMPACTE & DÉPLAÇABLE (LARGEUR FIXE STRICTE)
+   ========================================================================= */
 #floating-user-tools {
     position: fixed !important;
-    right: 14px;
-    bottom: 20px;
-    background: rgba(24, 32, 47, 0.94) !important;
-    backdrop-filter: blur(10px) !important;
+    width: 122px !important;
+    max-width: 122px !important;
+    min-width: 122px !important;
+    box-sizing: border-box !important;
+    background: #18202f !important;
     border: 1px solid #3b4d6b !important;
     border-radius: 10px !important;
     padding: 6px !important;
@@ -489,39 +383,39 @@
     z-index: 1200 !important;
     display: flex !important;
     flex-direction: column !important;
-    gap: 4px !important;
+    gap: 5px !important;
     user-select: none !important;
-    touch-action: none;
+    transform: none !important;
 }
 
 .floating-tools-header {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
-    padding: 3px 6px 4px 6px !important;
-    border-bottom: 1px solid #334155 !important;
+    padding: 4px 6px !important;
+    background: #243048 !important;
+    border-radius: 6px !important;
     font-size: 10px !important;
     font-weight: 700 !important;
     color: #94a3b8 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
-    cursor: grab !important;
-}
-
-.floating-tools-header:active {
-    cursor: grabbing !important;
+    cursor: move !important;
+    touch-action: none !important;
 }
 
 .floating-tools-grid {
     display: grid !important;
-    grid-template-columns: repeat(2, 54px) !important;
+    grid-template-columns: repeat(2, 52px) !important;
     gap: 4px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    direction: ltr !important; /* garde la grille de 2 colonnes alignée */
 }
 
 .floating-tool-btn {
     background: #1e293b !important;
     border: 1px solid #334155 !important;
     color: #f1f5f9 !important;
+    width: 52px !important;
     height: 42px !important;
     border-radius: 6px !important;
     display: flex !important;
@@ -530,15 +424,14 @@
     justify-content: center !important;
     gap: 2px !important;
     cursor: pointer !important;
-    transition: all 0.15s ease !important;
-    padding: 2px !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
 }
 
 .floating-tool-btn:hover {
     background: #2563eb !important;
     border-color: #60a5fa !important;
     color: #fff !important;
-    transform: translateY(-1px) !important;
 }
 
 .floating-tool-btn:active {
@@ -548,7 +441,6 @@
 .floating-tool-btn.active {
     background: #2563eb !important;
     border-color: #60a5fa !important;
-    box-shadow: 0 0 8px rgba(37, 99, 235, 0.5) !important;
 }
 
 .floating-tool-btn i {
@@ -558,36 +450,13 @@
 .floating-tool-btn span {
     font-size: 9px !important;
     font-weight: 600 !important;
-    letter-spacing: 0.2px !important;
     line-height: 1 !important;
 }
 
 .floating-tool-btn.btn-danger {
     color: #f87171 !important;
 }
-
 .floating-tool-btn.btn-danger:hover {
     background: #dc2626 !important;
     color: #fff !important;
-    border-color: #ef4444 !important;
-}
-
-@media (max-width: 768px) {
-    #floating-user-tools {
-        right: 10px;
-        bottom: 60px;
-    }
-    .floating-tools-grid {
-        grid-template-columns: repeat(2, 50px) !important;
-        gap: 3px !important;
-    }
-    .floating-tool-btn {
-        height: 38px !important;
-    }
-    .floating-tool-btn i {
-        font-size: 12px !important;
-    }
-    .floating-tool-btn span {
-        font-size: 8.5px !important;
-    }
 }
