@@ -1008,9 +1008,9 @@ dialog#pv-learning-notice,#pv-learning-notice{
 
     <!-- Palette d'outils flottante exacte de la photo, directement sous la main -->
     <div id="floating-user-tools">
-        <div class="floating-tools-header">
-            <span>Outils</span>
-            <i class="fa-solid fa-hand-pointer" style="font-size:12px;color:#38bdf8;"></i>
+        <div id="floating-tools-drag-handle" class="floating-tools-header" title="Déplacer la barre (glisser-déposer)">
+            <span><i class="fa-solid fa-grip-vertical" style="margin-right:4px;opacity:0.7;"></i> Outils</span>
+            <i class="fa-solid fa-up-down-left-right" style="font-size:11px;color:#38bdf8;"></i>
         </div>
         <div class="floating-tools-grid">
             <!-- Ligne 1 : Sélection & Supprimer -->
@@ -1064,6 +1064,77 @@ dialog#pv-learning-notice,#pv-learning-notice{
             </button>
         </div>
     </div>
+
+
+    <!-- Script de déplacement fluide (Drag & Drop tactile et souris) de la barre d'outils -->
+    <script>
+    (function initFloatingToolsDrag() {
+        const el = document.getElementById('floating-user-tools');
+        const handle = document.getElementById('floating-tools-drag-handle') || el;
+        if (!el || !handle) return;
+
+        let isDragging = false;
+        let startX = 0, startY = 0;
+        let initialLeft = 0, initialTop = 0;
+
+        function onStart(e) {
+            // Uniquement clic gauche ou touch
+            if (e.type === 'mousedown' && e.button !== 0) return;
+            const touch = e.touches ? e.touches[0] : e;
+            isDragging = true;
+            startX = touch.clientX;
+            startY = touch.clientY;
+
+            const rect = el.getBoundingClientRect();
+            initialLeft = rect.left;
+            initialTop = rect.top;
+
+            // Fixer les coordonnées absolues pour détacher du 'right' / 'bottom'
+            el.style.right = 'auto';
+            el.style.bottom = 'auto';
+            el.style.left = initialLeft + 'px';
+            el.style.top = initialTop + 'px';
+
+            document.addEventListener('mousemove', onMove, { passive: false });
+            document.addEventListener('mouseup', onEnd);
+            document.addEventListener('touchmove', onMove, { passive: false });
+            document.addEventListener('touchend', onEnd);
+            e.preventDefault();
+        }
+
+        function onMove(e) {
+            if (!isDragging) return;
+            const touch = e.touches ? e.touches[0] : e;
+            const dx = touch.clientX - startX;
+            const dy = touch.clientY - startY;
+
+            let newLeft = initialLeft + dx;
+            let newTop = initialTop + dy;
+
+            // Limiter aux bordures de l'écran
+            const maxLeft = window.innerWidth - el.offsetWidth - 5;
+            const maxTop = window.innerHeight - el.offsetHeight - 5;
+
+            newLeft = Math.max(5, Math.min(newLeft, maxLeft));
+            newTop = Math.max(5, Math.min(newTop, maxTop));
+
+            el.style.left = newLeft + 'px';
+            el.style.top = newTop + 'px';
+            e.preventDefault();
+        }
+
+        function onEnd() {
+            isDragging = false;
+            document.removeEventListener('mousemove', onMove);
+            document.removeEventListener('mouseup', onEnd);
+            document.removeEventListener('touchmove', onMove);
+            document.removeEventListener('touchend', onEnd);
+        }
+
+        handle.addEventListener('mousedown', onStart);
+        handle.addEventListener('touchstart', onStart, { passive: false });
+    })();
+    </script>
 
 </body>
 </html>

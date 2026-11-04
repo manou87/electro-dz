@@ -471,3 +471,123 @@
     align-items: center !important;
     gap: 6px !important;
 }
+
+/* =========================================================================
+   PALETTE FLOTTANTE D'OUTILS DÉPLAÇABLE (DRAGGABLE & COMPACTE)
+   ========================================================================= */
+
+#floating-user-tools {
+    position: fixed !important;
+    right: 14px;
+    bottom: 20px;
+    background: rgba(24, 32, 47, 0.94) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid #3b4d6b !important;
+    border-radius: 10px !important;
+    padding: 6px !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
+    z-index: 1200 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    user-select: none !important;
+    touch-action: none;
+}
+
+.floating-tools-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 3px 6px 4px 6px !important;
+    border-bottom: 1px solid #334155 !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    color: #94a3b8 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    cursor: grab !important;
+}
+
+.floating-tools-header:active {
+    cursor: grabbing !important;
+}
+
+.floating-tools-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 54px) !important;
+    gap: 4px !important;
+}
+
+.floating-tool-btn {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    color: #f1f5f9 !important;
+    height: 42px !important;
+    border-radius: 6px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2px !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+    padding: 2px !important;
+}
+
+.floating-tool-btn:hover {
+    background: #2563eb !important;
+    border-color: #60a5fa !important;
+    color: #fff !important;
+    transform: translateY(-1px) !important;
+}
+
+.floating-tool-btn:active {
+    transform: scale(0.95) !important;
+}
+
+.floating-tool-btn.active {
+    background: #2563eb !important;
+    border-color: #60a5fa !important;
+    box-shadow: 0 0 8px rgba(37, 99, 235, 0.5) !important;
+}
+
+.floating-tool-btn i {
+    font-size: 13px !important;
+}
+
+.floating-tool-btn span {
+    font-size: 9px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.2px !important;
+    line-height: 1 !important;
+}
+
+.floating-tool-btn.btn-danger {
+    color: #f87171 !important;
+}
+
+.floating-tool-btn.btn-danger:hover {
+    background: #dc2626 !important;
+    color: #fff !important;
+    border-color: #ef4444 !important;
+}
+
+@media (max-width: 768px) {
+    #floating-user-tools {
+        right: 10px;
+        bottom: 60px;
+    }
+    .floating-tools-grid {
+        grid-template-columns: repeat(2, 50px) !important;
+        gap: 3px !important;
+    }
+    .floating-tool-btn {
+        height: 38px !important;
+    }
+    .floating-tool-btn i {
+        font-size: 12px !important;
+    }
+    .floating-tool-btn span {
+        font-size: 8.5px !important;
+    }
+}
