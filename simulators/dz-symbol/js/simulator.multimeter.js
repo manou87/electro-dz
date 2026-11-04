@@ -990,8 +990,7 @@ body.engineering-mode #multimeter-scene .multimeter-scale-hit {
     }
 
     function normalizeFontePhaseVoltage(value) {
-        const normalized = String(value || '').trim();
-        return ['127', '220', '254'].includes(normalized) ? normalized : '127';
+        return '230';
     }
 
     function getFonteTrifasicaConfiguredPhaseVoltage(phaseInfo, neutralInfo) {
@@ -1031,7 +1030,7 @@ body.engineering-mode #multimeter-scene .multimeter-scale-hit {
             return sourceVoltage;
         }
 
-        return '127';
+        return '230';
     }
 
     function getSsw05AnalogOutputVoltageText(redInfo, blackInfo) {
@@ -1115,12 +1114,7 @@ body.engineering-mode #multimeter-scene .multimeter-scale-hit {
             return `${getFonteTrifasicaConfiguredPhaseVoltage(phaseInfo, neutralInfo)}V`;
         }
         if (red.hasPhase && black.hasPhase) {
-            const lineVoltage = (() => {
-                const phaseVoltage = getFonteTrifasicaConfiguredPhaseVoltage(red, black);
-                if (phaseVoltage === '254') return '440V';
-                if (phaseVoltage === '220') return '380V';
-                return '220V';
-            })();
+            const lineVoltage = '400V';
             if (red.phaseIds.size && black.phaseIds.size) {
                 return setsIntersect(red.phaseIds, black.phaseIds) ? '0V' : lineVoltage;
             }
