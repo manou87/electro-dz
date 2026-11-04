@@ -643,3 +643,15 @@
     visibility: visible !important;
     opacity: 1 !important;
 }
+
+/* Rendre le bouton rotatif du multimetre cliquable et net */
+#multimeter-scene .multimeter-selector {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    z-index: 10 !important;
+}
+#multimeter-scene .multimeter-scale-hit {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    z-index: 12 !important;
+}

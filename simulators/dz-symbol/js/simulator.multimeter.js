@@ -329,11 +329,10 @@
     position: absolute;
     width: 49.8%;
     transform-origin: 50% 50%;
-    cursor: default;
+    cursor: pointer;
     transition: transform 180ms ease;
-    z-index: 5;
-
-    pointer-events: none;
+    z-index: 10;
+    pointer-events: auto;
 }
 #multimeter-scene .multimeter-probe {
     width: 36px;
@@ -790,15 +789,27 @@ body.engineering-mode #multimeter-scene .multimeter-scale-hit {
         }
 
                 refs.hits.forEach(hit => {
-            const modeKey = hit.dataset.mode || 'off';
+            const modeKey = hit.dataset.mode || off;
             const handleModeEvent = event => activateModeHit(modeKey, event);
-            hit.style.pointerEvents = 'auto';
-            hit.style.touchAction = 'manipulation';
+            hit.style.pointerEvents = auto;
+            hit.style.touchAction = manipulation;
             hit.onpointerdown = handleModeEvent;
             hit.onmousedown = handleModeEvent;
             hit.ontouchstart = handleModeEvent;
             hit.onclick = handleModeEvent;
         });
+
+        // Clic direct sur le bouton rotatif ou le multimètre pour basculer facilement : OFF -> Volt (AC/DC) -> Continuité
+        if (refs?.selector) {
+            refs.selector.addEventListener("click", event => {
+                event.preventDefault();
+                event.stopPropagation();
+                const modes = ["off", "volt", "cont"];
+                const curIdx = modes.indexOf(state.mode);
+                const nextMode = modes[(curIdx + 1) % modes.length];
+                setMode(nextMode);
+            });
+        }
 
         bindDrag(refs.meter, 'meter');
         bindDrag(refs.probeRed, 'probe-red');
@@ -955,10 +966,13 @@ body.engineering-mode #multimeter-scene .multimeter-scale-hit {
         const componentLib = normalizePotentialToken(target?.componentLib).toLowerCase();
         const hasPhase = tokens.includes('FASE') || phaseIds.size > 0 || potential === 'FASE';
         const hasNeutral = tokens.includes('NEUTRO') || potential === 'NEUTRO';
-        const dcVoltage = tokens.includes('12V') ? 12 :
-            (tokens.includes('24V') || (componentLib === 'real_fonte_24v' && pin === '24V') ? 24 : 0);
-        const isDcPlus = dcVoltage > 0;
-        const isDcMinus = tokens.includes('0V') || (componentLib === 'real_fonte_24v' && pin === '0V');
+        const isIecAcDc = componentLib === "iec_fonte_ac_dc" || componentLib.includes("fonte_ac_dc");
+        const is24VPin = pin === "24V" || pin === "+24V" || pin === "+" || pin === "V+";
+        const is0VPin = pin === "0V" || pin === "GND" || pin === "-" || pin === "V-";
+        const dcVoltage = tokens.includes("12V") ? 12 :
+            (tokens.includes("24V") || ((componentLib === "real_fonte_24v" || isIecAcDc) && is24VPin) ? 24 : 0);
+        const isDcPlus = dcVoltage > 0 || (isIecAcDc && is24VPin);
+        const isDcMinus = tokens.includes("0V") || ((componentLib === "real_fonte_24v" || isIecAcDc) && is0VPin);
         const signature = `${tokens.slice().sort().join('|')}::${potential}::${pin}::${componentLib}`;
         return {
             hasContact: !!target,
