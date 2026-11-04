@@ -468,7 +468,7 @@
 
 
 /* =========================================================================
-   MENU DES LANGUES : VISIBILITÉ ET Z-INDEX PRIORITAIRES (ADAPTÉ MOBILE & PC)
+   MENU DES LANGUES : VISIBILITÉ ET ALIGNEMENT PARFAIT SOUS LE DRAPEAU
    ========================================================================= */
 .top-bar {
     overflow: visible !important;
@@ -480,35 +480,33 @@
 
 .language-selector {
     position: relative !important;
-    z-index: 9999 !important;
+    z-index: 99999 !important;
 }
 
 .language-options {
     position: absolute !important;
-    top: calc(100% + 8px) !important;
-    left: 0 !important;
-    right: auto !important;
+    top: calc(100% + 6px) !important;
+    right: 0 !important; /* Aligné sur le bord droit du bouton drapeau */
+    left: auto !important;
     background: #1e293b !important;
     border: 2px solid #3b82f6 !important;
     border-radius: 10px !important;
     padding: 6px !important;
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7) !important;
-    z-index: 999999 !important;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.75) !important;
+    z-index: 9999999 !important;
     min-width: 175px !important;
-    max-width: 90vw !important;
     box-sizing: border-box !important;
 }
 
-/* Sur mobile : s'assurer que le menu ne déborde ni à gauche ni à droite de l'écran */
 @media (max-width: 768px) {
     .top-bar {
         overflow-x: visible !important;
     }
     .language-options {
-        left: 4px !important;
-        right: auto !important;
-        min-width: 165px !important;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8) !important;
+        right: 0 !important;
+        left: auto !important;
+        min-width: 160px !important;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.85) !important;
     }
 }
 
