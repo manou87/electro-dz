@@ -165,7 +165,8 @@
     .top-bar {
         height: 48px !important;
         padding: 0 8px !important;
-        overflow-x: auto !important;
+        overflow: visible !important;
+        overflow-x: visible !important;
         -webkit-overflow-scrolling: touch !important;
     }
 
@@ -467,7 +468,7 @@
 
 
 /* =========================================================================
-   MENU DES LANGUES : VISIBILITÉ ET Z-INDEX PRIORITAIRES
+   MENU DES LANGUES : VISIBILITÉ ET Z-INDEX PRIORITAIRES (ADAPTÉ MOBILE & PC)
    ========================================================================= */
 .top-bar {
     overflow: visible !important;
@@ -484,16 +485,31 @@
 
 .language-options {
     position: absolute !important;
-    top: calc(100% + 6px) !important;
+    top: calc(100% + 8px) !important;
     left: 0 !important;
     right: auto !important;
     background: #1e293b !important;
-    border: 1px solid #3b82f6 !important;
-    border-radius: 8px !important;
+    border: 2px solid #3b82f6 !important;
+    border-radius: 10px !important;
     padding: 6px !important;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6) !important;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7) !important;
     z-index: 999999 !important;
-    min-width: 170px !important;
+    min-width: 175px !important;
+    max-width: 90vw !important;
+    box-sizing: border-box !important;
+}
+
+/* Sur mobile : s'assurer que le menu ne déborde ni à gauche ni à droite de l'écran */
+@media (max-width: 768px) {
+    .top-bar {
+        overflow-x: visible !important;
+    }
+    .language-options {
+        left: 4px !important;
+        right: auto !important;
+        min-width: 165px !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8) !important;
+    }
 }
 
 .language-selector.is-open .language-options {
