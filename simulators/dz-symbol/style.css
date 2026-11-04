@@ -6146,8 +6146,8 @@ body.simulando .real-botoeira-frontal-toggle {
     }
 
     .language-options {
-        left: 0;
-        right: auto;
+        right: 0 !important;
+        left: auto !important;
     }
 }
 .top-bar .language-toggle-btn,

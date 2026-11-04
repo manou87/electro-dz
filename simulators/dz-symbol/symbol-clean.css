@@ -663,21 +663,51 @@
     z-index: 12 !important;
 }
 
-/* Poignée dans le coin pour redimensionner la palette en glissant */
+/* Poignée dans le coin pour redimensionner la palette en glissant (Tactile facile & visible) */
 #floating-tools-resize-handle {
     position: absolute !important;
-    right: 2px !important;
-    bottom: 2px !important;
-    width: 16px !important;
-    height: 16px !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 28px !important;
+    height: 28px !important;
     cursor: nwse-resize !important;
     touch-action: none !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    z-index: 50 !important;
+    z-index: 60 !important;
     user-select: none !important;
+    background: rgba(56, 189, 248, 0.12) !important;
+    border-radius: 8px 0 8px 0 !important;
 }
 #floating-tools-resize-handle:hover svg {
     opacity: 1 !important;
+}
+
+/* Multimètre adapté écran tactile mobile */
+#multimeter-scene .multimeter-device {
+    cursor: move !important;
+    touch-action: none !important;
+}
+#multimeter-scene .multimeter-probe {
+    touch-action: none !important;
+    cursor: grab !important;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.45));
+}
+#multimeter-scene .multimeter-probe:active {
+    cursor: grabbing !important;
+}
+#multimeter-scene .multimeter-tip-collider {
+    width: 32px !important;
+    height: 32px !important;
+    pointer-events: none !important;
+}
+@media (max-width: 768px) {
+    #multimeter-scene .multimeter-probe {
+        width: 48px !important;
+        height: 160px !important;
+    }
+    #multimeter-scene .multimeter-probe[data-probe=red] {
+        width: 52px !important;
+    }
 }

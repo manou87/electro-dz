@@ -1418,7 +1418,7 @@ body.engineering-mode #multimeter-scene .multimeter-scale-hit {
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
             const distance = Math.hypot(centerX - clientX, centerY - clientY);
-            const limit = Math.max(radius, Math.max(rect.width, rect.height) * 1.4, 24);
+            const limit = Math.max(radius, Math.max(rect.width, rect.height) * 2.2, 42); // Plus tolérant sur tactile
             if (distance > limit) return;
             const comp = terminal.closest('.component[data-lib="real_sensor_indutivo"], .component[data-lib="real_sensor_capacitivo"]');
             const pin = terminal.dataset.pin || '';
