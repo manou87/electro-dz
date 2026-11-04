@@ -189,7 +189,7 @@ dialog#pv-learning-notice,#pv-learning-notice{
     <div class="top-bar">
         <div class="control-group">
             <button id="btn-sidebar-toggle" onclick="toggleSidebarPanel('menu')" title="Abrir menu de componentes"><i class="fa-solid fa-bars"></i></button>
-            <button id="btn-commands-tools-toggle" onclick="toggleSidebarPanel('tools')" title="Abrir painel de ferramentas"><i class="fa-solid fa-screwdriver-wrench"></i></button>
+            <button id="btn-commands-tools-toggle" onclick="toggleSidebarPanel('tools')" title="فتح لوحة الأدوات"><i class="fa-solid fa-screwdriver-wrench"></i></button>
             <span class="logo">SimuDz <small>Comandos v1.0</small></span>
             
             <!-- Boutons Sauvegarder (.dz), Ouvrir (.dz) et Multimètre sur la même ligne que la langue -->
@@ -259,11 +259,11 @@ dialog#pv-learning-notice,#pv-learning-notice{
             <div id="sidebar-main-panel" class="sidebar-panel sidebar-panel-main">
                 <div class="sidebar-segment-title">
                     <i class="fa-solid fa-bars-staggered"></i>
-                    <span>Menu Comandos</span>
+                    <span>قائمة الأوامر</span>
                 </div>
 
                 <div class="tool-group sidebar-wire-group">
-                    <p>Fia&ccedil;&atilde;o</p>
+                    <p>الأسلاك والتوصيل</p>
                     <div id="wire-primary-tools" class="tools-grid">
                         <button id="btn-wire" onclick="ativarFerramenta('fio')" class="btn-tool" title="Ferramenta Fio"><i class="fa-solid fa-pen-nib"></i> FIO</button>
                         <button id="btn-emenda" onclick="ativarFerramenta('emenda')" class="btn-tool" title="Criar Emenda"><i class="fa-solid fa-circle-nodes"></i> EMENDA</button>
@@ -302,17 +302,17 @@ dialog#pv-learning-notice,#pv-learning-notice{
             <div id="sidebar-tools-panel" class="sidebar-panel sidebar-panel-tools">
                 <div class="sidebar-segment-title">
                     <i class="fa-solid fa-screwdriver-wrench"></i>
-                    <span>Ferramentas</span>
+                    <span>الأدوات</span>
                 </div>
                 <div class="tool-group workspace-visual-group">
                     <label class="workspace-visual-toggle" title="Aplica fundo escuro somente no workspace">
                         <input id="workspace-dark-toggle" type="checkbox" onchange="toggleWorkspaceDarkMode(this.checked)">
-                        <span>Workspace escuro</span>
+                        <span>مساحة عمل داكنة</span>
                     </label>
                 </div>
 
                 <div class="tool-group">
-                    <p>Edi&ccedil;&atilde;o</p>
+                    <p>تحرير</p>
                     <div class="tools-grid">
                         <button type="button" onclick="undoAcao()" title="Voltar (Ctrl+Z)" data-label="Desfazer"><i class="fa-solid fa-rotate-left"></i></button>
                         <button type="button" onclick="redoAcao()" title="Avan&ccedil;ar (Ctrl+Y)" data-label="Refazer"><i class="fa-solid fa-rotate-right"></i></button>
@@ -320,36 +320,36 @@ dialog#pv-learning-notice,#pv-learning-notice{
                         <button type="button" onclick="colarSelecaoCircuito()" title="Colar sele&ccedil;&atilde;o (Ctrl+V)" data-label="Colar" data-mirror-source="#btn-paste"><i class="fa-solid fa-paste"></i></button>
                         <button type="button" onclick="ativarFerramenta('info')" class="btn-tool" title="Info" data-tool="info" data-label="Info"><i class="fa-solid fa-circle-info"></i></button>
                         <button type="button" onclick="ativarFerramenta('pan')" class="btn-tool" title="Déplacer" data-tool="pan" data-label="Déplacer"><i class="fa-solid fa-hand"></i></button>
-                        <button type="button" onclick="abrirModalEdicaoDesenho()" title="Editar forma selecionada" data-label="Editar" data-mirror-source="#btn-edit-drawing"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button type="button" onclick="abrirModalEdicaoDesenho()" title="تعديل الشكل المحدد" data-label="تعديل" data-mirror-source="#btn-edit-drawing"><i class="fa-solid fa-pen-to-square"></i></button>
                     </div>
                 </div>
 
                 <div class="tool-group">
-                    <p>Desenho</p>
+                    <p>رسم</p>
                     <div class="tools-grid">
                         <button type="button" onclick="ativarFerramenta('draw-line')" class="btn-tool" title="Desenhar linha" data-tool="draw-line" data-label="Linha"><i class="fa-solid fa-minus"></i></button>
                         <button type="button" onclick="ativarFerramenta('draw-rect')" class="btn-tool" title="Desenhar ret&acirc;ngulo" data-tool="draw-rect" data-label="Ret&acirc;ngulo"><i class="fa-regular fa-square"></i></button>
                         <button type="button" onclick="ativarFerramenta('draw-circle')" class="btn-tool" title="Desenhar c&iacute;rculo" data-tool="draw-circle" data-label="C&iacute;rculo"><i class="fa-regular fa-circle"></i></button>
                         <button type="button" onclick="ativarFerramenta('draw-polygon')" class="btn-tool" title="Desenhar pol&iacute;gono" data-tool="draw-polygon" data-label="Pol&iacute;gono"><i class="fa-solid fa-draw-polygon"></i></button>
                         <button type="button" onclick="ativarFerramenta('draw-text')" class="btn-tool" title="Inserir texto" data-tool="draw-text" data-label="Texto"><i class="fa-solid fa-font"></i></button>
-                        <button type="button" onclick="descerCamadaDesenho()" title="Descer camada da forma" data-label="Descer" data-mirror-source="#btn-drawing-down"><i class="fa-solid fa-arrow-down"></i></button>
-                        <button type="button" onclick="subirCamadaDesenho()" title="Subir camada da forma" data-label="Subir" data-mirror-source="#btn-drawing-up"><i class="fa-solid fa-arrow-up"></i></button>
-                        <label id="draw-fill-tile-sidebar" class="draw-fill-tile" title="Ativar preenchimento do desenho">
+                        <button type="button" onclick="descerCamadaDesenho()" title="نقل للطبقة السفلية" data-label="للأسفل" data-mirror-source="#btn-drawing-down"><i class="fa-solid fa-arrow-down"></i></button>
+                        <button type="button" onclick="subirCamadaDesenho()" title="نقل للطبقة العلوية" data-label="للأعلى" data-mirror-source="#btn-drawing-up"><i class="fa-solid fa-arrow-up"></i></button>
+                        <label id="draw-fill-tile-sidebar" class="draw-fill-tile" title="تفعيل تعبئة الرسم">
                             <i class="fa-solid fa-fill-drip"></i>
                             <span>Fill</span>
                             <input id="draw-fill-toggle-input-sidebar" type="checkbox" onchange="setPreenchimentoDesenhoAtivo(this.checked)">
                         </label>
                     </div>
                     <div class="draw-sidebar-settings">
-                        <label class="draw-sidebar-control" title="Cor do desenho">
-                            <span>Cor do desenho</span>
+                        <label class="draw-sidebar-control" title="لون الرسم">
+                            <span>لون الرسم</span>
                             <input id="draw-color-input-sidebar" class="draw-color-input" type="color" value="#2c3e50" onchange="setCorDesenho(this.value)">
                         </label>
-                        <label class="draw-sidebar-control" title="Cor de preenchimento">
+                        <label class="draw-sidebar-control" title="لون التعبئة">
                             <span>Cor de preenchimento</span>
                             <input id="draw-fill-color-input-sidebar" class="draw-color-input" type="color" value="#74b9ff" onchange="setCorPreenchimentoDesenho(this.value)">
                         </label>
-                        <label class="draw-sidebar-control" title="Espessura do desenho">
+                        <label class="draw-sidebar-control" title="سُمك الرسم">
                             <span>Espessura</span>
                             <select id="draw-width-select-sidebar" class="draw-width-select" onchange="setEspessuraDesenho(this.value)">
                                 <option value="1">1px</option>
@@ -362,13 +362,13 @@ dialog#pv-learning-notice,#pv-learning-notice{
                 </div>
 
                 <div class="tool-group">
-                    <p>Projeto</p>
+                    <p>مشروع</p>
                     <div class="tools-grid">
-                        <button id="btn-save" onclick="salvarProjeto()" title="Salvar projeto" data-label="Salvar"><i class="fa-solid fa-save"></i></button>
-                        <button type="button" onclick="document.getElementById('file-input').click()" title="Abrir projeto" data-label="Abrir"><i class="fa-solid fa-folder-open"></i></button>
+                        <button id="btn-save" onclick="salvarProjeto()" title="حفظ المشروع (.dz)" data-label="حفظ"><i class="fa-solid fa-save"></i></button>
+                        <button type="button" onclick="document.getElementById('file-input').click()" title="فتح مشروع (.dz)" data-label="فتح"><i class="fa-solid fa-folder-open"></i></button>
                         <button id="btn-examples" onclick="abrirCatalogoCircuitosExemplo()" title="Abrir circuitos de exemplo" data-label="Exemplos"><i class="fa-solid fa-book-open"></i></button>
                         <button id="btn-save-img" onclick="exportarImagem()" title="Exportar imagem" data-label="Imagem"><i class="fa-solid fa-camera"></i></button>
-                        <button id="btn-save-pdf" onclick="exportarPdf()" title="Exportar PDF (folha ativa ou todas)" data-label="PDF"><i class="fa-solid fa-file-pdf"></i></button>
+                        <button id="btn-save-pdf" onclick="exportarPdf()" title="تصدير PDF (الصفحة الحالية أو الكل)" data-label="PDF"><i class="fa-solid fa-file-pdf"></i></button>
                         <button type="button" onclick="limparBancada()" title="Limpar Tudo" data-label="Limpar Tudo"><i class="fa-solid fa-trash"></i></button>
                     </div>
                     <input type="file" id="file-input" style="display:none" onchange="carregarProjeto(this)" accept=".dz,.json">
@@ -580,12 +580,12 @@ dialog#pv-learning-notice,#pv-learning-notice{
     <div id="sheet-config-modal" class="modal">
         <div class="modal-content sheet-config-modal-content">
             <span class="close-modal" onclick="fecharModalConfigFolha()">&times;</span>
-            <h2>Configurar Folha</h2>
+            <h2>إعداد الصفحة والإطار</h2>
             <div class="sheet-config-grid">
                 <label>Logo</label>
                 <div class="sheet-config-logo-row">
                     <div id="sheet-config-logo-preview" class="sheet-config-logo-preview">
-                        <img id="sheet-config-logo-img" alt="Logo da folha" style="display:none">
+                        <img id="sheet-config-logo-img" alt="شعار الصفحة" style="display:none">
                         <span id="sheet-config-logo-empty">Sem logo</span>
                     </div>
                     <div class="sheet-config-logo-actions">
@@ -609,13 +609,13 @@ dialog#pv-learning-notice,#pv-learning-notice{
                 <input id="sheet-config-rows" type="number" min="2" max="99" step="1">
 
                 <label for="sheet-config-title">Titulo (centro)</label>
-                <input id="sheet-config-title" type="text" maxlength="120" placeholder="Nome da folha">
+                <input id="sheet-config-title" type="text" maxlength="120" placeholder="اسم الصفحة">
 
                 <label for="sheet-config-author">Autor</label>
                 <input id="sheet-config-author" type="text" maxlength="80" placeholder="Nome do autor">
 
-                <label for="sheet-config-project">Projeto</label>
-                <input id="sheet-config-project" type="text" maxlength="120" placeholder="Nome do projeto">
+                <label for="sheet-config-project">اسم المشروع</label>
+                <input id="sheet-config-project" type="text" maxlength="120" placeholder="اسم المشروع">
 
                 <label for="sheet-config-date">Data</label>
                 <input id="sheet-config-date" type="text" maxlength="20" placeholder="dd/mm/aaaa">
@@ -663,7 +663,7 @@ dialog#pv-learning-notice,#pv-learning-notice{
             <span id="engineering-target">Selecione 1 componente</span>
         </div>
         <div class="engineering-help">
-            Edite vari&aacute;veis do s&iacute;mbolo selecionado. Para escala global da folha, clique no canto superior esquerdo da moldura.
+            تعديل متغيرات وخصائص الرمز المحدد. لضبط المقياس العام للصفحة، انقر على الزاوية العلوية اليسرى من الإطار.
         </div>
         <label class="engineering-option">
             <input id="engineering-show-bornes" type="checkbox">

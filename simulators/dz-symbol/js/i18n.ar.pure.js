@@ -147,7 +147,29 @@
         'Temporisation (s)': 'المدة الزمنية (بالثواني)',
         'Cor da lâmpada': 'لون المصباح',
         'Salvar': 'حفظ',
-        'Cancelar': 'إلغاء'
+        'Cancelar': 'إلغاء',
+        'Expandir tudo': 'فتح الكل',
+        'Recolher tudo': 'طي الكل',
+        'Menu Comandos': 'قائمة الأوامر',
+        'Ferramentas': 'الأدوات',
+        'Workspace escuro': 'مساحة عمل داكنة',
+        'Configurar Folha': 'إعداد الصفحة',
+        'Nome da folha': 'اسم الصفحة',
+        'Nome do projeto': 'اسم المشروع',
+        'Nova folha': 'صفحة جديدة',
+        'Apagar a folha ativa': 'حذف الصفحة النشطة',
+        'Espessura do desenho': 'سُمك الرسم',
+        'Cor do desenho': 'لون الرسم',
+        'Preencher': 'تعبئة',
+        'Projeto': 'مشروع',
+        'Desenho': 'رسم',
+        'Fiação': 'الأسلاك والتوصيل',
+        'Edição': 'تحرير',
+        'Espessura': 'سُمك الخط',
+        'Linhas': 'الخطوط',
+        'Traço': 'الخط',
+        'Forma': 'الشكل',
+
     };
 
     // Traduire le DOM récursivement
@@ -183,6 +205,19 @@
             }
             if (el.getAttribute('data-label') && AR_TERMS[el.getAttribute('data-label').trim()]) {
                 el.setAttribute('data-label', AR_TERMS[el.getAttribute('data-label').trim()]);
+            }
+        });
+
+        
+        // 5. Remplacement dynamique de Folha dans tous les boutons et onglets
+        document.querySelectorAll('.sheet-tab, button, span').forEach(el => {
+            if (el.childNodes.length === 1 && el.childNodes[0].nodeType === 3) {
+                const text = el.textContent;
+                if (/^\s*Folha\s*(\d+)?\s*$/i.test(text)) {
+                    el.textContent = text.replace(/Folha/i, 'الصفحة');
+                } else if (/Folha/i.test(text)) {
+                    el.textContent = text.replace(/Folha/gi, 'الصفحة');
+                }
             }
         });
 

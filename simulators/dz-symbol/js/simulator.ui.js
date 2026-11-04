@@ -4942,7 +4942,7 @@ function recarregarVarsEngenharia() {
         return;
     }
     if (engineeringSheetScaleTargetActive) {
-        targetEl.innerText = 'Folha (escala global)';
+        targetEl.innerText = 'الصفحة (المقياس العام)';
         updateEngineeringTextareaForSelected();
         updateProjectSheetFrameMeta();
         renderEngineeringPinLabelFields();
@@ -7195,7 +7195,7 @@ function sortCrossRefRecords(records = []) {
 function collectCrossReferenceRecordsForProject() {
     const activeBancada = document.getElementById('bancada');
     if (!projectSheets.length) {
-        const fallbackConfig = buildDefaultSheetPageConfig('Folha');
+        const fallbackConfig = buildDefaultSheetPageConfig('الصفحة');
         const order = 1;
         return Array.from(activeBancada?.querySelectorAll('.component') || [])
             .map(comp => buildCrossRefRecordFromLiveComponent(comp, order, fallbackConfig))
@@ -7470,7 +7470,7 @@ function createProjectSheetFrameElement() {
 
     const corner = document.createElement('div');
     corner.className = 'project-sheet-corner';
-    corner.title = 'Engenharia: ajustar escala global da folha';
+    corner.title = 'ضبط المقياس العام للصفحة';
     corner.addEventListener('click', onProjectSheetCornerClick);
     frame.appendChild(corner);
 
@@ -7502,7 +7502,7 @@ function createProjectSheetFrameElement() {
         <div class="project-sheet-footer-center"><span class="project-sheet-title-value"></span></div>
         <div class="project-sheet-footer-right">
             <div class="project-sheet-footer-row">Projeto : <span class="project-sheet-project-value"></span></div>
-            <div class="project-sheet-footer-row">Folha : <span class="project-sheet-page-value">1/1</span></div>
+            <div class="project-sheet-footer-row">الصفحة : <span class="project-sheet-page-value">1/1</span></div>
         </div>
     `;
     frame.appendChild(footer);
@@ -7534,7 +7534,7 @@ function updateProjectSheetFrameMeta() {
     const scaledWidthPx = Math.max(200, Math.round(size.widthPx * sheetScaleFactor));
     const scaledHeightPx = Math.max(160, Math.round(size.heightPx * sheetScaleFactor));
     const dateText = config.autoDate ? formatProjectSheetDate() : (config.dateText || formatProjectSheetDate());
-    const titleText = config.legendTitle || String(activeSheet?.name || '').trim() || 'Folha';
+    const titleText = config.legendTitle || String(activeSheet?.name || '').trim() || 'الصفحة';
     const topBandPx = Math.max(22, Math.round(scaledHeightPx * 0.017));
     const leftBandPx = Math.max(36, Math.round(scaledWidthPx * 0.016));
     const footerPx = Math.max(78, Math.round(scaledHeightPx * 0.082));
@@ -7842,8 +7842,8 @@ function syncCategoriasButtonText() {
     const someClosed = Array.from(document.querySelectorAll('#menu-container .cat-content'))
         .some(c => !c.classList.contains('open'));
     btn.innerHTML = someClosed
-        ? '<i class="fa-solid fa-expand"></i><span>Expandir tudo</span>'
-        : '<i class="fa-solid fa-compress"></i><span>Recolher tudo</span>';
+        ? '<i class="fa-solid fa-expand"></i><span>فتح الكل</span>'
+        : '<i class="fa-solid fa-compress"></i><span>طي الكل</span>';
     btn.title = someClosed ? 'Expandir todas as classes' : 'Recolher todas as classes';
 }
 function buildEmptyActiveSheetSnapshot() {
@@ -8020,12 +8020,12 @@ function renderProjectSheetTabs() {
         btn.type = 'button';
         btn.className = `sheet-tab${sheet.id === activeProjectSheetId ? ' active' : ''}`;
         btn.textContent = getProjectSheetDisplayName(sheet);
-        btn.title = 'Clique para abrir. Duplo clique para renomear.';
+        btn.title = "انقر للفتح، انقر نقراً مزدوجاً لإعادة التسمية";
         btn.addEventListener('click', () => activateProjectSheet(sheet.id));
         btn.addEventListener('dblclick', (e) => {
             e.preventDefault();
-            const atual = String(sheet.name || '').trim() || 'Folha';
-            const novo = prompt('Nome da folha:', atual);
+            const atual = String(sheet.name || '').trim() || 'الصفحة';
+            const novo = prompt("اسم الصفحة:", atual);
             if (novo === null) return;
             const txt = String(novo || '').trim();
             if (!txt) return;
@@ -8106,7 +8106,7 @@ function openProjectSheetConfigModal() {
     if (rowsInput) rowsInput.value = `${config.gridRows}`;
     if (titleInput) {
         titleInput.value = config.legendTitle || '';
-        titleInput.placeholder = String(sheet.name || 'Nome da folha');
+        titleInput.placeholder = String(sheet.name || 'اسم الصفحة');
     }
     if (authorInput) authorInput.value = config.author || '';
     if (projectInput) projectInput.value = config.project || '';
@@ -8276,8 +8276,8 @@ function addProjectSheet() {
 function renameActiveProjectSheet() {
     const sheet = getSheetById(activeProjectSheetId);
     if (!sheet) return;
-    const atual = String(sheet.name || '').trim() || 'Folha';
-    const novo = prompt('Nome da folha ativa:', atual);
+    const atual = String(sheet.name || '').trim() || 'الصفحة';
+    const novo = prompt("اسم الصفحة النشطة:", atual);
     if (novo === null) return;
     const txt = String(novo || '').trim();
     if (!txt) return;
@@ -8325,12 +8325,12 @@ function initProjectSheets() {
         const initialViewState = getCurrentSheetViewportState();
         projectSheets = [{
             id: firstId,
-            name: 'Folha 1',
+            name: 'الصفحة 1',
             order: 1,
             snapshot: firstSnapshot,
             viewState: initialViewState,
             viewStatesByMode: buildEmptySheetViewportStatesByMode(),
-            pageConfig: buildDefaultSheetPageConfig('Folha 1')
+            pageConfig: buildDefaultSheetPageConfig('الصفحة 1')
         }];
         setSheetViewportStateForMode(projectSheets[0], activeWorkspaceMode, initialViewState);
         activeProjectSheetId = firstId;
@@ -8352,7 +8352,7 @@ window.exportSheetsProjectPayload = function () {
         activeSheetId: activeProjectSheetId,
         sheets: projectSheets.map(sheet => ({
             id: sheet.id,
-            name: String(sheet.name || 'Folha').trim() || 'Folha',
+            name: String(sheet.name || 'الصفحة').trim() || 'الصفحة',
             order: Number.isFinite(sheet.order) ? sheet.order : null,
             snapshot: cloneSheetSnapshot(sheet.snapshot),
             viewState: normalizeSheetViewportState(sheet.viewState),
