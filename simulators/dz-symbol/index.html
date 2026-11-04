@@ -434,26 +434,26 @@ dialog#pv-learning-notice,#pv-learning-notice{
 
 
     <div id="symbolic-component-modal" class="modal">
-        <div class="modal-content symbolic-component-modal-content">
+        <div class="modal-content symbolic-component-modal-content" dir="rtl">
             <span class="close-modal" onclick="fecharModalPropriedadesComponente()">&times;</span>
-            <h2>Propriétés du Composant</h2>
+            <h2 style="color:#38bdf8;font-size:16px;margin-bottom:12px;">خصائص العنصر (اسم المرجع ونقاط التلامس)</h2>
             <div class="symbolic-component-grid">
-                <label for="symbolic-component-tag">Repère (Tag)</label>
-                <input id="symbolic-component-tag" type="text" maxlength="30" placeholder="Ex: K1">
+                <label for="symbolic-component-tag" style="font-weight:700;color:#f8fafc;">اسم المرجع (K1, K2, Q1, S1...)</label>
+                <input id="symbolic-component-tag" type="text" maxlength="30" placeholder="مثال: K1" style="font-weight:700;font-size:14px;color:#38bdf8;background:#0f172a;border:1px solid #3b82f6;">
 
-                <label for="symbolic-component-manufacturer">Fabricant</label>
-                <input id="symbolic-component-manufacturer" type="text" maxlength="80" placeholder="Ex: Schneider">
+                <label for="symbolic-component-manufacturer">المصنّع (Fabricant)</label>
+                <input id="symbolic-component-manufacturer" type="text" maxlength="80" placeholder="مثال: Schneider">
 
-                <label for="symbolic-component-model">Modèle</label>
-                <input id="symbolic-component-model" type="text" maxlength="80" placeholder="Ex: LC1D09">
+                <label for="symbolic-component-model">الطراز (Modèle)</label>
+                <input id="symbolic-component-model" type="text" maxlength="80" placeholder="مثال: LC1D09">
 
-                <label for="symbolic-component-comment">Coment&aacute;rio</label>
-                <textarea id="symbolic-component-comment" rows="3" maxlength="240" placeholder="Observa&ccedil;&otilde;es do componente"></textarea>
+                <label for="symbolic-component-comment">ملاحظات (Commentaire)</label>
+                <textarea id="symbolic-component-comment" rows="2" maxlength="240" placeholder="ملاحظات إضافية..."></textarea>
 
-                <label for="symbolic-component-show-model">Exibir modelo</label>
+                <label for="symbolic-component-show-model">إظهار الطراز</label>
                 <input id="symbolic-component-show-model" type="checkbox">
 
-                <label for="symbolic-component-show-manufacturer">Exibir fabricante</label>
+                <label for="symbolic-component-show-manufacturer">إظهار المصنّع</label>
                 <input id="symbolic-component-show-manufacturer" type="checkbox">
 
                 <div id="symbolic-component-timer-row" class="symbolic-component-optional-row" style="display:none;">
@@ -485,8 +485,8 @@ dialog#pv-learning-notice,#pv-learning-notice{
             </div>
             <div id="symbolic-component-pin-fields" class="symbolic-component-pin-fields"></div>
             <div class="sinaleiro-modal-actions">
-                <button type="button" onclick="fecharModalPropriedadesComponente()">Annuler</button>
-                <button id="symbolic-component-save" type="button">Enregistrer</button>
+                <button type="button" onclick="fecharModalPropriedadesComponente()" style="background:#475569;">إلغاء</button>
+                <button id="symbolic-component-save" type="button" style="background:#2563eb;font-weight:700;">حفظ التغييرات</button>
             </div>
         </div>
     </div>
@@ -1127,10 +1127,10 @@ dialog#pv-learning-notice,#pv-learning-notice{
                 <span>لصق</span>
             </button>
 
-            <!-- Ligne 6 : Modifier repère & Déplacer feuille -->
-            <button type="button" class="floating-tool-btn" onclick="openSelectedComponentEditMobile()" title="تعديل المرجع (Modifier repère)">
-                <i class="fa-solid fa-pen-to-square"></i>
-                <span>تعديل</span>
+            <!-- Ligne 6 : Modifier nom contact (K1, K2...) & Déplacer feuille -->
+            <button id="floating-btn-edit-tag" type="button" class="floating-tool-btn" onclick="openSelectedComponentEditMobile()" title="تعديل اسم المرجع ونقاط التلامس (K1, K2...)" style="background: #1e3a8a !important; border-color: #3b82f6 !important;">
+                <i class="fa-solid fa-pen-to-square" style="color:#60a5fa;"></i>
+                <span style="font-weight:700;color:#93c5fd;">تعديل K1/K2</span>
             </button>
             <button type="button" class="floating-tool-btn" onclick="ativarFerramenta('pan')" title="تحريك مساحة العمل (Déplacer)">
                 <i class="fa-solid fa-hand"></i>

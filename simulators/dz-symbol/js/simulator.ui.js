@@ -2395,15 +2395,31 @@ function updateMobileQuickActionButtons() {
 }
 
 function openSelectedComponentEditMobile() {
-    const selected = getSelectedComponents();
     if (simulando) return false;
-    if (selected.length === 1) {
-        selected[0].dispatchEvent(new MouseEvent('dblclick', { bubbles: true, cancelable: true, view: window }));
+    const selected = getSelectedComponents();
+    if (selected.length >= 1) {
+        const comp = selected[0];
+        if (typeof abrirModalPropriedadesComponente === 'function' && isSymbolicPropertiesComponent(comp)) {
+            abrirModalPropriedadesComponente(comp);
+            return true;
+        }
+        const def = (typeof BIBLIOTECA !== 'undefined') ? BIBLIOTECA[comp.dataset.lib] : {};
+        const atual = comp.dataset.tag || getDefaultTag(def, comp.dataset.lib);
+        const novo = prompt('اسم المرجع / العنصر (مثال: K1, K2):', atual);
+        if (novo !== null) {
+            comp.dataset.tag = novo.trim();
+            const l = comp.querySelector('.tag-label');
+            if (l) l.innerText = comp.dataset.tag;
+            if (typeof scheduleCrossReferenceRefresh === 'function') scheduleCrossReferenceRefresh();
+            if (typeof scheduleHistoryCheckpoint === 'function') scheduleHistoryCheckpoint('tag_component');
+            return true;
+        }
         return true;
     }
-    if (selected.length === 0 && typeof window.openSelectedWireEditMobile === 'function') {
-        return !!window.openSelectedWireEditMobile();
-    }
+    
+    // Si aucun composant n'est sélectionné, demander à l'utilisateur de cliquer sur un composant
+    alert('يرجى تحديد عنصر أولاً لتعديل اسمه (K1, K2...) أو أطرافه
+Veuillez d'abord cliquer sur un composant pour modifier son repère (K1, K2...).');
     return false;
 }
 
