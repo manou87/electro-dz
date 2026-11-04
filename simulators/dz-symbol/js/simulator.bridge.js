@@ -1470,18 +1470,18 @@ function choosePdfExportMode(defaultMode = 'all') {
             fontFamily: 'Segoe UI, Arial, sans-serif'
         });
         card.innerHTML = `
-            <div style="font-size:16px;font-weight:600;margin-bottom:10px;">Exportar PDF</div>
-            <label style="display:flex;align-items:center;gap:8px;margin:8px 0;">
+            <div style="font-size:16px;font-weight:700;margin-bottom:12px;color:#1e293b;text-align:right;" dir="rtl">تصدير المخطط إلى PDF</div>
+            <label style="display:flex;align-items:center;gap:8px;margin:10px 0;cursor:pointer;flex-direction:row-reverse;justify-content:flex-end;" dir="rtl">
                 <input id="pdf-export-opt-active" type="checkbox">
-                <span>Folha ativa</span>
+                <span style="font-weight:600;color:#334155;">الصفحة الحالية فقط (الورقة النشطة)</span>
             </label>
-            <label style="display:flex;align-items:center;gap:8px;margin:8px 0;">
+            <label style="display:flex;align-items:center;gap:8px;margin:10px 0;cursor:pointer;flex-direction:row-reverse;justify-content:flex-end;" dir="rtl">
                 <input id="pdf-export-opt-all" type="checkbox">
-                <span>Todas as folhas (ordem das abas)</span>
+                <span style="font-weight:600;color:#334155;">جميع الصفحات (حسب الترتيب)</span>
             </label>
-            <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px;">
-                <button id="pdf-export-cancel" type="button" style="padding:7px 10px;border:1px solid #ccd1d9;background:#f5f7fa;border-radius:6px;cursor:pointer;">Cancelar</button>
-                <button id="pdf-export-ok" type="button" style="padding:7px 10px;border:1px solid #2d7cf3;background:#2d7cf3;color:#fff;border-radius:6px;cursor:pointer;">Exportar</button>
+            <div style="display:flex;justify-content:flex-start;gap:8px;margin-top:16px;">
+                <button id="pdf-export-ok" type="button" style="padding:8px 14px;border:none;background:#2563eb;color:#fff;border-radius:6px;cursor:pointer;font-weight:700;">تحميل PDF</button>
+                <button id="pdf-export-cancel" type="button" style="padding:8px 14px;border:1px solid #cbd5e1;background:#f1f5f9;color:#475569;border-radius:6px;cursor:pointer;font-weight:600;">إلغاء</button>
             </div>
         `;
         overlay.appendChild(card);
@@ -1767,27 +1767,24 @@ async function captureCurrentSheetFrameAsCanvas() {
 
     try {
         await waitForUiFrame(60);
-        const crop = {
-            x: Math.max(0, Math.round(frame.offsetLeft)),
-            y: Math.max(0, Math.round(frame.offsetTop)),
-            width: Math.max(1, Math.round(frame.offsetWidth || frame.clientWidth || 1)),
-            height: Math.max(1, Math.round(frame.offsetHeight || frame.clientHeight || 1))
-        };
+        // Mesurer précisément les dimensions réelles de la feuille de schéma
+        const frameW = Math.max(1, Math.round(frame.offsetWidth || frame.clientWidth || 1160));
+        const frameH = Math.max(1, Math.round(frame.offsetHeight || frame.clientHeight || 820));
+        const frameLeft = Math.max(0, Math.round(frame.offsetLeft || 0));
+        const frameTop = Math.max(0, Math.round(frame.offsetTop || 0));
 
         const capturedCanvas = await html2canvas(zoomContainer, {
             backgroundColor: '#ffffff',
             useCORS: true,
-            scale: PDF_CAPTURE_SCALE,
+            scale: 2.5,
             foreignObjectRendering: false,
             removeContainer: true,
-            windowWidth: Math.max(1, zoomContainer.scrollWidth || zoomContainer.clientWidth || 1),
-            windowHeight: Math.max(1, zoomContainer.scrollHeight || zoomContainer.clientHeight || 1),
             scrollX: 0,
             scrollY: 0,
-            x: crop.x,
-            y: crop.y,
-            width: crop.width,
-            height: crop.height,
+            x: frameLeft,
+            y: frameTop,
+            width: frameW,
+            height: frameH,
             onclone: (doc) => {
                 // Evita overlays/estado de engenharia no PDF.
                 try {
@@ -1840,6 +1837,16 @@ async function captureCurrentSheetFrameAsCanvas() {
                     clonedZoomContainer.style.transform = 'none';
                     clonedZoomContainer.style.transformOrigin = '0 0';
                 }
+                // Masquer la palette flottante et les barres d'outils sur le PDF exporté
+                const floatingPal = doc.getElementById('floating-user-tools');
+                if (floatingPal) floatingPal.style.display = 'none';
+                const lockOverlay = doc.getElementById('dz-access-lock-overlay');
+                if (lockOverlay) lockOverlay.style.display = 'none';
+                // Assurer que tous les composants et textes SVG sont affichés
+                doc.querySelectorAll('.component, .user-wire, .tag-label, .pin-label').forEach(el => {
+                    el.style.visibility = 'visible';
+                    el.style.opacity = '1';
+                });
                 doc.querySelectorAll('#bancada img[data-pdf-img-key]').forEach(img => {
                     const key = String(img.getAttribute('data-pdf-img-key') || '');
                     const dataUrl = embeddedImages.map.get(key);
@@ -1868,7 +1875,7 @@ window.exportarPdf = async function (opts = {}) {
 
         const ordered = getOrderedSheetsForPdfExport();
         if (!ordered || !ordered.sheets.length) {
-            alert('Nenhuma folha encontrada para exportar.');
+            alert('لم يتم العثور على أي صفحة لتصديرها.');
             return;
         }
         const requestedMode = String(opts?.mode || '').toLowerCase();
@@ -1885,23 +1892,23 @@ window.exportarPdf = async function (opts = {}) {
             ? ordered.sheets.filter(s => s.id === activeSheetId)
             : ordered.sheets;
         if (!targetSheets.length) {
-            alert('Folha ativa nao encontrada para exportacao.');
+            alert('الصفحة النشطة غير موجودة.');
             return;
         }
         if (targetSheets.length > 1 && typeof window.activateProjectSheetById !== 'function') {
-            alert('Troca de folhas indisponivel para exportacao.');
+            alert('تبديل الصفحات غير متاح أثناء التصدير.');
             return;
         }
 
         finishPdfLoading = beginProjectLoading(
-            'Gerando PDF...',
+            'جاري إنشاء ملف PDF...',
             `Carregando recursos e preparando ${targetSheets.length === 1 ? 'a folha' : `${targetSheets.length} folhas`}.`
         );
         await waitForNextPaint();
         await ensureSimuDzExportLibraries({ jspdf: true });
         const jsPdfLib = window.jspdf?.jsPDF;
         if (typeof jsPdfLib !== 'function') {
-            throw new Error('Biblioteca de exportacao em PDF indisponivel.');
+            throw new Error('مكتبة تصدير PDF غير متاحة.');
         }
 
         let pdf = null;
@@ -1909,7 +1916,7 @@ window.exportarPdf = async function (opts = {}) {
         try {
             for (const [sheetIndex, sheet] of targetSheets.entries()) {
                 updateProjectLoadingOverlay(
-                    'Gerando PDF...',
+                    'جاري إنشاء ملف PDF...',
                     `Processando folha ${sheetIndex + 1} de ${targetSheets.length}.`
                 );
                 await waitForNextPaint();
@@ -1965,7 +1972,7 @@ window.exportarPdf = async function (opts = {}) {
         }
 
         if (!pdf || exportedPages <= 0) {
-            alert('Falha ao gerar PDF das folhas.');
+            alert('فشل إنشاء ملف PDF.');
             return;
         }
         updateProjectLoadingOverlay('Finalizando PDF...', 'Preparando o arquivo para download.');
@@ -1973,7 +1980,7 @@ window.exportarPdf = async function (opts = {}) {
         pdf.save('projeto-cade.pdf');
     } catch (err) {
         console.error(err);
-        alert('Falha ao exportar PDF.');
+        alert('فشل تصدير ملف PDF.');
     } finally {
         if (finishPdfLoading) await finishPdfLoading();
     }
