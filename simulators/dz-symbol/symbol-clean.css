@@ -457,3 +457,17 @@
         height: 48px !important;
     }
 }
+
+/* Désactiver le volet d'outils secondaire qui fait flotter la colonne noire */
+#sidebar-tools-panel,
+.sidebar-panel-tools,
+#btn-commands-tools-toggle {
+    display: none !important;
+}
+
+/* Les outils rapides sous la main dans la barre supérieure restent parfaitement alignés horizontalement */
+.simulation-controls {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+}

@@ -132,18 +132,6 @@ dialog#pv-learning-notice,#pv-learning-notice{
         </div>
                 <div class="control-group toolbar-actions">
             <!-- Grille des outils essentiels comme sur la photo -->
-            <div class="quick-tools-grid">
-                <button type="button" class="btn-tool active" onclick="ativarFerramenta('select')" title="Sélectionner / Déplacer"><i class="fa-solid fa-arrow-pointer"></i><span>Sélection</span></button>
-                <button type="button" class="btn-tool" onclick="ativarFerramenta('rotacao')" title="Pivoter le symbole (90°)"><i class="fa-solid fa-rotate-right"></i><span>Pivoter</span></button>
-                <button type="button" class="btn-tool danger" onclick="ativarFerramenta('borracha')" title="Supprimer symbole ou fil"><i class="fa-solid fa-trash-can"></i><span>Supprimer</span></button>
-                <button type="button" class="btn-tool" onclick="undoAcao()" title="Annuler (Ctrl+Z)"><i class="fa-solid fa-rotate-left"></i><span>Annuler</span></button>
-                <button type="button" class="btn-tool" onclick="redoAcao()" title="Rétablir (Ctrl+Y)"><i class="fa-solid fa-rotate-right"></i><span>Rétablir</span></button>
-                <button type="button" class="btn-tool" onclick="copiarSelecaoCircuito()" title="Copier (Ctrl+C)"><i class="fa-solid fa-copy"></i><span>Copier</span></button>
-                <button type="button" class="btn-tool" onclick="colarSelecaoCircuito()" title="Coller (Ctrl+V)"><i class="fa-solid fa-paste"></i><span>Coller</span></button>
-                <button type="button" class="btn-tool" onclick="openSelectedComponentEditMobile()" title="Modifier les propriétés"><i class="fa-solid fa-pen-to-square"></i><span>Modifier</span></button>
-                <button type="button" class="btn-tool" onclick="ativarFerramenta('info')" title="Informations"><i class="fa-solid fa-circle-info"></i><span>Info</span></button>
-                <button type="button" class="btn-tool" onclick="ativarFerramenta('pan')" title="Déplacer la vue (Pan)"><i class="fa-solid fa-hand"></i><span>Déplacer</span></button>
-            </div>
             <div class="sep"></div>
             <button id="btn-zoom-out" onclick="setZoom(zoomLevel - 0.1)" title="Diminuer zoom"><i class="fa-solid fa-minus"></i></button>
             <span id="zoom-display">100%</span>
