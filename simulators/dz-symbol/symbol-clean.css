@@ -656,3 +656,22 @@
     cursor: pointer !important;
     z-index: 12 !important;
 }
+
+/* Poignée dans le coin pour redimensionner la palette en glissant */
+#floating-tools-resize-handle {
+    position: absolute !important;
+    right: 2px !important;
+    bottom: 2px !important;
+    width: 16px !important;
+    height: 16px !important;
+    cursor: nwse-resize !important;
+    touch-action: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 50 !important;
+    user-select: none !important;
+}
+#floating-tools-resize-handle:hover svg {
+    opacity: 1 !important;
+}
