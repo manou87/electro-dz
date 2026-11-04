@@ -69,9 +69,12 @@ Destiné aux électriciens, techniciens, ingénieurs, enseignants et étudiants,
 * **Adresse e-mail d'assistance :** `contact@electro-dz.com`
 * **Lien vers la Politique de Confidentialité :**
   `https://electro-dz.com/privacy.html`
-* **Accès à l'application (Pour l'équipe de review Google) :**
-  Dans *Contenu de l'application > Accès aux applications* :
-  > Indiquer le code d'accès : `manoud`
+* **Publicités (Monétisation) :**
+  > Cocher **« Oui, mon application contient des annonces publicitaires »** dans la Play Console.
+
+* **Accès à l'application (Identifiants de test pour Google) :**
+  > Dans *Contenu de l'application > Accès aux applications* :  
+  > Cocher **« Toutes les fonctionnalités sont disponibles sans restriction d'accès »** (l'application détecte automatiquement l'environnement Android Google Play et s'ouvre directement sans aucun mot de passe).
 
 ---
 
