@@ -1,0 +1,24 @@
+{
+  "name": "SimuDz Schémas IEC",
+  "short_name": "SimuDz",
+  "description": "Simulateur de schémas électriques industriels et automatismes norme IEC",
+  "start_url": "/simulators/dz-symbol/index.html",
+  "display": "standalone",
+  "orientation": "landscape-primary",
+  "background_color": "#0a0f1d",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "assets/logo/logo-square-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "store-assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
