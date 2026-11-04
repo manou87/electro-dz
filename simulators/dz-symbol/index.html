@@ -1068,74 +1068,55 @@ dialog#pv-learning-notice,#pv-learning-notice{
 
     <!-- Script de déplacement fluide (Drag & Drop tactile et souris) de la barre d'outils -->
     <script>
-    (function setupDraggableFloatingPalette() {
+    (function setupFloatingPaletteWithInteract() {
         const palette = document.getElementById('floating-user-tools');
-        const handle = document.getElementById('floating-tools-drag-handle');
-        if (!palette || !handle) return;
+        if (!palette) return;
 
-        // Position initiale par défaut
-        palette.style.top = '140px';
-        palette.style.left = 'calc(100vw - 140px)';
+        // Position initiale dans un coin propre sans écrasement
+        palette.style.top = '120px';
+        palette.style.left = 'calc(100vw - 135px)';
         palette.style.right = 'auto';
         palette.style.bottom = 'auto';
 
-        let isDown = false;
-        let startClientX = 0;
-        let startClientY = 0;
-        let startElemX = 0;
-        let startElemY = 0;
+        let curX = 0;
+        let curY = 0;
 
-        function onPointerDown(e) {
-            // Clic gauche ou toucher uniquement
-            if (e.pointerType === 'mouse' && e.button !== 0) return;
-            isDown = true;
-            startClientX = e.clientX;
-            startClientY = e.clientY;
-
-            const rect = palette.getBoundingClientRect();
-            startElemX = rect.left;
-            startElemY = rect.top;
-
-            palette.style.left = startElemX + 'px';
-            palette.style.top = startElemY + 'px';
-            palette.style.right = 'auto';
-            palette.style.bottom = 'auto';
-
-            try { handle.setPointerCapture(e.pointerId); } catch (_) {}
-            e.preventDefault();
-            e.stopPropagation();
+        // Utiliser interact.js (la bibliothèque officielle du projet)
+        function initInteract() {
+            if (typeof window.interact !== 'function') {
+                setTimeout(initInteract, 100);
+                return;
+            }
+            window.interact(palette).draggable({
+                allowFrom: '#floating-tools-drag-handle',
+                inertia: false,
+                modifiers: [
+                    window.interact.modifiers.restrictRect({
+                        restriction: 'body',
+                        endOnly: false
+                    })
+                ],
+                listeners: {
+                    start(event) {
+                        const rect = palette.getBoundingClientRect();
+                        curX = rect.left;
+                        curY = rect.top;
+                        palette.style.left = curX + 'px';
+                        palette.style.top = curY + 'px';
+                        palette.style.right = 'auto';
+                        palette.style.bottom = 'auto';
+                    },
+                    move(event) {
+                        curX += event.dx;
+                        curY += event.dy;
+                        palette.style.left = curX + 'px';
+                        palette.style.top = curY + 'px';
+                    }
+                }
+            });
         }
 
-        function onPointerMove(e) {
-            if (!isDown) return;
-            const dx = e.clientX - startClientX;
-            const dy = e.clientY - startClientY;
-
-            let nx = startElemX + dx;
-            let ny = startElemY + dy;
-
-            // Restreindre dans les limites visibles de l'écran
-            const maxW = window.innerWidth - palette.offsetWidth - 8;
-            const maxH = window.innerHeight - palette.offsetHeight - 8;
-            nx = Math.max(8, Math.min(nx, maxW));
-            ny = Math.max(8, Math.min(ny, maxH));
-
-            palette.style.left = nx + 'px';
-            palette.style.top = ny + 'px';
-            e.preventDefault();
-            e.stopPropagation();
-        }
-
-        function onPointerUp(e) {
-            if (!isDown) return;
-            isDown = false;
-            try { handle.releasePointerCapture(e.pointerId); } catch (_) {}
-        }
-
-        handle.addEventListener('pointerdown', onPointerDown);
-        handle.addEventListener('pointermove', onPointerMove);
-        handle.addEventListener('pointerup', onPointerUp);
-        handle.addEventListener('pointercancel', onPointerUp);
+        initInteract();
     })();
     </script>
 

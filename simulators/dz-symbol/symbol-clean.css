@@ -374,6 +374,10 @@
     width: 122px !important;
     max-width: 122px !important;
     min-width: 122px !important;
+    height: auto !important;
+    max-height: fit-content !important;
+    min-height: auto !important;
+    bottom: auto !important;
     box-sizing: border-box !important;
     background: #18202f !important;
     border: 1px solid #3b4d6b !important;
@@ -381,7 +385,7 @@
     padding: 6px !important;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
     z-index: 1200 !important;
-    display: flex !important;
+    display: inline-flex !important;
     flex-direction: column !important;
     gap: 5px !important;
     user-select: none !important;
