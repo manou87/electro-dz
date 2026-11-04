@@ -5340,8 +5340,9 @@ function adicionarComponente(k, id, t, l, opts = {}) {
         scheduleHistoryCheckpoint('tag_component');
     };
 
-    d.addEventListener('dblclick', handleComponentDoubleActivate);
-    bindMobileDoubleTap(d, handleComponentDoubleActivate);
+    // Option double-clic sur composant annulée selon la demande utilisateur
+    // d.addEventListener('dblclick', handleComponentDoubleActivate);
+    // bindMobileDoubleTap(d, handleComponentDoubleActivate);
 
     d.querySelectorAll('.pin-label').forEach(pinLabel => {
         pinLabel.addEventListener('mousedown', e => e.stopPropagation());
@@ -5360,8 +5361,8 @@ function adicionarComponente(k, id, t, l, opts = {}) {
             syncEngineeringPinLabelVar(d, pinLabel);
             scheduleHistoryCheckpoint('pin_label');
         };
-        pinLabel.addEventListener('dblclick', handlePinLabelDoubleActivate);
-        bindMobileDoubleTap(pinLabel, handlePinLabelDoubleActivate);
+        // pinLabel.addEventListener('dblclick', handlePinLabelDoubleActivate);
+        // bindMobileDoubleTap(pinLabel, handlePinLabelDoubleActivate);
     });
 
     d.querySelectorAll('.timer-label').forEach(timerLabel => {
@@ -5383,8 +5384,8 @@ function adicionarComponente(k, id, t, l, opts = {}) {
             timerLabel.innerText = `${secs}s`;
             scheduleHistoryCheckpoint('timer_label');
         };
-        timerLabel.addEventListener('dblclick', handleTimerLabelDoubleActivate);
-        bindMobileDoubleTap(timerLabel, handleTimerLabelDoubleActivate);
+        // timerLabel.addEventListener('dblclick', handleTimerLabelDoubleActivate);
+        // bindMobileDoubleTap(timerLabel, handleTimerLabelDoubleActivate);
     });
 
     const releTripBtn = d.querySelector('.rele-trip-btn');
