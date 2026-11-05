@@ -788,11 +788,11 @@ body.engineering-mode #multimeter-scene .multimeter-scale-hit {
             setMode(modeKey || 'off');
         }
 
-                refs.hits.forEach(hit => {
-            const modeKey = hit.dataset.mode || off;
+        refs.hits.forEach(hit => {
+            const modeKey = hit.dataset.mode || 'off';
             const handleModeEvent = event => activateModeHit(modeKey, event);
-            hit.style.pointerEvents = auto;
-            hit.style.touchAction = manipulation;
+            hit.style.pointerEvents = 'auto';
+            hit.style.touchAction = 'manipulation';
             hit.onpointerdown = handleModeEvent;
             hit.onmousedown = handleModeEvent;
             hit.ontouchstart = handleModeEvent;
