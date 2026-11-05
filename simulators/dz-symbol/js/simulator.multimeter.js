@@ -1631,11 +1631,17 @@ body.engineering-mode #multimeter-scene .multimeter-scale-hit {
         if (!state.mounted) return;
         syncSceneHost();
         const active = is2DActive();
+        const isShown = active && state.visible;
         refs.fab.dataset.visible = active ? 'true' : 'false';
-        refs.scene.dataset.visible = active && state.visible ? 'true' : 'false';
+        refs.scene.dataset.visible = isShown ? 'true' : 'false';
+        refs.scene.classList.toggle('multimeter-visible', isShown);
+        refs.scene.style.display = isShown ? 'block' : 'none';
+
         if (!active && state.visible) {
             state.visible = false;
             refs.scene.dataset.visible = 'false';
+            refs.scene.classList.remove('multimeter-visible');
+            refs.scene.style.display = 'none';
             state.contacts.red = null;
             state.contacts.black = null;
             state.continuityClosed = false;

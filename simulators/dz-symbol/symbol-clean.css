@@ -631,6 +631,11 @@
     left: 0 !important;
     pointer-events: none !important;
     z-index: 900 !important;
+    display: none !important;
+}
+#multimeter-scene[data-visible="true"],
+#multimeter-scene.multimeter-visible {
+    display: block !important;
 }
 #multimeter-scene svg.multimeter-leads {
     width: 5000px !important;
