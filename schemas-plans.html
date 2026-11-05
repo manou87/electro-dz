@@ -2,19 +2,105 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex, nofollow" />
-  <meta http-equiv="refresh" content="0; url=/index.html" />
-  <title>Redirection…</title>
-  <!-- TEMP HIDDEN 2026-11-05: Schéma et plan entry stub.
-       Full page kept as schemas-plans.restore.html — restore: rename restore → this file. -->
-  <script>
-    (function () {
-      try { location.replace("/index.html"); }
-      catch (e) { location.href = "/index.html"; }
-    })();
-  </script>
+  <meta name="description" content="On revient bientôt — سنعود قريباً | Electro DZ" />
+  <title>On revient bientôt — سنعود قريباً | Electro DZ</title>
+  <link rel="icon" href="assets/app-icon.png" type="image/png" />
+  <!-- TEMP HIDDEN 2026-11-05: Schéma et plan public stub (no app UI).
+       Full source: schemas-plans.restore.html — restore by renaming restore → this file. -->
+  <style>
+    :root {
+      --bg: #0a0f1a;
+      --bg2: #0f172a;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #facc15;
+      --line: rgba(148, 163, 184, 0.22);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 18px;
+      font-family: "Segoe UI", Tahoma, system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(900px 420px at 50% -10%, rgba(250, 204, 21, 0.12), transparent 60%),
+        linear-gradient(180deg, var(--bg2), var(--bg));
+    }
+    main {
+      width: min(520px, 100%);
+      text-align: center;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 36px 28px 28px;
+      background: rgba(15, 23, 42, 0.72);
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+      color: var(--accent);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .brand img { width: 36px; height: 36px; border-radius: 8px; }
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(1.55rem, 4vw, 2rem);
+      line-height: 1.25;
+      font-weight: 800;
+    }
+    .ar {
+      direction: rtl;
+      font-family: "Segoe UI", Tahoma, "Noto Naskh Arabic", sans-serif;
+    }
+    .sep {
+      width: 48px;
+      height: 2px;
+      margin: 18px auto;
+      background: var(--accent);
+      opacity: 0.75;
+      border-radius: 2px;
+    }
+    p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.55;
+    }
+    .home {
+      display: inline-flex;
+      margin-top: 26px;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(250, 204, 21, 0.45);
+      background: rgba(250, 204, 21, 0.12);
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .home:hover { background: rgba(250, 204, 21, 0.2); }
+  </style>
 </head>
 <body>
-  <p><a href="/index.html">Accueil Electro DZ</a></p>
+  <main>
+    <a class="brand" href="index.html">
+      <img src="assets/app-icon.png" alt="" width="36" height="36" decoding="async" />
+      <span>Electro DZ</span>
+    </a>
+    <h1>On revient bientôt</h1>
+    <p>La section Schéma et plan est temporairement indisponible.</p>
+    <div class="sep" aria-hidden="true"></div>
+    <h1 class="ar" lang="ar">سنعود قريباً</h1>
+    <p class="ar" lang="ar">قسم المخططات والرسوم غير متاح مؤقتاً.</p>
+    <a class="home" href="index.html">Accueil · الرئيسية</a>
+  </main>
 </body>
 </html>

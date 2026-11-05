@@ -82,7 +82,7 @@
    * Feature flags site (masquage temporaire sans supprimer les fichiers métier).
    * schemasPlans=false :
    *  - tuiles Accueil / sitemap commentées
-   *  - entrées publiques = stubs redirect → /index.html
+   *  - entrées publiques = page « On revient bientôt / سنعود قريباً » (pas d’UI app)
    *  - sources complètes : *.restore.html (schemas-plans, dz-symbol/index, termos-de-uso)
    * Restore : schemasPlans=true, décommenter tuiles/sitemap, renommer chaque *.restore.html
    *           vers le nom d’entrée (écraser le stub).
