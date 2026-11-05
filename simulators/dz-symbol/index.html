@@ -1162,6 +1162,14 @@ dialog#pv-learning-notice,#pv-learning-notice{
                 <i class="fa-solid fa-hand"></i>
                 <span>تحريك</span>
             </button>
+
+            <!-- Ligne 7 : Multimètre de mesure (pleine largeur pour accès rapide) -->
+            <button id="floating-btn-multimeter" type="button" class="floating-tool-btn" onclick="if(typeof toggleMultimetro === 'function') toggleMultimetro();" title="المتر المتعدد / الملتيميتر (Multimètre de mesure)" style="grid-column: span 2; height: 34px; background: #eab308 !important; border: 1px solid #facc15 !important; color: #1e293b !important;">
+                <div style="display:flex;align-items:center;justify-content:center;gap:6px;width:100%;font-weight:800;">
+                    <i class="fa-solid fa-gauge-high" style="font-size:13px;"></i>
+                    <span style="font-size:11px;font-weight:800;">الملتيميتر (Multimètre)</span>
+                </div>
+            </button>
         </div>
         <!-- Poignée dans le coin inférieur pour redimensionner librement en glissant -->
         <div id="floating-tools-resize-handle" title="اسحب لتغيير الحجم (Glisser pour redimensionner)">

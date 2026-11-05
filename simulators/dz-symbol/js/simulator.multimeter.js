@@ -685,18 +685,18 @@ body.engineering-mode #multimeter-scene .multimeter-scale-hit {
     }
 
     function placeDefaultLayout() {
-        if (state.spawned) return;
         const rect = getVisibleWorldRect();
-        state.meter.x = Math.round(rect.left + Math.max(120, rect.width * 0.56));
-        state.meter.y = Math.round(rect.top + Math.max(80, rect.height * 0.18));
-        state.probes.red.x = Math.round(state.meter.x + 250);
-        state.probes.red.y = Math.round(state.meter.y + 140);
-        const meterCenterX = state.meter.x + (210 / 2);
-        const redCenterX = state.probes.red.x + (40 / 2);
-        const mirroredOffsetX = redCenterX - meterCenterX;
-        state.probes.black.x = Math.round((meterCenterX - mirroredOffsetX) - (36 / 2));
-        state.probes.black.y = Math.round(state.meter.y + 140);
-        state.spawned = true;
+        const isOffscreen = state.meter.x < (rect.left - 50) || state.meter.x > (rect.left + rect.width + 50) ||
+                            state.meter.y < (rect.top - 50) || state.meter.y > (rect.top + rect.height + 50);
+        if (!state.spawned || isOffscreen) {
+            state.meter.x = Math.round(rect.left + Math.max(50, rect.width * 0.38));
+            state.meter.y = Math.round(rect.top + Math.max(50, rect.height * 0.15));
+            state.probes.red.x = Math.round(state.meter.x + 230);
+            state.probes.red.y = Math.round(state.meter.y + 130);
+            state.probes.black.x = Math.max(rect.left + 15, Math.round(state.meter.x - 120));
+            state.probes.black.y = Math.round(state.meter.y + 130);
+            state.spawned = true;
+        }
     }
 
     function buildSceneMarkup() {
