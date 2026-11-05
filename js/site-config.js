@@ -80,16 +80,18 @@
 
   /**
    * Feature flags site (masquage temporaire sans supprimer les fichiers métier).
-   * schemasPlans=false :
-   *  - tuiles Accueil / sitemap commentées
+   * schemasPlans / wireLab = false :
+   *  - tuiles Accueil commentées (+ sitemap schemas)
    *  - entrées publiques = page « On revient bientôt / سنعود قريباً » (pas d’UI app)
-   *  - sources complètes : *.restore.html (schemas-plans, dz-symbol/index, termos-de-uso)
-   * Restore : schemasPlans=true, décommenter tuiles/sitemap, renommer chaque *.restore.html
-   *           vers le nom d’entrée (écraser le stub).
+   *  - sources complètes en *.restore.html
+   * Restore : flag true, décommenter tuiles, renommer chaque *.restore.html → entrée.
+   * Note : swissdz-panel reste pour École électricité (entrée séparée).
    */
   const FEATURES = {
     /** Schéma et plan (DZ Symbol + schemas-plans.html) — masqué (nav + URLs). */
     schemasPlans: false,
+    /** WireLab (wirelab.html + wirelab-sim + wirelabeduvolt2) — masqué (nav + URLs). */
+    wireLab: false,
   };
 
   g.ElectroDzSite = {

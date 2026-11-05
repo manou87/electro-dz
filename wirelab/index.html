@@ -1,30 +1,106 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>WireLab — SwissDZ</title>
-  <meta name="description" content="WireLab by SwissDZ — privacy policies and store information.">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="description" content="On revient bientôt — سنعود قريباً | Electro DZ" />
+  <title>On revient bientôt — سنعود قريباً | Electro DZ</title>
+  <link rel="icon" href="../assets/app-icon.png" type="image/png" />
+  <!-- TEMP HIDDEN 2026-11-05: WireLab public stub (no app UI).
+       Full source: index.restore.html — restore by renaming restore → this file. -->
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; max-width: 40rem; margin: 2.5rem auto; padding: 0 1.2rem; line-height: 1.55; color: #14202e; background: #f7f8fb; }
-    main { background: #fff; padding: 1.6rem 1.4rem; border-radius: 12px; border: 1px solid #e5e9f0; }
-    h1 { margin: 0 0 .4rem; font-size: 1.6rem; }
-    .meta { color: #5b6b7c; }
-    a { color: #9f1239; }
-    ul { padding-left: 1.2rem; }
+    :root {
+      --bg: #0a0f1a;
+      --bg2: #0f172a;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #facc15;
+      --line: rgba(148, 163, 184, 0.22);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 18px;
+      font-family: "Segoe UI", Tahoma, system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(900px 420px at 50% -10%, rgba(250, 204, 21, 0.12), transparent 60%),
+        linear-gradient(180deg, var(--bg2), var(--bg));
+    }
+    main {
+      width: min(520px, 100%);
+      text-align: center;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 36px 28px 28px;
+      background: rgba(15, 23, 42, 0.72);
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+      color: var(--accent);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .brand img { width: 36px; height: 36px; border-radius: 8px; }
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(1.55rem, 4vw, 2rem);
+      line-height: 1.25;
+      font-weight: 800;
+    }
+    .ar {
+      direction: rtl;
+      font-family: "Segoe UI", Tahoma, "Noto Naskh Arabic", sans-serif;
+    }
+    .sep {
+      width: 48px;
+      height: 2px;
+      margin: 18px auto;
+      background: var(--accent);
+      opacity: 0.75;
+      border-radius: 2px;
+    }
+    p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.55;
+    }
+    .home {
+      display: inline-flex;
+      margin-top: 26px;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(250, 204, 21, 0.45);
+      background: rgba(250, 204, 21, 0.12);
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .home:hover { background: rgba(250, 204, 21, 0.2); }
   </style>
 </head>
 <body>
   <main>
-    <h1>WireLab</h1>
-    <p class="meta">by SwissDZ · <a href="https://electro-dz.com/">electro-dz.com</a></p>
-    <p>Politiques de confidentialité / Privacy policies :</p>
-    <ul>
-      <li><a href="confidentialite-fr.html">Français — Politique de confidentialité</a></li>
-      <li><a href="privacy-en.html">English — Privacy Policy</a></li>
-      <li><a href="privacy-ar.html">العربية — سياسة الخصوصية</a></li>
-    </ul>
-    <p>Contact : <a href="mailto:contact.electrodz@gmail.com">contact.electrodz@gmail.com</a></p>
+    <a class="brand" href="../index.html">
+      <img src="../assets/app-icon.png" alt="" width="36" height="36" decoding="async" />
+      <span>Electro DZ</span>
+    </a>
+    <h1>On revient bientôt</h1>
+    <p>WireLab est temporairement indisponible.</p>
+    <div class="sep" aria-hidden="true"></div>
+    <h1 class="ar" lang="ar">سنعود قريباً</h1>
+    <p class="ar" lang="ar">WireLab غير متاح مؤقتاً.</p>
+    <a class="home" href="../index.html">Accueil · الرئيسية</a>
   </main>
 </body>
 </html>
