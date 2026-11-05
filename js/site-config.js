@@ -78,6 +78,15 @@
   const PDF_ASSET_BASE =
     'https://raw.githubusercontent.com/manou87/electro-dz/main/';
 
+  /**
+   * Feature flags site (masquage temporaire sans supprimer les fichiers métier).
+   * Remettre schemasPlans à true et décommenter les tuiles Accueil / sitemap.
+   */
+  const FEATURES = {
+    /** Schéma et plan (DZ Symbol + schemas-plans.html) — masqué de la nav / accueil. */
+    schemasPlans: false,
+  };
+
   g.ElectroDzSite = {
     scope: SCOPE,
     siteOrigin: SITE_ORIGIN,
@@ -85,6 +94,7 @@
     pageUrl,
     pdfAssetBase: PDF_ASSET_BASE,
     libraryProtected: LIBRARY_PROTECTED,
+    features: FEATURES,
     /** Accès libre simulateur SwissDZ / OIBT uniquement (journée locale inclusive). */
     oibtFreeUntil: '2026-09-25',
     supabase: {
