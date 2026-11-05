@@ -80,10 +80,15 @@
 
   /**
    * Feature flags site (masquage temporaire sans supprimer les fichiers métier).
-   * Remettre schemasPlans à true et décommenter les tuiles Accueil / sitemap.
+   * schemasPlans=false :
+   *  - tuiles Accueil / sitemap commentées
+   *  - entrées publiques = stubs redirect → /index.html
+   *  - sources complètes : *.restore.html (schemas-plans, dz-symbol/index, termos-de-uso)
+   * Restore : schemasPlans=true, décommenter tuiles/sitemap, renommer chaque *.restore.html
+   *           vers le nom d’entrée (écraser le stub).
    */
   const FEATURES = {
-    /** Schéma et plan (DZ Symbol + schemas-plans.html) — masqué de la nav / accueil. */
+    /** Schéma et plan (DZ Symbol + schemas-plans.html) — masqué (nav + URLs). */
     schemasPlans: false,
   };
 
