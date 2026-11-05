@@ -20,5 +20,11 @@ Disallow: /schemas-plans.restore.html
 Disallow: /simulators/dz-symbol/
 Disallow: /simulators/dz-symbol/index.restore.html
 Disallow: /simulators/dz-symbol/termos-de-uso.restore.html
+# TEMP HIDDEN 2026-11-05: WireLab (entrées + archives restore)
+Disallow: /wirelab.html
+Disallow: /wirelab.restore.html
+Disallow: /wirelab/
+Disallow: /wirelab-sim/
+Disallow: /wirelabeduvolt2/
 
 Sitemap: https://electro-dz.com/sitemap.xml
