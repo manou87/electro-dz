@@ -14,5 +14,11 @@ Disallow: /login.html
 Disallow: /register.html
 Disallow: /lecteur-pdf.html
 Disallow: /presentation.html
+# TEMP HIDDEN 2026-11-05: Schéma et plan (entrées + archives restore)
+Disallow: /schemas-plans.html
+Disallow: /schemas-plans.restore.html
+Disallow: /simulators/dz-symbol/
+Disallow: /simulators/dz-symbol/index.restore.html
+Disallow: /simulators/dz-symbol/termos-de-uso.restore.html
 
 Sitemap: https://electro-dz.com/sitemap.xml

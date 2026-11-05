@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="js/theme-electric-neon.js"></script>
+  <meta name="description" content="Electro DZ — Simulation professionnelle : circuits électriques interactifs — SwissDZ" />
+  <meta name="robots" content="index, follow"/>
+  <title>Electro DZ — Simulation professionnelle | SwissDZ</title>
+  <link rel="stylesheet" href="css/schemas-plans.css?v=20260624c" />
+  <link rel="icon" href="assets/app-icon.png" type="image/png" />
+  <link rel="canonical" href="https://electro-dz.com/schemas-plans.html" />
+</head>
+<body class="schemas-page falstad-page">
+  <header class="schemas-topbar">
+    <div class="schemas-topbar-inner">
+      <a href="index-fr.html" class="schemas-brand" data-i18n-href-fr="index-fr.html" data-i18n-href-ar="index.html" data-i18n-href-en="index-fr.html">
+        <img src="assets/app-icon.png" alt="" width="32" height="32" decoding="async" />
+        <span>Swiss<span class="accent" data-i18n="brand">DZ</span></span>
+      </a>
+      <h1 class="schemas-page-title" data-i18n="page.title">Simulation professionnelle</h1>
+      <div class="schemas-lang-switch">
+        <button type="button" class="lang-btn active" data-lang="fr" aria-label="Français">FR</button>
+        <button type="button" class="lang-btn" data-lang="ar" aria-label="العربية">AR</button>
+        <button type="button" class="lang-btn" data-lang="en" aria-label="English">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="schemas-workspace">
+    <div class="schemas-editor-wrap">
+      <div class="schemas-loading" id="falstadLoading" data-i18n="loading">Chargement du simulateur…</div>
+      <iframe
+        id="falstadFrame"
+        title="Simulateur Falstad — circuitjs"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+      <div class="falstad-error" id="falstadError" hidden>
+        <p class="falstad-error-title" data-i18n="error.title">Impossible de charger le simulateur</p>
+        <p class="falstad-error-msg" data-i18n="error.msg">Vérifiez votre connexion internet puis réessayez.</p>
+        <p class="falstad-error-details" id="falstadErrorDetails" hidden></p>
+        <div class="falstad-error-actions">
+          <button type="button" class="btn-schema btn-schema--primary" id="btnFalstadRetry" data-i18n="error.retry">Réessayer</button>
+          <button type="button" class="btn-schema" id="btnFalstadBrowser" data-i18n="error.browser">Ouvrir dans le navigateur</button>
+        </div>
+      </div>
+    </div>
+    <p class="schemas-footer-note" data-i18n="footer">
+      Simulateur de circuits intégré — comme dans l'application Electro DZ.
+    </p>
+  </div>
+
+  <script src="js/schemas-plans-i18n.js" defer></script>
+  <script src="js/falstad-circuit.js?v=20260828en" defer></script>
+  <script>
+    (function () {
+      var STORAGE = "electrodz-site-lang";
+      function syncHomeLinks() {
+        var lang = "fr";
+        try {
+          lang = localStorage.getItem(STORAGE) || "fr";
+          if (lang !== "fr" && lang !== "ar" && lang !== "en") lang = "fr";
+        } catch (e) {}
+        document.querySelectorAll("[data-i18n-href-fr]").forEach(function (a) {
+          var href =
+            lang === "ar"
+              ? a.getAttribute("data-i18n-href-ar")
+              : lang === "en"
+                ? a.getAttribute("data-i18n-href-en") || a.getAttribute("data-i18n-href-fr")
+                : a.getAttribute("data-i18n-href-fr");
+          if (href) a.href = href;
+        });
+      }
+      syncHomeLinks();
+      document.addEventListener("electrodz-lang-changed", syncHomeLinks);
+    })();
+  </script>
+</body>
+</html>
