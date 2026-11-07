@@ -4,23 +4,65 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <script src="js/theme-electric-neon.js?v=chrome1"></script>
-  <meta name="description" content="DZ Marker — éditeur d’étiquettes de tableaux électriques. Accès par code." />
+  <meta name="description" content="Électro Marker — éditeur d’étiquettes de tableaux électriques. Accès par code." />
   <meta name="robots" content="noindex, follow" />
-  <title>DZ Marker — Electro DZ</title>
-  <link rel="icon" href="assets/app-icon.png" type="image/png" />
+  <title>Électro Marker — Electro DZ</title>
+  <link rel="icon" href="assets/electro-marker-icon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="assets/electro-marker-icon.png" />
   <link rel="stylesheet" href="css/simulation-swissdz.css?v=20260917chrome1" />
   <link rel="stylesheet" href="css/ecole-electricite.css?v=20261007-logo" />
   <link rel="canonical" href="https://electro-dz.com/dz-marker.html" />
   <style>
-    /* Soft gate only — no product copy beyond shell chrome */
-    .dz-marker-frame { background: #111; }
+    /* Soft gate only — Électro Marker cyan/noir (scoped; does not alter other ecole pages) */
+    .dz-marker-frame { background: #0a0f1a; }
+    body.ecole-page {
+      --em-cyan: #00aeef;
+      --em-ink: #0a0f1a;
+    }
+    .sim-brand .accent { color: #00aeef !important; }
+    .ecole-app-logo {
+      width: min(280px, 78vw);
+      height: auto;
+      max-height: none;
+      border-radius: 14px;
+      object-fit: contain;
+      background: #121214;
+      border-color: rgba(0, 174, 239, 0.45);
+      box-shadow: 0 10px 28px rgba(0, 174, 239, 0.18);
+    }
+    .ecole-badge {
+      background: rgba(0, 174, 239, 0.16);
+      color: #7dd3fc;
+    }
+    .ecole-gate-card h1 { color: #f8fafc; }
+    .ecole-lead { color: #cbd5e1; }
+    .ecole-gate-form input:focus {
+      border-color: rgba(0, 174, 239, 0.7);
+      box-shadow: 0 0 0 3px rgba(0, 174, 239, 0.18);
+    }
+    .ecole-gate-form button[type="submit"] {
+      background: #00aeef;
+      color: #061018;
+    }
+    .ecole-gate-form button[type="submit"]:hover {
+      background: #38bdf8;
+    }
+    .lang-btn.active {
+      background: #00aeef !important;
+      color: #061018 !important;
+    }
+    .edz-home-link {
+      border-color: rgba(0, 174, 239, 0.45) !important;
+      background: rgba(0, 174, 239, 0.12) !important;
+      color: #7dd3fc !important;
+    }
   </style>
 </head>
 <body class="sim-page ecole-page">
   <header class="sim-topbar">
     <a href="index-fr.html" class="sim-brand" data-i18n-href-fr="index-fr.html" data-i18n-href-ar="index.html">
-      <img src="assets/app-icon.png" alt="" width="32" height="32" decoding="async" />
-      <span>DZ <span class="accent">Marker</span></span>
+      <img src="assets/electro-marker-icon.png" alt="" width="32" height="32" decoding="async" />
+      <span>Électro <span class="accent">Marker</span></span>
     </a>
     <a href="index-fr.html" class="edz-home-link" data-edz-home="1" data-i18n="nav.home">Accueil</a>
     <div class="sim-top-actions">
@@ -42,11 +84,11 @@
   <div class="sim-workspace ecole-workspace">
     <section id="ecoleGate" class="ecole-gate" aria-labelledby="ecoleGateTitle">
       <div class="ecole-gate-card">
-        <img class="ecole-app-logo" src="assets/app-icon.png" alt="DZ Marker" width="96" height="96" decoding="async" />
-        <p class="ecole-badge" data-i18n="badge">DZ Marker</p>
-        <h1 id="ecoleGateTitle" data-i18n="title">DZ Marker</h1>
+        <img class="ecole-app-logo" src="assets/electro-marker-logo.jpg" alt="Électro Marker" width="96" height="96" decoding="async" />
+        <p class="ecole-badge" data-i18n="badge">Électro Marker</p>
+        <h1 id="ecoleGateTitle" data-i18n="title">Électro Marker</h1>
         <p class="ecole-lead" data-i18n="lead">
-          Accédez à DZ Marker — éditeur d’étiquettes pour tableaux électriques.
+          Accédez à Électro Marker — éditeur d’étiquettes pour tableaux électriques.
         </p>
         <form id="ecoleGateForm" class="ecole-gate-form" autocomplete="off">
           <label for="ecoleCode" data-i18n="codeLabel">Code d’accès</label>
@@ -68,11 +110,11 @@
     </section>
 
     <div class="sim-frame-wrap ecole-frame-wrap" id="simFrameWrap" hidden>
-      <p class="sim-loading" id="simLoading" data-i18n="loading">Chargement de DZ Marker…</p>
+      <p class="sim-loading" id="simLoading" data-i18n="loading">Chargement d’Électro Marker…</p>
       <iframe
         id="simFrame"
         class="dz-marker-frame"
-        title="DZ Marker — éditeur d’étiquettes"
+        title="Électro Marker — éditeur d’étiquettes"
         allow="fullscreen"
         allowfullscreen
         loading="lazy"
@@ -94,48 +136,48 @@
 
       var T = {
         fr: {
-          "meta.title": "DZ Marker — Electro DZ",
+          "meta.title": "Électro Marker — Electro DZ",
           "meta.desc":
-            "DZ Marker — éditeur d’étiquettes de tableaux électriques. Accès par code.",
+            "Électro Marker — éditeur d’étiquettes de tableaux électriques. Accès par code.",
           "nav.home": "Accueil",
-          badge: "DZ Marker",
-          title: "DZ Marker",
-          lead: "Accédez à DZ Marker — éditeur d’étiquettes pour tableaux électriques.",
+          badge: "Électro Marker",
+          title: "Électro Marker",
+          lead: "Accédez à Électro Marker — éditeur d’étiquettes pour tableaux électriques.",
           codeLabel: "Code d’accès",
           enter: "Entrer",
           err: "Code incorrect. Réessayez.",
-          loading: "Chargement de DZ Marker…",
+          loading: "Chargement d’Électro Marker…",
           "fs.enter": "Plein écran",
           "fs.exit": "Quitter",
           "fs.close": "Fermer",
         },
         ar: {
-          "meta.title": "DZ Marker — Electro DZ",
-          "meta.desc": "DZ Marker — محرر ملصقات اللوحات الكهربائية. الدخول برمز.",
+          "meta.title": "Électro Marker — Electro DZ",
+          "meta.desc": "Électro Marker — محرر ملصقات اللوحات الكهربائية. الدخول برمز.",
           "nav.home": "الرئيسية",
-          badge: "DZ Marker",
-          title: "DZ Marker",
-          lead: "ادخل إلى DZ Marker — محرر ملصقات اللوحات الكهربائية.",
+          badge: "Électro Marker",
+          title: "Électro Marker",
+          lead: "ادخل إلى Électro Marker — محرر ملصقات اللوحات الكهربائية.",
           codeLabel: "رمز الدخول",
           enter: "دخول",
           err: "رمز غير صحيح. أعد المحاولة.",
-          loading: "جاري تحميل DZ Marker…",
+          loading: "جاري تحميل Électro Marker…",
           "fs.enter": "ملء الشاشة",
           "fs.exit": "خروج",
           "fs.close": "إغلاق",
         },
         en: {
-          "meta.title": "DZ Marker — Electro DZ",
+          "meta.title": "Électro Marker — Electro DZ",
           "meta.desc":
-            "DZ Marker — electrical panel label editor. Access code required.",
+            "Électro Marker — electrical panel label editor. Access code required.",
           "nav.home": "Home",
-          badge: "DZ Marker",
-          title: "DZ Marker",
-          lead: "Access DZ Marker — electrical panel label editor.",
+          badge: "Électro Marker",
+          title: "Électro Marker",
+          lead: "Access Électro Marker — electrical panel label editor.",
           codeLabel: "Access code",
           enter: "Enter",
           err: "Incorrect code. Please try again.",
-          loading: "Loading DZ Marker…",
+          loading: "Loading Électro Marker…",
           "fs.enter": "Fullscreen",
           "fs.exit": "Exit",
           "fs.close": "Close",
@@ -194,7 +236,7 @@
       }
 
       function panelSrcForLang() {
-        /* DZ Marker: EN shell + FR shell */
+        /* Électro Marker: EN shell + FR shell */
         return lang === "fr" ? "dzmarker-app/fr/index.html" : "dzmarker-app/index.html";
       }
 
