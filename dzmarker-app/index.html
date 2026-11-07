@@ -131,6 +131,26 @@
   }
 
 
+
+  function forceProProfile() {
+    try {
+      var store = findStore();
+      if (!store || !store.state || !store.state.user) return;
+      var p = store.state.user.profile || {};
+      var next = Object.assign({}, p, {
+        role: "PRO",
+        roleid: 2,
+        max_rails: Math.max(24, Number(p.max_rails) || 0),
+        max_projects: Math.max(1000, Number(p.max_projects) || 0),
+        cookie: true,
+        showProButton: false
+      });
+      // Keep existing fields; only upgrade entitlement bits.
+      if (p.roleid === 2 && p.role === "PRO" && (p.max_rails || 0) >= 24) return;
+      store.commit("user/assign", { profile: next });
+    } catch (e) {}
+  }
+
   function hydrateManufacturerModels() {
     try {
       var store = findStore();
@@ -175,8 +195,9 @@
       var p = (store.state.user && store.state.user.profile) || {};
       if (!p.cookie) {
         store.commit("user/assign", {
-          profile: Object.assign({}, p, { cookie: true })
+          profile: Object.assign({}, p, { cookie: true, role: "PRO", roleid: 2, max_rails: Math.max(24, Number(p.max_rails) || 24), max_projects: Math.max(1000, Number(p.max_projects) || 1000), showProButton: false })
         });
+        forceProProfile();
       }
       var l10n = store.state.l10n || {};
       var hasUi = l10n.ui && l10n.ui["tabs.main"];
@@ -193,14 +214,18 @@
   }
   setInterval(killAuth, 800);
   setInterval(hydrateManufacturerModels, 1000);
-  document.addEventListener("DOMContentLoaded", function () { killAuth(); hydrateManufacturerModels(); });
+  setInterval(forceProProfile, 1000);
+  document.addEventListener("DOMContentLoaded", function () { killAuth(); hydrateManufacturerModels(); forceProProfile(); });
   window.addEventListener("load", function () {
     setTimeout(killAuth, 400);
     setTimeout(hydrateManufacturerModels, 500);
+    setTimeout(forceProProfile, 550);
     setTimeout(killAuth, 1200);
     setTimeout(hydrateManufacturerModels, 1300);
+    setTimeout(forceProProfile, 1350);
     setTimeout(killAuth, 2500);
     setTimeout(hydrateManufacturerModels, 2600);
+    setTimeout(forceProProfile, 2650);
   });
 })();
 </script>
