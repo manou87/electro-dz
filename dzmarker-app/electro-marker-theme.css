@@ -1,20 +1,86 @@
-/* Électro Marker brand theme — cyan électrique + noir, contraste clair */
+/* Électro Marker — cyan + contraste lisible (panels clairs / chrome sombre) */
 :root {
-  --em_red: hsla(195, 100%, 47%, 1);
+  --em_red: hsla(195, 100%, 47%, 1); /* brand accent (was red) */
   --em-cyan: #00aeef;
   --em-cyan-soft: rgba(0, 174, 239, 0.18);
   --em-ink: #0a0f1a;
-  --em-panel: #121214;
-  --em-text: #f1f5f9;
-  --em-muted: #cbd5e1;
+  --em-panel-dark: #5e6674;
+  --em-panel-light: #f5f5f5;
+  --em-text-on-dark: #f8fafc;
+  --em-text-on-light: #0f172a;
+  --em-muted-on-light: #334155;
+  --em-muted-on-dark: #e2e8f0;
 }
 
-html, body {
-  background: var(--em-ink);
-  color: var(--em-text);
+/* App shell stays light like upstream UI; do NOT force light text globally */
+html,
+body {
+  background-color: var(--em-panel-light);
+  color: var(--em-text-on-light);
 }
 
-/* Brand accent formerly red */
+/* Dark chrome: left menu + right tab rail */
+.menu,
+.tabs {
+  color: var(--em-text-on-dark);
+}
+
+.menu .title,
+.tabs .title {
+  color: var(--em-text-on-dark);
+}
+
+/* Selected tab chip on light strip keeps dark label (upstream rule) */
+.getMarking .tabs .current .title {
+  color: #5e6674;
+}
+
+/* Properties / content panels: light background → dark text */
+.tab,
+.tab label,
+.tab span,
+.tab p,
+.tab li,
+.tab h1,
+.tab h2,
+.tab h3,
+.tab h4,
+.tab legend,
+.tab .title:not(.tabs .title),
+.popup,
+.popup label,
+.popup span,
+.popup p,
+.notification:not(.urgent) {
+  color: var(--em-text-on-light);
+}
+
+.tab .muted,
+.tab .hint,
+.tab .secondary {
+  color: var(--em-muted-on-light);
+}
+
+.tab input,
+.tab select,
+.tab textarea,
+.tab button,
+.popup input,
+.popup select,
+.popup textarea,
+.popup button {
+  color: var(--em-text-on-light);
+}
+
+/* Nested gray sub-tabs inside a panel keep light text on gray bar */
+.tab .tabs div {
+  color: #eee;
+}
+.tab .tabs .current {
+  color: var(--em-text-on-light);
+}
+
+/* Brand accent */
 .item.logo .title,
 .logo .title,
 a,
@@ -23,16 +89,64 @@ button.primary {
   accent-color: var(--em-cyan);
 }
 
-/* Urgent/notif brand reds → cyan (keep readable white text) */
 .notification.urgent {
   background-color: var(--em-cyan) !important;
   color: #fff !important;
 }
 
-/* Ensure toolbar / chrome text stays light on dark */
-.toolbar,
-.header,
-.menu,
-.sidebar {
-  color: var(--em-text);
+/* Top-left app mark → Électro Marker icon (overrides embedded Electromarker SVG) */
+.menu .item.logo::before,
+.menu .logo::before {
+  background-image: url("electro-marker-icon.png") !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: 50% 50% !important;
+}
+
+/* Force readable labels/controls in the light Properties pane */
+.getMarking .tab,
+.getMarking .tab label,
+.getMarking .tab .all_params,
+.getMarking .tab .Params,
+.getMarking .tab fieldset {
+  color: var(--em-text-on-light) !important;
+}
+
+.getMarking .tab input[type="text"],
+.getMarking .tab input:not([type]),
+.getMarking .tab select,
+.getMarking .tab textarea {
+  color: var(--em-text-on-light) !important;
+  background-color: #fff;
+}
+
+/* Dark surfaces keep light glyphs */
+.menu .item::before,
+.tabs .item::before {
+  filter: none;
+}
+
+/* Floating Properties / Layout editors (bg #eee) — dark text */
+.editor,
+.editor .content,
+.editor label,
+.editor span,
+.editor p,
+.editor .Params,
+.editor .all_params {
+  color: var(--em-text-on-light) !important;
+}
+
+.editor .tabs div {
+  color: #eee; /* inactive chips on gray bar */
+}
+.editor .tabs .current {
+  color: var(--em-text-on-light) !important; /* selected chip on #eee */
+}
+
+.editor input,
+.editor select,
+.editor textarea,
+.editor button {
+  color: var(--em-text-on-light) !important;
 }
