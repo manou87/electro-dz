@@ -1,0 +1,38 @@
+/* Électro Marker brand theme — cyan électrique + noir, contraste clair */
+:root {
+  --em_red: hsla(195, 100%, 47%, 1);
+  --em-cyan: #00aeef;
+  --em-cyan-soft: rgba(0, 174, 239, 0.18);
+  --em-ink: #0a0f1a;
+  --em-panel: #121214;
+  --em-text: #f1f5f9;
+  --em-muted: #cbd5e1;
+}
+
+html, body {
+  background: var(--em-ink);
+  color: var(--em-text);
+}
+
+/* Brand accent formerly red */
+.item.logo .title,
+.logo .title,
+a,
+.button.primary,
+button.primary {
+  accent-color: var(--em-cyan);
+}
+
+/* Urgent/notif brand reds → cyan (keep readable white text) */
+.notification.urgent {
+  background-color: var(--em-cyan) !important;
+  color: #fff !important;
+}
+
+/* Ensure toolbar / chrome text stays light on dark */
+.toolbar,
+.header,
+.menu,
+.sidebar {
+  color: var(--em-text);
+}

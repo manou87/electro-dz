@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- DZ Marker local editor shell -->
+<!-- Électro Marker local editor shell -->
 <html lang="en">   
 <head>
   <!-- analytics removed -->
@@ -11,8 +11,8 @@
   <meta charset="UTF-8">
   <!-- <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1"> -->
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title lang="en">DZ Marker — electrical panel label editor</title>
-  <meta lang="en" name="description" content="DZ Marker is a tool for making labels for electrical panels. Create labels, download the PDF, print and stick on panel." />
+  <title lang="en">Électro Marker — electrical panel label editor</title>
+  <meta lang="en" name="description" content="Électro Marker is a tool for making labels for electrical panels. Create labels, download the PDF, print and stick on panel." />
   <meta lang="en" name="keywords" content="electric panel label, labeling electrical panel, electrical panel label maker, electrical label printer, electrical panel tags, electrical sample board, electrician software, electrical soft, panel board switch, electrical software, fuse board, panel board, electrical panel, distribution board, panel board in electrical, panel boards and distribution boards, electrical panel sticker template, fuse in electric board, electrical fuse, distribution panel, electrical distribution board, electrical panel labels, Electrical Panel Label Template Excel, Circuit breaker template excel, electrical panel labels template, printable electrical panel labels, electrician, labelmaker, electrical panels, electrical switchboard labels, wall stickers near switchboard, fuse box labels online, fuse board labels, fuse box labels, main switchboard panel, main fuse board with switches, main switchboard, main switchboard for home, stickers online, stick on name labels, custom made labels, personalised labels, cable labels, custom sticker maker, sticker label maker, service stickers, breaker box labels, distribution board labels template, online labels uk, sticker template, distribution board stickers">
   <meta http-equiv="Cache-Control" content="no-cache">
   <meta http-equiv="Content-language" content="en">
@@ -25,9 +25,11 @@
       }
   </style>
   <link href="main.css" rel="stylesheet">
+  <link href="electro-marker-theme.css" rel="stylesheet">
   
     <link rel="icon" href="favicon.svg" type=" image/svg+xml">  
     <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
 <style id="em-no-auth-css">
@@ -128,6 +130,26 @@
     };
   }
 
+
+  function hydrateManufacturerModels() {
+    try {
+      var store = findStore();
+      var pack = window.__DZ_MANUFACTURERS__;
+      if (!store || !pack || !store.state || !Array.isArray(store.state.manufacturers)) return;
+      var list = store.state.manufacturers;
+      for (var i = 0; i < list.length; i++) {
+        var row = list[i];
+        if (!row || !row.id || row.id === "empty" || row.models) continue;
+        var local = pack[row.id];
+        if (!local) continue;
+        // Attach models without brand styles (styles load on select via models.get).
+        var V = window.Vue || window.Vue$1;
+        if (V && V.set) V.set(row, "models", local.models || {});
+        else row.models = local.models || {};
+      }
+    } catch (e) {}
+  }
+
   function killAuth() {
     try {
       document.querySelectorAll(".auth, .weusecookie").forEach(function (el) {
@@ -170,11 +192,15 @@
     } catch (e) {}
   }
   setInterval(killAuth, 800);
-  document.addEventListener("DOMContentLoaded", killAuth);
+  setInterval(hydrateManufacturerModels, 1000);
+  document.addEventListener("DOMContentLoaded", function () { killAuth(); hydrateManufacturerModels(); });
   window.addEventListener("load", function () {
     setTimeout(killAuth, 400);
+    setTimeout(hydrateManufacturerModels, 500);
     setTimeout(killAuth, 1200);
+    setTimeout(hydrateManufacturerModels, 1300);
     setTimeout(killAuth, 2500);
+    setTimeout(hydrateManufacturerModels, 2600);
   });
 })();
 </script>
