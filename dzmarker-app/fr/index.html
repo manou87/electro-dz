@@ -130,6 +130,26 @@
     };
   }
 
+
+  function hydrateManufacturerModels() {
+    try {
+      var store = findStore();
+      var pack = window.__DZ_MANUFACTURERS__;
+      if (!store || !pack || !store.state || !Array.isArray(store.state.manufacturers)) return;
+      var list = store.state.manufacturers;
+      for (var i = 0; i < list.length; i++) {
+        var row = list[i];
+        if (!row || !row.id || row.id === "empty" || row.models) continue;
+        var local = pack[row.id];
+        if (!local) continue;
+        // Attach models without brand styles (styles load on select via models.get).
+        var V = window.Vue || window.Vue$1;
+        if (V && V.set) V.set(row, "models", local.models || {});
+        else row.models = local.models || {};
+      }
+    } catch (e) {}
+  }
+
   function killAuth() {
     try {
       document.querySelectorAll(".auth, .weusecookie").forEach(function (el) {
@@ -172,11 +192,15 @@
     } catch (e) {}
   }
   setInterval(killAuth, 800);
-  document.addEventListener("DOMContentLoaded", killAuth);
+  setInterval(hydrateManufacturerModels, 1000);
+  document.addEventListener("DOMContentLoaded", function () { killAuth(); hydrateManufacturerModels(); });
   window.addEventListener("load", function () {
     setTimeout(killAuth, 400);
+    setTimeout(hydrateManufacturerModels, 500);
     setTimeout(killAuth, 1200);
+    setTimeout(hydrateManufacturerModels, 1300);
     setTimeout(killAuth, 2500);
+    setTimeout(hydrateManufacturerModels, 2600);
   });
 })();
 </script>
