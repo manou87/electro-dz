@@ -382,16 +382,66 @@ def main() -> int:
     dump_js_json(CACHE_JS, "window.__DZ_DEVICE_CACHE__=", cache)
     print(f"checkpoint device-cache.js entries={len(cache)}", flush=True)
 
-    print("Mirror top-brand QF faces (C25/B32 focus)…", flush=True)
+    # Mirror generic "other/appareil" empty faces (default + button often adds these)
+    print("Mirror other/empty placeholder faces…", flush=True)
+    for amp in ("16", "18", "25"):
+        for module in ("", "1"):
+            payload = {
+                "type": "other",
+                "module": module if module else 1,
+                "manufacturer": "empty",
+                "seria": "",
+                "model": "",
+                "params": {"amperage": amp} if False else {},
+            }
+            # EM other devices often hash as other--empty---{width}
+            resp = post_device(client, {
+                "type": "other",
+                "module": 1,
+                "manufacturer": "empty",
+                "seria": "",
+                "model": "",
+                "params": {},
+            })
+            if resp:
+                keys = store_face(cache, client, payload, resp)
+                uid = resp.get("uid") or ""
+                # also alias common UI hashes seen locally
+                for alias in (uid, f"other--empty---{amp}", "other--empty---16", "other-1-empty----", "other--empty----"):
+                    if alias and resp.get("svg"):
+                        cache[alias] = {
+                            "svg": resp.get("svg") or "",
+                            "png1": rewrite_photo(resp.get("png1"), client),
+                            "png2": rewrite_photo(resp.get("png2"), client),
+                        }
+                print(f"  other face uid={uid} aliases ok", flush=True)
+            break
+        break
+    dump_js_json(CACHE_JS, "window.__DZ_DEVICE_CACHE__=", cache)
+
+    print("Mirror ALL-brand QF faces (throttled; top brands denser)…", flush=True)
     n_brand = 0
-    for mfr in TOP_MFRS:
-        if mfr == "empty":
-            continue
+    ordered = [m for m in TOP_MFRS if m != "empty"] + [m for m in sorted(mfr_pack.keys()) if m not in TOP_MFRS and m != "empty"]
+    force = os.environ.get("EM_FORCE") == "1"
+    only = [x for x in (os.environ.get("EM_ONLY") or "").split(",") if x]
+    if only:
+        ordered = [m for m in ordered if m in only]
+    for idx, mfr in enumerate(ordered):
         if mfr not in mfr_pack:
-            print(f"  skip missing {mfr}", flush=True)
+            print(f"  skip missing pack {mfr}", flush=True)
             continue
-        n_brand += mirror_brand_qf(client, cache, mfr_pack, mfr, limit_models=6)
-        dump_js_json(CACHE_JS, "window.__DZ_DEVICE_CACHE__=", cache)
+        # Skip if brand already has QF png coverage unless forced
+        existing = sum(1 for k,v in cache.items() if k.startswith("QF-") and f"-{mfr}-" in k and v.get("png1"))
+        lim = 6 if mfr in TOP_MFRS else 2
+        if existing >= (8 if mfr in TOP_MFRS else 2) and not force:
+            print(f"  [{idx+1}/{len(ordered)}] skip {mfr} (qf_png={existing})", flush=True)
+            continue
+        print(f"  [{idx+1}/{len(ordered)}] mirror {mfr} limit_models={lim} existing_qf_png={existing}", flush=True)
+        n_brand += mirror_brand_qf(client, cache, mfr_pack, mfr, limit_models=lim)
+        if (idx + 1) % 5 == 0:
+            dump_js_json(CACHE_JS, "window.__DZ_DEVICE_CACHE__=", cache)
+            print(f"  checkpoint cache={len(cache)}", flush=True)
+    dump_js_json(CACHE_JS, "window.__DZ_DEVICE_CACHE__=", cache)
     print(f"brand face posts={n_brand}", flush=True)
 
     dump_js_json(CACHE_JS, "window.__DZ_DEVICE_CACHE__=", cache)

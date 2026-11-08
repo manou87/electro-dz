@@ -25,7 +25,7 @@
       }
   </style>
   <link href="../main.css" rel="stylesheet">
-  <link href="../electro-marker-theme.css?v=em25faces" rel="stylesheet">
+  <link href="../electro-marker-theme.css?v=em25faces7" rel="stylesheet">
   
     <link rel="icon" href="../electro-marker-icon.png" type="image/png" sizes="any">
     <link rel="apple-touch-icon" href="../electro-marker-icon.png">
@@ -72,12 +72,12 @@
     document.documentElement.classList.add('em-no-auth');
 
   </script>
-  <script src="../v3.5.1/device-cache.js?v=em25faces"></script>
-<script src="../v3.5.1/manufacturers.js?v=em25faces"></script>
+  <script src="../v3.5.1/device-cache.js?v=em25faces7"></script>
+<script src="../v3.5.1/manufacturers.js?v=em25faces7"></script>
 <script src="../vendor/html2canvas.min.js"></script>
 <script src="../vendor/jspdf.min.js"></script>
 <script src="../offline-pdf.js?v=em23pdf"></script>
-<script src="../bundle.js?v=em25faces"></script>
+<script src="../bundle.js?v=em25faces7"></script>
 
 <script id="em-no-auth-runtime">
 (function () {
@@ -150,7 +150,8 @@
         paid: Math.max(1, Number(p.paid) || 0),
         chkConfirm: false,
         cookie: true,
-        showProButton: false
+        showProButton: false,
+        realisticView: true
       });
       // Keep upgrading entitlement bits (incl. download credits).
       if (
@@ -166,22 +167,74 @@
     } catch (e) {}
   }
 
+  window.ensureBrandStyles = function ensureBrandStyles(ids) {
+    try {
+      var store = findStore();
+      var pack = window.__DZ_MANUFACTURERS__;
+      if (!store || !pack) return;
+      var list = ids;
+      if (!list || !list.length) {
+        // Brands currently on rails only (avoid injecting 100+ SVG packs).
+        list = [];
+        var cur = store.state.markings && store.state.markings.current;
+        var rails = (cur && cur.rails) || [];
+        for (var r = 0; r < rails.length; r++) {
+          var mods = rails[r].modules || [];
+          for (var m = 0; m < mods.length; m++) {
+            var id = mods[m] && mods[m].manufacturer;
+            if (id && id !== "empty" && list.indexOf(id) < 0) list.push(id);
+          }
+        }
+      }
+      var V = window.Vue || window.Vue$1;
+      for (var i = 0; i < list.length; i++) {
+        var mid = list[i];
+        var local = pack[mid];
+        if (!local) continue;
+        var row = (store.state.manufacturers || []).find(function (x) { return x && x.id === mid; });
+        if (row && !row.models) {
+          if (V && V.set) V.set(row, "models", local.models || {});
+          else row.models = local.models || {};
+        }
+        if (local.style && row && !row.__dzStyleApplied) {
+          row.__dzStyleApplied = true;
+          store.commit("assign", {
+            svgGlobalStyle: (store.state.svgGlobalStyle || "") + local.style
+          });
+        } else if (local.style && !row && !store.state.__dzStyleAppliedIds) {
+          store.state.__dzStyleAppliedIds = store.state.__dzStyleAppliedIds || {};
+        }
+        if (local.style && row && row.__dzStyleApplied) continue;
+        if (local.style && !row) {
+          store.state.__dzStyleAppliedIds = store.state.__dzStyleAppliedIds || {};
+          if (!store.state.__dzStyleAppliedIds[mid]) {
+            store.state.__dzStyleAppliedIds[mid] = true;
+            store.commit("assign", {
+              svgGlobalStyle: (store.state.svgGlobalStyle || "") + local.style
+            });
+          }
+        }
+      }
+    } catch (e) {}
+  }
+
   function hydrateManufacturerModels() {
     try {
       var store = findStore();
       var pack = window.__DZ_MANUFACTURERS__;
       if (!store || !pack || !store.state || !Array.isArray(store.state.manufacturers)) return;
       var list = store.state.manufacturers;
+      var V = window.Vue || window.Vue$1;
       for (var i = 0; i < list.length; i++) {
         var row = list[i];
         if (!row || !row.id || row.id === "empty" || row.models) continue;
         var local = pack[row.id];
         if (!local) continue;
-        // Attach models without brand styles (styles load on select via models.get).
-        var V = window.Vue || window.Vue$1;
+        // Models only here — brand SVG defs applied on demand (ensureBrandStyles).
         if (V && V.set) V.set(row, "models", local.models || {});
         else row.models = local.models || {};
       }
+      ensureBrandStyles();
     } catch (e) {}
   }
 
@@ -229,6 +282,7 @@
   }
   setInterval(killAuth, 800);
   setInterval(hydrateManufacturerModels, 1000);
+  setInterval(ensureBrandStyles, 1200);
   setInterval(forceProProfile, 1000);
   document.addEventListener("DOMContentLoaded", function () { killAuth(); hydrateManufacturerModels(); forceProProfile(); });
   window.addEventListener("load", function () {
