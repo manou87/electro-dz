@@ -94,23 +94,31 @@ button.primary {
   color: #fff !important;
 }
 
-/* Top-left app mark → Électro Marker icon (overrides embedded Electromarker SVG)
-   Enlarge beyond upstream 28×28 so brand text in the mark is readable. */
+/* Top-left app mark → Électro Marker icon (overrides embedded Electromarker SVG).
+   Logo asset already includes “Electro MARKER”, so hide the duplicate .title.
+   Prior 56×56 in an 84px cell with padding-top:58 overlapped the label (~10px). */
 .menu .item.logo {
-  min-height: 84px !important;
-  max-height: 84px !important;
-  padding-top: 58px !important;
+  min-height: 52px !important;
+  max-height: 52px !important;
+  padding-top: 0 !important;
+  overflow: hidden;
+}
+.menu .item.logo .title,
+.menu .logo .title {
+  display: none !important;
 }
 .menu .item.logo::before,
 .menu .logo::before {
-  width: 56px !important;
-  height: 56px !important;
-  top: 12px !important;
-  margin-left: -28px !important;
+  /* Landscape slot matches cropped mark (~512×308), no black-square overflow */
+  width: 64px !important;
+  height: 40px !important;
+  top: 6px !important;
+  margin-left: -32px !important;
   background-image: url("electro-marker-icon.png") !important;
   background-size: contain !important;
   background-repeat: no-repeat !important;
   background-position: 50% 50% !important;
+  border-radius: 4px;
 }
 
 /* Force readable labels/controls in the light Properties pane */
