@@ -1,0 +1,162 @@
+{
+  "format": "electro-marker-project",
+  "version": 1,
+  "savedAt": "2026-11-08T16:31:13.692Z",
+  "id": "dz-local-1",
+  "marking": {
+    "id": "dz-local-1",
+    "name": "No name",
+    "groups": [
+      {
+        "id": "group1",
+        "value": "group.general",
+        "color": "#757e8f",
+        "readonly": false
+      }
+    ],
+    "rails": [
+      {
+        "color": "#ffffff",
+        "fontColor": "#000000",
+        "fontName": "dzmarker",
+        "fontSize": 3,
+        "din": 12,
+        "height": 25,
+        "id": "rail_1794155467862",
+        "modules": [
+          {
+            "autonumerate": false,
+            "center": 1,
+            "description": "",
+            "deviceNumber": 1,
+            "din": 1,
+            "fill": false,
+            "groupId": "group1",
+            "groupNumber": "",
+            "manualTypeNumber": "",
+            "unnumber": false,
+            "rotate": false,
+            "icons": [],
+            "id": "mod_1794155467862",
+            "manufacturer": "empty",
+            "merge": true,
+            "model": null,
+            "name": "Circuit breaker (MCB)",
+            "period": "",
+            "positions": [
+              {
+                "icon": null,
+                "name": "",
+                "groupId": ""
+              },
+              {
+                "icon": null,
+                "name": "",
+                "groupId": ""
+              },
+              {
+                "icon": null,
+                "name": "",
+                "groupId": ""
+              }
+            ],
+            "realWidth": 18,
+            "showType": false,
+            "showGroupNumber": false,
+            "title": "",
+            "type": "QF",
+            "width": 18,
+            "height": 84,
+            "shift": 0,
+            "withoutIcon": false,
+            "connectors": [
+              {
+                "id": "con_top_0",
+                "type": "any",
+                "pos": "top",
+                "color": "#df4e4e",
+                "combset": "any",
+                "name": "L",
+                "radius": 3,
+                "x": 9,
+                "y": 8
+              },
+              {
+                "id": "con_bottom_1",
+                "type": "any",
+                "pos": "bottom",
+                "color": "#df4e4e",
+                "combset": "any",
+                "name": "L",
+                "radius": 3,
+                "x": 9,
+                "y": 76
+              }
+            ],
+            "poles": "1P",
+            "amperage": "6",
+            "crossSection": "2.5",
+            "curve": "C",
+            "icn": "6000",
+            "voltage": "230/400"
+          }
+        ],
+        "padding": 0,
+        "position": "bottom",
+        "shadow": false
+      }
+    ],
+    "object": {
+      "wrapsX": 300,
+      "wrapsY": [
+        125,
+        125
+      ],
+      "barbus": [
+        {
+          "t": "N",
+          "x": 0,
+          "p": 26
+        },
+        {
+          "t": "N",
+          "x": 4,
+          "p": 6
+        },
+        {
+          "t": "N",
+          "x": 4,
+          "p": 6
+        },
+        {
+          "t": "PE",
+          "x": 0,
+          "p": 26
+        }
+      ],
+      "cutmarkers": []
+    },
+    "connections": [],
+    "cablesMarking": [],
+    "combs": [],
+    "badgeMarking": null,
+    "idsMarking": [
+      {
+        "auto": true,
+        "copies": 1,
+        "edited": false,
+        "width": 12,
+        "height": 6,
+        "railId": "rail_1794155467862",
+        "items": [
+          {
+            "text": "QF1",
+            "groupId": "group1"
+          }
+        ]
+      }
+    ],
+    "labelsMarking": null,
+    "legendMarking": null
+  }
+}

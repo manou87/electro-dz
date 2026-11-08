@@ -1,13 +1,16 @@
 /**
- * Offline PDF/XLS bridge for Électro Marker on static hosting.
- * Intercepts /v3.5.1/preview (and download tokens) because GitHub Pages
- * has no Electromarker backend — without this, "Générer le fichier" is a no-op.
+ * Offline API bridge for Électro Marker on static hosting.
+ * Intercepts /v3.5.1/preview (+ download tokens) and /v3.5.1/marking
+ * because there is no Electromarker backend — without this,
+ * "Générer le fichier" and project save/download are no-ops.
  */
 (function () {
   if (window.__DZ_OFFLINE_PDF__) return;
   window.__DZ_OFFLINE_PDF__ = true;
 
   var TOKEN_PREFIX = "/dzmarker-app/v3.5.1/__dz_offline/";
+  var MARKINGS_KEY = "dz_offline_markings_v1";
+  var GUEST_MARKING_KEY = "marking";
   var cache = Object.create(null);
   var origFetch = window.fetch.bind(window);
 
@@ -36,6 +39,209 @@
     } catch (e) {
       return path;
     }
+  }
+
+  function safeParse(raw, fallback) {
+    try {
+      return raw ? JSON.parse(raw) : fallback;
+    } catch (e) {
+      return fallback;
+    }
+  }
+
+  function loadMarkingsDb() {
+    var db = safeParse(localStorage.getItem(MARKINGS_KEY), null);
+    if (!db || typeof db !== "object" || !Array.isArray(db.items)) {
+      db = { items: [], byId: {} };
+    }
+    if (!db.byId || typeof db.byId !== "object") db.byId = {};
+    return db;
+  }
+
+  function persistMarkingsDb(db) {
+    try {
+      localStorage.setItem(MARKINGS_KEY, JSON.stringify(db));
+    } catch (e) {}
+  }
+
+  function countRails(payload) {
+    var rails = (payload && payload.rails) || [];
+    var modCount = 0;
+    var idCount = 0;
+    rails.forEach(function (rail) {
+      var mods = rail.modules || rail.items || [];
+      modCount += mods.length;
+      mods.forEach(function (m) {
+        if (m && (m.deviceNumber || m.textid)) idCount += 1;
+      });
+    });
+    return {
+      railsCount: rails.length,
+      modCount: modCount,
+      idCount: idCount,
+      connCount: ((payload && payload.connections) || []).length,
+      labelCount: ((payload && payload.labelsMarking) || []).length,
+      cableCount: ((payload && payload.cablesMarking) || []).length,
+      symbolCount: 0,
+      iconCount: 0
+    };
+  }
+
+  function listItemFromPayload(payload, id) {
+    var counts = countRails(payload);
+    return Object.assign(
+      {
+        id: id,
+        name: (payload && payload.name) || "marking",
+        date: Date.now() / 1000,
+        object: (payload && payload.object) || {}
+      },
+      counts
+    );
+  }
+
+  function downloadBlob(blob, filename) {
+    try {
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      a.rel = "noopener";
+      a.style.display = "none";
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function () {
+        try {
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        } catch (e) {}
+      }, 1500);
+    } catch (e) {
+      console.error("[dz-offline-save] download failed", e);
+    }
+  }
+
+  function downloadJson(payload, id) {
+    var safeName = String((payload && payload.name) || "marquage")
+      .replace(/^marking\.name$/i, "marquage")
+      .replace(/[^\w\-àâäéèêëïîôùûüç]+/gi, "_")
+      .replace(/^_+|_+$/g, "")
+      .slice(0, 48) || "marquage";
+    var stamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-");
+    var file = {
+      format: "electro-marker-project",
+      version: 1,
+      savedAt: new Date().toISOString(),
+      id: id,
+      marking: payload
+    };
+    var blob = new Blob([JSON.stringify(file, null, 2)], {
+      type: "application/json;charset=utf-8"
+    });
+    downloadBlob(blob, safeName + "-" + stamp + ".json");
+  }
+
+  function parseBody(init) {
+    try {
+      var body = init && init.body;
+      if (typeof body === "string") return JSON.parse(body);
+      if (body && typeof body === "object") return body;
+    } catch (e) {}
+    return {};
+  }
+
+  function markingIdFromUrl(url) {
+    var m = String(url).match(/\/v3\.5\.1\/marking\/([^/?#]+)/);
+    return m ? decodeURIComponent(m[1]) : null;
+  }
+
+  function isMarkingCollection(url) {
+    return /\/v3\.5\.1\/marking\/?(\?|$)/.test(String(url));
+  }
+
+  function isMarkingItem(url) {
+    return /\/v3\.5\.1\/marking\/[^/?#]+/.test(String(url));
+  }
+
+  function handleMarkingRequest(url, method, init) {
+    var db = loadMarkingsDb();
+    var body = parseBody(init);
+
+    if (method === "GET" && isMarkingCollection(url)) {
+      return jsonResponse({ params: db.items.slice() });
+    }
+
+    if (method === "POST" && isMarkingCollection(url)) {
+      var newId =
+        (body && body.from_id && db.byId[body.from_id] && "dz-" + Date.now().toString(36)) ||
+        "dz-" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+      var source =
+        body && body.from_id && db.byId[body.from_id]
+          ? JSON.parse(JSON.stringify(db.byId[body.from_id]))
+          : body || {};
+      source.id = newId;
+      if (!source.name) source.name = "marking.name";
+      db.byId[newId] = source;
+      db.items = db.items.filter(function (x) {
+        return x.id !== newId;
+      });
+      db.items.unshift(listItemFromPayload(source, newId));
+      persistMarkingsDb(db);
+      try {
+        localStorage.setItem(GUEST_MARKING_KEY, JSON.stringify(source));
+      } catch (e) {}
+      downloadJson(source, newId);
+      return jsonResponse(source);
+    }
+
+    var id = markingIdFromUrl(url);
+    if (!id) return jsonResponse({ error: "not found" }, 404);
+
+    if (method === "GET") {
+      if (!db.byId[id]) return jsonResponse({ error: "not found" }, 404);
+      return jsonResponse(db.byId[id]);
+    }
+
+    if (method === "PUT" || method === "PATCH") {
+      var prev = db.byId[id] || { id: id };
+      var next = Object.assign({}, prev, body || {}, { id: id });
+      db.byId[id] = next;
+      var summary = listItemFromPayload(next, id);
+      var idx = db.items.findIndex(function (x) {
+        return x.id === id;
+      });
+      if (idx >= 0) db.items[idx] = summary;
+      else db.items.unshift(summary);
+      db.items.sort(function (a, b) {
+        return (b.date || 0) - (a.date || 0);
+      });
+      persistMarkingsDb(db);
+      try {
+        localStorage.setItem(GUEST_MARKING_KEY, JSON.stringify(next));
+      } catch (e) {}
+      if (method === "PUT") downloadJson(next, id);
+      var counts = countRails(next);
+      return jsonResponse(
+        Object.assign(
+          {
+            saved: "yes",
+            dat: summary.date
+          },
+          counts
+        )
+      );
+    }
+
+    if (method === "DELETE") {
+      delete db.byId[id];
+      db.items = db.items.filter(function (x) {
+        return x.id !== id;
+      });
+      persistMarkingsDb(db);
+      return jsonResponse({ ok: true });
+    }
+
+    return jsonResponse({ error: "method" }, 405);
   }
 
   function waitForLibs() {
@@ -185,16 +391,13 @@
         ? canvas.toDataURL("image/jpeg", 0.85)
         : "";
     if (!previewUrl) {
-      // 1x1 white placeholder so the preview pane is not empty
       previewUrl =
         "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
     }
 
     var token = "t" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
     var pdfPath = TOKEN_PREFIX + token + "/pdf";
-    var filePath = TOKEN_PREFIX + token + "/file.pdf";
     var xlsPath = TOKEN_PREFIX + token + "/xls";
-    var xlsFilePath = TOKEN_PREFIX + token + "/file.csv";
 
     var xlsBlob = new Blob([buildXlsText(store)], {
       type: "text/csv;charset=utf-8"
@@ -223,7 +426,6 @@
       excesslength: 0
     };
     out[tab || "main"] = block;
-    // Always expose main.pdf for equipment XLS source as upstream expects
     if ((tab || "main") !== "main") {
       out.main = Object.assign({}, block);
     } else {
@@ -233,13 +435,61 @@
   }
 
   function isPreviewUrl(url) {
-    return /\/v3\.5\.1\/preview\/?(\?|$)/.test(url);
+    return /\/v3\.5\.1\/preview\/?(\?|$)/.test(String(url));
   }
 
   function tokenFromUrl(url) {
     var m = String(url).match(/\/__dz_offline\/([^/]+)\//);
     return m && m[1];
   }
+
+  function patchStoreSave(store) {
+    if (!store || store.__dzOfflineSavePatched) return;
+    store.__dzOfflineSavePatched = true;
+    var origDispatch = store.dispatch.bind(store);
+    store.dispatch = function (type, payload, opts) {
+      var action = typeof type === "string" ? type : type && type.type;
+      if (action === "markings/save") {
+        try {
+          var current = store.state.markings && store.state.markings.current;
+          if (!current) return Promise.resolve();
+          if (!current.id) {
+            current.id = "dz-" + Date.now().toString(36);
+          }
+          // Ensure list entry exists so authorized save path won't crash.
+          var items = store.state.markings.items || [];
+          if (!items.find(function (x) {
+            return x && x.id === current.id;
+          })) {
+            items.unshift(
+              listItemFromPayload(
+                Object.assign({}, current, {
+                  rails: (store.getters && store.getters["rails/pureData"]) || []
+                }),
+                current.id
+              )
+            );
+            store.commit("markings/assign", { items: items });
+          }
+        } catch (e) {}
+      }
+      return origDispatch(type, payload, opts);
+    };
+  }
+
+  function bootPatches() {
+    try {
+      var store = findStore();
+      if (store) patchStoreSave(store);
+    } catch (e) {}
+  }
+
+  setInterval(bootPatches, 1000);
+  document.addEventListener("DOMContentLoaded", bootPatches);
+  window.addEventListener("load", function () {
+    setTimeout(bootPatches, 400);
+    setTimeout(bootPatches, 1200);
+  });
 
   window.fetch = function (input, init) {
     var url = typeof input === "string" ? input : (input && input.url) || "";
@@ -289,6 +539,15 @@
           status: 200,
           headers: { "Content-Type": "text/csv" }
         });
+      }
+    }
+
+    if (isMarkingCollection(url) || isMarkingItem(url)) {
+      try {
+        return Promise.resolve(handleMarkingRequest(url, method, init));
+      } catch (err) {
+        console.error("[dz-offline-save]", err);
+        return jsonResponse({ error: String(err && err.message) }, 500);
       }
     }
 

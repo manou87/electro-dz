@@ -76,7 +76,7 @@
 <script src="v3.5.1/manufacturers.js?v=em25mfr8"></script>
 <script src="vendor/html2canvas.min.js"></script>
 <script src="vendor/jspdf.min.js"></script>
-<script src="offline-pdf.js?v=em23pdf"></script>
+<script src="offline-pdf.js?v=em26savepdf"></script>
 <script src="bundle.js?v=em25mfr8"></script>
 
 <script id="em-no-auth-runtime">
@@ -99,6 +99,7 @@
       groups = JSON.parse(JSON.stringify((store.state.groups && store.state.groups.items) || []));
     } catch (e) {}
     return {
+      id: "dz-local-1",
       name: "marking.name",
       groups: groups,
       rails: [
@@ -142,6 +143,7 @@
       if (!store || !store.state || !store.state.user) return;
       var p = store.state.user.profile || {};
       var next = Object.assign({}, p, {
+        id: p.id || "dz-local-user",
         role: "PRO",
         roleid: 2,
         max_rails: Math.max(24, Number(p.max_rails) || 0),
@@ -151,10 +153,12 @@
         chkConfirm: false,
         cookie: true,
         showProButton: false,
-        realisticView: true
+        realisticView: true,
+        currentMarking: p.currentMarking || "dz-local-1"
       });
       // Keep upgrading entitlement bits (incl. download credits).
       if (
+        p.id &&
         p.roleid === 2 &&
         p.role === "PRO" &&
         (p.max_rails || 0) >= 24 &&
@@ -288,7 +292,7 @@
       var p = (store.state.user && store.state.user.profile) || {};
       if (!p.cookie) {
         store.commit("user/assign", {
-          profile: Object.assign({}, p, { cookie: true, role: "PRO", roleid: 2, max_rails: Math.max(24, Number(p.max_rails) || 24), max_projects: Math.max(1000, Number(p.max_projects) || 1000), downloads: Math.max(9999, Number(p.downloads) || 0), paid: Math.max(1, Number(p.paid) || 0), chkConfirm: false, showProButton: false })
+          profile: Object.assign({}, p, { id: p.id || "dz-local-user", cookie: true, role: "PRO", roleid: 2, max_rails: Math.max(24, Number(p.max_rails) || 24), max_projects: Math.max(1000, Number(p.max_projects) || 1000), downloads: Math.max(9999, Number(p.downloads) || 0), paid: Math.max(1, Number(p.paid) || 0), chkConfirm: false, showProButton: false, currentMarking: p.currentMarking || "dz-local-1" })
         });
         forceProProfile();
       }
@@ -297,8 +301,32 @@
       var current = store.state.markings && store.state.markings.current;
       if (hasUi && !current && !store.state.__dzBootstrapped) {
         store.state.__dzBootstrapped = true;
+        var boot = defaultMarking(store);
         store
-          .dispatch("markings/current", defaultMarking(store))
+          .dispatch("markings/current", boot)
+          .then(function () {
+            try {
+              var items = (store.state.markings && store.state.markings.items) || [];
+              if (!items.find(function (x) { return x && x.id === boot.id; })) {
+                items = items.slice();
+                items.unshift({
+                  id: boot.id,
+                  name: boot.name,
+                  date: Date.now() / 1000,
+                  railsCount: 1,
+                  modCount: 0,
+                  idCount: 0,
+                  connCount: 0,
+                  labelCount: 0,
+                  cableCount: 0,
+                  symbolCount: 0,
+                  iconCount: 0,
+                  object: boot.object || {}
+                });
+                store.commit("markings/assign", { items: items });
+              }
+            } catch (e) {}
+          })
           .catch(function () {
             store.state.__dzBootstrapped = false;
           });

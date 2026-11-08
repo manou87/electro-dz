@@ -1,0 +1,90 @@
+{
+  "url": "http://127.0.0.1:8765/dzmarker-app/",
+  "hardRefresh": "http://127.0.0.1:8765/dzmarker-app/index.html?em=26savepdf&t=1794155466083",
+  "boot": {
+    "url": "http://127.0.0.1:8765/dzmarker-app/index.html",
+    "profileId": "dz-local-user",
+    "authorized": true,
+    "markingId": "dz-local-1",
+    "items": [
+      "dz-local-1"
+    ],
+    "rails": 1,
+    "brands": [
+      "empty",
+      "abb",
+      "hager",
+      "legrand",
+      "siemens",
+      "chint",
+      "eaton",
+      "bticino"
+    ],
+    "offlinePdf": true,
+    "jspdf": true,
+    "html2canvas": true
+  },
+  "saveResult": {
+    "ok": true,
+    "saved": true,
+    "edited": false,
+    "ls": true,
+    "db": true,
+    "currentId": "dz-local-1"
+  },
+  "downloadMeta": {
+    "suggested": "No_name-2026-11-08-16-31-13.json",
+    "bytes": 3653,
+    "format": "electro-marker-project",
+    "hasMarking": true,
+    "rails": 1,
+    "mods": 1
+  },
+  "preview": {
+    "emkey": "dz-offline-tmw81v03yqshecu",
+    "hasMain": true,
+    "previews": 1,
+    "pdf": "http://127.0.0.1:8765/dzmarker-app/v3.5.1/__dz_offline/tmw81v03yqshecu/pdf",
+    "previewIsDataUrl": true,
+    "loading": false
+  },
+  "pdf": {
+    "ok": true,
+    "downloads": 9999,
+    "paid": 1,
+    "pdfBytes": 73682,
+    "header": "%PDF-1.3"
+  },
+  "brandsCount": 8,
+  "brands": [
+    "empty",
+    "abb",
+    "hager",
+    "legrand",
+    "siemens",
+    "chint",
+    "eaton",
+    "bticino"
+  ],
+  "req404": [
+    "http://127.0.0.1:8765/dzmarker-app/v3.5.1/auth",
+    "http://127.0.0.1:8765/images/measurement.png",
+    "http://127.0.0.1:8765/images/measurement.png",
+    "http://127.0.0.1:8765/dzmarker-app/v3.5.1/auth",
+    "http://127.0.0.1:8765/images/measurement.png",
+    "http://127.0.0.1:8765/images/measurement.png",
+    "http://127.0.0.1:8765/images/measurement.png",
+    "http://127.0.0.1:8765/images/measurement.png"
+  ],
+  "consoleTail": [
+    "[error] Blocked attempt to show a 'beforeunload' confirmation panel for a frame that never had a user gesture since its load. https://www.chromestatus.com/feature/5082396709879808",
+    "[error] Failed to load resource: the server responded with a status of 404 (File not found)",
+    "[error] Failed to load resource: the server responded with a status of 404 (File not found)",
+    "[error] Failed to load resource: the server responded with a status of 404 (File not found)",
+    "[error] Failed to load resource: the server responded with a status of 404 (File not found)",
+    "[error] Failed to load resource: the server responded with a status of 404 (File not found)",
+    "[error] Failed to load resource: the server responded with a status of 404 (File not found)",
+    "[error] Failed to load resource: the server responded with a status of 404 (File not found)",
+    "[error] Failed to load resource: the server responded with a status of 404 (File not found)"
+  ]
+}
