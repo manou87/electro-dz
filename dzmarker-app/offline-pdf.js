@@ -121,13 +121,22 @@
     }
   }
 
+  function safeFileStem(payload) {
+    return (
+      String((payload && payload.name) || "marquage")
+        .replace(/^marking\.name$/i, "marquage")
+        .replace(/[^\w\-àâäéèêëïîôùûüç]+/gi, "_")
+        .replace(/^_+|_+$/g, "")
+        .slice(0, 48) || "marquage"
+    );
+  }
+
+  function fileStamp() {
+    return new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-");
+  }
+
+  /** Optional JSON for reopen tooling — not the primary Save download. */
   function downloadJson(payload, id) {
-    var safeName = String((payload && payload.name) || "marquage")
-      .replace(/^marking\.name$/i, "marquage")
-      .replace(/[^\w\-àâäéèêëïîôùûüç]+/gi, "_")
-      .replace(/^_+|_+$/g, "")
-      .slice(0, 48) || "marquage";
-    var stamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-");
     var file = {
       format: "electro-marker-project",
       version: 1,
@@ -138,7 +147,24 @@
     var blob = new Blob([JSON.stringify(file, null, 2)], {
       type: "application/json;charset=utf-8"
     });
-    downloadBlob(blob, safeName + "-" + stamp + ".json");
+    downloadBlob(blob, safeFileStem(payload) + "-" + fileStamp() + ".json");
+  }
+
+  /**
+   * Primary Enregistrer download: same html2canvas + jsPDF path as
+   * « Générer le fichier » (makePreviewPayload / buildPdfDoc).
+   */
+  function downloadSavePdf(payload) {
+    generatePdfBlob()
+      .then(function (gen) {
+        downloadBlob(
+          gen.blob,
+          safeFileStem(payload) + "-" + fileStamp() + ".pdf"
+        );
+      })
+      .catch(function (err) {
+        console.error("[dz-offline-save] PDF export failed", err);
+      });
   }
 
   function parseBody(init) {
@@ -190,7 +216,8 @@
       try {
         localStorage.setItem(GUEST_MARKING_KEY, JSON.stringify(source));
       } catch (e) {}
-      downloadJson(source, newId);
+      // Primary UX: printable PDF (JSON stays in localStorage for reopen).
+      downloadSavePdf(source);
       return jsonResponse(source);
     }
 
@@ -219,7 +246,7 @@
       try {
         localStorage.setItem(GUEST_MARKING_KEY, JSON.stringify(next));
       } catch (e) {}
-      if (method === "PUT") downloadJson(next, id);
+      if (method === "PUT") downloadSavePdf(next);
       var counts = countRails(next);
       return jsonResponse(
         Object.assign(
@@ -367,13 +394,10 @@
       .join("\n");
   }
 
-  async function makePreviewPayload(tab) {
-    await waitForLibs();
-    var store = findStore();
+  async function captureMarkingCanvas() {
     var target = captureTarget();
-    var canvas = null;
     try {
-      canvas = await window.html2canvas(target, {
+      return await window.html2canvas(target, {
         backgroundColor: "#ffffff",
         scale: 2,
         useCORS: true,
@@ -381,11 +405,28 @@
         windowWidth: Math.max(target.scrollWidth || 1200, 1200)
       });
     } catch (e) {
-      canvas = null;
+      return null;
     }
+  }
 
+  /** Shared quality path for Save + Générer le fichier. */
+  async function generatePdfBlob() {
+    await waitForLibs();
+    var store = findStore();
+    var canvas = await captureMarkingCanvas();
     var pdf = buildPdfDoc(canvas, store);
-    var pdfBlob = pdf.output("blob");
+    return {
+      blob: pdf.output("blob"),
+      canvas: canvas,
+      store: store
+    };
+  }
+
+  async function makePreviewPayload(tab) {
+    var gen = await generatePdfBlob();
+    var store = gen.store;
+    var canvas = gen.canvas;
+    var pdfBlob = gen.blob;
     var previewUrl =
       canvas && canvas.width > 2
         ? canvas.toDataURL("image/jpeg", 0.85)

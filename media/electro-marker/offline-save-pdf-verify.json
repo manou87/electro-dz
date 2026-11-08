@@ -1,0 +1,41 @@
+{
+  "url": "http://127.0.0.1:8765/dzmarker-app/index.html?em=28savepdf&t=1794160662056",
+  "boot": {
+    "offlinePdf": true,
+    "jspdf": true,
+    "html2canvas": true,
+    "profileId": null,
+    "authorized": false,
+    "markingId": "dz-local-1",
+    "rails": 1,
+    "brands": [
+      "abb",
+      "hager",
+      "legrand",
+      "siemens",
+      "chint",
+      "eaton",
+      "bticino"
+    ]
+  },
+  "saveResult": {
+    "ok": true,
+    "currentId": "dz-local-1",
+    "ls": true,
+    "db": true
+  },
+  "downloadMeta": {
+    "suggested": "No_name-2026-11-08-17-57-55.pdf",
+    "bytes": 100991,
+    "header": "%PDF-1.3",
+    "path": "/Users/a/development/electro-dz/media/electro-marker/offline-save-enregistre.pdf",
+    "isPdf": true
+  },
+  "consoleTail": [
+    "[error] Blocked attempt to show a 'beforeunload' confirmation panel for a frame that never had a user gesture since its load. https://www.chromestatus.com/feature/5082396709879808",
+    "[error] Failed to load resource: the server responded with a status of 404 (File not found)",
+    "[error] Failed to load resource: the server responded with a status of 404 (File not found)",
+    "[error] Failed to load resource: the server responded with a status of 404 (File not found)",
+    "[error] Failed to load resource: the server responded with a status of 404 (File not found)"
+  ]
+}
