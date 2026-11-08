@@ -25,7 +25,7 @@
       }
   </style>
   <link href="main.css" rel="stylesheet">
-  <link href="electro-marker-theme.css?v=em25faces7" rel="stylesheet">
+  <link href="electro-marker-theme.css?v=em25mfr8" rel="stylesheet">
   
     <link rel="icon" href="electro-marker-icon.png" type="image/png" sizes="any">
     <link rel="apple-touch-icon" href="electro-marker-icon.png">
@@ -72,12 +72,12 @@
     document.documentElement.classList.add('em-no-auth');
 
   </script>
-  <script src="v3.5.1/device-cache.js?v=em25faces7"></script>
-<script src="v3.5.1/manufacturers.js?v=em25faces7"></script>
+  <script src="v3.5.1/device-cache.js?v=em25mfr8"></script>
+<script src="v3.5.1/manufacturers.js?v=em25mfr8"></script>
 <script src="vendor/html2canvas.min.js"></script>
 <script src="vendor/jspdf.min.js"></script>
 <script src="offline-pdf.js?v=em23pdf"></script>
-<script src="bundle.js?v=em25faces7"></script>
+<script src="bundle.js?v=em25mfr8"></script>
 
 <script id="em-no-auth-runtime">
 (function () {
@@ -218,6 +218,30 @@
     } catch (e) {}
   }
 
+
+  var DZ_MFR_ALLOW = ["empty", "abb", "hager", "legrand", "siemens", "chint", "eaton", "bticino"];
+  function filterManufacturersList() {
+    try {
+      var store = findStore();
+      if (!store || !store.state || !Array.isArray(store.state.manufacturers)) return;
+      var allow = {};
+      for (var i = 0; i < DZ_MFR_ALLOW.length; i++) allow[DZ_MFR_ALLOW[i]] = true;
+      var filtered = store.state.manufacturers.filter(function (m) { return m && allow[m.id]; });
+      // stable order
+      var byId = {};
+      for (var j = 0; j < filtered.length; j++) byId[filtered[j].id] = filtered[j];
+      var ordered = [];
+      for (var k = 0; k < DZ_MFR_ALLOW.length; k++) if (byId[DZ_MFR_ALLOW[k]]) ordered.push(byId[DZ_MFR_ALLOW[k]]);
+      if (ordered.length && ordered.length !== store.state.manufacturers.length) {
+        store.commit("assign", { manufacturers: ordered });
+      } else if (ordered.length && store.state.manufacturers !== ordered) {
+        // still reorder if needed
+        var same = ordered.length === store.state.manufacturers.length && ordered.every(function (m, idx) { return store.state.manufacturers[idx] && store.state.manufacturers[idx].id === m.id; });
+        if (!same) store.commit("assign", { manufacturers: ordered });
+      }
+    } catch (e) {}
+  }
+
   function hydrateManufacturerModels() {
     try {
       var store = findStore();
@@ -234,6 +258,7 @@
         if (V && V.set) V.set(row, "models", local.models || {});
         else row.models = local.models || {};
       }
+      filterManufacturersList();
       ensureBrandStyles();
     } catch (e) {}
   }
@@ -283,6 +308,7 @@
   setInterval(killAuth, 800);
   setInterval(hydrateManufacturerModels, 1000);
   setInterval(ensureBrandStyles, 1200);
+  setInterval(filterManufacturersList, 1500);
   setInterval(forceProProfile, 1000);
   document.addEventListener("DOMContentLoaded", function () { killAuth(); hydrateManufacturerModels(); forceProProfile(); });
   window.addEventListener("load", function () {
