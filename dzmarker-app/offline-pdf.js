@@ -518,27 +518,42 @@
       var token = tokenFromUrl(url);
       var entry = token && cache[token];
       if (!entry) {
-        return jsonResponse({ error: "expired" }, 404);
+        // Must return a Promise — app code always does fetch(...).then(...)
+        return Promise.resolve(jsonResponse({ error: "expired" }, 404));
       }
       if (/\/pdf\/?(\?|$)/.test(url) || /\/xls\/?(\?|$)/.test(url)) {
         var isXls = /\/xls\/?(\?|$)/.test(url);
-        return jsonResponse({
-          downloads: 9999,
-          paid: 1,
-          file: isXls ? entry.xlsFileUrl : entry.pdfFileUrl
-        });
+        // Also force a real file download: Electromarker uses window.open(blob)
+        // inside setTimeout, which popup-blockers (and some WebViews) swallow.
+        try {
+          downloadBlob(
+            isXls ? entry.xlsBlob : entry.pdfBlob,
+            isXls ? "marquage-equipement.csv" : "marquage-electro-marker.pdf"
+          );
+        } catch (e) {}
+        return Promise.resolve(
+          jsonResponse({
+            downloads: 9999,
+            paid: 1,
+            file: isXls ? entry.xlsFileUrl : entry.pdfFileUrl
+          })
+        );
       }
       if (/\/file\.pdf/.test(url)) {
-        return new Response(entry.pdfBlob, {
-          status: 200,
-          headers: { "Content-Type": "application/pdf" }
-        });
+        return Promise.resolve(
+          new Response(entry.pdfBlob, {
+            status: 200,
+            headers: { "Content-Type": "application/pdf" }
+          })
+        );
       }
       if (/\/file\.csv/.test(url)) {
-        return new Response(entry.xlsBlob, {
-          status: 200,
-          headers: { "Content-Type": "text/csv" }
-        });
+        return Promise.resolve(
+          new Response(entry.xlsBlob, {
+            status: 200,
+            headers: { "Content-Type": "text/csv" }
+          })
+        );
       }
     }
 
@@ -547,7 +562,9 @@
         return Promise.resolve(handleMarkingRequest(url, method, init));
       } catch (err) {
         console.error("[dz-offline-save]", err);
-        return jsonResponse({ error: String(err && err.message) }, 500);
+        return Promise.resolve(
+          jsonResponse({ error: String(err && err.message) }, 500)
+        );
       }
     }
 
