@@ -74,7 +74,10 @@
   </script>
   <script src="v3.5.1/device-cache.js"></script>
 <script src="v3.5.1/manufacturers.js"></script>
-<script src="bundle.js?v=em22rail"></script>
+<script src="vendor/html2canvas.min.js"></script>
+<script src="vendor/jspdf.min.js"></script>
+<script src="offline-pdf.js?v=em23pdf"></script>
+<script src="bundle.js?v=em23pdf"></script>
 
 <script id="em-no-auth-runtime">
 (function () {
@@ -143,11 +146,22 @@
         roleid: 2,
         max_rails: Math.max(24, Number(p.max_rails) || 0),
         max_projects: Math.max(1000, Number(p.max_projects) || 0),
+        downloads: Math.max(9999, Number(p.downloads) || 0),
+        paid: Math.max(1, Number(p.paid) || 0),
+        chkConfirm: false,
         cookie: true,
         showProButton: false
       });
-      // Keep existing fields; only upgrade entitlement bits.
-      if (p.roleid === 2 && p.role === "PRO" && (p.max_rails || 0) >= 24) return;
+      // Keep upgrading entitlement bits (incl. download credits).
+      if (
+        p.roleid === 2 &&
+        p.role === "PRO" &&
+        (p.max_rails || 0) >= 24 &&
+        (p.downloads || 0) >= 9999 &&
+        (p.paid || 0) >= 1
+      ) {
+        return;
+      }
       store.commit("user/assign", { profile: next });
     } catch (e) {}
   }
@@ -196,7 +210,7 @@
       var p = (store.state.user && store.state.user.profile) || {};
       if (!p.cookie) {
         store.commit("user/assign", {
-          profile: Object.assign({}, p, { cookie: true, role: "PRO", roleid: 2, max_rails: Math.max(24, Number(p.max_rails) || 24), max_projects: Math.max(1000, Number(p.max_projects) || 1000), showProButton: false })
+          profile: Object.assign({}, p, { cookie: true, role: "PRO", roleid: 2, max_rails: Math.max(24, Number(p.max_rails) || 24), max_projects: Math.max(1000, Number(p.max_projects) || 1000), downloads: Math.max(9999, Number(p.downloads) || 0), paid: Math.max(1, Number(p.paid) || 0), chkConfirm: false, showProButton: false })
         });
         forceProProfile();
       }
