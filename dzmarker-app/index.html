@@ -25,7 +25,7 @@
       }
   </style>
   <link href="main.css" rel="stylesheet">
-  <link href="electro-marker-theme.css?v=em25mfr8" rel="stylesheet">
+  <link href="electro-marker-theme.css?v=em29files" rel="stylesheet">
   
     <link rel="icon" href="electro-marker-icon.png" type="image/png" sizes="any">
     <link rel="apple-touch-icon" href="electro-marker-icon.png">
@@ -76,7 +76,7 @@
 <script src="v3.5.1/manufacturers.js?v=em25mfr8"></script>
 <script src="vendor/html2canvas.min.js"></script>
 <script src="vendor/jspdf.min.js"></script>
-<script src="offline-pdf.js?v=em28savepdf"></script>
+<script src="offline-pdf.js?v=em29files"></script>
 <script src="bundle.js?v=em25mfr8"></script>
 
 <script id="em-no-auth-runtime">
@@ -148,7 +148,7 @@
         roleid: 2,
         max_rails: Math.max(24, Number(p.max_rails) || 0),
         max_projects: Math.max(1000, Number(p.max_projects) || 0),
-        downloads: Math.max(9999, Number(p.downloads) || 0),
+        downloads: Number(window.__DZ_OFFLINE_FILE_COUNT__) || 0,
         paid: Math.max(1, Number(p.paid) || 0),
         chkConfirm: false,
         cookie: true,
@@ -162,9 +162,12 @@
         p.roleid === 2 &&
         p.role === "PRO" &&
         (p.max_rails || 0) >= 24 &&
-        (p.downloads || 0) >= 9999 &&
         (p.paid || 0) >= 1
       ) {
+        // Keep "fichiers disponibles" honest (Vuex defaults used to say 9999).
+        try {
+          store.state.user.profile.downloads = Number(window.__DZ_OFFLINE_FILE_COUNT__) || 0;
+        } catch (eHeal) {}
         return;
       }
       store.commit("user/assign", { profile: next });
@@ -292,7 +295,7 @@
       var p = (store.state.user && store.state.user.profile) || {};
       if (!p.cookie) {
         store.commit("user/assign", {
-          profile: Object.assign({}, p, { id: p.id || "dz-local-user", cookie: true, role: "PRO", roleid: 2, max_rails: Math.max(24, Number(p.max_rails) || 24), max_projects: Math.max(1000, Number(p.max_projects) || 1000), downloads: Math.max(9999, Number(p.downloads) || 0), paid: Math.max(1, Number(p.paid) || 0), chkConfirm: false, showProButton: false, currentMarking: p.currentMarking || "dz-local-1" })
+          profile: Object.assign({}, p, { id: p.id || "dz-local-user", cookie: true, role: "PRO", roleid: 2, max_rails: Math.max(24, Number(p.max_rails) || 24), max_projects: Math.max(1000, Number(p.max_projects) || 1000), downloads: Number(window.__DZ_OFFLINE_FILE_COUNT__) || 0, paid: Math.max(1, Number(p.paid) || 0), chkConfirm: false, showProButton: false, currentMarking: p.currentMarking || "dz-local-1" })
         });
         forceProProfile();
       }

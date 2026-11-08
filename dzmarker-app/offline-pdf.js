@@ -12,6 +12,10 @@
   var MARKINGS_KEY = "dz_offline_markings_v1";
   var GUEST_MARKING_KEY = "marking";
   var cache = Object.create(null);
+  /** Real generated offline files (PDF/CSV) — drives "%count% fichiers disponibles". */
+  var offlineFiles = [];
+  window.__DZ_OFFLINE_FILES__ = offlineFiles;
+  window.__DZ_OFFLINE_FILE_COUNT__ = 0;
   var origFetch = window.fetch.bind(window);
 
   function findStore() {
@@ -155,12 +159,22 @@
    * « Générer le fichier » (makePreviewPayload / buildPdfDoc).
    */
   function downloadSavePdf(payload) {
-    generatePdfBlob()
+    generatePdfBlob("main")
       .then(function (gen) {
-        downloadBlob(
-          gen.blob,
-          safeFileStem(payload) + "-" + fileStamp() + ".pdf"
-        );
+        var name = safeFileStem(payload) + "-" + fileStamp() + ".pdf";
+        var url = URL.createObjectURL(gen.blob);
+        downloadBlob(gen.blob, name);
+        registerOfflineFile({
+          token: "save-" + Date.now().toString(36),
+          kind: "pdf",
+          tab: "main",
+          name: name,
+          label: "PDF enregistré",
+          blob: gen.blob,
+          url: url,
+          bytes: gen.blob.size,
+          previewUrl: previewDataUrlFromCanvas(gen.canvas)
+        });
       })
       .catch(function (err) {
         console.error("[dz-offline-save] PDF export failed", err);
@@ -288,13 +302,132 @@
     });
   }
 
-  function captureTarget() {
+  function captureTarget(tab) {
+    tab = String(tab || "");
+    if (tab === "legend") {
+      return (
+        document.querySelector(".legend") ||
+        document.querySelector(".custom-legend") ||
+        document.querySelector(".content .legend") ||
+        document.querySelector(".rails") ||
+        document.body
+      );
+    }
+    if (tab === "wiring" || tab === "board") {
+      return (
+        document.querySelector("." + tab) ||
+        document.querySelector(".rails") ||
+        document.body
+      );
+    }
     return (
       document.querySelector(".rails") ||
       document.querySelector(".modnumbers") ||
       document.querySelector(".content") ||
       document.body
     );
+  }
+
+  function syncDownloadsCount() {
+    window.__DZ_OFFLINE_FILE_COUNT__ = offlineFiles.length;
+    try {
+      var store = findStore();
+      if (store && store.state && store.state.user && store.state.user.profile) {
+        // Honest count for "X fichiers disponibles" — never fake 9999.
+        store.state.user.profile.downloads = offlineFiles.length;
+      }
+    } catch (e) {}
+  }
+
+  function ensureFilesPanel() {
+    var panel = document.getElementById("dz-offline-files");
+    if (panel) return panel;
+    panel = document.createElement("div");
+    panel.id = "dz-offline-files";
+    panel.className = "dz-offline-files";
+    panel.setAttribute("aria-live", "polite");
+    document.body.appendChild(panel);
+    return panel;
+  }
+
+  function renderFilesPanel() {
+    var panel = ensureFilesPanel();
+    if (!offlineFiles.length) {
+      panel.hidden = true;
+      panel.innerHTML = "";
+      return;
+    }
+    panel.hidden = false;
+    var html =
+      '<div class="dz-offline-files__head">Fichiers PDF prêts (' +
+      offlineFiles.length +
+      ")</div><ul class=\"dz-offline-files__list\">";
+    offlineFiles.forEach(function (f, idx) {
+      html +=
+        '<li class="dz-offline-files__item">' +
+        '<div class="dz-offline-files__meta">' +
+        "<strong>" +
+        (f.label || f.name) +
+        "</strong>" +
+        "<span>" +
+        (f.tab || "main") +
+        " · " +
+        (f.bytes ? Math.round(f.bytes / 1024) + " Ko" : "") +
+        "</span></div>" +
+        '<button type="button" class="dz-offline-files__btn" data-idx="' +
+        idx +
+        '">Télécharger le PDF</button>' +
+        "</li>";
+    });
+    html += "</ul>";
+    panel.innerHTML = html;
+    panel.onclick = function (ev) {
+      var btn = ev.target && ev.target.closest && ev.target.closest("[data-idx]");
+      if (!btn) return;
+      var i = Number(btn.getAttribute("data-idx"));
+      var file = offlineFiles[i];
+      if (!file) return;
+      downloadBlob(file.blob, file.name);
+    };
+  }
+
+  function registerOfflineFile(entry) {
+    offlineFiles = offlineFiles.filter(function (f) {
+      return !(f.token === entry.token && f.kind === entry.kind);
+    });
+    offlineFiles.unshift(entry);
+    if (offlineFiles.length > 12) offlineFiles.length = 12;
+    window.__DZ_OFFLINE_FILES__ = offlineFiles;
+    syncDownloadsCount();
+    renderFilesPanel();
+  }
+
+  function previewDataUrlFromCanvas(canvas) {
+    var fallback =
+      "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+    if (!canvas || canvas.width < 2 || canvas.height < 2) return fallback;
+    try {
+      var maxW = 1200;
+      var scale = Math.min(1, maxW / canvas.width);
+      var w = Math.max(2, Math.round(canvas.width * scale));
+      var h = Math.max(2, Math.round(canvas.height * scale));
+      // Pad short captures so the order dialog does not show a 1px-tall strip.
+      var outH = Math.max(h, 220);
+      var out = document.createElement("canvas");
+      out.width = w;
+      out.height = outH;
+      var ctx = out.getContext("2d");
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, w, outH);
+      ctx.drawImage(canvas, 0, Math.floor((outH - h) / 2), w, h);
+      return out.toDataURL("image/jpeg", 0.9);
+    } catch (e) {
+      try {
+        return canvas.toDataURL("image/jpeg", 0.85);
+      } catch (e2) {
+        return fallback;
+      }
+    }
   }
 
   function railSummary(store) {
@@ -394,8 +527,8 @@
       .join("\n");
   }
 
-  async function captureMarkingCanvas() {
-    var target = captureTarget();
+  async function html2canvasSafe(target) {
+    if (!target) return null;
     try {
       return await window.html2canvas(target, {
         backgroundColor: "#ffffff",
@@ -409,11 +542,24 @@
     }
   }
 
+  async function captureMarkingCanvas(tab) {
+    var canvas = await html2canvasSafe(captureTarget(tab));
+    // Legend/empty tabs can yield a near-blank capture — fall back to rails.
+    if (
+      (!canvas || canvas.width < 8 || canvas.height < 8) &&
+      tab &&
+      tab !== "main"
+    ) {
+      canvas = await html2canvasSafe(captureTarget("main"));
+    }
+    return canvas;
+  }
+
   /** Shared quality path for Save + Générer le fichier. */
-  async function generatePdfBlob() {
+  async function generatePdfBlob(tab) {
     await waitForLibs();
     var store = findStore();
-    var canvas = await captureMarkingCanvas();
+    var canvas = await captureMarkingCanvas(tab);
     var pdf = buildPdfDoc(canvas, store);
     return {
       blob: pdf.output("blob"),
@@ -423,34 +569,57 @@
   }
 
   async function makePreviewPayload(tab) {
-    var gen = await generatePdfBlob();
+    tab = tab || "main";
+    var gen = await generatePdfBlob(tab);
     var store = gen.store;
     var canvas = gen.canvas;
     var pdfBlob = gen.blob;
-    var previewUrl =
-      canvas && canvas.width > 2
-        ? canvas.toDataURL("image/jpeg", 0.85)
-        : "";
-    if (!previewUrl) {
-      previewUrl =
-        "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
-    }
+    var previewUrl = previewDataUrlFromCanvas(canvas);
 
     var token = "t" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
     var pdfPath = TOKEN_PREFIX + token + "/pdf";
     var xlsPath = TOKEN_PREFIX + token + "/xls";
+    var pdfName =
+      safeFileStem(
+        (store &&
+          store.state &&
+          store.state.markings &&
+          store.state.markings.current) ||
+          null
+      ) +
+      "-" +
+      tab +
+      "-" +
+      fileStamp() +
+      ".pdf";
 
     var xlsBlob = new Blob([buildXlsText(store)], {
       type: "text/csv;charset=utf-8"
     });
+    var pdfFileUrl = URL.createObjectURL(pdfBlob);
+    var xlsFileUrl = URL.createObjectURL(xlsBlob);
 
     cache[token] = {
       pdfBlob: pdfBlob,
-      pdfFileUrl: URL.createObjectURL(pdfBlob),
+      pdfFileUrl: pdfFileUrl,
+      pdfName: pdfName,
       xlsBlob: xlsBlob,
-      xlsFileUrl: URL.createObjectURL(xlsBlob),
-      previewUrl: previewUrl
+      xlsFileUrl: xlsFileUrl,
+      previewUrl: previewUrl,
+      tab: tab
     };
+
+    registerOfflineFile({
+      token: token,
+      kind: "pdf",
+      tab: tab,
+      name: pdfName,
+      label: "Marquage PDF (" + tab + ")",
+      blob: pdfBlob,
+      url: pdfFileUrl,
+      bytes: pdfBlob.size,
+      previewUrl: previewUrl
+    });
 
     var block = {
       previews: [previewUrl],
@@ -460,14 +629,15 @@
 
     var out = {
       EMKEY: "dz-offline-" + token,
-      tab: tab || "main",
+      tab: tab,
       delivery: null,
       costs: null,
       costs_pro: null,
       excesslength: 0
     };
-    out[tab || "main"] = block;
-    if ((tab || "main") !== "main") {
+    out[tab] = block;
+    // Keep main populated so switching tabs still has a printable file.
+    if (tab !== "main") {
       out.main = Object.assign({}, block);
     } else {
       out.main = block;
@@ -564,17 +734,33 @@
       }
       if (/\/pdf\/?(\?|$)/.test(url) || /\/xls\/?(\?|$)/.test(url)) {
         var isXls = /\/xls\/?(\?|$)/.test(url);
-        // Also force a real file download: Electromarker uses window.open(blob)
-        // inside setTimeout, which popup-blockers (and some WebViews) swallow.
+        var fileName = isXls
+          ? "marquage-equipement.csv"
+          : entry.pdfName || "marquage-electro-marker.pdf";
+        // Immediate download: Electromarker uses window.open(blob) in setTimeout,
+        // which popup-blockers (and some WebViews) swallow.
         try {
-          downloadBlob(
-            isXls ? entry.xlsBlob : entry.pdfBlob,
-            isXls ? "marquage-equipement.csv" : "marquage-electro-marker.pdf"
-          );
+          downloadBlob(isXls ? entry.xlsBlob : entry.pdfBlob, fileName);
         } catch (e) {}
+        if (!isXls) {
+          registerOfflineFile({
+            token: token,
+            kind: "pdf",
+            tab: entry.tab || "main",
+            name: fileName,
+            label: "PDF généré",
+            blob: entry.pdfBlob,
+            url: entry.pdfFileUrl,
+            bytes: entry.pdfBlob && entry.pdfBlob.size,
+            previewUrl: entry.previewUrl
+          });
+        } else {
+          syncDownloadsCount();
+        }
         return Promise.resolve(
           jsonResponse({
-            downloads: 9999,
+            // Remaining / listed offline files — not a fake 9999 credit pool.
+            downloads: Math.max(1, offlineFiles.length),
             paid: 1,
             file: isXls ? entry.xlsFileUrl : entry.pdfFileUrl
           })

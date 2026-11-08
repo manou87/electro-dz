@@ -170,3 +170,86 @@ button.primary {
 }
 
 /* EM-25: removed invented .faceDetails overlays (no CSS plaques). */
+
+/* Offline generated PDFs — clear list + download (not fake 9999 credits). */
+.dz-offline-files {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 10050;
+  width: min(360px, calc(100vw - 24px));
+  max-height: min(42vh, 360px);
+  overflow: auto;
+  background: #0f172a;
+  color: #f8fafc;
+  border: 1px solid rgba(0, 174, 239, 0.45);
+  border-radius: 10px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  padding: 12px 12px 10px;
+  font: 13px/1.35 "Segoe UI", "Helvetica Neue", sans-serif;
+}
+.dz-offline-files[hidden] {
+  display: none !important;
+}
+.dz-offline-files__head {
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #00aeef;
+}
+.dz-offline-files__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.dz-offline-files__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 8px;
+}
+.dz-offline-files__meta {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.dz-offline-files__meta strong {
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dz-offline-files__meta span {
+  font-size: 11px;
+  opacity: 0.75;
+}
+.dz-offline-files__btn {
+  flex-shrink: 0;
+  border: 0;
+  border-radius: 6px;
+  background: #00aeef;
+  color: #041018;
+  font-weight: 700;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+.dz-offline-files__btn:hover {
+  filter: brightness(1.08);
+}
+
+/* Make the in-dialog "Télécharger" link unmistakable after Générer. */
+.getMarking a.downloadLink {
+  display: inline-block !important;
+  margin: 0.5em 0 0.75em !important;
+  padding: 0.65em 1em !important;
+  border-radius: 6px !important;
+  background: #00aeef !important;
+  color: #041018 !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  border: 0 !important;
+}
