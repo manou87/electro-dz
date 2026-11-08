@@ -12,3 +12,5 @@ python3 -m http.server 8080
 Ouvrir `dz-marker.html` (soft gate) ou `dzmarker-app/index.html` (éditeur).
 
 Les appels API externes sont désactivés (mode hors-ligne).
+
+Export PDF/XLS : `offline-pdf.js` intercepte `/v3.5.1/preview` et génère un PDF local (html2canvas + jsPDF), sans backend Electromarker.
