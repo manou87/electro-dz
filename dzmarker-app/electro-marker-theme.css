@@ -201,3 +201,27 @@ button.primary {
   color: #222;
   text-shadow: 0 0 2px #fff;
 }
+
+/* Hide baked SVG rating when live overlay is present (cache often stuck on C16/etc.) */
+.realisticView .module:has(.faceDetails) .em_Model,
+.realisticView .module:has(.faceDetails) .em_Model tspan {
+  fill: transparent !important;
+  stroke: transparent !important;
+  opacity: 0 !important;
+}
+
+/* Readable live rating over brand PNGs that still show a stale printed face */
+.realisticView .module .faceDetails.onPng .faceRating {
+  background: rgba(255, 255, 255, 0.88);
+  padding: 0.4mm 1.2mm;
+  border-radius: 0.6mm;
+}
+.realisticView .module .faceDetails.onPng .faceType {
+  background: rgba(0, 0, 0, 0.45);
+  padding: 0.2mm 1mm;
+  border-radius: 0.5mm;
+}
+.realisticView .module .faceDetails .faceResidual,
+.realisticView .module .faceDetails .faceRating {
+  white-space: nowrap;
+}
