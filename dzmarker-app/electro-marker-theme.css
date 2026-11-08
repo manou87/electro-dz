@@ -94,9 +94,19 @@ button.primary {
   color: #fff !important;
 }
 
-/* Top-left app mark → Électro Marker icon (overrides embedded Electromarker SVG) */
+/* Top-left app mark → Électro Marker icon (overrides embedded Electromarker SVG)
+   Enlarge beyond upstream 28×28 so brand text in the mark is readable. */
+.menu .item.logo {
+  min-height: 84px !important;
+  max-height: 84px !important;
+  padding-top: 58px !important;
+}
 .menu .item.logo::before,
 .menu .logo::before {
+  width: 56px !important;
+  height: 56px !important;
+  top: 12px !important;
+  margin-left: -28px !important;
   background-image: url("electro-marker-icon.png") !important;
   background-size: contain !important;
   background-repeat: no-repeat !important;

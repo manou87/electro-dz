@@ -38,7 +38,7 @@
         "WireLab — tableau électrique pédagogique, moteurs et sélecteurs (accès par code)",
       "quick.dzmarker": "Électro Marker",
       "quick.dzmarker.hint":
-        "Électro Marker — éditeur d’étiquettes de tableaux électriques (accès par code)",
+        "Électro Marker — éditeur d’étiquettes de tableaux électriques",
       "quick.oibt": "Entraînement au contrôle électrique",
       "quick.oibt.hint":
         "Entraînement au contrôle d'installations — tableau, prises et testeur",
@@ -173,7 +173,7 @@
         "WireLab — لوحة كهربائية تعليمية، محركات ومحددات (رمز دخول)",
       "quick.dzmarker": "Électro Marker",
       "quick.dzmarker.hint":
-        "Électro Marker — محرر ملصقات اللوحات الكهربائية (رمز دخول)",
+        "Électro Marker — محرر ملصقات اللوحات الكهربائية",
       "quick.oibt": "تدريب على المراقبة الكهربائية",
       "quick.oibt.hint":
         "تدريب على مراقبة التركيبات — لوحة، مقابس وجهاز اختبار",
@@ -309,7 +309,7 @@
         "WireLab — educational electrical panel, motors and selectors (access code)",
       "quick.dzmarker": "Électro Marker",
       "quick.dzmarker.hint":
-        "Électro Marker — electrical panel label editor (access code)",
+        "Électro Marker — electrical panel label editor",
       "quick.oibt": "Electrical inspection training",
       "quick.oibt.hint":
         "Electrical inspection training — panel, outlets and tester",
