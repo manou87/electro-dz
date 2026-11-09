@@ -1,7 +1,7 @@
 # Fix: no auto-download / no invented PDF sheets on marking open
 
 ## SHA
-`5bd1db5313e0b235b3db8ed526ab4081eed2ff0d` — branch `cursor/em-no-auto-pdf-2168` (push blocked 403)
+`5e283c78c591d85c915b3f605bc0dd71a9a725e3` — branch `cursor/em-no-auto-pdf-2168` (push blocked 403)
 
 ## Root cause
 `offline-pdf.js` called `downloadSavePdf()` on every `POST /v3.5.1/marking` and `PUT /v3.5.1/marking/:id`. Opening the marking page (authorized bootstrap / autosave timer / Enregistrer path) therefore force-downloaded a PDF and registered it into the floating **« Fichiers PDF prêts »** panel. Preview also registered files immediately, so the panel could appear without a Générer click.
