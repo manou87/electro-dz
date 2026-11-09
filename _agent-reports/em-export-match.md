@@ -9,7 +9,7 @@ DZ = on-screen DOM capture (html2canvas) that mirrors API shape and prepare-dial
 
 ## SHA
 
-`4c8e4f127f7a8d923b9c2bc1aaa7803e3784ac74` on `cursor/em-export-match-f391`
+Code commit: see `git log -1 --oneline` on `cursor/em-export-match-f391` after this docs tip.
 
 ## Changes
 
