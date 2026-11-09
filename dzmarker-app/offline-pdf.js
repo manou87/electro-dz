@@ -86,8 +86,28 @@
       connCount: ((payload && payload.connections) || []).length,
       labelCount: ((payload && payload.labelsMarking) || []).length,
       cableCount: ((payload && payload.cablesMarking) || []).length,
-      symbolCount: 0,
-      iconCount: 0
+      symbolCount: ((payload && payload.labelsMarking) || []).reduce(function (
+        n,
+        line
+      ) {
+        return (
+          n +
+          ((line && line.items) || []).filter(function (it) {
+            return it && it.icon;
+          }).length
+        );
+      },
+      0),
+      iconCount: (function () {
+        var n = 0;
+        rails.forEach(function (rail) {
+          (rail.modules || rail.items || []).forEach(function (m) {
+            if (m && m.icons && m.icons.length) n += m.icons.length;
+            else if (m && m.icon) n += 1;
+          });
+        });
+        return n;
+      })()
     };
   }
 
@@ -286,6 +306,8 @@
         pick(
           document.querySelector(".content .labels"),
           document.querySelector(".labels"),
+          document.querySelector(".badge"),
+          document.querySelector(".content"),
           document.querySelector(".rails")
         ) || document.body
       );
@@ -406,8 +428,75 @@
     if (offlineFiles.length > 12) offlineFiles.length = 12;
     window.__DZ_OFFLINE_FILES__ = offlineFiles;
     syncDownloadsCount();
-    // Only reveal the floating panel after an explicit Générer / Télécharger click.
-    if (opts.showPanel) renderFilesPanel();
+    // Official UI file proposal = preview popup a.downloadLink (links[tab]),
+    // not an invented floating "Fichiers PDF prêts" dump.
+    if (opts.showPanel) {
+      // Keep panel hidden — real proposal is the Electromarker downloadLink.
+      var panel = document.getElementById("dz-offline-files");
+      if (panel) {
+        panel.hidden = true;
+        panel.innerHTML = "";
+      }
+    }
+  }
+
+  /** Hide prepare/auth overlays so capture matches on-screen marking (icons/labels). */
+  function withOverlaysHidden(run) {
+    var hidden = [];
+    var nodes = document.querySelectorAll(
+      ".fader, .popup.getMarking, .weusecookie, .dz-offline-files, #pre_loading, #pre_lang"
+    );
+    for (var i = 0; i < nodes.length; i++) {
+      var el = nodes[i];
+      hidden.push({
+        el: el,
+        visibility: el.style.visibility,
+        pointerEvents: el.style.pointerEvents
+      });
+      el.style.visibility = "hidden";
+      el.style.pointerEvents = "none";
+    }
+    return Promise.resolve()
+      .then(run)
+      .then(
+        function (result) {
+          hidden.forEach(function (h) {
+            h.el.style.visibility = h.visibility;
+            h.el.style.pointerEvents = h.pointerEvents;
+          });
+          return result;
+        },
+        function (err) {
+          hidden.forEach(function (h) {
+            h.el.style.visibility = h.visibility;
+            h.el.style.pointerEvents = h.pointerEvents;
+          });
+          throw err;
+        }
+      );
+  }
+
+  function waitForImages(root, ms) {
+    root = root || document;
+    var imgs = Array.prototype.slice.call(root.querySelectorAll("img"));
+    var pending = imgs.map(function (img) {
+      if (img.complete && img.naturalWidth > 0) return Promise.resolve();
+      return new Promise(function (resolve) {
+        var done = function () {
+          resolve();
+        };
+        img.addEventListener("load", done, { once: true });
+        img.addEventListener("error", done, { once: true });
+        setTimeout(done, ms || 800);
+      });
+    });
+    return Promise.all(pending).then(function () {
+      return new Promise(function (resolve) {
+        requestAnimationFrame(function () {
+          setTimeout(resolve, 48);
+        });
+      });
+    });
   }
 
   function previewDataUrlFromCanvas(canvas) {
@@ -507,15 +596,21 @@
         useCORS: true,
         allowTaint: true,
         logging: false,
-        imageTimeout: 800,
+        imageTimeout: 1500,
         removeContainer: true,
-        windowWidth: Math.max(target.scrollWidth || 1200, 1200),
+        // Keep SVG/icon symbols in the print sheet (as on screen).
+        foreignObjectRendering: false,
+        windowWidth: Math.max(
+          target.scrollWidth || 1200,
+          document.documentElement.clientWidth || 1200
+        ),
         ignoreElements: function (el) {
           if (!el || !el.classList) return false;
           return (
             el.classList.contains("fader") ||
             el.classList.contains("popup") ||
             el.classList.contains("auth") ||
+            el.classList.contains("weusecookie") ||
             el.classList.contains("dz-offline-files") ||
             el.id === "dz-offline-files" ||
             el.id === "pre_loading" ||
@@ -554,23 +649,24 @@
 
   async function captureMarkingCanvas(tab) {
     tab = tab || "main";
-    var prev = activateTabForCapture(tab);
-    await new Promise(function (resolve) {
-      requestAnimationFrame(function () {
-        setTimeout(resolve, 32);
-      });
+    return withOverlaysHidden(async function () {
+      var prev = activateTabForCapture(tab);
+      var target = captureTarget(tab);
+      await waitForImages(target, 1200);
+      var canvas = await html2canvasSafe(target);
+      // Legend/empty tabs can yield a near-blank capture — fall back to rails.
+      if (
+        (!canvas || canvas.width < 8 || canvas.height < 8) &&
+        tab &&
+        tab !== "main"
+      ) {
+        var mainTarget = captureTarget("main");
+        await waitForImages(mainTarget, 800);
+        canvas = await html2canvasSafe(mainTarget);
+      }
+      restoreTab(prev);
+      return canvas;
     });
-    var canvas = await html2canvasSafe(captureTarget(tab));
-    // Legend/empty tabs can yield a near-blank capture — fall back to rails.
-    if (
-      (!canvas || canvas.width < 8 || canvas.height < 8) &&
-      tab &&
-      tab !== "main"
-    ) {
-      canvas = await html2canvasSafe(captureTarget("main"));
-    }
-    restoreTab(prev);
-    return canvas;
   }
 
   /** Shared path for « Obtenir / Générer » — live marking capture only. */
@@ -762,11 +858,8 @@
         var fileName = isXls
           ? "marquage-equipement.csv"
           : entry.pdfName || "marquage-electro-marker.pdf";
-        // Explicit Générer / Télécharger click path (bundle download() → fetch(pdfUrl)).
-        // Electromarker uses window.open(blob); <a download> covers popup blockers.
-        try {
-          downloadBlob(isXls ? entry.xlsBlob : entry.pdfBlob, fileName);
-        } catch (e) {}
+        // Official download(tab): fetch(token) → JSON {file, downloads[, paid]}
+        // then links[tab]=file and window.open(file). No forced <a download>.
         if (!isXls) {
           registerOfflineFile(
             entry._pendingFile || {
@@ -780,16 +873,17 @@
               bytes: entry.pdfBlob && entry.pdfBlob.size,
               previewUrl: entry.previewUrl
             },
-            { showPanel: true }
+            { showPanel: false }
           );
         } else {
           syncDownloadsCount();
         }
         return Promise.resolve(
           jsonResponse({
-            // Remaining / listed offline files — not a fake 9999 credit pool.
+            // Honest remaining/listed files — never fake 9999.
             downloads: Math.max(1, offlineFiles.length),
             paid: 1,
+            // Blob URL so window.open / a.downloadLink show the real PDF sheet.
             file: isXls ? entry.xlsFileUrl : entry.pdfFileUrl
           })
         );
