@@ -9,7 +9,12 @@ DZ = on-screen DOM capture (html2canvas) that mirrors API shape and prepare-dial
 
 ## SHA
 
-Code commit: see `git log -1 --oneline` on `cursor/em-export-match-f391` after this docs tip.
+- Fix: `18f9477b8b5065e3bd32dbdcef4564ed0625b53c`
+- Docs: `3f6c2bac5b03a375c275d991ea0c3415a8ba31a0` (this file tip; next commit pins both)
+
+## Branch
+
+`cursor/em-export-match-f391`
 
 ## Changes
 
@@ -18,8 +23,4 @@ Code commit: see `git log -1 --oneline` on `cursor/em-export-match-f391` after t
 
 ## Push
 
-Blocked — GitHub PAT/keyring invalid (401). Need fresh PAT then:
-
-```bash
-git push -u origin cursor/em-export-match-f391
-```
+Blocked — GitHub PAT/keyring invalid (401).
