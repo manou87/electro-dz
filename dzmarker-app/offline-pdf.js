@@ -139,48 +139,6 @@
     return new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-");
   }
 
-  /** Optional JSON for reopen tooling — not the primary Save download. */
-  function downloadJson(payload, id) {
-    var file = {
-      format: "electro-marker-project",
-      version: 1,
-      savedAt: new Date().toISOString(),
-      id: id,
-      marking: payload
-    };
-    var blob = new Blob([JSON.stringify(file, null, 2)], {
-      type: "application/json;charset=utf-8"
-    });
-    downloadBlob(blob, safeFileStem(payload) + "-" + fileStamp() + ".json");
-  }
-
-  /**
-   * Primary Enregistrer download: same html2canvas + jsPDF path as
-   * « Générer le fichier » (makePreviewPayload / buildPdfDoc).
-   */
-  function downloadSavePdf(payload) {
-    generatePdfBlob("main")
-      .then(function (gen) {
-        var name = safeFileStem(payload) + "-" + fileStamp() + ".pdf";
-        var url = URL.createObjectURL(gen.blob);
-        downloadBlob(gen.blob, name);
-        registerOfflineFile({
-          token: "save-" + Date.now().toString(36),
-          kind: "pdf",
-          tab: "main",
-          name: name,
-          label: "PDF enregistré",
-          blob: gen.blob,
-          url: url,
-          bytes: gen.blob.size,
-          previewUrl: previewDataUrlFromCanvas(gen.canvas)
-        });
-      })
-      .catch(function (err) {
-        console.error("[dz-offline-save] PDF export failed", err);
-      });
-  }
-
   function parseBody(init) {
     try {
       var body = init && init.body;
@@ -230,8 +188,7 @@
       try {
         localStorage.setItem(GUEST_MARKING_KEY, JSON.stringify(source));
       } catch (e) {}
-      // Primary UX: printable PDF (JSON stays in localStorage for reopen).
-      downloadSavePdf(source);
+      // Persist only — never auto-download / auto-generate PDF on save or page open.
       return jsonResponse(source);
     }
 
@@ -260,7 +217,7 @@
       try {
         localStorage.setItem(GUEST_MARKING_KEY, JSON.stringify(next));
       } catch (e) {}
-      if (method === "PUT") downloadSavePdf(next);
+      // Autosave / Enregistrer must not trigger PDF download or the ready panel.
       var counts = countRails(next);
       return jsonResponse(
         Object.assign(
@@ -303,28 +260,64 @@
   }
 
   function captureTarget(tab) {
-    tab = String(tab || "");
+    tab = String(tab || "main");
+    var pick = function () {
+      for (var i = 0; i < arguments.length; i++) {
+        var el = arguments[i];
+        if (!el) continue;
+        var r = el.getBoundingClientRect && el.getBoundingClientRect();
+        if (r && r.width >= 8 && r.height >= 8) return el;
+        if (!r && (el.scrollWidth > 8 || el.offsetWidth > 8)) return el;
+      }
+      return null;
+    };
     if (tab === "legend") {
       return (
-        document.querySelector(".legend") ||
-        document.querySelector(".custom-legend") ||
-        document.querySelector(".content .legend") ||
-        document.querySelector(".rails") ||
-        document.body
+        pick(
+          document.querySelector(".content .legend"),
+          document.querySelector(".custom-legend"),
+          document.querySelector(".legend"),
+          document.querySelector(".rails")
+        ) || document.body
       );
     }
-    if (tab === "wiring" || tab === "board") {
+    if (tab === "labels") {
       return (
-        document.querySelector("." + tab) ||
-        document.querySelector(".rails") ||
-        document.body
+        pick(
+          document.querySelector(".content .labels"),
+          document.querySelector(".labels"),
+          document.querySelector(".rails")
+        ) || document.body
+      );
+    }
+    if (tab === "devices") {
+      return (
+        pick(
+          document.querySelector(".devices-and-ids"),
+          document.querySelector(".content .devices"),
+          document.querySelector(".devices"),
+          document.querySelector(".modnumbers"),
+          document.querySelector(".rails")
+        ) || document.body
+      );
+    }
+    if (tab === "wiring" || tab === "board" || tab === "cables") {
+      return (
+        pick(
+          document.querySelector(".wiring-canvas"),
+          document.querySelector("." + tab),
+          document.querySelector(".content ." + tab),
+          document.querySelector(".rails")
+        ) || document.body
       );
     }
     return (
-      document.querySelector(".rails") ||
-      document.querySelector(".modnumbers") ||
-      document.querySelector(".content") ||
-      document.body
+      pick(
+        document.querySelector(".content .rails"),
+        document.querySelector(".rails"),
+        document.querySelector(".modnumbers"),
+        document.querySelector(".content")
+      ) || document.body
     );
   }
 
@@ -346,8 +339,21 @@
     panel.id = "dz-offline-files";
     panel.className = "dz-offline-files";
     panel.setAttribute("aria-live", "polite");
+    panel.hidden = true;
     document.body.appendChild(panel);
     return panel;
+  }
+
+  function clearFilesPanel() {
+    offlineFiles = [];
+    window.__DZ_OFFLINE_FILES__ = offlineFiles;
+    window.__DZ_OFFLINE_FILE_COUNT__ = 0;
+    var panel = document.getElementById("dz-offline-files");
+    if (panel) {
+      panel.hidden = true;
+      panel.innerHTML = "";
+    }
+    syncDownloadsCount();
   }
 
   function renderFilesPanel() {
@@ -391,7 +397,8 @@
     };
   }
 
-  function registerOfflineFile(entry) {
+  function registerOfflineFile(entry, opts) {
+    opts = opts || {};
     offlineFiles = offlineFiles.filter(function (f) {
       return !(f.token === entry.token && f.kind === entry.kind);
     });
@@ -399,7 +406,8 @@
     if (offlineFiles.length > 12) offlineFiles.length = 12;
     window.__DZ_OFFLINE_FILES__ = offlineFiles;
     syncDownloadsCount();
-    renderFilesPanel();
+    // Only reveal the floating panel after an explicit Générer / Télécharger click.
+    if (opts.showPanel) renderFilesPanel();
   }
 
   function previewDataUrlFromCanvas(canvas) {
@@ -430,70 +438,33 @@
     }
   }
 
-  function railSummary(store) {
-    var lines = [];
-    try {
-      var rails = (store && store.state && store.state.rails && store.state.rails.items) || [];
-      rails.forEach(function (rail, ri) {
-        lines.push("Rail " + (ri + 1) + " — " + (rail.din || "?") + " DIN");
-        (rail.items || []).forEach(function (d, di) {
-          var label =
-            (d.deviceNumber || d.name || d.text || d.type || "module") +
-            (d.In || d.curve ? " " + [d.curve, d.In ? d.In + "A" : ""].filter(Boolean).join(" ") : "");
-          lines.push("  " + (di + 1) + ". " + label);
-        });
-      });
-    } catch (e) {}
-    return lines;
-  }
-
-  function buildPdfDoc(canvas, store) {
+  /**
+   * Mirror official Electromarker download: PDF is a capture of the live
+   * marking HTML/canvas (rails / legend / labels), not an invented sheet layout.
+   * No schematic rail dumps, no "export hors-ligne" banners.
+   */
+  function buildPdfDoc(canvas) {
     var JsPDF = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
-    var pdf = new JsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
+    var landscape =
+      !canvas || !canvas.width || !canvas.height || canvas.width >= canvas.height;
+    var pdf = new JsPDF({
+      orientation: landscape ? "landscape" : "portrait",
+      unit: "mm",
+      format: "a4"
+    });
     var pageW = pdf.internal.pageSize.getWidth();
     var pageH = pdf.internal.pageSize.getHeight();
-    var margin = 8;
-    pdf.setFontSize(12);
-    pdf.text("Électro Marker — export hors-ligne", margin, margin + 4);
-    pdf.setFontSize(9);
-    pdf.setTextColor(80);
-    var name = "";
-    try {
-      name =
-        (store &&
-          store.state &&
-          store.state.markings &&
-          store.state.markings.current &&
-          store.getters.localize &&
-          store.getters.localize(store.state.markings.current.name)) ||
-        (store.state.markings.current && store.state.markings.current.name) ||
-        "";
-    } catch (e) {
-      try {
-        name = store.state.markings.current.name || "";
-      } catch (e2) {}
-    }
-    if (name) pdf.text(String(name), margin, margin + 9);
-    pdf.setTextColor(0);
+    var margin = 6;
 
     if (canvas && canvas.width > 2 && canvas.height > 2) {
       var maxW = pageW - margin * 2;
-      var maxH = pageH - margin * 2 - 14;
+      var maxH = pageH - margin * 2;
       var ratio = Math.min(maxW / canvas.width, maxH / canvas.height);
       var w = canvas.width * ratio;
       var h = canvas.height * ratio;
-      var img = canvas.toDataURL("image/jpeg", 0.92);
-      pdf.addImage(img, "JPEG", margin, margin + 12, w, h);
-    } else {
-      pdf.setFontSize(10);
-      var y = margin + 16;
-      railSummary(store).forEach(function (line) {
-        pdf.text(line, margin, y);
-        y += 6;
-      });
-      if (y === margin + 16) {
-        pdf.text("Aucun appareil sur le rail — ajoutez des modules avant d'exporter.", margin, y);
-      }
+      var x = margin + (maxW - w) / 2;
+      var y = margin + (maxH - h) / 2;
+      pdf.addImage(canvas.toDataURL("image/jpeg", 0.92), "JPEG", x, y, w, h);
     }
     return pdf;
   }
@@ -534,15 +505,61 @@
         backgroundColor: "#ffffff",
         scale: 2,
         useCORS: true,
+        allowTaint: true,
         logging: false,
-        windowWidth: Math.max(target.scrollWidth || 1200, 1200)
+        imageTimeout: 800,
+        removeContainer: true,
+        windowWidth: Math.max(target.scrollWidth || 1200, 1200),
+        ignoreElements: function (el) {
+          if (!el || !el.classList) return false;
+          return (
+            el.classList.contains("fader") ||
+            el.classList.contains("popup") ||
+            el.classList.contains("auth") ||
+            el.classList.contains("dz-offline-files") ||
+            el.id === "dz-offline-files" ||
+            el.id === "pre_loading" ||
+            el.id === "pre_lang"
+          );
+        }
       });
     } catch (e) {
       return null;
     }
   }
 
+  function activateTabForCapture(tab) {
+    var store = findStore();
+    if (!store || !store.state || !tab) return null;
+    var prev = store.state.tab;
+    if (tab !== "main" && tab !== prev) {
+      try {
+        store.commit("assign", { tab: tab });
+      } catch (e) {
+        store.state.tab = tab;
+      }
+    }
+    return prev;
+  }
+
+  function restoreTab(prev) {
+    var store = findStore();
+    if (!store || !store.state || prev == null || prev === store.state.tab) return;
+    try {
+      store.commit("assign", { tab: prev });
+    } catch (e) {
+      store.state.tab = prev;
+    }
+  }
+
   async function captureMarkingCanvas(tab) {
+    tab = tab || "main";
+    var prev = activateTabForCapture(tab);
+    await new Promise(function (resolve) {
+      requestAnimationFrame(function () {
+        setTimeout(resolve, 32);
+      });
+    });
     var canvas = await html2canvasSafe(captureTarget(tab));
     // Legend/empty tabs can yield a near-blank capture — fall back to rails.
     if (
@@ -552,15 +569,16 @@
     ) {
       canvas = await html2canvasSafe(captureTarget("main"));
     }
+    restoreTab(prev);
     return canvas;
   }
 
-  /** Shared quality path for Save + Générer le fichier. */
+  /** Shared path for « Obtenir / Générer » — live marking capture only. */
   async function generatePdfBlob(tab) {
     await waitForLibs();
     var store = findStore();
     var canvas = await captureMarkingCanvas(tab);
-    var pdf = buildPdfDoc(canvas, store);
+    var pdf = buildPdfDoc(canvas);
     return {
       blob: pdf.output("blob"),
       canvas: canvas,
@@ -609,7 +627,8 @@
       tab: tab
     };
 
-    registerOfflineFile({
+    // Cache for later Générer click — do not show the ready panel on preview alone.
+    cache[token]._pendingFile = {
       token: token,
       kind: "pdf",
       tab: tab,
@@ -619,7 +638,7 @@
       url: pdfFileUrl,
       bytes: pdfBlob.size,
       previewUrl: previewUrl
-    });
+    };
 
     var block = {
       previews: [previewUrl],
@@ -695,9 +714,15 @@
     } catch (e) {}
   }
 
+  // Page open must never show leftover "Fichiers PDF prêts" or trigger downloads.
+  clearFilesPanel();
   setInterval(bootPatches, 1000);
-  document.addEventListener("DOMContentLoaded", bootPatches);
+  document.addEventListener("DOMContentLoaded", function () {
+    clearFilesPanel();
+    bootPatches();
+  });
   window.addEventListener("load", function () {
+    clearFilesPanel();
     setTimeout(bootPatches, 400);
     setTimeout(bootPatches, 1200);
   });
@@ -737,23 +762,26 @@
         var fileName = isXls
           ? "marquage-equipement.csv"
           : entry.pdfName || "marquage-electro-marker.pdf";
-        // Immediate download: Electromarker uses window.open(blob) in setTimeout,
-        // which popup-blockers (and some WebViews) swallow.
+        // Explicit Générer / Télécharger click path (bundle download() → fetch(pdfUrl)).
+        // Electromarker uses window.open(blob); <a download> covers popup blockers.
         try {
           downloadBlob(isXls ? entry.xlsBlob : entry.pdfBlob, fileName);
         } catch (e) {}
         if (!isXls) {
-          registerOfflineFile({
-            token: token,
-            kind: "pdf",
-            tab: entry.tab || "main",
-            name: fileName,
-            label: "PDF généré",
-            blob: entry.pdfBlob,
-            url: entry.pdfFileUrl,
-            bytes: entry.pdfBlob && entry.pdfBlob.size,
-            previewUrl: entry.previewUrl
-          });
+          registerOfflineFile(
+            entry._pendingFile || {
+              token: token,
+              kind: "pdf",
+              tab: entry.tab || "main",
+              name: fileName,
+              label: "PDF généré",
+              blob: entry.pdfBlob,
+              url: entry.pdfFileUrl,
+              bytes: entry.pdfBlob && entry.pdfBlob.size,
+              previewUrl: entry.previewUrl
+            },
+            { showPanel: true }
+          );
         } else {
           syncDownloadsCount();
         }
