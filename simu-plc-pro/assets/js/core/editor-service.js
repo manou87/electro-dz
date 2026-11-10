@@ -216,7 +216,7 @@
     return {
       type: LEGACY_DUAL_TYPE,
       version: LEGACY_DUAL_VERSION,
-      name: String(name || 'Projet SimuPLC'),
+      name: String(name || 'Projet Electro DZ'),
       savedAt: new Date().toISOString(),
       activeEditor: activeEditor(),
       editors: {

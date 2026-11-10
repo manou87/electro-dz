@@ -194,7 +194,7 @@
   }
   function saveFreeModal(){
     const ref=freeById(state.referenceTextEditingId);if(!ref){closeFreeModal(true);return;}
-    const value=text(document.getElementById('referenceTextInput').value,1000);if(!value){alert('Escribe el texte de referencia.');return;}
+    const value=text(document.getElementById('referenceTextInput').value,1000);if(!value){alert('Saisissez le texte de référence.');return;}
     ref.text=value;ref.format=document.getElementById('referenceTextFormat').value||'comment';ref.fontFamily=document.getElementById('referenceTextFont').value||'Arial';ref.fontSize=Number(document.getElementById('referenceTextSize').value)||18;ref.maxWidth=Number(document.getElementById('referenceTextWidth').value)||360;ref.color=document.getElementById('referenceTextColor').value||defaults.color;ref.background=document.getElementById('referenceTextBg').value||defaults.background;ref.bold=!!document.getElementById('referenceTextBold').checked||ref.format==='title';ref.italic=!!document.getElementById('referenceTextItalic').checked;dirty();setStatus('Texte de référence enregistré. Vous pouvez le faire glisser pour le déplacer.');closeFreeModal(true);
   }
   function visibleCenter(){
@@ -213,7 +213,7 @@
   function editFree(){const ref=freeById(state.referenceTextSelectedId);if(!ref)return false;openFreeModal(ref,false);return true;}
 
   function installAssociatedFields(){
-    const input=document.getElementById('editReferenceInput');if(!input||input.dataset.richDocumentation==='1')return;input.dataset.richDocumentation='1';input.maxLength=300;input.placeholder='Ejemplo: Pulsador de marcha / Contactor de bomba';
+    const input=document.getElementById('editReferenceInput');if(!input||input.dataset.richDocumentation==='1')return;input.dataset.richDocumentation='1';input.maxLength=300;input.placeholder='Exemple : Bouton marche / Contacteur de pompa';
     const label=input.closest('label');if(!label)return;const title=label.querySelector('.edit-label');if(title)title.textContent='Texte de référence de l’élément';
     const block=document.createElement('div');block.innerHTML='<div class="associated-edit-grid">'
       +'<label>Format<select id="editDescriptionFormat"><option value="comment">Commentaire PLC</option><option value="title">Titre</option><option value="free">Texte simple</option></select></label>'

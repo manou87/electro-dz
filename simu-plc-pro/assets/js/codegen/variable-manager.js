@@ -583,7 +583,7 @@
         </div>
         <footer class="vm-footer">
           <div class="vm-footer-note">Les mémoires, temporisateurs, compteurs et résultats internes n’ont pas besoin de broche physique.</div>
-          <div class="vm-footer-actions"><button class="vm-btn" id="vmOpenCode" type="button">CODE MCU</button><button class="vm-btn primary" id="vmSave" type="button">GUARDAR</button></div>
+          <div class="vm-footer-actions"><button class="vm-btn" id="vmOpenCode" type="button">CODE MCU</button><button class="vm-btn primary" id="vmSave" type="button">ENREGISTRER</button></div>
         </footer>
       </section>
       <div id="vmToast"></div>
@@ -761,7 +761,7 @@
     document.getElementById('vmSave').addEventListener('click', function () {
       persistWorkingState();
       renderTable();
-      showToast(lastValidation && lastValidation.ok ? 'Variables y broches enregistrés' : 'Guardado; encore hay errores por corregir');
+      showToast(lastValidation && lastValidation.ok ? 'Variables y broches enregistrés' : 'Enregistré ; il reste encore des erreurs à corriger');
     });
     document.getElementById('vmOpenCode').addEventListener('click', function () {
       persistWorkingState();

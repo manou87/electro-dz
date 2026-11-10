@@ -47,7 +47,7 @@
   function now(){return Date.now();}
   function makeId(){return 'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,8);}
   function safeName(v,fallback){
-    return String(v||fallback||'Projet SimuPLC').trim().replace(/[\\/:*?"<>|]+/g,'_').replace(/\s+/g,' ').slice(0,80)||'Projet SimuPLC';
+    return String(v||fallback||'Projet Electro DZ').trim().replace(/[\\/:*?"<>|]+/g,'_').replace(/\s+/g,' ').slice(0,80)||'Projet Electro DZ';
   }
   function nameKey(v){return safeName(v,'').toLocaleLowerCase('es');}
   function editorLabel(mode){return mode==='ladder'?'LADDER':mode==='control'?'CONTRÔLE':mode==='hmi'?'HMI':'FBD';}
@@ -93,7 +93,7 @@
     if(item.simuplcProject&&item.simuplcProject.editors){
       var already=clone(item.simuplcProject);already.type=FORMAT;already.version=FORMAT_VERSION;already.name=safeName(item.name||already.name);already.editors=Object.assign({fbd:null,ladder:null,control:null,hmi:null},already.editors||{});return already;
     }
-    var p=blankProject(item.name||'Projet SimuPLC');
+    var p=blankProject(item.name||'Projet Electro DZ');
     var src=item.completeProject||item.dualProject||((item.data&&item.data.editors)?item.data:null);
     if(src&&src.editors){
       p.activeEditor=(src.activeEditor==='ladder'||src.activeEditor==='control'||src.activeEditor==='hmi')?src.activeEditor:'fbd';
@@ -234,13 +234,13 @@
   }
 
   async function openProjectDirect(id){
-    var item=getItem(id);if(!item){alert('Introuvable : el projet.');return false;}
+    var item=getItem(id);if(!item){alert('Introuvable : le projet.');return false;}
     var p=clone(item.simuplcProject),e=projectEditors(item),keys=['fbd','ladder','control','hmi'].filter(function(k){return !!e[k];});
     var ok=true;
     if(keys.length<=1){var mode=keys[0]||item.primaryEditor||'fbd';ok=await loadSingle(mode,e[mode]);}
     else ok=await loadComplete(p);
     if(ok!==false){sessionSet(item.id);refreshLibrary();closeLibrary();toast('Projet cargado: '+item.name);return true;}
-    alert('Impossible de charger el projet completo.');return false;
+    alert('Impossible de charger le projet complet.');return false;
   }
 
   function setOpenGuardBusy(v){
@@ -253,7 +253,7 @@
     if(openGuardNameInput)openGuardNameInput.disabled=openGuardBusy;
     var save=openGuardModal.querySelector('[data-open-save]');
     if(save){
-      save.textContent=openGuardBusy?'⏳ Guardando…':'💾 Enregistrer et ouvrir';
+      save.textContent=openGuardBusy?'⏳ Enregistrement…':'💾 Enregistrer et ouvrir';
       save.style.setProperty('opacity',openGuardBusy?'.78':'1','important');
     }
   }
@@ -353,7 +353,7 @@
     await openProjectDirect(id);
   }
   async function openProject(id){
-    var item=getItem(id);if(!item){alert('Introuvable : el projet.');return false;}
+    var item=getItem(id);if(!item){alert('Introuvable : le projet.');return false;}
 
     /*
       V23: antes de sustituir el trabajo visible, vérifie si existe contenido.
@@ -378,10 +378,10 @@
 
     if(status.current){
       if(openGuardNameWrap)openGuardNameWrap.hidden=true;
-      if(openGuardHint)openGuardHint.textContent='Si eliges “Enregistrer et ouvrir”, se sera mis à jour “'+status.current.name+'” antes de ouvrir el otro projet.';
+      if(openGuardHint)openGuardHint.textContent='Si vous choisissez « Enregistrer et ouvrir », « '+status.current.name+' » sera mis à jour avant d’ouvrir l’autre projet.';
     }else{
       if(openGuardNameWrap)openGuardNameWrap.hidden=false;
-      if(openGuardNameInput)openGuardNameInput.value='Projet SimuPLC';
+      if(openGuardNameInput)openGuardNameInput.value='Projet Electro DZ';
       if(openGuardHint)openGuardHint.textContent='Ce travail n’est pas encore enregistré. Donnez-lui un nom si vous souhaitez le conserver avant d’ouvrir l’autre projet.';
     }
 
@@ -398,7 +398,7 @@
     return null;
   }
   async function saveScope(scope){
-    var mode=activeEditor();var name=safeName(nameInput&&nameInput.value,(scope==='single'?'Projet '+editorLabel(mode):'Projet SimuPLC'));
+    var mode=activeEditor();var name=safeName(nameInput&&nameInput.value,(scope==='single'?'Projet '+editorLabel(mode):'Projet Electro DZ'));
     if(!name){return;}
     var target=targetForSave(name),created=target?target.createdAt:now();
     if(!target)target={id:makeId(),name:name,editor:'project',projectKind:'SIMUPLC_PROJECT_V19',saveScope:scope,primaryEditor:mode,createdAt:created,updatedAt:created,simuplcProject:blankProject(name)};
@@ -412,7 +412,7 @@
     }
     target.name=name;target.editor='project';target.projectKind='SIMUPLC_PROJECT_V19';target.saveScope=scope;target.primaryEditor=mode;target.updatedAt=now();target.simuplcProject=project;
     upsert(target);sessionSet(target.id);forceSaveAs=false;refreshLibrary();closeSave();
-    toast(scope==='single'?'Projet actualizado · '+editorLabel(mode):'Projet completo actualizado');
+    toast(scope==='single'?'Projet mis à jour · '+editorLabel(mode):'Projet complet mis à jour');
     return target;
   }
 
@@ -523,7 +523,7 @@
     sessionSet(target.id);
     forceSaveAs=false;
     refreshLibrary();
-    toast('Projet actual guardado');
+    toast('Projet actuel enregistré');
     return target;
   }
   async function resetEditorOnly(mode){
@@ -600,7 +600,7 @@
     if(newNameInput)newNameInput.disabled=newBusy;
     var save=newModal.querySelector('[data-new-save]');
     if(save){
-      save.textContent=newBusy?'⏳ Guardando projet…':'💾 Enregistrer et continuer';
+      save.textContent=newBusy?'⏳ Enregistrement du projet…':'💾 Enregistrer et continuer';
       save.style.setProperty('background','#0f4c81','important');
       save.style.setProperty('color','#ffffff','important');
       save.style.setProperty('border-color','#0f4c81','important');
@@ -630,7 +630,7 @@
 
     if(newNameWrap)newNameWrap.hidden=!!current||!newCanSave;
     if(newNameInput){
-      if(!current&&newCanSave&&!newNameInput.value)newNameInput.value='Projet SimuPLC';
+      if(!current&&newCanSave&&!newNameInput.value)newNameInput.value='Projet Electro DZ';
     }
 
     if(save){
@@ -684,7 +684,7 @@
     refreshNewSaveState(kind,mode);
   }
   async function executeNew(kind,mode){
-    await backupBeforeNew(kind==='project'?'antes-de-nouveau-projet':'antes-de-nouveau-'+mode);
+    await backupBeforeNew(kind==='project'?'avant-nouveau-projet':'antes-de-nouveau-'+mode);
     var ok;
     if(kind==='project'){
       ok=await resetWholeProject();
@@ -861,17 +861,17 @@
     modal=document.getElementById('simuplcSaveChoice');if(!modal)return;
     installStyles();
     var card=modal.querySelector('.sp-save-card'),h=card&&card.querySelector('h3'),sub=card&&card.querySelector('.sp-save-sub');
-    if(h)h.textContent='Enregistrer le projet';if(sub)sub.textContent='Enregistre seulement l’éditeur actuel ou met à jour le projet complet FBD + Ladder + CONTROL + HMI.';
+    if(h)h.textContent='Enregistrer le projet';if(sub)sub.textContent='Enregistrez uniquement l’éditeur actuel ou mettez à jour le projet complet FBD + Ladder + CONTROL + HMI.';
     nameInput=replaceNode('simuplcSaveChoiceName');cancelBtn=replaceNode('simuplcSaveCancel');saveSingleBtn=replaceNode('simuplcSaveSingle');saveCompleteBtn=replaceNode('simuplcSaveGlobal');
     var actions=modal.querySelector('.sp-save-actions');
-    saveAsBtn=document.getElementById('simuplcSaveAs');if(!saveAsBtn&&actions){saveAsBtn=document.createElement('button');saveAsBtn.id='simuplcSaveAs';saveAsBtn.type='button';saveAsBtn.className='sp-save-as';saveAsBtn.textContent='Enregistrer como…';actions.appendChild(saveAsBtn);}
+    saveAsBtn=document.getElementById('simuplcSaveAs');if(!saveAsBtn&&actions){saveAsBtn=document.createElement('button');saveAsBtn.id='simuplcSaveAs';saveAsBtn.type='button';saveAsBtn.className='sp-save-as';saveAsBtn.textContent='Enregistrer sous…';actions.appendChild(saveAsBtn);}
     var info=document.getElementById('simuplcSaveCurrentInfo');if(!info&&nameInput){info=document.createElement('div');info.id='simuplcSaveCurrentInfo';info.className='sp-current';nameInput.insertAdjacentElement('afterend',info);}
     if(cancelBtn)cancelBtn.onclick=closeSave;
     if(saveSingleBtn)saveSingleBtn.onclick=function(){saveScope('single').catch(function(e){alert('Impossible d’enregistrer : '+(e.message||e));});};
     if(saveCompleteBtn)saveCompleteBtn.onclick=function(){saveScope('complete').catch(function(e){alert('Impossible d’enregistrer le projet : '+(e.message||e));});};
     if(saveAsBtn)saveAsBtn.onclick=function(){
       var cur=getItem(getCurrentId());forceSaveAs=true;
-      if(nameInput){nameInput.readOnly=false;nameInput.value=safeName((cur&&cur.name?cur.name:'Projet SimuPLC')+' copia');nameInput.focus();nameInput.select();}
+      if(nameInput){nameInput.readOnly=false;nameInput.value=safeName((cur&&cur.name?cur.name:'Projet Electro DZ')+' copia');nameInput.focus();nameInput.select();}
       var i=document.getElementById('simuplcSaveCurrentInfo');if(i)i.textContent='Enregistrer sous : saisissez un nouveau nom et choisissez si vous souhaitez enregistrer seulement '+editorLabel(activeEditor())+' ou le projet complet.';
       saveAsBtn.style.display='none';
     };
@@ -882,9 +882,9 @@
     forceSaveAs=false;var mode=activeEditor(),cur=getItem(getCurrentId());
     if(nameInput){nameInput.value=cur?cur.name:('Projet '+editorLabel(mode));nameInput.readOnly=!!cur;}
     if(saveSingleBtn)saveSingleBtn.textContent='Enregistrer seulement '+editorLabel(mode);
-    if(saveCompleteBtn)saveCompleteBtn.textContent=cur?'Mettre à jour le projet complet':'Enregistrer le projet completo';
+    if(saveCompleteBtn)saveCompleteBtn.textContent=cur?'Mettre à jour le projet complet':'Enregistrer le projet complet';
     if(saveAsBtn)saveAsBtn.style.display=cur?'':'none';
-    var info=document.getElementById('simuplcSaveCurrentInfo');if(info)info.textContent=cur?('Editando “'+cur.name+'”. Enregistrer sera mis à jour este mismo projet; no se creará un duplicado.'):'Projet nouveau. Si ya existe un projet con el mismo nom, se sera mis à jour ese projet.';
+    var info=document.getElementById('simuplcSaveCurrentInfo');if(info)info.textContent=cur?('Édition de « '+cur.name+' ». Enregistrer mettra à jour ce même projet ; aucun doublon ne sera créé.'):'Nouveau projet. S’il existe déjà un projet du même nom, ce projet sera mis à jour.';
     modal.classList.add('show');modal.setAttribute('aria-hidden','false');
     if(nameInput&&!cur)setTimeout(function(){nameInput.focus();nameInput.select();},30);
   }
@@ -892,7 +892,7 @@
 
   function setupLibrary(){
     var old=document.getElementById('circuitsList');if(old&&old.parentNode){var n=old.cloneNode(false);n.id='circuitsList';n.className=old.className;old.parentNode.replaceChild(n,old);listEl=n;}else listEl=old;
-    var m=document.getElementById('circuitsModal');if(m){var h=m.querySelector('.circuits-header h3');if(h)h.textContent='Mes projets';var p=m.querySelector('.circuits-subtitle');if(p)p.innerHTML='Abre un projet para seguir éditer. <b>Enregistrer</b> sera mis à jour ese mismo projet.';var e=document.getElementById('circuitsEmpty');if(e)e.textContent='Vous n’avez pas encore de projets enregistrés.';}
+    var m=document.getElementById('circuitsModal');if(m){var h=m.querySelector('.circuits-header h3');if(h)h.textContent='Mes projets';var p=m.querySelector('.circuits-subtitle');if(p)p.innerHTML='Ouvrez un projet pour continuer l’édition. <b>Enregistrer</b> mettra à jour ce même projet.';var e=document.getElementById('circuitsEmpty');if(e)e.textContent='Vous n’avez pas encore de projets enregistrés.';}
     var topBtn=document.getElementById('btnCircuitsList');if(topBtn){topBtn.title='Mes projets';topBtn.setAttribute('aria-label','Mes projets');}
     var close=document.getElementById('circuitsClose');if(close)close.onclick=closeLibrary;
     if(listEl)listEl.addEventListener('click',function(ev){
@@ -915,9 +915,9 @@
     arr.forEach(function(item){
       var li=document.createElement('li');li.className='circuit-row'+(item.id===cur?' is-current':'');
       var e=projectEditors(item),badges=[];['fbd','ladder','control','hmi'].forEach(function(k){if(e[k])badges.push('<span class="project-badge">'+editorLabel(k)+'</span>');});
-      if(editorCount(item)>1)badges.unshift('<span class="project-badge complete">PROYECTO COMPLETO</span>');if(item.id===cur)badges.unshift('<span class="project-badge current">EDITANDO</span>');
+      if(editorCount(item)>1)badges.unshift('<span class="project-badge complete">PROJET COMPLET</span>');if(item.id===cur)badges.unshift('<span class="project-badge current">EN ÉDITION</span>');
       var date=new Date(item.updatedAt||item.createdAt||Date.now()).toLocaleString();
-      li.innerHTML='<div class="title">'+escapeHtml(item.name||'Proyecto sin nombre')+'</div><div class="project-badges">'+badges.join('')+'</div><div class="meta">'+escapeHtml(date)+'</div><div class="actions"><button data-id="'+escapeHtml(item.id)+'" data-action="open">Abrir</button><button data-id="'+escapeHtml(item.id)+'" data-action="rename">Renombrar</button><button data-id="'+escapeHtml(item.id)+'" data-action="delete">Eliminar</button></div>';
+      li.innerHTML='<div class="title">'+escapeHtml(item.name||'Projet sans nom')+'</div><div class="project-badges">'+badges.join('')+'</div><div class="meta">'+escapeHtml(date)+'</div><div class="actions"><button data-id="'+escapeHtml(item.id)+'" data-action="open">Abrir</button><button data-id="'+escapeHtml(item.id)+'" data-action="rename">Renombrar</button><button data-id="'+escapeHtml(item.id)+'" data-action="delete">Supprimer</button></div>';
       listEl.appendChild(li);
     });
   }
@@ -928,11 +928,11 @@
     var n=prompt('Nouveau nom pour le projet :',arr[i].name||'');if(n===null)return;n=safeName(n);if(!n)return;
     var duplicate=arr.find(function(x){return x&&x.id!==id&&nameKey(x.name)===nameKey(n);});
     if(duplicate){alert('Un projet portant ce nom existe déjà. Utilisez un autre nom ou ouvrez ce projet pour le mettre à jour.');return;}
-    arr[i].name=n;arr[i].updatedAt=now();if(arr[i].simuplcProject)arr[i].simuplcProject.name=n;writeRaw(arr);refreshLibrary();toast('Proyecto renombrado');
+    arr[i].name=n;arr[i].updatedAt=now();if(arr[i].simuplcProject)arr[i].simuplcProject.name=n;writeRaw(arr);refreshLibrary();toast('Projet renommé');
   }
   function deleteProject(id){
     var item=getItem(id);if(!item)return;if(!confirm('Supprimer le projet « '+item.name+'”? Cette action est irréversible.'))return;
-    writeRaw(list().filter(function(x){return x&&x.id!==id;}));if(getCurrentId()===id)sessionSet(null);refreshLibrary();toast('Proyecto eliminado');
+    writeRaw(list().filter(function(x){return x&&x.id!==id;}));if(getCurrentId()===id)sessionSet(null);refreshLibrary();toast('Projet supprimé');
   }
 
   function bindMainNewButton(){
@@ -968,7 +968,7 @@
   function init(){
     migrateLibrary();sessionSet(sessionGet());setupSaveModal();setupLibrary();bindMainNewButton();bindNewAndImport();global.addEventListener('message',onChildMessage,false);
     global.SimuPLCUnifiedProjects={version:'22.0',list:list,get:getItem,open:openProject,openLibrary:openLibrary,openSave:openSave,openNew:openNew,saveEditor:function(){return saveScope('single');},saveComplete:function(){return saveScope('complete');},rename:renameProject,delete:deleteProject,clearCurrent:clearCurrent,getCurrentId:getCurrentId,refresh:refreshLibrary};
-    try{var b=document.getElementById('btnSave');if(b){b.title='Enregistrer / actualizar projet';b.setAttribute('aria-label','Enregistrer ou mettre à jour le projet');}}catch(_){ }
+    try{var b=document.getElementById('btnSave');if(b){b.title='Enregistrer / mettre à jour le projet';b.setAttribute('aria-label','Enregistrer ou mettre à jour le projet');}}catch(_){ }
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else setTimeout(init,0);
 })(window);

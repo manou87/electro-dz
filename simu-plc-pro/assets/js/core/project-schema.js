@@ -100,7 +100,7 @@
       schemaVersion: config.projectSchemaVersion,
       version: config.projectSchemaVersion,
       app: { name: config.appName, version: config.appVersion },
-      name: String(options.name || 'Projet SimuPLC'),
+      name: String(options.name || 'Projet Electro DZ'),
       createdAt: options.createdAt || options.savedAt || now,
       updatedAt: now,
       savedAt: now,

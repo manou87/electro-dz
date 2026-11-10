@@ -403,12 +403,12 @@
       const dateText = envelope.savedAt ? new Date(envelope.savedAt).toLocaleString() : 'recientemente';
       const restore = await modal().confirm(
         'Travail non enregistré trouvé de ' + dateText + '.\n\nSouhaitez-vous le récupérer maintenant ?',
-        'Recuperar trabajo'
+        'Récupérer le travail'
       );
       if (restore) {
         await createBackup('avant-recuperation-sauvegarde-auto');
         await restoreProject(canonical, { reason: 'recuperado-al-iniciar', pending: true });
-        toast('Trabajo recuperado correctamente');
+        toast('Travail récupéré correctement');
         return true;
       }
       state.pending = false;

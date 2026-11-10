@@ -24,17 +24,17 @@
   }
 
   function safeFileName(name) {
-    return String(name || 'Projet SimuPLC')
+    return String(name || 'Projet Electro DZ')
       .trim()
       .replace(/[<>:"/\\|?*\x00-\x1F]+/g, '_')
-      .replace(/\s+/g, '_') || 'Proyecto_SimuPLC';
+      .replace(/\s+/g, '_') || 'Projet_ElectroDZ';
   }
 
   function downloadJSON(value, filename) {
     const blob = new Blob([JSON.stringify(value, null, 2)], { type: 'application/json' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = filename || 'Proyecto_SimuPLC.json';
+    link.download = filename || 'Projet_ElectroDZ.json';
     document.body.appendChild(link);
     link.click();
     setTimeout(function () {
@@ -119,7 +119,7 @@
   }
 
   function exportProject(project, preferredName) {
-    const filename = safeFileName((project && project.name) || preferredName || 'Projet SimuPLC') + '.json';
+    const filename = safeFileName((project && project.name) || preferredName || 'Projet Electro DZ') + '.json';
     downloadJSON(project, filename);
     return filename;
   }

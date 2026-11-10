@@ -218,9 +218,9 @@
 
   async function exportProject() {
     return runOnce('export', async function () {
-      let name = await getModal().prompt('Nom du fichier pour exporter le projet complet FBD/Ladder.', 'Projet SimuPLC', 'Exporter le projet');
+      let name = await getModal().prompt('Nom du fichier pour exporter le projet complet FBD/Ladder.', 'Projet Electro DZ', 'Exporter le projet');
       if (name === null || name === false) return false;
-      name = String(name).trim() || 'Projet SimuPLC';
+      name = String(name).trim() || 'Projet Electro DZ';
       const projectIO = getProjectIO();
       const repository = getRepository();
       if (!projectIO || !repository) throw new Error('Les modules de projet ne sont pas disponibles.');

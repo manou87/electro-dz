@@ -330,7 +330,7 @@
     Object.assign(dom,{workspace:q('workspace'),wires:q('wires'),viewport:q('viewport'),properties:q('properties'),toast:q('toast')});
     syncProfile(); buildLibrary(); bindEvents(); initMessaging(); setZoom(1); render();
     setProject(defaultProject());
-    window.SimuPLCControlEditor = { getProject, setProject, clearAll, focus:function(){ showToast('CONTROL listo'); }, getState:()=>clone(state) };
+    window.SimuPLCControlEditor = { getProject, setProject, clearAll, focus:function(){ showToast('CONTROL prêt'); }, getState:()=>clone(state) };
   }
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
