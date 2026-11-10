@@ -36,6 +36,12 @@
       "quick.wirelab": "WireLab",
       "quick.wirelab.hint":
         "WireLab — tableau électrique pédagogique, moteurs et sélecteurs (accès par code)",
+      "quick.wirilab": "WiriLab",
+      "quick.wirilab.hint":
+        "WiriLab — simulateur de câblage électrique (clone local)",
+      "quick.simuplcpro": "Simu PLC Pro",
+      "quick.simuplcpro.hint":
+        "Simu PLC Pro — simulateur PLC (clone fidèle de simuplc.escuelapasir.com)",
       "quick.oibt": "Entraînement au contrôle électrique",
       "quick.oibt.hint":
         "Entraînement au contrôle d'installations — tableau, prises et testeur",
@@ -168,6 +174,12 @@
       "quick.wirelab": "WireLab",
       "quick.wirelab.hint":
         "WireLab — لوحة كهربائية تعليمية، محركات ومحددات (رمز دخول)",
+      "quick.wirilab": "WiriLab",
+      "quick.wirilab.hint":
+        "WiriLab — محاكي توصيل كهربائي (نسخة محلية)",
+      "quick.simuplcpro": "Simu PLC Pro",
+      "quick.simuplcpro.hint":
+        "Simu PLC Pro — محاكي PLC (نسخة مطابقة لـ simuplc.escuelapasir.com)",
       "quick.oibt": "تدريب على المراقبة الكهربائية",
       "quick.oibt.hint":
         "تدريب على مراقبة التركيبات — لوحة، مقابس وجهاز اختبار",
@@ -301,6 +313,12 @@
       "quick.wirelab": "WireLab",
       "quick.wirelab.hint":
         "WireLab — educational electrical panel, motors and selectors (access code)",
+      "quick.wirilab": "WiriLab",
+      "quick.wirilab.hint":
+        "WiriLab — electrical wiring simulator (local clone)",
+      "quick.simuplcpro": "Simu PLC Pro",
+      "quick.simuplcpro.hint":
+        "Simu PLC Pro — PLC simulator (faithful clone of simuplc.escuelapasir.com)",
       "quick.oibt": "Electrical inspection training",
       "quick.oibt.hint":
         "Electrical inspection training — panel, outlets and tester",

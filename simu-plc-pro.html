@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <script src="js/theme-electric-neon.js?v=chrome1"></script>
+  <meta name="description" content="Simu PLC Pro — clone local de simuplc.escuelapasir.com (SimuPLC Lab)." />
+  <meta name="robots" content="noindex, follow" />
+  <title>Simu PLC Pro — Electro DZ</title>
+  <link rel="icon" href="simu-plc-pro/icons/icon-192.png" type="image/png" />
+  <link rel="stylesheet" href="css/simulation-swissdz.css?v=20260917chrome1" />
+  <link rel="stylesheet" href="css/ecole-electricite.css?v=20261007-logo" />
+  <link rel="canonical" href="https://electro-dz.com/simu-plc-pro.html" />
+  <style>
+    /* Entry chrome only — simulation content stays in iframe (source clone). */
+    body.simu-plc-pro-page .sim-frame-wrap { display:block; }
+    body.simu-plc-pro-page #simFrame { width:100%; height:calc(100vh - 56px); border:0; background:#095BD8; }
+    body.simu-plc-pro-page.sim-fs-active #simFrame { height:100vh; }
+  </style>
+</head>
+<body class="sim-page ecole-page ecole-unlocked simu-plc-pro-page">
+  <header class="sim-topbar">
+    <a href="index-fr.html" class="sim-brand" data-edz-home="1">
+      <img src="simu-plc-pro/icons/icon-192.png" alt="" width="32" height="32" decoding="async" />
+      <span>Simu <span class="accent">PLC Pro</span></span>
+    </a>
+    <a href="index-fr.html" class="edz-home-link" data-edz-home="1">Accueil</a>
+    <div class="sim-top-actions">
+      <a class="edz-home-link" href="simu-plc-pro/" target="_blank" rel="noopener">Ouvrir seul</a>
+      <button type="button" class="sim-fs-toggle" id="simFsToggle" aria-pressed="false" aria-controls="simFrameWrap">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M7 14H5v5h5v-2H7v-3zm12 0h-2v3h-3v2h5v-5zM7 7h3V5H5v5h2V7zm12-2h-5v2h3v3h2V5z"/>
+        </svg>
+        <span class="sim-fs-enter">Plein écran</span>
+        <span class="sim-fs-exit">Quitter</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="sim-workspace ecole-workspace">
+    <div class="sim-frame-wrap ecole-frame-wrap" id="simFrameWrap">
+      <p class="sim-loading" id="simLoading">Chargement de Simu PLC Pro…</p>
+      <iframe
+        id="simFrame"
+        title="Simu PLC Pro — SimuPLC Lab"
+        src="simu-plc-pro/index.html"
+        allow="fullscreen; serial; usb"
+        allowfullscreen
+      ></iframe>
+      <button type="button" class="sim-fs-close" id="simFsClose">
+        <span class="sim-fs-close-x" aria-hidden="true">×</span>
+        <span>Fermer</span>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var frame = document.getElementById("simFrame");
+      var loading = document.getElementById("simLoading");
+      if (frame && loading) {
+        frame.addEventListener("load", function () { loading.hidden = true; });
+      }
+      var home = (localStorage.getItem("electrodz-site-lang") === "ar") ? "index.html" : "index-fr.html";
+      document.querySelectorAll("[data-edz-home]").forEach(function (a) { a.setAttribute("href", home); });
+    })();
+  </script>
+  <script src="js/sim-fullscreen.js?v=20260917chrome1"></script>
+</body>
+</html>
