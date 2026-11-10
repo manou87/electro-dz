@@ -246,7 +246,7 @@
         requestType: 'class', recipient: 'interface', request: 0x20,
         value: 0, index: this.controlInterfaceNumber
       }, data);
-      await ensureOk(result, 'Impossible de configurar USB CDC');
+      await ensureOk(result, 'Impossible de configurer USB CDC');
     }
 
     async _openCh340() {
@@ -431,7 +431,7 @@
           requestType: 'class', recipient: 'interface', request: 0x23,
           value: signals.break ? 0xFFFF : 0,
           index: this.controlInterfaceNumber
-        }, EMPTY), 'Impossible de configurar BREAK');
+        }, EMPTY), 'Impossible de configurer BREAK');
       }
     }
 

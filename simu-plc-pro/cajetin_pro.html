@@ -219,7 +219,7 @@ body.simuplc-free-pdf label[for="templateSelect"]::after{content:" · PRO";color
 <body>
 
 <header class="topbar" id="topbar">
-  <button id="backToSimuPLC" title="Volver a SimuPLC">← Volver</button>
+  <button id="backToSimuPLC" title="Retour à SimuPLC">← Retour</button>
   <span id="simuplcPlanBadge">FREE</span>
   <button id="printPdf" class="icon-btn primary" title="Télécharger / exporter PDF" aria-label="Télécharger PDF"><svg viewBox="0 0 24 24"><path d="M6 2h9l4 4v16H6z"/><path d="M14 2v5h5"/><path d="M8 13h8"/><path d="M8 17h6"/></svg><span class="pdf-download-arrow" aria-hidden="true">↓</span></button>
   <div class="sep"></div>
@@ -298,7 +298,7 @@ body.simuplc-free-pdf label[for="templateSelect"]::after{content:" · PRO";color
     <div id="autoWrap" style="display:none;margin-top:10px">
       <label class="field" for="autoField">Donnée automatique</label>
       <select id="autoField" class="sel">
-        <option value="{{PROYECTO}}">Projet</option><option value="{{EDITOR}}">Editor</option><option value="{{FECHA}}">Fecha</option>
+        <option value="{{PROJET}}">Projet</option><option value="{{EDITOR}}">Editor</option><option value="{{FECHA}}">Fecha</option>
         <option value="{{HOJA}}">Hoja</option><option value="{{TOTAL_HOJAS}}">Total hojas</option><option value="{{AUTOR}}">Autor</option>
         <option value="{{CODIGO}}">Code</option><option value="{{REVISION}}">Révision</option>
       </select>
@@ -390,22 +390,22 @@ const BORDER_VERTICAL='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmN
 const zoomSteps=[.50,.60,.75,.90,1,1.25,1.50];
 
 const meta={
-  PROYECTO:'Arranque bomba principal',EDITOR:'CONTROL',FECHA:new Date().toLocaleDateString('fr-FR'),HOJA:'1',TOTAL_HOJAS:'4',
+  PROYECTO:'Démarrage pompe principale',EDITOR:'CONTROL',FECHA:new Date().toLocaleDateString('fr-FR'),HOJA:'1',TOTAL_HOJAS:'4',
   AUTOR:'Technicien / Utilisateur',CODIGO:'CT-01',REVISION:'01'
 };
 
 const templates={
   industrial:{rows:[1/3,1/3,1/3],cols:[.33,.34,.18,.15],cells:[
-    ['PROYECTO','{{PROYECTO}}','auto'],['PLANO','{{EDITOR}}','auto'],['REV.','{{REVISION}}','auto'],['HOJA','{{HOJA}} / {{TOTAL_HOJAS}}','auto'],
+    ['PROYECTO','{{PROJET}}','auto'],['PLANO','{{EDITOR}}','auto'],['REV.','{{REVISION}}','auto'],['HOJA','{{HOJA}} / {{TOTAL_HOJAS}}','auto'],
     ['CLIENTE','Client / Entreprise','manual'],['AUTOR','{{AUTOR}}','auto'],['FECHA','{{FECHA}}','auto'],['CODE','{{CODIGO}}','auto'],
     ['EMPLACEMENT','Emplacement','manual'],['DESCRIPTION','Description du plan','manual'],['NORMA','IEC / NEC','manual'],['ESCALA','S/E','manual']
   ]},
   academic:{rows:[.5,.5],cols:[.38,.26,.18,.18],cells:[
-    ['PROYECTO','{{PROYECTO}}','auto'],['ALUMNO','{{AUTOR}}','auto'],['FECHA','{{FECHA}}','auto'],['HOJA','{{HOJA}} / {{TOTAL_HOJAS}}','auto'],
+    ['PROYECTO','{{PROJET}}','auto'],['ALUMNO','{{AUTOR}}','auto'],['FECHA','{{FECHA}}','auto'],['HOJA','{{HOJA}} / {{TOTAL_HOJAS}}','auto'],
     ['CURSO','Électricité / Automatisation','manual'],['DOCENTE','Enseignant','manual'],['EDITOR','{{EDITOR}}','auto'],['CODE','{{CODIGO}}','auto']
   ]},
   minimal:{rows:[.5,.5],cols:[.5,.25,.25],cells:[
-    ['PROYECTO','{{PROYECTO}}','auto'],['EDITOR','{{EDITOR}}','auto'],['HOJA','{{HOJA}} / {{TOTAL_HOJAS}}','auto'],
+    ['PROYECTO','{{PROJET}}','auto'],['EDITOR','{{EDITOR}}','auto'],['HOJA','{{HOJA}} / {{TOTAL_HOJAS}}','auto'],
     ['AUTOR','{{AUTOR}}','auto'],['FECHA','{{FECHA}}','auto'],['CODE','{{CODIGO}}','auto']
   ]}
 };
@@ -575,7 +575,7 @@ function openModal(){
   if(selected==null)return;selected=masterIndex(selected);const c=model.cells[selected];if(!c)return;
   const loc=cellLocation(selected);modalLoc.textContent='Fila '+loc.row+' · Columna '+loc.col+(c.rowSpan>1||c.colSpan>1?' · Combinada '+c.rowSpan+'×'+c.colSpan:'');
   fieldLabel.value=c.label||'';fieldValue.value=c.value||'';fieldType.value=c.type||'manual';autoWrap.style.display=c.type==='auto'?'block':'none';
-  if(c.type==='auto'){const opts=[...autoField.options].map(o=>o.value);autoField.value=opts.includes(c.value)?c.value:'{{PROYECTO}}'}
+  if(c.type==='auto'){const opts=[...autoField.options].map(o=>o.value);autoField.value=opts.includes(c.value)?c.value:'{{PROJET}}'}
   fontFamily.value=c.fontFamily||'Arial';fontSize.value=c.fontSize||13;fontColor.value=c.color||'#0f172a';
   if(cellBgPreset){const bgOpts=[...cellBgPreset.options].map(o=>o.value);cellBgPreset.value=bgOpts.includes(c.backgroundColor)?c.backgroundColor:'#ffffff'}
   setToggle(boldBtn,c.bold);setToggle(italicBtn,c.italic);modalAlign=c.textAlign||'left';document.querySelectorAll('.align-btn').forEach(b=>b.classList.toggle('active',b.dataset.align===modalAlign));verticalAlign.value=c.verticalAlign||'start';

@@ -373,7 +373,7 @@
         const pin = Number(value);
         if (kind === 'out' && (profile.inputOnly || []).includes(pin)) errors.push(label + ': GPIO ' + pin + ' es solo entrada.');
         if (kind === 'in' && (profile.inputOnly || []).includes(pin)) errors.push(label + ': GPIO ' + pin + ' n’a pas d’INPUT_PULLUP interne.');
-        if ((profile.strapping || []).includes(pin)) warnings.push(label + ': GPIO ' + pin + ' es pin de arranque.');
+        if ((profile.strapping || []).includes(pin)) warnings.push(label + ': GPIO ' + pin + ' est la broche de démarrage.');
         if ((profile.serial || []).includes(pin)) warnings.push(label + ': GPIO ' + pin + ' se usa normalmente para Serial.');
       } else if (Number(value) === 0 || Number(value) === 1) {
         warnings.push(label + ': D0/D1 suelen usarse para Serial.');

@@ -298,11 +298,11 @@
     openGuardModal.setAttribute('aria-hidden','true');
     openGuardModal.innerHTML=
       '<div class="sp-open-card" role="dialog" aria-modal="true">'+
-        '<div class="sp-open-head"><div class="sp-open-icon">⚠️</div><div><h3>Antes de abrir otro projet</h3><p class="sp-open-sub">Vous avez un travail ouvert. Choisissez si vous souhaitez l’enregistrer avant de charger un autre projet.</p></div></div>'+
+        '<div class="sp-open-head"><div class="sp-open-icon">⚠️</div><div><h3>Avant d’ouvrir un autre projet</h3><p class="sp-open-sub">Vous avez un travail ouvert. Choisissez si vous souhaitez l’enregistrer avant de charger un autre projet.</p></div></div>'+
         '<div id="simuplcOpenTargetName" class="sp-open-target"></div>'+
-        '<div id="simuplcOpenGuardNameWrap" class="sp-open-name" hidden><label for="simuplcOpenGuardName">Nom du projet actuel</label><input id="simuplcOpenGuardName" type="text" maxlength="80" autocomplete="off" placeholder="Ej. Arranque de motor"></div>'+
+        '<div id="simuplcOpenGuardNameWrap" class="sp-open-name" hidden><label for="simuplcOpenGuardName">Nom du projet actuel</label><input id="simuplcOpenGuardName" type="text" maxlength="80" autocomplete="off" placeholder="Ex. Démarrage moteur"></div>'+
         '<div id="simuplcOpenGuardHint" class="sp-open-hint"></div>'+
-        '<div class="sp-open-actions"><button type="button" data-open-save>💾 Enregistrer et ouvrir</button><button type="button" data-open-discard>Ouvrir sin enregistrer</button></div>'+
+        '<div class="sp-open-actions"><button type="button" data-open-save>💾 Enregistrer et ouvrir</button><button type="button" data-open-discard>Ouvrir sans enregistrer</button></div>'+
         '<button type="button" class="sp-open-cancel" data-open-cancel>Annuler</button>'+
       '</div>';
     document.body.appendChild(openGuardModal);
@@ -328,7 +328,7 @@
         openGuardNameInput.style.setProperty('border-color','#dc2626','important');
         openGuardNameInput.style.setProperty('box-shadow','0 0 0 3px rgba(220,38,38,.12)','important');
       }
-      if(openGuardHint)openGuardHint.textContent='Saisissez un nom pour enregistrer tu trabajo actual.';
+      if(openGuardHint)openGuardHint.textContent='Saisissez un nom pour enregistrer votre travail actuel.';
       return;
     }
     setOpenGuardBusy(true);
@@ -382,7 +382,7 @@
     }else{
       if(openGuardNameWrap)openGuardNameWrap.hidden=false;
       if(openGuardNameInput)openGuardNameInput.value='Projet SimuPLC';
-      if(openGuardHint)openGuardHint.textContent='Este trabajo encore no está guardado. Ponle un nom si vous souhaitez conservararlo antes de ouvrir el otro projet.';
+      if(openGuardHint)openGuardHint.textContent='Ce travail n’est pas encore enregistré. Donnez-lui un nom si vous souhaitez le conserver avant d’ouvrir l’autre projet.';
     }
 
     setOpenGuardBusy(false);
@@ -421,7 +421,7 @@
     return mode==='hmi'?'HMI':editorLabel(mode);
   }
   function newCircuitName(mode){
-    return mode==='hmi'?'Nueva écran HMI':'Nouveau circuit';
+    return mode==='hmi'?'Nouvel écran HMI':'Nouveau circuit';
   }
   function modalApi(){
     return global.SimuPLCNativeModal||global.SimuPLCModal||null;
@@ -642,13 +642,13 @@
     if(newSaveHint){
       if(current){
         newSaveHint.hidden=false;
-        newSaveHint.textContent='Se sera mis à jour el projet “'+current.name+'” antes de continuer.';
+        newSaveHint.textContent='Le projet « '+current.name+' » sera mis à jour avant de continuer.';
       }else if(newCanSave){
         newSaveHint.hidden=false;
-        newSaveHint.textContent='Este trabajo encore no tiene nom. Escribe uno para enregistrerlo antes de continuer.';
+        newSaveHint.textContent='Ce travail n’a pas encore de nom. Saisissez-en un pour l’enregistrer avant de continuer.';
       }else{
         newSaveHint.hidden=false;
-        newSaveHint.textContent='Il n’y a pas de contenido que enregistrer. Puedes continuer directamente.';
+        newSaveHint.textContent='Il n’y a aucun contenu à enregistrer. Vous pouvez continuer directement.';
       }
     }
     setNewBusy(false);
@@ -658,7 +658,7 @@
     var save=newModal&&newModal.querySelector('[data-new-save]');
     if(save){save.hidden=true;save.disabled=true;}
     if(newNameWrap)newNameWrap.hidden=true;
-    if(newSaveHint){newSaveHint.hidden=false;newSaveHint.textContent='Comprobando el projet actual…';}
+    if(newSaveHint){newSaveHint.hidden=false;newSaveHint.textContent='Vérification du projet actuel…';}
     try{
       var status=await currentWorkStatus(kind,mode);
       if(pendingNewKind!==kind||pendingNewEditor!==mode)return;
@@ -674,12 +674,12 @@
     if(newChoiceStage)newChoiceStage.hidden=true;
     if(newConfirmStage)newConfirmStage.hidden=false;
     if(kind==='project'){
-      if(newConfirmTitle)newConfirmTitle.textContent='¿Comenzar un projet nouveau?';
-      if(newConfirmDesc)newConfirmDesc.textContent='Se limpiarán FBD, Ladder, CONTROL y HMI. Puedes enregistrer el projet actual antes de continuer.';
+      if(newConfirmTitle)newConfirmTitle.textContent='Commencer un nouveau projet ?';
+      if(newConfirmDesc)newConfirmDesc.textContent='FBD, Ladder, CONTROL et HMI seront effacés. Vous pouvez enregistrer le projet actuel avant de continuer.';
     }else{
       var label=newEditorLabel(mode);
-      if(newConfirmTitle)newConfirmTitle.textContent=(mode==='hmi'?'¿Crear una écran HMI nouvelle?':'¿Crear un circuit nouveau en '+label+'?');
-      if(newConfirmDesc)newConfirmDesc.textContent=(mode==='hmi'?'Se limpiará uniquement HMI. FBD, Ladder y CONTROL permanecerán intactos.':'Se limpiará uniquement '+label+'. Los demás editores permanecerán intactos.');
+      if(newConfirmTitle)newConfirmTitle.textContent=(mode==='hmi'?'Créer un nouvel écran HMI ?':'Créer un nouveau circuit en '+label+' ?');
+      if(newConfirmDesc)newConfirmDesc.textContent=(mode==='hmi'?'Seul HMI sera effacé. FBD, Ladder et CONTROL resteront intacts.':'Seul '+label+' sera effacé. Les autres éditeurs resteront intacts.');
     }
     refreshNewSaveState(kind,mode);
   }
@@ -691,18 +691,18 @@
       if(ok!==false){
         clearCurrent();
         closeNew();
-        toast('Projet nouveau prêt · todos los editores están vacíos');
+        toast('Nouveau projet prêt · tous les éditeurs sont vides');
         return true;
       }
-      throw new Error('No se pudieron limpiar todos los editores.');
+      throw new Error('Impossible d’effacer tous les éditeurs.');
     }
     ok=await resetEditorOnly(mode);
     if(ok!==false){
       closeNew();
-      toast(mode==='hmi'?'Nueva écran HMI lista':'Nouveau circuit '+newEditorLabel(mode)+' prêt');
+      toast(mode==='hmi'?'Nouvel écran HMI prêt':'Nouveau circuit '+newEditorLabel(mode)+' prêt');
       return true;
     }
-    throw new Error('Impossible de limpiar '+newEditorLabel(mode)+'.');
+    throw new Error('Impossible d’effacer '+newEditorLabel(mode)+'.');
   }
   async function saveAndExecuteNew(){
     if(newBusy||!newCanSave)return;
@@ -714,7 +714,7 @@
         newNameInput.style.setProperty('border-color','#dc2626','important');
         newNameInput.style.setProperty('box-shadow','0 0 0 3px rgba(220,38,38,.12)','important');
       }
-      if(newSaveHint)newSaveHint.textContent='Escribe un nom para poder enregistrer este projet.';
+      if(newSaveHint)newSaveHint.textContent='Saisissez un nom pour pouvoir enregistrer ce projet.';
       return;
     }
     if(newNameInput){
@@ -790,7 +790,7 @@
     newModal.setAttribute('aria-hidden','true');
     newModal.innerHTML=
       '<div class="sp-new-card" role="dialog" aria-modal="true" aria-labelledby="simuplcNewTitle">'+
-        '<div class="sp-new-head"><div class="sp-new-icon">✨</div><div><h3 id="simuplcNewTitle">Crear nouveau</h3><p class="sp-new-sub">Choisissez si vous souhaitez repartir de zéro dans SimuPLC ou nettoyer uniquement l’éditeur actuel.</p></div></div>'+
+        '<div class="sp-new-head"><div class="sp-new-icon">✨</div><div><h3 id="simuplcNewTitle">Nouveau</h3><p class="sp-new-sub">Choisissez si vous souhaitez repartir de zéro dans SimuPLC ou nettoyer uniquement l’éditeur actuel.</p></div></div>'+
         '<div id="simuplcNewChoiceStage" class="sp-new-options">'+
           '<button type="button" class="sp-new-option project" data-new-kind="project"><span class="ico">🗂️</span><span><strong>Nouveau projet</strong><small>Efface FBD, Ladder, CONTRÔLE et HMI et démarre un projet entièrement nouveau.</small></span></button>'+
           '<button type="button" class="sp-new-option" data-new-kind="circuit"><span class="ico">⚙️</span><span><strong id="simuplcNewCircuitTitle">Nouveau circuit</strong><small id="simuplcNewCircuitDesc">Efface uniquement l’éditeur actuel et conserve les autres.</small></span></button>'+
@@ -798,10 +798,10 @@
         '</div>'+
         '<div id="simuplcNewConfirmStage" hidden>'+
           '<div class="sp-new-confirm"><h4 id="simuplcNewConfirmTitle"></h4><p id="simuplcNewConfirmDesc"></p></div>'+
-          '<div id="simuplcNewNameWrap" class="sp-new-name" hidden><label for="simuplcNewProjectName">Nom du projet actuel</label><input id="simuplcNewProjectName" type="text" maxlength="80" autocomplete="off" placeholder="Ej. Arranque de motor"></div>'+
+          '<div id="simuplcNewNameWrap" class="sp-new-name" hidden><label for="simuplcNewProjectName">Nom du projet actuel</label><input id="simuplcNewProjectName" type="text" maxlength="80" autocomplete="off" placeholder="Ex. Démarrage moteur"></div>'+
           '<div id="simuplcNewSaveHint" class="sp-new-save-hint"></div>'+
           '<div class="sp-new-actions"><button type="button" data-new-save style="background:#0f4c81;color:#fff;border-color:#0f4c81;font-size:12px;font-weight:900">💾 Enregistrer et continuer</button><button type="button" data-new-discard>Continuer sans enregistrer</button></div>'+
-          '<button type="button" class="sp-new-cancel" data-new-back>Volver</button>'+
+          '<button type="button" class="sp-new-cancel" data-new-back>Retour</button>'+
         '</div>'+
       '</div>';
     document.body.appendChild(newModal);
@@ -838,7 +838,7 @@
     if(newNameInput)newNameInput.value='';
     if(newNameWrap)newNameWrap.hidden=true;
     if(newCircuitTitle)newCircuitTitle.textContent=newCircuitName(pendingNewEditor);
-    if(newCircuitDesc)newCircuitDesc.textContent=pendingNewEditor==='hmi'?'Limpia uniquement la écran HMI actual. FBD, Ladder y CONTROL no cambian.':'Limpia uniquement '+newEditorLabel(pendingNewEditor)+'. Los demás editores no cambian.';
+    if(newCircuitDesc)newCircuitDesc.textContent=pendingNewEditor==='hmi'?'Efface uniquement l’écran HMI actuel. FBD, Ladder et CONTROL ne changent pas.':'Efface uniquement '+newEditorLabel(pendingNewEditor)+'. Les autres éditeurs ne changent pas.';
     showNewChoice();
     newModal.classList.add('show');
     newModal.setAttribute('aria-hidden','false');
@@ -861,18 +861,18 @@
     modal=document.getElementById('simuplcSaveChoice');if(!modal)return;
     installStyles();
     var card=modal.querySelector('.sp-save-card'),h=card&&card.querySelector('h3'),sub=card&&card.querySelector('.sp-save-sub');
-    if(h)h.textContent='Enregistrer le projet';if(sub)sub.textContent='Guarda solo el editor actual o actualiza el projet completo FBD + Ladder + CONTROL + HMI.';
+    if(h)h.textContent='Enregistrer le projet';if(sub)sub.textContent='Enregistre seulement l’éditeur actuel ou met à jour le projet complet FBD + Ladder + CONTROL + HMI.';
     nameInput=replaceNode('simuplcSaveChoiceName');cancelBtn=replaceNode('simuplcSaveCancel');saveSingleBtn=replaceNode('simuplcSaveSingle');saveCompleteBtn=replaceNode('simuplcSaveGlobal');
     var actions=modal.querySelector('.sp-save-actions');
     saveAsBtn=document.getElementById('simuplcSaveAs');if(!saveAsBtn&&actions){saveAsBtn=document.createElement('button');saveAsBtn.id='simuplcSaveAs';saveAsBtn.type='button';saveAsBtn.className='sp-save-as';saveAsBtn.textContent='Enregistrer como…';actions.appendChild(saveAsBtn);}
     var info=document.getElementById('simuplcSaveCurrentInfo');if(!info&&nameInput){info=document.createElement('div');info.id='simuplcSaveCurrentInfo';info.className='sp-current';nameInput.insertAdjacentElement('afterend',info);}
     if(cancelBtn)cancelBtn.onclick=closeSave;
     if(saveSingleBtn)saveSingleBtn.onclick=function(){saveScope('single').catch(function(e){alert('Impossible d’enregistrer : '+(e.message||e));});};
-    if(saveCompleteBtn)saveCompleteBtn.onclick=function(){saveScope('complete').catch(function(e){alert('Impossible de enregistrer el projet: '+(e.message||e));});};
+    if(saveCompleteBtn)saveCompleteBtn.onclick=function(){saveScope('complete').catch(function(e){alert('Impossible d’enregistrer le projet : '+(e.message||e));});};
     if(saveAsBtn)saveAsBtn.onclick=function(){
       var cur=getItem(getCurrentId());forceSaveAs=true;
       if(nameInput){nameInput.readOnly=false;nameInput.value=safeName((cur&&cur.name?cur.name:'Projet SimuPLC')+' copia');nameInput.focus();nameInput.select();}
-      var i=document.getElementById('simuplcSaveCurrentInfo');if(i)i.textContent='Enregistrer como: saisissez un nom nouveau y choisissez si vous souhaitez enregistrer solo '+editorLabel(activeEditor())+' o el projet completo.';
+      var i=document.getElementById('simuplcSaveCurrentInfo');if(i)i.textContent='Enregistrer sous : saisissez un nouveau nom et choisissez si vous souhaitez enregistrer seulement '+editorLabel(activeEditor())+' ou le projet complet.';
       saveAsBtn.style.display='none';
     };
     global.SimuPLCSaveChoice={open:openSave,close:closeSave,saveSingle:function(){return saveScope('single');},saveGlobal:function(){return saveScope('complete');},saveAs:function(){if(saveAsBtn)saveAsBtn.click();}};
@@ -881,8 +881,8 @@
     if(!modal)setupSaveModal();if(!modal)return;
     forceSaveAs=false;var mode=activeEditor(),cur=getItem(getCurrentId());
     if(nameInput){nameInput.value=cur?cur.name:('Projet '+editorLabel(mode));nameInput.readOnly=!!cur;}
-    if(saveSingleBtn)saveSingleBtn.textContent='Enregistrer solo '+editorLabel(mode);
-    if(saveCompleteBtn)saveCompleteBtn.textContent=cur?'Actualizar projet completo':'Enregistrer le projet completo';
+    if(saveSingleBtn)saveSingleBtn.textContent='Enregistrer seulement '+editorLabel(mode);
+    if(saveCompleteBtn)saveCompleteBtn.textContent=cur?'Mettre à jour le projet complet':'Enregistrer le projet completo';
     if(saveAsBtn)saveAsBtn.style.display=cur?'':'none';
     var info=document.getElementById('simuplcSaveCurrentInfo');if(info)info.textContent=cur?('Editando “'+cur.name+'”. Enregistrer sera mis à jour este mismo projet; no se creará un duplicado.'):'Projet nouveau. Si ya existe un projet con el mismo nom, se sera mis à jour ese projet.';
     modal.classList.add('show');modal.setAttribute('aria-hidden','false');
@@ -925,13 +925,13 @@
   function closeLibrary(){var m=document.getElementById('circuitsModal');if(m)m.style.display='none';}
   function renameProject(id){
     var arr=list(),i=arr.findIndex(function(x){return x&&x.id===id;});if(i<0)return;
-    var n=prompt('Nuevo nombre para el proyecto:',arr[i].name||'');if(n===null)return;n=safeName(n);if(!n)return;
+    var n=prompt('Nouveau nom pour le projet :',arr[i].name||'');if(n===null)return;n=safeName(n);if(!n)return;
     var duplicate=arr.find(function(x){return x&&x.id!==id&&nameKey(x.name)===nameKey(n);});
-    if(duplicate){alert('Ya existe un proyecto con ese nombre. Usa otro nombre o abre ese proyecto para actualizarlo.');return;}
+    if(duplicate){alert('Un projet portant ce nom existe déjà. Utilisez un autre nom ou ouvrez ce projet pour le mettre à jour.');return;}
     arr[i].name=n;arr[i].updatedAt=now();if(arr[i].simuplcProject)arr[i].simuplcProject.name=n;writeRaw(arr);refreshLibrary();toast('Proyecto renombrado');
   }
   function deleteProject(id){
-    var item=getItem(id);if(!item)return;if(!confirm('¿Eliminar el proyecto “'+item.name+'”? Esta acción no se puede deshacer.'))return;
+    var item=getItem(id);if(!item)return;if(!confirm('Supprimer le projet « '+item.name+'”? Cette action est irréversible.'))return;
     writeRaw(list().filter(function(x){return x&&x.id!==id;}));if(getCurrentId()===id)sessionSet(null);refreshLibrary();toast('Proyecto eliminado');
   }
 
@@ -968,7 +968,7 @@
   function init(){
     migrateLibrary();sessionSet(sessionGet());setupSaveModal();setupLibrary();bindMainNewButton();bindNewAndImport();global.addEventListener('message',onChildMessage,false);
     global.SimuPLCUnifiedProjects={version:'22.0',list:list,get:getItem,open:openProject,openLibrary:openLibrary,openSave:openSave,openNew:openNew,saveEditor:function(){return saveScope('single');},saveComplete:function(){return saveScope('complete');},rename:renameProject,delete:deleteProject,clearCurrent:clearCurrent,getCurrentId:getCurrentId,refresh:refreshLibrary};
-    try{var b=document.getElementById('btnSave');if(b){b.title='Enregistrer / actualizar projet';b.setAttribute('aria-label','Guardar o actualizar proyecto');}}catch(_){ }
+    try{var b=document.getElementById('btnSave');if(b){b.title='Enregistrer / actualizar projet';b.setAttribute('aria-label','Enregistrer ou mettre à jour le projet');}}catch(_){ }
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else setTimeout(init,0);
 })(window);

@@ -10,7 +10,7 @@
 
   function getRaw(key) {
     try { return localStorage.getItem(key); }
-    catch (error) { console.warn('[SimuPLCStorage] Impossible de leer', key, error); return null; }
+    catch (error) { console.warn('[SimuPLCStorage] Impossible de lire', key, error); return null; }
   }
 
   function setRaw(key, value) {

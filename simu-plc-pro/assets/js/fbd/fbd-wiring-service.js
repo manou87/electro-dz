@@ -52,7 +52,7 @@
     if(!fromIsOutput || !toIsInput) return reject('direction','La connexion doit aller d’une sortie vers une entrée.');
 
     var duplicate=adapter.getConnections().some(function(conn){ return conn && conn.from===fromTerm && conn.to===toTerm; });
-    if(duplicate) return reject('duplicate','La connexion ya existe.');
+    if(duplicate) return reject('duplicate','Cette connexion existe déjà.');
 
     return {ok:true,fromNode:fromNode,toNode:toNode};
   }

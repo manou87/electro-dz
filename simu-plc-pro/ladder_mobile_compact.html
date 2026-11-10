@@ -2229,7 +2229,7 @@ body.ladder-pro-only .branch-panel {
       if(fromPin.elementId === toPin.elementId) return {ok:false, reason:'No conectes un componente consigo mismo.'};
       if(fromPin.x > toPin.x + S(4)) return {ok:false, reason:'Ladder debe conectarse de izquierda a derecha.'};
       const exists=(state.proWires||[]).some(w => w.from===fromPin.id && w.to===toPin.id);
-      if(exists) return {ok:false, reason:'Ese cable ya existe.'};
+      if(exists) return {ok:false, reason:'Ce câble existe déjà.'};
       return {ok:true};
     }
     function handleProPointerDown(pos){
@@ -3222,7 +3222,7 @@ body.ladder-pro-only .branch-panel {
         const parsed = JSON.parse(txt);
         tryLoadModel(parsed);
       } catch {
-        alert('El contenido del JSON no es valide.');
+        alert('Le contenu du JSON n’est pas valide.');
       }
     }
 
@@ -3527,7 +3527,7 @@ body.ladder-pro-only .branch-panel {
         var model = (typeof getSerializableLadder === 'function') ? getSerializableLadder() : (state && state.ladder);
         return clone(model) || { version:1, type:'ladder-phase9', rungs:[] };
       } catch(e) {
-        console.warn('[Phase 2] Impossible de leer Ladder:', e);
+        console.warn('[Phase 2] Impossible de lire le Ladder :', e);
         return { version:1, type:'ladder-phase9', rungs:[] };
       }
     };
@@ -9772,7 +9772,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
 
   async function bindMainButtons(){
     cloneAndBind('btnSave', async function(oldBtn){
-      const name = await api.prompt('Saisissez un nom pour enregistrer votre circuit. Aucune donnée du navigateur ni du dépôt ne sera affichée.', 'Projet SimuPLC', 'Enregistrer circuito');
+      const name = await api.prompt('Saisissez un nom pour enregistrer votre circuit. Aucune donnée du navigateur ni du dépôt ne sera affichée.', 'Projet SimuPLC', 'Enregistrer le circuit');
       if(name === null) return;
       try{
         withTempDialog('prompt', name, function(){ oldBtn.dispatchEvent(new MouseEvent('click', {bubbles:true, cancelable:true, view:window})); });
@@ -9781,7 +9781,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     });
 
     cloneAndBind('btnExportUnified', async function(){
-      const name = await api.prompt('Nombre del fichier para exporter el projet completo FBD/Ladder.', 'Projet SimuPLC', 'Exporter le projet');
+      const name = await api.prompt('Nom du fichier pour exporter le projet complet FBD/Ladder.', 'Projet SimuPLC', 'Exporter le projet');
       if(name === null) return;
       try{
         if(window.SimuPLCProject && typeof window.SimuPLCProject.makeUnifiedProject === 'function'){
@@ -9827,7 +9827,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
           if(!name) return;
           withTempDialog('prompt', name, function(){ btn.dispatchEvent(new MouseEvent('click', {bubbles:true, cancelable:true, view:window})); });
         }else{
-          const ok = await api.confirm('Supprimer ce circuit ? Cette action est irréversible.', 'Supprimer circuito');
+          const ok = await api.confirm('Supprimer ce circuit ? Cette action est irréversible.', 'Supprimer le circuit');
           if(!ok) return;
           withTempDialog('confirm', true, function(){ btn.dispatchEvent(new MouseEvent('click', {bubbles:true, cancelable:true, view:window})); });
         }

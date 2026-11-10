@@ -166,7 +166,7 @@
         if (typeof editors.resetFBDOnly !== 'function') throw new Error('La réinitialisation FBD n’est pas disponible.');
         result = editors.resetFBDOnly();
       }
-      if (result === false) throw new Error('El editor no pudo reiniciarse.');
+      if (result === false) throw new Error('L’éditeur n’a pas pu redémarrer.');
       await acknowledgeProject('nouveau-' + mode);
       toast('Nouveau ' + label + ' prêt ; l’autre éditeur n’a pas changé');
       return true;
@@ -190,7 +190,7 @@
       const mode = activeEditor();
       const label = mode === 'ladder' ? 'Ladder' : 'FBD';
       const defaultName = mode === 'ladder' ? 'Circuit Ladder' : 'Circuit FBD';
-      let name = await getModal().prompt('Saisissez un nom pour enregistrer solamente el editor ' + label + '.', defaultName, 'Enregistrer ' + label);
+      let name = await getModal().prompt('Saisissez un nom pour enregistrer seulement l’éditeur ' + label + '.', defaultName, 'Enregistrer ' + label);
       if (name === null || name === false) return false;
       name = String(name).trim() || defaultName;
 
@@ -199,10 +199,10 @@
       if (!repository) throw new Error('Le dépôt de projets n’est pas disponible.');
       let item;
       if (mode === 'ladder') {
-        if (typeof editors.getLadderState !== 'function') throw new Error('Impossible de leer Ladder. Abre LADDER una vez y vuelve a enregistrer.');
+        if (typeof editors.getLadderState !== 'function') throw new Error('Impossible de lire le Ladder. Ouvrez LADDER une fois puis réenregistrez.');
         item = repository.createSavedItem({ name: name, editor: mode, ladder: await editors.getLadderState() });
       } else {
-        if (typeof editors.getFBDState !== 'function') throw new Error('Impossible de leer FBD.');
+        if (typeof editors.getFBDState !== 'function') throw new Error('Impossible de lire le FBD.');
         item = repository.createSavedItem({ name: name, editor: mode, fbd: editors.getFBDState() });
       }
       if (!repository.add(item)) throw new Error('Le navigateur n’a pas autorisé l’enregistrement du circuit.');
@@ -218,7 +218,7 @@
 
   async function exportProject() {
     return runOnce('export', async function () {
-      let name = await getModal().prompt('Nombre del fichier para exporter el projet completo FBD/Ladder.', 'Projet SimuPLC', 'Exporter le projet');
+      let name = await getModal().prompt('Nom du fichier pour exporter le projet complet FBD/Ladder.', 'Projet SimuPLC', 'Exporter le projet');
       if (name === null || name === false) return false;
       name = String(name).trim() || 'Projet SimuPLC';
       const projectIO = getProjectIO();
@@ -313,7 +313,7 @@
       await acknowledgeProject('circuito-abierto-' + normalized.editor);
       return true;
     }).catch(function (error) {
-      getModal().alert(error.message || String(error), 'Ouvrir circuito');
+      getModal().alert(error.message || String(error), 'Ouvrir le circuit');
       return false;
     });
   }
@@ -337,7 +337,7 @@
     if (global.SimuPLCUnifiedProjects && typeof global.SimuPLCUnifiedProjects.delete === 'function') {
       return global.SimuPLCUnifiedProjects.delete(id);
     }
-    const ok = await getModal().confirm('Supprimer ce circuit ? Cette action est irréversible.', 'Supprimer circuito');
+    const ok = await getModal().confirm('Supprimer ce circuit ? Cette action est irréversible.', 'Supprimer le circuit');
     if (!ok) return false;
     const repository = getRepository();
     if (!repository || !repository.remove(id)) return false;

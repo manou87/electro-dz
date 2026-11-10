@@ -38,7 +38,7 @@
     if (!pinA.id || !pinB.id) return { ok: false, reason: 'Los terminales no tienen identificador.' };
     if (pinA.id === pinB.id) return { ok: false, reason: 'No conectes un terminal consigo mismo.' };
     if (sameElement(pinA, pinB)) return { ok: false, reason: 'No conectes dos terminales del mismo componente directamente.' };
-    if (hasDuplicate(wires, pinA.id, pinB.id)) return { ok: false, reason: 'Ese conductor ya existe.' };
+    if (hasDuplicate(wires, pinA.id, pinB.id)) return { ok: false, reason: 'Ce conducteur existe déjà.' };
 
     // Conserva una orientación canónica cuando existe una relación lógica clara,
     // pero nunca bloquea la continuidad física por la clase input/output.

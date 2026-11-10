@@ -2104,7 +2104,7 @@ body.simulating[data-data-view="simhidden"] #faultBanner{display:none!important}
       <button id="controlCircuitsBtn" class="tool control-circuits-btn" type="button" title="Mes circuits CONTROL">Mes circuits</button>
       <button id="controlImportBtn" class="tool" type="button" title="Importer fichier">Importer</button>
       <button id="controlExportBtn" class="tool" type="button" title="Exporter le projet completo">Exporter</button>
-      <button id="controlPdfBtn" class="tool" type="button" title="Exporter circuito CONTROL a PDF">PDF</button>
+      <button id="controlPdfBtn" class="tool" type="button" title="Exporter le circuit CONTROL en PDF">PDF</button>
 <select id="electricalLevelSelect" class="electrical-level-select" title="Nivel de simulation électrique">
         <option value="basic">BASE</option>
         <option value="technical">TECHNICIEN</option>
@@ -2224,7 +2224,7 @@ body.simulating[data-data-view="simhidden"] #faultBanner{display:none!important}
       <label id="txEngMinRow" class="prop-row" hidden>Rango minimal<input id="propTxEngMin" type="number" step="0.1" value="0"></label>
       <label id="txEngMaxRow" class="prop-row" hidden>Rango maximal<input id="propTxEngMax" type="number" step="0.1" value="100"></label>
       <label id="txUnitRow" class="prop-row" hidden>Unité d’ingénierie<input id="propTxUnit" maxlength="12" placeholder="bar, °C, %, m..."></label>
-      <label id="txValueRow" class="prop-row" hidden>Valeur inicial / actual<input id="propTxValue" type="number" step="0.1" value="50"></label>
+      <label id="txValueRow" class="prop-row" hidden>Valeur initiale / actuelle<input id="propTxValue" type="number" step="0.1" value="50"></label>
 <label id="vfdInputModeRow" class="prop-row" hidden>VFD · alimentation de entrada<select id="propVfdInputMode"><option value="three">TRIPHASÉE → TRIPHASÉE</option><option value="single">MONOPHASÉE → TRIPHASÉE</option></select><span class="phase1-help">En 1Φ, SimuPLC utilise L/N à l’entrée et U/V/W à la sortie. Profil didactique générique : jusqu’à 5 HP. La sortie n’élève pas 220 V à 380 V.</span></label>
 <label id="vfdPowerVoltageRow" class="prop-row" hidden>VFD · clase de tension<select id="propVfdPowerVoltage"><option value="220">220–240 V</option><option value="380">380–415 V</option><option value="440">440–480 V</option></select></label>
       <label id="vfdRatedCurrentRow" class="prop-row" hidden>VFD · corriente nominal (A)<input id="propVfdRatedCurrent" type="number" min="0.1" max="1000" step="0.1" value="10"></label>
@@ -2275,9 +2275,9 @@ body.simulating[data-data-view="simhidden"] #faultBanner{display:none!important}
 <div id="controlSaveModal" class="control-save-overlay" aria-hidden="true">
   <div class="control-save-card" role="dialog" aria-modal="true" aria-labelledby="controlSaveTitle">
     <div class="control-save-icon">💾</div>
-    <h3 id="controlSaveTitle">Enregistrer circuito</h3>
-    <p>Escribe un nombre y elige si quieres enregistrer <b>solo CONTROL</b> o el <b>projet completo FBD + Ladder + CONTROL + HMI</b>. Aucun fichier ne sera téléchargé.</p>
-    <label class="control-save-label">Nombre del circuito
+    <h3 id="controlSaveTitle">Enregistrer le circuit</h3>
+    <p>Saisissez un nom et choisissez si vous voulez enregistrer <b>solo CONTROL</b> o el <b>projet completo FBD + Ladder + CONTROL + HMI</b>. Aucun fichier ne sera téléchargé.</p>
+    <label class="control-save-label">Nom du circuit
       <input id="controlSaveName" type="text" maxlength="80" placeholder="Exemple : Démarrage étoile-triangle">
     </label>
     <div class="control-save-note">Les deux options sont enregistrées en interne et vous pourrez les retrouver depuis <b>Mes circuits</b>.</div>
@@ -2299,8 +2299,8 @@ body.simulating[data-data-view="simhidden"] #faultBanner{display:none!important}
       <button id="controlCircuitsClose" class="tool" type="button">Fermer</button>
     </div>
     <div class="control-circuits-save-row">
-      <input id="controlCircuitName" type="text" maxlength="80" placeholder="Nombre del circuit">
-      <button id="controlCircuitSaveLocal" class="tool primary" type="button">Enregistrer actual</button>
+      <input id="controlCircuitName" type="text" maxlength="80" placeholder="Nom du circuit">
+      <button id="controlCircuitSaveLocal" class="tool primary" type="button">Enregistrer l’actuel</button>
     </div>
     <div id="controlCircuitsSummary" class="control-circuits-summary"></div>
     <div id="controlCircuitsList" class="control-circuits-list"></div>
@@ -2511,7 +2511,7 @@ SVG['Condensador 3Φ estrella.svg']='data:image/svg+xml;base64,//48AD8AeABtAGwAI
     {group:'MOTORES',type:'motor_1p_4wire',name:'Moteur monophasé · 4 bornes',tag:'M1',label:'Motor 1Φ · 4 bornes',cls:'motor',img:'Motor 1Φ 4 bornes.svg',motor:'1ph4',motorRotorCenter:{x:mm(45),y:mm(45)},size:{w:mm(105),h:mm(90)},terms:[{id:'U1',x:mm(15),y:mm(0),label:'U1'},{id:'U2',x:mm(75),y:mm(0),label:'U2'},{id:'Z1',x:mm(15),y:mm(90),label:'Z1'},{id:'Z2',x:mm(75),y:mm(90),label:'Z2'},{id:'PE',x:mm(105),y:mm(45),label:'PE',protectiveEarth:true}]},
     {group:'CONDENSADORES',type:'capacitor_1p',name:'Condensador 1Φ · 2 bornes',tag:'C1',label:'Condensador 1Φ',cls:'capacitor',img:'Condensador 1Φ 2 bornes.svg',capacitor:true,size:{w:mm(40),h:mm(26)},terms:[{id:'C1',x:mm(0),y:mm(13),label:'C1'},{id:'C2',x:mm(40),y:mm(13),label:'C2'}]},
     {group:'CONDENSADORES',type:'capacitor_bank_3p',name:'Banco de condensadores 3Φ',tag:'BC1',label:'Banco 3Φ',cls:'capacitor',img:'Condensador 3Φ delta.svg',capacitorBank3p:true,size:{w:mm(65),h:mm(63)},terms:[{id:'L1',x:mm(2.5),y:mm(51.5),label:'L1'},{id:'L2',x:mm(32.5),y:mm(0),label:'L2'},{id:'L3',x:mm(62.5),y:mm(51.5),label:'L3'}]},
-    {group:'ARRANQUE 1Φ',type:'centrifugal_switch_1p',name:'Interrupteur centrifuge externe',tag:'IC1',label:'Interrupteur centrifuge',cls:'contact centrifugal-switch-device',img:'IC Reposo NC.svg',imgActive:'IC Activado NO.svg',contact:'nc',centrifugalSwitch:true,size:{w:mm(60),h:mm(60)},terms:[{id:'1',x:mm(30),y:mm(0),label:'1'},{id:'2',x:mm(30),y:mm(60),label:'2'}]},
+    {group:'DÉMARRAGE 1Φ',type:'centrifugal_switch_1p',name:'Interrupteur centrifuge externe',tag:'IC1',label:'Interrupteur centrifuge',cls:'contact centrifugal-switch-device',img:'IC Reposo NC.svg',imgActive:'IC Activado NO.svg',contact:'nc',centrifugalSwitch:true,size:{w:mm(60),h:mm(60)},terms:[{id:'1',x:mm(30),y:mm(0),label:'1'},{id:'2',x:mm(30),y:mm(60),label:'2'}]},
     {group:'MOTORES',type:'motor_3p_3wire',name:'Moteur triphasé · 3 bornes',tag:'M1',label:'Motor 3Φ',cls:'motor',img:'Motor 3Φ 3 bornes.svg',motor:'3wire',motorRotorCenter:{x:mm(45),y:mm(45)},size:{w:mm(105),h:mm(90)},terms:[{id:'U',x:mm(15),y:mm(0),label:'U'},{id:'V',x:mm(45),y:mm(0),label:'V'},{id:'W',x:mm(75),y:mm(0),label:'W'},{id:'PE',x:mm(105),y:mm(45),label:'PE',protectiveEarth:true}]},
     {group:'MOTORES',type:'motor_3p_6wire',name:'Moteur triphasé · 6 bornes',tag:'M1',label:'Motor 3Φ 6 bornes',cls:'motor',img:'Motor 3Φ 6 bornes.svg',motor:'6wire',motorRotorCenter:{x:mm(45),y:mm(45)},size:{w:mm(105),h:mm(90)},terms:[{id:'U1',x:mm(15),y:mm(0),label:'U1'},{id:'V1',x:mm(45),y:mm(0),label:'V1'},{id:'W1',x:mm(75),y:mm(0),label:'W1'},{id:'W2',x:mm(15),y:mm(90),label:'W2'},{id:'U2',x:mm(45),y:mm(90),label:'U2'},{id:'V2',x:mm(75),y:mm(90),label:'V2'},{id:'PE',x:mm(105),y:mm(45),label:'PE',protectiveEarth:true}]},
     {group:'MANDO',type:'pb_no',name:'Pulsador NO',tag:'S1',label:'Pulsador NO',cls:'contact',img:'PULSADOR NO REPOSO.svg',imgActive:'PULSADOR NO ACCIONADO.svg',contact:'no',operator:'momentary',terms:[{id:'3',x:41,y:0,label:'3'},{id:'4',x:41,y:82,label:'4'}]},
@@ -6700,7 +6700,7 @@ function fmt(v){const d=new Date(Number(v)||v||Date.now());try{return d.toLocale
 function saveLocal(){
   const data=getCurrent();if(!data||!Array.isArray(data.elements)){notice('Impossible de lire le circuit actuel');return;}
   const inp=$('controlCircuitName');let name=String(inp&&inp.value||'').trim();
-  if(!name){name=String(prompt('Nombre del circuit CONTROL:','Circuit CONTROL')||'').trim();if(!name)return;}
+  if(!name){name=String(prompt('Nom du circuit CONTROL :','Circuit CONTROL')||'').trim();if(!name)return;}
   name=name.replace(/[\\/:*?"<>|]+/g,'_').slice(0,80);
   const now=Date.now();let list=arr(CONTROL_KEY);
   list=list.filter(x=>String(x&&x.name||'').toLowerCase()!==name.toLowerCase());

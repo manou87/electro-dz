@@ -170,7 +170,7 @@
     try {
       return sanitizeLadderState(await api.getProject());
     } catch (error) {
-      console.warn('[SimuPLCEditors] Impossible de leer Ladder.', error);
+      console.warn('[SimuPLCEditors] Impossible de lire le Ladder.', error);
       return emptyLadder();
     }
   }
