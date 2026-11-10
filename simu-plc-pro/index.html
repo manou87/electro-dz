@@ -1,7 +1,24 @@
 <!DOCTYPE html>
 
 <html lang="es" class="simuplc-booting"><head>
-<script>window.__SIMUPLC_MCU_CONTROLLER_ACTIVE__ = true;</script><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<script>window.__SIMUPLC_MCU_CONTROLLER_ACTIVE__ = true;</script>
+<script src="./assets/js/unlock-pro-local.js"></script>
+<style id="simuplc-unlock-pro-local">
+  /* Local unlock: hide paywall / lock chrome; keep existing Pro components usable. */
+  body.show-premium #lockOverlay,
+  #lockOverlay,
+  #modalSoporte,
+  #btnSoporte,
+  .btn-soporte{display:none!important;visibility:hidden!important;pointer-events:none!important}
+  .component[data-premium="1"]::after,
+  #paletteGrid .pick[data-premium="1"]::after,
+  #sidebar .component[data-premium="1"] .lib-badge-mini,
+  .lib-badge-mini[data-premium],
+  .pick[data-premium="1"] .lib-badge-mini{display:none!important}
+  .component[data-premium="1"],
+  #paletteGrid .pick[data-premium="1"]{opacity:1!important;filter:none!important;pointer-events:auto!important;cursor:grab!important}
+</style>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>SimuPLC Lab — TON / TOFF</title>
 <link rel="manifest" href="./manifest.json">
@@ -3565,12 +3582,9 @@ body.mode-control #editorSelectBtn{display:none!important}
   (function(){
     const LOCAL_KEY_FULL = "logicsoft_full_v1";
     function syncFullModeClass(){
-      let full = false;
-      try {
-        full = localStorage.getItem(LOCAL_KEY_FULL) === "1";
-      } catch(e){
-        full = !!window.isFull;
-      }
+      /* Local Electro DZ: always FULL so Pro catalog stays unlocked. */
+      try { localStorage.setItem(LOCAL_KEY_FULL, "1"); } catch(e){}
+      let full = true;
       document.body.classList.toggle("full-mode", !!full);
       window.isFull = !!full;
     }
@@ -4709,8 +4723,9 @@ const PALETTE_TYPES_FULL  = ['input','output','analog_constant','analog_input','
 const PRO_TYPES = ['sr','ton','toff','cnt','analog_constant','analog_input','scale','gt','lt','eq','gte','lte','hyst','pid','split_range','pwm_output','analog_output'];
 
 function isFullDevice(){
-  try { return localStorage.getItem('logicsoft_full_v1') === '1'; }
-  catch(e){ return !!window.isFull; }
+  /* Local Electro DZ unlock */
+  try { localStorage.setItem('logicsoft_full_v1','1'); } catch(e){}
+  return true;
 }
 
 function openPalette(){
@@ -9041,8 +9056,9 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 
   function isFullDevice(){
-    try { return localStorage.getItem('logicsoft_full_v1') === '1'; }
-    catch(e){ return !!window.isFull; }
+    /* Local Electro DZ unlock */
+    try { localStorage.setItem('logicsoft_full_v1','1'); } catch(e){}
+    return true;
   }
 
   let placingType = null;
@@ -23694,5 +23710,6 @@ html body.mode-ladder:not(.modular-external-editor){
   };
 })();
 </script>
+<script src="./assets/js/unlock-pro-local.js"></script>
 </body>
 </html>

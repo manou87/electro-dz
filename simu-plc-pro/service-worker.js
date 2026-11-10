@@ -12,6 +12,7 @@ const APP_SHELL = [
   "./arduino512.jpg",
   "./assets/css/app.css",
   "./assets/js/billing-config.js",
+  "./assets/js/unlock-pro-local.js",
   "./assets/js/codegen/esp32-codegen.js",
   "./assets/js/codegen/mcu-codegen-controller.js",
   "./assets/js/codegen/variable-manager.js",
