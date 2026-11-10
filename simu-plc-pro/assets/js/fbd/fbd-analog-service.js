@@ -366,10 +366,10 @@
       html+=field('analogDecimals','Decimales','number',node.decimals,'min="0" max="4" step="1"');
       html+='<label>Limitar al rango<select id="analogClamp"><option value="1">Oui</option><option value="0">No</option></select></label>';
     }else if(node.type===TYPES.SCALE){
-      html+=field('analogInMin','Entrada mínima','number',node.inMin,'step="any"');
-      html+=field('analogInMax','Entrada máxima','number',node.inMax,'step="any"');
-      html+=field('analogOutMin','Salida mínima','number',node.outMin,'step="any"');
-      html+=field('analogOutMax','Salida máxima','number',node.outMax,'step="any"');
+      html+=field('analogInMin','Entrée minimale','number',node.inMin,'step="any"');
+      html+=field('analogInMax','Entrée maximale','number',node.inMax,'step="any"');
+      html+=field('analogOutMin','Sortie minimale','number',node.outMin,'step="any"');
+      html+=field('analogOutMax','Sortie maximale','number',node.outMax,'step="any"');
       html+=field('analogUnit','Unidad de salida','text',node.unit,'maxlength="12"');
       html+=field('analogDecimals','Decimales','number',node.decimals,'min="0" max="4" step="1"');
       html+='<label>Limitar al rango<select id="analogClamp"><option value="1">Oui</option><option value="0">No</option></select></label>';
@@ -378,36 +378,36 @@
       html+=field('analogKi','Ki · Ganancia integral','number',node.ki,'step="any"');
       html+=field('analogKd','Kd · Ganancia derivativa','number',node.kd,'step="any"');
       html+=field('analogSampleMs','Tiempo de muestreo (ms)','number',node.sampleMs,'min="20" max="60000" step="1"');
-      html+=field('analogOutMin','Salida mínima','number',node.outMin,'step="any"');
-      html+=field('analogOutMax','Salida máxima','number',node.outMax,'step="any"');
+      html+=field('analogOutMin','Sortie minimale','number',node.outMin,'step="any"');
+      html+=field('analogOutMax','Sortie maximale','number',node.outMax,'step="any"');
       html+='<label>Modo<select id="analogPidMode"><option value="auto">Automático</option><option value="manual">Manual</option></select></label>';
-      html+=field('analogManualOutput','Salida manual','number',node.manualOutput,'step="any"');
+      html+=field('analogManualOutput','Sortie manuelle','number',node.manualOutput,'step="any"');
       html+='<label>Acción<select id="analogPidDirection"><option value="heating">Directa / calefacción</option><option value="cooling">Inversa / refrigeración</option></select></label>';
       html+=field('analogUnit','Unidad de salida','text',node.unit,'maxlength="12"');
       html+=field('analogDecimals','Decimales','number',node.decimals,'min="0" max="4" step="1"');
     }else if(node.type===TYPES.SPLIT){
-      html+=field('analogInMin','Entrada mínima','number',node.inMin,'step="any"');
-      html+=field('analogInMax','Entrada máxima','number',node.inMax,'step="any"');
+      html+=field('analogInMin','Entrée minimale','number',node.inMin,'step="any"');
+      html+=field('analogInMax','Entrée maximale','number',node.inMax,'step="any"');
       html+=field('analogNeutral','Punto neutro','number',node.neutral,'step="any"');
       html+=field('analogDeadband','Zona muerta total','number',node.deadband,'min="0" step="any"');
-      html+=field('analogSplitOutMax','Salida máxima','number',node.outMax,'min="0" step="any"');
+      html+=field('analogSplitOutMax','Sortie maximale','number',node.outMax,'min="0" step="any"');
       html+=field('analogUnit','Unidad','text',node.unit,'maxlength="12"');
       html+=field('analogDecimals','Decimales','number',node.decimals,'min="0" max="4" step="1"');
       html+='<label>Limitar al rango<select id="analogClamp"><option value="1">Oui</option><option value="0">No</option></select></label>';
     }else if(node.type===TYPES.PWM){
-      html+=field('analogInMin','Entrada mínima','number',node.inMin,'step="any"');
-      html+=field('analogInMax','Entrada máxima','number',node.inMax,'step="any"');
+      html+=field('analogInMin','Entrée minimale','number',node.inMin,'step="any"');
+      html+=field('analogInMax','Entrée maximale','number',node.inMax,'step="any"');
       html+=field('analogUnit','Unidad de entrada','text',node.unit,'maxlength="12"');
       html+=field('analogFrequency','Frecuencia PWM (Hz)','number',node.frequency,'min="1" max="40000" step="1"');
       html+=field('analogResolution','Resolución (bits)','number',node.resolution,'min="1" max="16" step="1"');
       html+=field('analogDecimals','Decimales','number',node.decimals,'min="0" max="4" step="1"');
       html+='<label>Limitar al rango<select id="analogClamp"><option value="1">Oui</option><option value="0">No</option></select></label>';
     }else if(node.type===TYPES.AO){
-      html+=field('analogInMin','Entrada mínima','number',node.inMin,'step="any"');
-      html+=field('analogInMax','Entrada máxima','number',node.inMax,'step="any"');
+      html+=field('analogInMin','Entrée minimale','number',node.inMin,'step="any"');
+      html+=field('analogInMax','Entrée maximale','number',node.inMax,'step="any"');
       html+='<label>Type de sortie<select id="analogOutputProfile"><option value="v3.3">0–3.3 V</option><option value="v5">0–5 V</option><option value="v10">0–10 V</option><option value="ma4-20">4–20 mA</option><option value="custom">Personalizada</option></select></label>';
-      html+=field('analogVoltageMin','Salida mínima','number',node.voltageMin,'step="any"');
-      html+=field('analogVoltageMax','Salida máxima','number',node.voltageMax,'step="any"');
+      html+=field('analogVoltageMin','Sortie minimale','number',node.voltageMin,'step="any"');
+      html+=field('analogVoltageMax','Sortie maximale','number',node.voltageMax,'step="any"');
       html+=field('analogOutputUnit','Unidad de salida','text',node.outputUnit||'V','maxlength="12"');
       html+=field('analogUnit','Unidad de entrada','text',node.unit,'maxlength="12"');
       html+=field('analogDecimals','Decimales','number',node.decimals,'min="0" max="4" step="1"');

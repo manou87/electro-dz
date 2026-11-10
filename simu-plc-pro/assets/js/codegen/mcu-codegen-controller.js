@@ -89,7 +89,7 @@
       inputOnly: Object.freeze([34, 35, 36, 39]),
       strapping: Object.freeze([0, 2, 5, 12, 15]),
       serial: Object.freeze([1, 3]),
-      note: 'ESP32 classique: AI en ADC1, lectura de 12 bits (0–4095).'
+      note: 'ESP32 classique : AI sur ADC1, lecture 12 bits (0–4095).'
     })
   });
 
@@ -364,7 +364,7 @@
 
     function registerDigital(label, value, kind, candidates) {
       if (isMissing(value)) {
-        errors.push(label + ': variable sin broche asignado.');
+        errors.push(label + ': variable sans broche assignée.');
         return;
       }
       if (!validCandidate(value, candidates)) errors.push(label + ': broche no valide para ' + profile.name + '.');
@@ -385,13 +385,13 @@
     (signals.pwmOutputs || []).forEach(function (label) { registerDigital(label, map.pwmOutputs[label], 'out', profile.pwmOutputs || []); });
     (signals.analogOutputs || []).forEach(function (label) {
       const value=map.analogOutputs[label];
-      if (!(profile.analogOutputs || []).length) { errors.push(label + ': la placa ' + profile.name + ' n’a pas de sortie DAC réelle. Utilisez PWM.'); return; }
+      if (!(profile.analogOutputs || []).length) { errors.push(label + ': la carte ' + profile.name + ' n’a pas de sortie DAC réelle. Utilisez PWM.'); return; }
       registerDigital(label,value,'out',profile.analogOutputs||[]);
     });
     (signals.analogInputs || []).forEach(function (label) {
       const value = map.analogInputs[label];
       if (isMissing(value)) {
-        errors.push(label + ': variable sin broche analogique asignado.');
+        errors.push(label + ': variable sans broche analogique assignée.');
         return;
       }
       if (!validCandidate(value, profile.analogInputs)) errors.push(label + ' : entrée analogique non valide pour ' + profile.name + '.');
@@ -439,7 +439,7 @@
     output = output.replace(/ESP32 clásico/g, profile.name);
     output = output.replace(/SimuPLC Lab ([^\n]+) - ESP32 desde FBD/g, 'SimuPLC Lab ' + VERSION + ' - ' + profile.name + ' desde FBD');
     output = output.replace(/SimuPLC Lab ([^\n]+) - ESP32 desde Ladder/g, 'SimuPLC Lab ' + VERSION + ' - ' + profile.name + ' desde Ladder');
-    output = output.replace(/Entradas analogicas: ADC de 12 bits \(0\.\.4095\)\./g, 'Entrées analogiques: ADC de ' + profile.adcBits + ' bits (0..' + profile.adcRawMax + ').');
+    output = output.replace(/Entradas analogicas: ADC de 12 bits \(0\.\.4095\)\./g, 'Entrées analogiques : ADC de ' + profile.adcBits + ' bits (0..' + profile.adcRawMax + ').');
     output = output.replace(/^\s*analogReadResolution\(12\);\s*\n/gm, '');
     output = output.replace(/GPIO/g, 'pin');
     output = output.replace(/ESP32/g, profile.name);
@@ -584,7 +584,7 @@
     if (!panel) {
       panel = document.createElement('div');
       panel.id = 'mcuPinsPanel';
-      panel.innerHTML = '<div class="title">Asignación de broches MCU</div><div class="sub2"></div><div class="mcu-broche-grid"></div><div id="mcuPinsFooter"><button id="mcuPinsReset" type="button">Restaurar broches seguros</button><div id="mcuPinsMessages"></div></div>';
+      panel.innerHTML = '<div class="title">Affectation des broches MCU</div><div class="sub2"></div><div class="mcu-broche-grid"></div><div id="mcuPinsFooter"><button id="mcuPinsReset" type="button">Restaurer les broches sûres</button><div id="mcuPinsMessages"></div></div>';
       const oldPins = document.getElementById('arduinoPins');
       if (oldPins && oldPins.parentNode) oldPins.parentNode.insertBefore(panel, oldPins.nextSibling);
       else {
@@ -601,7 +601,7 @@
   }
 
   function pinOptionMarkup(values, current, profile) {
-    let html = '<option value=""' + (current == null || current === '' ? ' selected' : '') + '>Sin asignar</option>';
+    let html = '<option value=""' + (current == null || current === '' ? ' selected' : '') + '>Non assigné</option>';
     const validCurrent = values.some(function (value) { return samePin(value, current); });
     if (current != null && current !== '' && !validCurrent) {
       html += '<option value="' + current + '" selected>⚠ ' + current + ' (incompatible)</option>';
@@ -630,9 +630,9 @@
     const subtitle = panel.querySelector('.sub2');
     if (subtitle) subtitle.textContent = profile.note + ' Las entrées digitales usan INPUT_PULLUP.';
     const groups = [
-      { key: 'digitalInputs', title: 'Entrées digitales I', values: profile.digitalInputs },
+      { key: 'digitalInputs', title: 'Entrées numériques I', values: profile.digitalInputs },
       { key: 'analogInputs', title: 'Entrées analogiques AI', values: profile.analogInputs },
-      { key: 'outputs', title: 'Sorties digitales Q', values: profile.outputs },
+      { key: 'outputs', title: 'Sorties numériques Q', values: profile.outputs },
       { key: 'pwmOutputs', title: 'Sorties PWM', values: profile.pwmOutputs || [] },
       { key: 'analogOutputs', title: 'Sorties analogiques AO (DAC)', values: profile.analogOutputs || [] }
     ];
@@ -651,7 +651,7 @@
       if (!(context.signals[group.key] || []).length) {
         const empty = document.createElement('div');
         empty.style.cssText = 'font-size:11px;color:#78909c;padding:5px 2px';
-        empty.textContent = 'Sin variables';
+        empty.textContent = 'Aucune variable';
         column.appendChild(empty);
       }
       grid.appendChild(column);
@@ -677,11 +677,11 @@
     const hint = document.getElementById('arduinoHint');
     const download = document.getElementById('arduinoDownload');
     const modeBox = document.getElementById('arduinoModeBox');
-    if (title) title.textContent = 'Programar microcontrolador';
-    if (subtitle) subtitle.textContent = 'Preparar, compilar y transferir · ' + profile.name;
+    if (title) title.textContent = 'Programmer le microcontrôleur';
+    if (subtitle) subtitle.textContent = 'Préparer, compiler et transférer · ' + profile.name;
     if (boardInfo) boardInfo.textContent = profile.note;
-    if (hint) hint.innerHTML = '<b>Generador USB/OTG analogique:</b> genera I, AI, Q, PWM, AO, PID y SPLIT con protocolo Serial a 115200 bauds para Arduino y ESP32. Incluye HELLO, PING, GET_STATE, MODE, SET, SETA, RUN y STOP sin bloquear el ciclo PLC.';
-    if (download) download.textContent = '⬇ Descargar ' + (profile.id === 'esp32' ? 'ESP32 ' : 'Arduino ') + '.ino';
+    if (hint) hint.innerHTML = '<b>Générateur USB/OTG analogique :</b> génère I, AI, Q, PWM, AO, PID et SPLIT avec protocole Serial à 115200 bauds pour Arduino et ESP32. Inclut HELLO, PING, GET_STATE, MODE, SET, SETA, RUN et STOP sans bloquer le cycle PLC.';
+    if (download) download.textContent = '⬇ Télécharger ' + (profile.id === 'esp32' ? 'ESP32 ' : 'Arduino ') + '.ino';
     if (modeBox) modeBox.style.display = 'none';
     const button = document.getElementById('btnArduino');
     if (button) {

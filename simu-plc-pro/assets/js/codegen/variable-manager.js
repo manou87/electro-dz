@@ -205,17 +205,17 @@
 
   function typeInfo(kind) {
     const map = {
-      digitalInput: { title: 'Entrada digital', group: 'digitalInputs', physical: true, prefix: 'I' },
-      analogInput: { title: 'Entrada analógica', group: 'analogInputs', physical: true, prefix: 'AI' },
-      digitalOutput: { title: 'Salida digital', group: 'outputs', physical: true, prefix: 'Q' },
-      pwmOutput: { title: 'Salida PWM', group: 'pwmOutputs', physical: true, prefix: 'PWM' },
-      analogConstant: { title: 'Constante analógica', group: null, physical: false, prefix: 'CONST' },
-      analogOutput: { title: 'Salida analógica DAC', group: 'analogOutputs', physical: true, prefix: 'AO' },
-      memory: { title: 'Mémoire interna', group: null, physical: false, prefix: 'M' },
-      timer: { title: 'Temporizador', group: null, physical: false, prefix: 'T' },
-      counter: { title: 'Contador', group: null, physical: false, prefix: 'C' },
-      internalAnalog: { title: 'Bloque analógico interno', group: null, physical: false, prefix: 'B' },
-      internalDigital: { title: 'Bloque lógico interno', group: null, physical: false, prefix: 'B' }
+      digitalInput: { title: 'Entrée numérique', group: 'digitalInputs', physical: true, prefix: 'I' },
+      analogInput: { title: 'Entrée analogique', group: 'analogInputs', physical: true, prefix: 'AI' },
+      digitalOutput: { title: 'Sortie numérique', group: 'outputs', physical: true, prefix: 'Q' },
+      pwmOutput: { title: 'Sortie PWM', group: 'pwmOutputs', physical: true, prefix: 'PWM' },
+      analogConstant: { title: 'Constante analogique', group: null, physical: false, prefix: 'CONST' },
+      analogOutput: { title: 'Sortie analogique DAC', group: 'analogOutputs', physical: true, prefix: 'AO' },
+      memory: { title: 'Mémoire interne', group: null, physical: false, prefix: 'M' },
+      timer: { title: 'Temporisateur', group: null, physical: false, prefix: 'T' },
+      counter: { title: 'Compteur', group: null, physical: false, prefix: 'C' },
+      internalAnalog: { title: 'Bloc analogique interne', group: null, physical: false, prefix: 'B' },
+      internalDigital: { title: 'Bloc logique interne', group: null, physical: false, prefix: 'B' }
     };
     return map[kind] || map.internalDigital;
   }
@@ -366,7 +366,7 @@
   }
 
   function pinDisplay(value, profile, group) {
-    if (value == null || value === '') return 'Sin asignar';
+    if (value == null || value === '') return 'Non assigné';
     if (profile.id === 'esp32') return 'GPIO ' + value;
     if (group === 'analogInputs' || /^A\d+$/i.test(String(value))) return String(value).toUpperCase();
     return 'D' + value;
@@ -532,7 +532,7 @@
     const button = document.createElement('button');
     button.id = 'btnVariables';
     button.type = 'button';
-    button.title='Tabla profesional de variables y asignación de broches';
+    button.title='Table professionnelle des variables et affectation des broches';
     button.innerHTML = '<span aria-hidden="true">📋</span><span>VARIABLES</span>';
     const arduino = document.getElementById('btnArduino');
     const spacer = document.getElementById('spacer');
@@ -556,28 +556,28 @@
     modal.innerHTML = `
       <section id="variableManagerCard" role="dialog" aria-modal="true" aria-labelledby="vmTitle">
         <header class="vm-head">
-          <div class="vm-head-main"><h2 id="vmTitle">Tabla profesional de variables</h2><p>Administra I, AI, Q y variables internas de FBD y Ladder. Las asignaciones se guardan por placa y son utilizadas directamente por CODE MCU.</p></div>
+          <div class="vm-head-main"><h2 id="vmTitle">Table professionnelle des variables</h2><p>Gérez I, AI, Q et les variables internes de FBD et Ladder. Les affectations sont enregistrées par carte et utilisées directement par le CODE MCU.</p></div>
           <button class="vm-close" id="vmClose" type="button" aria-label="Fermer">×</button>
         </header>
         <div class="vm-toolbar">
-          <div class="vm-field"><label for="vmBoard">Placa</label><select id="vmBoard"></select></div>
-          <input id="vmSearch" class="vm-search" type="search" placeholder="Buscar variable o description..." />
-          <button class="vm-btn blue" id="vmAuto" type="button">AUTOASIGNAR</button>
-          <button class="vm-btn" id="vmValidate" type="button">VALIDAR</button>
-          <button class="vm-btn danger" id="vmReset" type="button">RESTABLECER</button>
+          <div class="vm-field"><label for="vmBoard">Carte</label><select id="vmBoard"></select></div>
+          <input id="vmSearch" class="vm-search" type="search" placeholder="Rechercher une variable ou une description…" />
+          <button class="vm-btn blue" id="vmAuto" type="button">AUTO-ASSIGNER</button>
+          <button class="vm-btn" id="vmValidate" type="button">VALIDER</button>
+          <button class="vm-btn danger" id="vmReset" type="button">RÉINITIALISER</button>
           <button class="vm-btn" id="vmCSV" type="button">EXPORTER CSV</button>
         </div>
         <div class="vm-summary" id="vmSummary"></div>
-        <div class="vm-message ok" id="vmMessage">Leyendo variables...</div>
+        <div class="vm-message ok" id="vmMessage">Lecture des variables…</div>
         <div class="vm-filters" id="vmFilters">
-          <button class="vm-filter active" data-filter="all" type="button">Todas</button>
+          <button class="vm-filter active" data-filter="all" type="button">Toutes</button>
           <button class="vm-filter" data-filter="physical" type="button">Physiques</button>
-          <button class="vm-filter" data-filter="internal" type="button">Internas</button>
-          <button class="vm-filter" data-filter="errors" type="button">Con errores</button>
+          <button class="vm-filter" data-filter="internal" type="button">Internes</button>
+          <button class="vm-filter" data-filter="errors" type="button">Avec erreurs</button>
         </div>
         <div class="vm-table-wrap">
           <table class="vm-table">
-            <thead><tr><th>État</th><th>Variable</th><th>Tipo</th><th>Editor</th><th>Description</th><th>Valeur</th><th>Pin</th><th>Diagnostic</th></tr></thead>
+            <thead><tr><th>État</th><th>Variable</th><th>Type</th><th>Éditeur</th><th>Description</th><th>Valeur</th><th>Broche</th><th>Diagnostic</th></tr></thead>
             <tbody id="vmBody"></tbody>
           </table>
         </div>
@@ -605,7 +605,7 @@
   function close(force) {
     if (!modal) return;
     if (dirty && !force) {
-      const discard = confirm('Hay cambios sin enregistrer en la tabla de variables. ¿Fermer y descartarlos?');
+      const discard = confirm('Il y a des modifications non enregistrées dans la table des variables. Fermer et les abandonner ?');
       if (!discard) return;
     }
     modal.style.display = 'none';
@@ -623,7 +623,7 @@
 
   function pinOptions(row, profile, current) {
     const candidates = candidateList(row, profile);
-    let html = '<option value=""' + (current == null || current === '' ? ' selected' : '') + '>Sin asignar</option>';
+    let html = '<option value=""' + (current == null || current === '' ? ' selected' : '') + '>Non assigné</option>';
     const validCurrent = candidates.some(function (candidate) { return samePin(candidate, current); });
     if (current != null && current !== '' && !validCurrent) {
       html += '<option value="' + escapeHTML(current) + '" selected>⚠ ' + escapeHTML(pinDisplay(current, profile, row.group)) + ' (incompatible)</option>';
@@ -662,7 +662,7 @@
     const target = document.getElementById('vmSummary');
     if (!target) return;
     target.innerHTML = [
-      ['Variables', currentRows.length], ['Physiques', physical], ['Asignadas', assigned + '/' + physical], ['Errores', errorCount], ['Advertencias', warningCount]
+      ['Variables', currentRows.length], ['Physiques', physical], ['Assignées', assigned + '/' + physical], ['Erreurs', errorCount], ['Avertissements', warningCount]
     ].map(function (item) { return '<div class="vm-stat"><b>' + item[1] + '</b><span>' + item[0] + '</span></div>'; }).join('');
   }
 
@@ -671,13 +671,13 @@
     if (!target) return;
     if (validation.errors.length) {
       target.className = 'vm-message erreur';
-      target.textContent = validation.errors.length + ' erreur(es). Corrige los broches marcados antes de generar code.';
+      target.textContent = validation.errors.length + ' erreur(es). Corrigez les broches marquées avant de générer le code.';
     } else if (validation.warnings.length) {
       target.className = 'vm-message warning';
-      target.textContent = 'Asignación válida con ' + validation.warnings.length + ' avertissement(s).';
+      target.textContent = 'Affectation valide avec ' + validation.warnings.length + ' avertissement(s).';
     } else {
       target.className = 'vm-message ok';
-      target.textContent = 'Asignación válida para ' + getProfile(currentBoard).name + '.';
+      target.textContent = 'Affectation valide pour ' + getProfile(currentBoard).name + '.';
     }
   }
 
@@ -691,7 +691,7 @@
     if (!body) return;
     const rows = filteredRows(validation);
     if (!rows.length) {
-      body.innerHTML = '<tr><td colspan="8" style="padding:24px;text-align:center;color:#6b7f8b">Il n’y a pas de variables para este filtro.</td></tr>';
+      body.innerHTML = '<tr><td colspan="8" style="padding:24px;text-align:center;color:#6b7f8b">Il n’y a pas de variables pour ce filtre.</td></tr>';
       return;
     }
     body.innerHTML = rows.map(function (row) {
@@ -701,14 +701,14 @@
       const messages = state.errors.concat(state.warnings);
       const messageClass = state.errors.length ? 'erreur' : (state.warnings.length ? 'warning' : '');
       return '<tr data-variable="' + escapeHTML(row.label) + '">' +
-        '<td data-label="Estado"><span class="vm-status-dot ' + state.status + '" title="' + escapeHTML(messages.join(' ')) + '">' + icon + '</span></td>' +
+        '<td data-label="État"><span class="vm-status-dot ' + state.status + '" title="' + escapeHTML(messages.join(' ')) + '">' + icon + '</span></td>' +
         '<td data-label="Variable"><span class="vm-label">' + escapeHTML(row.label) + '</span></td>' +
-        '<td data-label="Tipo"><span class="vm-kind">' + escapeHTML(row.typeTitle) + '</span></td>' +
-        '<td data-label="Editor"><span class="vm-origin">' + escapeHTML(row.origin) + '</span></td>' +
-        '<td data-label="Description"><input class="vm-desc" data-variable="' + escapeHTML(row.label) + '" value="' + escapeHTML(row.description) + '" placeholder="Ej.: Motor principal" /></td>' +
-        '<td data-label="Valor"><span>' + escapeHTML(row.value) + '</span></td>' +
-        '<td data-label="Pin">' + (row.physical ? '<select class="vm-pin ' + (state.errors.length ? 'invalid' : '') + '" data-group="' + row.group + '" data-variable="' + escapeHTML(row.label) + '">' + pinOptions(row, profile, current) + '</select>' : '<span class="vm-no-pin">No requerido</span>') + '</td>' +
-        '<td data-label="Diagnóstico"><div class="vm-row-message ' + messageClass + '">' + escapeHTML(messages.length ? messages.join(' ') : (row.physical ? 'Correcto' : 'Variable interna')) + '</div></td>' +
+        '<td data-label="Type"><span class="vm-kind">' + escapeHTML(row.typeTitle) + '</span></td>' +
+        '<td data-label="Éditeur"><span class="vm-origin">' + escapeHTML(row.origin) + '</span></td>' +
+        '<td data-label="Description"><input class="vm-desc" data-variable="' + escapeHTML(row.label) + '" value="' + escapeHTML(row.description) + '" placeholder="Ex. : Moteur principal" /></td>' +
+        '<td data-label="Valeur"><span>' + escapeHTML(row.value) + '</span></td>' +
+        '<td data-label="Broche">' + (row.physical ? '<select class="vm-pin ' + (state.errors.length ? 'invalid' : '') + '" data-group="' + row.group + '" data-variable="' + escapeHTML(row.label) + '">' + pinOptions(row, profile, current) + '</select>' : '<span class="vm-no-pin">Non requis</span>') + '</td>' +
+        '<td data-label="Diagnostic"><div class="vm-row-message ' + messageClass + '">' + escapeHTML(messages.length ? messages.join(' ') : (row.physical ? 'Correct' : 'Variable interne')) + '</div></td>' +
       '</tr>';
     }).join('');
   }
@@ -748,14 +748,14 @@
       dirty = true;
       renderTable();
     });
-    document.getElementById('vmAuto').addEventListener('click', function () { autoAssign(currentBoard, true); renderTable(); showToast('Pines autoasignados para ' + getProfile(currentBoard).name); });
-    document.getElementById('vmValidate').addEventListener('click', function () { renderTable(); showToast(lastValidation && lastValidation.ok ? 'Asignación válida' : 'Hay errores por corregir'); });
+    document.getElementById('vmAuto').addEventListener('click', function () { autoAssign(currentBoard, true); renderTable(); showToast('Broches auto-assignées pour ' + getProfile(currentBoard).name); });
+    document.getElementById('vmValidate').addEventListener('click', function () { renderTable(); showToast(lastValidation && lastValidation.ok ? 'Affectation valide' : 'Il y a des erreurs à corriger'); });
     document.getElementById('vmReset').addEventListener('click', function () {
-      if (!confirm('¿Restablecer la asignación de broches para ' + getProfile(currentBoard).name + '?')) return;
+      if (!confirm('Réinitialiser l’affectation des broches pour ' + getProfile(currentBoard).name + '?')) return;
       workingMaps[currentBoard] = emptyMap();
       autoAssign(currentBoard, false);
       renderTable();
-      showToast('Asignación restablecida');
+      showToast('Affectation réinitialisée');
     });
     document.getElementById('vmCSV').addEventListener('click', exportCSV);
     document.getElementById('vmSave').addEventListener('click', function () {
@@ -766,7 +766,7 @@
     document.getElementById('vmOpenCode').addEventListener('click', function () {
       persistWorkingState();
       renderTable();
-      if (!lastValidation || !lastValidation.ok) { showToast('Corrige los errores antes de generar code'); return; }
+      if (!lastValidation || !lastValidation.ok) { showToast('Corrigez les erreurs avant de générer le code'); return; }
       close(true);
       const button = document.getElementById('btnArduino');
       if (button) button.click();
@@ -783,10 +783,10 @@
     const validation = validateRows(currentBoard);
     const profile = getProfile(currentBoard);
     const map = mapForBoard(currentBoard);
-    const lines = [['Variable','Tipo','Editor','Description','Valeur','Placa','Pin','État','Diagnostic'].map(csvCell).join(',')];
+    const lines = [['Variable','Type','Éditeur','Description','Valeur','Carte','Broche','État','Diagnostic'].map(csvCell).join(',')];
     currentRows.forEach(function (row) {
       const state = validation.states[row.label];
-      const pin = row.physical ? pinDisplay(map[row.group][row.label], profile, row.group) : 'No requerido';
+      const pin = row.physical ? pinDisplay(map[row.group][row.label], profile, row.group) : 'Non requis';
       lines.push([
         row.label, row.typeTitle, row.origin, row.description, row.value, profile.name, pin,
         state.status, state.errors.concat(state.warnings).join(' ')
@@ -822,7 +822,7 @@
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
     const message = document.getElementById('vmMessage');
-    if (message) { message.className = 'vm-message ok'; message.textContent = 'Leyendo variables de FBD y Ladder...'; }
+    if (message) { message.className = 'vm-message ok'; message.textContent = 'Lecture des variables FBD et Ladder…'; }
     await refresh();
   }
 

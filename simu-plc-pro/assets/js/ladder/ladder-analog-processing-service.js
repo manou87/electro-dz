@@ -421,13 +421,13 @@
     wrap.className = 'ladder-analog-processing-grid';
     wrap.innerHTML = `
       <label data-field="constantValue">Valeur constante<input class="edit-input" id="ladderAnalogConstantValue" type="number" step="any"></label>
-      <label data-field="inMin">Entrada mínima<input class="edit-input" id="ladderAnalogInMin" type="number" step="any"></label>
-      <label data-field="inMax">Entrada máxima<input class="edit-input" id="ladderAnalogInMax" type="number" step="any"></label>
-      <label data-field="outMin">Salida mínima<input class="edit-input" id="ladderAnalogOutMin" type="number" step="any"></label>
-      <label data-field="outMax">Salida máxima<input class="edit-input" id="ladderAnalogOutMax" type="number" step="any"></label>
+      <label data-field="inMin">Entrée minimale<input class="edit-input" id="ladderAnalogInMin" type="number" step="any"></label>
+      <label data-field="inMax">Entrée maximale<input class="edit-input" id="ladderAnalogInMax" type="number" step="any"></label>
+      <label data-field="outMin">Sortie minimale<input class="edit-input" id="ladderAnalogOutMin" type="number" step="any"></label>
+      <label data-field="outMax">Sortie maximale<input class="edit-input" id="ladderAnalogOutMax" type="number" step="any"></label>
       <label data-field="neutral">Punto neutro<input class="edit-input" id="ladderSplitNeutral" type="number" step="any"></label>
       <label data-field="deadband">Zona muerta total<input class="edit-input" id="ladderSplitDeadband" type="number" min="0" step="any"></label>
-      <label data-field="splitOutMax">Salida máxima Split<input class="edit-input" id="ladderSplitOutMax" type="number" min="0" step="any"></label>
+      <label data-field="splitOutMax">Sortie maximale Split<input class="edit-input" id="ladderSplitOutMax" type="number" min="0" step="any"></label>
       <label data-field="threshold">Valeur de comparación<input class="edit-input" id="ladderAnalogThreshold" type="number" step="any"></label>
       <label data-field="tolerance">Tolerancia<input class="edit-input" id="ladderAnalogTolerance" type="number" min="0" step="any"></label>
       <label data-field="low">Umbral de apagado<input class="edit-input" id="ladderAnalogLow" type="number" step="any"></label>
@@ -436,9 +436,9 @@
       <label data-field="ki">Ki<input class="edit-input" id="ladderPidKi" type="number" step="any"></label>
       <label data-field="kd">Kd<input class="edit-input" id="ladderPidKd" type="number" step="any"></label>
       <label data-field="sampleMs">Muestreo (ms)<input class="edit-input" id="ladderPidSampleMs" type="number" min="20" step="1"></label>
-      <label data-field="pidOutMin">Salida mínima<input class="edit-input" id="ladderPidOutMin" type="number" step="any"></label>
-      <label data-field="pidOutMax">Salida máxima<input class="edit-input" id="ladderPidOutMax" type="number" step="any"></label>
-      <label data-field="manualOutput">Salida manual<input class="edit-input" id="ladderPidManual" type="number" step="any"></label>
+      <label data-field="pidOutMin">Sortie minimale<input class="edit-input" id="ladderPidOutMin" type="number" step="any"></label>
+      <label data-field="pidOutMax">Sortie maximale<input class="edit-input" id="ladderPidOutMax" type="number" step="any"></label>
+      <label data-field="manualOutput">Sortie manuelle<input class="edit-input" id="ladderPidManual" type="number" step="any"></label>
       <label data-field="pidMode">Modo<select class="edit-select" id="ladderPidMode"><option value="auto">Automático</option><option value="manual">Manual</option></select></label>
       <label data-field="pidDirection">Acción<select class="edit-select" id="ladderPidDirection"><option value="heating">Calefacción</option><option value="cooling">Refrigeración</option></select></label>
       <label data-field="frequency">Frecuencia PWM (Hz)<input class="edit-input" id="ladderAnalogFrequency" type="number" min="1" max="40000" step="1"></label>

@@ -406,7 +406,7 @@
     overlay.id = 'ladderAiQuickOverlay';
     overlay.innerHTML = `
       <div class="ladder-ai-quick-card" role="dialog" aria-modal="false" aria-label="Contrôle rapide d’entrée analogique">
-        <div class="ladder-ai-quick-head"><h3 id="ladderAiQuickTitle">Entrada analógica</h3><button class="ladder-ai-quick-close" id="ladderAiQuickClose" type="button" aria-label="Fermer">×</button></div>
+        <div class="ladder-ai-quick-head"><h3 id="ladderAiQuickTitle">Entrée analogique</h3><button class="ladder-ai-quick-close" id="ladderAiQuickClose" type="button" aria-label="Fermer">×</button></div>
         <div class="ladder-ai-quick-summary"><div class="ladder-ai-quick-display" id="ladderAiQuickDisplay"></div><div class="ladder-ai-quick-raw" id="ladderAiQuickRaw"></div></div>
         <div class="ladder-ai-controls"><input id="ladderAiQuickSlider" type="range" aria-label="Variar signal analogique"><input id="ladderAiQuickNumber" type="number" aria-label="Valeur RAW"></div>
       </div>`;

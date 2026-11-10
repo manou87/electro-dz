@@ -475,8 +475,8 @@
     const lines = [];
     lines.push('/*');
     lines.push('  SimuPLC Lab ' + VERSION + ' - ESP32 desde FBD');
-    lines.push('  Placa objetivo: ESP32 DevKit V1 / WROOM-32');
-    lines.push('  Entrées digitales: INPUT_PULLUP (LOW = contact cerrado a GND).');
+    lines.push('  Carte cible : ESP32 DevKit V1 / WROOM-32');
+    lines.push('  Entrées numériques: INPUT_PULLUP (LOW = contact cerrado a GND).');
     lines.push('  Entrées analogicas: ADC de 12 bits (0..4095).');
     lines.push('*/');
     lines.push('');
@@ -790,7 +790,7 @@
   function generateLadderESP32(model, pinMap) {
     const elements = flattenLadderElements(model);
     const wires = model && Array.isArray(model.proWires) ? model.proWires : [];
-    if (!elements.length) return '// Il n’y a pas de éléments Ladder para generar.';
+    if (!elements.length) return '// Aucun élément Ladder à générer.';
     if (!wires.length) return '// El projet Ladder no contiene el grafo proWires. Abre y vuelve a enregistrer el projet antes de generar ESP32.';
 
     const byId = new Map();
@@ -1205,7 +1205,7 @@
       savePinMap(map);
       const validation = validatePinMap(current.signals, map);
       if (!validation.ok) {
-        return '/*\n  Impossible de generar ESP32 por errores de asignacion de pines:\n  - ' + validation.errors.join('\n  - ') + '\n*/';
+        return '/*\n  Impossible de générer ESP32 à cause d’erreurs d’affectation de broches :\n  - ' + validation.errors.join('\n  - ') + '\n*/';
       }
       let code;
       if (current.editor === 'ladder') {
@@ -1216,7 +1216,7 @@
         diagnostics.fbdGenerated += 1;
       }
       const warningHeader = validation.warnings.length
-        ? '/* ADVERTENCIAS DE PINES:\n - ' + validation.warnings.join('\n - ') + '\n*/\n\n'
+        ? '/* AVERTISSEMENTS DE BROCHES:\n - ' + validation.warnings.join('\n - ') + '\n*/\n\n'
         : '';
       diagnostics.generated += 1;
       diagnostics.lastEditor = current.editor;
@@ -1284,7 +1284,7 @@
     savePinMap(map);
 
     const groups = [
-      { key: 'digitalInputs', title: 'Entrées digitales', pins: BOARD.digitalInputPins },
+      { key: 'digitalInputs', title: 'Entrées numériques', pins: BOARD.digitalInputPins },
       { key: 'analogInputs', title: 'Entrées analogiques AI', pins: BOARD.analogInputPins },
       { key: 'outputs', title: 'Sorties Q', pins: BOARD.outputPins }
     ];
@@ -1305,7 +1305,7 @@
       if (!(current.signals[group.key] || []).length) {
         const empty = document.createElement('div');
         empty.style.cssText = 'font-size:11px;color:#78909c;padding:5px 2px';
-        empty.textContent = 'Sin variables';
+        empty.textContent = 'Aucune variable';
         column.appendChild(empty);
       }
       grid.appendChild(column);
@@ -1331,7 +1331,7 @@
     const chunks = [];
     if (validation.errors.length) chunks.push('<div class="error">' + validation.errors.join('<br>') + '</div>');
     if (validation.warnings.length) chunks.push('<div class="esp32-warning">' + validation.warnings.join('<br>') + '</div>');
-    if (!chunks.length) chunks.push('<div style="color:#087f5b;font-weight:900">Asignación válida para ESP32.</div>');
+    if (!chunks.length) chunks.push('<div style="color:#087f5b;font-weight:900">Affectation valide pour ESP32.</div>');
     wrap.innerHTML = chunks.join('');
   }
 
@@ -1344,7 +1344,7 @@
       <div class="title">Mapeo de GPIO para ESP32</div>
       <div class="sub2">Les entrées AI utilisent ADC1 pour garder la compatibilité avec le futur bloc WiFi. Les GPIO 34–39 sont entrée seule et n’ont pas de pull-up interne.</div>
       <div class="esp32-pin-grid"></div>
-      <div id="esp32PinsFooter"><button id="esp32PinsReset" type="button">Restaurar pines seguros</button><div id="esp32PinsMessages"></div></div>
+      <div id="esp32PinsFooter"><button id="esp32PinsReset" type="button">Restaurer les broches sûres</button><div id="esp32PinsMessages"></div></div>
     `;
     const oldPins = modal.querySelector('#arduinoPins');
     if (oldPins && oldPins.parentNode) {
@@ -1384,7 +1384,7 @@
     if (title) title.textContent = esp32 ? 'Générateur ESP32 (.ino)' : 'Générateur Arduino (.ino)';
     if (subtitle) subtitle.textContent = esp32 ? 'FBD ou Ladder → code pour ESP32 DevKit V1' : 'Votre circuit → code prêt à coller dans Arduino IDE';
     if (hint && esp32) hint.innerHTML = '<b>ESP32 :</b> assignez des GPIO pour I, AI et Q. Les entrées numériques sont générées avec <b>INPUT_PULLUP</b> ; les AI utilisent une lecture 12 bits. Le code inclut SCALE, comparateurs et hystérésis.';
-    if (download) download.textContent = esp32 ? '⬇ Descargar ESP32 .ino' : '⬇ Descargar .ino';
+    if (download) download.textContent = esp32 ? '⬇ Télécharger ESP32 .ino' : '⬇ Télécharger .ino';
     const button = document.getElementById('btnArduino');
     if (button) {
       button.title='Generar code Arduino o ESP32';

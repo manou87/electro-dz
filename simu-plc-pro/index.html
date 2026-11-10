@@ -1370,7 +1370,7 @@ body {
 </style>
 
 <style id="counter-display-style">
-/* === Contador (CNT) display === */
+/* === Compteur (CNT) display === */
 .node[data-type="cnt"] .label{
   font-size: 44px !important;
   line-height: 1.0 !important;
@@ -1990,7 +1990,7 @@ html.theme-dark .node.selected.has-signal {
   color: #001b10 !important;
 }
 
-/* 2) Badge/etiquetas: contraste claro cuando el bloc esté activo en mode oscuro */
+/* 2) Badge/etiquetas: contraste claro cuando el bloc esté actif en mode oscuro */
 html.theme-dark .node.has-signal .badge,
 html.theme-dark .node.has-signal .label {
   color: #001b10 !important;
@@ -2460,8 +2460,8 @@ body{background:#e7ebf0 !important;}
 (function(){
   function symbolFor(type){
     switch((type||'').toLowerCase()){
-      case 'input': return ['Entrada (I)','INPUT'];
-      case 'output': return ['Salida (Q)','OUTPUT'];
+      case 'input': return ['Entrée (I)','INPUT'];
+      case 'output': return ['Sortie (Q)','OUTPUT'];
       case 'm': return ['Mémoire (M)','M'];
       case 'and': return ['AND','AND'];
       case 'or': return ['OR','OR'];
@@ -4388,7 +4388,7 @@ let selectedPinEl=null;
 /* Hubs (juntas) por broche de sortie */
 const outputHubs = new WeakMap(); // pinEl -> { x,y, dot, hit, stemPath, branches:Set }
 
-/* ==== Temporizador Modal (segundos) ==== */
+/* ==== Temporisateur Modal (segundos) ==== */
 const timerModal = document.getElementById('timerModal');
 const timerTitle = document.getElementById('timerTitle');
 const timerSecInput = document.getElementById('timerSec');
@@ -4431,7 +4431,7 @@ btnTimerSave.addEventListener('click', ()=>{
 });
 timerModal.addEventListener('click',(e)=>{ if(e.target===timerModal) closeTimerModal(); });
 
-/* ===== Contador (CNT) modal ===== */
+/* ===== Compteur (CNT) modal ===== */
 const counterModal = document.getElementById('counterModal');
 const counterTitle = document.getElementById('counterTitle');
 const counterOnInput = document.getElementById('counterOn');
@@ -8334,7 +8334,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
       outNodes.forEach((n,ix)=>{
         const label = n.name || ('Q' + (ix+1));
         const activeLevel = (typeof window.getArduinoOutputLevelForLabel === 'function') ? window.getArduinoOutputLevelForLabel(label) : (((typeof window.isArduinoOutputActiveLow === 'function') ? window.isArduinoOutputActiveLow() : true) ? 'low' : 'high');
-        lines.push('//   ' + label + ' -> D' + outputPins[ix] + ' | activo en ' + String(activeLevel).toUpperCase());
+        lines.push('//   ' + label + ' -> D' + outputPins[ix] + ' | actif en ' + String(activeLevel).toUpperCase());
       });
     }
     lines.push('');
@@ -8475,7 +8475,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const nodes = getNodes() || [];
     const conns = getConnections() || [];
 
-    if(!nodes.length) return '// No blocks in the circuit.';
+    if(!nodes.length) return '// Aucun bloc dans le circuit.';
 
     const mode = __arduinoGetMode();
     const analysis = __arduinoAnalyzeForCompact(nodes, conns);
@@ -9366,7 +9366,7 @@ window.addEventListener('pointermove', (e) => {
     alert("✅ Acceso FULL activé.\nToca el botón NUEVO para démarrer tu circuit con TON, TOFF y SR.");
   }
 
-  // ================== VALIDAR CODE (MANUAL) ===================
+  // ================== VALIDER CODE (MANUAL) ===================
   async function validarCodigoDesdeSheet(codigo){
     const device = getDeviceId();
     const payload = { code: (codigo || "").toUpperCase(), deviceId: device };
@@ -10368,36 +10368,36 @@ function attachNumberEditor(node){
       <div id="arduinoCard" role="dialog" aria-modal="true">
         <div id="arduinoHeader">
           <div>
-            <h3>Générateur Arduino / ESP32 (.ino)</h3>
-            <div class="sub">Votre circuit → code prêt à coller dans Arduino IDE</div>
+            <h3>Programmer le microcontrôleur</h3>
+            <div class="sub">Préparer, compiler et transférer · Arduino</div>
           </div>
-          <div id="arduinoHeaderRight"><button id="arduinoThemeToggle" type="button" title="Cambiar tema">🌙 Modo oscuro</button><button id="arduinoClose" title="Fermer">✕ Fermer</button></div>
+          <div id="arduinoHeaderRight"><button id="arduinoThemeToggle" type="button" title="Changer de thème">🌙 Mode sombre</button><button id="arduinoClose" title="Fermer">✕ Fermer</button></div>
         </div>
 
         <div id="arduinoHint">
-          <b>Tip:</b> assignez vos broches ici même (enregistré dans ce navigateur). Le code est généré avec ce mapping.<br>
-          Si vos boutons sont avec <b>INPUT_PULLUP</b>, el code interpreta <b>LOW = contact cerrado a GND</b>. Aoui: <b>NO</b> = 1 al presionar, <b>NC</b> = 1 al soltar. Si usas otra connexion, cambia <code>INPUT_ACTIVE_LOW</code>.
+          <b>Astuce :</b> assignez vos broches ici même (enregistré dans ce navigateur). Le code est généré avec ce mapping.<br>
+          Si vos boutons utilisent <b>INPUT_PULLUP</b>, le code interprète <b>LOW = contact fermé à GND</b>. Ainsi : <b>NO</b> = 1 à l’appui, <b>NC</b> = 1 au relâchement. Pour une autre connexion, changez <code>INPUT_ACTIVE_LOW</code>.
         </div>
 
         <div id="arduinoModeBox">
-          <div class="title">Modo de codigo</div>
+          <div class="title">Mode de code</div>
           <div class="sub2">Auto = compact s’il n’y a que des portes (sans SR/TON/TOFF/CNT/M et sans boucles). Sinon, PLC universel.</div>
           <div class="modeRow">
-            <label for="arduinoModeSelect"><b>Modo:</b></label>
+            <label for="arduinoModeSelect"><b>Mode :</b></label>
             <select id="arduinoModeSelect">
               <option value="auto">Auto</option>
-              <option value="compact">Compacto (solo compuertas)</option>
-              <option value="plc">PLC universal</option>
+              <option value="compact">Compact (portes seulement)</option>
+              <option value="plc">PLC universel</option>
             </select>
             <span id="arduinoModeInfo"></span>
           </div>
         </div>
 
         <div id="arduinoBoardBox">
-          <div class="title">Placa / Microcontrolador</div>
+          <div class="title">Carte / Microcontrôleur</div>
           <div class="sub2">Choisissez la carte pour que le mapping par défaut et la plage de broches coïncident (UNO, MEGA, ATmega, etc.).</div>
           <div class="boardRow">
-            <label for="arduinoBoardSelect"><b>Placa:</b></label>
+            <label for="arduinoBoardSelect"><b>Carte :</b></label>
             <select id="arduinoBoardSelect">
               <option value="uno">Arduino UNO / Nano (ATmega328P)</option>
               <option value="mega">Arduino MEGA 2560 (ATmega2560)</option>
@@ -10410,25 +10410,25 @@ function attachNumberEditor(node){
         </div>
 
         <div id="arduinoOutputBox">
-          <div class="title">Polaridad de sorties</div>
-          <div class="sub2">Configura cada sortie Q por separado. El selector general sirve como valeur por defecto y aussi para aplicar la misma polaridad a todas.</div>
+          <div class="title">Polarité des sorties</div>
+          <div class="sub2">Configurez chaque sortie Q séparément. Le sélecteur général sert de valeur par défaut et aussi pour appliquer la même polarité à toutes.</div>
           <div class="outputRow">
-            <label for="arduinoOutputLevel"><b>Predeterminado:</b></label>
+            <label for="arduinoOutputLevel"><b>Par défaut :</b></label>
             <select id="arduinoOutputLevel">
-              <option value="low">LOW (relay activo en LOW)</option>
-              <option value="high">HIGH (relay activo en HIGH)</option>
+              <option value="low">LOW (relais actif en LOW)</option>
+              <option value="high">HIGH (relais actif en HIGH)</option>
             </select>
             <span id="arduinoOutputInfo"></span>
           </div>
           <div id="arduinoOutputPerList"></div>
           <div id="arduinoOutputPerActions">
             <button id="arduinoApplyOutputDefault" type="button">Appliquer le défaut à toutes les Q</button>
-            <span id="arduinoOutputPerHint">Cada sortie guarda su propia polaridad en este navigateur.</span>
+            <span id="arduinoOutputPerHint">Chaque sortie conserve sa propre polarité dans ce navigateur.</span>
           </div>
         </div>
 
         <div id="arduinoPins">
-          <div class="title">Mapeo de broches</div>
+          <div class="title">Mapping des broches</div>
           <div class="sub2">Modifiez les broches pour chaque entrée/sortie puis régénérez (mise à jour automatique).</div>
           <div class="pinGrid">
             <div class="pinCol">
@@ -10441,7 +10441,7 @@ function attachNumberEditor(node){
             </div>
           </div>
           <div id="arduinoPinsFooter">
-            <button id="arduinoPinsDefault" type="button">Restaurar por defecto</button>
+            <button id="arduinoPinsDefault" type="button">Restaurer par défaut</button>
             <div class="warn" id="arduinoPinsWarn"></div>
           </div>
         </div>
@@ -10449,12 +10449,12 @@ function attachNumberEditor(node){
         <textarea id="arduinoCode" spellcheck="false"></textarea>
 
         <div id="arduinoActions">
-          <button class="warn" id="arduinoRefresh">🔄 Regenerar</button>
-          <button id="arduinoCopy">📋 Copiar</button>
-          <button class="primary" id="arduinoDownload">⬇ Descargar .ino</button>
+          <button class="warn" id="arduinoRefresh">🔄 Régénérer</button>
+          <button id="arduinoCopy">📋 Copier</button>
+          <button class="primary" id="arduinoDownload">⬇ Télécharger .ino</button>
         </div>
       </div>
-      <div id="arduinoToast">Copiado ✅</div>
+      <div id="arduinoToast">Copié ✅</div>
     `;
     document.body.appendChild(modal);
 
@@ -10478,7 +10478,7 @@ function attachNumberEditor(node){
       if(card) card.setAttribute('data-theme', safe);
       const toast = document.getElementById('arduinoToast');
       if(toast) toast.setAttribute('data-theme', safe);
-      if(themeBtn) themeBtn.textContent = safe === 'dark' ? '☀️ Mode clair' : '🌙 Modo oscuro';
+      if(themeBtn) themeBtn.textContent = safe === 'dark' ? '☀️ Mode clair' : '🌙 Mode sombre';
       try{ localStorage.setItem(__ARDUINO_MODAL_THEME_KEY, safe); }catch(_){ }
     }
     applyArduinoModalTheme(getArduinoModalTheme());
@@ -10493,10 +10493,10 @@ function attachNumberEditor(node){
       ta.select();
       try{
         await navigator.clipboard.writeText(ta.value);
-        showToast('Copiado ✅');
+        showToast('Copié ✅');
       }catch(_){
         document.execCommand('copy');
-        showToast('Copiado ✅');
+        showToast('Copié ✅');
       }
     });
 
@@ -10594,7 +10594,7 @@ function attachNumberEditor(node){
       const cfg = loadArduinoOutputConfig();
       outputPerList.innerHTML = '';
       if(!outNodes.length){
-        outputPerList.innerHTML = '<div style="font-size:12px;color:#94a3b8;font-weight:800;">Il n’y a pas de salidas Q en el circuito.</div>';
+        outputPerList.innerHTML = '<div style="font-size:12px;color:#94a3b8;font-weight:800;">Il n’y a pas de sorties Q dans le circuit.</div>';
         return;
       }
       outNodes.forEach((n,ix)=>{
@@ -10665,9 +10665,9 @@ function attachNumberEditor(node){
     const boardInfo = modal.querySelector('#arduinoBoardInfo');
     function __boardProfile(board){
       const profiles = {
-        uno: {key:'uno', name:'UNO/Nano (ATmega328P)', maxPin:19, inStart:2, outStart:8, note:'D0-13 + A0-A5 (14-19). Evita D0/D1 (Serial).'},
-        mega: {key:'mega', name:'MEGA 2560 (ATmega2560)', maxPin:69, inStart:22, outStart:30, note:'D0-53 + A0-A15 (54-69). Evita D0/D1 (Serial).'},
-        leonardo: {key:'leonardo', name:'Leonardo (ATmega32u4)', maxPin:23, inStart:2, outStart:8, note:'D0-13 + A0-A5 (18-23). Evita D0/D1 (Serial).'},
+        uno: {key:'uno', name:'UNO/Nano (ATmega328P)', maxPin:19, inStart:2, outStart:8, note:'D0-13 + A0-A5 (14-19). Évitez D0/D1 (Serial).'},
+        mega: {key:'mega', name:'MEGA 2560 (ATmega2560)', maxPin:69, inStart:22, outStart:30, note:'D0-53 + A0-A15 (54-69). Évitez D0/D1 (Serial).'},
+        leonardo: {key:'leonardo', name:'Leonardo (ATmega32u4)', maxPin:23, inStart:2, outStart:8, note:'D0-13 + A0-A5 (18-23). Évitez D0/D1 (Serial).'},
         atmega328: {key:'atmega328', name:'ATmega328P standalone', maxPin:19, inStart:2, outStart:8, note:'Similar a UNO (D0-13 + A0-A5).'},
       };
       return profiles[board] || profiles.uno;
@@ -10742,7 +10742,7 @@ function attachNumberEditor(node){
       const toast = document.getElementById('arduinoToast');
       if(toast) toast.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
       const themeBtn = document.getElementById('arduinoThemeToggle');
-      if(themeBtn) themeBtn.textContent = theme === 'dark' ? '☀️ Mode clair' : '🌙 Modo oscuro';
+      if(themeBtn) themeBtn.textContent = theme === 'dark' ? '☀️ Mode clair' : '🌙 Mode sombre';
     }catch(_){ }
     ta.value = (window.generateArduinoSketch ? window.generateArduinoSketch() : '');
     modal.style.display = 'flex';
@@ -10916,7 +10916,7 @@ function attachNumberEditor(node){
       const board = (typeof getArduinoBoard2==='function' ? getArduinoBoard2() : 'uno');
       const serialPinsUsed = used.has(0) || used.has(1);
       if(serialPinsUsed){
-        const msg = 'Ojo: D0/D1 suelen ser Serial (mejor evitar).';
+        const msg = 'Ojo: D0/D1 suelen ser Serial (mieux vaut éviter).';
         warnEl.textContent = warnEl.textContent ? (warnEl.textContent + ' | ' + msg) : msg;
       }
 
@@ -11150,7 +11150,7 @@ function attachNumberEditor(node){
         const activeLevel = (typeof window.getArduinoOutputLevelForLabel === 'function')
           ? window.getArduinoOutputLevelForLabel(label)
           : (((typeof window.isArduinoOutputActiveLow === 'function') ? window.isArduinoOutputActiveLow() : true) ? 'low' : 'high');
-        mapLines.push(`//   ${label}  -> D${outputPins[ix]}   (activo en ${String(activeLevel).toUpperCase()})`);
+        mapLines.push(`//   ${label}  -> D${outputPins[ix]}   (actif en ${String(activeLevel).toUpperCase()})`);
       });
     }
 
@@ -15522,8 +15522,8 @@ body.ladder-pro-only.library-collapsed .ladder-library-open-floating{
     });
   }
   window.SimuPLCModal = {
-    alert:function(message,title){ return showNativeModal({icon:'⚠', title:title||'Aviso', message:String(message||''), buttons:[{text:'Entendido',value:true,cls:'primary'}]}); },
-    confirm:function(message,title){ return showNativeModal({icon:'⚡', title:title||'Confirmar acción', message:String(message||''), buttons:[{text:'Annuler',value:false,cls:'ghost'},{text:'Continuar',value:true,cls:'primary'}]}); },
+    alert:function(message,title){ return showNativeModal({icon:'⚠', title:title||'Avertissement', message:String(message||''), buttons:[{text:'Compris',value:true,cls:'primary'}]}); },
+    confirm:function(message,title){ return showNativeModal({icon:'⚡', title:title||'Confirmer l’action', message:String(message||''), buttons:[{text:'Annuler',value:false,cls:'ghost'},{text:'Continuer',value:true,cls:'primary'}]}); },
     prompt:function(message,value,title){ return showNativeModal({icon:'💾', title:title||'Enregistrer le projet', message:String(message||''), input:true, value:value||'', buttons:[{text:'Annuler',value:null,cls:'ghost'},{text:'Enregistrer',value:true,cls:'success'}]}); }
   };
 
@@ -18034,7 +18034,7 @@ document.addEventListener("DOMContentLoaded",function(){
  const dialog=document.createElement("dialog");dialog.id="simuplcProFeaturesDialog";dialog.setAttribute("aria-label","Todas las funciones SimuPLC PRO");
  dialog.innerHTML='<button type="button" class="simuplc-features-close" aria-label="Fermer funciones">✕ Fermer</button><h3>Todo lo que incluye SimuPLC PRO</h3><p class="simuplc-features-subtitle">Outils pour concevoir, programmer, simuler et documenter vos projets électriques et d’automatisation.</p>';
  const sections=[
- {title:"Programación PLC y Arduino",icon:"🧩",items:["Programación y simulación avanzada en Ladder y FBD","Módulos de ampliación LOGO!","Entradas y salidas analógicas","Temporizadores configurables","Programación de Arduino con funciones avanzadas PRO, como temporizadores"]},
+ {title:"Programación PLC y Arduino",icon:"🧩",items:["Programación y simulación avanzada en Ladder y FBD","Módulos de ampliación LOGO!","Entradas y salidas analógicas","Temporisateurs configurables","Programación de Arduino con funciones avanzadas PRO, como temporizadores"]},
  {title:"Control y potencia",icon:"⚡",items:["Variadores de frecuencia (VFD)","Modo Técnico y Protecciones","Banco de condensadores y mejora del factor de potencia","Transformadores de alta a baja tensión"]},
  {title:"HMI et projets",icon:"🖥️",items:["Processus HMI avancés sans les limitations de FREE","Enregistrer et exporter le projet complet","Exporter les circuits en PDF avec cartouche éditable et sans marque"]},
  {title:"Actualizaciones",icon:"✨",items:["Nuevas funciones y actualizaciones PRO incluidas"]}
@@ -18729,7 +18729,7 @@ body.mode-ladder:not(.modular-external-editor) #topbar{display:flex!important}
       outWrap.appendChild(makeRow(label, 'out', val, 'D' + val));
     });
     if(!inputs.length) inWrap.innerHTML = '<div class="pinRow"><span class="hint">Aucune entrée I dans Ladder.</span></div>';
-    if(!outputs.length) outWrap.innerHTML = '<div class="pinRow"><span class="hint">Sin sorties Q en Ladder.</span></div>';
+    if(!outputs.length) outWrap.innerHTML = '<div class="pinRow"><span class="hint">Aucune sortie Q en Ladder.</span></div>';
     saveMap(map);
 
     function validate(){
@@ -19038,7 +19038,7 @@ body.mode-ladder:not(.modular-external-editor) #topbar{display:flex!important}
         }else{
           withTempDialog('prompt', name, function(){ document.getElementById('btnExportUnified') && document.getElementById('btnExportUnified').click(); });
         }
-        toast('Projet exportado');
+        toast('Projet exporté');
       }catch(e){ api.alert('Impossible d’exporterer : ' + (e.message || e), 'Erreur d’exportation'); }
     });
 
@@ -19146,7 +19146,7 @@ body.mode-ladder:not(.modular-external-editor) #topbar{display:flex!important}
       return analogCatalog.symbolFor(type) + ' · ' + analogCatalog.nameFor(type);
     }
     var map = {
-      input:'Entrada', output:'Salida', m:'Mémoire', and:'AND', or:'OR', not:'NOT',
+      input:'Entrée', output:'Sortie', m:'Mémoire', and:'AND', or:'OR', not:'NOT',
       nand:'NAND', nor:'NOR', xor:'XOR', xnor:'XNOR', ton:'TON', toff:'TOFF', sr:'SR', cnt:'COMPTEUR'
     };
     return map[type] || type.toUpperCase();
@@ -20157,7 +20157,7 @@ body.mode-hmi #hmiHost{top:0!important}
     ];return p;
   }
   function boxCounterTemplate(){
-    const p=baseProject('Contador de cajas','box-counter');
+    const p=baseProject('Compteur de cajas','box-counter');
     p.elements=[
       {id:uid(),type:'title',label:'COMPTEUR DE CAISSES SUR BANDE',x:55,y:35,w:1090,h:62,color:'blue'},
       {id:uid(),type:'pushbutton',label:'START',tag:'I1',contactType:'no',action:'momentary',x:65,y:110,w:180,h:125,color:'green'},
