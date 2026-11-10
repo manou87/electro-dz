@@ -879,7 +879,7 @@
       else if(isPID(element)) value.textContent=formatNumber(runtime.outputValue,element.decimals,element.unit);
       else if (isPWM(element)) value.textContent = formatNumber(runtime.outputValue, element.decimals, '%');
       else if (isAO(element)) value.textContent = formatNumber(runtime.outputValue, element.decimals, element.outputUnit||'V');
-      else value.textContent = runtime.digitalOutput ? 'ACTIVO' : 'INACTIVO';
+      else value.textContent = runtime.digitalOutput ? 'ACTIF' : 'INACTIF';
       row.appendChild(value);
       const detail = document.createElement('div');
       detail.className = 'ladder-analog-runtime-detail';

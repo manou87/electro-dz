@@ -82,7 +82,7 @@
       await io.sendCommand('MODE,'+command);
       clearTimeout(modeSyncTimer);
       modeSyncTimer=setTimeout(function(){try{io.requestStateThrottled&&io.requestStateThrottled();}catch(_){}},650);
-    }catch(error){console.warn('[SimuPLC CONTROL V23] Impossible de sincronizar el mode global:',error);}
+    }catch(error){console.warn('[SimuPLC CONTROL V23] Impossible de synchroniser le mode global :',error);}
   }
 
   function setMode(mode,options){
@@ -127,7 +127,7 @@
     const box=document.getElementById('arduinoHmiBox');if(!box)return;
     const inputTitle=Array.from(box.querySelectorAll('.title')).find(function(el){return /Origen de cada entrada/i.test(el.textContent||'');});
     const inputWrap=document.getElementById('arduinoHmiInputs');
-    if(inputTitle)inputTitle.textContent='Modo global de entradas';
+    if(inputTitle)inputTitle.textContent='Mode global des entrées';
     if(inputWrap){inputWrap.hidden=true;inputWrap.style.display='none';}
     let global=document.getElementById('arduinoGlobalControlBoxV21');
     if(!global){
@@ -329,7 +329,7 @@ void hmiSendState(){hmiTransportSend(hmiBuildState());hmiLastStateMs=millis();hm
       const node=document.querySelector('#hmiCanvas [data-id="'+el.id+'"]');if(!node)return;
       if(['pushbutton','sensor','photo-sensor','limit-sensor','universal-sensor','estop','selector'].includes(el.type)){
         const badge=ensureObjectModeBadge(node);
-        badge.textContent=mode==='hmi'?'HMI':mode==='physical'?'PHYSIQUE':'AMBOS';
+        badge.textContent=mode==='hmi'?'HMI':mode==='physical'?'PHYSIQUE':'LES DEUX';
         badge.dataset.mode=mode;
       }
     });

@@ -170,7 +170,7 @@
     renderElements();
     renderWires();
     q('zoomBadge').textContent = Math.round(state.zoom*100)+'%';
-    q('simBadge').textContent = state.running ? 'SIMULATION VISUAL' : 'DETENIDO';
+    q('simBadge').textContent = state.running ? 'SIMULATION VISUAL' : 'ARRÊTÉ';
     q('runBtn').classList.toggle('active', !!state.running);
   }
 
