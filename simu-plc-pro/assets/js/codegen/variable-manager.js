@@ -211,7 +211,7 @@
       pwmOutput: { title: 'Salida PWM', group: 'pwmOutputs', physical: true, prefix: 'PWM' },
       analogConstant: { title: 'Constante analógica', group: null, physical: false, prefix: 'CONST' },
       analogOutput: { title: 'Salida analógica DAC', group: 'analogOutputs', physical: true, prefix: 'AO' },
-      memory: { title: 'Memoria interna', group: null, physical: false, prefix: 'M' },
+      memory: { title: 'Mémoire interna', group: null, physical: false, prefix: 'M' },
       timer: { title: 'Temporizador', group: null, physical: false, prefix: 'T' },
       counter: { title: 'Contador', group: null, physical: false, prefix: 'C' },
       internalAnalog: { title: 'Bloque analógico interno', group: null, physical: false, prefix: 'B' },
@@ -532,7 +532,7 @@
     const button = document.createElement('button');
     button.id = 'btnVariables';
     button.type = 'button';
-    button.title='Tabla profesional de variables y asignación de pines';
+    button.title='Tabla profesional de variables y asignación de broches';
     button.innerHTML = '<span aria-hidden="true">📋</span><span>VARIABLES</span>';
     const arduino = document.getElementById('btnArduino');
     const spacer = document.getElementById('spacer');
@@ -561,7 +561,7 @@
         </header>
         <div class="vm-toolbar">
           <div class="vm-field"><label for="vmBoard">Placa</label><select id="vmBoard"></select></div>
-          <input id="vmSearch" class="vm-search" type="search" placeholder="Buscar variable o descripción..." />
+          <input id="vmSearch" class="vm-search" type="search" placeholder="Buscar variable o description..." />
           <button class="vm-btn blue" id="vmAuto" type="button">AUTOASIGNAR</button>
           <button class="vm-btn" id="vmValidate" type="button">VALIDAR</button>
           <button class="vm-btn danger" id="vmReset" type="button">RESTABLECER</button>
@@ -577,12 +577,12 @@
         </div>
         <div class="vm-table-wrap">
           <table class="vm-table">
-            <thead><tr><th>Estado</th><th>Variable</th><th>Tipo</th><th>Editor</th><th>Description</th><th>Valor</th><th>Pin</th><th>Diagnóstico</th></tr></thead>
+            <thead><tr><th>État</th><th>Variable</th><th>Tipo</th><th>Editor</th><th>Description</th><th>Valeur</th><th>Pin</th><th>Diagnostic</th></tr></thead>
             <tbody id="vmBody"></tbody>
           </table>
         </div>
         <footer class="vm-footer">
-          <div class="vm-footer-note">Las memorias, temporizadores, contadores y resultados internos no necesitan pin físico.</div>
+          <div class="vm-footer-note">Les mémoires, temporisateurs, compteurs et résultats internes n’ont pas besoin de broche physique.</div>
           <div class="vm-footer-actions"><button class="vm-btn" id="vmOpenCode" type="button">CODE MCU</button><button class="vm-btn primary" id="vmSave" type="button">GUARDAR</button></div>
         </footer>
       </section>
@@ -605,7 +605,7 @@
   function close(force) {
     if (!modal) return;
     if (dirty && !force) {
-      const discard = confirm('Hay cambios sin guardar en la tabla de variables. ¿Fermer y descartarlos?');
+      const discard = confirm('Hay cambios sin enregistrer en la tabla de variables. ¿Fermer y descartarlos?');
       if (!discard) return;
     }
     modal.style.display = 'none';
@@ -670,11 +670,11 @@
     const target = document.getElementById('vmMessage');
     if (!target) return;
     if (validation.errors.length) {
-      target.className = 'vm-message error';
-      target.textContent = validation.errors.length + ' error(es). Corrige los pines marcados antes de generar código.';
+      target.className = 'vm-message erreur';
+      target.textContent = validation.errors.length + ' erreur(es). Corrige los broches marcados antes de generar code.';
     } else if (validation.warnings.length) {
       target.className = 'vm-message warning';
-      target.textContent = 'Asignación válida con ' + validation.warnings.length + ' advertencia(s).';
+      target.textContent = 'Asignación válida con ' + validation.warnings.length + ' avertissement(s).';
     } else {
       target.className = 'vm-message ok';
       target.textContent = 'Asignación válida para ' + getProfile(currentBoard).name + '.';
@@ -691,15 +691,15 @@
     if (!body) return;
     const rows = filteredRows(validation);
     if (!rows.length) {
-      body.innerHTML = '<tr><td colspan="8" style="padding:24px;text-align:center;color:#6b7f8b">No hay variables para este filtro.</td></tr>';
+      body.innerHTML = '<tr><td colspan="8" style="padding:24px;text-align:center;color:#6b7f8b">Il n’y a pas de variables para este filtro.</td></tr>';
       return;
     }
     body.innerHTML = rows.map(function (row) {
       const state = validation.states[row.label] || { status: 'ok', errors: [], warnings: [] };
-      const icon = state.status === 'ok' ? '✓' : (state.status === 'error' ? '!' : (state.status === 'warning' ? '⚠' : '•'));
+      const icon = state.status === 'ok' ? '✓' : (state.status === 'erreur' ? '!' : (state.status === 'warning' ? '⚠' : '•'));
       const current = row.physical ? map[row.group][row.label] : null;
       const messages = state.errors.concat(state.warnings);
-      const messageClass = state.errors.length ? 'error' : (state.warnings.length ? 'warning' : '');
+      const messageClass = state.errors.length ? 'erreur' : (state.warnings.length ? 'warning' : '');
       return '<tr data-variable="' + escapeHTML(row.label) + '">' +
         '<td data-label="Estado"><span class="vm-status-dot ' + state.status + '" title="' + escapeHTML(messages.join(' ')) + '">' + icon + '</span></td>' +
         '<td data-label="Variable"><span class="vm-label">' + escapeHTML(row.label) + '</span></td>' +
@@ -739,7 +739,7 @@
       dirty = true;
     });
     document.getElementById('vmBody').addEventListener('change', function (event) {
-      const select = event.target.closest('.vm-pin');
+      const select = event.target.closest('.vm-broche');
       if (!select) return;
       const group = select.dataset.group;
       const label = upper(select.dataset.variable);
@@ -751,7 +751,7 @@
     document.getElementById('vmAuto').addEventListener('click', function () { autoAssign(currentBoard, true); renderTable(); showToast('Pines autoasignados para ' + getProfile(currentBoard).name); });
     document.getElementById('vmValidate').addEventListener('click', function () { renderTable(); showToast(lastValidation && lastValidation.ok ? 'Asignación válida' : 'Hay errores por corregir'); });
     document.getElementById('vmReset').addEventListener('click', function () {
-      if (!confirm('¿Restablecer la asignación de pines para ' + getProfile(currentBoard).name + '?')) return;
+      if (!confirm('¿Restablecer la asignación de broches para ' + getProfile(currentBoard).name + '?')) return;
       workingMaps[currentBoard] = emptyMap();
       autoAssign(currentBoard, false);
       renderTable();
@@ -761,12 +761,12 @@
     document.getElementById('vmSave').addEventListener('click', function () {
       persistWorkingState();
       renderTable();
-      showToast(lastValidation && lastValidation.ok ? 'Variables y pines guardados' : 'Guardado; aún hay errores por corregir');
+      showToast(lastValidation && lastValidation.ok ? 'Variables y broches enregistrés' : 'Guardado; encore hay errores por corregir');
     });
     document.getElementById('vmOpenCode').addEventListener('click', function () {
       persistWorkingState();
       renderTable();
-      if (!lastValidation || !lastValidation.ok) { showToast('Corrige los errores antes de generar código'); return; }
+      if (!lastValidation || !lastValidation.ok) { showToast('Corrige los errores antes de generar code'); return; }
       close(true);
       const button = document.getElementById('btnArduino');
       if (button) button.click();
@@ -783,7 +783,7 @@
     const validation = validateRows(currentBoard);
     const profile = getProfile(currentBoard);
     const map = mapForBoard(currentBoard);
-    const lines = [['Variable','Tipo','Editor','Description','Valor','Placa','Pin','Estado','Diagnóstico'].map(csvCell).join(',')];
+    const lines = [['Variable','Tipo','Editor','Description','Valeur','Placa','Pin','État','Diagnostic'].map(csvCell).join(',')];
     currentRows.forEach(function (row) {
       const state = validation.states[row.label];
       const pin = row.physical ? pinDisplay(map[row.group][row.label], profile, row.group) : 'No requerido';

@@ -3,7 +3,7 @@
   if(global.SimuPLCFBDSelection) return;
 
   var adapter=global.SimuPLCFBDAdapter;
-  if(!adapter){ console.error('[SimuPLC FBD] Adaptador de selección no disponible.'); return; }
+  if(!adapter){ console.error('[SimuPLC FBD] Adaptateur de sélection non disponible.'); return; }
   var stats={selectNode:0,selectConnection:0,selectTag:0,clear:0,deleted:0};
 
   function removeClass(target,name){

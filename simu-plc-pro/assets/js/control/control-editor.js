@@ -1,7 +1,7 @@
 (function(){
   const SYMBOL_BASE = './assets/control-symbols/';
   const PARTS = [
-    {group:'ALIMENTATION', type:'source', name:'Línea / +24V', label:'L1', tag:'L1', className:'source', img:'LINEA Y NEUTRO.svg', w:80,h:120, terms:[{id:'t0',x:40,y:18,label:'L'}]},
+    {group:'ALIMENTATION', type:'source', name:'Ligne / +24V', label:'L1', tag:'L1', className:'source', img:'LINEA Y NEUTRO.svg', w:80,h:120, terms:[{id:'t0',x:40,y:18,label:'L'}]},
     {group:'ALIMENTATION', type:'return', name:'Neutro / 0V', label:'N', tag:'N', className:'return', img:'LINEA Y NEUTRO.svg', w:80,h:120, terms:[{id:'t0',x:40,y:102,label:'N'}]},
     {group:'MANDO', type:'pb_no', name:'Pulsador NO', label:'Pulsador NO', tag:'S1', className:'contact', img:'PULSADOR NO.svg', w:116,h:120, stateful:true, terms:[{id:'t0',x:58,y:12,label:'1'},{id:'t1',x:58,y:108,label:'2'}]},
     {group:'MANDO', type:'pb_nc', name:'Pulsador NC', label:'Pulsador NC', tag:'S2', className:'contact', img:'PULSADOR NC.svg', w:116,h:120, stateful:true, terms:[{id:'t0',x:58,y:12,label:'1'},{id:'t1',x:58,y:108,label:'2'}]},
@@ -11,13 +11,13 @@
     {group:'MANDO', type:'selector_nc', name:'Selector NC', label:'Selector NC', tag:'S4', className:'contact', img:'SELECTOR NC.svg', w:116,h:120, stateful:true, terms:[{id:'t0',x:58,y:12,label:'1'},{id:'t1',x:58,y:108,label:'2'}]},
     {group:'MANDO', type:'final_no', name:'Final de carrera NO', label:'FC NO', tag:'SQ1', className:'contact', img:'FINAL DE CARRERA NO.svg', w:116,h:120, stateful:true, terms:[{id:'t0',x:58,y:12,label:'1'},{id:'t1',x:58,y:108,label:'2'}]},
     {group:'MANDO', type:'final_nc', name:'Final de carrera NC', label:'FC NC', tag:'SQ2', className:'contact', img:'FINAL DE CARRERA NC.svg', w:116,h:120, stateful:true, terms:[{id:'t0',x:58,y:12,label:'1'},{id:'t1',x:58,y:108,label:'2'}]},
-    {group:'AUXILIARES', type:'aux_no', name:'Contacto auxiliar NO', label:'Aux NO', tag:'KM1', className:'contact', img:'CONTACTO AUXILIAR NO.svg', w:116,h:120, stateful:true, terms:[{id:'t0',x:58,y:12,label:'13'},{id:'t1',x:58,y:108,label:'14'}]},
-    {group:'AUXILIARES', type:'aux_nc', name:'Contacto auxiliar NC', label:'Aux NC', tag:'KM1', className:'contact', img:'CONTACTO AUXILIAR NC.svg', w:116,h:120, stateful:true, terms:[{id:'t0',x:58,y:12,label:'21'},{id:'t1',x:58,y:108,label:'22'}]},
-    {group:'AUXILIARES', type:'overload_no', name:'Térmico auxiliar NO', label:'Térmico NO', tag:'FR1', className:'contact', img:'CONTACTOR AUXILIAR RELE TERMICO NO.svg', w:116,h:120, stateful:true, terms:[{id:'t0',x:58,y:12,label:'97'},{id:'t1',x:58,y:108,label:'98'}]},
-    {group:'AUXILIARES', type:'overload_nc', name:'Térmico auxiliar NC', label:'Térmico NC', tag:'FR1', className:'contact', img:'CONTACTOR AUXILIAR RELE TERMICO NC.svg', w:116,h:120, stateful:true, terms:[{id:'t0',x:58,y:12,label:'95'},{id:'t1',x:58,y:108,label:'96'}]},
+    {group:'AUXILIARES', type:'aux_no', name:'Contact auxiliaire NO', label:'Aux NO', tag:'KM1', className:'contact', img:'CONTACTO AUXILIAR NO.svg', w:116,h:120, stateful:true, terms:[{id:'t0',x:58,y:12,label:'13'},{id:'t1',x:58,y:108,label:'14'}]},
+    {group:'AUXILIARES', type:'aux_nc', name:'Contact auxiliaire NF', label:'Aux NC', tag:'KM1', className:'contact', img:'CONTACTO AUXILIAR NC.svg', w:116,h:120, stateful:true, terms:[{id:'t0',x:58,y:12,label:'21'},{id:'t1',x:58,y:108,label:'22'}]},
+    {group:'AUXILIARES', type:'overload_no', name:'Thermique auxiliaire NO', label:'Thermique NO', tag:'FR1', className:'contact', img:'CONTACTOR AUXILIAR RELE TERMICO NO.svg', w:116,h:120, stateful:true, terms:[{id:'t0',x:58,y:12,label:'97'},{id:'t1',x:58,y:108,label:'98'}]},
+    {group:'AUXILIARES', type:'overload_nc', name:'Thermique auxiliaire NF', label:'Thermique NF', tag:'FR1', className:'contact', img:'CONTACTOR AUXILIAR RELE TERMICO NC.svg', w:116,h:120, stateful:true, terms:[{id:'t0',x:58,y:12,label:'95'},{id:'t1',x:58,y:108,label:'96'}]},
     {group:'RECEPTORES', type:'coil', name:'Bobina', label:'Bobina', tag:'KM1', className:'coil', img:'BOBINA.svg', w:96,h:118, stateful:true, terms:[{id:'t0',x:48,y:12,label:'A1'},{id:'t1',x:48,y:106,label:'A2'}]},
     {group:'RECEPTORES', type:'pilot', name:'Piloto', label:'Piloto', tag:'H1', className:'pilot', img:'PILOTO NORMAL.svg', w:96,h:118, stateful:true, terms:[{id:'t0',x:48,y:12,label:'X1'},{id:'t1',x:48,y:106,label:'X2'}]},
-    {group:'AUTOMATIZACIÓN', type:'plc', name:'PLC del proyecto', label:'PLC del proyecto', tag:'PLC', className:'plc', img:'', w:720,h:250, special:'plc'}
+    {group:'AUTOMATISATION', type:'plc', name:'PLC du projet', label:'PLC du projet', tag:'PLC', className:'plc', img:'', w:720,h:250, special:'plc'}
   ];
 
   const state = {
@@ -142,24 +142,24 @@
   function removeSelected(){
     if(state.selectedWireId){
       state.wires = state.wires.filter(w=>w.id!==state.selectedWireId);
-      state.selectedWireId=null; render(); showToast('Cable eliminado'); return;
+      state.selectedWireId=null; render(); showToast('Câble supprimé'); return;
     }
     if(!state.selectedId) return;
     const id=state.selectedId;
     state.elements = state.elements.filter(e=>e.id!==id);
     state.wires = state.wires.filter(w=>w.from.elementId!==id && w.to.elementId!==id);
-    state.selectedId=null; closeProperties(); render(); showToast('Elemento eliminado');
+    state.selectedId=null; closeProperties(); render(); showToast('Élément supprimé');
   }
 
   function duplicateSelected(){
     const src = state.elements.find(e=>e.id===state.selectedId); if(!src) return;
     const copy = clone(src); copy.id=uid('e'); copy.x+=24; copy.y+=24;
-    state.elements.push(copy); state.selectedId=copy.id; render(); openProperties(copy); showToast('Elemento duplicado');
+    state.elements.push(copy); state.selectedId=copy.id; render(); openProperties(copy); showToast('Élément dupliqué');
   }
 
   function rotateSelected(){
     const item = state.elements.find(e=>e.id===state.selectedId); if(!item || item.type==='plc') return;
-    item.rotation = ((item.rotation||0)+90)%360; render(); openProperties(item); showToast('Elemento rotado');
+    item.rotation = ((item.rotation||0)+90)%360; render(); openProperties(item); showToast('Élément tourné');
   }
 
   function clearAll(){
@@ -203,7 +203,7 @@
     const face = el('div',{class:'plc-face'});
     face.appendChild(el('div',{class:'plc-strip-label inputs',text:'ENTRADAS'}));
     face.appendChild(el('div',{class:'plc-strip-label outputs',text:'SALIDAS RELÉ'}));
-    face.appendChild(el('div',{class:'plc-brand',html:'<strong>SimuPLC PLC</strong><span>Perfil global del proyecto</span>'}));
+    face.appendChild(el('div',{class:'plc-brand',html:'<strong>SimuPLC PLC</strong><span>Perfil global del projet</span>'}));
     const inputX=[50,115,180,245,310,375,440,505];
     inputX.forEach((x,i)=> face.appendChild(Object.assign(el('div',{class:'plc-input-label',text:'I'+i}),{style:`left:${x}px`})));
     const outputX=[160,280,400,520];
@@ -267,7 +267,7 @@
     const part = partByType(item.type) || {};
     dom.properties.classList.add('open');
     q('propLabel').value=item.label||''; q('propTag').value=item.tag||''; q('propState').value=String(item.visualState?1:0);
-    q('propHelp').textContent = part.name ? (part.name + (part.type==='plc' ? '. Bloque especial con bornes de entradas y salidas.' : '. Doble clic en simulación visual para alternar su estado gráfico.')) : '';
+    q('propHelp').textContent = part.name ? (part.name + (part.type==='plc' ? '. Bloque especial con bornes de entradas y salidas.' : '. Double-clic en simulation visuelle pour basculer son état graphique.')) : '';
     q('propStateWrap').style.display = part.stateful ? 'block' : 'none';
     q('propTagWrap').style.display = part.special==='plc' ? 'none' : 'block';
   }
@@ -277,7 +277,7 @@
     item.label = q('propLabel').value.trim() || item.label;
     item.tag = q('propTag').value.trim();
     item.visualState = Number(q('propState').value||0) ? 1 : 0;
-    render(); openProperties(item); showToast('Propiedades actualizadas');
+    render(); openProperties(item); showToast('Propriétés mises à jour');
   }
 
   function setZoom(z){ state.zoom=clamp(z,0.35,2.4); q('workspace').style.transform='scale(' + state.zoom + ')'; }

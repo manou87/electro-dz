@@ -10,17 +10,17 @@
 
   function getRaw(key) {
     try { return localStorage.getItem(key); }
-    catch (error) { console.warn('[SimuPLCStorage] No se pudo leer', key, error); return null; }
+    catch (error) { console.warn('[SimuPLCStorage] Impossible de leer', key, error); return null; }
   }
 
   function setRaw(key, value) {
     try { localStorage.setItem(key, String(value)); return true; }
-    catch (error) { console.warn('[SimuPLCStorage] No se pudo guardar', key, error); return false; }
+    catch (error) { console.warn('[SimuPLCStorage] Impossible de enregistrer', key, error); return false; }
   }
 
   function remove(key) {
     try { localStorage.removeItem(key); return true; }
-    catch (error) { console.warn('[SimuPLCStorage] No se pudo eliminar', key, error); return false; }
+    catch (error) { console.warn('[SimuPLCStorage] Impossible de supprimer', key, error); return false; }
   }
 
   function getJSON(key, fallback) {
@@ -28,14 +28,14 @@
     if (raw == null || raw === '') return clone(fallback);
     try { return JSON.parse(raw); }
     catch (error) {
-      console.warn('[SimuPLCStorage] JSON inválido en', key, error);
+      console.warn('[SimuPLCStorage] JSON invalide en', key, error);
       return clone(fallback);
     }
   }
 
   function setJSON(key, value) {
     try { return setRaw(key, JSON.stringify(value)); }
-    catch (error) { console.warn('[SimuPLCStorage] No se pudo serializar', key, error); return false; }
+    catch (error) { console.warn('[SimuPLCStorage] Impossible de serializar', key, error); return false; }
   }
 
   function makeBackup(reason) {

@@ -69,7 +69,7 @@
     try{var a=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return Array.isArray(a)?a:[];}catch(_){return[];}
   }
   function writeRaw(a){
-    try{localStorage.setItem(STORAGE_KEY,JSON.stringify(Array.isArray(a)?a:[]));return true;}catch(e){console.error('[Projects V22] storage',e);return false;}
+    try{localStorage.setItem(STORAGE_KEY,JSON.stringify(Array.isArray(a)?a:[]));return true;}catch(e){console.erreur('[Projects V22] storage',e);return false;}
   }
   function sessionGet(){try{return sessionStorage.getItem(CURRENT_KEY)||null;}catch(_){return null;}}
   function sessionSet(id){
@@ -145,7 +145,7 @@
   function upsert(item){
     var arr=list(),i=arr.findIndex(function(x){return x&&x.id===item.id;});
     if(i>=0)arr[i]=clone(item);else arr.push(clone(item));
-    if(!writeRaw(arr))throw new Error('No se pudo escribir en el almacenamiento local.');
+    if(!writeRaw(arr))throw new Error('Impossible de escribir en el almacenamiento local.');
     return item;
   }
 
@@ -162,13 +162,13 @@
     timeout=timeout||1000;
     return new Promise(function(resolve){
       var frame=hmiFrame(),target=frame&&frame.contentWindow;
-      if(!target){resolve({ok:false,error:'no-frame'});return;}
+      if(!target){resolve({ok:false,erreur:'no-frame'});return;}
       var requestId='hmi_'+Date.now()+'_'+Math.random().toString(36).slice(2,8),done=false;
-      var tm=setTimeout(function(){finish({ok:false,error:'timeout'});},timeout);
+      var tm=setTimeout(function(){finish({ok:false,erreur:'timeout'});},timeout);
       function finish(v){if(done)return;done=true;clearTimeout(tm);global.removeEventListener('message',onMsg);resolve(v);}
       function onMsg(ev){var m=ev.data||{};if(!m.__simuplcHmiHost||m.requestId!==requestId)return;finish(m);}
       global.addEventListener('message',onMsg);
-      try{target.postMessage({__simuplcHmiHost:true,requestId:requestId,cmd:cmd,data:data},'*');}catch(e){finish({ok:false,error:String(e)});}
+      try{target.postMessage({__simuplcHmiHost:true,requestId:requestId,cmd:cmd,data:data},'*');}catch(e){finish({ok:false,erreur:String(e)});}
     });
   }
   async function getHmi(){
@@ -222,7 +222,7 @@
   }
   async function loadComplete(project){
     project=clone(project||{});var e=Object.assign({fbd:null,ladder:null,control:null,hmi:null},project.editors||{});
-    // Ouvrir un proyecto guardado tiene prioridad sobre cualquier borrador de recuperación anterior.
+    // Ouvrir un projet guardado tiene prioridad sobre cualquier borrador de récupération anterior.
     try{if(global.SimuPLCControlHost&&global.SimuPLCControlHost.discardStartupRecovery)await global.SimuPLCControlHost.discardStartupRecovery();}catch(_){}
     var results=await Promise.all([loadFbd(e.fbd),loadLadder(e.ladder),loadControl(e.control)]);
     if(e.hmi)pendingHmiProject=clone(e.hmi);
@@ -234,13 +234,13 @@
   }
 
   async function openProjectDirect(id){
-    var item=getItem(id);if(!item){alert('No se encontró el proyecto.');return false;}
+    var item=getItem(id);if(!item){alert('Introuvable : el projet.');return false;}
     var p=clone(item.simuplcProject),e=projectEditors(item),keys=['fbd','ladder','control','hmi'].filter(function(k){return !!e[k];});
     var ok=true;
     if(keys.length<=1){var mode=keys[0]||item.primaryEditor||'fbd';ok=await loadSingle(mode,e[mode]);}
     else ok=await loadComplete(p);
     if(ok!==false){sessionSet(item.id);refreshLibrary();closeLibrary();toast('Projet cargado: '+item.name);return true;}
-    alert('No se pudo cargar el proyecto completo.');return false;
+    alert('Impossible de charger el projet completo.');return false;
   }
 
   function setOpenGuardBusy(v){
@@ -298,11 +298,11 @@
     openGuardModal.setAttribute('aria-hidden','true');
     openGuardModal.innerHTML=
       '<div class="sp-open-card" role="dialog" aria-modal="true">'+
-        '<div class="sp-open-head"><div class="sp-open-icon">⚠️</div><div><h3>Antes de abrir otro proyecto</h3><p class="sp-open-sub">Vous avez un travail ouvert. Choisissez si vous souhaitez l’enregistrer avant de charger un autre projet.</p></div></div>'+
+        '<div class="sp-open-head"><div class="sp-open-icon">⚠️</div><div><h3>Antes de abrir otro projet</h3><p class="sp-open-sub">Vous avez un travail ouvert. Choisissez si vous souhaitez l’enregistrer avant de charger un autre projet.</p></div></div>'+
         '<div id="simuplcOpenTargetName" class="sp-open-target"></div>'+
         '<div id="simuplcOpenGuardNameWrap" class="sp-open-name" hidden><label for="simuplcOpenGuardName">Nom du projet actuel</label><input id="simuplcOpenGuardName" type="text" maxlength="80" autocomplete="off" placeholder="Ej. Arranque de motor"></div>'+
         '<div id="simuplcOpenGuardHint" class="sp-open-hint"></div>'+
-        '<div class="sp-open-actions"><button type="button" data-open-save>💾 Enregistrer et ouvrir</button><button type="button" data-open-discard>Ouvrir sin guardar</button></div>'+
+        '<div class="sp-open-actions"><button type="button" data-open-save>💾 Enregistrer et ouvrir</button><button type="button" data-open-discard>Ouvrir sin enregistrer</button></div>'+
         '<button type="button" class="sp-open-cancel" data-open-cancel>Annuler</button>'+
       '</div>';
     document.body.appendChild(openGuardModal);
@@ -341,7 +341,7 @@
     }catch(e){
       setOpenGuardBusy(false);
       var api=modalApi();
-      if(api&&typeof api.alert==='function')api.alert('Impossible d’enregistrer le projet actuel : '+(e.message||e),'Ouvrir proyecto');
+      if(api&&typeof api.alert==='function')api.alert('Impossible d’enregistrer le projet actuel : '+(e.message||e),'Ouvrir projet');
       else alert('Impossible d’enregistrer le projet actuel : '+(e.message||e));
     }
   }
@@ -353,11 +353,11 @@
     await openProjectDirect(id);
   }
   async function openProject(id){
-    var item=getItem(id);if(!item){alert('No se encontró el proyecto.');return false;}
+    var item=getItem(id);if(!item){alert('Introuvable : el projet.');return false;}
 
     /*
-      V23: antes de sustituir el trabajo visible, comprueba si existe contenido.
-      Si la app está vacía, abre directamente. Si hay trabajo, protege al usuario.
+      V23: antes de sustituir el trabajo visible, vérifie si existe contenido.
+      Si la app está vide, abre directamente. Si hay trabajo, protege al utilisateur.
     */
     var status;
     try{status=await currentWorkStatus('project',activeEditor());}
@@ -369,7 +369,7 @@
     pendingOpenId=id;
     openGuardCanSave=true;
 
-    if(openGuardTargetName)openGuardTargetName.textContent='Vas a abrir: '+safeName(item.name,'Projet');
+    if(openGuardTargetName)openGuardTargetName.textContent='Vas a ouvrir: '+safeName(item.name,'Projet');
     if(openGuardNameInput){
       openGuardNameInput.value='';
       openGuardNameInput.style.removeProperty('border-color');
@@ -378,11 +378,11 @@
 
     if(status.current){
       if(openGuardNameWrap)openGuardNameWrap.hidden=true;
-      if(openGuardHint)openGuardHint.textContent='Si eliges “Enregistrer et ouvrir”, se actualizará “'+status.current.name+'” antes de abrir el otro proyecto.';
+      if(openGuardHint)openGuardHint.textContent='Si eliges “Enregistrer et ouvrir”, se sera mis à jour “'+status.current.name+'” antes de ouvrir el otro projet.';
     }else{
       if(openGuardNameWrap)openGuardNameWrap.hidden=false;
       if(openGuardNameInput)openGuardNameInput.value='Projet SimuPLC';
-      if(openGuardHint)openGuardHint.textContent='Este trabajo todavía no está guardado. Ponle un nombre si deseas conservararlo antes de abrir el otro proyecto.';
+      if(openGuardHint)openGuardHint.textContent='Este trabajo encore no está guardado. Ponle un nom si vous souhaitez conservararlo antes de ouvrir el otro projet.';
     }
 
     setOpenGuardBusy(false);
@@ -405,7 +405,7 @@
     var project=target.simuplcProject?clone(target.simuplcProject):blankProject(name);project.editors=Object.assign({fbd:null,ladder:null,control:null,hmi:null},project.editors||{});
     if(scope==='single'){
       var state=await captureEditor(mode);
-      if(state===undefined||state===null)throw new Error('No se pudo leer el editor '+editorLabel(mode)+'.');
+      if(state===undefined||state===null)throw new Error('Impossible de leer el editor '+editorLabel(mode)+'.');
       project.editors[mode]=clone(state);project.activeEditor=mode;project.savedAt=new Date().toISOString();project.name=name;
     }else{
       project=await captureComplete(name,target);
@@ -421,7 +421,7 @@
     return mode==='hmi'?'HMI':editorLabel(mode);
   }
   function newCircuitName(mode){
-    return mode==='hmi'?'Nueva pantalla HMI':'Nouveau circuit';
+    return mode==='hmi'?'Nueva écran HMI':'Nouveau circuit';
   }
   function modalApi(){
     return global.SimuPLCNativeModal||global.SimuPLCModal||null;
@@ -500,8 +500,8 @@
 
     /*
       V22.2:
-      - Projet existente: conserva su nombre y se actualiza.
-      - Trabajo nuevo todavía sin guardar: el nombre viene del campo visible
+      - Projet existente: conserva su nom y se actualiza.
+      - Trabajo nouveau encore sin enregistrer: el nom viene del campo visible
         dentro del mismo modal NEW. Ya no se abre otro prompt detrás del modal.
     */
     if(!name){
@@ -551,7 +551,7 @@
       pendingHmiProject=null;
       if(pendingHmiTimer){clearTimeout(pendingHmiTimer);pendingHmiTimer=0;}
 
-      /* V24: Nouveau projet borra HMI en memoria y su autosave. */
+      /* V24: Nouveau projet borra HMI en mémoire y su autosave. */
       try{localStorage.removeItem('simuplc_hmi_project_v1');}catch(_){}
       if(!frame)return true;
 
@@ -565,7 +565,7 @@
         }
       }
 
-      /* Respaldo fuerte si el HMI no respondió o conservó elementos. */
+      /* Respaldo fuerte si el HMI no respondió o conservó éléments. */
       try{localStorage.removeItem('simuplc_hmi_project_v1');}catch(_){}
       try{
         var wasHmi=document.body&&document.body.classList.contains('mode-hmi');
@@ -583,7 +583,7 @@
   async function resetWholeProject(){
     pendingHmiProject=null;
     try{localStorage.removeItem('simuplc_hmi_project_v1');}catch(_){}
-    try{if(global.SimuPLCRecoveryManager&&global.SimuPLCRecoveryManager.acknowledge)await global.SimuPLCRecoveryManager.acknowledge('nuevo-proyecto');}catch(_){}
+    try{if(global.SimuPLCRecoveryManager&&global.SimuPLCRecoveryManager.acknowledge)await global.SimuPLCRecoveryManager.acknowledge('nouveau-projet');}catch(_){}
     var okFbd=await resetEditorOnly('fbd');
     var okLadder=await resetEditorOnly('ladder');
     var okControl=await resetEditorOnly('control');
@@ -600,7 +600,7 @@
     if(newNameInput)newNameInput.disabled=newBusy;
     var save=newModal.querySelector('[data-new-save]');
     if(save){
-      save.textContent=newBusy?'⏳ Guardando proyecto…':'💾 Enregistrer et continuer';
+      save.textContent=newBusy?'⏳ Guardando projet…':'💾 Enregistrer et continuer';
       save.style.setProperty('background','#0f4c81','important');
       save.style.setProperty('color','#ffffff','important');
       save.style.setProperty('border-color','#0f4c81','important');
@@ -642,13 +642,13 @@
     if(newSaveHint){
       if(current){
         newSaveHint.hidden=false;
-        newSaveHint.textContent='Se actualizará el proyecto “'+current.name+'” antes de continuar.';
+        newSaveHint.textContent='Se sera mis à jour el projet “'+current.name+'” antes de continuer.';
       }else if(newCanSave){
         newSaveHint.hidden=false;
-        newSaveHint.textContent='Este trabajo todavía no tiene nombre. Escribe uno para guardarlo antes de continuar.';
+        newSaveHint.textContent='Este trabajo encore no tiene nom. Escribe uno para enregistrerlo antes de continuer.';
       }else{
         newSaveHint.hidden=false;
-        newSaveHint.textContent='No hay contenido que guardar. Puedes continuar directamente.';
+        newSaveHint.textContent='Il n’y a pas de contenido que enregistrer. Puedes continuer directamente.';
       }
     }
     setNewBusy(false);
@@ -658,13 +658,13 @@
     var save=newModal&&newModal.querySelector('[data-new-save]');
     if(save){save.hidden=true;save.disabled=true;}
     if(newNameWrap)newNameWrap.hidden=true;
-    if(newSaveHint){newSaveHint.hidden=false;newSaveHint.textContent='Comprobando el proyecto actual…';}
+    if(newSaveHint){newSaveHint.hidden=false;newSaveHint.textContent='Comprobando el projet actual…';}
     try{
       var status=await currentWorkStatus(kind,mode);
       if(pendingNewKind!==kind||pendingNewEditor!==mode)return;
       applyNewSaveState(status);
     }catch(_){
-      /* Si no podemos comprobarlo, evitamos bloquear al usuario. */
+      /* Si no podemos comprobarlo, evitamos bloquear al utilisateur. */
       applyNewSaveState({hasCurrent:!!getCurrentId(),hasWork:!!getCurrentId(),current:getItem(getCurrentId())});
     }
   }
@@ -674,24 +674,24 @@
     if(newChoiceStage)newChoiceStage.hidden=true;
     if(newConfirmStage)newConfirmStage.hidden=false;
     if(kind==='project'){
-      if(newConfirmTitle)newConfirmTitle.textContent='¿Comenzar un proyecto nuevo?';
-      if(newConfirmDesc)newConfirmDesc.textContent='Se limpiarán FBD, Ladder, CONTROL y HMI. Puedes guardar el proyecto actual antes de continuar.';
+      if(newConfirmTitle)newConfirmTitle.textContent='¿Comenzar un projet nouveau?';
+      if(newConfirmDesc)newConfirmDesc.textContent='Se limpiarán FBD, Ladder, CONTROL y HMI. Puedes enregistrer el projet actual antes de continuer.';
     }else{
       var label=newEditorLabel(mode);
-      if(newConfirmTitle)newConfirmTitle.textContent=(mode==='hmi'?'¿Crear una pantalla HMI nueva?':'¿Crear un circuito nuevo en '+label+'?');
-      if(newConfirmDesc)newConfirmDesc.textContent=(mode==='hmi'?'Se limpiará únicamente HMI. FBD, Ladder y CONTROL permanecerán intactos.':'Se limpiará únicamente '+label+'. Los demás editores permanecerán intactos.');
+      if(newConfirmTitle)newConfirmTitle.textContent=(mode==='hmi'?'¿Crear una écran HMI nouvelle?':'¿Crear un circuit nouveau en '+label+'?');
+      if(newConfirmDesc)newConfirmDesc.textContent=(mode==='hmi'?'Se limpiará uniquement HMI. FBD, Ladder y CONTROL permanecerán intactos.':'Se limpiará uniquement '+label+'. Los demás editores permanecerán intactos.');
     }
     refreshNewSaveState(kind,mode);
   }
   async function executeNew(kind,mode){
-    await backupBeforeNew(kind==='project'?'antes-de-nuevo-proyecto':'antes-de-nuevo-'+mode);
+    await backupBeforeNew(kind==='project'?'antes-de-nouveau-projet':'antes-de-nouveau-'+mode);
     var ok;
     if(kind==='project'){
       ok=await resetWholeProject();
       if(ok!==false){
         clearCurrent();
         closeNew();
-        toast('Projet nuevo listo · todos los editores están vacíos');
+        toast('Projet nouveau prêt · todos los editores están vacíos');
         return true;
       }
       throw new Error('No se pudieron limpiar todos los editores.');
@@ -699,10 +699,10 @@
     ok=await resetEditorOnly(mode);
     if(ok!==false){
       closeNew();
-      toast(mode==='hmi'?'Nueva pantalla HMI lista':'Nouveau circuit '+newEditorLabel(mode)+' listo');
+      toast(mode==='hmi'?'Nueva écran HMI lista':'Nouveau circuit '+newEditorLabel(mode)+' prêt');
       return true;
     }
-    throw new Error('No se pudo limpiar '+newEditorLabel(mode)+'.');
+    throw new Error('Impossible de limpiar '+newEditorLabel(mode)+'.');
   }
   async function saveAndExecuteNew(){
     if(newBusy||!newCanSave)return;
@@ -714,7 +714,7 @@
         newNameInput.style.setProperty('border-color','#dc2626','important');
         newNameInput.style.setProperty('box-shadow','0 0 0 3px rgba(220,38,38,.12)','important');
       }
-      if(newSaveHint)newSaveHint.textContent='Escribe un nombre para poder guardar este proyecto.';
+      if(newSaveHint)newSaveHint.textContent='Escribe un nom para poder enregistrer este projet.';
       return;
     }
     if(newNameInput){
@@ -790,17 +790,17 @@
     newModal.setAttribute('aria-hidden','true');
     newModal.innerHTML=
       '<div class="sp-new-card" role="dialog" aria-modal="true" aria-labelledby="simuplcNewTitle">'+
-        '<div class="sp-new-head"><div class="sp-new-icon">✨</div><div><h3 id="simuplcNewTitle">Crear nuevo</h3><p class="sp-new-sub">Choisissez si vous souhaitez repartir de zéro dans SimuPLC ou nettoyer uniquement l’éditeur actuel.</p></div></div>'+
+        '<div class="sp-new-head"><div class="sp-new-icon">✨</div><div><h3 id="simuplcNewTitle">Crear nouveau</h3><p class="sp-new-sub">Choisissez si vous souhaitez repartir de zéro dans SimuPLC ou nettoyer uniquement l’éditeur actuel.</p></div></div>'+
         '<div id="simuplcNewChoiceStage" class="sp-new-options">'+
           '<button type="button" class="sp-new-option project" data-new-kind="project"><span class="ico">🗂️</span><span><strong>Nouveau projet</strong><small>Efface FBD, Ladder, CONTRÔLE et HMI et démarre un projet entièrement nouveau.</small></span></button>'+
-          '<button type="button" class="sp-new-option" data-new-kind="circuit"><span class="ico">⚙️</span><span><strong id="simuplcNewCircuitTitle">Nouveau circuit</strong><small id="simuplcNewCircuitDesc">Limpia únicamente el editor actual y conserva los demás.</small></span></button>'+
+          '<button type="button" class="sp-new-option" data-new-kind="circuit"><span class="ico">⚙️</span><span><strong id="simuplcNewCircuitTitle">Nouveau circuit</strong><small id="simuplcNewCircuitDesc">Efface uniquement l’éditeur actuel et conserve les autres.</small></span></button>'+
           '<button type="button" class="sp-new-cancel" data-new-cancel>Annuler</button>'+
         '</div>'+
         '<div id="simuplcNewConfirmStage" hidden>'+
           '<div class="sp-new-confirm"><h4 id="simuplcNewConfirmTitle"></h4><p id="simuplcNewConfirmDesc"></p></div>'+
           '<div id="simuplcNewNameWrap" class="sp-new-name" hidden><label for="simuplcNewProjectName">Nom du projet actuel</label><input id="simuplcNewProjectName" type="text" maxlength="80" autocomplete="off" placeholder="Ej. Arranque de motor"></div>'+
           '<div id="simuplcNewSaveHint" class="sp-new-save-hint"></div>'+
-          '<div class="sp-new-actions"><button type="button" data-new-save style="background:#0f4c81;color:#fff;border-color:#0f4c81;font-size:12px;font-weight:900">💾 Enregistrer et continuer</button><button type="button" data-new-discard>Continuar sin guardar</button></div>'+
+          '<div class="sp-new-actions"><button type="button" data-new-save style="background:#0f4c81;color:#fff;border-color:#0f4c81;font-size:12px;font-weight:900">💾 Enregistrer et continuer</button><button type="button" data-new-discard>Continuer sans enregistrer</button></div>'+
           '<button type="button" class="sp-new-cancel" data-new-back>Volver</button>'+
         '</div>'+
       '</div>';
@@ -838,7 +838,7 @@
     if(newNameInput)newNameInput.value='';
     if(newNameWrap)newNameWrap.hidden=true;
     if(newCircuitTitle)newCircuitTitle.textContent=newCircuitName(pendingNewEditor);
-    if(newCircuitDesc)newCircuitDesc.textContent=pendingNewEditor==='hmi'?'Limpia únicamente la pantalla HMI actual. FBD, Ladder y CONTROL no cambian.':'Limpia únicamente '+newEditorLabel(pendingNewEditor)+'. Los demás editores no cambian.';
+    if(newCircuitDesc)newCircuitDesc.textContent=pendingNewEditor==='hmi'?'Limpia uniquement la écran HMI actual. FBD, Ladder y CONTROL no cambian.':'Limpia uniquement '+newEditorLabel(pendingNewEditor)+'. Los demás editores no cambian.';
     showNewChoice();
     newModal.classList.add('show');
     newModal.setAttribute('aria-hidden','false');
@@ -861,18 +861,18 @@
     modal=document.getElementById('simuplcSaveChoice');if(!modal)return;
     installStyles();
     var card=modal.querySelector('.sp-save-card'),h=card&&card.querySelector('h3'),sub=card&&card.querySelector('.sp-save-sub');
-    if(h)h.textContent='Enregistrer le projet';if(sub)sub.textContent='Guarda solo el editor actual o actualiza el proyecto completo FBD + Ladder + CONTROL + HMI.';
+    if(h)h.textContent='Enregistrer le projet';if(sub)sub.textContent='Guarda solo el editor actual o actualiza el projet completo FBD + Ladder + CONTROL + HMI.';
     nameInput=replaceNode('simuplcSaveChoiceName');cancelBtn=replaceNode('simuplcSaveCancel');saveSingleBtn=replaceNode('simuplcSaveSingle');saveCompleteBtn=replaceNode('simuplcSaveGlobal');
     var actions=modal.querySelector('.sp-save-actions');
     saveAsBtn=document.getElementById('simuplcSaveAs');if(!saveAsBtn&&actions){saveAsBtn=document.createElement('button');saveAsBtn.id='simuplcSaveAs';saveAsBtn.type='button';saveAsBtn.className='sp-save-as';saveAsBtn.textContent='Enregistrer como…';actions.appendChild(saveAsBtn);}
     var info=document.getElementById('simuplcSaveCurrentInfo');if(!info&&nameInput){info=document.createElement('div');info.id='simuplcSaveCurrentInfo';info.className='sp-current';nameInput.insertAdjacentElement('afterend',info);}
     if(cancelBtn)cancelBtn.onclick=closeSave;
     if(saveSingleBtn)saveSingleBtn.onclick=function(){saveScope('single').catch(function(e){alert('Impossible d’enregistrer : '+(e.message||e));});};
-    if(saveCompleteBtn)saveCompleteBtn.onclick=function(){saveScope('complete').catch(function(e){alert('No se pudo guardar el proyecto: '+(e.message||e));});};
+    if(saveCompleteBtn)saveCompleteBtn.onclick=function(){saveScope('complete').catch(function(e){alert('Impossible de enregistrer el projet: '+(e.message||e));});};
     if(saveAsBtn)saveAsBtn.onclick=function(){
       var cur=getItem(getCurrentId());forceSaveAs=true;
       if(nameInput){nameInput.readOnly=false;nameInput.value=safeName((cur&&cur.name?cur.name:'Projet SimuPLC')+' copia');nameInput.focus();nameInput.select();}
-      var i=document.getElementById('simuplcSaveCurrentInfo');if(i)i.textContent='Enregistrer como: escribe un nombre nuevo y elige si deseas guardar solo '+editorLabel(activeEditor())+' o el proyecto completo.';
+      var i=document.getElementById('simuplcSaveCurrentInfo');if(i)i.textContent='Enregistrer como: saisissez un nom nouveau y choisissez si vous souhaitez enregistrer solo '+editorLabel(activeEditor())+' o el projet completo.';
       saveAsBtn.style.display='none';
     };
     global.SimuPLCSaveChoice={open:openSave,close:closeSave,saveSingle:function(){return saveScope('single');},saveGlobal:function(){return saveScope('complete');},saveAs:function(){if(saveAsBtn)saveAsBtn.click();}};
@@ -882,9 +882,9 @@
     forceSaveAs=false;var mode=activeEditor(),cur=getItem(getCurrentId());
     if(nameInput){nameInput.value=cur?cur.name:('Projet '+editorLabel(mode));nameInput.readOnly=!!cur;}
     if(saveSingleBtn)saveSingleBtn.textContent='Enregistrer solo '+editorLabel(mode);
-    if(saveCompleteBtn)saveCompleteBtn.textContent=cur?'Actualizar proyecto completo':'Enregistrer le projet completo';
+    if(saveCompleteBtn)saveCompleteBtn.textContent=cur?'Actualizar projet completo':'Enregistrer le projet completo';
     if(saveAsBtn)saveAsBtn.style.display=cur?'':'none';
-    var info=document.getElementById('simuplcSaveCurrentInfo');if(info)info.textContent=cur?('Editando “'+cur.name+'”. Enregistrer actualizará este mismo proyecto; no se creará un duplicado.'):'Projet nuevo. Si ya existe un proyecto con el mismo nombre, se actualizará ese proyecto.';
+    var info=document.getElementById('simuplcSaveCurrentInfo');if(info)info.textContent=cur?('Editando “'+cur.name+'”. Enregistrer sera mis à jour este mismo projet; no se creará un duplicado.'):'Projet nouveau. Si ya existe un projet con el mismo nom, se sera mis à jour ese projet.';
     modal.classList.add('show');modal.setAttribute('aria-hidden','false');
     if(nameInput&&!cur)setTimeout(function(){nameInput.focus();nameInput.select();},30);
   }
@@ -892,14 +892,14 @@
 
   function setupLibrary(){
     var old=document.getElementById('circuitsList');if(old&&old.parentNode){var n=old.cloneNode(false);n.id='circuitsList';n.className=old.className;old.parentNode.replaceChild(n,old);listEl=n;}else listEl=old;
-    var m=document.getElementById('circuitsModal');if(m){var h=m.querySelector('.circuits-header h3');if(h)h.textContent='Mes projets';var p=m.querySelector('.circuits-subtitle');if(p)p.innerHTML='Abre un proyecto para seguir editando. <b>Enregistrer</b> actualizará ese mismo proyecto.';var e=document.getElementById('circuitsEmpty');if(e)e.textContent='Vous n’avez pas encore de projets enregistrés.';}
+    var m=document.getElementById('circuitsModal');if(m){var h=m.querySelector('.circuits-header h3');if(h)h.textContent='Mes projets';var p=m.querySelector('.circuits-subtitle');if(p)p.innerHTML='Abre un projet para seguir éditer. <b>Enregistrer</b> sera mis à jour ese mismo projet.';var e=document.getElementById('circuitsEmpty');if(e)e.textContent='Vous n’avez pas encore de projets enregistrés.';}
     var topBtn=document.getElementById('btnCircuitsList');if(topBtn){topBtn.title='Mes projets';topBtn.setAttribute('aria-label','Mes projets');}
     var close=document.getElementById('circuitsClose');if(close)close.onclick=closeLibrary;
     if(listEl)listEl.addEventListener('click',function(ev){
       var b=ev.target&&ev.target.closest&&ev.target.closest('button[data-action]');if(!b)return;
       ev.preventDefault();ev.stopPropagation();
       var id=b.getAttribute('data-id'),action=b.getAttribute('data-action');
-      if(action==='open')openProject(id).catch(function(e){alert('No se pudo abrir: '+(e.message||e));});
+      if(action==='open')openProject(id).catch(function(e){alert('Impossible de ouvrir: '+(e.message||e));});
       else if(action==='rename')renameProject(id);
       else if(action==='delete')deleteProject(id);
     });
@@ -946,7 +946,7 @@
   }
 
   function bindNewAndImport(){
-    /* NEW se gestiona mediante el modal V22. Importer sí libera el proyecto actual. */
+    /* NEW se gestiona mediante el modal V22. Importer oui libera el projet actual. */
     ['btnImportUnified','btnLoad'].forEach(function(id){
       var b=document.getElementById(id);if(!b)return;
       ['pointerdown','mousedown','touchstart'].forEach(function(type){b.addEventListener(type,function(){clearCurrent();},{capture:true,passive:true});});
@@ -968,7 +968,7 @@
   function init(){
     migrateLibrary();sessionSet(sessionGet());setupSaveModal();setupLibrary();bindMainNewButton();bindNewAndImport();global.addEventListener('message',onChildMessage,false);
     global.SimuPLCUnifiedProjects={version:'22.0',list:list,get:getItem,open:openProject,openLibrary:openLibrary,openSave:openSave,openNew:openNew,saveEditor:function(){return saveScope('single');},saveComplete:function(){return saveScope('complete');},rename:renameProject,delete:deleteProject,clearCurrent:clearCurrent,getCurrentId:getCurrentId,refresh:refreshLibrary};
-    try{var b=document.getElementById('btnSave');if(b){b.title='Enregistrer / actualizar proyecto';b.setAttribute('aria-label','Guardar o actualizar proyecto');}}catch(_){ }
+    try{var b=document.getElementById('btnSave');if(b){b.title='Enregistrer / actualizar projet';b.setAttribute('aria-label','Guardar o actualizar proyecto');}}catch(_){ }
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else setTimeout(init,0);
 })(window);

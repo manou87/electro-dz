@@ -99,13 +99,13 @@
         if (input && output) return { iface, alternate, input, output };
       }
     }
-    throw new Error('La placa no expone canales USB de entrada y salida compatibles.');
+    throw new Error('La carte n’expose pas de canaux USB d’entrée et de sortie compatibles.');
   }
 
   function findEndpoint(alternate, direction) {
     const endpoints = alternate && Array.isArray(alternate.endpoints) ? alternate.endpoints : [];
     const endpoint = endpoints.find((item) => item.direction === direction && (!item.type || item.type === 'bulk'));
-    if (!endpoint) throw new Error('No se encontró el canal USB de ' + (direction === 'in' ? 'entrada' : 'salida') + '.');
+    if (!endpoint) throw new Error('Introuvable : el canal USB de ' + (direction === 'in' ? 'entrada' : 'salida') + '.');
     return endpoint;
   }
 
@@ -151,7 +151,7 @@
     }
 
     async open(options) {
-      if (this.opened) throw new DOMException('El puerto ya está abierto.', 'InvalidStateError');
+      if (this.opened) throw new DOMException('El puerto est déjà ouvert.', 'InvalidStateError');
       this.options = Object.assign({
         baudRate: 115200,
         dataBits: 8,
@@ -161,7 +161,7 @@
         bufferSize: 128
       }, options || {});
       if (!Number.isFinite(Number(this.options.baudRate)) || Number(this.options.baudRate) <= 0) {
-        throw new RangeError('Velocidad USB inválida.');
+        throw new RangeError('Vitesse USB invalide.');
       }
 
       try {
@@ -181,13 +181,13 @@
         try { if (this.device.opened) await this.device.close(); } catch (_) {}
         const cause = asError(error);
         throw new Error(
-          'No se pudo abrir ' + this.deviceLabel() + ' mediante WebUSB (' + this.driver + '): ' + cause.message
+          'Impossible de abrir ' + this.deviceLabel() + ' mediante WebUSB (' + this.driver + '): ' + cause.message
         );
       }
     }
 
     deviceLabel() {
-      const product = this.device.productName || 'dispositivo USB';
+      const product = this.device.productName || 'appareil USB';
       return product + ' [' + hex(this.device.vendorId) + ':' + hex(this.device.productId) + ']';
     }
 
@@ -225,7 +225,7 @@
       const control = findInterfaceByClass(this.device.configuration, USB_CLASS_CDC_CONTROL);
       const data = findInterfaceByClass(this.device.configuration, USB_CLASS_CDC_DATA);
       if (!control || !data) {
-        throw new Error('No se encontraron las interfaces USB CDC-ACM de control y datos.');
+        throw new Error('Interfaces USB CDC-ACM de contrôle et de données introuvables.');
       }
       await this._claim(control.iface.interfaceNumber, control.alternate.alternateSetting);
       await this._claim(data.iface.interfaceNumber, data.alternate.alternateSetting);
@@ -246,7 +246,7 @@
         requestType: 'class', recipient: 'interface', request: 0x20,
         value: 0, index: this.controlInterfaceNumber
       }, data);
-      await ensureOk(result, 'No se pudo configurar USB CDC');
+      await ensureOk(result, 'Impossible de configurar USB CDC');
     }
 
     async _openCh340() {
@@ -272,7 +272,7 @@
       const result = await this.device.controlTransferOut({
         requestType: 'vendor', recipient: 'device', request, value, index
       }, EMPTY);
-      return ensureOk(result, 'Error de configuración CH340');
+      return ensureOk(result, 'Error de configuration CH340');
     }
 
     async _chIn(request, value, index, length) {
@@ -284,7 +284,7 @@
 
     async _chSetBaud(baudRate) {
       const entry = CH340_BAUD[baudRate];
-      if (!entry) throw new Error('CH340 no admite la velocidad ' + baudRate + ' en esta versión.');
+      if (!entry) throw new Error('CH340 no admite la vitesse ' + baudRate + ' en esta version.');
       await this._chOut(0x9A, 0x1312, entry.factor);
       await this._chOut(0x9A, 0x0F2C, entry.divisor);
       await this._chOut(0x9A, 0x2727, 0x0000);
@@ -308,7 +308,7 @@
       const result = await this.device.controlTransferOut({
         requestType: 'vendor', recipient: 'interface', request, value, index
       }, data || EMPTY);
-      return ensureOk(result, 'Error de configuración CP210x');
+      return ensureOk(result, 'Error de configuration CP210x');
     }
 
     async _openFtdi() {
@@ -329,7 +329,7 @@
       const result = await this.device.controlTransferOut({
         requestType: 'vendor', recipient: 'device', request, value, index
       }, EMPTY);
-      return ensureOk(result, 'Error de configuración FTDI');
+      return ensureOk(result, 'Error de configuration FTDI');
     }
 
     async _ftdiSetBaud(baudRate) {
@@ -425,13 +425,13 @@
       await ensureOk(await this.device.controlTransferOut({
         requestType: 'class', recipient: 'interface', request: 0x22,
         value, index: this.controlInterfaceNumber
-      }, EMPTY), 'No se pudieron configurar DTR/RTS');
+      }, EMPTY), 'Impossible de configurer DTR/RTS');
       if (signals && typeof signals.break === 'boolean') {
         await ensureOk(await this.device.controlTransferOut({
           requestType: 'class', recipient: 'interface', request: 0x23,
           value: signals.break ? 0xFFFF : 0,
           index: this.controlInterfaceNumber
-        }, EMPTY), 'No se pudo configurar BREAK');
+        }, EMPTY), 'Impossible de configurar BREAK');
       }
     }
 
@@ -464,7 +464,7 @@
 
   function encodeFtdiBaud(baudRate, portIndex) {
     const rate = Number(baudRate);
-    if (!Number.isFinite(rate) || rate <= 0) throw new RangeError('Velocidad FTDI inválida.');
+    if (!Number.isFinite(rate) || rate <= 0) throw new RangeError('Vitesse FTDI invalide.');
     let divisor3 = Math.max(8, Math.round((3000000 * 8) / rate));
     if (divisor3 === 8) divisor3 = 0;
     const fractions = [0, 3, 2, 4, 1, 5, 6, 7];
@@ -523,7 +523,7 @@
       const cause = asError(error);
       if (cause.name === 'NotFoundError') {
         throw new DOMException(
-          'No se seleccionó una placa USB. Conecta el Arduino por OTG, cierra ArduinoDroid y vuelve a tocar Connecter.',
+          'Aucune carte USB sélectionnée. Connectez l’Arduino via OTG, fermez ArduinoDroid et retouchez Connecter.',
           'NotFoundError'
         );
       }
@@ -543,7 +543,7 @@
     } catch (error) {
       const cause = asError(error);
       if (cause.name === 'NotFoundError') {
-        throw new DOMException('No se seleccionó ningún dispositivo USB.', 'NotFoundError');
+        throw new DOMException('Aucune sélection : aucun appareil USB.', 'NotFoundError');
       }
       throw cause;
     }
@@ -564,7 +564,7 @@
       productId: device.productId,
       vendorHex: hex(device.vendorId),
       productHex: hex(device.productId),
-      productName: device.productName || 'Dispositivo USB',
+      productName: device.productName || 'Appareil USB',
       manufacturerName: device.manufacturerName || '',
       driver: detectDriver(device)
     }));

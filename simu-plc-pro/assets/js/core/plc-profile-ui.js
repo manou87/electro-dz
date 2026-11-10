@@ -45,12 +45,12 @@
     if (!top) return null;
     wrap = document.createElement('div');
     wrap.id = 'simuplcPlcProfileWrap';
-    wrap.title='PLC global del proyecto';
+    wrap.title='PLC global del projet';
     const options = Object.keys(api.profiles).map(function (id) {
       const p = api.profiles[id];
       return '<option value="' + id + '">' + p.label + '</option>';
     }).join('');
-    wrap.innerHTML = '<span class="plc-chip">PLC</span><select id="simuplcPlcProfileSelect" aria-label="PLC del proyecto">' + options + '</select><span id="simuplcPlcAddressBadge"></span>';
+    wrap.innerHTML = '<span class="plc-chip">PLC</span><select id="simuplcPlcProfileSelect" aria-label="PLC du projet">' + options + '</select><span id="simuplcPlcAddressBadge"></span>';
     const anchor = document.getElementById('modeFBDBtn');
     if (anchor && anchor.parentNode === top) top.insertBefore(wrap, anchor);
     else top.insertBefore(wrap, top.firstChild);
@@ -77,7 +77,7 @@
       btn.setAttribute('aria-disabled', unavailable ? 'true' : 'false');
       btn.style.opacity = unavailable ? '.48' : '';
       btn.title = unavailable
-        ? 'CODE MCU no corresponde a ' + p.label + '. Selecciona PLC con Arduino, PLC con ESP32 o SimuPLC actual.'
+        ? 'Le code MCU ne correspond pas à ' + p.label + '. Sélectionnez PLC avec Arduino, PLC avec ESP32 ou SimuPLC actuel.'
         : 'Generar C++ usando ' + p.short + ' (' + p.label + ')';
     }
 
@@ -125,7 +125,7 @@
       if (JSON.stringify(before) === JSON.stringify(after)) return false;
       return editors.loadFBDState(after) !== false;
     } catch (error) {
-      console.warn('[PLC V16] No se pudo migrar FBD.', error);
+      console.warn('[PLC V16] Impossible de migrar FBD.', error);
       return false;
     }
   }
@@ -146,7 +146,7 @@
       sendProfileToLadder();
       return result !== false;
     } catch (error) {
-      console.warn('[PLC V16] No se pudo migrar Ladder.', error);
+      console.warn('[PLC V16] Impossible de migrar Ladder.', error);
       sendProfileToLadder();
       return false;
     }
@@ -164,7 +164,7 @@
       hmi.loadProject(after);
       return true;
     } catch (error) {
-      console.warn('[PLC V16] No se pudo migrar HMI.', error);
+      console.warn('[PLC V16] Impossible de migrar HMI.', error);
       return false;
     }
   }

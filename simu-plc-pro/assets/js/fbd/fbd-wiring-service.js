@@ -4,8 +4,8 @@
 
   var adapter=global.SimuPLCFBDAdapter;
   var geometry=global.SimuPLCFBDWireGeometry;
-  if(!adapter){ console.error('[SimuPLC FBD] Adaptador de cableado no disponible.'); return; }
-  if(!geometry){ console.error('[SimuPLC FBD] Geometría de cableado no disponible.'); return; }
+  if(!adapter){ console.error('[SimuPLC FBD] Adaptateur de câblage non disponible.'); return; }
+  if(!geometry){ console.error('[SimuPLC FBD] Géométrie de câblé non disponible.'); return; }
 
   var stats={
     boundPins:0,created:0,removed:0,updated:0,bendsAdded:0,convertedToLabel:0,
@@ -52,7 +52,7 @@
     if(!fromIsOutput || !toIsInput) return reject('direction','La connexion doit aller d’une sortie vers une entrée.');
 
     var duplicate=adapter.getConnections().some(function(conn){ return conn && conn.from===fromTerm && conn.to===toTerm; });
-    if(duplicate) return reject('duplicate','La conexión ya existe.');
+    if(duplicate) return reject('duplicate','La connexion ya existe.');
 
     return {ok:true,fromNode:fromNode,toNode:toNode};
   }

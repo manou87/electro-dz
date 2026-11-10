@@ -93,7 +93,7 @@
     return new Promise(function (resolve) {
       const target = getTarget();
       if (!target) {
-        resolve({ ok: false, command: command, data: null, error: 'El editor Ladder todavía no está disponible.' });
+        resolve({ ok: false, command: command, data: null, error: 'L’éditeur Ladder n’est pas encore disponible.' });
         return;
       }
 
@@ -158,7 +158,7 @@
       if (latest.ok) return latest;
       await new Promise(function (resolve) { setTimeout(resolve, intervalMs); });
     }
-    return latest || { ok: false, command: 'ping', error: 'Ladder no respondió.' };
+    return latest || { ok: false, command: 'ping', error: 'Ladder n’a pas répondu.' };
   }
 
   function getDiagnostics() {

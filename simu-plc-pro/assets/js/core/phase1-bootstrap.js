@@ -102,7 +102,7 @@
 
   function init() {
     try { global.SimuPLCStorage && global.SimuPLCStorage.ensureInitialBackup(); } catch (error) {
-      console.warn('[Fase 1] No se pudo crear el respaldo inicial.', error);
+      console.warn('[Phase 1] Impossible de créer la sauvegarde initiale.', error);
     }
 
     patchProjectAPIs();

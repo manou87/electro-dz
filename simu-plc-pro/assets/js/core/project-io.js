@@ -57,11 +57,11 @@
   }
 
   function parseImportText(text) {
-    if (typeof text !== 'string' || !text.trim()) throw new Error('El archivo está vacío.');
+    if (typeof text !== 'string' || !text.trim()) throw new Error('Le fichier est vide.');
     const recovery = getRecovery();
     if (recovery && typeof recovery.validateImportText === 'function') return recovery.validateImportText(text);
     try { return JSON.parse(text); }
-    catch (error) { throw new Error('El archivo JSON está dañado o incompleto.'); }
+    catch (error) { throw new Error('Le fichier JSON est endommagé ou incomplet.'); }
   }
 
   async function currentFallbacks() {
@@ -95,7 +95,7 @@
     if (global.SimuPLCProject && typeof global.SimuPLCProject.loadUnifiedProject === 'function') {
       return global.SimuPLCProject.loadUnifiedProject(project);
     }
-    throw new Error('El cargador de proyectos no está disponible.');
+    throw new Error('Le chargeur de projets n’est pas disponible.');
   }
 
   function validateEditorState(editor, state) {
@@ -114,7 +114,7 @@
       ladder: mode === 'ladder' ? normalized : schema.emptyLadder()
     });
     const check = schema.validate(project, { strict: true });
-    if (!check.ok) throw new Error('El circuito ' + (mode === 'ladder' ? 'Ladder' : 'FBD') + ' está dañado: ' + check.errors.join(' '));
+    if (!check.ok) throw new Error('El circuit ' + (mode === 'ladder' ? 'Ladder' : 'FBD') + ' est endommagé : ' + check.errors.join(' '));
     return normalized;
   }
 

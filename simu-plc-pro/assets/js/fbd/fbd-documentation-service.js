@@ -44,7 +44,7 @@
     return list.find(function(node){return node && String(node.id)===String(id);}) || list[index] || null;
   }
   function markChanged(label){
-    try{ if(typeof global.pushHistory==='function') global.pushHistory(label || 'documentación FBD'); }
+    try{ if(typeof global.pushHistory==='function') global.pushHistory(label || 'documentation FBD'); }
     catch(_){ }
     try{ document.dispatchEvent(new CustomEvent('simuplc:fbd-documentation-change',{detail:{label:label||''}})); }
     catch(_){ }
@@ -136,7 +136,7 @@
     ensureDefaults(node);
     if(node.el) renderAssociated(node.el,node);
     clearAssociatedSelection();
-    markChanged('eliminar texto asociado FBD');
+    markChanged('supprimer texte associé FBD');
     return true;
   }
 
@@ -259,10 +259,10 @@
       +'<div class="fbd-text-head"><h3>Texte libre FBD</h3><button type="button" id="fbdTextClose">Fermer</button></div>'
       +'<div class="fbd-text-body"><label>Texte ou commentaire<textarea id="fbdTextValue" maxlength="1000" placeholder="Écrivez un titre, un commentaire ou une explication…"></textarea></label>'
       +'<div class="fbd-text-grid">'
-      +'<label>Formato<select id="fbdTextFormat"><option value="comment">Commentaire PLC</option><option value="title">Titre de réseau</option><option value="free">Texte libre</option></select></label>'
+      +'<label>Format<select id="fbdTextFormat"><option value="comment">Commentaire PLC</option><option value="title">Titre de réseau</option><option value="free">Texte libre</option></select></label>'
       +'<label>Source<select id="fbdTextFont"><option>Arial</option><option>Verdana</option><option>Tahoma</option><option>Georgia</option><option>Courier New</option></select></label>'
       +'<label>Taille<select id="fbdTextSize"><option value="14">Petit</option><option value="18">Normal</option><option value="24">Grande</option><option value="30">Titre</option><option value="38">Muy grande</option></select></label>'
-      +'<label>Ancho máximo<select id="fbdTextWidth"><option value="240">Corto</option><option value="360">Normal</option><option value="520">Ancho</option><option value="700">Muy ancho</option></select></label>'
+      +'<label>Ancho maximal<select id="fbdTextWidth"><option value="240">Corto</option><option value="360">Normal</option><option value="520">Ancho</option><option value="700">Muy ancho</option></select></label>'
       +'<label class="wide">Couleur du texte'+global.SimuPLCTextPalette.markup('fbdTextColor','text',defaults.color)+'</label>'
       +'<label class="wide">Couleur de fond'+global.SimuPLCTextPalette.markup('fbdTextBg','background',defaults.background)+'</label>'
       +'</div><div class="fbd-text-checks"><label><input id="fbdTextBold" type="checkbox"> Negrita</label><label><input id="fbdTextItalic" type="checkbox"> Cursiva</label></div>'
@@ -311,7 +311,7 @@
   function deleteSelectedFree(){
     if(!selectedTextId) return false;
     freeTexts=freeTexts.filter(function(item){return item.id!==selectedTextId;}); selectedTextId=null;
-    renderFreeTexts(); closeFreeModal(); markChanged('eliminar texto libre FBD'); return true;
+    renderFreeTexts(); closeFreeModal(); markChanged('supprimer texte libre FBD'); return true;
   }
   function beginText(){
     if(!activeFBD()){
@@ -330,17 +330,17 @@
     const inputModes=document.getElementById('inputModeGroup');
     if(inputModes && group.contains(inputModes)) group.parentNode.insertBefore(inputModes,group.nextSibling);
     group.dataset.richDocumentation='1';
-    group.innerHTML='<label class="doc-main-label">Texte de référence del elemento</label>'
-      +'<input id="editIOLabel" maxlength="300" placeholder="Ejemplo: Sensor de nivel / Contactor de bomba">'
+    group.innerHTML='<label class="doc-main-label">Texte de référence de l’élément</label>'
+      +'<input id="editIOLabel" maxlength="300" placeholder="Exemple : Capteur de niveau / Contacteur de pompe">'
       +'<div class="doc-edit-grid">'
-      +'<label>Formato<select id="editDescriptionFormat"><option value="comment">Commentaire PLC</option><option value="title">Titre</option><option value="free">Texte simple</option></select></label>'
+      +'<label>Format<select id="editDescriptionFormat"><option value="comment">Commentaire PLC</option><option value="title">Titre</option><option value="free">Texte simple</option></select></label>'
       +'<label>Source<select id="editDescriptionFont"><option>Arial</option><option>Verdana</option><option>Tahoma</option><option>Georgia</option><option>Courier New</option></select></label>'
       +'<label>Taille<select id="editDescriptionSize"><option value="12">Petit</option><option value="14">Normal</option><option value="18">Grande</option><option value="22">Muy grande</option><option value="28">Titre</option></select></label>'
       +'<label>Ancho<select id="editDescriptionWidth"><option value="170">Corto</option><option value="230">Normal</option><option value="320">Ancho</option><option value="440">Muy ancho</option></select></label>'
       +'<label class="wide">Couleur du texte'+global.SimuPLCTextPalette.markup('editDescriptionColor','text',defaults.color)+'</label>'
       +'<label class="wide">Couleur de fond'+global.SimuPLCTextPalette.markup('editDescriptionBg','background',defaults.background)+'</label>'
       +'</div><div class="doc-checks"><label><input id="editDescriptionBold" type="checkbox" checked> Negrita</label><label><input id="editDescriptionItalic" type="checkbox"> Cursiva</label></div>'
-      +'<div class="doc-edit-help">El texto seguirá al bloque y podrás moverlo de forma independiente.</div>';
+      +'<div class="doc-edit-help">Le texte suivra le bloc et vous pourrez le déplacer indépendamment.</div>';
     global.SimuPLCTextPalette.bind(group);
   }
   function fillEdit(node){

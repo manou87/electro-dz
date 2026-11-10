@@ -21,7 +21,7 @@
       analogOutputs: Object.freeze([]),
       adcBits: 10,
       adcRawMax: 1023,
-      note: 'Arduino UNO R3: 6 entradas analógicas A0–A5, ADC de 10 bits (0–1023).'
+      note: 'Arduino UNO R3: 6 entrées analogiques A0–A5, ADC de 10 bits (0–1023).'
     }),
     nano: Object.freeze({
       id: 'nano',
@@ -34,7 +34,7 @@
       analogOutputs: Object.freeze([]),
       adcBits: 10,
       adcRawMax: 1023,
-      note: 'Arduino Nano clásico: 8 entradas analógicas A0–A7, ADC de 10 bits (0–1023).'
+      note: 'Arduino Nano classique : 8 entrées analogiques A0–A7, ADC 10 bits (0–1023).'
     }),
     mega: Object.freeze({
       id: 'mega',
@@ -47,7 +47,7 @@
       analogOutputs: Object.freeze([]),
       adcBits: 10,
       adcRawMax: 1023,
-      note: 'Arduino MEGA 2560: 16 entradas analógicas A0–A15, ADC de 10 bits (0–1023).'
+      note: 'Arduino MEGA 2560 : 16 entrées analogiques A0–A15, ADC 10 bits (0–1023).'
     }),
     leonardo: Object.freeze({
       id: 'leonardo',
@@ -60,7 +60,7 @@
       analogOutputs: Object.freeze([]),
       adcBits: 10,
       adcRawMax: 1023,
-      note: 'Arduino Leonardo: 12 entradas analógicas A0–A11, ADC de 10 bits (0–1023).'
+      note: 'Arduino Leonardo : 12 entrées analogiques A0–A11, ADC 10 bits (0–1023).'
     }),
     atmega328: Object.freeze({
       id: 'atmega328',
@@ -73,7 +73,7 @@
       analogOutputs: Object.freeze([]),
       adcBits: 10,
       adcRawMax: 1023,
-      note: 'ATmega328P con core Arduino: 6 canales analógicos A0–A5, ADC de 10 bits (0–1023).'
+      note: 'ATmega328P avec core Arduino : 6 canaux analogiques A0–A5, ADC 10 bits (0–1023).'
     }),
     esp32: Object.freeze({
       id: 'esp32',
@@ -89,7 +89,7 @@
       inputOnly: Object.freeze([34, 35, 36, 39]),
       strapping: Object.freeze([0, 2, 5, 12, 15]),
       serial: Object.freeze([1, 3]),
-      note: 'ESP32 clásico: AI en ADC1, lectura de 12 bits (0–4095).'
+      note: 'ESP32 classique: AI en ADC1, lectura de 12 bits (0–4095).'
     })
   });
 
@@ -278,7 +278,7 @@
     const previous = all[boardId] && typeof all[boardId] === 'object' ? all[boardId] : emptyMap();
     const incoming = map && typeof map === 'object' ? map : emptyMap();
     // El generador trabaja con el editor activo, pero la tabla profesional administra
-    // FBD y Ladder juntos. Por eso se fusionan los grupos y no se eliminan las
+    // FBD y Ladder juntos. Por eso se fusionan los groupes y no se eliminan las
     // asignaciones del otro editor al regenerar código.
     all[boardId] = {
       digitalInputs: Object.assign({}, previous.digitalInputs || {}, incoming.digitalInputs || {}),
@@ -364,15 +364,15 @@
 
     function registerDigital(label, value, kind, candidates) {
       if (isMissing(value)) {
-        errors.push(label + ': variable sin pin asignado.');
+        errors.push(label + ': variable sin broche asignado.');
         return;
       }
-      if (!validCandidate(value, candidates)) errors.push(label + ': pin no válido para ' + profile.name + '.');
+      if (!validCandidate(value, candidates)) errors.push(label + ': broche no valide para ' + profile.name + '.');
       registerPhysical(label, value);
       if (profile.id === 'esp32') {
         const pin = Number(value);
         if (kind === 'out' && (profile.inputOnly || []).includes(pin)) errors.push(label + ': GPIO ' + pin + ' es solo entrada.');
-        if (kind === 'in' && (profile.inputOnly || []).includes(pin)) errors.push(label + ': GPIO ' + pin + ' no tiene INPUT_PULLUP interno.');
+        if (kind === 'in' && (profile.inputOnly || []).includes(pin)) errors.push(label + ': GPIO ' + pin + ' n’a pas d’INPUT_PULLUP interne.');
         if ((profile.strapping || []).includes(pin)) warnings.push(label + ': GPIO ' + pin + ' es pin de arranque.');
         if ((profile.serial || []).includes(pin)) warnings.push(label + ': GPIO ' + pin + ' se usa normalmente para Serial.');
       } else if (Number(value) === 0 || Number(value) === 1) {
@@ -385,16 +385,16 @@
     (signals.pwmOutputs || []).forEach(function (label) { registerDigital(label, map.pwmOutputs[label], 'out', profile.pwmOutputs || []); });
     (signals.analogOutputs || []).forEach(function (label) {
       const value=map.analogOutputs[label];
-      if (!(profile.analogOutputs || []).length) { errors.push(label + ': la placa ' + profile.name + ' no tiene salida DAC real. Usa PWM.'); return; }
+      if (!(profile.analogOutputs || []).length) { errors.push(label + ': la placa ' + profile.name + ' n’a pas de sortie DAC réelle. Utilisez PWM.'); return; }
       registerDigital(label,value,'out',profile.analogOutputs||[]);
     });
     (signals.analogInputs || []).forEach(function (label) {
       const value = map.analogInputs[label];
       if (isMissing(value)) {
-        errors.push(label + ': variable sin pin analógico asignado.');
+        errors.push(label + ': variable sin broche analogique asignado.');
         return;
       }
-      if (!validCandidate(value, profile.analogInputs)) errors.push(label + ': entrada analógica no válida para ' + profile.name + '.');
+      if (!validCandidate(value, profile.analogInputs)) errors.push(label + ' : entrée analogique non valide pour ' + profile.name + '.');
       registerPhysical(label, value);
     });
 
@@ -439,7 +439,7 @@
     output = output.replace(/ESP32 clásico/g, profile.name);
     output = output.replace(/SimuPLC Lab ([^\n]+) - ESP32 desde FBD/g, 'SimuPLC Lab ' + VERSION + ' - ' + profile.name + ' desde FBD');
     output = output.replace(/SimuPLC Lab ([^\n]+) - ESP32 desde Ladder/g, 'SimuPLC Lab ' + VERSION + ' - ' + profile.name + ' desde Ladder');
-    output = output.replace(/Entradas analogicas: ADC de 12 bits \(0\.\.4095\)\./g, 'Entrées analógicas: ADC de ' + profile.adcBits + ' bits (0..' + profile.adcRawMax + ').');
+    output = output.replace(/Entradas analogicas: ADC de 12 bits \(0\.\.4095\)\./g, 'Entrées analogiques: ADC de ' + profile.adcBits + ' bits (0..' + profile.adcRawMax + ').');
     output = output.replace(/^\s*analogReadResolution\(12\);\s*\n/gm, '');
     output = output.replace(/GPIO/g, 'pin');
     output = output.replace(/ESP32/g, profile.name);
@@ -467,7 +467,7 @@
       });
     }
     const lines = [];
-    lines.push('// Asignación física de variables PLC');
+    lines.push('// Affectation physique des variables PLC');
     (context.signals.digitalInputs || []).forEach(function (label) {
       lines.push('const uint8_t PIN_' + safeName(label) + ' = ' + map.digitalInputs[label] + ';' + (variableDescription(label) ? ' // ' + variableDescription(label) : ''));
     });
@@ -584,7 +584,7 @@
     if (!panel) {
       panel = document.createElement('div');
       panel.id = 'mcuPinsPanel';
-      panel.innerHTML = '<div class="title">Asignación de pines MCU</div><div class="sub2"></div><div class="mcu-pin-grid"></div><div id="mcuPinsFooter"><button id="mcuPinsReset" type="button">Restaurar pines seguros</button><div id="mcuPinsMessages"></div></div>';
+      panel.innerHTML = '<div class="title">Asignación de broches MCU</div><div class="sub2"></div><div class="mcu-broche-grid"></div><div id="mcuPinsFooter"><button id="mcuPinsReset" type="button">Restaurar broches seguros</button><div id="mcuPinsMessages"></div></div>';
       const oldPins = document.getElementById('arduinoPins');
       if (oldPins && oldPins.parentNode) oldPins.parentNode.insertBefore(panel, oldPins.nextSibling);
       else {
@@ -619,7 +619,7 @@
     const chunks = [];
     if (validation.errors.length) chunks.push('<div class="error">' + validation.errors.join('<br>') + '</div>');
     if (validation.warnings.length) chunks.push('<div class="mcu-warning">' + validation.warnings.join('<br>') + '</div>');
-    if (!chunks.length) chunks.push('<div style="color:#087f5b;font-weight:900">Asignación válida.</div>');
+    if (!chunks.length) chunks.push('<div style="color:#087f5b;font-weight:900">Affectation valide.</div>');
     target.innerHTML = chunks.join('');
   }
 
@@ -628,13 +628,13 @@
     if (!panel) return;
     const profile = getBoardProfile(boardId);
     const subtitle = panel.querySelector('.sub2');
-    if (subtitle) subtitle.textContent = profile.note + ' Las entradas digitales usan INPUT_PULLUP.';
+    if (subtitle) subtitle.textContent = profile.note + ' Las entrées digitales usan INPUT_PULLUP.';
     const groups = [
       { key: 'digitalInputs', title: 'Entrées digitales I', values: profile.digitalInputs },
-      { key: 'analogInputs', title: 'Entrées analógicas AI', values: profile.analogInputs },
+      { key: 'analogInputs', title: 'Entrées analogiques AI', values: profile.analogInputs },
       { key: 'outputs', title: 'Sorties digitales Q', values: profile.outputs },
       { key: 'pwmOutputs', title: 'Sorties PWM', values: profile.pwmOutputs || [] },
-      { key: 'analogOutputs', title: 'Sorties analógicas AO (DAC)', values: profile.analogOutputs || [] }
+      { key: 'analogOutputs', title: 'Sorties analogiques AO (DAC)', values: profile.analogOutputs || [] }
     ];
     const grid = panel.querySelector('.mcu-pin-grid');
     grid.innerHTML = '';
@@ -680,7 +680,7 @@
     if (title) title.textContent = 'Programar microcontrolador';
     if (subtitle) subtitle.textContent = 'Preparar, compilar y transferir · ' + profile.name;
     if (boardInfo) boardInfo.textContent = profile.note;
-    if (hint) hint.innerHTML = '<b>Generador USB/OTG analógico:</b> genera I, AI, Q, PWM, AO, PID y SPLIT con protocolo Serial a 115200 baudios para Arduino y ESP32. Incluye HELLO, PING, GET_STATE, MODE, SET, SETA, RUN y STOP sin bloquear el ciclo PLC.';
+    if (hint) hint.innerHTML = '<b>Generador USB/OTG analogique:</b> genera I, AI, Q, PWM, AO, PID y SPLIT con protocolo Serial a 115200 bauds para Arduino y ESP32. Incluye HELLO, PING, GET_STATE, MODE, SET, SETA, RUN y STOP sin bloquear el ciclo PLC.';
     if (download) download.textContent = '⬇ Descargar ' + (profile.id === 'esp32' ? 'ESP32 ' : 'Arduino ') + '.ino';
     if (modeBox) modeBox.style.display = 'none';
     const button = document.getElementById('btnArduino');
@@ -695,7 +695,7 @@
   async function refreshAll(forceDefaults) {
     const token = ++generationToken;
     const textarea = document.getElementById('arduinoCode');
-    if (textarea) textarea.value = '// Leyendo el proyecto y generando código...';
+    if (textarea) textarea.value = '// Lecture du projet et génération du code...';
     try {
       ensureStyles();
       ensureBoardOptions();
@@ -707,7 +707,7 @@
       // los pines predeterminados de todas las variables FBD/Ladder para la placa activa.
       if (!forceDefaults && global.SimuPLCVariableManager && typeof global.SimuPLCVariableManager.ensureDefaults === 'function') {
         try { await global.SimuPLCVariableManager.ensureDefaults(boardId); }
-        catch (syncError) { console.warn('[SimuPLC] No se pudo sincronizar la tabla de variables en segundo plano.', syncError); }
+        catch (syncError) { console.warn('[SimuPLC] Impossible de synchroniser la table des variables en arrière-plan.', syncError); }
       }
       if (token !== generationToken) { diagnostics.staleResultsDiscarded += 1; return ''; }
       const map = normalizeMap(context.signals, profile, loadBoardMap(boardId), !!forceDefaults);
@@ -717,7 +717,7 @@
       const validation = validateMap(context.signals, profile, map);
       let code;
       if (!validation.ok) {
-        code = '/*\n  No se pudo generar por errores de asignación:\n  - ' + validation.errors.join('\n  - ') + '\n*/';
+        code = '/*\n  Impossible de générer à cause d’erreurs d’affectation :\n  - ' + validation.errors.join('\n  - ') + '\n*/';
       } else {
         code = await generate(context, boardId, map);
         if (validation.warnings.length) code = '/* ADVERTENCIAS:\n - ' + validation.warnings.join('\n - ') + '\n*/\n\n' + code;
@@ -733,7 +733,7 @@
     } catch (error) {
       const message = error && error.message ? error.message : String(error);
       diagnostics.lastError = message;
-      if (textarea && token === generationToken) textarea.value = '/* Error del generador MCU: ' + message + ' */';
+      if (textarea && token === generationToken) textarea.value = '/* Erreur du générateur MCU : ' + message + ' */';
       return '';
     }
   }
@@ -834,7 +834,7 @@
     const script = document.createElement('script');
     script.src = 'assets/js/arduino-uno-programmer-v1.js?v=android-uno-release-1';
     script.dataset.simuplcUnoAndroid = '1';
-    script.onerror = function () { console.error('[SimuPLC] No se pudo cargar el programador USB/OTG'); };
+    script.onerror = function () { console.error('[SimuPLC] Impossible de charger el programador USB/OTG'); };
     document.head.appendChild(script);
   }
 

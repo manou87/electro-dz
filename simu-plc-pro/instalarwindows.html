@@ -85,8 +85,8 @@
     <h1>Installer SimuPLC</h1>
 
     <p>
-      Presiona el botón para instalar SimuPLC Lab como aplicación en tu computadora.
-      Funciona mejor en Google Chrome o Microsoft Edge.
+      Appuyez sur le bouton pour installer SimuPLC Lab comme application sur votre ordinateur.
+      Fonctionne mieux avec Google Chrome ou Microsoft Edge.
     </p>
 
     <button id="installBtn" class="btn">
@@ -120,9 +120,9 @@
 
         if (choiceResult.outcome === "accepted") {
           installBtn.textContent = "Instalando...";
-          helpText.textContent = "La instalación fue iniciada correctamente.";
+          helpText.textContent = "L’installation a démarré correctement.";
         } else {
-          helpText.textContent = "La instalación fue cancelada.";
+          helpText.textContent = "L’installation a été annulée.";
         }
 
         deferredPrompt = null;

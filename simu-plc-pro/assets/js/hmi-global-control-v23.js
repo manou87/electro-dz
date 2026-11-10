@@ -82,7 +82,7 @@
       await io.sendCommand('MODE,'+command);
       clearTimeout(modeSyncTimer);
       modeSyncTimer=setTimeout(function(){try{io.requestStateThrottled&&io.requestStateThrottled();}catch(_){}},650);
-    }catch(error){console.warn('[SimuPLC CONTROL V23] No se pudo sincronizar el modo global:',error);}
+    }catch(error){console.warn('[SimuPLC CONTROL V23] Impossible de sincronizar el mode global:',error);}
   }
 
   function setMode(mode,options){
@@ -115,7 +115,7 @@
     wrap.innerHTML='<span class="hmi-global-caption">CONTRÔLE</span>'+
       '<button type="button" data-global-control-mode="hmi" title="Commandes depuis HMI ; STOP, urgence et protections physiques NC gardent la priorité">HMI</button>'+
       '<button type="button" data-global-control-mode="physical" title="Utiliser uniquement boutons-poussoirs, sélecteurs et capteurs physiques">PHYSIQUE</button>'+
-      '<button type="button" data-global-control-mode="both" title="NO: cualquiera activa · NC: cualquiera detiene">LES DEUX</button>'+
+      '<button type="button" data-global-control-mode="both" title="NO : n’importe laquelle active · NF : n’importe laquelle arrête">LES DEUX</button>'+
       '<b id="hmiGlobalModeBadgeV21"></b>';
     const connect=document.getElementById('hmiIoConnectBtn');
     if(connect&&connect.parentNode===toolbar)toolbar.insertBefore(wrap,connect);else toolbar.appendChild(wrap);
@@ -134,9 +134,9 @@
       global=document.createElement('div');
       global.id='arduinoGlobalControlBoxV21';
       global.className='arduino-global-control-v21';
-      global.innerHTML='<label>Source para todas las entradas<select id="arduinoGlobalControlModeV21">'+
+      global.innerHTML='<label>Source pour toutes les entrées<select id="arduinoGlobalControlModeV21">'+
         '<option value="hmi">Contrôle HMI (sécurité physique NC active)</option><option value="physical">Contrôle physique</option><option value="both">HMI + physique</option></select></label>'+
-        '<p id="arduinoGlobalControlHelpV21"></p><small>Esta selección se integra en el .ino. En HMI + physique, NO usa OR y NC usa AND; cualquier STOP o emergencia puede detener.</small>';
+        '<p id="arduinoGlobalControlHelpV21"></p><small>Cette sélection est intégrée dans le .ino. En HMI + physique, NO utilise OR et NC utilise AND ; tout STOP ou urgence peut arrêter.</small>';
       if(inputWrap&&inputWrap.parentNode)inputWrap.parentNode.insertBefore(global,inputWrap);else box.appendChild(global);
       global.querySelector('select').addEventListener('change',function(){setMode(this.value,{send:false});});
     }
@@ -145,7 +145,7 @@
     const period=document.getElementById('arduinoHmiPeriod');
     if(period){period.value='250';period.disabled=true;}
     const status=document.getElementById('arduinoHmiStatus');
-    if(status)status.textContent='Control lógico V23 activo · USB sin cambios · modos HMI, físico y ambos corregidos.';
+    if(status)status.textContent='Contrôle logique V23 actif · USB inchangé · modes HMI, physique et les deux corrigés.';
     updateModeUi();
   }
 

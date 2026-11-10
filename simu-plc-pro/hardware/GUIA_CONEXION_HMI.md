@@ -44,7 +44,7 @@ No abras la app como `file://index.html` para Web Serial: debe servirse mediante
 
 Para una conexión por internet, utiliza un endpoint `wss://` seguro mediante un servidor/gateway. No expongas directamente un ESP32 sin autenticación a internet.
 
-## Seguridad eléctrica
+## Sécurité eléctrica
 
 Arduino o ESP32 solo entregan señales lógicas. Para activar cargas reales usa:
 

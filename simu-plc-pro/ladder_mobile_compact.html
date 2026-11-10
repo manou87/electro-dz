@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
 <script id="simuplc-embedded-frame-early">try{if(window.self!==window.top)document.documentElement.classList.add('simuplc-embedded-frame')}catch(e){}</script>
-  <title>Ladder Test - Fase 9 Simulation Visual</title>
+  <title>Test Ladder — Phase 9 Simulation visuelle</title>
   <style>
     :root {
       --bg: #f3f3f3;
@@ -1023,34 +1023,34 @@ body.ladder-pro-only .branch-panel {
   <div class="app">
     <div class="toolbar">
       <div class="toolbar-group">
-        <button class="btn primary" id="addNO">Contacto NO</button>
-        <button class="btn primary" id="addNC">Contacto NC</button>
+        <button class="btn primary" id="addNO">Contact NO</button>
+        <button class="btn primary" id="addNC">Contact NC</button>
         <button class="btn primary" id="addCoil">Bobina</button>
         <button class="btn primary" id="addBranch">Rama paralela</button>
         <button class="btn secondary" id="addRung">+ Rung</button>
       </div>
 
       <div class="toolbar-group">
-        <button class="btn secondary" id="editLabel">Editar nombre</button>
+        <button class="btn secondary" id="editLabel">Modifier le nom</button>
         <button class="btn secondary" id="deleteElement">Supprimer</button>
         <button class="btn secondary" id="resetDemo">Nouveau Ladder</button>
         <button class="btn secondary" id="toggleSim">Simuler</button>
         <button class="btn secondary" id="quickSaveBtn">Enregistrer</button>
-        <button class="btn secondary" id="openCircuitsBtn">Ouvrir circuitos</button>
+        <button class="btn secondary" id="openCircuitsBtn">Ouvrir les circuits</button>
         <button class="btn secondary" id="openSimPanelBtn">Variables</button>
-        <button class="btn secondary" id="toggleLadderPro">Modo PRO</button>
+        <button class="btn secondary" id="toggleLadderPro">Mode PRO</button>
       </div>
 
-      <div class="hint">Fase 9: simulación Ladder visual con líneas energizadas y variables reales</div>
+      <div class="hint">Phase 9 : simulation Ladder visuelle avec lignes alimentées et variables réelles</div>
     </div>
 
     <div class="workspace">
       <canvas id="ladderCanvas"></canvas>
-      <div class="pro-badge" id="proBadge">MODO PRO: toca un pin azul y suelta en un pin blanco</div>
+      <div class="pro-badge" id="proBadge">MODE PRO : touchez une broche bleue et relâchez sur une broche blanche</div>
 
       <div class="branch-panel" id="branchPanel">
         <h3 class="panel-title">Editor de ramas</h3>
-        <p class="panel-text">Puedes editar el ramal y arrastrar elementos en línea principal o dentro del ramal.</p>
+        <p class="panel-text">Vous pouvez éditer la dérivation et faire glisser des éléments sur la ligne principale ou dans la dérivation.</p>
         <div class="branch-actions">
           <button class="btn secondary" id="branchTopNO">+ NO arriba</button>
           <button class="btn secondary" id="branchTopNC">+ NC arriba</button>
@@ -1058,18 +1058,18 @@ body.ladder-pro-only .branch-panel {
           <button class="btn secondary" id="branchBottomNO">+ NO abajo</button>
           <button class="btn secondary" id="branchBottomNC">+ NC abajo</button>
           <button class="btn secondary" id="branchBottomCoil">+ Bobina abajo</button>
-          <button class="btn secondary" id="removeTopItem">Quitar último arriba</button>
-          <button class="btn secondary" id="removeBottomItem">Quitar último abajo</button>
+          <button class="btn secondary" id="removeTopItem">Quitar dernier arriba</button>
+          <button class="btn secondary" id="removeBottomItem">Quitar dernier abajo</button>
         </div>
         <div class="branch-meta" id="branchMeta">
-          <span class="tag warn">Sin rama seleccionada</span>
+          <span class="tag warn">Aucune branche sélectionnée</span>
         </div>
         <div class="insert-note">
           Astuce : faites glisser des éléments dans la branche ou sur la ligne principale. Pour insérer de nouveaux éléments, utilisez NO, NC ou Bobine puis cliquez où vous voulez.
         </div>
       </div>
 
-      <div class="status" id="statusText">Sélectionnez un elemento o agrega contactos, bobinas y ramas paralelas.</div>
+      <div class="status" id="statusText">Sélectionnez un élément ou ajoutez contacts, bobines et branches parallèles.</div>
     </div>
   </div>
 
@@ -1087,12 +1087,12 @@ body.ladder-pro-only .branch-panel {
           <button class="btn secondary" id="downloadProject">Descargar JSON</button>
           <button class="btn secondary" id="copyJson">Copiar JSON</button>
           <button class="btn secondary" id="loadJsonText">Charger depuis JSON</button>
-          <button class="btn secondary" id="loadJsonFileBtn">Cargar archivo JSON</button>
+          <button class="btn secondary" id="loadJsonFileBtn">Charger fichier JSON</button>
         </div>
         <input type="file" id="loadJsonFile" accept=".json,application/json" style="display:none" />
         <div class="storage-meta" id="storageMeta"></div>
         <div class="slots" id="savedSlots"></div>
-        <textarea id="jsonBox" class="code-box" placeholder="Aquí aparecerá el JSON exportado del Ladder completo..."></textarea>
+        <textarea id="jsonBox" class="code-box" placeholder="Ici apparaîtra le JSON exporté du Ladder complet…"></textarea>
       </div>
     </div>
   </div>
@@ -1100,11 +1100,11 @@ body.ladder-pro-only .branch-panel {
   <div class="overlay" id="simOverlay">
     <div class="modal-card" style="width:min(920px,96vw)">
       <div class="modal-head">
-        <h3 class="panel-title" style="margin:0">Variables de simulación</h3>
+        <h3 class="panel-title" style="margin:0">Variables de simulation</h3>
         <button class="btn secondary" id="closeSimOverlay">Fermer</button>
       </div>
       <div class="modal-body">
-        <p class="panel-text">Activez entrées et marques. Vous pouvez appuyer directement sur les entrées I et marques M du diagramme. Su comportamiento puede ser selector o pulsador.</p>
+        <p class="panel-text">Activez entrées et marques. Vous pouvez appuyer directement sur les entrées I et marques M du diagramme. Leur comportement peut être sélecteur ou poussoir.</p>
         <div class="sim-actions">
           <button class="btn secondary" id="refreshVars">Actualizar variables</button>
           <button class="btn secondary" id="allOff">Apagar todo</button>
@@ -1119,12 +1119,12 @@ body.ladder-pro-only .branch-panel {
   <div class="edit-overlay" id="editOverlay">
     <div class="edit-card">
       <div class="modal-head">
-        <h3 class="panel-title" style="margin:0">Editar elemento</h3>
+        <h3 class="panel-title" style="margin:0">Modifier l’élément</h3>
         <button class="btn secondary" id="closeEditOverlay">Fermer</button>
       </div>
       <div class="edit-grid">
         <label>
-          <div class="edit-label">Dirección / variable</div>
+          <div class="edit-label">Adresse / variable</div>
           <input class="edit-input" id="editNameInput" type="text" placeholder="Ejemplo: I1, Q1, M1">
         </label>
         <label>
@@ -1132,9 +1132,9 @@ body.ladder-pro-only .branch-panel {
           <input class="edit-input" id="editReferenceInput" type="text" maxlength="120" placeholder="Exemple : Bouton-poussoir de démarrage / Moteur principal">
         </label>
         <label>
-          <div class="edit-label">Comportamiento en simulación</div>
+          <div class="edit-label">Comportamiento en simulation</div>
           <select class="edit-select" id="editBehaviorSelect">
-            <option value="selector">Selector</option>
+            <option value="selector">Sélecteur</option>
             <option value="pulsador">Bouton-poussoir</option>
           </select>
         </label>
@@ -1146,7 +1146,7 @@ body.ladder-pro-only .branch-panel {
           </select>
         </label>
         <div class="insert-note">
-          Combina el símbolo Ladder NO/NC con el comportamiento <strong>pulsador/selector</strong> y el tipo físico <strong>NO/NC</strong>.
+          Combina el ouimbolo Ladder NO/NC con el comportamiento <strong>pulsador/selector</strong> y el tipo physique <strong>NO/NC</strong>.
         </div>
         <div class="storage-actions">
           <button class="btn primary" id="saveEditModal">Enregistrer cambios</button>
@@ -1296,7 +1296,7 @@ body.ladder-pro-only .branch-panel {
 
     function normalizeLadderModel(input) {
       const data = cloneDeep(input);
-      if (!data || typeof data !== 'object') throw new Error('El JSON no es válido.');
+      if (!data || typeof data !== 'object') throw new Error('El JSON no es valide.');
       if (!Array.isArray(data.rungs)) throw new Error('El modelo Ladder necesita un arreglo rungs.');
       data.version = data.version || 1;
       data.type = data.type || 'ladder-phase9';
@@ -2088,7 +2088,7 @@ body.ladder-pro-only .branch-panel {
       const ws = document.querySelector('.workspace');
       if(ws) ws.classList.toggle('pro-mode', isProMode());
       const btn = document.getElementById('toggleLadderPro');
-      if(btn){ btn.textContent = isProMode() ? 'Modo Clásico' : 'Modo PRO'; btn.classList.toggle('active', isProMode()); }
+      if(btn){ btn.textContent = isProMode() ? 'Mode classique' : 'Mode PRO'; btn.classList.toggle('active', isProMode()); }
       const badge = document.getElementById('proBadge');
       if(badge) badge.textContent = 'MODE PRO : connectez la sortie bleue à l’entrée blanche. Câbles orthogonaux type circuit électrique.';
     }
@@ -2222,7 +2222,7 @@ body.ladder-pro-only .branch-panel {
       state.proWires = (state.proWires||[]).filter(w => ids.has(w.from) && ids.has(w.to));
     }
     function validateProConnection(fromPin, toPin){
-      if(!fromPin || !toPin) return {ok:false, reason:'Sélectionnez dos pines válidos.'};
+      if(!fromPin || !toPin) return {ok:false, reason:'Sélectionnez deux broches valides.'};
       if(fromPin.id === toPin.id) return {ok:false, reason:'No conectes un pin consigo mismo.'};
       if(fromPin.kind !== 'output') return {ok:false, reason:'La connexion doit commencer sur une sortie bleue.'};
       if(toPin.kind !== 'input') return {ok:false, reason:'La connexion doit se terminer sur une entrée blanche.'};
@@ -2261,7 +2261,7 @@ body.ladder-pro-only .branch-panel {
       const check = validateProConnection(state.proWireStart, pin);
       if(check.ok){
         state.proWires.push({id:getProWireId(), from:state.proWireStart.id, to:pin.id, points:orthogonalPoints(state.proWireStart,pin), energized:false});
-        statusText.textContent='Cable eléctrico creado.';
+        statusText.textContent='Câble électrique créé.';
       } else {
         statusText.textContent='Cable cancelado: ' + check.reason;
       }
@@ -2428,8 +2428,8 @@ body.ladder-pro-only .branch-panel {
     }
 
     function labelForType(type) {
-      if (type === 'NO') return 'Contacto NO';
-      if (type === 'NC') return 'Contacto NC';
+      if (type === 'NO') return 'Contact NO';
+      if (type === 'NC') return 'Contact NC';
       if (type === 'COIL') return 'Bobina';
       if (type === 'BRANCH') return 'Rama paralela';
       return type;
@@ -2525,7 +2525,7 @@ body.ladder-pro-only .branch-panel {
 
           const badge = document.createElement('span');
           badge.className = 'tag';
-          badge.textContent = behavior.toUpperCase() + ' ' + physicalType + ' | señal ' + (physicalOn ? 'ON' : 'OFF');
+          badge.textContent = behavior.toUpperCase() + ' ' + physicalType + ' | signal ' + (physicalOn ? 'ON' : 'OFF');
 
           const toggle = document.createElement('input');
           toggle.type = 'checkbox';
@@ -2565,11 +2565,11 @@ body.ladder-pro-only .branch-panel {
         + '<span class="tag">Q: ' + outs + '</span>'
         + '<span class="tag">Activas: ' + activeOutputs + '</span>'
         + '<span class="tag">Scans: ' + diag.passes + '</span>'
-        + '<span class="tag ' + (diag.stable ? 'ok' : 'warn') + '">' + (diag.stable ? 'Estable' : 'Límite scan') + '</span>';
+        + '<span class="tag ' + (diag.stable ? 'ok' : 'warn') + '">' + (diag.stable ? 'Estable' : 'Limite de scan') + '</span>';
     }
 
     function refreshSimButton() {
-      toggleSimBtn.textContent = state.simulationOn ? 'Detener simulación' : 'Simuler';
+      toggleSimBtn.textContent = state.simulationOn ? 'Detener simulation' : 'Simuler';
       toggleSimBtn.classList.toggle('sim-on', state.simulationOn);
     }
 
@@ -2610,21 +2610,21 @@ body.ladder-pro-only .branch-panel {
       }
       if (selected) {
         if (selected.parentBranchId && selected.branchLane) {
-          statusText.textContent = 'Seleccionado: ' + labelForType(selected.element.type) + ' "' + (selected.element.label || '') + '" dentro de una rama paralela en rung ' + (selected.rungIndex + 1) + '.';
+          statusText.textContent = 'Sélectionné : ' + labelForType(selected.element.type) + ' "' + (selected.element.label || '') + '" dentro de una rama paralela en rung ' + (selected.rungIndex + 1) + '.';
           return;
         }
-        statusText.textContent = 'Seleccionado: ' + labelForType(selected.element.type) + (selected.element.label ? ' "' + selected.element.label + '"' : '') + ' en rung ' + (selected.rungIndex + 1) + '.';
+        statusText.textContent = 'Sélectionné : ' + labelForType(selected.element.type) + (selected.element.label ? ' "' + selected.element.label + '"' : '') + ' en rung ' + (selected.rungIndex + 1) + '.';
         return;
       }
       statusText.textContent = state.simulationOn
         ? 'Simulation active : vous pouvez appuyer sur I et M. La réponse des contacts associés aux bobines est recalculée instantanément.'
-        : 'Sélectionnez un elemento o agrega contactos, bobinas y ramas paralelas.';
+        : 'Sélectionnez un élément ou ajoutez contacts, bobines et branches parallèles.';
     }
 
     function updateBranchPanel() {
       if (state.simulationOn) {
         branchPanel.style.display = 'none';
-        branchMeta.innerHTML = '<span class="tag warn">Edición bloqueada en simulación</span>';
+        branchMeta.innerHTML = '<span class="tag warn">Édition verrouillée en simulation</span>';
         return;
       }
       const selected = findSelected();
@@ -2633,7 +2633,7 @@ body.ladder-pro-only .branch-panel {
         : null;
       if (!branch) {
         branchPanel.style.display = 'none';
-        branchMeta.innerHTML = '<span class="tag warn">Sin rama seleccionada</span>';
+        branchMeta.innerHTML = '<span class="tag warn">Aucune branche sélectionnée</span>';
         return;
       }
       branchPanel.style.display = 'block';
@@ -2643,8 +2643,8 @@ body.ladder-pro-only .branch-panel {
         + '<span class="tag ok">Rama activa</span>'
         + '<span class="tag">Arriba: ' + top.length + '</span>'
         + '<span class="tag">Abajo: ' + bottom.length + '</span>'
-        + '<p><strong>Línea superior:</strong> ' + (top.length ? top.map(el => el.label || el.type).join(' → ') : 'vacía') + '</p>'
-        + '<p><strong>Línea inferior:</strong> ' + (bottom.length ? bottom.map(el => el.label || el.type).join(' → ') : 'vacía') + '</p>';
+        + '<p><strong>Ligne supérieure :</strong> ' + (top.length ? top.map(el => el.label || el.type).join(' → ') : 'vide') + '</p>'
+        + '<p><strong>Ligne inférieure :</strong> ' + (bottom.length ? bottom.map(el => el.label || el.type).join(' → ') : 'vide') + '</p>';
     }
 
     function updatePendingButtonState() {
@@ -2818,7 +2818,7 @@ body.ladder-pro-only .branch-panel {
       const branch = getBranchOwnerFromHit(selected);
       if (!branch) { alert('Sélectionnez d’abord une branche parallèle ou un élément dedans.'); return; }
       const laneIndex = lane === 'top' ? 0 : 1;
-      if (!branch.branches[laneIndex].length) { alert('Esa línea ya está vacía.'); return; }
+      if (!branch.branches[laneIndex].length) { alert('Cette ligne est déjà vide.'); return; }
       const removed = branch.branches[laneIndex].pop();
       if (state.selectedId === removed.id) state.selectedId = branch.id;
       draw();
@@ -2960,7 +2960,7 @@ body.ladder-pro-only .branch-panel {
       if (!hit || !hit.element) return false;
       if (!toggleSimulationInput(hit.element.label, hit.element)) return false;
       state.selectedId = hit.id;
-      statusText.textContent = 'Entrée ' + hit.element.label + ' accionada: ' + (state.simValues[hit.element.label] ? 'SI' : 'NO') + ' | señal física: ' + (getPhysicalSignalForElement(hit.element, state.coilStates) ? 'ON' : 'OFF') + '.';
+      statusText.textContent = 'Entrée ' + hit.element.label + ' accionada: ' + (state.simValues[hit.element.label] ? 'SI' : 'NO') + ' | signal physique: ' + (getPhysicalSignalForElement(hit.element, state.coilStates) ? 'ON' : 'OFF') + '.';
       return true;
     }
 
@@ -3116,7 +3116,7 @@ body.ladder-pro-only .branch-panel {
 
         const loadBtn = document.createElement('button');
         loadBtn.className = 'btn secondary';
-        loadBtn.textContent = 'Cargar';
+        loadBtn.textContent = 'Charger';
         loadBtn.onclick = () => {
           tryLoadModel(item.model);
           saveNameInput.value = item.name || '';
@@ -3183,7 +3183,7 @@ body.ladder-pro-only .branch-panel {
         draw();
         statusText.textContent = 'Ladder cargado correctamente.';
       } catch (err) {
-        alert(err.message || 'No se pudo cargar el Ladder.');
+        alert(err.message || 'Impossible de charger el Ladder.');
       }
     }
 
@@ -3192,7 +3192,7 @@ body.ladder-pro-only .branch-panel {
       const blob = new Blob([JSON.stringify(model, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      const safeName = (saveNameInput.value.trim() || 'ladder-proyecto').replace(/[^a-z0-9-_]+/gi, '_');
+      const safeName = (saveNameInput.value.trim() || 'ladder-projet').replace(/[^a-z0-9-_]+/gi, '_');
       a.href = url;
       a.download = safeName + '.json';
       document.body.appendChild(a);
@@ -3208,7 +3208,7 @@ body.ladder-pro-only .branch-panel {
         await navigator.clipboard.writeText(txt);
         statusText.textContent = 'JSON copiado al portapapeles.';
       } catch {
-        statusText.textContent = 'No se pudo copiar automáticamente. El JSON quedó visible en la caja.';
+        statusText.textContent = 'Impossible de copier automatiquement. Le JSON est resté visible dans la boîte.';
       }
     }
 
@@ -3222,7 +3222,7 @@ body.ladder-pro-only .branch-panel {
         const parsed = JSON.parse(txt);
         tryLoadModel(parsed);
       } catch {
-        alert('El contenido del JSON no es válido.');
+        alert('El contenido del JSON no es valide.');
       }
     }
 
@@ -3234,7 +3234,7 @@ body.ladder-pro-only .branch-panel {
           const parsed = JSON.parse(String(reader.result || ''));
           tryLoadModel(parsed);
         } catch {
-          alert('El archivo JSON no es válido.');
+          alert('El fichier JSON no es valide.');
         }
       };
       reader.readAsText(file);
@@ -3341,7 +3341,7 @@ body.ladder-pro-only .branch-panel {
         return;
       }
       if (selected.element.type === 'BRANCH') {
-        alert('Sélectionnez un elemento dentro de la rama o usa el panel de edición de ramas.');
+        alert('Sélectionnez un élément dans la branche ou utilisez le panneau d’édition des branches.');
         return;
       }
       const ref = getElementRef(selected);
@@ -3527,7 +3527,7 @@ body.ladder-pro-only .branch-panel {
         var model = (typeof getSerializableLadder === 'function') ? getSerializableLadder() : (state && state.ladder);
         return clone(model) || { version:1, type:'ladder-phase9', rungs:[] };
       } catch(e) {
-        console.warn('[Fase 2] No se pudo leer Ladder:', e);
+        console.warn('[Phase 2] Impossible de leer Ladder:', e);
         return { version:1, type:'ladder-phase9', rungs:[] };
       }
     };
@@ -3543,8 +3543,8 @@ body.ladder-pro-only .branch-panel {
         }
         return true;
       } catch(e) {
-        console.error('[Fase 2] No se pudo cargar Ladder:', e);
-        alert('No se pudo cargar el Ladder: ' + (e.message || e));
+        console.error('[Phase 2] Impossible de charger le Ladder :', e);
+        alert('Impossible de charger el Ladder: ' + (e.message || e));
         return false;
       }
     };
@@ -4618,7 +4618,7 @@ body.ladder-pro-only .pro-badge{
       var ui=document.createElement('div');
       ui.id='ladderTouchZoomUi';
       ui.className='ladder-touch-zoom-ui';
-      ui.innerHTML='<button type="button" data-z="out" title="Alejar">−</button><button type="button" data-z="reset" class="zoom-reset" title="100%">100%</button><button type="button" data-z="in" title="Acercar">+</button>';
+      ui.innerHTML='<button type="button" data-z="out" title="Zoom arrière">−</button><button type="button" data-z="reset" class="zoom-reset" title="100%">100%</button><button type="button" data-z="in" title="Zoom avant">+</button>';
       (getWrap() || workspace || document.body).appendChild(ui);
       ui.addEventListener('pointerdown', function(e){ e.stopPropagation(); });
       ui.addEventListener('click', function(e){
@@ -5339,7 +5339,7 @@ if ('serviceWorker' in navigator) {
 </script>
 
 
-<!-- ===== CHATGPT FINAL PATCH: API Ladder aislada para proyecto dual ===== -->
+<!-- ===== CHATGPT FINAL PATCH: API Ladder aislada para projet dual ===== -->
 <script id="chatgpt-final-ladder-isolated-api">
 (function(){
   'use strict';
@@ -5380,7 +5380,7 @@ if ('serviceWorker' in navigator) {
       if(typeof draw === 'function') draw();
       return true;
     } catch(e) {
-      console.error('[Ladder aislado] No se pudo cargar Ladder:', e);
+      console.error('[Ladder isolé] Impossible de charger le Ladder :', e);
       return false;
     }
   }
@@ -5812,7 +5812,7 @@ if ('serviceWorker' in navigator) {
     }catch(e){ window.SimuPLCModal.alert('Impossible de créer un nouveau circuit : '+(e.message||e)); }
   }
   async function customSave(){
-    var name = await window.SimuPLCModal.prompt('Saisissez un nom pour enregistrer o descargar tu circuito.', 'Projet SimuPLC', 'Enregistrer circuito');
+    var name = await window.SimuPLCModal.prompt('Saisissez un nom pour enregistrer o télécharger tu circuit.', 'Projet SimuPLC', 'Enregistrer circuit');
     if(name === null || name === false) return;
     name = cleanName(name, 'Projet SimuPLC');
     try{
@@ -5825,7 +5825,7 @@ if ('serviceWorker' in navigator) {
         localStorage.setItem('simuplc_native_saved_projects_v1', JSON.stringify(list.slice(0,40)));
       }catch(_){ }
       downloadJson(project, cleanName(name,'Projet') + '.json');
-      window.SimuPLCModal.alert('Projet guardado y descargado correctamente.', 'Guardado listo');
+      window.SimuPLCModal.alert('Projet guardado y descargado correctamente.', 'Guardado prêt');
     }catch(e){ window.SimuPLCModal.alert('Impossible d’enregistrer : '+(e.message||e)); }
   }
 
@@ -5919,12 +5919,12 @@ if ('serviceWorker' in navigator) {
   }
 
   // Este override conserva la mejora anterior, pero la limita a simulacion activa.
-  // STOP / edicion: NO y NC no cambian por el tipo fisico configurado.
-  // PLAY: si una entrada fisica NC entrega senal en reposo, el contacto Ladder se anima.
+  // STOP / edicion: NO y NC no cambian por el type fisico configurado.
+  // PLAY: si una entrée fisica NC entrega senal en reposo, el contact Ladder se anima.
   function contactVisualStatePlayOnly(el, coilSnapshot){
     if(!el || !el.label) return false;
 
-    // Regla solicitada: el cambio visual por tipo fisico solo ocurre en PLAY.
+    // Regla solicitada: el cambio visual por type fisico solo ocurre en PLAY.
     if(!state || !state.simulationOn) return false;
 
     if(isInputOrMarkerContact(el)){
@@ -5993,7 +5993,7 @@ if ('serviceWorker' in navigator) {
   function applyPresetToElement(el, value){
     if(!el || !isCTU(el)) return false;
     var pv = clampCtuPreset(value);
-    // Guardamos en varias claves compatibles para que dibujo, simulacion y JSON usen el mismo valor.
+    // Guardamos en varias claves compatibles para que dibujo, simulacion y JSON usen el mismo valeur.
     el.preset = pv;
     el.pv = pv;
     el.PV = pv;
@@ -6006,7 +6006,7 @@ if ('serviceWorker' in navigator) {
     var grid = overlay && overlay.querySelector('.edit-grid');
     if(!grid) return;
 
-    // Reutiliza el campo existente si Fase 4 ya lo creo; si no existe, lo crea.
+    // Reutiliza el campo existente si Phase 4 ya lo creo; si no existe, lo crea.
     var input = document.getElementById('editPreset');
     var box = document.getElementById('fase4ExtraEdit') || document.getElementById('chatgptCtuPresetBox');
     if(!input){
@@ -6045,7 +6045,7 @@ if ('serviceWorker' in navigator) {
       btn.addEventListener('click', capturePresetBeforeSave, true);
     }
 
-    // Cada vez que se abre el editor, si el elemento actual es CTU, asegurar campo y valor correcto.
+    // Cada vez que se abre el editor, si el élément actual es CTU, asegurar campo y valeur correcto.
     document.addEventListener('click', function(){
       setTimeout(function(){ ensureCtuPresetField(findEditTarget()); }, 0);
     }, true);
@@ -6074,7 +6074,7 @@ if ('serviceWorker' in navigator) {
 
 <!-- ===== CHATGPT PATCH: CTU presets como escritura directa sin flechas ===== -->
 <style id="chatgpt-ctu-no-spinner-style">
-  /* Oculta flechas de incremento/decremento en presets CTU si el navegador conserva type=number. */
+  /* Oculta flechas de incremento/decremento en presets CTU si el navigateur conserva type=number. */
   #editPreset::-webkit-outer-spin-button,
   #editPreset::-webkit-inner-spin-button,
   #editPresetOff::-webkit-outer-spin-button,
@@ -6297,7 +6297,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       }
     }catch(e){minX=0;minY=0;maxX=pw-1;maxY=ph-1}
 
-    if(maxX<0){restoreCanvas();alert('No hay elementos para exportar');return}
+    if(maxX<0){restoreCanvas();alert('Il n’y a pas de éléments para exporter');return}
     const pad=Math.round(70*pdfRatio);
     const x=Math.max(0,minX-pad),y=Math.max(0,minY-pad);
     const cw=Math.min(pw-x,maxX-minX+pad*2),ch=Math.min(ph-y,maxY-minY+pad*2);
@@ -6400,7 +6400,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
    const c=document.getElementById('ladderCanvas');if(!c){resolve(null);return}
    try{
     // Captura del canvas actualmente renderizado. Es el respaldo seguro si la
-    // captura 3x no pudo completarse por memoria/tamaño del navegador.
+    // captura 3x no pudo completarse por mémoire/taille del navigateur.
     const srcW=Math.max(1,c.width),srcH=Math.max(1,c.height);
     const maxDim=7000,ratio=Math.min(1,maxDim/Math.max(srcW,srcH));
     const out=document.createElement('canvas');
@@ -6421,12 +6421,12 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
  window.addEventListener('message',async function(ev){
   const m=ev.data||{};
   if(m.type!=='SIMUPLC_PDF_CAPTURE_REQUEST_V252'||m.editor!=='ladder'||!m.requestId)return;
-  let source=null,error='';
+  let source=null,erreur='';
   try{
    source=await capturePdfImageV25();
    if(!source)source=await capturePdfImageFallbackV252();
   }catch(e){
-   error=String(e&&e.message||e||'Error de captura LADDER');
+   erreur=String(e&&e.message||e||'Error de captura LADDER');
    try{source=await capturePdfImageFallbackV252()}catch(_){}
   }
   try{
@@ -6435,7 +6435,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     requestId:m.requestId,
     editor:'ladder',
     source:source||null,
-    error:error
+    erreur:erreur
    },'*');
   }catch(_){}
  });
@@ -6467,7 +6467,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       if(el && (el.type==='TON' || el.type==='TOFF')) timers.push(el);
       if(el && el.type==='CTU'){
         counters.push(el);
-        // Las señales CU/R del contador son internas del bloque; no se exportan como pines fisicos Arduino.
+        // Las señales CU/R del compteur son internas del bloc; no se exportan como broches fisicos Arduino.
         internals[label] = true;
       }
       if(el && (el.type==='COIL' || el.type==='SET' || el.type==='RESET')){
@@ -6514,10 +6514,10 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     model = model || getModel();
 
     // FIX REAL ARDUINO LADDER PRO:
-    // En modo PRO industrial el circuito NO debe leerse como lista lineal.
+    // En mode PRO industrial el circuit NO debe leerse como lista lineal.
     // Debe leerse como grafo de cables proWires:
-    // - varias salidas llegando al mismo pin de entrada = PARALELO = OR ||
-    // - un elemento alimentando a otro = SERIE = AND &&
+    // - varias sorties llegando al mismo broche de entrée = PARALELO = OR ||
+    // - un élément alimentando a otro = SERIE = AND &&
     var isFreeProModel = !!(model && (model.type === 'ladder-free-pro' || model.type === 'ladder-free-pro-industrial') && Array.isArray(model.proWires));
 
     function pinId(el, side){ return (el && el.id ? el.id : 'x') + ':' + side; }
@@ -6586,31 +6586,31 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
         return '(' + uniq.map(function(p){ return '(' + p + ')'; }).join(' || ') + ')';
       }
 
-      function exprAtInputPin(pin, visiting){
-        if(memoIn[pin]) return memoIn[pin];
+      function exprAtInputPin(broche, visiting){
+        if(memoIn[broche]) return memoIn[broche];
         visiting=visiting||{};
-        if(visiting['in:'+pin]) return 'false';
-        visiting['in:'+pin]=true;
-        var network=conductorNetwork(pin),parts=[];
+        if(visiting['in:'+broche]) return 'false';
+        visiting['in:'+broche]=true;
+        var network=conductorNetwork(broche),parts=[];
         network.forEach(function(nodeId){
-          if(nodeId===pin||isRightRailPin(nodeId)||/^junction:/i.test(String(nodeId))) return;
+          if(nodeId===broche||isRightRailPin(nodeId)||/^junction:/i.test(String(nodeId))) return;
           if(isLeftRailPin(nodeId)){parts.push('true');return;}
           var sp=splitPinId(nodeId);
           if(sp.side==='out') parts.push(exprAtOutputPin(nodeId,visiting));
         });
-        delete visiting['in:'+pin];
-        return memoIn[pin]=orList(parts);
+        delete visiting['in:'+broche];
+        return memoIn[broche]=orList(parts);
       }
 
-      function exprAtOutputPin(pin, visiting){
-        if(isLeftRailPin(pin)) return 'true';
-        if(isRightRailPin(pin)) return 'false';
-        if(memoOut[pin]) return memoOut[pin];
+      function exprAtOutputPin(broche, visiting){
+        if(isLeftRailPin(broche)) return 'true';
+        if(isRightRailPin(broche)) return 'false';
+        if(memoOut[broche]) return memoOut[broche];
         visiting = visiting || {};
-        if(visiting['out:'+pin]) return 'false';
-        visiting['out:'+pin] = true;
-        var sp = splitPinId(pin), el = byId[sp.elementId];
-        if(!el){ delete visiting['out:'+pin]; return 'false'; }
+        if(visiting['out:'+broche]) return 'false';
+        visiting['out:'+broche] = true;
+        var sp = splitPinId(broche), el = byId[sp.elementId];
+        if(!el){ delete visiting['out:'+broche]; return 'false'; }
         var inputPower = 'false';
         if(el.type === 'SR'){
           inputPower = orList([exprAtInputPin(pinId(el,'s'), visiting), exprAtInputPin(pinId(el,'r'), visiting)]);
@@ -6625,8 +6625,8 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
         else if(el.type === 'TON' || el.type === 'TOFF' || el.type === 'CTU' || el.type === 'SR') out = safeName(el.label);
         else if(el.type === 'COIL' || el.type === 'SET' || el.type === 'RESET') out = safeName(el.label);
         else out = inputPower;
-        delete visiting['out:'+pin];
-        return memoOut[pin] = out;
+        delete visiting['out:'+broche];
+        return memoOut[broche] = out;
       }
 
       function powerTo(el, side){ return exprAtInputPin(pinId(el, side || 'in'), {}); }
@@ -6715,9 +6715,9 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     (labels.counters||[]).forEach(function(el){ if(el.label) declaredInternal[el.label]=true; });
     var lines=[];
     lines.push('/*');
-    lines.push('  SimuPLC Lab - Arduino desde LADDER (Fase 4)');
+    lines.push('  SimuPLC Lab - Arduino desde LADDER (Phase 4)');
     lines.push('  Soporta: NO, NC, BRANCH, COIL, SET, RESET, SR, TON, TOFF y CTU.');
-    lines.push('  Entrées con INPUT_PULLUP: contacto cerrado = LOW = logico 1.');
+    lines.push('  Entrées con INPUT_PULLUP: contact cerrado = LOW = logico 1.');
     lines.push('*/'); lines.push('');
     labels.inputs.forEach(function(l){ lines.push('const byte PIN_' + safeName(l) + ' = ' + (stored.inputs[l] ?? dflt.inputs[l]) + ';'); });
     labels.outputs.forEach(function(l){ lines.push('const byte PIN_' + safeName(l) + ' = ' + (stored.outputs[l] ?? dflt.outputs[l]) + ';'); });
@@ -6778,7 +6778,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
 })();
 </script>
 
-<!-- ===== FASE 3.3: Respuesta de etiquetas Ladder para mapeo de pines ===== -->
+<!-- ===== FASE 3.3: Respuesta de etiquetas Ladder para mapeo de broches ===== -->
 <script id="fase3-3-ladder-pin-labels">
 (function(){
   function safeCollect(){
@@ -6803,7 +6803,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
 })();
 </script>
 
-<!-- SIMUPLC FASE 2: motor de cableado Ladder profesional -->
+<!-- SIMUPLC FASE 2: motor de câblé Ladder profesional -->
 <script src="./assets/js/ladder/ladder-wiring-service.js"></script>
 
 <!-- ===== CHATGPT PATCH: Modo PRO INDUSTRIAL libre tipo circuito electrico ===== -->
@@ -6880,15 +6880,15 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     state.proElectricalNetworks = [];
     state.proWireHover = null;
 
-    // Evita duplicados de pines en un mismo frame. Especialmente util cuando componentes
-    // industriales llaman rutinas de dibujo heredadas que tambien intentan agregar pines.
+    // Evita duplicados de broches en un mismo frame. Especialmente util cuando componentes
+    // industriales llaman rutinas de dibujo heredadas que tambien intentan agregar broches.
     var originalAddProPin = addProPin;
-    window.addProPin = addProPin = function(pin){
-      if(!isProMode() || !pin || !pin.id) return;
+    window.addProPin = addProPin = function(broche){
+      if(!isProMode() || !broche || !broche.id) return;
       if(!state._proPinIds) state._proPinIds = Object.create(null);
-      if(state._proPinIds[pin.id]) return;
-      state._proPinIds[pin.id] = true;
-      state.proPins.push(pin);
+      if(state._proPinIds[broche.id]) return;
+      state._proPinIds[broche.id] = true;
+      state.proPins.push(broche);
     };
     window.resetProPins = resetProPins = function(){
       state.proPins = [];
@@ -6925,7 +6925,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     function proZoomAnchorY(){ return px(PRO.railTop); }
 
     // Zoom PRO uniforme anclado al rail positivo L+.
-    // El modelo se guarda en coordenadas world; el render escala X/Y igual.
+    // El modelo se guarda en coordenadas world; el render échelle X/Y igual.
     function worldToScreen(x, y){
       var z = getProZoom();
       var ax = proZoomAnchorX();
@@ -6945,7 +6945,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       var z = getProZoom();
       var ax = proZoomAnchorX();
       var ay = proZoomAnchorY();
-      // Escala uniforme: no deforma componentes. El punto L+ queda fijo en pantalla.
+      // Escala uniforme: no deforma componentes. El punto L+ queda fijo en écran.
       ctx.transform(z, 0, 0, z, ax * (1 - z), ay * (1 - z));
     }
 
@@ -7075,7 +7075,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
 
     function getProCanvasHeight(){
       // Altura deterministica: SOLO depende de la cantidad de filas visibles.
-      // Mover componentes, conectar cables o hacer scroll no debe agrandar el area.
+      // Mover componentes, connecter cables o hacer scroll no debe agrandar el area.
       var rows = Math.max(PRO.railRowsInitial, parseInt(state.proRailRows || PRO.railRowsInitial, 10));
       rows = Math.min(PRO.railRowsMax, rows);
       return Math.ceil(px(PRO.railTop) + Math.max(0, rows - 1) * px(PRO.railPinSpacingBase) + px(PRO.railBottomPad) + px(95));
@@ -7099,7 +7099,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       var wsRect = workspace ? workspace.getBoundingClientRect() : wrapRect;
       var w = (wrap && wrap.clientWidth) || wrapRect.width || wsRect.width || window.innerWidth;
       var h = (wrap && wrap.clientHeight) || wrapRect.height || wsRect.height || Math.max(360, window.innerHeight - 110);
-      // Seguridad: si el contenedor se expandio por el canvas, usa la altura visible del workspace.
+      // Sécurité: si el contenedor se expandio por el canvas, usa la altura visible del workspace.
       if(workspace && wsRect.height && h > wsRect.height + 2) h = wsRect.height;
       return {width:Math.max(320, Math.round(w)), height:Math.max(260, Math.round(h))};
     }
@@ -7111,7 +7111,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       var ax = proZoomAnchorX();
       var ay = proZoomAnchorY();
 
-      // World size estable. Nunca se calcula con posiciones de elementos, cables o scroll.
+      // World size estable. Nunca se calcula con posiciones de éléments, cables o scroll.
       var worldW = getProCanvasWidth(viewport.width);
       var worldH = getProCanvasHeight();
       state.proWorldCanvasW = worldW;
@@ -7156,7 +7156,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     }
 
     function buildRailPins(l){
-      // Pines por filas controladas: 10 iniciales y +10 solo cuando el usuario lo solicita.
+      // Pines por filas controladas: 10 iniciales y +10 solo cuando el utilisateur lo solicita.
       // No dependen del scroll ni de la altura total del canvas; por eso nunca crecen infinito.
       var rows = Math.max(PRO.railRowsInitial, parseInt(state.proRailRows || PRO.railRowsInitial, 10));
       rows = Math.min(PRO.railRowsMax, rows);
@@ -7202,7 +7202,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     }
 
     function drawGridIndustrial(){
-      // Grilla liviana en coordenadas world. El zoom del canvas la escala uniformemente.
+      // Grilla liviana en coordenadas world. El zoom del canvas la échelle uniformemente.
       var w = state.proWorldCanvasW || screenToWorld(canvas.clientWidth,0).x;
       var h = state.proWorldCanvasH || getProCanvasHeight();
       var step = px(80), major = px(320);
@@ -7223,7 +7223,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       ctx.lineWidth = px(10);
       ctx.lineCap = 'round';
       ctx.beginPath(); ctx.moveTo(l.leftRailX,l.top); ctx.lineTo(l.leftRailX,l.bottom); ctx.stroke();
-      // Barra derecha/negativo oculta visualmente. Se conserva como referencia lógica interna.
+      // Barre derecha/negativo oculta visualmente. Se conserva como referencia lógica interna.
       ctx.fillStyle = state.textColor;
       ctx.font = '900 ' + Math.round(px(18)) + 'px Arial';
       ctx.textAlign='center';
@@ -7319,8 +7319,8 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       if(window.SimuPLCLadderAnalogProcessing && typeof window.SimuPLCLadderAnalogProcessing.isProcessor==='function' && window.SimuPLCLadderAnalogProcessing.isProcessor(el)){
         var analogApi=window.SimuPLCLadderAnalogProcessing;
         try{ analogApi.normalize(el); }catch(_){ }
-        // CONST es una fuente interna: no recibe señal ni potencial y solo posee salida A.
-        // PWM/AO son sumideros: reciben una entrada A y no exponen una salida lógica adicional.
+        // CONST es una fuente interna: no reçoit signal ni potencial y solo posee sortie A.
+        // PWM/AO son sumideros: reciben una entrée A y no exponen una sortie lógica adicional.
         var isConstant=typeof analogApi.isConstant==='function' && analogApi.isConstant(el);
         var isOutputSink=typeof analogApi.isOutputSink==='function' && analogApi.isOutputSink(el);
         var isPID=typeof analogApi.isPID==='function' && analogApi.isPID(el);
@@ -7370,8 +7370,8 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       var service = window.SimuPLCLadderWiring;
       if(service && typeof service.findNearestPin === 'function'){
         var nearestPin = service.findNearestPin(state.proPins || [], x, y, px(PRO.componentPinHitRadius));
-        // El nodo negro es solo una referencia visual de continuidad eléctrica.
-        // No puede iniciar conexiones ni recibir gestos de arrastre.
+        // El nœud negro es solo una referencia visual de continuité électrique.
+        // No puede démarrer conexiones ni recibir gestos de arrastre.
         if(nearestPin && nearestPin.kind === 'junction') return null;
         return nearestPin;
       }
@@ -7390,7 +7390,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
 
     function getPinByIdIndustrial(id){
       // Las uniones se resuelven siempre desde el modelo, no desde el cache visual.
-      // Así el nodo y sus cables comparten la misma coordenada durante el arrastre.
+      // Aoui el nœud y sus cables comparten la misma coordenada durante el arrastre.
       var junctionId=String(id||'');
       if(/^junction:/i.test(junctionId)){
         var liveJunction=(state.proJunctions||[]).find(function(j){return j&&j.id===junctionId;});
@@ -7398,7 +7398,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       }
       var direct = (state.proPins || []).find(function(p){ return p.id === id; });
       if(direct) return direct;
-      // Reconstruccion logica para cables guardados contra pines de rail no visibles.
+      // Reconstruccion logica para cables enregistrés contra broches de rail no visibles.
       var m = String(id).match(/^rail:(left|right):(\d+)$/);
       if(m){
         var idx = parseInt(m[2],10);
@@ -7507,12 +7507,12 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
 
     function allPinsForElectricalGraph(){
       var list=(state.proPins||[]).slice(), known=Object.create(null);
-      list.forEach(function(pin){ if(pin&&pin.id) known[pin.id]=true; });
+      list.forEach(function(broche){ if(broche&&broche.id) known[broche.id]=true; });
       (state.proWires||[]).forEach(function(wire){
         [wire&&wire.from,wire&&wire.to].forEach(function(id){
           if(!id || known[id]) return;
-          var pin=getProPinById(id);
-          if(pin){ known[id]=true; list.push(pin); }
+          var broche=getProPinById(id);
+          if(broche){ known[id]=true; list.push(broche); }
         });
       });
       return list;
@@ -7592,7 +7592,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       var newPoint={x:snapWireCoordinate(exact.x),y:snapWireCoordinate(exact.y)};
       if(Math.hypot(newPoint.x-junction.x,newPoint.y-junction.y)<0.01) return false;
       // La geometría de los cables es la fuente de verdad. Solo el indicador negro
-      // sigue la intersección; nunca se deforman los cables para perseguir al nodo.
+      // sigue la intersección; nunca se deforman los cables para perseguir al nœud.
       junction.x=newPoint.x;
       junction.y=newPoint.y;
       return true;
@@ -7612,7 +7612,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
         if(!j||!j.id||byId[j.id]) return false;
         byId[j.id]=true; j.type='junction'; j.energized=false; return true;
       });
-      // Recupera uniones referenciadas por cables de proyectos anteriores.
+      // Recupera uniones referenciadas por cables de projets anteriores.
       state.proWires.forEach(function(wire){
         [wire&&wire.from,wire&&wire.to].forEach(function(id){
           if(!/^junction:/i.test(String(id||''))||byId[id]) return;
@@ -7626,7 +7626,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     }
     window.repairAndMigrateElectricalModel=repairAndMigrateElectricalModel;
 
-    // Fase 2 Paso 8: los conductores ya no se desplazan manualmente.
+    // Phase 2 Paso 8: los conductores ya no se desplazan manualmente.
     // Estas funciones se conservan como API de compatibilidad, pero no alteran la geometría.
     function verticalBranchMoveBounds(junctionId){
       var junction=(state.proJunctions||[]).find(function(j){return j&&j.id===junctionId;});
@@ -7745,14 +7745,14 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       splitWireWithJunction(wire,junction,{segmentIndex:nearest.segmentIndex});
       repairJunctionGeometry(junction.id);
       rebuildElectricalGraph();
-      var pin={id:junction.id,elementId:junction.id,elementType:'JUNCTION',kind:'junction',side:'junction',x:junction.x,y:junction.y,r:px(9),junction:true};
-      addProPin(pin);
-      return pin;
+      var broche={id:junction.id,elementId:junction.id,elementType:'JUNCTION',kind:'junction',side:'junction',x:junction.x,y:junction.y,r:px(9),junction:true};
+      addProPin(broche);
+      return broche;
     }
 
     function completeProConnection(pinA,pinB){
-      if(state.simulationOn) return {ok:false,reason:'Detén la simulación antes de conectar.'};
-      if((pinA&&pinA.kind==='junction')||(pinB&&pinB.kind==='junction')) return {ok:false,reason:'El nodo negro es solo una referencia visual.'};
+      if(state.simulationOn) return {ok:false,reason:'Detén la simulation antes de connecter.'};
+      if((pinA&&pinA.kind==='junction')||(pinB&&pinB.kind==='junction')) return {ok:false,reason:'El nœud negro es solo una referencia visual.'};
       var analogService=window.SimuPLCLadderAnalogProcessing || window.SimuPLCLadderAnalogInput;
       var analogCheck=analogService && typeof analogService.validateConnection==='function'
         ? analogService.validateConnection(pinA,pinB) : {ok:true};
@@ -7770,7 +7770,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     }
 
     // API pública bloqueada: los nodos negros no se crean manualmente.
-    // Las uniones existentes se conservan únicamente para compatibilidad y propagación.
+    // Las uniones existentes se conservan uniquement para compatibilidad y propagación.
     window.createJunctionOnWire=function(){ return null; };
     window.splitWireAtPoint=function(){ return null; };
     window.completeProConnection=completeProConnection;
@@ -7979,11 +7979,11 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
         return pass;
       }
 
-      // Paso 1: propaga usando el Q anterior de timers para estabilizar entradas.
+      // Paso 1: propaga usando el Q anterior de timers para estabilizar entrées.
       seedRails();
       var pass1 = propagateNetwork(32);
 
-      // Paso 2: actualiza TON/TOFF UNA sola vez por frame, con su entrada ya calculada.
+      // Paso 2: actualiza TON/TOFF UNA sola vez por frame, con su entrée ya calculada.
       elements.forEach(function(el){
         var type = normType(el);
         if((type === 'TON' || type === 'TOFF') && el.label){
@@ -7996,7 +7996,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
         }
       });
 
-      // Paso 3: recalcula energía con Q nuevo para alimentar elementos aguas abajo.
+      // Paso 3: recalcula energía con Q nouveau para alimentar éléments aguas abajo.
       state.freePinEnergy = {};
       state.freeElementEnergy = {};
       seedRails();
@@ -8061,7 +8061,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       }
 
       // Refuerzo PLC: si SR/CTU tienen Q memorizada, fuerza su OUT energizado
-      // despues del recalculo de red, incluso sin energia en sus pines de entrada.
+      // despues del recalculo de red, incluso sin energia en sus broches de entrée.
       elements.forEach(function(el){
         var type = normType(el);
         if((type === 'SR' || type === 'CTU') && el.label && !!nextCoils[el.label]){
@@ -8101,8 +8101,8 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
         ? state.analogWireValues[w.id] : null;
       var analogWire = w.signalType==='analog' || (a.signalType==='analog' && b.signalType==='analog');
       var baseColor = analogWire ? '#087e9a' : '#1f1c20';
-      var color = energized ? '#ff0000' : (selected ? '#0066ff' : baseColor);
-      drawOrthogonalPath(pts, {color:color, width:selected ? px(6) : px(4.5)});
+      var color= energized ? '#ff0000' : (selected ? '#0066ff' : baseColor);
+      drawOrthogonalPath(pts, {color:couleur, width:selected ? px(6) : px(4.5)});
       if(energized) drawOrthogonalPath(pts, {color:'#ff0000', width:px(2.4), dash:[px(16),px(10)]});
       else if(analogWire && state.simulationOn && Number.isFinite(analogValue)) drawOrthogonalPath(pts, {color:'#18a9c3', width:px(2.2), dash:[px(14),px(9)]});
       drawWireEditHandles(w,pts);
@@ -8165,11 +8165,11 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
 
     /**
      * Obtiene los puntos donde varios cables que comparten un terminal se
-     * separan o se reúnen visualmente. La posición del círculo negro se deriva
-     * de la geometría real de los conductores, nunca de la posición del pin.
+     * separan o se reúnen visualmente. La position del círculo negro se deriva
+     * de la geometría real de los conductores, nunca de la position del broche.
      */
-    function visualBranchMarkersForTerminal(pin,incidentWires){
-      if(!pin||!Array.isArray(incidentWires)||incidentWires.length<2) return [];
+    function visualBranchMarkersForTerminal(broche,incidentWires){
+      if(!broche||!Array.isArray(incidentWires)||incidentWires.length<2) return [];
       var tolerance=Math.max(.25,logicalTolerance(1.25));
       var routes=incidentWires.map(function(wire){
         return {wire:wire,points:wirePointsFor(wire)};
@@ -8198,42 +8198,42 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
           Object.keys(local).forEach(function(direction){arms[direction]=true;});
         });
         // Una unión visual real tiene al menos dos cables y tres brazos
-        // geométricos. Así el nodo aparece en la T, no en el terminal común.
+        // geométricos. Aoui el nœud aparece en la T, no en el terminal común.
         if(carriers.length>=2 && directionCount(arms)>=3){
           branches.push({
-            id:'visual:'+pin.id+':'+markerCoordinateKey(point.x,point.y),
+            id:'visual:'+broche.id+':'+markerCoordinateKey(point.x,point.y),
             source:'visual-branch',
-            terminalId:pin.id,
+            terminalId:broche.id,
             degree:carriers.length,
             x:point.x,
             y:point.y,
             wireIds:carriers,
-            active:!!(state.simulationOn && state.freePinEnergy && state.freePinEnergy[pin.id])
+            active:!!(state.simulationOn && state.freePinEnergy && state.freePinEnergy[broche.id])
           });
         }
       });
 
       // Si los cables se separan exactamente en el terminal y no existe otra T
-      // visible, el terminal sí es el punto real de unión.
+      // visible, el terminal oui es el punto real de unión.
       if(!branches.length){
         var terminalCarriers=routes.filter(function(item){
-          return routeContainsMarkerPoint(item.points,{x:pin.x,y:pin.y},tolerance);
+          return routeContainsMarkerPoint(item.points,{x:broche.x,y:broche.y},tolerance);
         });
         var terminalArms=Object.create(null);
         terminalCarriers.forEach(function(item){
-          var local=routeDirectionsAtMarkerPoint(item.points,{x:pin.x,y:pin.y},tolerance);
+          var local=routeDirectionsAtMarkerPoint(item.points,{x:broche.x,y:broche.y},tolerance);
           Object.keys(local).forEach(function(direction){terminalArms[direction]=true;});
         });
         if(terminalCarriers.length>=2 && directionCount(terminalArms)>=2){
           branches.push({
-            id:'visual:'+pin.id+':terminal',
+            id:'visual:'+broche.id+':terminal',
             source:'terminal',
-            terminalId:pin.id,
+            terminalId:broche.id,
             degree:terminalCarriers.length,
-            x:pin.x,
-            y:pin.y,
+            x:broche.x,
+            y:broche.y,
             wireIds:terminalCarriers.map(function(item){return item.wire.id;}),
-            active:!!(state.simulationOn && state.freePinEnergy && state.freePinEnergy[pin.id])
+            active:!!(state.simulationOn && state.freePinEnergy && state.freePinEnergy[broche.id])
           });
         }
       }
@@ -8246,7 +8246,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       var markers=[];
       var drawn=Object.create(null);
 
-      // Uniones persistentes de proyectos que contienen junctions explícitos.
+      // Uniones persistentes de projets que contiennent junctions explícitos.
       // repairAllJunctionGeometry() las mantiene sobre la intersección real.
       (state.proJunctions || []).forEach(function(junction){
         if(!junction || !junction.id) return;
@@ -8268,15 +8268,15 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       });
 
       // Para terminales con varias conexiones se analiza el recorrido completo.
-      // El nodo se coloca en el punto donde los conductores se separan/reúnen
-      // visualmente, no encima del pin del elemento.
-      (state.proPins||[]).forEach(function(pin){
-        var degree=pin && counts[pin.id]||0;
-        if(!pin || pin.kind==='junction' || degree<2) return;
+      // El nœud se coloca en el punto donde los conductores se separan/reúnen
+      // visualmente, no encima del broche del élément.
+      (state.proPins||[]).forEach(function(broche){
+        var degree=broche && counts[broche.id]||0;
+        if(!broche || broche.kind==='junction' || degree<2) return;
         var incident=(state.proWires||[]).filter(function(wire){
-          return wire && (wire.from===pin.id || wire.to===pin.id);
+          return wire && (wire.from===broche.id || wire.to===broche.id);
         });
-        visualBranchMarkersForTerminal(pin,incident).forEach(function(marker){
+        visualBranchMarkersForTerminal(broche,incident).forEach(function(marker){
           var key=markerCoordinateKey(marker.x,marker.y);
           if(drawn[key]) return;
           drawn[key]=true;
@@ -8296,12 +8296,12 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     }
 
     function shouldShowFreeConnectionPin(p){
-      // En simulación ningún terminal visual se dibuja, aunque hubiera una selección previa.
+      // En simulation ningún terminal visual se dibuja, aunque hubiera una selección previa.
       if(state.simulationOn) return false;
 
       // Visibilidad global de nodos en el editor Ladder libre/PRO:
-      // - sin elemento seleccionado: ocultar todos
-      // - con cualquier elemento seleccionado: mostrar todos los nodos disponibles
+      // - sin élément seleccionado: ocultar todos
+      // - con cualquier élément seleccionado: mostrar todos los nodos disponibles
       // - mientras se crea una conexion: mantener todos visibles
       // No elimina ni altera nodos/cables; solo controla su dibujo.
       if(state.proWireStart || state.selectedWireId) return true;
@@ -8311,8 +8311,8 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     }
 
     function drawFreePins(){
-      // Vista profesional: durante la simulación los terminales de conexión se ocultan siempre.
-      // Las uniones eléctricas negras reales se dibujan aparte y permanecen visibles.
+      // Vista profesional: durante la simulation los terminales de connexion se ocultan siempre.
+      // Las uniones eléctricas negras reales se dibujan aparte y restent visibles.
       if(state.simulationOn) return;
       ctx.save();
       (state.proPins||[]).forEach(function(p){
@@ -8330,7 +8330,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
 
     function drawFreePro(){
       freeCanvasSize();
-      // Reset real de estructuras transitorias: evita crecimiento de pines, hitboxes y guias clasicas.
+      // Reset real de estructuras transitorias: evita crecimiento de broches, hitboxes y guias clasicas.
       state.hitMap = [];
       state.freeElementHitMap = [];
       state.proUiHitMap = [];
@@ -8349,9 +8349,9 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       clearInvalidProWiresIndustrial();
       repairAllJunctionGeometry();
       rebuildElectricalGraph();
-      // Usa siempre el motor público final. El cierre original conservaba una versión
+      // Usa siempre el moteur público final. El cierre original conservaba una version
       // digital anterior y por eso AI/comparadores funcionaban en pruebas directas,
-      // pero se apagaban al redibujar el canvas durante la simulación real.
+      // pero se apagaban al redibujar el canvas durante la simulation real.
       state._sim = (typeof window.computeFreeSimulation === 'function')
         ? window.computeFreeSimulation()
         : computeFreeSimulation();
@@ -8383,20 +8383,20 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       }
       drawFreePins();
       // Redibuja las referencias de unión al final para que permanezcan visibles
-      // incluso cuando los terminales de conexión están habilitados.
+      // incluso cuando los terminales de connexion están habilitados.
       drawFreeJunctions();
       ctx.restore();
       state.freeDiagnostics = {railRows:state.proRailRows, railPins:state.freeRailPinsCache.length, elements:freeElements().length, wires:(state.proWires||[]).length, zoom:Math.round(getProZoom()*100)};
       if(state.proPerf){ state.proPerf.renderCount++; }
       updateStatus();
       // OPTIMIZACION: no recalcular JSON, storage ni paneles en cada frame de canvas.
-      // Se actualizan solo si el modelo cambio o con baja frecuencia.
+      // Se actualizan solo si el modelo cambio o con baja fréquence.
       updatePanelsOnly(false);
       syncProModeUi();
     }
 
     function clearInvalidProWiresIndustrial(){
-      // Mantiene cables de pines de rail aunque el pin no este visible por virtualizacion.
+      // Mantiene cables de broches de rail aunque el broche no este visible por virtualizacion.
       state.proWires = (state.proWires || []).filter(function(w){
         var a = getProPinById(w.from), b = getProPinById(w.to);
         return !!(a && b);
@@ -8429,7 +8429,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       if(!isProMode()) return classicSetPendingType(type);
       if(blockIfSimulating()) return false;
       if(type === 'BRANCH'){
-        statusText.textContent = 'En modo PRO industrial no se usa Rama: crea paralelos reales con cables.';
+        statusText.textContent = 'En mode PRO industriel, on n’utilise pas Branche : créez des parallèles réels avec des câbles.';
         return false;
       }
       state.pendingType = type; state.freeSelectedId = null; state.selectedId = null; state.selectedWireId = null; clearDragState(); draw(); return true;
@@ -8437,7 +8437,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
 
     window.addElementAtPointer = addElementAtPointer = function(x,y){
       if(!isProMode()) return;
-      if(state.simulationOn){ statusText.textContent='Detén la simulación antes de agregar elementos.'; return; }
+      if(state.simulationOn){ statusText.textContent='Detén la simulation antes de agregar éléments.'; return; }
       if(!state.pendingType) return;
       var p = snapComponentPosition(x,y);
       var el = buildPendingElement(state.pendingType); el.x = p.x; el.y = p.y;
@@ -8480,38 +8480,38 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       state.proWirePointerGesture=null;
     }
 
-    function beginProWire(pin,pos){
+    function beginProWire(broche,pos){
       if(state.simulationOn){
-        statusText.textContent='Detén la simulación antes de crear conexiones.';
+        statusText.textContent='Detén la simulation antes de créer conexiones.';
         return false;
       }
-      if(!pin || pin.kind==='junction') return false;
-      state.proWireStart=pin;
+      if(!broche || broche.kind==='junction') return false;
+      state.proWireStart=broche;
       state.proWirePreview={x:pos.x,y:pos.y};
-      state.proWirePointerGesture={startId:pin.id,x:pos.x,y:pos.y,moved:false};
+      state.proWirePointerGesture={startId:broche.id,x:pos.x,y:pos.y,moved:false};
       state.selectedWireId=null;
       state.proWireTapPoint=null;
       state.freeSelectedId=null;
       state.selectedId=null;
-      statusText.textContent='Terminal seleccionado. Toca o arrastra hasta otro terminal. Escape cancela.';
+      statusText.textContent='Terminal sélectionné. Touchez ou faites glisser jusqu’à un autre terminal. Échap annule.';
     }
 
     function finishProWire(pinA,pinB,successText){
       if(state.simulationOn){
         clearProWireInteraction();
-        statusText.textContent='Detén la simulación antes de crear conexiones.';
+        statusText.textContent='Detén la simulation antes de créer conexiones.';
         draw();
         return {ok:false,reason:'Simulation activa'};
       }
       if((pinA&&pinA.kind==='junction')||(pinB&&pinB.kind==='junction')){
-        return {ok:false,reason:'El nodo negro es solo una referencia de unión.'};
+        return {ok:false,reason:'El nœud negro es solo una referencia de unión.'};
       }
       var result=completeProConnection(pinA,pinB);
       if(result.ok){
         clearProWireInteraction();
         state.selectedWireId=null;
         state.proWireTapPoint=null;
-        statusText.textContent=successText || 'Cable creado automáticamente.';
+        statusText.textContent=successText || 'Cable créé automatiquement.';
       }else{
         statusText.textContent='Connexion no permitida: ' + result.reason;
       }
@@ -8521,43 +8521,43 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     }
 
     function finishProWireOnWire(){
-      return {ok:false,reason:'Las conexiones se realizan únicamente entre terminales.'};
+      return {ok:false,reason:'Las conexiones se realizan uniquement entre terminales.'};
     }
     function finishSelectedWireAtPin(){ return null; }
     function finishSelectedWireOnWire(){ return null; }
 
     window.handleProPointerDown = handleProPointerDown = function(pos){
       if(!isProMode()) return false;
-      // Durante la simulación el editor queda totalmente bloqueado para cableado,
-      // movimiento, creación y eliminación. El manejador clásico conserva el
-      // accionamiento de entradas simuladas.
+      // Durante la simulation el editor queda totalmente verrouillé para câblé,
+      // movimiento, creación y eliminación. El manejador classique conserva el
+      // accionamiento de entrées simuladas.
       if(state.simulationOn) return false;
 
       var uiHit=findProUiHit(pos.x,pos.y);
       if(uiHit && uiHit.kind==='add-rail-rows'){ addMoreRailRows(); return true; }
 
-      var pin=findProPinAt(pos.x,pos.y);
-      if(pin){
+      var broche=findProPinAt(pos.x,pos.y);
+      if(broche){
         if(state.proWireStart){
-          if(pin.id===state.proWireStart.id){
+          if(broche.id===state.proWireStart.id){
             state.proWirePreview={x:pos.x,y:pos.y};
             draw();
             return true;
           }
-          finishProWire(state.proWireStart,pin,'Cable creado entre terminales.');
+          finishProWire(state.proWireStart,broche,'Cable créé entre terminales.');
           return true;
         }
-        beginProWire(pin,pos);
+        beginProWire(broche,pos);
         draw();
         return true;
       }
 
       var wireHit=nearestWireHit(pos.x,pos.y);
       if(wireHit){
-        // El cable se puede seleccionar para eliminarlo, pero no se arrastra
-        // ni se usa para crear puntos o derivaciones manuales.
+        // El câble se puede sélectionner para eliminarlo, pero no se faites glisser
+        // ni se usa para créer puntos o derivaciones manuels.
         if(state.proWireStart){
-          statusText.textContent='Sélectionnez un terminal de destino. Los nodos y derivaciones se generan automáticamente desde terminales compartidos.';
+          statusText.textContent='Sélectionnez un terminal de destino. Los nodos y derivaciones se generan automatiquement desde terminales compartidos.';
           draw();
           return true;
         }
@@ -8567,7 +8567,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
         state.proJunctionPointerGesture=null;
         state.freeSelectedId=null;
         state.selectedId=null;
-        statusText.textContent='Conductor seleccionado. Puedes eliminarlo; su recorrido se ajusta automáticamente al mover elementos.';
+        statusText.textContent='Conductor seleccionado. Puedes eliminarlo; su recorrido se ajusta automatiquement al mover éléments.';
         draw();
         return true;
       }
@@ -8576,7 +8576,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       if(hit){
         if(state.proWireStart){
           clearProWireInteraction();
-          statusText.textContent='Connexion cancelada: seleccionaste el cuerpo del elemento.';
+          statusText.textContent='Connexion annulée : vous avez sélectionné le corps de l’élément.';
         }
         state.freeSelectedId=hit.id;
         state.selectedId=hit.id;
@@ -8630,7 +8630,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
           if(el.x!==p.x || el.y!==p.y || !!state.freeSnapGuide!==!!p.snapped){
             el.x=p.x; el.y=p.y; state.freeDrag.x=el.x; state.freeDrag.y=el.y;
             state.freeSnapGuide=p.snapped ? {y:p.y} : null;
-            // Los nodos automáticos se recalculan en draw() usando la posición
+            // Los nodos automáticos se recalculan en draw() usando la position
             // actual de terminales y cables, por lo que siguen la unión.
             draw();
           }
@@ -8648,14 +8648,14 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       if(state.proWireStart){
         var gesture=state.proWirePointerGesture;
         if(gesture && gesture.moved){
-          var pin=findProPinAt(pos.x,pos.y);
-          if(pin && pin.id!==state.proWireStart.id){
-            finishProWire(state.proWireStart,pin,'Cable creado al soltar sobre el terminal.');
+          var broche=findProPinAt(pos.x,pos.y);
+          if(broche && broche.id!==state.proWireStart.id){
+            finishProWire(state.proWireStart,broche,'Cable créé al soltar sobre el terminal.');
             return true;
           }
         }
         // Si no se soltó sobre un terminal, conserva el primer terminal
-        // para completar la conexión mediante dos toques.
+        // para completar la connexion mediante dos toques.
         state.proWirePointerGesture=null;
         return false;
       }
@@ -8688,7 +8688,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
         cleanupProJunctions(); repairAllJunctionGeometry(); rebuildElectricalGraph(); markModelDirty(); draw(); return;
       }
       var id = state.freeSelectedId || state.selectedId;
-      if(!id){ alert('Sélectionnez un elemento o cable.'); return; }
+      if(!id){ alert('Sélectionnez un élément o câble.'); return; }
       var list = freeElements(); var idx = list.findIndex(function(e){ return e.id===id; });
       if(idx>=0){
         var el=list[idx]; list.splice(idx,1);
@@ -8736,12 +8736,12 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
 
     window.updateStatus = updateStatus = function(){
       if(!isProMode()) return;
-      if(state.pendingType){ statusText.textContent='PRO industrial: haz clic en el canvas para colocar ' + labelForType(state.pendingType) + '. Se alineara automaticamente con los pines del rail.'; return; }
-      if(state.proWireStart){ statusText.textContent='Terminal seleccionado: toca o arrastra hasta otro terminal. Escape cancela.'; return; }
+      if(state.pendingType){ statusText.textContent='PRO industrial: haz clic en el canvas para colocar ' + labelForType(state.pendingType) + '. Se alineara automaticamente con los broches del rail.'; return; }
+      if(state.proWireStart){ statusText.textContent='Terminal sélectionné : touchez ou faites glisser jusqu’à un autre terminal. Échap annule.'; return; }
       if(state.freeDrag){ statusText.textContent='Moviendo componente con snap magnetico a rail.'; return; }
-      if(state.selectedWireId){ statusText.textContent='Conductor seleccionado. Puedes eliminarlo; no se desplaza ni crea nodos manualmente.'; return; }
-      if(state.freeSelectedId){ var el=getFreeElementById(state.freeSelectedId); statusText.textContent='Seleccionado: ' + (el ? labelForType(el.type) + ' ' + (el.label || '') : 'elemento') + '. Filas rail: ' + state.freeDiagnostics.railRows + ' | Zoom: ' + state.freeDiagnostics.zoom + '% | Pines rail: ' + state.freeDiagnostics.railPins + '. Wires: ' + state.freeDiagnostics.wires + '. Render: ' + (state.proPerf ? state.proPerf.lastDrawMs : 0) + ' ms.'; return; }
-      statusText.textContent = state.simulationOn ? 'Simulacion PRO activa: energia desde L+ por grafo de cables.' : 'Modo PRO industrial: Ctrl + rueda para zoom uniforme. L+ queda fijo y no se deforman los componentes.';
+      if(state.selectedWireId){ statusText.textContent='Conducteur sélectionné. Vous pouvez le supprimer ; il ne se déplace pas et ne crée pas de nœuds manuellement.'; return; }
+      if(state.freeSelectedId){ var el=getFreeElementById(state.freeSelectedId); statusText.textContent='Sélectionné : ' + (el ? labelForType(el.type) + ' ' + (el.label || '') : 'élément') + '. Filas rail: ' + state.freeDiagnostics.railRows + ' | Zoom: ' + state.freeDiagnostics.zoom + '% | Pines rail: ' + state.freeDiagnostics.railPins + '. Wires: ' + state.freeDiagnostics.wires + '. Render: ' + (state.proPerf ? state.proPerf.lastDrawMs : 0) + ' ms.'; return; }
+      statusText.textContent = state.simulationOn ? 'Simulacion PRO activa: energia desde L+ por grafo de cables.' : 'Mode PRO industriel : Ctrl + molette pour un zoom uniforme. L+ reste fixe et les composants ne se déforment pas.';
     };
 
     window.updateBranchPanel = updateBranchPanel = function(){ if(isProMode()){ branchPanel.style.display='none'; return; } };
@@ -8772,12 +8772,12 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
 
     // Integracion UI
     var addRungBtn = document.getElementById('addRung'); if(addRungBtn) addRungBtn.style.display='none';
-    var branchBtn = document.getElementById('addBranch'); if(branchBtn){ branchBtn.textContent='Paralelo por cable'; branchBtn.title='En PRO industrial los paralelos se hacen cableando pines.'; }
-    var hint = document.querySelector('.hint'); if(hint) hint.textContent='Modo PRO industrial: cableado entre terminales, uniones automáticas y propagación bidireccional.';
+    var branchBtn = document.getElementById('addBranch'); if(branchBtn){ branchBtn.textContent='Paralelo por câble'; branchBtn.title='En PRO industriel, les parallèles se font en câblant les broches.'; }
+    var hint = document.querySelector('.hint'); if(hint) hint.textContent='Mode PRO industriel : câblé entre terminaux, jonctions automatiques et propagation bidirectionnelleonal.';
     var badge = document.getElementById('proBadge'); if(badge) badge.textContent='PRO industrial: cualquier terminal ↔ cualquier terminal | Unión T exacta';
 
     // Mejora visual de botones industriales
-    var proBtn = document.getElementById('toggleLadderPro'); if(proBtn){ proBtn.textContent='Modo PRO Industrial'; proBtn.classList.add('active'); }
+    var proBtn = document.getElementById('toggleLadderPro'); if(proBtn){ proBtn.textContent='Mode PRO industriel'; proBtn.classList.add('active'); }
 
     syncProModeUi();
     state.ladder = normalizeFreeModel(state.ladder);
@@ -8788,7 +8788,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
 </script>
 
 
-<!-- ===== CHATGPT PATCH: Bibliothèque de componentes y modo PRO unico ===== -->
+<!-- ===== CHATGPT PATCH: Bibliothèque de componentes y mode PRO unico ===== -->
 <script id="chatgpt-pro-only-component-library">
 (function(){
   function ready(fn){ if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn, {once:true}); else fn(); }
@@ -8796,7 +8796,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     if(typeof state === 'undefined') return;
     document.body.classList.add('ladder-pro-only');
 
-    // Fuerza modo PRO como unico modo de trabajo.
+    // Fuerza mode PRO como unico mode de trabajo.
     state.ladderMode = 'pro';
     window.toggleLadderProMode = function(){
       state.ladderMode = 'pro';
@@ -8806,7 +8806,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     };
     if(typeof syncProModeUi === 'function') syncProModeUi();
 
-    // Reestructura el workspace: biblioteca lateral + area canvas con scroll.
+    // Reestructura el workspace: bibliothèque lateral + area canvas con scroll.
     var workspace = document.querySelector('.workspace');
     var canvas = document.getElementById('ladderCanvas');
     if(!workspace || !canvas) return;
@@ -8817,14 +8817,14 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       library.innerHTML = [
         '<div class="ladder-library-head">',
           '<h3 class="ladder-library-title">Bibliothèque Ladder</h3>',
-          '<button type="button" class="ladder-library-toggle" id="toggleLibraryBtn" title="Masquer la bibliothèque">◀ Ocultar</button>',
+          '<button type="button" class="ladder-library-toggle" id="toggleLibraryBtn" title="Masquer la bibliothèque">◀ Masquer</button>',
           '<span class="ladder-library-badge">PRO</span>',
         '</div>',
         '<div class="ladder-lib-section">',
           '<p class="ladder-lib-section-title">Contactos</p>',
           '<div class="ladder-lib-grid">',
-            libBtn('NO','─| |─','Contacto NO','Entrée normalmente abierta'),
-            libBtn('NC','─|/|─','Contacto NC','Entrée normalmente cerrada'),
+            libBtn('NO','─| |─','Contact NO','Entrée normalement ouverte'),
+            libBtn('NC','─|/|─','Contact NC','Entrée normalement fermée'),
           '</div>',
         '</div>',
         '<div class="ladder-lib-section">',
@@ -8846,10 +8846,10 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
         '<div class="ladder-lib-section">',
           '<p class="ladder-lib-section-title">Compteurs</p>',
           '<div class="ladder-lib-grid">',
-            libBtn('CTU','CTU','CTU','Contador ascendente'),
+            libBtn('CTU','CTU','CTU','Compteur ascendant'),
           '</div>',
         '</div>',
-        '<div class="ladder-lib-note">Los paralelos ya no usan bloque especial: se crean conectando pines con cables.</div>'
+        '<div class="ladder-lib-note">Les parallèles n’utilisent plus de bloc spécial : ils se créent en connectant des broches avec des câbles.</div>'
       ].join('');
 
       var canvasWrap = document.createElement('div');
@@ -8857,7 +8857,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       canvas.parentNode.insertBefore(canvasWrap, canvas);
       canvasWrap.appendChild(canvas);
 
-      // Mueve elementos flotantes del workspace al contenedor del canvas para conservar su posicion visual.
+      // Mueve éléments flotantes del workspace al contenedor del canvas para conservar su posicion visual.
       ['proBadge','branchPanel','statusText'].forEach(function(id){
         var node = document.getElementById(id);
         if(node) canvasWrap.appendChild(node);
@@ -8915,8 +8915,8 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       document.body.classList.toggle('library-collapsed', !!state.libraryCollapsed);
       var toggle = document.getElementById('toggleLibraryBtn');
       if(toggle){
-        toggle.textContent = state.libraryCollapsed ? '☰ Mostrar' : '◀ Ocultar';
-        toggle.title = state.libraryCollapsed ? 'Mostrar biblioteca' : 'Masquer la bibliothèque';
+        toggle.textContent = state.libraryCollapsed ? '☰ Mostrar' : '◀ Masquer';
+        toggle.title = state.libraryCollapsed ? 'Mostrar bibliothèque' : 'Masquer la bibliothèque';
       }
     }
     window.setLadderLibraryCollapsed = setLibraryCollapsed;
@@ -8936,13 +8936,13 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       activateLibraryType(btn.getAttribute('data-ladder-type'));
     });
 
-    // Quita botones de componentes/toggle antiguo de la toolbar: la biblioteca es la unica fuente de componentes.
+    // Quita botones de componentes/toggle antiguo de la toolbar: la bibliothèque es la unica fuente de componentes.
     ['addNO','addNC','addCoil','addBranch','addRung','addSET','addRESET','addTON','addTOFF','addCTU','toggleLadderPro'].forEach(function(id){
       var node = document.getElementById(id);
       if(node){ node.classList.add('legacy-component-btn'); node.remove(); }
     });
 
-    // Evita que Fase 4 vuelva a poblar la toolbar con botones industriales si se reejecuta.
+    // Evita que Phase 4 vuelva a poblar la toolbar con botones industriales si se reejecuta.
     var firstGroup = document.querySelector('.toolbar .toolbar-group');
     if(firstGroup){
       Array.from(firstGroup.querySelectorAll('button')).forEach(function(btn){
@@ -8954,11 +8954,11 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
 
     // Toolbar solo para acciones globales.
     var hint = document.querySelector('.hint');
-    if(hint) hint.textContent = 'Modo PRO único: usa la biblioteca para insertar componentes; los paralelos se hacen con cables.';
+    if(hint) hint.textContent = 'Mode PRO unique : utilisez la bibliothèque pour insérer des composants ; les parallèles se font avec des câbles.';
     var badge = document.getElementById('proBadge');
-    if(badge) badge.textContent = 'PRO: salida azul -> entrada blanca | Componentes desde biblioteca';
+    if(badge) badge.textContent = 'PRO: sortie azul -> entrée blanca | Componentes desde bibliothèque';
 
-    // Mantiene estado visual cuando se coloca un elemento.
+    // Mantiene état visual cuando se coloca un élément.
     var oldDraw = window.draw;
     window.draw = draw = function(){
       if(typeof oldDraw === 'function') oldDraw();
@@ -9094,8 +9094,8 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
   }
 
   window.computeFreeSimulation = computeFreeSimulation = function(){
-    // Fallback publico: el motor real PRO usa la funcion interna corregida arriba.
-    // Esta version evita que scripts externos vuelvan a tratar TON/TOFF como bloques normales.
+    // Fallback publico: el moteur real PRO usa la funcion interna corregida arriba.
+    // Esta version evita que scripts externos vuelvan a tratar TON/TOFF como blocs normales.
     var scan = {elements:{}, branches:{}, coils:{}};
     try{
       if(typeof state === 'undefined') return scan;
@@ -9194,7 +9194,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
 })();
 </script>
 
-<!-- ===== CHATGPT PATCH FINAL: Memorias M como variables internas PLC reales ===== -->
+<!-- ===== CHATGPT PATCH FINAL: Mémoires M como variables internas PLC reales ===== -->
 <script id="chatgpt-final-plc-memory-map-m-variables">
 (function(){
   if(window.__chatgptFinalPlcMemoryMapMVariables) return;
@@ -9287,7 +9287,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     if(!label) return false;
     var p = prefix(label);
 
-    // I = entrada física/manual. M/Q/T/C = estados internos escritos por bobinas/bloques.
+    // I = entrée physique/manual. M/Q/T/C = estados internos escritos por bobinas/blocs.
     if(p === 'I') return !!(state && state.simValues && state.simValues[label]);
 
     var snap = snapshot || {};
@@ -9308,7 +9308,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     return readPlcLabel(label, snapshot);
   }
 
-  // FIX principal: M ya no se trata como entrada accionable. Solo I se pulsa/togglea desde el panel.
+  // FIX principal: M ya no se trata como entrée accionable. Solo I se pulsa/togglea desde el panel.
   try{
     window.isToggleInputLabel = isToggleInputLabel = function(label){ return isInputLabel(label); };
   }catch(e){ window.isToggleInputLabel = function(label){ return isInputLabel(label); }; }
@@ -9533,11 +9533,11 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     }
   }
 
-  // Última capa: deja activo el motor PRO corregido aunque un patch anterior haya puesto un fallback simple.
+  // Última capa: deja activo el moteur PRO corregido aunque un patch anterior haya puesto un fallback simple.
   try{ window.computeFreeSimulation = computeFreeSimulation = computeFreeSimulationFixed; }
   catch(e){ window.computeFreeSimulation = computeFreeSimulationFixed; }
 
-  // Clásico/lineal: contactos NO/NC también leen M/Q/T/C desde el mismo mapa.
+  // classique/lineal: contacts NO/NC aussi leen M/Q/T/C desde el mismo mapa.
   try{
     window.evaluateElement = evaluateElement = function(el, coilSnapshot){
       if(!el) return false;
@@ -9555,7 +9555,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
 
 
 
-<!-- ===== CHATGPT FINAL PATCH: Modales nativos PRO + PWA pantalla completa móvil ===== -->
+<!-- ===== CHATGPT FINAL PATCH: Modales nativos PRO + PWA écran completa móvil ===== -->
 <style id="chatgpt-final-native-modal-pwa">
   :root{
     --app-safe-top: env(safe-area-inset-top, 0px);
@@ -9681,7 +9681,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     overlay.id = 'nativeModalOverlay';
     overlay.className = 'native-modal-overlay';
     overlay.innerHTML = '<div class="native-modal-card" role="dialog" aria-modal="true">' +
-      '<div class="native-modal-head"><div class="native-modal-icon" data-role="icon">⚡</div><div><h3 class="native-modal-title" data-role="title">Aviso</h3><p class="native-modal-msg" data-role="message"></p></div></div>' +
+      '<div class="native-modal-head"><div class="native-modal-icon" data-role="icon">⚡</div><div><h3 class="native-modal-title" data-role="title">Avis</h3><p class="native-modal-msg" data-role="message"></p></div></div>' +
       '<div class="native-modal-body" data-role="body"></div><div class="native-modal-actions" data-role="actions"></div></div>';
     document.body.appendChild(overlay);
     return overlay;
@@ -9772,16 +9772,16 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
 
   async function bindMainButtons(){
     cloneAndBind('btnSave', async function(oldBtn){
-      const name = await api.prompt('Saisissez un nom pour enregistrer tu circuito. No se mostrará ningún dato del navegador ni del repositorio.', 'Projet SimuPLC', 'Enregistrer circuito');
+      const name = await api.prompt('Saisissez un nom pour enregistrer votre circuit. Aucune donnée du navigateur ni du dépôt ne sera affichée.', 'Projet SimuPLC', 'Enregistrer circuito');
       if(name === null) return;
       try{
         withTempDialog('prompt', name, function(){ oldBtn.dispatchEvent(new MouseEvent('click', {bubbles:true, cancelable:true, view:window})); });
-        toast('Guardado correctamente');
-      }catch(e){ api.alert('Impossible d’enregistrer : ' + (e.message || e), 'Error al guardar'); }
+        toast('Enregistré correctement');
+      }catch(e){ api.alert('Impossible d’enregistrer : ' + (e.message || e), 'Erreur d’enregistrement'); }
     });
 
     cloneAndBind('btnExportUnified', async function(){
-      const name = await api.prompt('Nombre del archivo para exportar el proyecto completo FBD/Ladder.', 'Projet SimuPLC', 'Exporter le projet');
+      const name = await api.prompt('Nombre del fichier para exporter el projet completo FBD/Ladder.', 'Projet SimuPLC', 'Exporter le projet');
       if(name === null) return;
       try{
         if(window.SimuPLCProject && typeof window.SimuPLCProject.makeUnifiedProject === 'function'){
@@ -9792,7 +9792,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
           withTempDialog('prompt', name, function(){ document.getElementById('btnExportUnified') && document.getElementById('btnExportUnified').click(); });
         }
         toast('Projet exportado');
-      }catch(e){ api.alert('Impossible d’exporterer : ' + (e.message || e), 'Error al exportar'); }
+      }catch(e){ api.alert('Impossible d’exporterer : ' + (e.message || e), 'Erreur d’exportation'); }
     });
 
     cloneAndBind('btnImportUnified', async function(oldBtn){
@@ -10110,7 +10110,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     var btn = document.createElement('button');
     btn.id = 'ladderPremiumBtn';
     btn.type = 'button';
-    btn.textContent = 'ACTIVA FUNCIONES';
+    btn.textContent = 'ACTIVE LES FONCTIONS';
     document.body.appendChild(btn);
 
     function open(ev){
@@ -10124,7 +10124,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
         if(window.parent && window.parent !== window){
           window.parent.postMessage({type:'SIMUPLC_OPEN_PREMIUM'}, '*');
         }else{
-          alert('Activa Premium desde el botón ACTIVA FUNCIONES de SimuPLC.');
+          alert('Activez Premium depuis le bouton ACTIVER LES FONCTIONS de SimuPLC.');
         }
       }catch(e){
         alert('Activa Premium desde SimuPLC.');
@@ -10222,7 +10222,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
 <script src="./assets/js/shared/analog-block-catalog.js"></script>
 <script src="./assets/js/shared/text-palette.js"></script>
 <script src="./assets/js/ladder/ladder-documentation-service.js"></script>
-<!-- SIMUPLC FASE 2: entrada analógica AI y procesamiento analógico Ladder -->
+<!-- SIMUPLC FASE 2: entrada analogique AI y procesamiento analógico Ladder -->
 <script src="./assets/js/ladder/ladder-analog-input-service.js"></script>
 <script src="./assets/js/ladder/ladder-analog-processing-service.js"></script>
 <script src="./assets/js/pid/pid-ladder-extension.js"></script>
@@ -10453,7 +10453,7 @@ html.simuplc-embedded-frame body.ladder-embedded #simuplcChildRibbonLaneV1{displ
 </script>
 <!-- ===== FIN SIMUPLC CHILD TOUCH VIEWPORT V1: LADDER ===== -->
 
-<!-- ===== SIMUPLC LADDER AO SELECTOR V1: replica selector de salida analógica FBD ===== -->
+<!-- ===== SIMUPLC LADDER AO SELECTOR V1: replica selector de salida analogique FBD ===== -->
 <script id="simuplc-ladder-ao-selector-v1">
 (function(){
   'use strict';
@@ -10502,7 +10502,7 @@ html.simuplc-embedded-frame body.ladder-embedded #simuplcChildRibbonLaneV1{displ
     row=document.createElement('label');
     row.id='ladderAnalogOutputProfileRow';
     row.dataset.field='outputProfile';
-    row.innerHTML='Tipo de salida<select class="edit-select" id="ladderAnalogOutputProfile">'
+    row.innerHTML='Type de sortie<select class="edit-select" id="ladderAnalogOutputProfile">'
       +'<option value="v3.3">0–3.3 V</option>'
       +'<option value="v5">0–5 V</option>'
       +'<option value="v10">0–10 V</option>'
@@ -10530,7 +10530,7 @@ html.simuplc-embedded-frame body.ladder-embedded #simuplcChildRibbonLaneV1{displ
     row=document.createElement('label');
     row.id='ladderAnalogInputProfileRow';
     row.dataset.field='inputProfile';
-    row.innerHTML='Tipo de entrada<select class="edit-select" id="ladderAnalogInputProfile">'
+    row.innerHTML='Type d’entrée<select class="edit-select" id="ladderAnalogInputProfile">'
       +'<option value="v3.3">0–3.3 V</option>'
       +'<option value="v5">0–5 V</option>'
       +'<option value="v10">0–10 V</option>'

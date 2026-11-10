@@ -158,12 +158,12 @@
       if (api && typeof api.makeDualProject === 'function' && typeof api.loadProjectSelective === 'function') return api;
       await new Promise(function (resolve) { setTimeout(resolve, 120); });
     }
-    throw new Error('Los editores todavía no están listos.');
+    throw new Error('Les éditeurs ne sont pas encore prêts.');
   }
 
   async function readCanonicalProject(name) {
     const api = await waitForEditors();
-    const raw = await api.makeDualProject(name || 'Recuperación automática');
+    const raw = await api.makeDualProject(name || 'Récupération automatique');
     const projectSchema = schema();
     const project = projectSchema && typeof projectSchema.migrate === 'function' ? projectSchema.migrate(raw) : raw;
     if (projectSchema && typeof projectSchema.validate === 'function') {
@@ -232,7 +232,7 @@
     if (suspendCount > 0 && !options.allowSuspended) return null;
     captureRunning = true;
     try {
-      const project = await readCanonicalProject(options.name || 'Recuperación automática');
+      const project = await readCanonicalProject(options.name || 'Récupération automatique');
       const projectFingerprint = fingerprint(project);
       const previous = readAutosave();
       const changed = !previous || previous.fingerprint !== projectFingerprint;
@@ -244,11 +244,11 @@
         version: 1,
         appVersion: config().appVersion || MODULE_VERSION,
         savedAt: now,
-        reason: reason || 'autoguardado',
+        reason: reason || 'sauvegarde-auto',
         fingerprint: projectFingerprint,
         project: project
       };
-      if (!writeAutosave(envelope)) throw new Error('El navegador no permitió guardar la recuperación automática.');
+      if (!writeAutosave(envelope)) throw new Error('Le navigateur n’a pas autorisé l’enregistrement de la récupération automatique.');
       currentFingerprint = projectFingerprint;
       lastCaptureAt = Date.now();
 
@@ -256,7 +256,7 @@
       state.version = 1;
       state.pending = options.pending !== false && !isProjectEmpty(project);
       state.fingerprint = projectFingerprint;
-      state.lastReason = reason || 'autoguardado';
+      state.lastReason = reason || 'sauvegarde-auto';
       state.updatedAt = now;
       if (options.pending === false) state.acknowledgedAt = now;
       writeRecoveryState(state);
@@ -268,7 +268,7 @@
 
   async function createBackup(reason, options) {
     options = options || {};
-    const project = options.project ? clone(options.project) : await readCanonicalProject('Respaldo automático');
+    const project = options.project ? clone(options.project) : await readCanonicalProject('Sauvegarde automatique');
     const projectSchema = schema();
     if (projectSchema && typeof projectSchema.validate === 'function') {
       const validation = projectSchema.validate(project, { strict: true });
@@ -287,7 +287,7 @@
       version: 1,
       appVersion: config().appVersion || MODULE_VERSION,
       createdAt: now,
-      reason: reason || 'respaldo-manual',
+      reason: reason || 'sauvegarde-manuelle',
       fingerprint: projectFingerprint,
       project: project
     };
@@ -309,11 +309,11 @@
     suspendCount += 1;
     try {
       const loaded = await api.loadProjectSelective(canonical);
-      if (loaded === false) throw new Error('El proyecto no pudo recuperarse completamente.');
+      if (loaded === false) throw new Error('El projet no pudo recuperarse completamente.');
     } finally {
       suspendCount = Math.max(0, suspendCount - 1);
     }
-    await captureProject(options.reason || 'proyecto-recuperado', { force: true, pending: options.pending !== false, allowSuspended: true });
+    await captureProject(options.reason || 'projet-recuperado', { force: true, pending: options.pending !== false, allowSuspended: true });
     return true;
   }
 
@@ -336,7 +336,7 @@
     clearTimeout(activityTimer);
     activityTimer = setTimeout(function () {
       markChanged(reason || 'actividad-editor').catch(function (error) {
-        console.warn('[SimuPLCRecovery] Autoguardado omitido:', error);
+        console.warn('[SimuPLCRecovery] Sauvegarde auto omise :', error);
       });
     }, ACTIVITY_DELAY_MS);
   }
@@ -358,11 +358,11 @@
     global.addEventListener('simuplc:action-start', function () { suspendCount += 1; });
     global.addEventListener('simuplc:action-end', function () {
       suspendCount = Math.max(0, suspendCount - 1);
-      setTimeout(function () { scheduleAutosave('después-de-acción'); }, 80);
+      setTimeout(function () { scheduleAutosave('apres-action'); }, 80);
     });
     document.addEventListener('visibilitychange', function () {
       if (document.visibilityState === 'hidden') {
-        captureProject('aplicación-en-segundo-plano', { force: false, pending: true }).catch(function () {});
+        captureProject('application-en-arriere-plan', { force: false, pending: true }).catch(function () {});
       }
     });
     global.addEventListener('pagehide', function () {
@@ -375,8 +375,8 @@
   function startInterval() {
     clearInterval(autosaveTimer);
     autosaveTimer = setInterval(function () {
-      markChanged('autoguardado-periódico').catch(function (error) {
-        console.warn('[SimuPLCRecovery] Autoguardado periódico omitido:', error);
+      markChanged('sauvegarde-auto-periodique').catch(function (error) {
+        console.warn('[SimuPLCRecovery] Sauvegarde auto périodique omise :', error);
       });
     }, AUTOSAVE_INTERVAL_MS);
   }
@@ -402,11 +402,11 @@
       }
       const dateText = envelope.savedAt ? new Date(envelope.savedAt).toLocaleString() : 'recientemente';
       const restore = await modal().confirm(
-        'Se encontró trabajo sin guardar de ' + dateText + '.\n\n¿Deseas recuperarlo ahora?',
+        'Travail non enregistré trouvé de ' + dateText + '.\n\nSouhaitez-vous le récupérer maintenant ?',
         'Recuperar trabajo'
       );
       if (restore) {
-        await createBackup('antes-de-recuperar-autoguardado');
+        await createBackup('avant-recuperation-sauvegarde-auto');
         await restoreProject(canonical, { reason: 'recuperado-al-iniciar', pending: true });
         toast('Trabajo recuperado correctamente');
         return true;
@@ -414,7 +414,7 @@
       state.pending = false;
       state.discardedAt = new Date().toISOString();
       writeRecoveryState(state);
-      toast('Recuperación descartada');
+      toast('Récupération abandonnée');
       return false;
     } catch (error) {
       state.pending = false;
@@ -422,19 +422,19 @@
       state.invalidReason = String(error && error.message || error);
       writeRecoveryState(state);
       await modal().alert(
-        'La copia de recuperación está dañada o no es compatible y no se cargará.\n\nDetalle: ' + state.invalidReason,
-        'Recuperación no disponible'
+        'La copie de récupération est endommagée ou incompatible et ne sera pas chargée.\n\nDétail : ' + state.invalidReason,
+        'Récupération non disponible'
       );
       return false;
     }
   }
 
   function validateImportText(text) {
-    if (typeof text !== 'string' || !text.trim()) throw new Error('El archivo está vacío.');
-    if (text.length * 2 > IMPORT_MAX_BYTES) throw new Error('El archivo es demasiado grande para importarlo de forma segura.');
+    if (typeof text !== 'string' || !text.trim()) throw new Error('Le fichier est vide.');
+    if (text.length * 2 > IMPORT_MAX_BYTES) throw new Error('El fichier es demasiado grande para importerlo de forma segura.');
     let source;
     try { source = JSON.parse(text); }
-    catch (_error) { throw new Error('El archivo está dañado: no contiene un JSON válido.'); }
+    catch (_error) { throw new Error('Le fichier est endommagé : il ne contient pas un JSON valide.'); }
     const projectSchema = schema();
     if (projectSchema && typeof projectSchema.validateImportSource === 'function') {
       const inspection = projectSchema.validateImportSource(source);
@@ -449,10 +449,10 @@
 
   async function restoreBackup(id) {
     const entry = readHistory().find(function (item) { return item && item.id === id; });
-    if (!entry || !entry.project) throw new Error('No se encontró el respaldo solicitado.');
-    await createBackup('antes-de-restaurar-respaldo');
-    await restoreProject(entry.project, { reason: 'respaldo-restaurado', pending: true });
-    toast('Respaldo restaurado');
+    if (!entry || !entry.project) throw new Error('Introuvable : la sauvegarde demandée.');
+    await createBackup('avant-restauration-sauvegarde');
+    await restoreProject(entry.project, { reason: 'sauvegarde-restauree', pending: true });
+    toast('Sauvegarde restaurée');
     return true;
   }
 
@@ -500,7 +500,7 @@
         }
         startInterval();
       } catch (error) {
-        console.warn('[SimuPLCRecovery] No se pudo iniciar completamente.', error);
+        console.warn('[SimuPLCRecovery] Impossible de iniciar completamente.', error);
       }
       return diagnostics();
     })();

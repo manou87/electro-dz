@@ -28,8 +28,8 @@
       family: 'source',
       inputType: null,
       outputType: 'analog',
-      description: 'Entrega un valor analógico fijo interno para comparadores, escalamiento, PWM, AO y futuras consignas PID.',
-      aliases: ['const', 'constant', 'analog_constant', 'constante', 'constante_analogica', 'constante analógica'],
+      description: 'Fournit une valeur analogique fixe interne pour comparateurs, mise à l’échelle, PWM, AO et futures consignes PID.',
+      aliases: ['const', 'constant', 'analog_constant', 'constante', 'constante_analogica', 'constante analogique'],
       editors: { fbd: true, ladder: true },
       defaults: { value: 50, unit: '', decimals: 1 }
     },
@@ -41,8 +41,8 @@
       family: 'source',
       inputType: null,
       outputType: 'analog',
-      description: 'Lee o simula una señal analógica y puede entregarla en valor RAW o en una unidad de ingeniería.',
-      aliases: ['ai', 'analog-input', 'analoginput', 'entrada_analogica', 'entrada analógica'],
+      description: 'Lit ou simule un signal analogique et peut le fournir en valeur RAW ou en unité d’ingénierie.',
+      aliases: ['ai', 'analog-input', 'analoginput', 'entrada_analogica', 'entrée analogique'],
       editors: { fbd: true, ladder: true },
       defaults: { rawMin: 0, rawMax: 4095, engMin: 0, engMax: 100, rawValue: 0, unit: '%', decimals: 1, clamp: true }
     },
@@ -54,7 +54,7 @@
       family: 'processing',
       inputType: 'analog',
       outputType: 'analog',
-      description: 'Convierte una señal de un rango de entrada a otro rango de salida.',
+      description: 'Convertit un signal d’une plage d’entrée vers une autre plage de sortie.',
       aliases: ['scaler', 'escalar', 'escalamiento'],
       editors: { fbd: true, ladder: true },
       defaults: { inMin: 0, inMax: 100, outMin: 0, outMax: 100, unit: '', decimals: 1, clamp: true }
@@ -67,7 +67,7 @@
       family: 'comparator',
       inputType: 'analog',
       outputType: 'digital',
-      description: 'Activa su salida cuando la señal analógica es mayor que el valor configurado.',
+      description: 'Active sa sortie quand le signal analogique est supérieur à la valeur configurée.',
       aliases: ['greater-than', 'greater_than', 'mayor'],
       editors: { fbd: true, ladder: true },
       defaults: { threshold: 50, unit: '', decimals: 1 }
@@ -80,7 +80,7 @@
       family: 'comparator',
       inputType: 'analog',
       outputType: 'digital',
-      description: 'Activa su salida cuando la señal analógica es menor que el valor configurado.',
+      description: 'Active sa sortie quand le signal analogique est inférieur à la valeur configurée.',
       aliases: ['less-than', 'less_than', 'menor'],
       editors: { fbd: true, ladder: true },
       defaults: { threshold: 50, unit: '', decimals: 1 }
@@ -93,7 +93,7 @@
       family: 'comparator',
       inputType: 'analog',
       outputType: 'digital',
-      description: 'Activa su salida cuando la señal se encuentra dentro de la tolerancia del valor configurado.',
+      description: 'Active sa sortie quand le signal se trouve dans la tolérance de la valeur configurée.',
       aliases: ['equal', 'equal-to', 'igual'],
       editors: { fbd: true, ladder: true },
       defaults: { threshold: 50, tolerance: 0.1, unit: '', decimals: 1 }
@@ -106,7 +106,7 @@
       family: 'comparator',
       inputType: 'analog',
       outputType: 'digital',
-      description: 'Activa su salida cuando la señal analógica es mayor o igual que el valor configurado.',
+      description: 'Active sa sortie quand le signal analogique est supérieur ou égal à la valeur configurée.',
       aliases: ['greater-or-equal', 'greater_equal', 'mayor_igual', '>='],
       editors: { fbd: true, ladder: true },
       defaults: { threshold: 50, unit: '', decimals: 1 }
@@ -119,7 +119,7 @@
       family: 'comparator',
       inputType: 'analog',
       outputType: 'digital',
-      description: 'Activa su salida cuando la señal analógica es menor o igual que el valor configurado.',
+      description: 'Active sa sortie quand le signal analogique est inférieur ou égal à la valeur configurée.',
       aliases: ['less-or-equal', 'less_equal', 'menor_igual', '<='],
       editors: { fbd: true, ladder: true },
       defaults: { threshold: 50, unit: '', decimals: 1 }
@@ -132,7 +132,7 @@
       family: 'comparator',
       inputType: 'analog',
       outputType: 'digital',
-      description: 'Usa un umbral de encendido y otro de apagado para evitar conmutaciones rápidas.',
+      description: 'Utilise un seuil d’allumage et un autre d’extinction pour éviter les commutations rapides.',
       aliases: ['hys', 'hysteresis', 'histeresis', 'histéresis'],
       editors: { fbd: true, ladder: true },
       defaults: { low: 40, high: 60, unit: '', decimals: 1, hystState: 0 }
@@ -145,7 +145,7 @@
       family: 'processing',
       inputType: 'analog',
       outputType: 'analog',
-      description: 'Compara PV con SP y calcula una salida analógica con acción proporcional, integral y derivativa.',
+      description: 'Compare PV avec SP et calcule une sortie analogique avec action proportionnelle, intégrale et dérivée.',
       aliases: ['pid', 'pid_controller', 'controlador_pid', 'controlador pid'],
       editors: { fbd: true, ladder: true },
       defaults: { kp: 2, ki: 0.5, kd: 0.1, sampleMs: 100, outMin: 0, outMax: 100, mode: 'auto', manualOutput: 0, direction: 'heating', unit: '%', decimals: 1 }
@@ -160,7 +160,7 @@
       outputType: 'analog',
       outputCount: 2,
       outputRoles: ['LLENAR', 'VACIAR'],
-      description: 'Divide una salida analógica alrededor de un punto neutro: una salida proporcional para llenar/avanzar y otra para vaciar/retroceder, con zona muerta y enclavamiento.',
+      description: 'Divise une sortie analogique autour d’un point neutre : une sortie proportionnelle pour remplir/avancer et une autre pour vider/reculer, avec zone morte et verrouillage.',
       aliases: ['split', 'split-range', 'split_range', 'rango_dividido', 'control_bidireccional', 'control bidireccional'],
       editors: { fbd: true, ladder: true },
       defaults: { inMin: 0, inMax: 100, neutral: 50, deadband: 2, outMax: 100, unit: '%', decimals: 1, clamp: true }
@@ -173,7 +173,7 @@
       family: 'output',
       inputType: 'analog',
       outputType: null,
-      description: 'Convierte una señal analógica en ciclo de trabajo PWM para velocidad, iluminación o potencia.',
+      description: 'Convertit un signal analogique en rapport cyclique PWM pour vitesse, éclairage ou puissance.',
       aliases: ['pwm', 'pwm_output', 'salida_pwm', 'salida pwm'],
       editors: { fbd: true, ladder: true },
       defaults: { inMin: 0, inMax: 100, unit: '%', decimals: 1, clamp: true, frequency: 1000, resolution: 8 }
@@ -186,8 +186,8 @@
       family: 'output',
       inputType: 'analog',
       outputType: null,
-      description: 'Convierte una señal de ingeniería en una salida DAC analógica real cuando la placa dispone de DAC.',
-      aliases: ['ao', 'analog_output', 'salida_analogica', 'salida analógica'],
+      description: 'Convertit un signal d’ingénierie en une sortie DAC analogique réelle lorsque la carte dispose d’un DAC.',
+      aliases: ['ao', 'analog_output', 'salida_analogica', 'sortie analogique'],
       editors: { fbd: true, ladder: true },
       defaults: { inMin: 0, inMax: 100, unit: '%', decimals: 1, clamp: true, voltageMin: 0, voltageMax: 3.3, outputUnit: 'V' }
     }

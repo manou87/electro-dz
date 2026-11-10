@@ -3,7 +3,7 @@
   if(global.SimuPLCFBDMovement) return;
 
   var adapter=global.SimuPLCFBDAdapter;
-  if(!adapter){ console.error('[SimuPLC FBD] Adaptador de movimiento no disponible.'); return; }
+  if(!adapter){ console.error('[SimuPLC FBD] Adaptateur de mouvement non disponible.'); return; }
   var stats={bound:0,mouseMoves:0,touchMoves:0,completed:0};
   var positionTransformer=null;
 

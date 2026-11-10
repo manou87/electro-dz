@@ -62,7 +62,7 @@
       if (typeof global.serializeFBD === 'function') return clone(global.serializeFBD());
       if (typeof global.serialize === 'function') return clone(global.serialize());
     } catch (error) {
-      console.warn('[SimuPLCEditors] No se pudo serializar FBD mediante la API principal.', error);
+      console.warn('[SimuPLCEditors] Impossible de serializar FBD mediante la API principal.', error);
     }
 
     try {
@@ -105,7 +105,7 @@
         settings: {}
       };
     } catch (error) {
-      console.warn('[SimuPLCEditors] No se pudo crear el respaldo mínimo FBD.', error);
+      console.warn('[SimuPLCEditors] Impossible de créer la sauvegarde minimale FBD.', error);
       return { v: 2, nodes: [], connections: [], settings: {} };
     }
   }
@@ -120,9 +120,9 @@
       if (typeof global.loadFromData === 'function') { global.loadFromData(state); return true; }
       if (typeof global.deserializeFBD === 'function') { global.deserializeFBD(state); return true; }
       if (typeof global.deserializeCircuit === 'function') { global.deserializeCircuit(state); return true; }
-      throw new Error('No se encontró el cargador FBD.');
+      throw new Error('Introuvable : el cargador FBD.');
     } catch (error) {
-      console.error('[SimuPLCEditors] No se pudo cargar FBD.', error);
+      console.error('[SimuPLCEditors] Impossible de charger FBD.', error);
       return false;
     }
   }
@@ -159,7 +159,7 @@
       try { if (typeof global.updateConnections === 'function') global.updateConnections(); } catch (_error) {}
       return true;
     } catch (error) {
-      console.error('[SimuPLCEditors] No se pudo reiniciar FBD.', error);
+      console.error('[SimuPLCEditors] Impossible de reiniciar FBD.', error);
       return false;
     }
   }
@@ -170,7 +170,7 @@
     try {
       return sanitizeLadderState(await api.getProject());
     } catch (error) {
-      console.warn('[SimuPLCEditors] No se pudo leer Ladder.', error);
+      console.warn('[SimuPLCEditors] Impossible de leer Ladder.', error);
       return emptyLadder();
     }
   }
@@ -183,7 +183,7 @@
       const result = await api.setProject(sanitizeLadderState(data));
       return result !== false;
     } catch (error) {
-      console.warn('[SimuPLCEditors] No se pudo cargar Ladder.', error);
+      console.warn('[SimuPLCEditors] Impossible de charger Ladder.', error);
       return false;
     }
   }
@@ -195,7 +195,7 @@
       const result = await api.resetProject();
       return result !== false;
     } catch (error) {
-      console.warn('[SimuPLCEditors] No se pudo reiniciar Ladder.', error);
+      console.warn('[SimuPLCEditors] Impossible de reiniciar Ladder.', error);
       return false;
     }
   }
@@ -230,7 +230,7 @@
   }
 
   function inspectProject(source) {
-    if (!source || typeof source !== 'object') throw new Error('El proyecto está vacío o es inválido.');
+    if (!source || typeof source !== 'object') throw new Error('Le projet est vide ou invalide.');
     const result = { activeEditor: source.activeEditor || null, hasFbd: false, hasLadder: false, fbd: null, ladder: null, hardware: source.hardware || source.mcuConfig || null };
 
     if (source.type === 'simuplc-project' && source.editors) {
@@ -245,7 +245,7 @@
       result.ladder = source.editors && source.editors.ladder ? source.editors.ladder : source.ladder || null;
       result.hasFbd = !!result.fbd;
       result.hasLadder = !!result.ladder;
-      if (!result.hasFbd && !result.hasLadder) throw new Error('El proyecto no contiene FBD ni Ladder.');
+      if (!result.hasFbd && !result.hasLadder) throw new Error('Le projet ne contient ni FBD ni Ladder.');
       return result;
     }
     if (Array.isArray(source.rungs) || String(source.type || '').indexOf('ladder') === 0) {
@@ -260,7 +260,7 @@
       result.fbd = source.data && Array.isArray(source.data.nodes) ? source.data : source;
       return result;
     }
-    throw new Error('El archivo no parece ser un proyecto SimuPLC válido.');
+    throw new Error('El fichier no parece ser un projet SimuPLC valide.');
   }
 
   async function loadProjectSelective(source) {
@@ -273,7 +273,7 @@
     else if (project.hasFbd) setEditor('fbd');
     if (project.hardware && global.SimuPLCVariableManager && typeof global.SimuPLCVariableManager.importConfig === 'function') {
       try { global.SimuPLCVariableManager.importConfig(project.hardware); }
-      catch (error) { console.warn('[SimuPLCEditors] No se pudo restaurar la configuración de variables y pines.', error); }
+      catch (error) { console.warn('[SimuPLCEditors] Impossible de restaurer la configuration des variables et broches.', error); }
     }
     return ok;
   }

@@ -93,20 +93,20 @@
   }
 
   function generatedControlMode() {
-    // El firmware recién grabado debe funcionar con pulsadores físicos sin HMI.
-    // El HMI puede cambiar el modo después de conectarse mediante el comando MODE.
-    // No heredar al Arduino el último modo HMI guardado en este navegador.
-    return 0; // SIMUPLC_BOTH: físico y HMI.
+    // El firmware recién grabado debe funcionar con boutons físicos sin HMI.
+    // El HMI puede changer el mode après de conectarse mediante el comando MODE.
+    // No heredar al Arduino el dernier mode HMI guardado en este navigateur.
+    return 0; // SIMUPLC_BOTH: physique y HMI.
   }
 
   function likelyNcInput(label, source) {
     const text = String(label || '') + ' ' + String(source && (source.label || source.name || source.description || '') || '');
     const mode = String(source && (source.contactType || source.inputMode || source.mode || source.params && source.params.inputMode) || '').toLowerCase();
-    return mode === 'nc' || /(?:^|[-_ ])nc(?:$|[-_ ])|STOP|PARADA|EMERGENCIA|E-?STOP|GUARDAMOTOR|PROTECCI(?:O|Ó)N|T[EÉ]RMICO|SOBRECARGA/i.test(text);
+    return mode === 'nc' || /(?:^|[-_ ])nc(?:$|[-_ ])|STOP|ARRÊT|URGENCE|E-?STOP|GUARDAMOTOR|PROTECCI(?:O|Ó)N|T[EÉ]RMICO|SURCHARGE/i.test(text);
   }
 
-  function pinLabel(pin) {
-    return 'GPIO ' + pin;
+  function pinLabel(broche) {
+    return 'GPIO ' + broche;
   }
 
   function activeEditor() {
@@ -179,13 +179,13 @@
     let cursor = 0;
     labels.forEach(function (label) {
       while (cursor < candidates.length && used.has(candidates[cursor])) cursor += 1;
-      let pin = candidates[cursor];
-      if (pin == null) {
-        pin = candidates.find(function (candidate) { return !used.has(candidate); });
+      let broche = candidates[cursor];
+      if (broche == null) {
+        broche = candidates.find(function (candidate) { return !used.has(candidate); });
       }
-      if (pin == null) pin = candidates[labels.indexOf(label) % Math.max(1, candidates.length)] || 0;
-      result[label] = pin;
-      used.add(pin);
+      if (broche == null) broche = candidates[labels.indexOf(label) % Math.max(1, candidates.length)] || 0;
+      result[label] = broche;
+      used.add(broche);
       cursor += 1;
     });
     return result;
@@ -208,9 +208,9 @@
       labels.forEach(function (label) {
         const current = existing && existing[key] ? parseInt(existing[key][label], 10) : NaN;
         const allowed = candidates.indexOf(current) >= 0;
-        const pin = !forceDefaults && allowed && !used.has(current) ? current : defaults[label];
-        output[key][label] = pin;
-        used.add(pin);
+        const broche = !forceDefaults && allowed && !used.has(current) ? current : defaults[label];
+        output[key][label] = broche;
+        used.add(broche);
       });
     });
     return output;
@@ -222,29 +222,29 @@
     const errors = [];
     const used = new Map();
 
-    function register(label, pin, group) {
-      const parsed = parseInt(pin, 10);
-      if (!BOARD.validPins.includes(parsed)) errors.push(label + ': GPIO no válido para ESP32 clásico.');
+    function register(label, broche, group) {
+      const parsed = parseInt(broche, 10);
+      if (!BOARD.validPins.includes(parsed)) errors.push(label + ': GPIO no valide para ESP32 classique.');
       if (!used.has(parsed)) used.set(parsed, []);
       used.get(parsed).push(label);
       if (group === 'analogInputs' && !BOARD.analogInputPins.includes(parsed)) {
         errors.push(label + ': usa un GPIO ADC1 (' + BOARD.analogInputPins.join(', ') + ').');
       }
       if (group === 'digitalInputs' && BOARD.inputOnlyPins.includes(parsed)) {
-        errors.push(label + ': GPIO ' + parsed + ' no tiene pull-up interno; usa otro pin para INPUT_PULLUP.');
+        errors.push(label + ': GPIO ' + parsed + ' no tiene pull-up interno; usa otro broche para INPUT_PULLUP.');
       }
       if (group === 'outputs' && BOARD.inputOnlyPins.includes(parsed)) {
-        errors.push(label + ': GPIO ' + parsed + ' es solo entrada.');
+        errors.push(label + ': GPIO ' + parsed + ' es solo entrée.');
       }
-      if (BOARD.strappingPins.includes(parsed)) warnings.push(label + ': GPIO ' + parsed + ' es pin de arranque; úsalo con cuidado.');
+      if (BOARD.strappingPins.includes(parsed)) warnings.push(label + ': GPIO ' + parsed + ' es broche de démarrage; úsalo con cuidado.');
       if (BOARD.serialPins.includes(parsed)) warnings.push(label + ': GPIO ' + parsed + ' se usa normalmente para Serial.');
     }
 
     ['digitalInputs', 'analogInputs', 'outputs'].forEach(function (group) {
       (signals[group] || []).forEach(function (label) { register(label, map[group] && map[group][label], group); });
     });
-    used.forEach(function (labels, pin) {
-      if (labels.length > 1) errors.push('GPIO ' + pin + ' está repetido: ' + labels.join(', ') + '.');
+    used.forEach(function (labels, broche) {
+      if (labels.length > 1) errors.push('GPIO ' + broche + ' está repetido: ' + labels.join(', ') + '.');
     });
 
     return { ok: errors.length === 0, errors: uniqueSorted(errors), warnings: uniqueSorted(warnings) };
@@ -349,7 +349,7 @@
   function generateFBDESP32(state, pinMap) {
     const nodes = state && Array.isArray(state.nodes) ? state.nodes : [];
     const connections = state && Array.isArray(state.connections) ? state.connections : [];
-    if (!nodes.length) return '// No hay bloques FBD para generar.';
+    if (!nodes.length) return '// Il n’y a pas de blocs FBD para generar.';
 
     const byId = new Map();
     nodes.forEach(function (node, index) { byId.set(String(node.id), { node: node, index: index }); });
@@ -443,13 +443,13 @@
       const source = byId.get(String(connection.fromId));
       const target = byId.get(String(connection.toId));
       if (!source || !target) return;
-      const pin = Math.max(0, integer(connection.toPin, 1, 1, 255) - 1);
+      const broche = Math.max(0, integer(connection.toPin, 1, 1, 255) - 1);
       const sourceType = cleanType(source.node.type);
-      const inversion = Array.isArray(target.node.inputsNot) && target.node.inputsNot[pin] ? 1 : 0;
+      const inversion = Array.isArray(target.node.inputsNot) && target.node.inputsNot[broche] ? 1 : 0;
       connSrc.push(source.index);
       connSrcPin.push(Math.max(0,integer(String(connection.fromPin||'out1').replace(/\D/g,''),1,1,255)-1));
       connDst.push(target.index);
-      connPin.push(pin);
+      connPin.push(broche);
       connInv.push(inversion);
       connSignal.push(ANALOG_TYPES.has(sourceType) ? 1 : 0);
     });
@@ -476,7 +476,7 @@
     lines.push('/*');
     lines.push('  SimuPLC Lab ' + VERSION + ' - ESP32 desde FBD');
     lines.push('  Placa objetivo: ESP32 DevKit V1 / WROOM-32');
-    lines.push('  Entrées digitales: INPUT_PULLUP (LOW = contacto cerrado a GND).');
+    lines.push('  Entrées digitales: INPUT_PULLUP (LOW = contact cerrado a GND).');
     lines.push('  Entrées analogicas: ADC de 12 bits (0..4095).');
     lines.push('*/');
     lines.push('');
@@ -554,7 +554,7 @@
     lines.push('const uint8_t nodeClamp[SAFE_NODES] = { ' + cppArray(clampFlags, 0, String) + ' };');
     lines.push('');
     lines.push('const uint16_t connSrc[SAFE_CONNS] = { ' + cppArray(connSrc, 0, String) + ' };');
-    lines.push('const uint8_t connSrcPin[SAFE_CONNS] = { ' + cppArray(connSrcPin, 0, String) + ' }; // 0=salida principal/LLENAR, 1=VACIAR');
+    lines.push('const uint8_t connSrcPin[SAFE_CONNS] = { ' + cppArray(connSrcPin, 0, String) + ' }; // 0=sortie principal/LLENAR, 1=VACIAR');
     lines.push('const uint16_t connDst[SAFE_CONNS] = { ' + cppArray(connDst, 0, String) + ' };');
     lines.push('const uint8_t connPin[SAFE_CONNS] = { ' + cppArray(connPin, 0, String) + ' };');
     lines.push('const uint8_t connInv[SAFE_CONNS] = { ' + cppArray(connInv, 0, String) + ' };');
@@ -593,60 +593,60 @@
     lines.push('');
     lines.push('float clampFloat(float value,float a,float b){ float lo=min(a,b),hi=max(a,b); return max(lo,min(hi,value)); }');
     lines.push('bool invalidFloat(float value){ return value != value; }');
-    lines.push('float runPidNode(uint16_t n,float pv,float sp,uint32_t now){bool manual=nodePidFlags[n]&1,cooling=nodePidFlags[n]&2;if(manual){pidOutput[n]=clampFloat(nodePidManual[n],nodeP4[n],nodeP5[n]);return pidOutput[n];}uint32_t sample=max((uint32_t)20,nodePidSample[n]);if(pidLastAt[n]&&now-pidLastAt[n]<sample)return pidOutput[n];float dt=max((float)sample,(float)(pidLastAt[n]?now-pidLastAt[n]:sample))/1000.0f;float error=(sp-pv)*(cooling?-1.0f:1.0f);float derivative=(error-pidPrevError[n])/max(dt,0.001f);float candidate=pidIntegral[n]+error*dt;float raw=nodeP1[n]*error+nodeP2[n]*candidate+nodeP3[n]*derivative;float limited=clampFloat(raw,nodeP4[n],nodeP5[n]);if(raw==limited||((error>0)!=(raw-limited>0)))pidIntegral[n]=candidate;pidPrevError[n]=error;pidLastAt[n]=now;pidOutput[n]=limited;return limited;}');
+    lines.push('float runPidNode(uint16_t n,float pv,float sp,uint32_t now){bool manual=nodePidFlags[n]&1,cooling=nodePidFlags[n]&2;if(manual){pidOutput[n]=clampFloat(nodePidManual[n],nodeP4[n],nodeP5[n]);return pidOutput[n];}uint32_t sample=max((uint32_t)20,nodePidSample[n]);if(pidLastAt[n]&&now-pidLastAt[n]<sample)return pidOutput[n];float dt=max((float)sample,(float)(pidLastAt[n]?now-pidLastAt[n]:sample))/1000.0f;float erreur=(sp-pv)*(cooling?-1.0f:1.0f);float derivative=(erreur-pidPrevError[n])/max(dt,0.001f);float candidate=pidIntegral[n]+erreur*dt;float raw=nodeP1[n]*erreur+nodeP2[n]*candidate+nodeP3[n]*derivative;float limited=clampFloat(raw,nodeP4[n],nodeP5[n]);if(raw==limited||((erreur>0)!=(raw-limited>0)))pidIntegral[n]=candidate;pidPrevError[n]=erreur;pidLastAt[n]=now;pidOutput[n]=limited;return limited;}');
     lines.push('float mapFloat(float value,float inMin,float inMax,float outMin,float outMax,bool limit){');
     lines.push('  if(inMax==inMin) return outMin;');
     lines.push('  if(limit) value=clampFloat(value,inMin,inMax);');
     lines.push('  return outMin + ((value-inMin)/(inMax-inMin))*(outMax-outMin);');
     lines.push('}');
     lines.push('');
-    lines.push('void setupPWMOutput(uint8_t pin,uint8_t channel,uint32_t frequency,uint8_t resolution){');
+    lines.push('void setupPWMOutput(uint8_t broche,uint8_t channel,uint32_t frequency,uint8_t resolution){');
     lines.push('#if defined(ARDUINO_ARCH_ESP32)');
     lines.push('  #if SIMUPLC_ESP_CORE3');
-    lines.push('    ledcAttach(pin,frequency,resolution);');
+    lines.push('    ledcAttach(broche,frequency,resolution);');
     lines.push('  #else');
-    lines.push('    ledcSetup(channel,frequency,resolution); ledcAttachPin(pin,channel);');
+    lines.push('    ledcSetup(channel,frequency,resolution); ledcAttachPin(broche,channel);');
     lines.push('  #endif');
     lines.push('#else');
-    lines.push('  (void)channel; (void)frequency; (void)resolution; pinMode(pin,OUTPUT);');
+    lines.push('  (void)channel; (void)frequency; (void)resolution; pinMode(broche,OUTPUT);');
     lines.push('#endif');
     lines.push('}');
-    lines.push('void writePWMOutput(uint8_t pin,uint8_t channel,float percent,uint8_t resolution){');
+    lines.push('void writePWMOutput(uint8_t broche,uint8_t channel,float percent,uint8_t resolution){');
     lines.push('  percent=clampFloat(percent,0.0f,100.0f);');
     lines.push('#if defined(ARDUINO_ARCH_ESP32)');
     lines.push('  uint8_t bits=min((uint8_t)16,max((uint8_t)1,resolution)); uint32_t maxDuty=(1UL<<bits)-1UL; uint32_t duty=(uint32_t)roundf(percent*maxDuty/100.0f);');
     lines.push('  #if SIMUPLC_ESP_CORE3');
-    lines.push('    ledcWrite(pin,duty);');
+    lines.push('    ledcWrite(broche,duty);');
     lines.push('  #else');
     lines.push('    ledcWrite(channel,duty);');
     lines.push('  #endif');
     lines.push('#else');
-    lines.push('  (void)channel; (void)resolution; analogWrite(pin,(int)roundf(percent*255.0f/100.0f));');
+    lines.push('  (void)channel; (void)resolution; analogWrite(broche,(int)roundf(percent*255.0f/100.0f));');
     lines.push('#endif');
     lines.push('}');
-    lines.push('void writeAnalogOutput(uint8_t pin,float volts,float minV,float maxV){');
+    lines.push('void writeAnalogOutput(uint8_t broche,float volts,float minV,float maxV){');
     lines.push('#if defined(ARDUINO_ARCH_ESP32)');
-    lines.push('  float ratio=(volts-minV)/(maxV-minV==0?1:(maxV-minV)); ratio=clampFloat(ratio,0.0f,1.0f); dacWrite(pin,(uint8_t)roundf(ratio*255.0f));');
+    lines.push('  float ratio=(volts-minV)/(maxV-minV==0?1:(maxV-minV)); ratio=clampFloat(ratio,0.0f,1.0f); dacWrite(broche,(uint8_t)roundf(ratio*255.0f));');
     lines.push('#else');
-    lines.push('  (void)pin;(void)volts;(void)minV;(void)maxV;');
+    lines.push('  (void)broche;(void)volts;(void)minV;(void)maxV;');
     lines.push('#endif');
     lines.push('}');
     lines.push('');
-    lines.push('bool pinConnected(uint16_t node,uint8_t pin,uint8_t signal){');
-    lines.push('  for(uint16_t k=0;k<N_CONNS;k++) if(connDst[k]==node && connPin[k]==pin && connSignal[k]==signal) return true;');
+    lines.push('bool pinConnected(uint16_t node,uint8_t broche,uint8_t signal){');
+    lines.push('  for(uint16_t k=0;k<N_CONNS;k++) if(connDst[k]==node && connPin[k]==broche && connSignal[k]==signal) return true;');
     lines.push('  return false;');
     lines.push('}');
-    lines.push('bool readBoolPin(uint16_t node,uint8_t pin){');
+    lines.push('bool readBoolPin(uint16_t node,uint8_t broche){');
     lines.push('  bool value=false;');
     lines.push('  for(uint16_t k=0;k<N_CONNS;k++){');
-    lines.push('    if(connDst[k]!=node || connPin[k]!=pin || connSignal[k]!=0) continue;');
+    lines.push('    if(connDst[k]!=node || connPin[k]!=broche || connSignal[k]!=0) continue;');
     lines.push('    bool part=bValue[connSrc[k]]; if(connInv[k]) part=!part; value=value||part;');
     lines.push('  }');
     lines.push('  return value;');
     lines.push('}');
     lines.push('float analogSourceValue(uint16_t source,uint8_t sourcePin){if(source>=N_NODES)return NAN;if(nodeType[source]==T_SPLIT)return sourcePin==1?splitDrain[source]:splitFill[source];return aValue[source];}');
-    lines.push('float readAnalogPin(uint16_t node,uint8_t pin){');
-    lines.push('  for(uint16_t k=0;k<N_CONNS;k++) if(connDst[k]==node && connPin[k]==pin && connSignal[k]==1) return analogSourceValue(connSrc[k],connSrcPin[k]);');
+    lines.push('float readAnalogPin(uint16_t node,uint8_t broche){');
+    lines.push('  for(uint16_t k=0;k<N_CONNS;k++) if(connDst[k]==node && connPin[k]==broche && connSignal[k]==1) return analogSourceValue(connSrc[k],connSrcPin[k]);');
     lines.push('  return NAN;');
     lines.push('}');
     lines.push('int findTagIndex(const char* tag,const char* const* tags,uint8_t count){for(uint8_t i=0;i<count;i++)if(strcmp(tag,tags[i])==0)return i;return -1;}');
@@ -790,8 +790,8 @@
   function generateLadderESP32(model, pinMap) {
     const elements = flattenLadderElements(model);
     const wires = model && Array.isArray(model.proWires) ? model.proWires : [];
-    if (!elements.length) return '// No hay elementos Ladder para generar.';
-    if (!wires.length) return '// El proyecto Ladder no contiene el grafo proWires. Abre y vuelve a guardar el proyecto antes de generar ESP32.';
+    if (!elements.length) return '// Il n’y a pas de éléments Ladder para generar.';
+    if (!wires.length) return '// El projet Ladder no contiene el grafo proWires. Abre y vuelve a enregistrer el projet antes de generar ESP32.';
 
     const byId = new Map();
     elements.forEach(function (element) { if (element && element.id) byId.set(String(element.id), element); });
@@ -862,33 +862,33 @@
       const variable = safeName(element.label || 'I0');
       return cleanType(element.type) === 'nc' ? '!(' + variable + ')' : variable;
     }
-    function digitalInputExpr(pin, visiting) {
-      if (memoDigitalInput.has(pin)) return memoDigitalInput.get(pin);
+    function digitalInputExpr(broche, visiting) {
+      if (memoDigitalInput.has(broche)) return memoDigitalInput.get(broche);
       visiting = visiting || new Set();
-      const key = 'in:' + pin;
+      const key = 'in:' + broche;
       if (visiting.has(key)) return 'false';
       visiting.add(key);
       const parts = [];
-      network(pin, 'digital').forEach(function (endpoint) {
-        if (endpoint === pin || isRightRail(endpoint) || isJunction(endpoint)) return;
+      network(broche, 'digital').forEach(function (endpoint) {
+        if (endpoint === broche || isRightRail(endpoint) || isJunction(endpoint)) return;
         if (isLeftRail(endpoint)) { parts.push('true'); return; }
         const parsed = endpointParts(endpoint);
         if (parsed.side === 'out') parts.push(digitalOutputExpr(endpoint, visiting));
       });
       visiting.delete(key);
       const result = orExpr(parts);
-      memoDigitalInput.set(pin, result);
+      memoDigitalInput.set(broche, result);
       return result;
     }
-    function digitalOutputExpr(pin, visiting) {
-      if (memoDigitalOutput.has(pin)) return memoDigitalOutput.get(pin);
-      if (isLeftRail(pin)) return 'true';
-      if (isRightRail(pin)) return 'false';
+    function digitalOutputExpr(broche, visiting) {
+      if (memoDigitalOutput.has(broche)) return memoDigitalOutput.get(broche);
+      if (isLeftRail(broche)) return 'true';
+      if (isRightRail(broche)) return 'false';
       visiting = visiting || new Set();
-      const key = 'out:' + pin;
+      const key = 'out:' + broche;
       if (visiting.has(key)) return 'false';
       visiting.add(key);
-      const parsed = endpointParts(pin);
+      const parsed = endpointParts(broche);
       const element = byId.get(parsed.elementId);
       if (!element) { visiting.delete(key); return 'false'; }
       const type = cleanType(element.type);
@@ -898,7 +898,7 @@
       else if (COMPARATOR_TYPES.has(type) || ['ton', 'toff', 'ctu', 'sr', 'coil', 'set', 'reset'].includes(type)) result = variable;
       else result = digitalInputExpr(pinId(element, 'in'), visiting);
       visiting.delete(key);
-      memoDigitalOutput.set(pin, result);
+      memoDigitalOutput.set(broche, result);
       return result;
     }
     function powerTo(element, side) { return digitalInputExpr(pinId(element, side || 'in'), new Set()); }
@@ -1047,13 +1047,13 @@
     lines.push('');
     lines.push('float clampFloat(float value,float a,float b){float lo=min(a,b),hi=max(a,b);return max(lo,min(hi,value));}');
     lines.push('float mapFloat(float value,float inMin,float inMax,float outMin,float outMax,bool limit){if(inMax==inMin)return outMin;if(limit)value=clampFloat(value,inMin,inMax);return outMin+((value-inMin)/(inMax-inMin))*(outMax-outMin);}');
-    lines.push('float runPID(float &integral,float &prevError,uint32_t &lastAt,float &output,float pv,float sp,float kp,float ki,float kd,uint32_t sampleMs,float outMin,float outMax,bool cooling,bool manualMode,float manualOutput,uint32_t now){if(manualMode){output=clampFloat(manualOutput,outMin,outMax);return output;}sampleMs=max((uint32_t)20,sampleMs);if(lastAt&&now-lastAt<sampleMs)return output;float dt=max((float)sampleMs,(float)(lastAt?now-lastAt:sampleMs))/1000.0f;float error=(sp-pv)*(cooling?-1.0f:1.0f);float derivative=(error-prevError)/max(dt,0.001f);float candidate=integral+error*dt;float raw=kp*error+ki*candidate+kd*derivative;float limited=clampFloat(raw,outMin,outMax);if(raw==limited||((error>0)!=(raw-limited>0)))integral=candidate;prevError=error;lastAt=now;output=limited;return limited;}');
+    lines.push('float runPID(float &integral,float &prevError,uint32_t &lastAt,float &output,float pv,float sp,float kp,float ki,float kd,uint32_t sampleMs,float outMin,float outMax,bool cooling,bool manualMode,float manualOutput,uint32_t now){if(manualMode){output=clampFloat(manualOutput,outMin,outMax);return output;}sampleMs=max((uint32_t)20,sampleMs);if(lastAt&&now-lastAt<sampleMs)return output;float dt=max((float)sampleMs,(float)(lastAt?now-lastAt:sampleMs))/1000.0f;float erreur=(sp-pv)*(cooling?-1.0f:1.0f);float derivative=(erreur-prevError)/max(dt,0.001f);float candidate=integral+erreur*dt;float raw=kp*erreur+ki*candidate+kd*derivative;float limited=clampFloat(raw,outMin,outMax);if(raw==limited||((erreur>0)!=(raw-limited>0)))integral=candidate;prevError=erreur;lastAt=now;output=limited;return limited;}');
     lines.push('');
-    lines.push('void setupPWMOutput(uint8_t pin,uint8_t channel,uint32_t frequency,uint8_t resolution){');
-    lines.push('#if defined(ARDUINO_ARCH_ESP32)'); lines.push('  #if SIMUPLC_ESP_CORE3'); lines.push('    ledcAttach(pin,frequency,resolution);'); lines.push('  #else'); lines.push('    ledcSetup(channel,frequency,resolution);ledcAttachPin(pin,channel);'); lines.push('  #endif'); lines.push('#else'); lines.push('  (void)channel;(void)frequency;(void)resolution;pinMode(pin,OUTPUT);'); lines.push('#endif'); lines.push('}');
-    lines.push('void writePWMOutput(uint8_t pin,uint8_t channel,float percent,uint8_t resolution){'); lines.push('  percent=clampFloat(percent,0.0f,100.0f);');
-    lines.push('#if defined(ARDUINO_ARCH_ESP32)'); lines.push('  uint8_t bits=min((uint8_t)16,max((uint8_t)1,resolution));uint32_t maxDuty=(1UL<<bits)-1UL;uint32_t duty=(uint32_t)roundf(percent*maxDuty/100.0f);'); lines.push('  #if SIMUPLC_ESP_CORE3'); lines.push('    ledcWrite(pin,duty);'); lines.push('  #else'); lines.push('    ledcWrite(channel,duty);'); lines.push('  #endif'); lines.push('#else'); lines.push('  (void)channel;(void)resolution;analogWrite(pin,(int)roundf(percent*255.0f/100.0f));'); lines.push('#endif'); lines.push('}');
-    lines.push('void writeAnalogOutput(uint8_t pin,float volts,float minV,float maxV){'); lines.push('#if defined(ARDUINO_ARCH_ESP32)'); lines.push('  float ratio=(volts-minV)/(maxV-minV==0?1:(maxV-minV));ratio=clampFloat(ratio,0.0f,1.0f);dacWrite(pin,(uint8_t)roundf(ratio*255.0f));'); lines.push('#else'); lines.push('  (void)pin;(void)volts;(void)minV;(void)maxV;'); lines.push('#endif'); lines.push('}');
+    lines.push('void setupPWMOutput(uint8_t broche,uint8_t channel,uint32_t frequency,uint8_t resolution){');
+    lines.push('#if defined(ARDUINO_ARCH_ESP32)'); lines.push('  #if SIMUPLC_ESP_CORE3'); lines.push('    ledcAttach(broche,frequency,resolution);'); lines.push('  #else'); lines.push('    ledcSetup(channel,frequency,resolution);ledcAttachPin(broche,channel);'); lines.push('  #endif'); lines.push('#else'); lines.push('  (void)channel;(void)frequency;(void)resolution;pinMode(broche,OUTPUT);'); lines.push('#endif'); lines.push('}');
+    lines.push('void writePWMOutput(uint8_t broche,uint8_t channel,float percent,uint8_t resolution){'); lines.push('  percent=clampFloat(percent,0.0f,100.0f);');
+    lines.push('#if defined(ARDUINO_ARCH_ESP32)'); lines.push('  uint8_t bits=min((uint8_t)16,max((uint8_t)1,resolution));uint32_t maxDuty=(1UL<<bits)-1UL;uint32_t duty=(uint32_t)roundf(percent*maxDuty/100.0f);'); lines.push('  #if SIMUPLC_ESP_CORE3'); lines.push('    ledcWrite(broche,duty);'); lines.push('  #else'); lines.push('    ledcWrite(channel,duty);'); lines.push('  #endif'); lines.push('#else'); lines.push('  (void)channel;(void)resolution;analogWrite(broche,(int)roundf(percent*255.0f/100.0f));'); lines.push('#endif'); lines.push('}');
+    lines.push('void writeAnalogOutput(uint8_t broche,float volts,float minV,float maxV){'); lines.push('#if defined(ARDUINO_ARCH_ESP32)'); lines.push('  float ratio=(volts-minV)/(maxV-minV==0?1:(maxV-minV));ratio=clampFloat(ratio,0.0f,1.0f);dacWrite(broche,(uint8_t)roundf(ratio*255.0f));'); lines.push('#else'); lines.push('  (void)broche;(void)volts;(void)minV;(void)maxV;'); lines.push('#endif'); lines.push('}');
     lines.push('int findTagIndex(const char* tag,const char* const* tags,uint8_t count){for(uint8_t i=0;i<count;i++)if(strcmp(tag,tags[i])==0)return i;return -1;}');
     lines.push('bool effectiveDigitalInput(uint8_t ix){if(ix>=N_DIGITAL_INPUTS)return false;if(simuplcControlMode==SIMUPLC_PHYSICAL)return physicalDigitalInputs[ix];if(simuplcControlMode==SIMUPLC_HMI)return digitalInputIsNc[ix]?(physicalDigitalInputs[ix]&&hmiDigitalInputs[ix]):hmiDigitalInputs[ix];return digitalInputIsNc[ix]?(physicalDigitalInputs[ix]&&hmiDigitalInputs[ix]):(physicalDigitalInputs[ix]||hmiDigitalInputs[ix]);}');
     lines.push('float effectiveAnalogInput(uint8_t ix){if(ix>=N_ANALOG_INPUTS)return 0.0f;if(simuplcControlMode==SIMUPLC_PHYSICAL)return physicalAnalogInputs[ix];if(simuplcControlMode==SIMUPLC_HMI)return hmiAnalogValid[ix]?hmiAnalogInputs[ix]:0.0f;return hmiAnalogValid[ix]?hmiAnalogInputs[ix]:physicalAnalogInputs[ix];}');
@@ -1205,7 +1205,7 @@
       savePinMap(map);
       const validation = validatePinMap(current.signals, map);
       if (!validation.ok) {
-        return '/*\n  No se pudo generar ESP32 por errores de asignacion de pines:\n  - ' + validation.errors.join('\n  - ') + '\n*/';
+        return '/*\n  Impossible de generar ESP32 por errores de asignacion de pines:\n  - ' + validation.errors.join('\n  - ') + '\n*/';
       }
       let code;
       if (current.editor === 'ladder') {
@@ -1272,7 +1272,7 @@
   }
 
   function optionMarkup(pins, current) {
-    return pins.map(function (pin) { return '<option value="' + pin + '"' + (pin === current ? ' selected' : '') + '>' + pinLabel(pin) + '</option>'; }).join('');
+    return pins.map(function (pin) { return '<option value="' + pin + '"' + (broche === current ? ' selected' : '') + '>' + pinLabel(broche) + '</option>'; }).join('');
   }
 
   async function renderESP32PinsUI(forceDefaults) {
@@ -1285,20 +1285,20 @@
 
     const groups = [
       { key: 'digitalInputs', title: 'Entrées digitales', pins: BOARD.digitalInputPins },
-      { key: 'analogInputs', title: 'Entrées analógicas AI', pins: BOARD.analogInputPins },
+      { key: 'analogInputs', title: 'Entrées analogiques AI', pins: BOARD.analogInputPins },
       { key: 'outputs', title: 'Sorties Q', pins: BOARD.outputPins }
     ];
-    const grid = panel.querySelector('.esp32-pin-grid');
+    const grid = panel.querySelector('.esp32-broche-grid');
     grid.innerHTML = '';
     groups.forEach(function (group) {
       const column = document.createElement('div');
-      column.className = 'esp32-pin-col';
+      column.className = 'esp32-broche-col';
       const title = document.createElement('h4');
       title.textContent = group.title;
       column.appendChild(title);
       (current.signals[group.key] || []).forEach(function (label) {
         const row = document.createElement('div');
-        row.className = 'esp32-pin-row';
+        row.className = 'esp32-broche-row';
         row.innerHTML = '<label title="' + label + '">' + label + '</label><select data-group="' + group.key + '" data-label="' + label + '">' + optionMarkup(group.pins, map[group.key][label]) + '</select>';
         column.appendChild(row);
       });
@@ -1342,7 +1342,7 @@
     panel.id = 'esp32PinsPanel';
     panel.innerHTML = `
       <div class="title">Mapeo de GPIO para ESP32</div>
-      <div class="sub2">Las entradas AI usan ADC1 para mantener compatibilidad con el futuro bloque WiFi. Los GPIO 34–39 son solo entrada y no tienen pull-up interno.</div>
+      <div class="sub2">Les entrées AI utilisent ADC1 pour garder la compatibilité avec le futur bloc WiFi. Les GPIO 34–39 sont entrée seule et n’ont pas de pull-up interne.</div>
       <div class="esp32-pin-grid"></div>
       <div id="esp32PinsFooter"><button id="esp32PinsReset" type="button">Restaurar pines seguros</button><div id="esp32PinsMessages"></div></div>
     `;
@@ -1380,14 +1380,14 @@
     if (panel) panel.style.display = esp32 ? 'block' : 'none';
     if (oldPins) oldPins.style.display = esp32 ? 'none' : '';
     if (modeBox) modeBox.style.display = esp32 ? 'none' : '';
-    if (boardInfo && esp32) boardInfo.textContent = 'ESP32 clásico: ADC de 12 bits. AI usa GPIO ADC1 32–39; se evitan ADC2 para preparar WiFi.';
-    if (title) title.textContent = esp32 ? 'Generador ESP32 (.ino)' : 'Generador Arduino (.ino)';
+    if (boardInfo && esp32) boardInfo.textContent = 'ESP32 classique : ADC 12 bits. AI utilise GPIO ADC1 32–39 ; ADC2 est évité pour préparer le WiFi.';
+    if (title) title.textContent = esp32 ? 'Générateur ESP32 (.ino)' : 'Générateur Arduino (.ino)';
     if (subtitle) subtitle.textContent = esp32 ? 'FBD ou Ladder → code pour ESP32 DevKit V1' : 'Votre circuit → code prêt à coller dans Arduino IDE';
-    if (hint && esp32) hint.innerHTML = '<b>ESP32:</b> asigna GPIO para I, AI y Q. Las entradas digitales se generan con <b>INPUT_PULLUP</b>; las AI usan lectura de 12 bits. El código incluye SCALE, comparadores e histéresis.';
+    if (hint && esp32) hint.innerHTML = '<b>ESP32 :</b> assignez des GPIO pour I, AI et Q. Les entrées numériques sont générées avec <b>INPUT_PULLUP</b> ; les AI utilisent une lecture 12 bits. Le code inclut SCALE, comparateurs et hystérésis.';
     if (download) download.textContent = esp32 ? '⬇ Descargar ESP32 .ino' : '⬇ Descargar .ino';
     const button = document.getElementById('btnArduino');
     if (button) {
-      button.title='Generar código Arduino o ESP32';
+      button.title='Generar code Arduino o ESP32';
       const img = button.querySelector('img');
       button.innerHTML = '';
       if (img) button.appendChild(img);
@@ -1401,7 +1401,7 @@
       try { return await global.SimuPLCEditors.getLadderArduino(); }
       catch (error) { return '// Error generando Arduino desde Ladder: ' + (error && error.message ? error.message : error); }
     }
-    try { return typeof global.generateArduinoSketch === 'function' ? global.generateArduinoSketch() : '// Generador Arduino no disponible.'; }
+    try { return typeof global.generateArduinoSketch === 'function' ? global.generateArduinoSketch() : '// Générateur Arduino non disponible.'; }
     catch (error) { return '// Error generando Arduino: ' + (error && error.message ? error.message : error); }
   }
 
@@ -1410,7 +1410,7 @@
     if (!textarea) return '';
     applyModalMode();
     if (isESP32Selected()) {
-      textarea.value = '// Generando código ESP32...';
+      textarea.value = '// Génération du code ESP32...';
       const code = await generateForActiveEditor();
       textarea.value = code;
       return code;

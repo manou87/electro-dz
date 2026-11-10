@@ -11,13 +11,13 @@
 <body>
 <main class="card">
 <h1>Diagnostic USB Android V40</h1>
-<p>En Chrome 148 o superior se utiliza Web Serial nativo. WebUSB se reserva como respaldo forzado.</p>
+<p>Sous Chrome 148 ou supérieur, Web Serial natif est utilisé. WebUSB est réservé comme secours forcé.</p>
 <div class="grid">
 <div class="item"><span>Android</span><b id="android">—</b></div>
 <div class="item"><span>HTTPS</span><b id="secure">—</b></div>
 <div class="item"><span>Web Serial</span><b id="webserial">—</b></div>
-<div class="item"><span>WebUSB respaldo</span><b id="webusb">—</b></div>
-<div class="item"><span>Placa</span><b id="device">No seleccionada</b></div>
+<div class="item"><span>WebUSB de secours</span><b id="webusb">—</b></div>
+<div class="item"><span>Placa</span><b id="device">Non sélectionnée</b></div>
 <div class="item"><span>Transporte</span><b id="backend">—</b></div>
 </div>
 <div class="actions">
@@ -30,7 +30,7 @@
 </div>
 <div class="status" id="status">Listo para seleccionar la placa.</div>
 <pre class="log" id="log"></pre>
-<div class="note"><b>Prueba esperada:</b> al pulsar I1 ON debe llegar <code>STATE</code> y activarse Q1/D13. Con I1 OFF debe apagarse. No debe aparecer una ráfaga continua de <code>GET_STATE</code>.</div>
+<div class="note"><b>Prueba esperada:</b> al pulsar I1 ON debe llegar <code>STATE</code> et Q1/D13 doit s’activer. Avec I1 OFF, il doit s’éteindre. Aucune rafale continue ne doit apparaître de <code>GET_STATE</code>.</div>
 </main>
 <script src="./assets/js/webusb-serial-v21.js?v=41"></script>
 <script>
@@ -46,9 +46,9 @@ function enableOpen(v){$('openBtn').disabled=!v;}
 function enableIo(v){['i1OnBtn','i1OffBtn','stateBtn','closeBtn'].forEach(id=>$(id).disabled=!v);}
 async function readLoop(){reading=true;let buffer='';try{while(reading&&reader){const r=await reader.read();if(r.done)break;if(!r.value)continue;buffer+=decoder.decode(r.value,{stream:true});let ix;while((ix=buffer.indexOf('\n'))>=0){const msg=buffer.slice(0,ix).replace(/\r$/,'').trim();buffer=buffer.slice(ix+1);if(msg)line(msg,'rx');}}}catch(e){if(reading){line('ERROR RX: '+e.message);status('Error de lectura: '+e.message,true);}}}
 async function send(command){if(!writer)throw new Error('Puerto no abierto.');line(command,'tx');await writer.write(encoder.encode(command+'\n'));}
-function init(){const ua=navigator.userAgent||'';$('android').textContent=/Android/i.test(ua)?'Sí':'No';$('secure').textContent=window.isSecureContext?'Sí':'No';$('webserial').textContent=navigator.serial?'Disponible':'No disponible';$('webusb').textContent=navigator.usb?'Disponible':'No disponible';if(!window.isSecureContext)status('La página debe abrirse mediante HTTPS.',true);else if(!navigator.serial&&!navigator.usb)status('Este navegador no ofrece Web Serial ni WebUSB.',true);}
-$('selectBtn').addEventListener('click',async()=>{try{status('Abriendo selector de dispositivos…');if(navigator.serial){backend='native';port=await navigator.serial.requestPort();$('backend').textContent='Web Serial Android';}else{backend='webusb';port=await window.SimuPLCWebUsbSerial.requestPort();$('backend').textContent='WebUSB alternativo';}const info=port.getInfo?port.getInfo():{};$('device').textContent=(info.productName||'Arduino / puerto serie')+' · VID '+hex(info.usbVendorId)+' / PID '+hex(info.usbProductId);enableOpen(true);line('Dispositivo seleccionado: '+$('device').textContent);status('Placa seleccionada. Pulsa Ouvrir a 115200.');}catch(e){status(e.message||String(e),true);line('ERROR: '+(e.message||e));}});
-$('openBtn').addEventListener('click',async()=>{try{status('Abriendo puerto…');await port.open({baudRate:115200,dataBits:8,stopBits:1,parity:'none',flowControl:'none'});reader=port.readable.getReader();writer=port.writable.getWriter();readLoop();await new Promise(r=>setTimeout(r,/Android/i.test(navigator.userAgent||'')?1800:1000));await send('HELLO,SIMUPLC,1');enableOpen(false);enableIo(true);status('Puerto abierto. Esperando respuesta del Arduino…');}catch(e){status(e.message||String(e),true);line('ERROR AL ABRIR: '+(e.message||e));}});
+function init(){const ua=navigator.userAgent||'';$('android').textContent=/Android/i.test(ua)?'Oui':'No';$('secure').textContent=window.isSecureContext?'Oui':'No';$('webserial').textContent=navigator.serial?'Disponible':'No disponible';$('webusb').textContent=navigator.usb?'Disponible':'No disponible';if(!window.isSecureContext)status('La page doit être ouverte via HTTPS.',true);else if(!navigator.serial&&!navigator.usb)status('Este navigateur no ofrece Web Serial ni WebUSB.',true);}
+$('selectBtn').addEventListener('click',async()=>{try{status('Abriendo selector de dispositivos…');if(navigator.serial){backend='native';port=await navigator.serial.requestPort();$('backend').textContent='Web Serial Android';}else{backend='webusb';port=await window.SimuPLCWebUsbSerial.requestPort();$('backend').textContent='WebUSB alternativo';}const info=port.getInfo?port.getInfo():{};$('device').textContent=(info.productName||'Arduino / puerto serie')+' · VID '+hex(info.usbVendorId)+' / PID '+hex(info.usbProductId);enableOpen(true);line('Appareil sélectionné : '+$('device').textContent);status('Carte sélectionnée. Appuyez sur Ouvrir à 115200.');}catch(e){status(e.message||String(e),true);line('ERROR: '+(e.message||e));}});
+$('openBtn').addEventListener('click',async()=>{try{status('Abriendo puerto…');await port.open({baudRate:115200,dataBits:8,stopBits:1,parity:'none',flowControl:'none'});reader=port.readable.getReader();writer=port.writable.getWriter();readLoop();await new Promise(r=>setTimeout(r,/Android/i.test(navigator.userAgent||'')?1800:1000));await send('HELLO,SIMUPLC,1');enableOpen(false);enableIo(true);status('Puerto abierto. Esperando respuesta del Arduino…');}catch(e){status(e.message||String(e),true);line('ERREUR À L’OUVERTURE : '+(e.message||e));}});
 $('i1OnBtn').addEventListener('click',()=>send('SET,I1,1').catch(e=>status(e.message,true)));
 $('i1OffBtn').addEventListener('click',()=>send('SET,I1,0').catch(e=>status(e.message,true)));
 $('stateBtn').addEventListener('click',()=>send('GET_STATE').catch(e=>status(e.message,true)));

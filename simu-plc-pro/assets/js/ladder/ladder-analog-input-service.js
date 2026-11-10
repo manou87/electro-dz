@@ -252,9 +252,9 @@
     section.dataset.family = 'analog';
     section.innerHTML = '<p class="ladder-lib-section-title">Analogique</p>'
       + '<div class="ladder-lib-grid">'
-      + '<button type="button" class="ladder-lib-item" data-premium="1" data-ladder-type="' + TYPE + '" title="Entrée analogique: simula una señal RAW o escalada">'
+      + '<button type="button" class="ladder-lib-item" data-premium="1" data-ladder-type="' + TYPE + '" title="Entrée analogique : simule un signal RAW ou mis à l’échelle">'
       + '<span class="ladder-lib-symbol">AI</span>'
-      + '<span class="ladder-lib-text"><strong>Entrée analogique</strong><span>Valor RAW o escalado</span></span>'
+      + '<span class="ladder-lib-text"><strong>Entrée analogique</strong><span>Valeur RAW ou mise à l’échelle</span></span>'
       + '</button></div>';
     const note = library.querySelector('.ladder-lib-note');
     if (note) library.insertBefore(section, note);
@@ -280,15 +280,15 @@
     wrap.id = 'ladderAnalogEditFields';
     wrap.className = 'ladder-analog-edit-grid';
     wrap.innerHTML = `
-      <label>Valor RAW actual<input class="edit-input" id="ladderAiRawValue" type="number" step="1"></label>
-      <label>Modo de salida<select class="edit-select" id="ladderAiOutputMode"><option value="scaled">Valor escalado</option><option value="raw">Valor RAW</option></select></label>
+      <label>Valeur RAW actual<input class="edit-input" id="ladderAiRawValue" type="number" step="1"></label>
+      <label>Modo de salida<select class="edit-select" id="ladderAiOutputMode"><option value="scaled">Valeur escalado</option><option value="raw">Valeur RAW</option></select></label>
       <label>RAW mínimo<input class="edit-input" id="ladderAiRawMin" type="number" step="any"></label>
       <label>RAW máximo<input class="edit-input" id="ladderAiRawMax" type="number" step="any"></label>
       <label>Ingeniería mínima<input class="edit-input" id="ladderAiEngMin" type="number" step="any"></label>
       <label>Ingeniería máxima<input class="edit-input" id="ladderAiEngMax" type="number" step="any"></label>
       <label>Unidad<input class="edit-input" id="ladderAiUnit" type="text" maxlength="12" placeholder="%, °C, bar..."></label>
       <label>Decimales<input class="edit-input" id="ladderAiDecimals" type="number" min="0" max="4" step="1"></label>
-      <label class="wide">Limitar al rango<select class="edit-select" id="ladderAiClamp"><option value="1">Sí</option><option value="0">No</option></select></label>
+      <label class="wide">Limitar al rango<select class="edit-select" id="ladderAiClamp"><option value="1">Oui</option><option value="0">No</option></select></label>
       <div class="ladder-analog-edit-help">La entrada AI conserva el valor RAW y calcula el valor de ingeniería. En simulación podrás modificarla desde la tabla de variables o tocando el bloque.</div>
     `;
     const actions = grid.querySelector('.storage-actions');
@@ -372,7 +372,7 @@
       slider.max = String(Math.max(element.rawMin, element.rawMax));
       slider.step = '1';
       slider.value = String(rawValue(element));
-      slider.setAttribute('aria-label', 'Valor RAW de ' + (element.label || 'AI'));
+      slider.setAttribute('aria-label', 'Valeur RAW de ' + (element.label || 'AI'));
       const number = document.createElement('input');
       number.type = 'number';
       number.min = slider.min;
@@ -408,7 +408,7 @@
       <div class="ladder-ai-quick-card" role="dialog" aria-modal="false" aria-label="Contrôle rapide d’entrée analogique">
         <div class="ladder-ai-quick-head"><h3 id="ladderAiQuickTitle">Entrada analógica</h3><button class="ladder-ai-quick-close" id="ladderAiQuickClose" type="button" aria-label="Fermer">×</button></div>
         <div class="ladder-ai-quick-summary"><div class="ladder-ai-quick-display" id="ladderAiQuickDisplay"></div><div class="ladder-ai-quick-raw" id="ladderAiQuickRaw"></div></div>
-        <div class="ladder-ai-controls"><input id="ladderAiQuickSlider" type="range" aria-label="Variar señal analógica"><input id="ladderAiQuickNumber" type="number" aria-label="Valor RAW"></div>
+        <div class="ladder-ai-controls"><input id="ladderAiQuickSlider" type="range" aria-label="Variar signal analogique"><input id="ladderAiQuickNumber" type="number" aria-label="Valeur RAW"></div>
       </div>`;
     document.body.appendChild(overlay);
     function close() { overlay.classList.remove('show'); document.body.classList.remove('ladder-ai-quick-open'); quickElementId = null; }
@@ -512,7 +512,7 @@
     const analogA = !!(pinA && pinA.signalType === 'analog');
     const analogB = !!(pinB && pinB.signalType === 'analog');
     if (analogA !== analogB) {
-      return { ok: false, reason: 'No conectes AI directamente a una bobina o contacto digital. Usa SCALE o un comparador analógico.' };
+      return { ok: false, reason: 'Ne connectez pas AI directement à une bobine ou un contact numérique. Utilisez SCALE ou un comparateur analogique.' };
     }
     return { ok: true };
   }
@@ -630,7 +630,7 @@
       window.validateProConnection = validateProConnection = function (pinA, pinB) {
         const analogA = pinA && pinA.signalType === 'analog';
         const analogB = pinB && pinB.signalType === 'analog';
-        if (analogA !== analogB) return { ok: false, reason: 'No conectes AI directamente a una bobina o contacto digital. Usa SCALE o un comparador analógico.' };
+        if (analogA !== analogB) return { ok: false, reason: 'Ne connectez pas AI directement à une bobine ou un contact numérique. Utilisez SCALE ou un comparateur analogique.' };
         return previousValidate.apply(this, arguments);
       };
     } catch (_) {}

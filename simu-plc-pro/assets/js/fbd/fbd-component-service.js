@@ -3,7 +3,7 @@
   if(global.SimuPLCFBDComponents) return;
 
   var adapter=global.SimuPLCFBDAdapter;
-  if(!adapter){ console.error('[SimuPLC FBD] Adaptador de componentes no disponible.'); return; }
+  if(!adapter){ console.error('[SimuPLC FBD] Adaptateur de composants non disponible.'); return; }
   var stats={created:0,removed:0,blockedDuplicateGesture:0};
 
   function dispatch(name,detail){

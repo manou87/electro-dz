@@ -133,7 +133,7 @@
 
   function refreshCircuitList() {
     try { if (typeof global.refreshCircuitList === 'function') global.refreshCircuitList(); }
-    catch (error) { console.warn('[SimuPLCActions] No se pudo actualizar Mis circuitos.', error); }
+    catch (error) { console.warn('[SimuPLCActions] Impossible de mettre à jour Mes circuits.', error); }
   }
 
   async function createNew() {
@@ -141,8 +141,8 @@
       V22: NEW ya no borra directamente.
       El gestor unificado muestra:
       - Nouveau projet
-      - Nouveau circuit / nueva pantalla
-      y luego permite guardar antes de continuar.
+      - Nouveau circuit / nouvel écran
+      puis permet d’enregistrer avant de continuer.
     */
     if (global.SimuPLCUnifiedProjects && typeof global.SimuPLCUnifiedProjects.openNew === 'function') {
       global.SimuPLCUnifiedProjects.openNew();
@@ -152,23 +152,23 @@
       const mode = activeEditor();
       const label = mode === 'ladder' ? 'Ladder' : 'FBD';
       const ok = await getModal().confirm(
-        'Se limpiará solamente el editor ' + label + '. El otro editor permanecerá intacto.',
+        'Seul l’éditeur sera effacé ' + label + '. L’autre éditeur restera intact.',
         'Nouveau ' + label
       );
       if (!ok) return false;
-      await createProjectBackup('antes-de-nuevo-' + mode);
+      await createProjectBackup('antes-de-nouveau-' + mode);
       const editors = getEditors();
       let result;
       if (mode === 'ladder') {
-        if (typeof editors.resetLadderOnly !== 'function') throw new Error('El reinicio Ladder no está disponible.');
+        if (typeof editors.resetLadderOnly !== 'function') throw new Error('La réinitialisation Ladder n’est pas disponible.');
         result = await editors.resetLadderOnly();
       } else {
-        if (typeof editors.resetFBDOnly !== 'function') throw new Error('El reinicio FBD no está disponible.');
+        if (typeof editors.resetFBDOnly !== 'function') throw new Error('La réinitialisation FBD n’est pas disponible.');
         result = editors.resetFBDOnly();
       }
       if (result === false) throw new Error('El editor no pudo reiniciarse.');
-      await acknowledgeProject('nuevo-' + mode);
-      toast('Nouveau ' + label + ' listo; el otro editor no cambió');
+      await acknowledgeProject('nouveau-' + mode);
+      toast('Nouveau ' + label + ' prêt ; l’autre éditeur n’a pas changé');
       return true;
     }).catch(function (error) {
       getModal().alert('Impossible de créer le nouveau circuit : ' + (error.message || error), 'Nouveau circuit');
@@ -196,29 +196,29 @@
 
       const editors = getEditors();
       const repository = getRepository();
-      if (!repository) throw new Error('El repositorio de proyectos no está disponible.');
+      if (!repository) throw new Error('Le dépôt de projets n’est pas disponible.');
       let item;
       if (mode === 'ladder') {
-        if (typeof editors.getLadderState !== 'function') throw new Error('No se pudo leer Ladder. Abre LADDER una vez y vuelve a guardar.');
+        if (typeof editors.getLadderState !== 'function') throw new Error('Impossible de leer Ladder. Abre LADDER una vez y vuelve a enregistrer.');
         item = repository.createSavedItem({ name: name, editor: mode, ladder: await editors.getLadderState() });
       } else {
-        if (typeof editors.getFBDState !== 'function') throw new Error('No se pudo leer FBD.');
+        if (typeof editors.getFBDState !== 'function') throw new Error('Impossible de leer FBD.');
         item = repository.createSavedItem({ name: name, editor: mode, fbd: editors.getFBDState() });
       }
-      if (!repository.add(item)) throw new Error('El navegador no permitió guardar el circuito.');
+      if (!repository.add(item)) throw new Error('Le navigateur n’a pas autorisé l’enregistrement du circuit.');
       refreshCircuitList();
-      await acknowledgeProject('guardado-' + mode);
-      toast('Guardado solo ' + label + '; el otro editor no se toca');
+      await acknowledgeProject('enregistre-' + mode);
+      toast('Enregistrement seul ' + label + '; l’autre éditeur n’a pas été touché');
       return item;
     }).catch(function (error) {
-      getModal().alert('Impossible d’enregistrer : ' + (error.message || error), 'Error al guardar');
+      getModal().alert('Impossible d’enregistrer : ' + (error.message || error), 'Erreur d’enregistrement');
       return false;
     });
   }
 
   async function exportProject() {
     return runOnce('export', async function () {
-      let name = await getModal().prompt('Nombre del archivo para exportar el proyecto completo FBD/Ladder.', 'Projet SimuPLC', 'Exporter le projet');
+      let name = await getModal().prompt('Nombre del fichier para exporter el projet completo FBD/Ladder.', 'Projet SimuPLC', 'Exporter le projet');
       if (name === null || name === false) return false;
       name = String(name).trim() || 'Projet SimuPLC';
       const projectIO = getProjectIO();
@@ -227,11 +227,11 @@
       const project = await projectIO.captureCurrentProject(name);
       repository.persistLastProject(project);
       projectIO.exportProject(project, name);
-      await acknowledgeProject('proyecto-exportado');
+      await acknowledgeProject('projet-exportado');
       toast('Projet FBD/Ladder exportado');
       return project;
     }).catch(function (error) {
-      getModal().alert('Impossible d’exporterer : ' + (error.message || error), 'Error al exportar');
+      getModal().alert('Impossible d’exporterer : ' + (error.message || error), 'Erreur d’exportation');
       return false;
     });
   }
@@ -239,7 +239,7 @@
   function requestImport() {
     const input = document.getElementById('loadInput');
     if (!input) {
-      getModal().alert('No se encontró el selector de archivos.', 'Importer');
+      getModal().alert('Introuvable : el selector de archivos.', 'Importer');
       return false;
     }
     input.value = '';
@@ -255,15 +255,15 @@
       if (!projectIO || !repository) throw new Error('Les modules de projet ne sont pas disponibles.');
       const source = projectIO.parseImportText(await file.text());
       const canonical = await projectIO.prepareImport(source);
-      await createProjectBackup('antes-de-importar-proyecto');
+      await createProjectBackup('antes-de-importer-projet');
       const loaded = await projectIO.loadCanonical(canonical);
-      if (loaded === false) throw new Error('El proyecto no pudo cargarse completamente.');
+      if (loaded === false) throw new Error('El projet no pudo cargarse completamente.');
       repository.persistLastProject(canonical);
-      await acknowledgeProject('proyecto-importado');
+      await acknowledgeProject('projet-importado');
       toast('Projet importé correctement');
       return true;
     }).catch(function (error) {
-      getModal().alert('Impossible d’importer : ' + (error.message || error), 'Error al importar');
+      getModal().alert('Impossible d’importer : ' + (error.message || error), 'Erreur lors de importer');
       return false;
     });
   }
@@ -286,28 +286,28 @@
       const normalized = repository.normalizeSavedItem(item, activeEditor());
       const editors = getEditors();
       if (normalized.editor === 'ladder') {
-        if (!normalized.ladder) throw new Error('Este circuito no contiene datos Ladder.');
+        if (!normalized.ladder) throw new Error('Ce circuit ne contient pas de données Ladder.');
         normalized.ladder = projectIO.validateEditorState('ladder', normalized.ladder);
       } else {
-        if (!normalized.fbd) throw new Error('Este circuito no contiene datos FBD.');
+        if (!normalized.fbd) throw new Error('Ce circuit ne contient pas de données FBD.');
         normalized.fbd = projectIO.validateEditorState('fbd', normalized.fbd);
       }
       await createProjectBackup('antes-de-abrir-circuito-' + normalized.editor);
       let ok;
       if (normalized.editor === 'ladder') {
-        if (!normalized.ladder) throw new Error('Este circuito no contiene datos Ladder.');
+        if (!normalized.ladder) throw new Error('Ce circuit ne contient pas de données Ladder.');
         setEditor('ladder');
         if (typeof editors.loadLadderState === 'function') ok = await editors.loadLadderState(clone(normalized.ladder));
         else if (typeof editors.loadProjectSelective === 'function') ok = await editors.loadProjectSelective({ ladder: clone(normalized.ladder), activeEditor: 'ladder' });
         toast('Ladder cargado; FBD intacto');
       } else {
-        if (!normalized.fbd) throw new Error('Este circuito no contiene datos FBD.');
+        if (!normalized.fbd) throw new Error('Ce circuit ne contient pas de données FBD.');
         setEditor('fbd');
         if (typeof editors.loadFBDState === 'function') ok = editors.loadFBDState(clone(normalized.fbd));
         else if (typeof editors.loadProjectSelective === 'function') ok = await editors.loadProjectSelective({ fbd: clone(normalized.fbd), activeEditor: 'fbd' });
         toast('FBD cargado; Ladder intacto');
       }
-      if (ok === false) throw new Error('El circuito no pudo abrirse.');
+      if (ok === false) throw new Error('El circuit no pudo abrirse.');
       const modal = document.getElementById('circuitsModal');
       if (modal) modal.style.display = 'none';
       await acknowledgeProject('circuito-abierto-' + normalized.editor);
@@ -342,7 +342,7 @@
     const repository = getRepository();
     if (!repository || !repository.remove(id)) return false;
     refreshCircuitList();
-    toast('Circuit eliminado');
+    toast('Circuit supprimé');
     return true;
   }
 

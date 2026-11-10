@@ -6,7 +6,7 @@
   var engine=global.SimuPLCFBDSimulationEngine;
   var view=global.SimuPLCFBDSimulationView;
   if(!adapter || !engine || !view){
-    console.error('[SimuPLC FBD] No se pudo iniciar el servicio de simulación.');
+    console.error('[SimuPLC FBD] Impossible de démarrer le service de simulation.');
     return;
   }
 

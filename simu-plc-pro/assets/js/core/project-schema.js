@@ -119,7 +119,7 @@
     const incoming = Number(source.schemaVersion || source.version || 1) || 1;
     const supported = Number(config.projectSchemaVersion || 1) || 1;
     if (incoming > supported) {
-      throw new Error('El proyecto usa la versión ' + incoming + ', pero esta aplicación admite hasta la versión ' + supported + '. Actualiza SimuPLC Lab para abrirlo.');
+      throw new Error('El projet usa la version ' + incoming + ', mais cette application prend en charge jusqu’à la version ' + supported + '. Actualiza SimuPLC Lab para abrirlo.');
     }
   }
 
@@ -153,7 +153,7 @@
 
     if (Array.isArray(source.nodes) || (source.data && Array.isArray(source.data.nodes))) {
       return createProject({
-        name: source.name || 'Projet FBD importado',
+        name: source.name || 'Projet FBD importé',
         activeEditor: 'fbd',
         fbd: source.data && Array.isArray(source.data.nodes) ? source.data : source,
         ladder: fallbacks.ladder,
@@ -163,7 +163,7 @@
 
     if (Array.isArray(source.rungs) || source.type === 'ladder-phase9' || source.type === 'ladder-free-pro-industrial') {
       return createProject({
-        name: source.name || 'Projet Ladder importado',
+        name: source.name || 'Projet Ladder importé',
         activeEditor: 'ladder',
         fbd: fallbacks.fbd,
         ladder: source,
@@ -171,73 +171,73 @@
       });
     }
 
-    throw new Error('El archivo no contiene un proyecto SimuPLC reconocido.');
+    throw new Error('Le fichier ne contient pas un projet SimuPLC reconnu.');
   }
 
   function validateFBD(fbd, errors, warnings, strict) {
     if (!isObject(fbd)) {
-      errors.push('La sección FBD no es válida.');
+      errors.push('La section FBD n’est pas valide.');
       return;
     }
-    if (!Array.isArray(fbd.nodes)) errors.push('FBD no contiene una lista nodes válida.');
-    if (!Array.isArray(fbd.connections)) errors.push('FBD no contiene una lista connections válida.');
-    if (Array.isArray(fbd.nodes) && fbd.nodes.length > MAX_FBD_NODES) errors.push('FBD supera el límite seguro de ' + MAX_FBD_NODES + ' bloques.');
-    if (Array.isArray(fbd.connections) && fbd.connections.length > MAX_FBD_CONNECTIONS) errors.push('FBD supera el límite seguro de ' + MAX_FBD_CONNECTIONS + ' conexiones.');
+    if (!Array.isArray(fbd.nodes)) errors.push('FBD ne contient pas une liste nodes valide.');
+    if (!Array.isArray(fbd.connections)) errors.push('FBD ne contient pas une liste connections valide.');
+    if (Array.isArray(fbd.nodes) && fbd.nodes.length > MAX_FBD_NODES) errors.push('FBD dépasse la limite sûre de ' + MAX_FBD_NODES + ' bloques.');
+    if (Array.isArray(fbd.connections) && fbd.connections.length > MAX_FBD_CONNECTIONS) errors.push('FBD dépasse la limite sûre de ' + MAX_FBD_CONNECTIONS + ' conexiones.');
     if (Array.isArray(fbd.nodes)) {
       fbd.nodes.forEach(function (node, index) {
-        if (!isObject(node)) errors.push('El bloque FBD #' + (index + 1) + ' está dañado.');
-        else if (strict && !node.type) errors.push('El bloque FBD #' + (index + 1) + ' no tiene tipo.');
-        else if (!node.id) warnings.push('El bloque FBD #' + (index + 1) + ' no tiene identificador; se intentará regenerar.');
+        if (!isObject(node)) errors.push('El bloc FBD #' + (index + 1) + ' est endommagé.');
+        else if (strict && !node.type) errors.push('El bloc FBD #' + (index + 1) + ' n’a pas de type.');
+        else if (!node.id) warnings.push('El bloc FBD #' + (index + 1) + ' n’a pas d’identifiant ; régénération tentée.');
       });
     }
     if (Array.isArray(fbd.connections)) {
       fbd.connections.forEach(function (wire, index) {
-        if (!isObject(wire)) errors.push('La conexión FBD #' + (index + 1) + ' está dañada.');
+        if (!isObject(wire)) errors.push('La connexion FBD #' + (index + 1) + ' est endommagée.');
       });
     }
   }
 
   function validateLadder(ladder, errors, warnings, strict) {
     if (!isObject(ladder)) {
-      errors.push('La sección Ladder no es válida.');
+      errors.push('La section Ladder n’est pas valide.');
       return;
     }
-    if (!Array.isArray(ladder.rungs)) errors.push('Ladder no contiene una lista rungs válida.');
-    if (!Array.isArray(ladder.proWires)) errors.push('Ladder no contiene una lista proWires válida.');
-    if (!Array.isArray(ladder.proJunctions)) errors.push('Ladder no contiene una lista proJunctions válida.');
-    if (Array.isArray(ladder.rungs) && ladder.rungs.length > MAX_LADDER_RUNGS) errors.push('Ladder supera el límite seguro de ' + MAX_LADDER_RUNGS + ' líneas.');
+    if (!Array.isArray(ladder.rungs)) errors.push('Ladder ne contient pas une liste rungs valide.');
+    if (!Array.isArray(ladder.proWires)) errors.push('Ladder ne contient pas une liste proWires valide.');
+    if (!Array.isArray(ladder.proJunctions)) errors.push('Ladder ne contient pas une liste proJunctions valide.');
+    if (Array.isArray(ladder.rungs) && ladder.rungs.length > MAX_LADDER_RUNGS) errors.push('Ladder dépasse la limite sûre de ' + MAX_LADDER_RUNGS + ' lignes.');
     let elementCount = 0;
     if (Array.isArray(ladder.rungs)) {
       ladder.rungs.forEach(function (rung, rungIndex) {
         if (!isObject(rung)) {
-          errors.push('La línea Ladder #' + (rungIndex + 1) + ' está dañada.');
+          errors.push('La ligne Ladder #' + (rungIndex + 1) + ' est endommagée.');
           return;
         }
         if (!Array.isArray(rung.elements)) {
-          errors.push('La línea Ladder #' + (rungIndex + 1) + ' no contiene una lista elements válida.');
+          errors.push('La ligne Ladder #' + (rungIndex + 1) + ' ne contient pas une liste elements valide.');
           return;
         }
         elementCount += rung.elements.length;
         rung.elements.forEach(function (element, elementIndex) {
-          if (!isObject(element)) errors.push('El elemento Ladder #' + (elementIndex + 1) + ' de la línea ' + (rungIndex + 1) + ' está dañado.');
-          else if (strict && !element.type) errors.push('El elemento Ladder #' + (elementIndex + 1) + ' de la línea ' + (rungIndex + 1) + ' no tiene tipo.');
-          else if (!element.id) warnings.push('Un elemento Ladder de la línea ' + (rungIndex + 1) + ' no tiene identificador.');
+          if (!isObject(element)) errors.push('L’élément Ladder #' + (elementIndex + 1) + ' de la ligne ' + (rungIndex + 1) + ' est endommagé.');
+          else if (strict && !element.type) errors.push('L’élément Ladder #' + (elementIndex + 1) + ' de la ligne ' + (rungIndex + 1) + ' n’a pas de type.');
+          else if (!element.id) warnings.push('Un élément Ladder de la ligne ' + (rungIndex + 1) + ' n’a pas d’identifiant.');
         });
       });
     }
-    if (elementCount > MAX_LADDER_ELEMENTS) errors.push('Ladder supera el límite seguro de ' + MAX_LADDER_ELEMENTS + ' elementos.');
-    if (Array.isArray(ladder.proWires) && ladder.proWires.length > MAX_LADDER_WIRES) errors.push('Ladder supera el límite seguro de ' + MAX_LADDER_WIRES + ' cables.');
+    if (elementCount > MAX_LADDER_ELEMENTS) errors.push('Ladder dépasse la limite sûre de ' + MAX_LADDER_ELEMENTS + ' éléments.');
+    if (Array.isArray(ladder.proWires) && ladder.proWires.length > MAX_LADDER_WIRES) errors.push('Ladder dépasse la limite sûre de ' + MAX_LADDER_WIRES + ' cables.');
     if (Array.isArray(ladder.proWires)) {
       ladder.proWires.forEach(function (wire, index) {
-        if (!isObject(wire)) errors.push('El cable Ladder #' + (index + 1) + ' está dañado.');
+        if (!isObject(wire)) errors.push('El câble Ladder #' + (index + 1) + ' est endommagé.');
       });
     }
-    if (Array.isArray(ladder.proJunctions) && ladder.proJunctions.length > MAX_LADDER_JUNCTIONS) errors.push('Ladder supera el límite seguro de ' + MAX_LADDER_JUNCTIONS + ' puntos de unión.');
+    if (Array.isArray(ladder.proJunctions) && ladder.proJunctions.length > MAX_LADDER_JUNCTIONS) errors.push('Ladder dépasse la limite sûre de ' + MAX_LADDER_JUNCTIONS + ' points de jonction.');
     if (Array.isArray(ladder.proJunctions)) {
       ladder.proJunctions.forEach(function (junction, index) {
-        if (!isObject(junction)) errors.push('El punto de unión Ladder #' + (index + 1) + ' está dañado.');
-        else if (!junction.id) warnings.push('El punto de unión Ladder #' + (index + 1) + ' no tiene identificador.');
-        else if (!Number.isFinite(Number(junction.x)) || !Number.isFinite(Number(junction.y))) errors.push('El punto de unión Ladder #' + (index + 1) + ' no tiene coordenadas válidas.');
+        if (!isObject(junction)) errors.push('Le point de jonction Ladder #' + (index + 1) + ' est endommagé.');
+        else if (!junction.id) warnings.push('Le point de jonction Ladder #' + (index + 1) + ' n’a pas d’identifiant.');
+        else if (!Number.isFinite(Number(junction.x)) || !Number.isFinite(Number(junction.y))) errors.push('Le point de jonction Ladder #' + (index + 1) + ' n’a pas de coordonnées valides.');
       });
     }
   }
@@ -247,21 +247,21 @@
     const errors = [];
     const warnings = [];
     const config = global.SimuPLCConfig || { projectType: 'simuplc-project', projectSchemaVersion: 1 };
-    if (!isObject(project)) return { ok: false, errors: ['El proyecto no es un objeto válido.'], warnings: [] };
+    if (!isObject(project)) return { ok: false, errors: ['El projet no es un objeto valide.'], warnings: [] };
 
     const incoming = Number(project.schemaVersion || project.version || 1) || 1;
     const supported = Number(config.projectSchemaVersion || 1) || 1;
     if (project.type === config.projectType && incoming > supported) {
-      errors.push('El proyecto requiere el esquema ' + incoming + ' y esta versión admite hasta el ' + supported + '.');
+      errors.push('El projet requiere el esquema ' + incoming + ' y esta version admite hasta el ' + supported + '.');
     }
-    if (project.type !== config.projectType) warnings.push('El tipo no es el formato canónico actual.');
+    if (project.type !== config.projectType) warnings.push('Le type n’est pas le format canonique actuel.');
     if (!isObject(project.editors)) {
-      errors.push('Falta la sección editors.');
+      errors.push('Falta la section editors.');
       return { ok: false, errors: errors, warnings: warnings };
     }
     validateFBD(project.editors.fbd, errors, warnings, !!options.strict);
     validateLadder(project.editors.ladder, errors, warnings, !!options.strict);
-    if (project.activeEditor !== 'fbd' && project.activeEditor !== 'ladder') warnings.push('El editor activo no está definido correctamente; se usará FBD.');
+    if (project.activeEditor !== 'fbd' && project.activeEditor !== 'ladder') warnings.push('L’éditeur actif n’est pas défini correctement ; FBD sera utilisé.');
     return { ok: errors.length === 0, errors: errors, warnings: warnings };
   }
 
@@ -269,19 +269,19 @@
     const errors = [];
     const warnings = [];
     const config = global.SimuPLCConfig || { projectType: 'simuplc-project', projectSchemaVersion: 1, legacyDualProjectType: 'simuplc-dual-project' };
-    if (!isObject(source)) return { ok: false, errors: ['El archivo no contiene un objeto de proyecto válido.'], warnings: [] };
+    if (!isObject(source)) return { ok: false, errors: ['Le fichier ne contient pas un objet de projet valide.'], warnings: [] };
 
     if (source.type === config.projectType) {
       const incoming = Number(source.schemaVersion || source.version || 1) || 1;
       const supported = Number(config.projectSchemaVersion || 1) || 1;
-      if (incoming > supported) errors.push('Este archivo fue creado con una versión más reciente de SimuPLC Lab. Esquema requerido: ' + incoming + '.');
-      if (!isObject(source.editors)) errors.push('El proyecto canónico no contiene la sección editors.');
+      if (incoming > supported) errors.push('Ce fichier a été créé avec une version plus récente de SimuPLC Lab. Schéma requis : ' + incoming + '.');
+      if (!isObject(source.editors)) errors.push('Le projet canonique ne contient pas la section editors.');
     }
 
     const looksDual = !!(source.editors || source.fbd || source.ladder || source.type === config.legacyDualProjectType);
     const looksFBD = Array.isArray(source.nodes) || !!(source.data && Array.isArray(source.data.nodes));
     const looksLadder = Array.isArray(source.rungs) || source.type === 'ladder-phase9' || source.type === 'ladder-free-pro-industrial';
-    if (!looksDual && !looksFBD && !looksLadder) errors.push('El archivo no parece contener un circuito FBD, Ladder ni un proyecto combinado.');
+    if (!looksDual && !looksFBD && !looksLadder) errors.push('Le fichier ne semble contenir ni circuit FBD, ni Ladder, ni projet combiné.');
 
     if (!errors.length) {
       try {

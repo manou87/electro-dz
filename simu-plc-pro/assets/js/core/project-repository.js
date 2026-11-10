@@ -38,7 +38,7 @@
         const raw = localStorage.getItem(key);
         value = raw ? JSON.parse(raw) : [];
       } catch (error) {
-        console.warn('[SimuPLCProjectRepository] No se pudo leer Mis circuitos.', error);
+        console.warn('[SimuPLCProjectRepository] Impossible de lire Mes circuits.', error);
         value = [];
       }
     }
@@ -54,7 +54,7 @@
       localStorage.setItem(key, JSON.stringify(safeList));
       return true;
     } catch (error) {
-      console.warn('[SimuPLCProjectRepository] No se pudo guardar Mis circuitos.', error);
+      console.warn('[SimuPLCProjectRepository] Impossible d’enregistrer Mes circuits.', error);
       return false;
     }
   }
@@ -171,7 +171,7 @@
       }
       return canonical;
     } catch (error) {
-      console.warn('[SimuPLCProjectRepository] No se pudo guardar el último proyecto.', error);
+      console.warn('[SimuPLCProjectRepository] Impossible de enregistrer el dernier projet.', error);
       return null;
     }
   }

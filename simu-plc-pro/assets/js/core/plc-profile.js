@@ -12,8 +12,8 @@
 
   const PROFILES = Object.freeze({
     classic: Object.freeze({
-      id: 'classic', label: 'SimuPLC actual', short: 'I1 / Q1', addressMode: 'sequential', mcu: 'any', recommendedBoard: null,
-      description: 'Compatibilidad con proyectos anteriores y selección libre de placa MCU.'
+      id: 'classic', label: 'SimuPLC actuel', short: 'I1 / Q1', addressMode: 'sequential', mcu: 'any', recommendedBoard: null,
+      description: 'Compatibilité avec les projets antérieurs et sélection libre de carte MCU.'
     }),
     s71200: Object.freeze({
       id: 's71200', label: 'Siemens S7-1200', short: 'I0.0 / Q0.0', addressMode: 'byte_bit', mcu: null, recommendedBoard: null,
@@ -25,11 +25,11 @@
     }),
     arduino_plc: Object.freeze({
       id: 'arduino_plc', label: 'PLC con Arduino', short: 'I0.0 / Q0.0', addressMode: 'byte_bit', mcu: 'arduino', recommendedBoard: 'uno',
-      description: 'Direcciones PLC lógicas traducidas a pines de Arduino.'
+      description: 'Adresses PLC logiques traduites en broches Arduino.'
     }),
     esp32_plc: Object.freeze({
       id: 'esp32_plc', label: 'PLC con ESP32', short: 'I0.0 / Q0.0', addressMode: 'byte_bit', mcu: 'esp32', recommendedBoard: 'esp32',
-      description: 'Direcciones PLC lógicas traducidas a GPIO de ESP32.'
+      description: 'Adresses PLC logiques traduites en GPIO ESP32.'
     })
   });
 

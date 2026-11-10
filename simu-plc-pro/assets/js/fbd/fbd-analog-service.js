@@ -236,7 +236,7 @@
   function displayText(node){
     ensureDefaults(node);
     if(node.type===TYPES.CONST){
-      return '<strong>'+formatValue(constantValue(node),node,true)+'</strong><span>Valor fijo interno · sin pin</span>';
+      return '<strong>'+formatValue(constantValue(node),node,true)+'</strong><span>Valeur fijo interno · sin broche</span>';
     }
     if(node.type===TYPES.INPUT){
       return '<strong>'+formatValue(analogInputValue(node),node,true)+'</strong><span>Raw: '+Number(node.rawValue).toFixed(0)+'</span>';
@@ -273,7 +273,7 @@
     let slider=node.el.querySelector('.analog-slider');
     if(!slider){
       slider=document.createElement('input');
-      slider.type='range';slider.className='analog-slider';slider.setAttribute('aria-label','Valor analógico simulado');
+      slider.type='range';slider.className='analog-slider';slider.setAttribute('aria-label','Valeur analogique simulado');
       ['pointerdown','mousedown','touchstart','click'].forEach(function(name){slider.addEventListener(name,function(ev){ev.stopPropagation();},{passive:name==='touchstart'});});
       slider.addEventListener('input',function(ev){
         ev.stopPropagation();node.rawValue=num(slider.value,node.rawMin);analogInputValue(node);refreshNode(node);diagnostics.sliderChanges++;
@@ -288,7 +288,7 @@
     if(!node || !node.el) return null;
     let button=node.el.querySelector('.analog-config-button');
     if(!button){
-      button=document.createElement('button');button.type='button';button.className='analog-config-button';button.title='Configurer bloque analógico';button.textContent='⚙';
+      button=document.createElement('button');button.type='button';button.className='analog-config-button';button.title='Configurer bloc analogique';button.textContent='⚙';
       ['pointerdown','mousedown','touchstart','click'].forEach(function(name){button.addEventListener(name,function(ev){ev.preventDefault();ev.stopPropagation();if(name==='click')openModal(node);},{passive:false});});
       node.el.appendChild(button);
     }
@@ -364,7 +364,7 @@
       html+=field('analogEngMin','Valor escalado mínimo','number',node.engMin,'step="any"');
       html+=field('analogEngMax','Valor escalado máximo','number',node.engMax,'step="any"');
       html+=field('analogDecimals','Decimales','number',node.decimals,'min="0" max="4" step="1"');
-      html+='<label>Limitar al rango<select id="analogClamp"><option value="1">Sí</option><option value="0">No</option></select></label>';
+      html+='<label>Limitar al rango<select id="analogClamp"><option value="1">Oui</option><option value="0">No</option></select></label>';
     }else if(node.type===TYPES.SCALE){
       html+=field('analogInMin','Entrada mínima','number',node.inMin,'step="any"');
       html+=field('analogInMax','Entrada máxima','number',node.inMax,'step="any"');
@@ -372,7 +372,7 @@
       html+=field('analogOutMax','Salida máxima','number',node.outMax,'step="any"');
       html+=field('analogUnit','Unidad de salida','text',node.unit,'maxlength="12"');
       html+=field('analogDecimals','Decimales','number',node.decimals,'min="0" max="4" step="1"');
-      html+='<label>Limitar al rango<select id="analogClamp"><option value="1">Sí</option><option value="0">No</option></select></label>';
+      html+='<label>Limitar al rango<select id="analogClamp"><option value="1">Oui</option><option value="0">No</option></select></label>';
     }else if(node.type===TYPES.PID){
       html+=field('analogKp','Kp · Ganancia proporcional','number',node.kp,'step="any"');
       html+=field('analogKi','Ki · Ganancia integral','number',node.ki,'step="any"');
@@ -393,7 +393,7 @@
       html+=field('analogSplitOutMax','Salida máxima','number',node.outMax,'min="0" step="any"');
       html+=field('analogUnit','Unidad','text',node.unit,'maxlength="12"');
       html+=field('analogDecimals','Decimales','number',node.decimals,'min="0" max="4" step="1"');
-      html+='<label>Limitar al rango<select id="analogClamp"><option value="1">Sí</option><option value="0">No</option></select></label>';
+      html+='<label>Limitar al rango<select id="analogClamp"><option value="1">Oui</option><option value="0">No</option></select></label>';
     }else if(node.type===TYPES.PWM){
       html+=field('analogInMin','Entrada mínima','number',node.inMin,'step="any"');
       html+=field('analogInMax','Entrada máxima','number',node.inMax,'step="any"');
@@ -401,17 +401,17 @@
       html+=field('analogFrequency','Frecuencia PWM (Hz)','number',node.frequency,'min="1" max="40000" step="1"');
       html+=field('analogResolution','Resolución (bits)','number',node.resolution,'min="1" max="16" step="1"');
       html+=field('analogDecimals','Decimales','number',node.decimals,'min="0" max="4" step="1"');
-      html+='<label>Limitar al rango<select id="analogClamp"><option value="1">Sí</option><option value="0">No</option></select></label>';
+      html+='<label>Limitar al rango<select id="analogClamp"><option value="1">Oui</option><option value="0">No</option></select></label>';
     }else if(node.type===TYPES.AO){
       html+=field('analogInMin','Entrada mínima','number',node.inMin,'step="any"');
       html+=field('analogInMax','Entrada máxima','number',node.inMax,'step="any"');
-      html+='<label>Tipo de salida<select id="analogOutputProfile"><option value="v3.3">0–3.3 V</option><option value="v5">0–5 V</option><option value="v10">0–10 V</option><option value="ma4-20">4–20 mA</option><option value="custom">Personalizada</option></select></label>';
+      html+='<label>Type de sortie<select id="analogOutputProfile"><option value="v3.3">0–3.3 V</option><option value="v5">0–5 V</option><option value="v10">0–10 V</option><option value="ma4-20">4–20 mA</option><option value="custom">Personalizada</option></select></label>';
       html+=field('analogVoltageMin','Salida mínima','number',node.voltageMin,'step="any"');
       html+=field('analogVoltageMax','Salida máxima','number',node.voltageMax,'step="any"');
       html+=field('analogOutputUnit','Unidad de salida','text',node.outputUnit||'V','maxlength="12"');
       html+=field('analogUnit','Unidad de entrada','text',node.unit,'maxlength="12"');
       html+=field('analogDecimals','Decimales','number',node.decimals,'min="0" max="4" step="1"');
-      html+='<label>Limitar al rango<select id="analogClamp"><option value="1">Sí</option><option value="0">No</option></select></label>';
+      html+='<label>Limitar al rango<select id="analogClamp"><option value="1">Oui</option><option value="0">No</option></select></label>';
     }else if(node.type===TYPES.HYST){
       html+=field('analogLow','Umbral de apagado','number',node.low,'step="any"');
       html+=field('analogHigh','Umbral de encendido','number',node.high,'step="any"');
@@ -533,9 +533,9 @@
     global.__simuplcAnalogArduinoGuard=true;
     const wrapped=function(){
       const analogNodes=nodes().filter(function(node){return node&&isAnalogType(node.type);});
-      // Desde la Fase 3 el generador MCU traduce AI, SCALE, comparadores e
-      // histéresis tanto para Arduino como para ESP32. La advertencia antigua
-      // solo se conserva como protección si el motor de código no cargó.
+      // Desde la Phase 3 el generador MCU traduce AI, SCALE, comparadores e
+      // histéresis tanto para Arduino como para ESP32. La avertissement antigua
+      // solo se conserva como protection si el moteur de code no cargó.
       if(analogNodes.length && !hasFBDAnalogCodegen()){
         const message='El motor de generación MCU no está disponible. Recarga la aplicación antes de generar el código de los bloques analógicos.';
         try{

@@ -313,7 +313,7 @@
       const value = Number.isFinite(runtime.outputValue) ? runtime.outputValue : element.constantValue;
       ctx.fillText(formatNumber(value, element.decimals, element.unit), x, y + scalePx(6));
       ctx.fillStyle = '#667b87'; ctx.font = '700 ' + Math.round(scalePx(9)) + 'px Arial';
-      ctx.fillText('Valor fijo interno · sin pin', x, y + scalePx(29));
+      ctx.fillText('Valeur fijo interno · sin broche', x, y + scalePx(29));
     } else if (isSplit(element)) {ctx.fillText('▲ '+formatNumber(runtime.fill,element.decimals,element.unit)+'  ▼ '+formatNumber(runtime.drain,element.decimals,element.unit),x,y+scalePx(5));ctx.fillStyle='#667b87';ctx.font='700 '+Math.round(scalePx(9))+'px Arial';ctx.fillText('IN '+formatNumber(runtime.inputValue,element.decimals,element.unit)+' · N '+formatNumber(element.neutral,element.decimals,element.unit),x,y+scalePx(27));
     } else if (isPID(element)) {ctx.fillText(formatNumber(runtime.outputValue,element.decimals,element.unit),x,y+scalePx(5));ctx.fillStyle='#667b87';ctx.font='700 '+Math.round(scalePx(9))+'px Arial';ctx.fillText('PV '+formatNumber(runtime.pv,element.decimals,'')+' · SP '+formatNumber(runtime.sp,element.decimals,''),x,y+scalePx(27));
     } else if (element.type === TYPES.SCALE) {
@@ -420,7 +420,7 @@
     wrap.id = 'ladderAnalogProcessingFields';
     wrap.className = 'ladder-analog-processing-grid';
     wrap.innerHTML = `
-      <label data-field="constantValue">Valor constante<input class="edit-input" id="ladderAnalogConstantValue" type="number" step="any"></label>
+      <label data-field="constantValue">Valeur constante<input class="edit-input" id="ladderAnalogConstantValue" type="number" step="any"></label>
       <label data-field="inMin">Entrada mínima<input class="edit-input" id="ladderAnalogInMin" type="number" step="any"></label>
       <label data-field="inMax">Entrada máxima<input class="edit-input" id="ladderAnalogInMax" type="number" step="any"></label>
       <label data-field="outMin">Salida mínima<input class="edit-input" id="ladderAnalogOutMin" type="number" step="any"></label>
@@ -428,7 +428,7 @@
       <label data-field="neutral">Punto neutro<input class="edit-input" id="ladderSplitNeutral" type="number" step="any"></label>
       <label data-field="deadband">Zona muerta total<input class="edit-input" id="ladderSplitDeadband" type="number" min="0" step="any"></label>
       <label data-field="splitOutMax">Salida máxima Split<input class="edit-input" id="ladderSplitOutMax" type="number" min="0" step="any"></label>
-      <label data-field="threshold">Valor de comparación<input class="edit-input" id="ladderAnalogThreshold" type="number" step="any"></label>
+      <label data-field="threshold">Valeur de comparación<input class="edit-input" id="ladderAnalogThreshold" type="number" step="any"></label>
       <label data-field="tolerance">Tolerancia<input class="edit-input" id="ladderAnalogTolerance" type="number" min="0" step="any"></label>
       <label data-field="low">Umbral de apagado<input class="edit-input" id="ladderAnalogLow" type="number" step="any"></label>
       <label data-field="high">Umbral de encendido<input class="edit-input" id="ladderAnalogHigh" type="number" step="any"></label>
@@ -448,7 +448,7 @@
       <label data-field="outputUnit">Unidad de salida AO<input class="edit-input" id="ladderAnalogOutputUnit" type="text" maxlength="12" placeholder="V, mA"></label>
       <label data-field="unit">Unidad<input class="edit-input" id="ladderAnalogUnit" type="text" maxlength="12" placeholder="%, °C, bar..."></label>
       <label data-field="decimals">Decimales<input class="edit-input" id="ladderAnalogDecimals" type="number" min="0" max="4" step="1"></label>
-      <label data-field="clamp" class="wide">Limitar al rango<select class="edit-select" id="ladderAnalogClamp"><option value="1">Sí</option><option value="0">No</option></select></label>
+      <label data-field="clamp" class="wide">Limitar al rango<select class="edit-select" id="ladderAnalogClamp"><option value="1">Oui</option><option value="0">No</option></select></label>
       <div class="ladder-analog-processing-help" id="ladderAnalogProcessingHelp"></div>`;
     const actions = grid.querySelector('.storage-actions');
     if (actions) grid.insertBefore(wrap, actions); else grid.appendChild(wrap);
@@ -486,7 +486,7 @@
     const pm=document.getElementById('ladderPidMode');if(pm)pm.value=element.mode||'auto';const pd=document.getElementById('ladderPidDirection');if(pd)pd.value=element.direction||'heating';
     document.getElementById('ladderAnalogClamp').value = element.clamp === false ? '0' : '1';
     const definition=definitionFor(element.type)||{};
-    document.getElementById('ladderAnalogProcessingHelp').textContent=definition.description||'Procesamiento analógico Ladder.';
+    document.getElementById('ladderAnalogProcessingHelp').textContent=definition.description||'Procesamiento analogique Ladder.';
     diagnostics.editOpens += 1;
   }
 
@@ -539,12 +539,12 @@
     const typeB = signalTypeOf(pinB);
     if (typeA === 'conductor' || typeB === 'conductor') return { ok: true };
     if (typeA !== typeB) {
-      return { ok: false, reason: 'No conectes una señal analógica directamente a una bobina o contacto digital. Usa un comparador analógico.' };
+      return { ok: false, reason: 'Ne connectez pas un signal analogique directement à une bobine ou un contact numérique. Utilisez un comparateur analogique.' };
     }
     if (typeA === 'analog') {
       const kinds = [String(pinA.kind || '').toLowerCase(), String(pinB.kind || '').toLowerCase()];
       if (kinds.indexOf('output') < 0 || kinds.indexOf('input') < 0) {
-        return { ok: false, reason: 'Una conexión analógica debe unir una salida A con una entrada A.' };
+        return { ok: false, reason: 'Une connexion analogique doit relier une sortie A à une entrée A.' };
       }
     }
     return { ok: true };
@@ -883,7 +883,7 @@
       row.appendChild(value);
       const detail = document.createElement('div');
       detail.className = 'ladder-analog-runtime-detail';
-      if (isConstant(element)) detail.textContent = 'Valor fijo interno · no requiere pin';
+      if (isConstant(element)) detail.textContent = 'Valeur fijo interno · no requiere pin';
       else if (isScale(element)) detail.textContent = 'Entrée: ' + formatNumber(runtime.inputValue, element.decimals, '');
       else if(isSplit(element)) detail.textContent='IN '+formatNumber(runtime.inputValue,element.decimals,element.unit)+' · Neutro '+formatNumber(element.neutral,element.decimals,element.unit)+' · Zona ±'+formatNumber(element.deadband/2,element.decimals,element.unit);
       else if(isPID(element)) detail.textContent='PV '+formatNumber(runtime.pv,element.decimals,'')+' · SP '+formatNumber(runtime.sp,element.decimals,'')+' · '+String(element.mode||'auto').toUpperCase();

@@ -23,22 +23,22 @@
   }
 
   function getProject() {
-    if (typeof global.getLadderProject !== 'function') throw new Error('La API getLadderProject no está disponible.');
+    if (typeof global.getLadderProject !== 'function') throw new Error('L’API getLadderProject n’est pas disponible.');
     return clone(global.getLadderProject());
   }
 
   function setProject(project) {
-    if (typeof global.setLadderProject !== 'function') throw new Error('La API setLadderProject no está disponible.');
+    if (typeof global.setLadderProject !== 'function') throw new Error('L’API setLadderProject n’est pas disponible.');
     return global.setLadderProject(clone(project)) !== false;
   }
 
   function resetProject() {
-    if (typeof global.resetLadderProject !== 'function') throw new Error('La API resetLadderProject no está disponible.');
+    if (typeof global.resetLadderProject !== 'function') throw new Error('L’API resetLadderProject n’est pas disponible.');
     return global.resetLadderProject() !== false;
   }
 
   function getArduino() {
-    if (typeof global.generateLadderArduinoSketch !== 'function') throw new Error('El generador Arduino Ladder no está disponible.');
+    if (typeof global.generateLadderArduinoSketch !== 'function') throw new Error('Le générateur Arduino Ladder n’est pas disponible.');
     return String(global.generateLadderArduinoSketch() || '');
   }
 
