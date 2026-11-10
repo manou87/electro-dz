@@ -3969,7 +3969,7 @@ body.mode-control #editorSelectBtn{display:none!important}
 </div>
 <div class="hmi-property-row">
   <label>Valeur inicial / manual<input id="hmiPropAnalogValue" step="any" type="number"/></label>
-  <label>Unidad<input id="hmiPropAnalogUnit" maxlength="12" placeholder="%, °C, bar" type="text"/></label>
+  <label>Unité<input id="hmiPropAnalogUnit" maxlength="12" placeholder="%, °C, bar" type="text"/></label>
 </div>
 <div class="hmi-property-row">
   <label>Décimales<input id="hmiPropAnalogDecimals" max="4" min="0" step="1" type="number"/></label>
@@ -4190,7 +4190,7 @@ body.mode-control #editorSelectBtn{display:none!important}
 <div id="timerModal">
 <div id="timerCard">
 <h3 id="timerTitle">Configurer le temporisateur</h3>
-<label for="timerSec">Tiempo (s)</label>
+<label for="timerSec">Temps (s)</label>
 <input id="timerSec" min="0" step="0.1" type="number" value="1"/>
 <div id="timerActions">
 <button id="btnTimerCancel">Annuler</button>
@@ -4215,7 +4215,7 @@ body.mode-control #editorSelectBtn{display:none!important}
       <button id="btnCounterCancel">Annuler</button>
       <button id="btnCounterSave" class="primary">Enregistrer</button>
     </div>
-    <p class="hint">* Como en LOGO: si ON &lt; OFF, la sortie Q se activa en la ventana [ON, OFF). Si ON ≥ OFF, se aplica histéresis.</p>
+    <p class="hint">* Comme sur LOGO : si ON &lt; OFF, la sortie Q s’active dans la fenêtre [ON, OFF). Si ON ≥ OFF, une hystérésis s’applique.</p>
   </div>
 </div>
 
@@ -4400,7 +4400,7 @@ function openTimerModal(node){
   timerNode = node;
   const kind = node.type.toUpperCase();
   const code = node.code || node.name;
-  timerTitle.textContent = `Configurar ${kind} (${code})`;
+  timerTitle.textContent = `Configurer ${kind} (${code})`;
   const sec = Math.max(0, Math.round(((node.delayMs ?? 1000)/1000)*10)/10);
   timerSecInput.value = sec;
   timerModal.style.display='block';
@@ -6192,7 +6192,7 @@ if (typeof removeConnectionById !== 'function') {
 <button id="btnEditCancel" style="padding:8px 10px;border-radius:8px;border:1px solid #777;background:#fff;font-weight:800">Annuler</button>
 <button id="btnEditSave" style="padding:8px 10px;border-radius:8px;border:1px solid #003366;background:#008000;color:#fff;font-weight:900">Enregistrer</button>
 </div>
-<div id="editHint" style="margin-top:8px;font-size:12px;color:#333">El numéro no debe repetirse dentro del mismo type (I, Q, M o B###).</div>
+<div id="editHint" style="margin-top:8px;font-size:12px;color:#333">Le numéro ne doit pas se répéter dans le même type (I, Q, M ou B###).</div>
 </div>
 <script>
 /* === Assistant: Botón "Editar" con panel lateral, validación de unicidad y actualización de etiquetas === */
@@ -6344,7 +6344,7 @@ if (typeof removeConnectionById !== 'function') {
     const raw = String(numberInput.value||'').trim();
     let valid = /^\d+$/.test(raw);
     if(!valid){
-      errorEl.style.display='block'; errorEl.textContent='Ingresa solo números enteros.';
+      errorEl.style.display='block'; errorEl.textContent='Entrez uniquement des nombres entiers.';
     }else{
       const num = parseInt(raw,10);
       if(taken.has(num)){
@@ -6379,7 +6379,7 @@ if (typeof removeConnectionById !== 'function') {
       showWireMenu(selectedConn, null, null);
       return;
     }
-    alert('Selecciona un bloque o un cable primero.');
+    alert('Sélectionnez d’abord un bloc ou un câble.');
   });
 
   btnSave.addEventListener('click', ()=>{
@@ -6388,7 +6388,7 @@ if (typeof removeConnectionById !== 'function') {
     const pref = prefixEl.textContent || 'B';
     const taken = currentTakenNumbersByType(node, pref);
     const raw = String(numberInput.value||'').trim();
-    if(!/^\d+$/.test(raw)){ alert('Ingresa solo números enteros.'); return; }
+    if(!/^\d+$/.test(raw)){ alert('Entrez uniquement des nombres entiers.'); return; }
     const num = parseInt(raw,10);
     if(taken.has(num)){ alert('Ce numéro est déjà utilisé par un autre bloc. Choisissez-en un autre.'); return; }
 
@@ -7085,7 +7085,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         created.push(n);
       } catch (err) {
         console.error('[SimuPLC Lab] Erreur lors de la restauration nœud', ns, err);
-        nodeErrors.push(`Error en bloque ${ns?.type || index + 1}`);
+        nodeErrors.push(`Erreur dans le bloc ${ns?.type || index + 1}`);
       }
     });
 
@@ -8062,7 +8062,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   function __arduinoAnalyzeForCompact(nodes, conns){
     const allowed = new Set(['input','output','and','or','not','nand','nor','xor','xnor']);
     for(const n of nodes){
-      if(!n || !n.type) return {ok:false, reason:'bloque desconocido'};
+      if(!n || !n.type) return {ok:false, reason:'bloc inconnu'};
       if(!allowed.has(n.type)) return {ok:false, reason:'usa bloque con memoria/tiempo: ' + n.type};
     }
 
@@ -8526,7 +8526,7 @@ document.addEventListener('DOMContentLoaded', function(){
   const KEY = 'logicsoft:theme';
   const html = document.documentElement;
   const btn = document.getElementById('themeBtnTwo');
-  if(!btn){ console.warn('[theme] No se encontró #themeBtnTwo'); return; }
+  if(!btn){ console.warn('[theme] #themeBtnTwo introuvable'); return; }
 
   const THEMES = ['original','logosoft','dark'];
   function apply(theme){
@@ -8763,7 +8763,7 @@ document.addEventListener('DOMContentLoaded', function(){
   function exportPNG(){
     try {
       var workspace = document.getElementById('workspace');
-      if (!workspace) throw new Error('No se encontró el área de trabajo.');
+      if (!workspace) throw new Error('Zone de travail introuvable.');
 
       var bbox = getBBox(workspace);
       var styles = collectInlineStyles();
@@ -9436,7 +9436,7 @@ window.addEventListener('pointermove', (e) => {
     }
 
     if (status === "INVALID"){
-      alert("Código no encontrado.");
+      alert("Code introuvable.");
       return;
     }
 
@@ -9541,7 +9541,7 @@ window.addEventListener('pointermove', (e) => {
         if (typeof window.syncFullModeClass === "function"){
           window.syncFullModeClass();
         }
-        alert("Código no encontrado.");
+        alert("Code introuvable.");
         return;
       }
 
@@ -9637,7 +9637,7 @@ if(btnCancel){
     if(btnOk){
       btnOk.addEventListener('click', function(){
         if(!selectedPlan){
-          alert('Selecciona un plan para abrir soporte.');
+          alert('Sélectionnez un forfait pour ouvrir le support.');
           return;
         }
         var url = '';
@@ -9657,7 +9657,7 @@ if(btnCancel){
         if(typeof window.validarCodigoDesdeSheet === 'function'){
           var codigo = (inputCodigo.value || '').trim();
           if(!codigo){
-            alert('Ingresa un código de activación.');
+            alert('Entrez un code d’activation.');
             return;
           }
           window.validarCodigoDesdeSheet(codigo);
@@ -9691,7 +9691,7 @@ document.addEventListener('DOMContentLoaded', function(){
       btnLockActivar.addEventListener('click', function(){
         var codigo = (lockInput && lockInput.value || '').trim();
         if(!codigo){
-          alert('Ingresa una clave de activación.');
+          alert('Entrez une clé d’activation.');
           return;
         }
         window.validarCodigoDesdeSheet(codigo);
@@ -13687,7 +13687,7 @@ body.simulating .hub-hit{
         if (cmd === 'getLadder' && msg.cmd === 'ladderData') finish({ok:true, data:msg.data});
         if (cmd === 'setLadder' && msg.cmd === 'ladderLoaded') finish({ok:!!msg.ok});
       }
-      const timer = setTimeout(function(){ finish({ok:false, data:null, error:'Tiempo de espera Ladder'}); }, LADDER_TIMEOUT_MS);
+      const timer = setTimeout(function(){ finish({ok:false, data:null, error:'Délai d’attente Ladder'}); }, LADDER_TIMEOUT_MS);
       window.addEventListener('message', onMessage);
       try {
         target.postMessage({__simuplcPhase2:true, cmd:cmd, data:data, requestId:requestId}, '*');
@@ -18034,7 +18034,7 @@ document.addEventListener("DOMContentLoaded",function(){
  const dialog=document.createElement("dialog");dialog.id="simuplcProFeaturesDialog";dialog.setAttribute("aria-label","Todas las funciones SimuPLC PRO");
  dialog.innerHTML='<button type="button" class="simuplc-features-close" aria-label="Fermer funciones">✕ Fermer</button><h3>Todo lo que incluye SimuPLC PRO</h3><p class="simuplc-features-subtitle">Outils pour concevoir, programmer, simuler et documenter vos projets électriques et d’automatisation.</p>';
  const sections=[
- {title:"Programación PLC y Arduino",icon:"🧩",items:["Programación y simulación avanzada en Ladder y FBD","Módulos de ampliación LOGO!","Entradas y salidas analógicas","Temporisateurs configurables","Programación de Arduino con funciones avanzadas PRO, como temporizadores"]},
+ {title:"Programación PLC y Arduino",icon:"🧩",items:["Programación y simulación avanzada en Ladder y FBD","Módulos de ampliación LOGO!","Entrées et sorties analogiques","Temporisateurs configurables","Programación de Arduino con funciones avanzadas PRO, como temporizadores"]},
  {title:"Control y potencia",icon:"⚡",items:["Variadores de frecuencia (VFD)","Modo Técnico y Protecciones","Banco de condensadores y mejora del factor de potencia","Transformadores de alta a baja tensión"]},
  {title:"HMI et projets",icon:"🖥️",items:["Processus HMI avancés sans les limitations de FREE","Enregistrer et exporter le projet complet","Exporter les circuits en PDF avec cartouche éditable et sans marque"]},
  {title:"Actualizaciones",icon:"✨",items:["Nuevas funciones y actualizaciones PRO incluidas"]}
@@ -18516,7 +18516,7 @@ body.mode-ladder:not(.modular-external-editor) #topbar{display:flex!important}
   function requestLadderArduinoCode(){
     return new Promise(function(resolve){
       const target = frameWindow();
-      if(!target) return resolve('// No se encontro el editor Ladder.');
+      if(!target) return resolve('// Éditeur Ladder introuvable.');
       const requestId = 'f31_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2);
       let closed = false;
       function finish(code){
@@ -18532,7 +18532,7 @@ body.mode-ladder:not(.modular-external-editor) #topbar{display:flex!important}
         if(msg.cmd === 'ladderArduino') finish(msg.code);
       }
       const timer = setTimeout(function(){
-        finish('// Tiempo de espera leyendo el projet Ladder.\n// Verifica que ladder.html este en la misma dossier y vuelve a intentar.');
+        finish('// Délai d’attente lors de la lecture du projet Ladder.\n// Vérifiez que ladder.html est dans le même dossier et réessayez.');
       }, TIMEOUT_MS);
       window.addEventListener('message', onMessage);
       try{
@@ -18623,7 +18623,7 @@ body.mode-ladder:not(.modular-external-editor) #topbar{display:flex!important}
     return new Promise(function(resolve){
       var frame = getLadderFrame();
       var target = frame && frame.contentWindow;
-      if(!target){ resolve('// No se encontro el editor LADDER cargado.'); return; }
+      if(!target){ resolve('// Éditeur LADDER chargé introuvable.'); return; }
       var requestId = 'code_' + Date.now() + '_' + Math.random().toString(36).slice(2);
       var done = false;
       function finish(code){
@@ -18638,7 +18638,7 @@ body.mode-ladder:not(.modular-external-editor) #topbar{display:flex!important}
         if(msg.cmd === 'ladderArduino') finish(msg.code);
       }
       window.addEventListener('message', onMessage);
-      setTimeout(function(){ finish('// Tiempo de espera al generar Arduino desde LADDER.'); }, 2500);
+      setTimeout(function(){ finish('// Délai d’attente lors de la génération Arduino depuis LADDER.'); }, 2500);
       try{ target.postMessage({__simuplcPhase3:true, cmd:'getLadderArduino', requestId:requestId}, '*'); }
       catch(e){ finish('// Error solicitando Arduino LADDER: ' + (e.message || e)); }
     });
@@ -18967,7 +18967,7 @@ body.mode-ladder:not(.modular-external-editor) #topbar{display:flex!important}
         if(ev.key === 'Escape'){ ev.preventDefault(); close(opts.input ? null : false); }
         if(ev.key === 'Enter' && input){ ev.preventDefault(); close(input.value); }
       }
-      (opts.buttons || [{text:'Entendido', value:true, cls:'primary'}]).forEach(function(b){
+      (opts.buttons || [{text:'Compris', value:true, cls:'primary'}]).forEach(function(b){
         const btn = document.createElement('button');
         btn.type='button';
         btn.className='native-modal-btn ' + (b.cls || '');
@@ -18981,8 +18981,8 @@ body.mode-ladder:not(.modular-external-editor) #topbar{display:flex!important}
     });
   }
   const api = {
-    alert:function(message,title){ return modal({icon:'⚠️', title:title || 'Aviso', message:String(message || ''), buttons:[{text:'Entendido', value:true, cls:'primary'}]}); },
-    confirm:function(message,title){ return modal({icon:'⚡', title:title || 'Confirmar acción', message:String(message || ''), buttons:[{text:'Annuler', value:false, cls:'ghost'},{text:'Continuar', value:true, cls:'primary'}]}); },
+    alert:function(message,title){ return modal({icon:'⚠️', title:title || 'Avis', message:String(message || ''), buttons:[{text:'Compris', value:true, cls:'primary'}]}); },
+    confirm:function(message,title){ return modal({icon:'⚡', title:title || 'Confirmer l’action', message:String(message || ''), buttons:[{text:'Annuler', value:false, cls:'ghost'},{text:'Continuer', value:true, cls:'primary'}]}); },
     prompt:function(message,value,title){ return modal({icon:'💾', title:title || 'Enregistrer', message:String(message || ''), input:true, value:value || '', buttons:[{text:'Annuler', value:null, cls:'ghost'},{text:'Enregistrer', value:true, cls:'success'}]}); }
   };
   window.SimuPLCNativeModal = api;
@@ -19953,7 +19953,7 @@ body.mode-hmi #hmiHost{top:0!important}
   }
   function hmiCheckCandidate(candidate,elements,excludeId){
     if(hmiIsPro())return {ok:true};
-    if(!candidate)return {ok:false,message:'Elemento HMI no válido.'};
+    if(!candidate)return {ok:false,message:'Élément HMI non valide.'};
     if(HMI_PRO_ONLY_TYPES.includes(candidate.type))return {ok:false,message:'Este elemento está disponible en SimuPLC Pro.'};
     const u=hmiUsage(elements,excludeId);
     if(hmiIsFunctional(candidate)&&u.functional>=HMI_FREE_LIMITS.maxFunctional)return {ok:false,message:'Has alcanzado el límite de 20 elementos funcionales de HMI Free.'};
@@ -20543,7 +20543,7 @@ body.mode-hmi #hmiHost{top:0!important}
     runtimeTimer=registerSimulationInterval(function(){processTankSimulation();requestRuntime(false);},40);
     persist();
   }
-  function pauseSimulation(){if(!simulationRunning)return;simulationPaused=!simulationPaused;lastProcessTick=0;if(dom.stop){dom.stop.textContent=simulationPaused?'▶ Continuar':'⏸ Pause';dom.stop.classList.toggle('paused',simulationPaused);}if(!simulationPaused){syncAllInputs();requestRuntime();}renderMode();}
+  function pauseSimulation(){if(!simulationRunning)return;simulationPaused=!simulationPaused;lastProcessTick=0;if(dom.stop){dom.stop.textContent=simulationPaused?'▶ Continuer':'⏸ Pause';dom.stop.classList.toggle('paused',simulationPaused);}if(!simulationPaused){syncAllInputs();requestRuntime();}renderMode();}
   function stopSimulation(){return stopAllSimulations();}
   function clearAllHmiProcessInputs(){
     const tags=new Set();
@@ -20721,7 +20721,7 @@ body.mode-hmi #hmiHost{top:0!important}
     updateRuntimeUi();fitCanvas();
   }
   function renderMode(){
-    const operate=project.mode==='operate';dom.shell.classList.toggle('operation-mode',operate);dom.designBtn.classList.toggle('active',!operate);dom.operateBtn.classList.toggle('active',operate);dom.operateBtn.textContent=operate?'■ Terminer l’opération':'▶ Fonctionnement';dom.source.value=project.source;if(dom.template)dom.template.value=project.template||'motor-start-stop';if(dom.stop){dom.stop.hidden=!operate;dom.stop.textContent=simulationPaused?'▶ Continuar':'⏸ Pause';dom.stop.classList.toggle('paused',simulationPaused);}
+    const operate=project.mode==='operate';dom.shell.classList.toggle('operation-mode',operate);dom.designBtn.classList.toggle('active',!operate);dom.operateBtn.classList.toggle('active',operate);dom.operateBtn.textContent=operate?'■ Terminer l’opération':'▶ Fonctionnement';dom.source.value=project.source;if(dom.template)dom.template.value=project.template||'motor-start-stop';if(dom.stop){dom.stop.hidden=!operate;dom.stop.textContent=simulationPaused?'▶ Continuer':'⏸ Pause';dom.stop.classList.toggle('paused',simulationPaused);}
     dom.host.classList.toggle('sim-stopped',!simulationRunning);dom.host.classList.toggle('sim-paused',simulationPaused);refreshHmiPlanUi();renderProperties();setUiCollapsed(!!project.uiCollapsed);fitCanvas();
   }
   function selected(){return project.elements.find(e=>e.id===selectedId)||null;}
@@ -23441,12 +23441,12 @@ html body.mode-ladder:not(.modular-external-editor){
           +'<option value="ma0-20">0–20 mA</option>'
           +'<option value="ma4-20">4–20 mA</option>'
         +'</select></label>'
-        +'<label>Valeur simulado RAW<input id="fbdEditAiRawValue" type="number" step="1"></label>'
+        +'<label>Valeur RAW simulée<input id="fbdEditAiRawValue" type="number" step="1"></label>'
         +'<label>Unité d’ingénierie<input id="fbdEditAiUnit" type="text" maxlength="12" placeholder="%, °C, bar..."></label>'
         +'<label>RAW minimal<input id="fbdEditAiRawMin" type="number" step="any"></label>'
         +'<label>RAW maximal<input id="fbdEditAiRawMax" type="number" step="any"></label>'
-        +'<label>Valeur escalado minimal<input id="fbdEditAiEngMin" type="number" step="any"></label>'
-        +'<label>Valeur escalado maximal<input id="fbdEditAiEngMax" type="number" step="any"></label>'
+        +'<label>Valeur mise à l’échelle min<input id="fbdEditAiEngMin" type="number" step="any"></label>'
+        +'<label>Valeur mise à l’échelle max<input id="fbdEditAiEngMax" type="number" step="any"></label>'
         +'<label>Décimales<input id="fbdEditAiDecimals" type="number" min="0" max="4" step="1"></label>'
         +'<label>Limitar al rango<select id="fbdEditAiClamp"><option value="1">Oui</option><option value="0">No</option></select></label>'
       +'</div>'

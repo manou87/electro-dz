@@ -2227,7 +2227,7 @@ body.ladder-pro-only .branch-panel {
       if(fromPin.kind !== 'output') return {ok:false, reason:'La connexion doit commencer sur une sortie bleue.'};
       if(toPin.kind !== 'input') return {ok:false, reason:'La connexion doit se terminer sur une entrée blanche.'};
       if(fromPin.elementId === toPin.elementId) return {ok:false, reason:'No conectes un componente consigo mismo.'};
-      if(fromPin.x > toPin.x + S(4)) return {ok:false, reason:'Ladder debe conectarse de izquierda a derecha.'};
+      if(fromPin.x > toPin.x + S(4)) return {ok:false, reason:'Le Ladder doit se connecter de gauche à droite.'};
       const exists=(state.proWires||[]).some(w => w.from===fromPin.id && w.to===toPin.id);
       if(exists) return {ok:false, reason:'Ce câble existe déjà.'};
       return {ok:true};
@@ -3215,7 +3215,7 @@ body.ladder-pro-only .branch-panel {
     function loadFromJsonText() {
       const txt = jsonBox.value.trim();
       if (!txt) {
-        alert('Pega o genera un JSON primero.');
+        alert('Collez ou générez d’abord un JSON.');
         return;
       }
       try {
@@ -3897,7 +3897,7 @@ body.ladder-pro-only .branch-panel {
     var wrap=document.createElement('div'); wrap.id='fase4ExtraEdit'; wrap.className='edit-grid';
     if(isTimerType(element.type)){
       var sec = Math.round((clampDelay(element.delayMs) / 1000) * 1000) / 1000;
-      wrap.innerHTML='<label><div class="edit-label">Tiempo (segundos)</div><input class="edit-input" id="editDelaySeconds" type="number" min="0" step="0.1" value="'+sec+'"></label>';
+      wrap.innerHTML='<label><div class="edit-label">Temps (secondes)</div><input class="edit-input" id="editDelaySeconds" type="number" min="0" step="0.1" value="'+sec+'"></label>';
     }else{
       wrap.innerHTML='<label><div class="edit-label">Preset compteur</div><input class="edit-input" id="editPreset" type="number" min="1" step="1" value="'+clampPreset(element.preset)+'"></label>';
     }
@@ -4128,7 +4128,7 @@ body.ladder-pro-only .branch-panel {
       box = document.createElement('div');
       box.id = 'chatgptTimerSecondsBox';
       box.className = 'edit-grid';
-      box.innerHTML = '<label><div class="edit-label">Tiempo (segundos)</div><input class="edit-input" id="editDelaySeconds" type="number" min="0" step="0.1"></label>';
+      box.innerHTML = '<label><div class="edit-label">Temps (secondes)</div><input class="edit-input" id="editDelaySeconds" type="number" min="0" step="0.1"></label>';
       var before = grid.querySelector('.storage-actions') || null;
       grid.insertBefore(box, before);
     }
@@ -9720,7 +9720,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
         if(ev.key === 'Escape'){ ev.preventDefault(); close(opts.input ? null : false); }
         if(ev.key === 'Enter' && input){ ev.preventDefault(); close(input.value); }
       }
-      (opts.buttons || [{text:'Entendido', value:true, cls:'primary'}]).forEach(function(b){
+      (opts.buttons || [{text:'Compris', value:true, cls:'primary'}]).forEach(function(b){
         const btn = document.createElement('button');
         btn.type='button';
         btn.className='native-modal-btn ' + (b.cls || '');
@@ -9734,8 +9734,8 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     });
   }
   const api = {
-    alert:function(message,title){ return modal({icon:'⚠️', title:title || 'Aviso', message:String(message || ''), buttons:[{text:'Entendido', value:true, cls:'primary'}]}); },
-    confirm:function(message,title){ return modal({icon:'⚡', title:title || 'Confirmar acción', message:String(message || ''), buttons:[{text:'Annuler', value:false, cls:'ghost'},{text:'Continuar', value:true, cls:'primary'}]}); },
+    alert:function(message,title){ return modal({icon:'⚠️', title:title || 'Avis', message:String(message || ''), buttons:[{text:'Compris', value:true, cls:'primary'}]}); },
+    confirm:function(message,title){ return modal({icon:'⚡', title:title || 'Confirmer l’action', message:String(message || ''), buttons:[{text:'Annuler', value:false, cls:'ghost'},{text:'Continuer', value:true, cls:'primary'}]}); },
     prompt:function(message,value,title){ return modal({icon:'💾', title:title || 'Enregistrer', message:String(message || ''), input:true, value:value || '', buttons:[{text:'Annuler', value:null, cls:'ghost'},{text:'Enregistrer', value:true, cls:'success'}]}); }
   };
   window.SimuPLCNativeModal = api;

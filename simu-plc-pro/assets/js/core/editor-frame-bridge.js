@@ -105,7 +105,7 @@
           ok: false,
           command: command,
           data: null,
-          error: 'Tiempo de espera agotado al comunicarse con Ladder.'
+          error: 'Délai d’attente dépassé lors de la communication avec Ladder.'
         });
       }, timeoutMs);
 

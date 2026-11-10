@@ -251,7 +251,7 @@
       return '<strong>'+Number(node.outputPercent||0).toFixed(node.decimals)+' %</strong><span>Entrée '+formatValue(node.lastAnalogInput,node,true)+' · '+node.frequency+' Hz</span>';
     }
     if(node.type===TYPES.AO){
-      return '<strong>'+Number(node.outputVoltage||0).toFixed(2)+' '+String(node.outputUnit||'V')+'</strong><span>Entrée '+formatValue(node.lastAnalogInput,node,true)+' · salida proporcional</span>';
+      return '<strong>'+Number(node.outputVoltage||0).toFixed(2)+' '+String(node.outputUnit||'V')+'</strong><span>Entrée '+formatValue(node.lastAnalogInput,node,true)+' · sortie proportionnelle</span>';
     }
     if(node.type===TYPES.HYST){
       return '<strong>'+formatValue(node.lastAnalogInput,node,true)+'</strong><span>OFF ≤ '+formatValue(node.low,node,true)+' · ON ≥ '+formatValue(node.high,node,true)+'</span>';
@@ -273,7 +273,7 @@
     let slider=node.el.querySelector('.analog-slider');
     if(!slider){
       slider=document.createElement('input');
-      slider.type='range';slider.className='analog-slider';slider.setAttribute('aria-label','Valeur analogique simulado');
+      slider.type='range';slider.className='analog-slider';slider.setAttribute('aria-label','Valeur analogique simulée');
       ['pointerdown','mousedown','touchstart','click'].forEach(function(name){slider.addEventListener(name,function(ev){ev.stopPropagation();},{passive:name==='touchstart'});});
       slider.addEventListener('input',function(ev){
         ev.stopPropagation();node.rawValue=num(slider.value,node.rawMin);analogInputValue(node);refreshNode(node);diagnostics.sliderChanges++;
@@ -353,75 +353,75 @@
     ensureDefaults(node);
     let html='';
     if(node.type===TYPES.CONST){
-      html+=field('analogConstantValue','Valor constante','number',node.constantValue,'step="any"');
-      html+=field('analogUnit','Unidad','text',node.unit,'maxlength="12"');
-      html+=field('analogDecimals','Decimales','number',node.decimals,'min="0" max="4" step="1"');
+      html+=field('analogConstantValue','Valeur constante','number',node.constantValue,'step="any"');
+      html+=field('analogUnit','Unité','text',node.unit,'maxlength="12"');
+      html+=field('analogDecimals','Décimales','number',node.decimals,'min="0" max="4" step="1"');
     }else if(node.type===TYPES.INPUT){
-      html+=field('analogRawValue','Valor simulado RAW','number',node.rawValue,'step="1"');
-      html+=field('analogUnit','Unidad de ingeniería','text',node.unit,'maxlength="12"');
-      html+=field('analogRawMin','RAW mínimo','number',node.rawMin,'step="any"');
-      html+=field('analogRawMax','RAW máximo','number',node.rawMax,'step="any"');
-      html+=field('analogEngMin','Valor escalado mínimo','number',node.engMin,'step="any"');
-      html+=field('analogEngMax','Valor escalado máximo','number',node.engMax,'step="any"');
-      html+=field('analogDecimals','Decimales','number',node.decimals,'min="0" max="4" step="1"');
-      html+='<label>Limitar al rango<select id="analogClamp"><option value="1">Oui</option><option value="0">No</option></select></label>';
+      html+=field('analogRawValue','Valeur RAW simulée','number',node.rawValue,'step="1"');
+      html+=field('analogUnit','Unité d’ingénierie','text',node.unit,'maxlength="12"');
+      html+=field('analogRawMin','RAW minimum','number',node.rawMin,'step="any"');
+      html+=field('analogRawMax','RAW maximum','number',node.rawMax,'step="any"');
+      html+=field('analogEngMin','Valeur mise à l’échelle min','number',node.engMin,'step="any"');
+      html+=field('analogEngMax','Valeur mise à l’échelle max','number',node.engMax,'step="any"');
+      html+=field('analogDecimals','Décimales','number',node.decimals,'min="0" max="4" step="1"');
+      html+='<label>Limiter à la plage<select id="analogClamp"><option value="1">Oui</option><option value="0">Non</option></select></label>';
     }else if(node.type===TYPES.SCALE){
       html+=field('analogInMin','Entrée minimale','number',node.inMin,'step="any"');
       html+=field('analogInMax','Entrée maximale','number',node.inMax,'step="any"');
       html+=field('analogOutMin','Sortie minimale','number',node.outMin,'step="any"');
       html+=field('analogOutMax','Sortie maximale','number',node.outMax,'step="any"');
-      html+=field('analogUnit','Unidad de salida','text',node.unit,'maxlength="12"');
-      html+=field('analogDecimals','Decimales','number',node.decimals,'min="0" max="4" step="1"');
-      html+='<label>Limitar al rango<select id="analogClamp"><option value="1">Oui</option><option value="0">No</option></select></label>';
+      html+=field('analogUnit','Unité de sortie','text',node.unit,'maxlength="12"');
+      html+=field('analogDecimals','Décimales','number',node.decimals,'min="0" max="4" step="1"');
+      html+='<label>Limiter à la plage<select id="analogClamp"><option value="1">Oui</option><option value="0">Non</option></select></label>';
     }else if(node.type===TYPES.PID){
-      html+=field('analogKp','Kp · Ganancia proporcional','number',node.kp,'step="any"');
-      html+=field('analogKi','Ki · Ganancia integral','number',node.ki,'step="any"');
-      html+=field('analogKd','Kd · Ganancia derivativa','number',node.kd,'step="any"');
-      html+=field('analogSampleMs','Tiempo de muestreo (ms)','number',node.sampleMs,'min="20" max="60000" step="1"');
+      html+=field('analogKp','Kp · Gain proportionnel','number',node.kp,'step="any"');
+      html+=field('analogKi','Ki · Gain intégral','number',node.ki,'step="any"');
+      html+=field('analogKd','Kd · Gain dérivé','number',node.kd,'step="any"');
+      html+=field('analogSampleMs','Temps d’échantillonnage (ms)','number',node.sampleMs,'min="20" max="60000" step="1"');
       html+=field('analogOutMin','Sortie minimale','number',node.outMin,'step="any"');
       html+=field('analogOutMax','Sortie maximale','number',node.outMax,'step="any"');
-      html+='<label>Modo<select id="analogPidMode"><option value="auto">Automático</option><option value="manual">Manual</option></select></label>';
+      html+='<label>Mode<select id="analogPidMode"><option value="auto">Automatique</option><option value="manual">Manuel</option></select></label>';
       html+=field('analogManualOutput','Sortie manuelle','number',node.manualOutput,'step="any"');
-      html+='<label>Acción<select id="analogPidDirection"><option value="heating">Directa / calefacción</option><option value="cooling">Inversa / refrigeración</option></select></label>';
-      html+=field('analogUnit','Unidad de salida','text',node.unit,'maxlength="12"');
-      html+=field('analogDecimals','Decimales','number',node.decimals,'min="0" max="4" step="1"');
+      html+='<label>Action<select id="analogPidDirection"><option value="heating">Directe / chauffage</option><option value="cooling">Inverse / refroidissement</option></select></label>';
+      html+=field('analogUnit','Unité de sortie','text',node.unit,'maxlength="12"');
+      html+=field('analogDecimals','Décimales','number',node.decimals,'min="0" max="4" step="1"');
     }else if(node.type===TYPES.SPLIT){
       html+=field('analogInMin','Entrée minimale','number',node.inMin,'step="any"');
       html+=field('analogInMax','Entrée maximale','number',node.inMax,'step="any"');
-      html+=field('analogNeutral','Punto neutro','number',node.neutral,'step="any"');
-      html+=field('analogDeadband','Zona muerta total','number',node.deadband,'min="0" step="any"');
+      html+=field('analogNeutral','Point neutre','number',node.neutral,'step="any"');
+      html+=field('analogDeadband','Zone morte totale','number',node.deadband,'min="0" step="any"');
       html+=field('analogSplitOutMax','Sortie maximale','number',node.outMax,'min="0" step="any"');
-      html+=field('analogUnit','Unidad','text',node.unit,'maxlength="12"');
-      html+=field('analogDecimals','Decimales','number',node.decimals,'min="0" max="4" step="1"');
-      html+='<label>Limitar al rango<select id="analogClamp"><option value="1">Oui</option><option value="0">No</option></select></label>';
+      html+=field('analogUnit','Unité','text',node.unit,'maxlength="12"');
+      html+=field('analogDecimals','Décimales','number',node.decimals,'min="0" max="4" step="1"');
+      html+='<label>Limiter à la plage<select id="analogClamp"><option value="1">Oui</option><option value="0">Non</option></select></label>';
     }else if(node.type===TYPES.PWM){
       html+=field('analogInMin','Entrée minimale','number',node.inMin,'step="any"');
       html+=field('analogInMax','Entrée maximale','number',node.inMax,'step="any"');
-      html+=field('analogUnit','Unidad de entrada','text',node.unit,'maxlength="12"');
-      html+=field('analogFrequency','Frecuencia PWM (Hz)','number',node.frequency,'min="1" max="40000" step="1"');
-      html+=field('analogResolution','Resolución (bits)','number',node.resolution,'min="1" max="16" step="1"');
-      html+=field('analogDecimals','Decimales','number',node.decimals,'min="0" max="4" step="1"');
-      html+='<label>Limitar al rango<select id="analogClamp"><option value="1">Oui</option><option value="0">No</option></select></label>';
+      html+=field('analogUnit','Unité d’entrée','text',node.unit,'maxlength="12"');
+      html+=field('analogFrequency','Fréquence PWM (Hz)','number',node.frequency,'min="1" max="40000" step="1"');
+      html+=field('analogResolution','Résolution (bits)','number',node.resolution,'min="1" max="16" step="1"');
+      html+=field('analogDecimals','Décimales','number',node.decimals,'min="0" max="4" step="1"');
+      html+='<label>Limiter à la plage<select id="analogClamp"><option value="1">Oui</option><option value="0">Non</option></select></label>';
     }else if(node.type===TYPES.AO){
       html+=field('analogInMin','Entrée minimale','number',node.inMin,'step="any"');
       html+=field('analogInMax','Entrée maximale','number',node.inMax,'step="any"');
-      html+='<label>Type de sortie<select id="analogOutputProfile"><option value="v3.3">0–3.3 V</option><option value="v5">0–5 V</option><option value="v10">0–10 V</option><option value="ma4-20">4–20 mA</option><option value="custom">Personalizada</option></select></label>';
+      html+='<label>Type de sortie<select id="analogOutputProfile"><option value="v3.3">0–3.3 V</option><option value="v5">0–5 V</option><option value="v10">0–10 V</option><option value="ma4-20">4–20 mA</option><option value="custom">Personnalisée</option></select></label>';
       html+=field('analogVoltageMin','Sortie minimale','number',node.voltageMin,'step="any"');
       html+=field('analogVoltageMax','Sortie maximale','number',node.voltageMax,'step="any"');
-      html+=field('analogOutputUnit','Unidad de salida','text',node.outputUnit||'V','maxlength="12"');
-      html+=field('analogUnit','Unidad de entrada','text',node.unit,'maxlength="12"');
-      html+=field('analogDecimals','Decimales','number',node.decimals,'min="0" max="4" step="1"');
-      html+='<label>Limitar al rango<select id="analogClamp"><option value="1">Oui</option><option value="0">No</option></select></label>';
+      html+=field('analogOutputUnit','Unité de sortie','text',node.outputUnit||'V','maxlength="12"');
+      html+=field('analogUnit','Unité d’entrée','text',node.unit,'maxlength="12"');
+      html+=field('analogDecimals','Décimales','number',node.decimals,'min="0" max="4" step="1"');
+      html+='<label>Limiter à la plage<select id="analogClamp"><option value="1">Oui</option><option value="0">Non</option></select></label>';
     }else if(node.type===TYPES.HYST){
-      html+=field('analogLow','Umbral de apagado','number',node.low,'step="any"');
-      html+=field('analogHigh','Umbral de encendido','number',node.high,'step="any"');
-      html+=field('analogUnit','Unidad','text',node.unit,'maxlength="12"');
-      html+=field('analogDecimals','Decimales','number',node.decimals,'min="0" max="4" step="1"');
+      html+=field('analogLow','Seuil d’arrêt','number',node.low,'step="any"');
+      html+=field('analogHigh','Seuil de marche','number',node.high,'step="any"');
+      html+=field('analogUnit','Unité','text',node.unit,'maxlength="12"');
+      html+=field('analogDecimals','Décimales','number',node.decimals,'min="0" max="4" step="1"');
     }else{
-      html+=field('analogThreshold','Valor de comparación','number',node.threshold,'step="any"');
-      if(node.type===TYPES.EQ) html+=field('analogTolerance','Tolerancia ±','number',node.tolerance,'min="0" step="any"');
-      html+=field('analogUnit','Unidad','text',node.unit,'maxlength="12"');
-      html+=field('analogDecimals','Decimales','number',node.decimals,'min="0" max="4" step="1"');
+      html+=field('analogThreshold','Valeur de comparaison','number',node.threshold,'step="any"');
+      if(node.type===TYPES.EQ) html+=field('analogTolerance','Tolérance ±','number',node.tolerance,'min="0" step="any"');
+      html+=field('analogUnit','Unité','text',node.unit,'maxlength="12"');
+      html+=field('analogDecimals','Décimales','number',node.decimals,'min="0" max="4" step="1"');
     }
     return html;
   }
@@ -442,7 +442,7 @@
   function openModal(node){
     if(!node || !isAnalogType(node.type)) return false;
     activeNode=node;ensureDefaults(node);ensureModal();
-    document.getElementById('analogConfigTitle').textContent='Configurar '+((node.type===TYPES.INPUT||node.type===TYPES.CONST)?(node.name||labelFor(node.type)):(node.code||labelFor(node.type))+' · '+nameFor(node.type)+' ('+labelFor(node.type)+')');
+    document.getElementById('analogConfigTitle').textContent='Configurer '+((node.type===TYPES.INPUT||node.type===TYPES.CONST)?(node.name||labelFor(node.type)):(node.code||labelFor(node.type))+' · '+nameFor(node.type)+' ('+labelFor(node.type)+')');
     document.getElementById('analogConfigFields').innerHTML=modalFields(node);
     const clampEl=document.getElementById('analogClamp');if(clampEl)clampEl.value=node.clamp===false?'0':'1';
     const pidMode=document.getElementById('analogPidMode');if(pidMode)pidMode.value=node.mode==='manual'?'manual':'auto';
@@ -493,30 +493,30 @@
     try{
       if(node.type===TYPES.CONST){
         const decimals=integer(read('analogDecimals',node.decimals),1,0,4);
-        preview.textContent='Valor constante: '+Number(read('analogConstantValue',node.constantValue)).toFixed(decimals)+' '+readText('analogUnit',node.unit)+' · no requiere pin';
+        preview.textContent='Valeur constante : '+Number(read('analogConstantValue',node.constantValue)).toFixed(decimals)+' '+readText('analogUnit',node.unit)+' · aucune broche requise';
       }else if(node.type===TYPES.INPUT){
         const value=mapRange(read('analogRawValue',node.rawValue),read('analogRawMin',node.rawMin),read('analogRawMax',node.rawMax),read('analogEngMin',node.engMin),read('analogEngMax',node.engMax),(document.getElementById('analogClamp')||{}).value!=='0');
-        preview.textContent='Vista previa: '+Number(value).toFixed(integer(read('analogDecimals',node.decimals),1,0,4))+' '+readText('analogUnit',node.unit);
+        preview.textContent='Aperçu : '+Number(value).toFixed(integer(read('analogDecimals',node.decimals),1,0,4))+' '+readText('analogUnit',node.unit);
       }else if(node.type===TYPES.SCALE){
-        preview.textContent='Escala: '+read('analogInMin',node.inMin)+'…'+read('analogInMax',node.inMax)+' → '+read('analogOutMin',node.outMin)+'…'+read('analogOutMax',node.outMax)+' '+readText('analogUnit',node.unit);
+        preview.textContent='Échelle : '+read('analogInMin',node.inMin)+'…'+read('analogInMax',node.inMax)+' → '+read('analogOutMin',node.outMin)+'…'+read('analogOutMax',node.outMax)+' '+readText('analogUnit',node.unit);
       }else if(node.type===TYPES.PID){
-        const mode=(document.getElementById('analogPidMode')||{}).value==='manual'?'MANUAL':'AUTOMÁTICO';
-        const direction=(document.getElementById('analogPidDirection')||{}).value==='cooling'?'INVERSA / REFRIGERACIÓN':'DIRECTA / CALEFACCIÓN';
-        preview.textContent='PID '+mode+': Kp '+read('analogKp',node.kp)+' · Ki '+read('analogKi',node.ki)+' · Kd '+read('analogKd',node.kd)+' · '+direction+' · salida '+read('analogOutMin',node.outMin)+'…'+read('analogOutMax',node.outMax)+' '+readText('analogUnit',node.unit);
+        const mode=(document.getElementById('analogPidMode')||{}).value==='manual'?'MANUAL':'AUTOMATIQUE';
+        const direction=(document.getElementById('analogPidDirection')||{}).value==='cooling'?'INVERSE / REFROIDISSEMENT':'DIRECTE / CHAUFFAGE';
+        preview.textContent='PID '+mode+': Kp '+read('analogKp',node.kp)+' · Ki '+read('analogKi',node.ki)+' · Kd '+read('analogKd',node.kd)+' · '+direction+' · sortie '+read('analogOutMin',node.outMin)+'…'+read('analogOutMax',node.outMax)+' '+readText('analogUnit',node.unit);
       }else if(node.type===TYPES.SPLIT){
         const temp={type:TYPES.SPLIT,inMin:read('analogInMin',node.inMin),inMax:read('analogInMax',node.inMax),neutral:read('analogNeutral',node.neutral),deadband:Math.max(0,read('analogDeadband',node.deadband)),outMax:Math.max(0,read('analogSplitOutMax',node.outMax)),unit:readText('analogUnit',node.unit),decimals:integer(read('analogDecimals',node.decimals),1,0,4),clamp:(document.getElementById('analogClamp')||{}).value!=='0'};
         const r=splitRangeValue(temp,node.lastAnalogInput);
-        preview.textContent='Neutro '+temp.neutral+' · zona muerta ±'+(temp.deadband/2)+' · LLENAR '+r.fill.toFixed(temp.decimals)+' · VACIAR '+r.drain.toFixed(temp.decimals)+' '+temp.unit;
+        preview.textContent='Neutre '+temp.neutral+' · zone morte ±'+(temp.deadband/2)+' · REMPLIR '+r.fill.toFixed(temp.decimals)+' · VIDER '+r.drain.toFixed(temp.decimals)+' '+temp.unit;
       }else if(node.type===TYPES.PWM){
-        preview.textContent='PWM: rango '+read('analogInMin',node.inMin)+'…'+read('analogInMax',node.inMax)+' '+readText('analogUnit',node.unit)+' → 0…100 % · '+read('analogFrequency',node.frequency)+' Hz';
+        preview.textContent='PWM : plage '+read('analogInMin',node.inMin)+'…'+read('analogInMax',node.inMax)+' '+readText('analogUnit',node.unit)+' → 0…100 % · '+read('analogFrequency',node.frequency)+' Hz';
       }else if(node.type===TYPES.AO){
-        preview.textContent='AO: rango '+read('analogInMin',node.inMin)+'…'+read('analogInMax',node.inMax)+' '+readText('analogUnit',node.unit)+' → '+read('analogVoltageMin',node.voltageMin)+'…'+read('analogVoltageMax',node.voltageMax)+' '+readText('analogOutputUnit',node.outputUnit||'V')+' · el HMI normaliza mínimo=0 % y máximo=100 %';
+        preview.textContent='AO : plage '+read('analogInMin',node.inMin)+'…'+read('analogInMax',node.inMax)+' '+readText('analogUnit',node.unit)+' → '+read('analogVoltageMin',node.voltageMin)+'…'+read('analogVoltageMax',node.voltageMax)+' '+readText('analogOutputUnit',node.outputUnit||'V')+' · le HMI normalise min=0 % et max=100 %';
       }else if(node.type===TYPES.HYST){
-        preview.textContent='Apaga en '+read('analogLow',node.low)+' · enciende en '+read('analogHigh',node.high)+' '+readText('analogUnit',node.unit);
+        preview.textContent='Arrêt à '+read('analogLow',node.low)+' · marche à '+read('analogHigh',node.high)+' '+readText('analogUnit',node.unit);
       }else{
-        preview.textContent='Condición: entrada '+labelFor(node.type)+' '+read('analogThreshold',node.threshold)+' '+readText('analogUnit',node.unit)+(node.type===TYPES.EQ?' con tolerancia ± '+read('analogTolerance',node.tolerance):'');
+        preview.textContent='Condition : entrée '+labelFor(node.type)+' '+read('analogThreshold',node.threshold)+' '+readText('analogUnit',node.unit)+(node.type===TYPES.EQ?' avec tolérance ± '+read('analogTolerance',node.tolerance):'');
       }
-    }catch(error){preview.textContent='Revisa los valores ingresados.';}
+    }catch(error){preview.textContent='Vérifiez les valeurs saisies.';}
   }
   function hasFBDAnalogCodegen(){
     const unified=global.SimuPLCMCUCodegen;
@@ -537,9 +537,9 @@
       // histéresis tanto para Arduino como para ESP32. La avertissement antigua
       // solo se conserva como protection si el moteur de code no cargó.
       if(analogNodes.length && !hasFBDAnalogCodegen()){
-        const message='El motor de generación MCU no está disponible. Recarga la aplicación antes de generar el código de los bloques analógicos.';
+        const message='Le moteur de génération MCU n’est pas disponible. Rechargez l’application avant de générer le code des blocs analogiques.';
         try{
-          if(global.SimuPLCModal && typeof global.SimuPLCModal.alert==='function'){ global.SimuPLCModal.alert(message,{title:'Generador MCU no disponible'}); return; }
+          if(global.SimuPLCModal && typeof global.SimuPLCModal.alert==='function'){ global.SimuPLCModal.alert(message,{title:'Générateur MCU non disponible'}); return; }
         }catch(_){ }
         global.alert(message); return;
       }

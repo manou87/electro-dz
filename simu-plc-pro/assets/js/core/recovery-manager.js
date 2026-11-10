@@ -402,13 +402,13 @@
       }
       const dateText = envelope.savedAt ? new Date(envelope.savedAt).toLocaleString() : 'recientemente';
       const restore = await modal().confirm(
-        'Travail non enregistré trouvé de ' + dateText + '.\n\nSouhaitez-vous le récupérer maintenant ?',
+        'Travail non enregistré trouvé le ' + dateText + '.\n\nVoulez-vous le récupérer maintenant ?',
         'Récupérer le travail'
       );
       if (restore) {
         await createBackup('avant-recuperation-sauvegarde-auto');
         await restoreProject(canonical, { reason: 'recuperado-al-iniciar', pending: true });
-        toast('Travail récupéré correctement');
+        toast('Travail récupéré avec succès');
         return true;
       }
       state.pending = false;
