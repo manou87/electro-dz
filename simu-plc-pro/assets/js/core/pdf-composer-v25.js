@@ -9,7 +9,7 @@ function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
 function activeEditor(){const b=document.body;if(b.classList.contains('mode-hmi'))return'hmi';if(b.classList.contains('mode-control'))return'control';if(b.classList.contains('mode-ladder'))return'ladder';return'fbd'}
 function label(m){return m==='ladder'?'LADDER':m==='control'?'CONTROL':m==='hmi'?'HMI':'FBD'}
 function isPro(){try{return localStorage.getItem('logicsoft_full_v1')==='1'||global.isFull===true||document.body.classList.contains('full-mode')}catch(_){return global.isFull===true}}
-function currentProjectName(){try{const id=sessionStorage.getItem('simuplc_current_project_id_v19'),a=JSON.parse(localStorage.getItem('logicsoft_circuits_v1')||'[]'),item=Array.isArray(a)&&id?a.find(x=>x&&x.id===id):null;if(item&&item.name)return String(item.name)}catch(_){}return'Proyecto SimuPLC'}
+function currentProjectName(){try{const id=sessionStorage.getItem('simuplc_current_project_id_v19'),a=JSON.parse(localStorage.getItem('logicsoft_circuits_v1')||'[]'),item=Array.isArray(a)&&id?a.find(x=>x&&x.id===id):null;if(item&&item.name)return String(item.name)}catch(_){}return'Projet SimuPLC'}
 function alertUser(msg,title){try{if(global.SimuPLCModal&&typeof global.SimuPLCModal.alert==='function')return global.SimuPLCModal.alert(msg,title||'PDF')}catch(_){}alert(msg)}
 function loading(on,editor){
  let el=document.getElementById('simuplcPdfComposerLoadingV25');
@@ -69,10 +69,10 @@ async function open(editorOverride){
  const editor=editorOverride||activeEditor();if(open._busy)return false;open._busy=true;loading(true,editor);
  try{
   const source=await capture(editor);
-  if(!source){alertUser('No hay elementos para exportar en '+label(editor)+'.','PDF');return false}
-  global[PAYLOAD_KEY]={version:'25.3',editor,editorLabel:label(editor),isPro:isPro(),projectName:currentProjectName(),date:new Date().toLocaleDateString('es-PE'),source};pendingPayloadV252=global[PAYLOAD_KEY];
+  if(!source){alertUser('Aucun élément à exporter en '+label(editor)+'.','PDF');return false}
+  global[PAYLOAD_KEY]={version:'25.3',editor,editorLabel:label(editor),isPro:isPro(),projectName:currentProjectName(),date:new Date().toLocaleDateString('fr-FR'),source};pendingPayloadV252=global[PAYLOAD_KEY];
   const ov=ensureOverlay(),fr=ov.querySelector('iframe');fr.src='cajetin_pro.html?embedded=1&v=25.4&t='+Date.now();ov.style.display='block';document.documentElement.style.overflow='hidden';document.body.style.overflow='hidden';return true
- }catch(e){console.error('[SimuPLC PDF Composer V25]',e);alertUser('No se pudo preparar el circuito para el formato PDF.','PDF');return false}
+ }catch(e){console.error('[SimuPLC PDF Composer V25]',e);alertUser('Impossible de préparer le circuit pour le format PDF.','PDF');return false}
  finally{loading(false);open._busy=false}
 }
 document.addEventListener('click',function(ev){const b=ev.target&&ev.target.closest&&ev.target.closest('#btnPdfActive');if(!b)return;ev.preventDefault();ev.stopPropagation();if(ev.stopImmediatePropagation)ev.stopImmediatePropagation();open(activeEditor())},true);

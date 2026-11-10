@@ -183,7 +183,7 @@
   function normalizeFreeText(item,index){
     item=item && typeof item==='object' ? Object.assign({},item) : {};
     item.id=item.id || ('FT'+(index+1));
-    item.text=cleanText(item.text || item.value || item.label || 'Texto de referencia',1000);
+    item.text=cleanText(item.text || item.value || item.label || 'Texte de référence',1000);
     item.x=number(item.x,120+index*20); item.y=number(item.y,100+index*20);
     item.format=item.format || defaults.format;
     item.fontFamily=item.fontFamily || defaults.fontFamily;
@@ -215,7 +215,7 @@
     freeTexts.forEach(function(item){
       const div=document.createElement('div');
       div.className='fbd-free-text format-'+item.format+(item.id===selectedTextId?' selected':'');
-      div.dataset.id=item.id; div.textContent=item.text; div.title='Doble clic para editar';
+      div.dataset.id=item.id; div.textContent=item.text; div.title='Double-clic pour modifier';
       div.style.left=item.x+'px'; div.style.top=item.y+'px';
       div.style.fontFamily=item.fontFamily; div.style.fontSize=item.fontSize+'px';
       div.style.maxWidth=item.maxWidth+'px'; div.style.fontWeight=(item.bold||item.format==='title')?'800':'500';
@@ -256,18 +256,18 @@
     if(document.getElementById('fbdTextModal')) return;
     const modal=document.createElement('div'); modal.id='fbdTextModal';
     modal.innerHTML='<div class="fbd-text-card" role="dialog" aria-modal="true">'
-      +'<div class="fbd-text-head"><h3>Texto libre FBD</h3><button type="button" id="fbdTextClose">Cerrar</button></div>'
-      +'<div class="fbd-text-body"><label>Texto o comentario<textarea id="fbdTextValue" maxlength="1000" placeholder="Escribe un título, comentario o explicación..."></textarea></label>'
+      +'<div class="fbd-text-head"><h3>Texte libre FBD</h3><button type="button" id="fbdTextClose">Fermer</button></div>'
+      +'<div class="fbd-text-body"><label>Texte ou commentaire<textarea id="fbdTextValue" maxlength="1000" placeholder="Écrivez un titre, un commentaire ou une explication…"></textarea></label>'
       +'<div class="fbd-text-grid">'
-      +'<label>Formato<select id="fbdTextFormat"><option value="comment">Comentario PLC</option><option value="title">Título de red</option><option value="free">Texto libre</option></select></label>'
-      +'<label>Fuente<select id="fbdTextFont"><option>Arial</option><option>Verdana</option><option>Tahoma</option><option>Georgia</option><option>Courier New</option></select></label>'
-      +'<label>Tamaño<select id="fbdTextSize"><option value="14">Pequeño</option><option value="18">Normal</option><option value="24">Grande</option><option value="30">Título</option><option value="38">Muy grande</option></select></label>'
+      +'<label>Formato<select id="fbdTextFormat"><option value="comment">Commentaire PLC</option><option value="title">Titre de réseau</option><option value="free">Texte libre</option></select></label>'
+      +'<label>Source<select id="fbdTextFont"><option>Arial</option><option>Verdana</option><option>Tahoma</option><option>Georgia</option><option>Courier New</option></select></label>'
+      +'<label>Taille<select id="fbdTextSize"><option value="14">Petit</option><option value="18">Normal</option><option value="24">Grande</option><option value="30">Titre</option><option value="38">Muy grande</option></select></label>'
       +'<label>Ancho máximo<select id="fbdTextWidth"><option value="240">Corto</option><option value="360">Normal</option><option value="520">Ancho</option><option value="700">Muy ancho</option></select></label>'
-      +'<label class="wide">Color del texto'+global.SimuPLCTextPalette.markup('fbdTextColor','text',defaults.color)+'</label>'
-      +'<label class="wide">Color de fondo'+global.SimuPLCTextPalette.markup('fbdTextBg','background',defaults.background)+'</label>'
+      +'<label class="wide">Couleur du texte'+global.SimuPLCTextPalette.markup('fbdTextColor','text',defaults.color)+'</label>'
+      +'<label class="wide">Couleur de fond'+global.SimuPLCTextPalette.markup('fbdTextBg','background',defaults.background)+'</label>'
       +'</div><div class="fbd-text-checks"><label><input id="fbdTextBold" type="checkbox"> Negrita</label><label><input id="fbdTextItalic" type="checkbox"> Cursiva</label></div>'
-      +'<div class="fbd-text-help">Este texto es informativo y no interviene en la simulación. Puedes moverlo libremente.</div>'
-      +'<div class="fbd-text-actions"><button type="button" id="fbdTextDelete">Eliminar</button><button type="button" id="fbdTextSave" class="primary">Guardar texto</button></div>'
+      +'<div class="fbd-text-help">Ce texte est informatif et n’intervient pas dans la simulation. Vous pouvez le déplacer librement.</div>'
+      +'<div class="fbd-text-actions"><button type="button" id="fbdTextDelete">Supprimer</button><button type="button" id="fbdTextSave" class="primary">Enregistrer le texte</button></div>'
       +'</div></div>';
     document.body.appendChild(modal);
     global.SimuPLCTextPalette.bind(modal);
@@ -330,15 +330,15 @@
     const inputModes=document.getElementById('inputModeGroup');
     if(inputModes && group.contains(inputModes)) group.parentNode.insertBefore(inputModes,group.nextSibling);
     group.dataset.richDocumentation='1';
-    group.innerHTML='<label class="doc-main-label">Texto de referencia del elemento</label>'
+    group.innerHTML='<label class="doc-main-label">Texte de référence del elemento</label>'
       +'<input id="editIOLabel" maxlength="300" placeholder="Ejemplo: Sensor de nivel / Contactor de bomba">'
       +'<div class="doc-edit-grid">'
-      +'<label>Formato<select id="editDescriptionFormat"><option value="comment">Comentario PLC</option><option value="title">Título</option><option value="free">Texto simple</option></select></label>'
-      +'<label>Fuente<select id="editDescriptionFont"><option>Arial</option><option>Verdana</option><option>Tahoma</option><option>Georgia</option><option>Courier New</option></select></label>'
-      +'<label>Tamaño<select id="editDescriptionSize"><option value="12">Pequeño</option><option value="14">Normal</option><option value="18">Grande</option><option value="22">Muy grande</option><option value="28">Título</option></select></label>'
+      +'<label>Formato<select id="editDescriptionFormat"><option value="comment">Commentaire PLC</option><option value="title">Titre</option><option value="free">Texte simple</option></select></label>'
+      +'<label>Source<select id="editDescriptionFont"><option>Arial</option><option>Verdana</option><option>Tahoma</option><option>Georgia</option><option>Courier New</option></select></label>'
+      +'<label>Taille<select id="editDescriptionSize"><option value="12">Petit</option><option value="14">Normal</option><option value="18">Grande</option><option value="22">Muy grande</option><option value="28">Titre</option></select></label>'
       +'<label>Ancho<select id="editDescriptionWidth"><option value="170">Corto</option><option value="230">Normal</option><option value="320">Ancho</option><option value="440">Muy ancho</option></select></label>'
-      +'<label class="wide">Color del texto'+global.SimuPLCTextPalette.markup('editDescriptionColor','text',defaults.color)+'</label>'
-      +'<label class="wide">Color de fondo'+global.SimuPLCTextPalette.markup('editDescriptionBg','background',defaults.background)+'</label>'
+      +'<label class="wide">Couleur du texte'+global.SimuPLCTextPalette.markup('editDescriptionColor','text',defaults.color)+'</label>'
+      +'<label class="wide">Couleur de fond'+global.SimuPLCTextPalette.markup('editDescriptionBg','background',defaults.background)+'</label>'
       +'</div><div class="doc-checks"><label><input id="editDescriptionBold" type="checkbox" checked> Negrita</label><label><input id="editDescriptionItalic" type="checkbox"> Cursiva</label></div>'
       +'<div class="doc-edit-help">El texto seguirá al bloque y podrás moverlo de forma independiente.</div>';
     global.SimuPLCTextPalette.bind(group);
@@ -466,7 +466,7 @@
   function installButton(){
     if(document.getElementById('btnReferenceText')) return;
     const topbar=document.getElementById('topbar'); if(!topbar) return;
-    const button=document.createElement('button');button.id='btnReferenceText';button.type='button';button.title='Insertar texto libre de referencia';button.setAttribute('aria-label','Insertar texto libre de referencia');button.innerHTML='<span aria-hidden="true" style="font-weight:900;font-size:16px">Aa</span>';
+    const button=document.createElement('button');button.id='btnReferenceText';button.type='button';button.title='Insérer un texte libre de référence';button.setAttribute('aria-label','Insérer un texte libre de référence');button.innerHTML='<span aria-hidden="true" style="font-weight:900;font-size:16px">Aa</span>';
     const edit=document.getElementById('btnEdit'); if(edit && edit.parentNode===topbar)topbar.insertBefore(button,edit);else topbar.appendChild(button);
     button.addEventListener('click',function(event){event.preventDefault();event.stopPropagation();beginText();});
   }
@@ -488,8 +488,8 @@
     });
     document.addEventListener('keydown',function(event){
       const tag=document.activeElement&&document.activeElement.tagName;if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
-      if((event.key==='Delete'||event.key==='Backspace')&&selectedDescriptionNode){event.preventDefault();removeAssociated();return;}
-      if((event.key==='Delete'||event.key==='Backspace')&&selectedTextId){event.preventDefault();deleteSelectedFree();return;}
+      if((event.key==='Supprimer'||event.key==='Backspace')&&selectedDescriptionNode){event.preventDefault();removeAssociated();return;}
+      if((event.key==='Supprimer'||event.key==='Backspace')&&selectedTextId){event.preventDefault();deleteSelectedFree();return;}
       if(event.key==='Enter'&&selectedTextId){const item=freeTexts.find(function(t){return t.id===selectedTextId;});if(item){event.preventDefault();openFreeModal(item);}}
     });
   }

@@ -8,7 +8,7 @@
       ['#08783d','Verde'],['#c62828','Rojo'],['#c05a00','Naranja'],['#6b3fa0','Morado'],['#ffffff','Blanco']
     ],
     background:[
-      ['transparent','Sin fondo'],['#f8fafc','Gris claro'],['#ffffff','Blanco'],['#eef6ff','Azul claro'],
+      ['transparent','Sans fond'],['#f8fafc','Gris claro'],['#ffffff','Blanco'],['#eef6ff','Azul claro'],
       ['#fff8d6','Amarillo claro'],['#eaf8ee','Verde claro'],['#fdecec','Rojo claro'],['#fff1e6','Naranja claro'],['#263548','Oscuro']
     ]
   };

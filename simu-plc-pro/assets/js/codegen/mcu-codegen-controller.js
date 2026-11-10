@@ -439,7 +439,7 @@
     output = output.replace(/ESP32 clásico/g, profile.name);
     output = output.replace(/SimuPLC Lab ([^\n]+) - ESP32 desde FBD/g, 'SimuPLC Lab ' + VERSION + ' - ' + profile.name + ' desde FBD');
     output = output.replace(/SimuPLC Lab ([^\n]+) - ESP32 desde Ladder/g, 'SimuPLC Lab ' + VERSION + ' - ' + profile.name + ' desde Ladder');
-    output = output.replace(/Entradas analogicas: ADC de 12 bits \(0\.\.4095\)\./g, 'Entradas analógicas: ADC de ' + profile.adcBits + ' bits (0..' + profile.adcRawMax + ').');
+    output = output.replace(/Entradas analogicas: ADC de 12 bits \(0\.\.4095\)\./g, 'Entrées analógicas: ADC de ' + profile.adcBits + ' bits (0..' + profile.adcRawMax + ').');
     output = output.replace(/^\s*analogReadResolution\(12\);\s*\n/gm, '');
     output = output.replace(/GPIO/g, 'pin');
     output = output.replace(/ESP32/g, profile.name);
@@ -630,11 +630,11 @@
     const subtitle = panel.querySelector('.sub2');
     if (subtitle) subtitle.textContent = profile.note + ' Las entradas digitales usan INPUT_PULLUP.';
     const groups = [
-      { key: 'digitalInputs', title: 'Entradas digitales I', values: profile.digitalInputs },
-      { key: 'analogInputs', title: 'Entradas analógicas AI', values: profile.analogInputs },
-      { key: 'outputs', title: 'Salidas digitales Q', values: profile.outputs },
-      { key: 'pwmOutputs', title: 'Salidas PWM', values: profile.pwmOutputs || [] },
-      { key: 'analogOutputs', title: 'Salidas analógicas AO (DAC)', values: profile.analogOutputs || [] }
+      { key: 'digitalInputs', title: 'Entrées digitales I', values: profile.digitalInputs },
+      { key: 'analogInputs', title: 'Entrées analógicas AI', values: profile.analogInputs },
+      { key: 'outputs', title: 'Sorties digitales Q', values: profile.outputs },
+      { key: 'pwmOutputs', title: 'Sorties PWM', values: profile.pwmOutputs || [] },
+      { key: 'analogOutputs', title: 'Sorties analógicas AO (DAC)', values: profile.analogOutputs || [] }
     ];
     const grid = panel.querySelector('.mcu-pin-grid');
     grid.innerHTML = '';
@@ -688,7 +688,7 @@
       const img = button.querySelector('img');
       button.innerHTML = '';
       if (img) button.appendChild(img);
-      button.appendChild(document.createTextNode('CÓDIGO MCU'));
+      button.appendChild(document.createTextNode('CODE MCU'));
     }
   }
 

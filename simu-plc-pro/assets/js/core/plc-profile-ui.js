@@ -45,7 +45,7 @@
     if (!top) return null;
     wrap = document.createElement('div');
     wrap.id = 'simuplcPlcProfileWrap';
-    wrap.title = 'PLC global del proyecto';
+    wrap.title='PLC global del proyecto';
     const options = Object.keys(api.profiles).map(function (id) {
       const p = api.profiles[id];
       return '<option value="' + id + '">' + p.label + '</option>';
@@ -77,7 +77,7 @@
       btn.setAttribute('aria-disabled', unavailable ? 'true' : 'false');
       btn.style.opacity = unavailable ? '.48' : '';
       btn.title = unavailable
-        ? 'CÓDIGO MCU no corresponde a ' + p.label + '. Selecciona PLC con Arduino, PLC con ESP32 o SimuPLC actual.'
+        ? 'CODE MCU no corresponde a ' + p.label + '. Selecciona PLC con Arduino, PLC con ESP32 o SimuPLC actual.'
         : 'Generar C++ usando ' + p.short + ' (' + p.label + ')';
     }
 

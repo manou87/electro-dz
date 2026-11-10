@@ -24,7 +24,7 @@
   }
 
   function safeFileName(name) {
-    return String(name || 'Proyecto SimuPLC')
+    return String(name || 'Projet SimuPLC')
       .trim()
       .replace(/[<>:"/\\|?*\x00-\x1F]+/g, '_')
       .replace(/\s+/g, '_') || 'Proyecto_SimuPLC';
@@ -51,7 +51,7 @@
     else if (global.SimuPLCProject && typeof global.SimuPLCProject.makeUnifiedProject === 'function') {
       project = await global.SimuPLCProject.makeUnifiedProject(name);
     }
-    if (!project) throw new Error('No se pudo leer el proyecto actual.');
+    if (!project) throw new Error('Impossible de lire le projet actuel.');
     const schema = getSchema();
     return schema && typeof schema.migrate === 'function' ? schema.migrate(project) : project;
   }
@@ -119,7 +119,7 @@
   }
 
   function exportProject(project, preferredName) {
-    const filename = safeFileName((project && project.name) || preferredName || 'Proyecto SimuPLC') + '.json';
+    const filename = safeFileName((project && project.name) || preferredName || 'Projet SimuPLC') + '.json';
     downloadJSON(project, filename);
     return filename;
   }

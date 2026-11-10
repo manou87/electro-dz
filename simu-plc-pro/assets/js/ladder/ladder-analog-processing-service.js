@@ -387,7 +387,7 @@
       section = document.createElement('div');
       section.className = 'ladder-lib-section';
       section.dataset.family = 'analog';
-      section.innerHTML = '<p class="ladder-lib-section-title">Analógico</p><div class="ladder-lib-grid"></div>';
+      section.innerHTML = '<p class="ladder-lib-section-title">Analogique</p><div class="ladder-lib-grid"></div>';
       const note = library.querySelector('.ladder-lib-note');
       if (note) library.insertBefore(section, note);
       else library.appendChild(section);
@@ -534,7 +534,7 @@
   }
 
   function validateConnection(pinA, pinB) {
-    if (!pinA || !pinB) return { ok: false, reason: 'Selecciona dos terminales válidos.' };
+    if (!pinA || !pinB) return { ok: false, reason: 'Sélectionnez deux bornes valides.' };
     const typeA = signalTypeOf(pinA);
     const typeB = signalTypeOf(pinB);
     if (typeA === 'conductor' || typeB === 'conductor') return { ok: true };
@@ -869,7 +869,7 @@
       head.className = 'var-head';
       head.innerHTML = '<div class="var-name"></div><div class="var-type"></div>';
       head.querySelector('.var-name').textContent = element.label || definition.symbol || element.type;
-      head.querySelector('.var-type').textContent = definition.name || 'Analógico';
+      head.querySelector('.var-type').textContent = definition.name || 'Analogique';
       row.appendChild(head);
       const value = document.createElement('div');
       value.className = 'ladder-analog-runtime-value' + (runtime.digitalOutput ? ' on' : '');
@@ -884,13 +884,13 @@
       const detail = document.createElement('div');
       detail.className = 'ladder-analog-runtime-detail';
       if (isConstant(element)) detail.textContent = 'Valor fijo interno · no requiere pin';
-      else if (isScale(element)) detail.textContent = 'Entrada: ' + formatNumber(runtime.inputValue, element.decimals, '');
+      else if (isScale(element)) detail.textContent = 'Entrée: ' + formatNumber(runtime.inputValue, element.decimals, '');
       else if(isSplit(element)) detail.textContent='IN '+formatNumber(runtime.inputValue,element.decimals,element.unit)+' · Neutro '+formatNumber(element.neutral,element.decimals,element.unit)+' · Zona ±'+formatNumber(element.deadband/2,element.decimals,element.unit);
       else if(isPID(element)) detail.textContent='PV '+formatNumber(runtime.pv,element.decimals,'')+' · SP '+formatNumber(runtime.sp,element.decimals,'')+' · '+String(element.mode||'auto').toUpperCase();
-      else if (isPWM(element)) detail.textContent = 'Entrada: ' + formatNumber(runtime.inputValue, element.decimals, element.unit) + ' · ' + element.frequency + ' Hz / ' + element.resolution + ' bits';
-      else if (isAO(element)) detail.textContent = 'Entrada: ' + formatNumber(runtime.inputValue, element.decimals, element.unit) + ' · salida ' + element.voltageMin + '…' + element.voltageMax + ' ' + (element.outputUnit||'V');
-      else if (normalizedType(element) === TYPES.HYST) detail.textContent = 'Entrada: ' + formatNumber(runtime.inputValue, element.decimals, element.unit) + ' · OFF ' + element.low + ' / ON ' + element.high;
-      else detail.textContent = 'Entrada: ' + formatNumber(runtime.inputValue, element.decimals, element.unit) + ' · ' + (definition.symbol || '') + ' ' + element.threshold;
+      else if (isPWM(element)) detail.textContent = 'Entrée: ' + formatNumber(runtime.inputValue, element.decimals, element.unit) + ' · ' + element.frequency + ' Hz / ' + element.resolution + ' bits';
+      else if (isAO(element)) detail.textContent = 'Entrée: ' + formatNumber(runtime.inputValue, element.decimals, element.unit) + ' · salida ' + element.voltageMin + '…' + element.voltageMax + ' ' + (element.outputUnit||'V');
+      else if (normalizedType(element) === TYPES.HYST) detail.textContent = 'Entrée: ' + formatNumber(runtime.inputValue, element.decimals, element.unit) + ' · OFF ' + element.low + ' / ON ' + element.high;
+      else detail.textContent = 'Entrée: ' + formatNumber(runtime.inputValue, element.decimals, element.unit) + ' · ' + (definition.symbol || '') + ' ' + element.threshold;
       row.appendChild(detail);
       varsBox.appendChild(row);
     });

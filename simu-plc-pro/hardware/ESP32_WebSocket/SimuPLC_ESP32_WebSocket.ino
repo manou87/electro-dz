@@ -1,7 +1,7 @@
 /*
-  SimuPLC HMI - Plantilla ESP32 por Wi-Fi / WebSocket
+  SimuPLC HMI - Modèle ESP32 por Wi-Fi / WebSocket
 
-  Librería requerida desde Arduino Library Manager:
+  Librería requerida desde Arduino Bibliothèque Manager:
     WebSockets by Markus Sattler (Links2004)
 
   El ESP32 crea la red:

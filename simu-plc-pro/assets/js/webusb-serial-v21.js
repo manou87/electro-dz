@@ -507,7 +507,7 @@
   async function requestPort() {
     if (!global.isSecureContext) throw new Error('WebUSB requiere HTTPS.');
     if (!navigator.usb || typeof navigator.usb.requestDevice !== 'function') {
-      throw new Error('WebUSB no está disponible en este navegador Android.');
+      throw new Error('WebUSB n’est pas disponible dans ce navigateur Android.');
     }
     let device;
     try {
@@ -523,7 +523,7 @@
       const cause = asError(error);
       if (cause.name === 'NotFoundError') {
         throw new DOMException(
-          'No se seleccionó una placa USB. Conecta el Arduino por OTG, cierra ArduinoDroid y vuelve a tocar Conectar.',
+          'No se seleccionó una placa USB. Conecta el Arduino por OTG, cierra ArduinoDroid y vuelve a tocar Connecter.',
           'NotFoundError'
         );
       }
@@ -535,7 +535,7 @@
   async function requestAnyPort() {
     if (!global.isSecureContext) throw new Error('WebUSB requiere HTTPS.');
     if (!navigator.usb || typeof navigator.usb.requestDevice !== 'function') {
-      throw new Error('WebUSB no está disponible en este navegador Android.');
+      throw new Error('WebUSB n’est pas disponible dans ce navigateur Android.');
     }
     let device;
     try {

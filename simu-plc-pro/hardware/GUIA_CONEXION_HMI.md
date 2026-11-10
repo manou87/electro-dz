@@ -40,7 +40,7 @@ No abras la app como `file://index.html` para Web Serial: debe servirse mediante
 2. Carga `ESP32_WebSocket/SimuPLC_ESP32_WebSocket.ino`.
 3. Conéctate a la red `SIMUPLC-HMI`, clave `simuplc123`.
 4. En SimuPLC selecciona `Wi-Fi / Internet`.
-5. Usa `ws://192.168.4.1:81/` y pulsa Conectar.
+5. Usa `ws://192.168.4.1:81/` y pulsa Connecter.
 
 Para una conexión por internet, utiliza un endpoint `wss://` seguro mediante un servidor/gateway. No expongas directamente un ESP32 sin autenticación a internet.
 

@@ -34,7 +34,7 @@
    * no la dirección del conductor. El cable es una continuidad bidireccional.
    */
   function normalizeConnection(pinA, pinB, wires) {
-    if (!pinA || !pinB) return { ok: false, reason: 'Selecciona dos terminales válidos.' };
+    if (!pinA || !pinB) return { ok: false, reason: 'Sélectionnez deux bornes valides.' };
     if (!pinA.id || !pinB.id) return { ok: false, reason: 'Los terminales no tienen identificador.' };
     if (pinA.id === pinB.id) return { ok: false, reason: 'No conectes un terminal consigo mismo.' };
     if (sameElement(pinA, pinB)) return { ok: false, reason: 'No conectes dos terminales del mismo componente directamente.' };

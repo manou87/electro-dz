@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Instalar SimuPLC</title>
+  <title>Installer SimuPLC</title>
 
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0f172a">
@@ -82,7 +82,7 @@
 <body>
 
   <div class="box">
-    <h1>Instalar SimuPLC</h1>
+    <h1>Installer SimuPLC</h1>
 
     <p>
       Presiona el botón para instalar SimuPLC Lab como aplicación en tu computadora.
@@ -90,11 +90,11 @@
     </p>
 
     <button id="installBtn" class="btn">
-      Instalar App
+      Installer App
     </button>
 
     <div class="help" id="helpText">
-      Si no aparece la ventana de instalación, abre esta página desde Chrome o Edge.
+      Si la fenêtre d’installation n’apparaît pas, ouvrez cette page depuis Chrome ou Edge.
     </div>
 
     <a href="https://escuelapasir.com" class="back">← Volver </a>
@@ -109,7 +109,7 @@
     window.addEventListener("beforeinstallprompt", function(e) {
       e.preventDefault();
       deferredPrompt = e;
-      helpText.textContent = "Listo. Presiona el botón para instalar la app.";
+      helpText.textContent = "Prêt. Appuyez sur le bouton pour installer l’application.";
     });
 
     installBtn.addEventListener("click", async function() {
@@ -129,7 +129,7 @@
         return;
       }
 
-      alert("La instalación PWA no está disponible todavía. Abre esta página en Chrome o Edge y verifica que la app tenga manifest.json y service worker activos.");
+      alert("L’installation PWA n’est pas encore disponible. Ouvrez cette page dans Chrome ou Edge et vérifiez que l’application a un manifest.json et un service worker actifs.");
     });
 
     window.addEventListener("appinstalled", function() {

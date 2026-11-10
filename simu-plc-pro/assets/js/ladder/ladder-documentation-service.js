@@ -2,7 +2,7 @@
   'use strict';
   if(global.SimuPLCLadderDocumentation) return;
 
-  const DEFAULT_TEXT='Texto de referencia';
+  const DEFAULT_TEXT='Texte de référence';
   const defaults={format:'comment',fontFamily:'Arial',fontSize:14,maxWidth:230,bold:true,italic:false,color:'#263548',background:'#f8fafc',offsetX:0,offsetY:-104};
   const diagnostics={freeCreates:0,associatedSaves:0,draws:0,loads:0,serializations:0,migrations:0};
   let paintPending=false;
@@ -158,7 +158,7 @@
   function addTopButton(){
     if(document.getElementById('addReferenceTextTop'))return;
     const group=document.querySelector('.toolbar .toolbar-group:nth-of-type(2)')||document.querySelector('.toolbar-group');if(!group)return;
-    const button=document.createElement('button');button.className='btn secondary';button.id='addReferenceTextTop';button.title='Insertar texto libre de referencia';button.innerHTML='<strong>Aa</strong>';
+    const button=document.createElement('button');button.className='btn secondary';button.id='addReferenceTextTop';button.title='Insérer un texte libre de référence';button.innerHTML='<strong>Aa</strong>';
     const edit=document.getElementById('editLabel');if(edit&&edit.parentNode===group)group.insertBefore(button,edit);else group.appendChild(button);
     button.addEventListener('click',function(event){event.preventDefault();event.stopPropagation();beginFreeText();});
   }
@@ -166,16 +166,16 @@
   function createFreeModal(){
     if(document.getElementById('referenceTextOverlay'))return;
     const overlay=document.createElement('div');overlay.id='referenceTextOverlay';overlay.className='reference-text-overlay';overlay.innerHTML='<div class="reference-text-card" role="dialog" aria-modal="true">'
-      +'<div class="reference-text-head"><h3>Texto libre Ladder</h3><button type="button" class="btn secondary" id="closeReferenceText">Cerrar</button></div>'
-      +'<div class="reference-text-body"><label>Texto o comentario<textarea id="referenceTextInput" maxlength="1000" placeholder="Ejemplo: Arranque automático de la bomba principal"></textarea></label>'
-      +'<div class="reference-text-grid"><label>Formato<select id="referenceTextFormat"><option value="comment">Comentario PLC</option><option value="title">Título de red</option><option value="free">Texto libre</option></select></label>'
-      +'<label>Fuente<select id="referenceTextFont"><option>Arial</option><option>Verdana</option><option>Tahoma</option><option>Georgia</option><option>Courier New</option></select></label>'
-      +'<label>Tamaño<select id="referenceTextSize"><option value="14">Pequeño</option><option value="18">Normal</option><option value="24">Grande</option><option value="30">Título</option><option value="38">Muy grande</option></select></label>'
+      +'<div class="reference-text-head"><h3>Texte libre Ladder</h3><button type="button" class="btn secondary" id="closeReferenceText">Fermer</button></div>'
+      +'<div class="reference-text-body"><label>Texte ou commentaire<textarea id="referenceTextInput" maxlength="1000" placeholder="Exemple : Démarrage automatique de la pompe principale"></textarea></label>'
+      +'<div class="reference-text-grid"><label>Formato<select id="referenceTextFormat"><option value="comment">Commentaire PLC</option><option value="title">Titre de réseau</option><option value="free">Texte libre</option></select></label>'
+      +'<label>Source<select id="referenceTextFont"><option>Arial</option><option>Verdana</option><option>Tahoma</option><option>Georgia</option><option>Courier New</option></select></label>'
+      +'<label>Taille<select id="referenceTextSize"><option value="14">Petit</option><option value="18">Normal</option><option value="24">Grande</option><option value="30">Titre</option><option value="38">Muy grande</option></select></label>'
       +'<label>Ancho máximo<select id="referenceTextWidth"><option value="240">Corto</option><option value="360">Normal</option><option value="520">Ancho</option><option value="700">Muy ancho</option></select></label>'
-      +'<label class="wide">Color del texto'+global.SimuPLCTextPalette.markup('referenceTextColor','text',defaults.color)+'</label><label class="wide">Color de fondo'+global.SimuPLCTextPalette.markup('referenceTextBg','background',defaults.background)+'</label></div>'
+      +'<label class="wide">Couleur du texte'+global.SimuPLCTextPalette.markup('referenceTextColor','text',defaults.color)+'</label><label class="wide">Couleur de fond'+global.SimuPLCTextPalette.markup('referenceTextBg','background',defaults.background)+'</label></div>'
       +'<div class="reference-text-checks"><label><input id="referenceTextBold" type="checkbox"> Negrita</label><label><input id="referenceTextItalic" type="checkbox"> Cursiva</label></div>'
-      +'<div class="reference-text-help">El texto no interviene en la simulación. Puedes moverlo libremente y se guarda en el proyecto.</div>'
-      +'<div class="reference-text-actions"><button type="button" class="btn secondary" id="deleteReferenceTextModal">Eliminar texto</button><button type="button" class="btn primary" id="saveReferenceText">Guardar texto</button></div></div></div>';
+      +'<div class="reference-text-help">Le texte n’intervient pas dans la simulation. Vous pouvez le déplacer librement et il est enregistré dans le projet.</div>'
+      +'<div class="reference-text-actions"><button type="button" class="btn secondary" id="deleteReferenceTextModal">Supprimer texto</button><button type="button" class="btn primary" id="saveReferenceText">Enregistrer le texte</button></div></div></div>';
     document.body.appendChild(overlay);global.SimuPLCTextPalette.bind(overlay);
     overlay.addEventListener('click',function(event){if(event.target===overlay)closeFreeModal(false);});
     document.getElementById('closeReferenceText').addEventListener('click',function(){closeFreeModal(false);});
@@ -195,32 +195,32 @@
   function saveFreeModal(){
     const ref=freeById(state.referenceTextEditingId);if(!ref){closeFreeModal(true);return;}
     const value=text(document.getElementById('referenceTextInput').value,1000);if(!value){alert('Escribe el texto de referencia.');return;}
-    ref.text=value;ref.format=document.getElementById('referenceTextFormat').value||'comment';ref.fontFamily=document.getElementById('referenceTextFont').value||'Arial';ref.fontSize=Number(document.getElementById('referenceTextSize').value)||18;ref.maxWidth=Number(document.getElementById('referenceTextWidth').value)||360;ref.color=document.getElementById('referenceTextColor').value||defaults.color;ref.background=document.getElementById('referenceTextBg').value||defaults.background;ref.bold=!!document.getElementById('referenceTextBold').checked||ref.format==='title';ref.italic=!!document.getElementById('referenceTextItalic').checked;dirty();setStatus('Texto de referencia guardado. Puedes arrastrarlo para moverlo.');closeFreeModal(true);
+    ref.text=value;ref.format=document.getElementById('referenceTextFormat').value||'comment';ref.fontFamily=document.getElementById('referenceTextFont').value||'Arial';ref.fontSize=Number(document.getElementById('referenceTextSize').value)||18;ref.maxWidth=Number(document.getElementById('referenceTextWidth').value)||360;ref.color=document.getElementById('referenceTextColor').value||defaults.color;ref.background=document.getElementById('referenceTextBg').value||defaults.background;ref.bold=!!document.getElementById('referenceTextBold').checked||ref.format==='title';ref.italic=!!document.getElementById('referenceTextItalic').checked;dirty();setStatus('Texte de référence guardado. Puedes arrastrarlo para moverlo.');closeFreeModal(true);
   }
   function visibleCenter(){
     const wrap=canvas.parentElement,sx=(wrap&&wrap.scrollLeft||0)+Math.max(160,(wrap&&wrap.clientWidth||canvas.clientWidth||640)/2),sy=(wrap&&wrap.scrollTop||0)+Math.max(120,(wrap&&wrap.clientHeight||canvas.clientHeight||420)/2);
     try{if(isPro()&&typeof screenToWorld==='function')return screenToWorld(sx,sy);}catch(_){ }return{x:sx,y:sy};
   }
   function beginFreeText(){
-    if(state.simulationOn){setStatus('Detén la simulación para agregar texto.');return;}
+    if(state.simulationOn){setStatus('Arrêtez la simulation pour ajouter du texte.');return;}
     state.referenceTextSelectedId=null;state.associatedDescriptionSelectedId=null;state.selectedId=null;state.freeSelectedId=null;state.selectedWireId=null;state.pendingType=null;
     const center=visibleCenter(),ref=normalizeFree({id:uid(),text:DEFAULT_TEXT,x:Math.round(Math.max(30,center.x-150)/10)*10,y:Math.round(Math.max(30,center.y-45)/10)*10},references().length);
     references().push(ref);state.referenceTextSelectedId=ref.id;diagnostics.freeCreates++;dirty();redraw();openFreeModal(ref,true);
   }
   function deleteFree(){
-    const id=state.referenceTextSelectedId||state.referenceTextEditingId;if(!id)return false;state.ladder.referenceTexts=references().filter(function(ref){return ref.id!==id;});state.referenceTextSelectedId=null;state.referenceTextEditingId=null;state.referenceTextDrag=null;dirty();redraw();setStatus('Texto libre eliminado.');return true;
+    const id=state.referenceTextSelectedId||state.referenceTextEditingId;if(!id)return false;state.ladder.referenceTexts=references().filter(function(ref){return ref.id!==id;});state.referenceTextSelectedId=null;state.referenceTextEditingId=null;state.referenceTextDrag=null;dirty();redraw();setStatus('Texte libre eliminado.');return true;
   }
   function editFree(){const ref=freeById(state.referenceTextSelectedId);if(!ref)return false;openFreeModal(ref,false);return true;}
 
   function installAssociatedFields(){
     const input=document.getElementById('editReferenceInput');if(!input||input.dataset.richDocumentation==='1')return;input.dataset.richDocumentation='1';input.maxLength=300;input.placeholder='Ejemplo: Pulsador de marcha / Contactor de bomba';
-    const label=input.closest('label');if(!label)return;const title=label.querySelector('.edit-label');if(title)title.textContent='Texto de referencia del elemento';
+    const label=input.closest('label');if(!label)return;const title=label.querySelector('.edit-label');if(title)title.textContent='Texte de référence del elemento';
     const block=document.createElement('div');block.innerHTML='<div class="associated-edit-grid">'
-      +'<label>Formato<select id="editDescriptionFormat"><option value="comment">Comentario PLC</option><option value="title">Título</option><option value="free">Texto simple</option></select></label>'
-      +'<label>Fuente<select id="editDescriptionFont"><option>Arial</option><option>Verdana</option><option>Tahoma</option><option>Georgia</option><option>Courier New</option></select></label>'
-      +'<label>Tamaño<select id="editDescriptionSize"><option value="12">Pequeño</option><option value="14">Normal</option><option value="18">Grande</option><option value="22">Muy grande</option><option value="28">Título</option></select></label>'
+      +'<label>Formato<select id="editDescriptionFormat"><option value="comment">Commentaire PLC</option><option value="title">Titre</option><option value="free">Texte simple</option></select></label>'
+      +'<label>Source<select id="editDescriptionFont"><option>Arial</option><option>Verdana</option><option>Tahoma</option><option>Georgia</option><option>Courier New</option></select></label>'
+      +'<label>Taille<select id="editDescriptionSize"><option value="12">Petit</option><option value="14">Normal</option><option value="18">Grande</option><option value="22">Muy grande</option><option value="28">Titre</option></select></label>'
       +'<label>Ancho<select id="editDescriptionWidth"><option value="170">Corto</option><option value="230">Normal</option><option value="320">Ancho</option><option value="440">Muy ancho</option></select></label>'
-      +'<label class="wide">Color del texto'+global.SimuPLCTextPalette.markup('editDescriptionColor','text',defaults.color)+'</label><label class="wide">Color de fondo'+global.SimuPLCTextPalette.markup('editDescriptionBg','background',defaults.background)+'</label></div>'
+      +'<label class="wide">Couleur du texte'+global.SimuPLCTextPalette.markup('editDescriptionColor','text',defaults.color)+'</label><label class="wide">Couleur de fond'+global.SimuPLCTextPalette.markup('editDescriptionBg','background',defaults.background)+'</label></div>'
       +'<div class="associated-checks"><label><input id="editDescriptionBold" type="checkbox" checked> Negrita</label><label><input id="editDescriptionItalic" type="checkbox"> Cursiva</label></div><div class="associated-help">El texto seguirá al elemento y podrás moverlo de forma independiente.</div>';
     label.appendChild(block);global.SimuPLCTextPalette.bind(label);
   }
@@ -285,7 +285,7 @@
       if(state.referenceTextSelectedId){event.preventDefault();event.stopPropagation();if(event.stopImmediatePropagation)event.stopImmediatePropagation();deleteFree();return;}
       if(state.associatedDescriptionSelectedId){event.preventDefault();event.stopPropagation();if(event.stopImmediatePropagation)event.stopImmediatePropagation();deleteAssociated();}
     },true);
-    global.addEventListener('keydown',function(event){const tag=document.activeElement&&document.activeElement.tagName;if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;if((event.key==='Delete'||event.key==='Backspace')&&state.referenceTextSelectedId){event.preventDefault();deleteFree();}else if((event.key==='Delete'||event.key==='Backspace')&&state.associatedDescriptionSelectedId){event.preventDefault();deleteAssociated();}else if(event.key==='Enter'&&state.referenceTextSelectedId){event.preventDefault();editFree();}else if(event.key==='Enter'&&state.associatedDescriptionSelectedId){const element=elementById(state.associatedDescriptionSelectedId);if(element){event.preventDefault();openEditModalForElement(element);}}});
+    global.addEventListener('keydown',function(event){const tag=document.activeElement&&document.activeElement.tagName;if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;if((event.key==='Supprimer'||event.key==='Backspace')&&state.referenceTextSelectedId){event.preventDefault();deleteFree();}else if((event.key==='Supprimer'||event.key==='Backspace')&&state.associatedDescriptionSelectedId){event.preventDefault();deleteAssociated();}else if(event.key==='Enter'&&state.referenceTextSelectedId){event.preventDefault();editFree();}else if(event.key==='Enter'&&state.associatedDescriptionSelectedId){const element=elementById(state.associatedDescriptionSelectedId);if(element){event.preventDefault();openEditModalForElement(element);}}});
     global.addEventListener('message',function(event){const message=event.data||{};if(message.type==='SIMUPLC_ADD_FREE_REFERENCE_TEXT'){beginFreeText();try{if(event.source)event.source.postMessage({type:'SIMUPLC_FREE_REFERENCE_TEXT_OPENED'},'*');}catch(_){ }}});
   }
   function init(){

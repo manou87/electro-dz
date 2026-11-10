@@ -56,7 +56,7 @@
 
   function updateUi() {
     const input = document.getElementById('editNameInput');
-    if (input) input.placeholder = 'Ejemplo: ' + api.formatAddress('I', 0) + ', ' + api.formatAddress('Q', 0) + ', M1';
+    if (input) input.placeholder='Ejemplo: ' + api.formatAddress('I', 0) + ', ' + api.formatAddress('Q', 0) + ', M1';
     try {
       document.documentElement.dataset.plcProfile = api.getId();
       document.body.dataset.plcProfile = api.getId();

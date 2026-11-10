@@ -202,13 +202,13 @@
 
   async function getLadderArduino() {
     const api = bridge();
-    if (!api) throw new Error('El puente Ladder no está disponible.');
+    if (!api) throw new Error('Le pont Ladder n’est pas disponible.');
     return api.getArduino();
   }
 
   async function getLadderLabels() {
     const api = bridge();
-    if (!api) throw new Error('El puente Ladder no está disponible.');
+    if (!api) throw new Error('Le pont Ladder n’est pas disponible.');
     return api.getLabels();
   }
 
@@ -216,7 +216,7 @@
     return {
       type: LEGACY_DUAL_TYPE,
       version: LEGACY_DUAL_VERSION,
-      name: String(name || 'Proyecto SimuPLC'),
+      name: String(name || 'Projet SimuPLC'),
       savedAt: new Date().toISOString(),
       activeEditor: activeEditor(),
       editors: {

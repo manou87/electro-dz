@@ -1,6 +1,6 @@
 /* Local Electro DZ unlock — Simu PLC Pro only.
- * Forces FULL / PRO gates off so existing catalog components are usable.
- * Does not add components; does not call live billing.
+ * Force la désactivation des gates FULL / PRO pour rendre utilisables les composants du catalogue.
+ * N’ajoute pas de composants ; n’appelle pas le billing live.
  */
 (function (global) {
   'use strict';
@@ -54,7 +54,7 @@
   global.isFullDevice = alwaysTrue;
   global.isProMode = alwaysTrue;
 
-  // Keep overrides after later scripts redefine helpers.
+  // Conserver les overrides si des scripts ultérieurs redéfinissent les helpers.
   function rebind() {
     forceStorage();
     global.isFull = true;
@@ -76,7 +76,7 @@
     unlock();
     rebind();
   });
-  // Re-assert shortly after boot (billing scripts may flip flags).
+  // Réaffirmer peu après le démarrage (les scripts billing peuvent inverser les flags).
   setTimeout(function () { unlock(); rebind(); }, 0);
   setTimeout(function () { unlock(); rebind(); }, 800);
   setTimeout(function () { unlock(); rebind(); }, 2500);

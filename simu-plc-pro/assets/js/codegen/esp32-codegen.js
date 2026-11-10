@@ -476,8 +476,8 @@
     lines.push('/*');
     lines.push('  SimuPLC Lab ' + VERSION + ' - ESP32 desde FBD');
     lines.push('  Placa objetivo: ESP32 DevKit V1 / WROOM-32');
-    lines.push('  Entradas digitales: INPUT_PULLUP (LOW = contacto cerrado a GND).');
-    lines.push('  Entradas analogicas: ADC de 12 bits (0..4095).');
+    lines.push('  Entrées digitales: INPUT_PULLUP (LOW = contacto cerrado a GND).');
+    lines.push('  Entrées analogicas: ADC de 12 bits (0..4095).');
     lines.push('*/');
     lines.push('');
     lines.push('#if defined(ARDUINO_ARCH_ESP32)');
@@ -1284,9 +1284,9 @@
     savePinMap(map);
 
     const groups = [
-      { key: 'digitalInputs', title: 'Entradas digitales', pins: BOARD.digitalInputPins },
-      { key: 'analogInputs', title: 'Entradas analógicas AI', pins: BOARD.analogInputPins },
-      { key: 'outputs', title: 'Salidas Q', pins: BOARD.outputPins }
+      { key: 'digitalInputs', title: 'Entrées digitales', pins: BOARD.digitalInputPins },
+      { key: 'analogInputs', title: 'Entrées analógicas AI', pins: BOARD.analogInputPins },
+      { key: 'outputs', title: 'Sorties Q', pins: BOARD.outputPins }
     ];
     const grid = panel.querySelector('.esp32-pin-grid');
     grid.innerHTML = '';
@@ -1382,16 +1382,16 @@
     if (modeBox) modeBox.style.display = esp32 ? 'none' : '';
     if (boardInfo && esp32) boardInfo.textContent = 'ESP32 clásico: ADC de 12 bits. AI usa GPIO ADC1 32–39; se evitan ADC2 para preparar WiFi.';
     if (title) title.textContent = esp32 ? 'Generador ESP32 (.ino)' : 'Generador Arduino (.ino)';
-    if (subtitle) subtitle.textContent = esp32 ? 'FBD o Ladder → código para ESP32 DevKit V1' : 'Tu circuito → código listo para pegar en Arduino IDE';
+    if (subtitle) subtitle.textContent = esp32 ? 'FBD ou Ladder → code pour ESP32 DevKit V1' : 'Votre circuit → code prêt à coller dans Arduino IDE';
     if (hint && esp32) hint.innerHTML = '<b>ESP32:</b> asigna GPIO para I, AI y Q. Las entradas digitales se generan con <b>INPUT_PULLUP</b>; las AI usan lectura de 12 bits. El código incluye SCALE, comparadores e histéresis.';
     if (download) download.textContent = esp32 ? '⬇ Descargar ESP32 .ino' : '⬇ Descargar .ino';
     const button = document.getElementById('btnArduino');
     if (button) {
-      button.title = 'Generar código Arduino o ESP32';
+      button.title='Generar código Arduino o ESP32';
       const img = button.querySelector('img');
       button.innerHTML = '';
       if (img) button.appendChild(img);
-      button.appendChild(document.createTextNode('CÓDIGO MCU'));
+      button.appendChild(document.createTextNode('CODE MCU'));
     }
     diagnostics.uiEnhancements += 1;
   }

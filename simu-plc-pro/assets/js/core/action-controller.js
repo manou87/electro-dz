@@ -140,8 +140,8 @@
     /*
       V22: NEW ya no borra directamente.
       El gestor unificado muestra:
-      - Nuevo proyecto
-      - Nuevo circuito / nueva pantalla
+      - Nouveau projet
+      - Nouveau circuit / nueva pantalla
       y luego permite guardar antes de continuar.
     */
     if (global.SimuPLCUnifiedProjects && typeof global.SimuPLCUnifiedProjects.openNew === 'function') {
@@ -153,7 +153,7 @@
       const label = mode === 'ladder' ? 'Ladder' : 'FBD';
       const ok = await getModal().confirm(
         'Se limpiará solamente el editor ' + label + '. El otro editor permanecerá intacto.',
-        'Nuevo ' + label
+        'Nouveau ' + label
       );
       if (!ok) return false;
       await createProjectBackup('antes-de-nuevo-' + mode);
@@ -168,17 +168,17 @@
       }
       if (result === false) throw new Error('El editor no pudo reiniciarse.');
       await acknowledgeProject('nuevo-' + mode);
-      toast('Nuevo ' + label + ' listo; el otro editor no cambió');
+      toast('Nouveau ' + label + ' listo; el otro editor no cambió');
       return true;
     }).catch(function (error) {
-      getModal().alert('No se pudo crear el circuito nuevo: ' + (error.message || error), 'Nuevo circuito');
+      getModal().alert('Impossible de créer le nouveau circuit : ' + (error.message || error), 'Nouveau circuit');
       return false;
     });
   }
 
   async function saveActiveEditor() {
     /*
-      V21: el gestor unificado es la autoridad para Guardar.
+      V21: el gestor unificado es la autoridad para Enregistrer.
       Evita que ActionController cree entradas FBD/Ladder legacy que luego
       no pueden abrir CONTROL/HMI.
     */
@@ -189,8 +189,8 @@
     return runOnce('save', async function () {
       const mode = activeEditor();
       const label = mode === 'ladder' ? 'Ladder' : 'FBD';
-      const defaultName = mode === 'ladder' ? 'Circuito Ladder' : 'Circuito FBD';
-      let name = await getModal().prompt('Escribe un nombre para guardar solamente el editor ' + label + '.', defaultName, 'Guardar ' + label);
+      const defaultName = mode === 'ladder' ? 'Circuit Ladder' : 'Circuit FBD';
+      let name = await getModal().prompt('Saisissez un nom pour enregistrer solamente el editor ' + label + '.', defaultName, 'Enregistrer ' + label);
       if (name === null || name === false) return false;
       name = String(name).trim() || defaultName;
 
@@ -211,27 +211,27 @@
       toast('Guardado solo ' + label + '; el otro editor no se toca');
       return item;
     }).catch(function (error) {
-      getModal().alert('No se pudo guardar: ' + (error.message || error), 'Error al guardar');
+      getModal().alert('Impossible d’enregistrer : ' + (error.message || error), 'Error al guardar');
       return false;
     });
   }
 
   async function exportProject() {
     return runOnce('export', async function () {
-      let name = await getModal().prompt('Nombre del archivo para exportar el proyecto completo FBD/Ladder.', 'Proyecto SimuPLC', 'Exportar proyecto');
+      let name = await getModal().prompt('Nombre del archivo para exportar el proyecto completo FBD/Ladder.', 'Projet SimuPLC', 'Exporter le projet');
       if (name === null || name === false) return false;
-      name = String(name).trim() || 'Proyecto SimuPLC';
+      name = String(name).trim() || 'Projet SimuPLC';
       const projectIO = getProjectIO();
       const repository = getRepository();
-      if (!projectIO || !repository) throw new Error('Los módulos de proyecto no están disponibles.');
+      if (!projectIO || !repository) throw new Error('Les modules de projet ne sont pas disponibles.');
       const project = await projectIO.captureCurrentProject(name);
       repository.persistLastProject(project);
       projectIO.exportProject(project, name);
       await acknowledgeProject('proyecto-exportado');
-      toast('Proyecto FBD/Ladder exportado');
+      toast('Projet FBD/Ladder exportado');
       return project;
     }).catch(function (error) {
-      getModal().alert('No se pudo exportar: ' + (error.message || error), 'Error al exportar');
+      getModal().alert('Impossible d’exporterer : ' + (error.message || error), 'Error al exportar');
       return false;
     });
   }
@@ -239,7 +239,7 @@
   function requestImport() {
     const input = document.getElementById('loadInput');
     if (!input) {
-      getModal().alert('No se encontró el selector de archivos.', 'Importar');
+      getModal().alert('No se encontró el selector de archivos.', 'Importer');
       return false;
     }
     input.value = '';
@@ -252,7 +252,7 @@
     return runOnce('import', async function () {
       const projectIO = getProjectIO();
       const repository = getRepository();
-      if (!projectIO || !repository) throw new Error('Los módulos de proyecto no están disponibles.');
+      if (!projectIO || !repository) throw new Error('Les modules de projet ne sont pas disponibles.');
       const source = projectIO.parseImportText(await file.text());
       const canonical = await projectIO.prepareImport(source);
       await createProjectBackup('antes-de-importar-proyecto');
@@ -260,17 +260,17 @@
       if (loaded === false) throw new Error('El proyecto no pudo cargarse completamente.');
       repository.persistLastProject(canonical);
       await acknowledgeProject('proyecto-importado');
-      toast('Proyecto importado correctamente');
+      toast('Projet importé correctement');
       return true;
     }).catch(function (error) {
-      getModal().alert('No se pudo importar: ' + (error.message || error), 'Error al importar');
+      getModal().alert('Impossible d’importer : ' + (error.message || error), 'Error al importar');
       return false;
     });
   }
 
   async function openSavedCircuit(id) {
     /*
-      V21: los elementos de "Mis proyectos" pueden ser FBD, Ladder, CONTROL,
+      V21: los elementos de "Mes projets" pueden ser FBD, Ladder, CONTROL,
       HMI o una combinación. No deben pasar por el normalizador FBD/Ladder
       de ActionController.
     */
@@ -280,9 +280,9 @@
     return runOnce('open', async function () {
       const repository = getRepository();
       const projectIO = getProjectIO();
-      if (!repository || !projectIO) throw new Error('Los módulos de proyecto no están disponibles.');
+      if (!repository || !projectIO) throw new Error('Les modules de projet ne sont pas disponibles.');
       const item = repository.get(id);
-      if (!item) throw new Error('No se encontró el circuito.');
+      if (!item) throw new Error('Circuit introuvable.');
       const normalized = repository.normalizeSavedItem(item, activeEditor());
       const editors = getEditors();
       if (normalized.editor === 'ladder') {
@@ -313,7 +313,7 @@
       await acknowledgeProject('circuito-abierto-' + normalized.editor);
       return true;
     }).catch(function (error) {
-      getModal().alert(error.message || String(error), 'Abrir circuito');
+      getModal().alert(error.message || String(error), 'Ouvrir circuito');
       return false;
     });
   }
@@ -326,7 +326,7 @@
     if (!repository) return false;
     const item = repository.get(id);
     if (!item) return false;
-    const name = await getModal().prompt('Nuevo nombre para el circuito.', item.name || 'Mi circuito', 'Renombrar circuito');
+    const name = await getModal().prompt('Nouveau nom pour le circuit.', item.name || 'Mon circuit', 'Renommer le circuit');
     if (!name) return false;
     const updated = repository.rename(id, name);
     if (updated) refreshCircuitList();
@@ -337,12 +337,12 @@
     if (global.SimuPLCUnifiedProjects && typeof global.SimuPLCUnifiedProjects.delete === 'function') {
       return global.SimuPLCUnifiedProjects.delete(id);
     }
-    const ok = await getModal().confirm('¿Eliminar este circuito? Esta acción no se puede deshacer.', 'Eliminar circuito');
+    const ok = await getModal().confirm('Supprimer ce circuit ? Cette action est irréversible.', 'Supprimer circuito');
     if (!ok) return false;
     const repository = getRepository();
     if (!repository || !repository.remove(id)) return false;
     refreshCircuitList();
-    toast('Circuito eliminado');
+    toast('Circuit eliminado');
     return true;
   }
 

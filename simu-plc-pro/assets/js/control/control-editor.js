@@ -1,8 +1,8 @@
 (function(){
   const SYMBOL_BASE = './assets/control-symbols/';
   const PARTS = [
-    {group:'ALIMENTACIÓN', type:'source', name:'Línea / +24V', label:'L1', tag:'L1', className:'source', img:'LINEA Y NEUTRO.svg', w:80,h:120, terms:[{id:'t0',x:40,y:18,label:'L'}]},
-    {group:'ALIMENTACIÓN', type:'return', name:'Neutro / 0V', label:'N', tag:'N', className:'return', img:'LINEA Y NEUTRO.svg', w:80,h:120, terms:[{id:'t0',x:40,y:102,label:'N'}]},
+    {group:'ALIMENTATION', type:'source', name:'Línea / +24V', label:'L1', tag:'L1', className:'source', img:'LINEA Y NEUTRO.svg', w:80,h:120, terms:[{id:'t0',x:40,y:18,label:'L'}]},
+    {group:'ALIMENTATION', type:'return', name:'Neutro / 0V', label:'N', tag:'N', className:'return', img:'LINEA Y NEUTRO.svg', w:80,h:120, terms:[{id:'t0',x:40,y:102,label:'N'}]},
     {group:'MANDO', type:'pb_no', name:'Pulsador NO', label:'Pulsador NO', tag:'S1', className:'contact', img:'PULSADOR NO.svg', w:116,h:120, stateful:true, terms:[{id:'t0',x:58,y:12,label:'1'},{id:'t1',x:58,y:108,label:'2'}]},
     {group:'MANDO', type:'pb_nc', name:'Pulsador NC', label:'Pulsador NC', tag:'S2', className:'contact', img:'PULSADOR NC.svg', w:116,h:120, stateful:true, terms:[{id:'t0',x:58,y:12,label:'1'},{id:'t1',x:58,y:108,label:'2'}]},
     {group:'MANDO', type:'estop_nc', name:'Parada de emergencia NC', label:'Paro emergencia', tag:'S0', className:'contact', img:'PARADA DE EMERGENCIA NC.svg', w:116,h:120, stateful:true, terms:[{id:'t0',x:58,y:12,label:'1'},{id:'t1',x:58,y:108,label:'2'}]},
@@ -170,7 +170,7 @@
     renderElements();
     renderWires();
     q('zoomBadge').textContent = Math.round(state.zoom*100)+'%';
-    q('simBadge').textContent = state.running ? 'SIMULACIÓN VISUAL' : 'DETENIDO';
+    q('simBadge').textContent = state.running ? 'SIMULATION VISUAL' : 'DETENIDO';
     q('runBtn').classList.toggle('active', !!state.running);
   }
 
@@ -323,7 +323,7 @@
     q('propDelete').addEventListener('click', removeSelected); q('propApply').addEventListener('click', applyProperties);
     q('zoomInBtn').addEventListener('click', ()=>{ setZoom(state.zoom+0.1); render(); }); q('zoomOutBtn').addEventListener('click', ()=>{ setZoom(state.zoom-0.1); render(); }); q('zoomBadge').addEventListener('click', fitToView);
     q('runBtn').addEventListener('click', ()=>{ state.running=true; render(); }); q('stopBtn').addEventListener('click', ()=>{ state.running=false; render(); });
-    document.addEventListener('keydown', function(ev){ if(ev.key==='Delete' || ev.key==='Backspace'){ if(document.activeElement && /input|textarea|select/i.test(document.activeElement.tagName)) return; removeSelected(); } });
+    document.addEventListener('keydown', function(ev){ if(ev.key==='Supprimer' || ev.key==='Backspace'){ if(document.activeElement && /input|textarea|select/i.test(document.activeElement.tagName)) return; removeSelected(); } });
   }
 
   function init(){

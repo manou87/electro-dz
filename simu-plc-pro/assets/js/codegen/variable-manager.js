@@ -532,7 +532,7 @@
     const button = document.createElement('button');
     button.id = 'btnVariables';
     button.type = 'button';
-    button.title = 'Tabla profesional de variables y asignación de pines';
+    button.title='Tabla profesional de variables y asignación de pines';
     button.innerHTML = '<span aria-hidden="true">📋</span><span>VARIABLES</span>';
     const arduino = document.getElementById('btnArduino');
     const spacer = document.getElementById('spacer');
@@ -556,8 +556,8 @@
     modal.innerHTML = `
       <section id="variableManagerCard" role="dialog" aria-modal="true" aria-labelledby="vmTitle">
         <header class="vm-head">
-          <div class="vm-head-main"><h2 id="vmTitle">Tabla profesional de variables</h2><p>Administra I, AI, Q y variables internas de FBD y Ladder. Las asignaciones se guardan por placa y son utilizadas directamente por CÓDIGO MCU.</p></div>
-          <button class="vm-close" id="vmClose" type="button" aria-label="Cerrar">×</button>
+          <div class="vm-head-main"><h2 id="vmTitle">Tabla profesional de variables</h2><p>Administra I, AI, Q y variables internas de FBD y Ladder. Las asignaciones se guardan por placa y son utilizadas directamente por CODE MCU.</p></div>
+          <button class="vm-close" id="vmClose" type="button" aria-label="Fermer">×</button>
         </header>
         <div class="vm-toolbar">
           <div class="vm-field"><label for="vmBoard">Placa</label><select id="vmBoard"></select></div>
@@ -565,25 +565,25 @@
           <button class="vm-btn blue" id="vmAuto" type="button">AUTOASIGNAR</button>
           <button class="vm-btn" id="vmValidate" type="button">VALIDAR</button>
           <button class="vm-btn danger" id="vmReset" type="button">RESTABLECER</button>
-          <button class="vm-btn" id="vmCSV" type="button">EXPORTAR CSV</button>
+          <button class="vm-btn" id="vmCSV" type="button">EXPORTER CSV</button>
         </div>
         <div class="vm-summary" id="vmSummary"></div>
         <div class="vm-message ok" id="vmMessage">Leyendo variables...</div>
         <div class="vm-filters" id="vmFilters">
           <button class="vm-filter active" data-filter="all" type="button">Todas</button>
-          <button class="vm-filter" data-filter="physical" type="button">Físicas</button>
+          <button class="vm-filter" data-filter="physical" type="button">Physiques</button>
           <button class="vm-filter" data-filter="internal" type="button">Internas</button>
           <button class="vm-filter" data-filter="errors" type="button">Con errores</button>
         </div>
         <div class="vm-table-wrap">
           <table class="vm-table">
-            <thead><tr><th>Estado</th><th>Variable</th><th>Tipo</th><th>Editor</th><th>Descripción</th><th>Valor</th><th>Pin</th><th>Diagnóstico</th></tr></thead>
+            <thead><tr><th>Estado</th><th>Variable</th><th>Tipo</th><th>Editor</th><th>Description</th><th>Valor</th><th>Pin</th><th>Diagnóstico</th></tr></thead>
             <tbody id="vmBody"></tbody>
           </table>
         </div>
         <footer class="vm-footer">
           <div class="vm-footer-note">Las memorias, temporizadores, contadores y resultados internos no necesitan pin físico.</div>
-          <div class="vm-footer-actions"><button class="vm-btn" id="vmOpenCode" type="button">CÓDIGO MCU</button><button class="vm-btn primary" id="vmSave" type="button">GUARDAR</button></div>
+          <div class="vm-footer-actions"><button class="vm-btn" id="vmOpenCode" type="button">CODE MCU</button><button class="vm-btn primary" id="vmSave" type="button">GUARDAR</button></div>
         </footer>
       </section>
       <div id="vmToast"></div>
@@ -605,7 +605,7 @@
   function close(force) {
     if (!modal) return;
     if (dirty && !force) {
-      const discard = confirm('Hay cambios sin guardar en la tabla de variables. ¿Cerrar y descartarlos?');
+      const discard = confirm('Hay cambios sin guardar en la tabla de variables. ¿Fermer y descartarlos?');
       if (!discard) return;
     }
     modal.style.display = 'none';
@@ -662,7 +662,7 @@
     const target = document.getElementById('vmSummary');
     if (!target) return;
     target.innerHTML = [
-      ['Variables', currentRows.length], ['Físicas', physical], ['Asignadas', assigned + '/' + physical], ['Errores', errorCount], ['Advertencias', warningCount]
+      ['Variables', currentRows.length], ['Physiques', physical], ['Asignadas', assigned + '/' + physical], ['Errores', errorCount], ['Advertencias', warningCount]
     ].map(function (item) { return '<div class="vm-stat"><b>' + item[1] + '</b><span>' + item[0] + '</span></div>'; }).join('');
   }
 
@@ -705,7 +705,7 @@
         '<td data-label="Variable"><span class="vm-label">' + escapeHTML(row.label) + '</span></td>' +
         '<td data-label="Tipo"><span class="vm-kind">' + escapeHTML(row.typeTitle) + '</span></td>' +
         '<td data-label="Editor"><span class="vm-origin">' + escapeHTML(row.origin) + '</span></td>' +
-        '<td data-label="Descripción"><input class="vm-desc" data-variable="' + escapeHTML(row.label) + '" value="' + escapeHTML(row.description) + '" placeholder="Ej.: Motor principal" /></td>' +
+        '<td data-label="Description"><input class="vm-desc" data-variable="' + escapeHTML(row.label) + '" value="' + escapeHTML(row.description) + '" placeholder="Ej.: Motor principal" /></td>' +
         '<td data-label="Valor"><span>' + escapeHTML(row.value) + '</span></td>' +
         '<td data-label="Pin">' + (row.physical ? '<select class="vm-pin ' + (state.errors.length ? 'invalid' : '') + '" data-group="' + row.group + '" data-variable="' + escapeHTML(row.label) + '">' + pinOptions(row, profile, current) + '</select>' : '<span class="vm-no-pin">No requerido</span>') + '</td>' +
         '<td data-label="Diagnóstico"><div class="vm-row-message ' + messageClass + '">' + escapeHTML(messages.length ? messages.join(' ') : (row.physical ? 'Correcto' : 'Variable interna')) + '</div></td>' +
@@ -783,7 +783,7 @@
     const validation = validateRows(currentBoard);
     const profile = getProfile(currentBoard);
     const map = mapForBoard(currentBoard);
-    const lines = [['Variable','Tipo','Editor','Descripción','Valor','Placa','Pin','Estado','Diagnóstico'].map(csvCell).join(',')];
+    const lines = [['Variable','Tipo','Editor','Description','Valor','Placa','Pin','Estado','Diagnóstico'].map(csvCell).join(',')];
     currentRows.forEach(function (row) {
       const state = validation.states[row.label];
       const pin = row.physical ? pinDisplay(map[row.group][row.label], profile, row.group) : 'No requerido';

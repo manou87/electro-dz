@@ -69,7 +69,7 @@
     const now = Number(options.createdAt || Date.now());
     const item = {
       id: options.id || makeId(),
-      name: String(options.name || (editor === 'ladder' ? 'Circuito Ladder' : 'Circuito FBD')),
+      name: String(options.name || (editor === 'ladder' ? 'Circuit Ladder' : 'Circuit FBD')),
       editor: editor,
       createdAt: now,
       updatedAt: Number(options.updatedAt || now)

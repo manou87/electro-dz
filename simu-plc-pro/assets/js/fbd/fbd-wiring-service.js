@@ -39,17 +39,17 @@
   }
 
   function validate(fromTerm,toTerm){
-    if(adapter.getSimulation()) return reject('simulation','No se puede modificar el cableado durante la simulación.');
+    if(adapter.getSimulation()) return reject('simulation','Impossible de modifier le câblage pendant la simulation.');
     if(!fromTerm || !toTerm) return reject('missingTerminal','Falta un terminal de origen o destino.');
     if(fromTerm===toTerm) return reject('sameTerminal','Un terminal no puede conectarse consigo mismo.');
 
     var fromNode=terminalNode(fromTerm);
     var toNode=terminalNode(toTerm);
-    if(fromNode && toNode && fromNode===toNode) return reject('sameNode','Un bloque no puede conectarse a sí mismo.');
+    if(fromNode && toNode && fromNode===toNode) return reject('sameNode','Un bloc ne peut pas se connecter à lui-même.');
 
     var fromIsOutput=!!(fromTerm.classList && fromTerm.classList.contains('output'));
     var toIsInput=!!(toTerm.classList && toTerm.classList.contains('input'));
-    if(!fromIsOutput || !toIsInput) return reject('direction','La conexión debe ir de una salida hacia una entrada.');
+    if(!fromIsOutput || !toIsInput) return reject('direction','La connexion doit aller d’une sortie vers une entrée.');
 
     var duplicate=adapter.getConnections().some(function(conn){ return conn && conn.from===fromTerm && conn.to===toTerm; });
     if(duplicate) return reject('duplicate','La conexión ya existe.');

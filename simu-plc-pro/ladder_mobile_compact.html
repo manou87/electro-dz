@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
 <script id="simuplc-embedded-frame-early">try{if(window.self!==window.top)document.documentElement.classList.add('simuplc-embedded-frame')}catch(e){}</script>
-  <title>Ladder Test - Fase 9 Simulación Visual</title>
+  <title>Ladder Test - Fase 9 Simulation Visual</title>
   <style>
     :root {
       --bg: #f3f3f3;
@@ -463,7 +463,7 @@
     .workspace.pro-mode .pro-badge{display:inline-flex}
 
 
-/* ===== CHATGPT PATCH: Biblioteca Ladder PRO unica ===== */
+/* ===== CHATGPT PATCH: Bibliothèque Ladder PRO unica ===== */
 body.ladder-pro-only .toolbar .legacy-component-btn,
 body.ladder-pro-only #addNO,
 body.ladder-pro-only #addNC,
@@ -659,7 +659,7 @@ body.ladder-pro-only .ladder-canvas-wrap > canvas {
 }
 
 
-/* ===== CHATGPT PATCH: Biblioteca plegable PRO ===== */
+/* ===== CHATGPT PATCH: Bibliothèque plegable PRO ===== */
 body.ladder-pro-only .workspace {
   transition: grid-template-columns .22s ease;
 }
@@ -957,7 +957,7 @@ body.ladder-pro-only .branch-panel {
     scrollbar-gutter: stable;
   }
 
-  /* El encabezado y Guardar permanecen accesibles mientras se recorre el formulario. */
+  /* El encabezado y Enregistrer permanecen accesibles mientras se recorre el formulario. */
   .edit-card > .modal-head{
     position: sticky;
     top: -16px;
@@ -983,7 +983,7 @@ body.ladder-pro-only .branch-panel {
     min-height: 44px;
   }
 
-  /* El botón flotante Premium no debe cubrir el formulario ni Guardar. */
+  /* El botón flotante Premium no debe cubrir el formulario ni Enregistrer. */
   body.ladder-edit-modal-open #ladderPremiumBtn{
     display: none !important;
     pointer-events: none !important;
@@ -1032,11 +1032,11 @@ body.ladder-pro-only .branch-panel {
 
       <div class="toolbar-group">
         <button class="btn secondary" id="editLabel">Editar nombre</button>
-        <button class="btn secondary" id="deleteElement">Eliminar</button>
-        <button class="btn secondary" id="resetDemo">Nuevo Ladder</button>
-        <button class="btn secondary" id="toggleSim">Simular</button>
-        <button class="btn secondary" id="quickSaveBtn">Guardar</button>
-        <button class="btn secondary" id="openCircuitsBtn">Abrir circuitos</button>
+        <button class="btn secondary" id="deleteElement">Supprimer</button>
+        <button class="btn secondary" id="resetDemo">Nouveau Ladder</button>
+        <button class="btn secondary" id="toggleSim">Simuler</button>
+        <button class="btn secondary" id="quickSaveBtn">Enregistrer</button>
+        <button class="btn secondary" id="openCircuitsBtn">Ouvrir circuitos</button>
         <button class="btn secondary" id="openSimPanelBtn">Variables</button>
         <button class="btn secondary" id="toggleLadderPro">Modo PRO</button>
       </div>
@@ -1065,28 +1065,28 @@ body.ladder-pro-only .branch-panel {
           <span class="tag warn">Sin rama seleccionada</span>
         </div>
         <div class="insert-note">
-          Tip: arrastra elementos dentro del ramal o en la línea principal. Para insertar elementos nuevos, usa NO, NC o Bobina y luego haz clic donde quieras.
+          Astuce : faites glisser des éléments dans la branche ou sur la ligne principale. Pour insérer de nouveaux éléments, utilisez NO, NC ou Bobine puis cliquez où vous voulez.
         </div>
       </div>
 
-      <div class="status" id="statusText">Selecciona un elemento o agrega contactos, bobinas y ramas paralelas.</div>
+      <div class="status" id="statusText">Sélectionnez un elemento o agrega contactos, bobinas y ramas paralelas.</div>
     </div>
   </div>
 
   <div class="overlay" id="storageOverlay">
     <div class="modal-card">
       <div class="modal-head">
-        <h3 class="panel-title" style="margin:0">Mis circuitos</h3>
-        <button class="btn secondary" id="closeStorageOverlay">Cerrar</button>
+        <h3 class="panel-title" style="margin:0">Mes circuits</h3>
+        <button class="btn secondary" id="closeStorageOverlay">Fermer</button>
       </div>
       <div class="modal-body">
-        <p class="panel-text">Guarda y abre tus proyectos Ladder sin cubrir el área de trabajo.</p>
-        <input type="text" id="saveName" class="storage-name" placeholder="Nombre del proyecto, por ejemplo: Arranque motor 1" />
+        <p class="panel-text">Enregistrez et ouvrez vos projets Ladder sans couvrir la zone de travail.</p>
+        <input type="text" id="saveName" class="storage-name" placeholder="Nom du projet, par exemple : Démarrage moteur 1" />
         <div class="storage-actions">
-          <button class="btn primary" id="saveProject">Guardar en memoria local</button>
+          <button class="btn primary" id="saveProject">Enregistrer en memoria local</button>
           <button class="btn secondary" id="downloadProject">Descargar JSON</button>
           <button class="btn secondary" id="copyJson">Copiar JSON</button>
-          <button class="btn secondary" id="loadJsonText">Cargar desde JSON</button>
+          <button class="btn secondary" id="loadJsonText">Charger depuis JSON</button>
           <button class="btn secondary" id="loadJsonFileBtn">Cargar archivo JSON</button>
         </div>
         <input type="file" id="loadJsonFile" accept=".json,application/json" style="display:none" />
@@ -1101,10 +1101,10 @@ body.ladder-pro-only .branch-panel {
     <div class="modal-card" style="width:min(920px,96vw)">
       <div class="modal-head">
         <h3 class="panel-title" style="margin:0">Variables de simulación</h3>
-        <button class="btn secondary" id="closeSimOverlay">Cerrar</button>
+        <button class="btn secondary" id="closeSimOverlay">Fermer</button>
       </div>
       <div class="modal-body">
-        <p class="panel-text">Activa entradas y marcas. Puedes pulsar directamente las entradas I y marcas M sobre el diagrama. Su comportamiento puede ser selector o pulsador.</p>
+        <p class="panel-text">Activez entrées et marques. Vous pouvez appuyer directement sur les entrées I et marques M du diagramme. Su comportamiento puede ser selector o pulsador.</p>
         <div class="sim-actions">
           <button class="btn secondary" id="refreshVars">Actualizar variables</button>
           <button class="btn secondary" id="allOff">Apagar todo</button>
@@ -1120,7 +1120,7 @@ body.ladder-pro-only .branch-panel {
     <div class="edit-card">
       <div class="modal-head">
         <h3 class="panel-title" style="margin:0">Editar elemento</h3>
-        <button class="btn secondary" id="closeEditOverlay">Cerrar</button>
+        <button class="btn secondary" id="closeEditOverlay">Fermer</button>
       </div>
       <div class="edit-grid">
         <label>
@@ -1128,18 +1128,18 @@ body.ladder-pro-only .branch-panel {
           <input class="edit-input" id="editNameInput" type="text" placeholder="Ejemplo: I1, Q1, M1">
         </label>
         <label>
-          <div class="edit-label">Texto de referencia (opcional)</div>
-          <input class="edit-input" id="editReferenceInput" type="text" maxlength="120" placeholder="Ejemplo: Pulsador de arranque / Motor principal">
+          <div class="edit-label">Texte de référence (opcional)</div>
+          <input class="edit-input" id="editReferenceInput" type="text" maxlength="120" placeholder="Exemple : Bouton-poussoir de démarrage / Moteur principal">
         </label>
         <label>
           <div class="edit-label">Comportamiento en simulación</div>
           <select class="edit-select" id="editBehaviorSelect">
             <option value="selector">Selector</option>
-            <option value="pulsador">Pulsador</option>
+            <option value="pulsador">Bouton-poussoir</option>
           </select>
         </label>
         <label>
-          <div class="edit-label">Tipo físico de entrada</div>
+          <div class="edit-label">Type physique d’entrée</div>
           <select class="edit-select" id="editPhysicalTypeSelect">
             <option value="NO">NO - Normalmente abierto</option>
             <option value="NC">NC - Normalmente cerrado</option>
@@ -1149,7 +1149,7 @@ body.ladder-pro-only .branch-panel {
           Combina el símbolo Ladder NO/NC con el comportamiento <strong>pulsador/selector</strong> y el tipo físico <strong>NO/NC</strong>.
         </div>
         <div class="storage-actions">
-          <button class="btn primary" id="saveEditModal">Guardar cambios</button>
+          <button class="btn primary" id="saveEditModal">Enregistrer cambios</button>
         </div>
       </div>
     </div>
@@ -2090,7 +2090,7 @@ body.ladder-pro-only .branch-panel {
       const btn = document.getElementById('toggleLadderPro');
       if(btn){ btn.textContent = isProMode() ? 'Modo Clásico' : 'Modo PRO'; btn.classList.toggle('active', isProMode()); }
       const badge = document.getElementById('proBadge');
-      if(badge) badge.textContent = 'MODO PRO: conecta salida azul con entrada blanca. Cables ortogonales tipo circuito eléctrico.';
+      if(badge) badge.textContent = 'MODE PRO : connectez la sortie bleue à l’entrée blanche. Câbles orthogonaux type circuit électrique.';
     }
     function proPinId(el, side){ return (el && el.id ? el.id : 'x') + ':' + side; }
     function proRailPinId(rungIndex, side){ return 'rail:' + rungIndex + ':' + side; }
@@ -2222,10 +2222,10 @@ body.ladder-pro-only .branch-panel {
       state.proWires = (state.proWires||[]).filter(w => ids.has(w.from) && ids.has(w.to));
     }
     function validateProConnection(fromPin, toPin){
-      if(!fromPin || !toPin) return {ok:false, reason:'Selecciona dos pines válidos.'};
+      if(!fromPin || !toPin) return {ok:false, reason:'Sélectionnez dos pines válidos.'};
       if(fromPin.id === toPin.id) return {ok:false, reason:'No conectes un pin consigo mismo.'};
-      if(fromPin.kind !== 'output') return {ok:false, reason:'La conexión debe iniciar en una salida azul.'};
-      if(toPin.kind !== 'input') return {ok:false, reason:'La conexión debe terminar en una entrada blanca.'};
+      if(fromPin.kind !== 'output') return {ok:false, reason:'La connexion doit commencer sur une sortie bleue.'};
+      if(toPin.kind !== 'input') return {ok:false, reason:'La connexion doit se terminer sur une entrée blanche.'};
       if(fromPin.elementId === toPin.elementId) return {ok:false, reason:'No conectes un componente consigo mismo.'};
       if(fromPin.x > toPin.x + S(4)) return {ok:false, reason:'Ladder debe conectarse de izquierda a derecha.'};
       const exists=(state.proWires||[]).some(w => w.from===fromPin.id && w.to===toPin.id);
@@ -2239,7 +2239,7 @@ body.ladder-pro-only .branch-panel {
         if(pin.kind==='output'){
           state.proWireStart=pin; state.proWirePreview={x:pos.x,y:pos.y}; state.selectedWireId=null; draw(); return true;
         }
-        statusText.textContent='En Modo PRO inicia el cable desde un pin azul de salida.';
+        statusText.textContent='En mode PRO, démarrez le câble depuis une broche bleue de sortie.';
         return true;
       }
       const wire=findProWireAt(pos.x,pos.y);
@@ -2268,7 +2268,7 @@ body.ladder-pro-only .branch-panel {
       state.proWireStart=null; state.proWirePreview=null; draw(); return true;
     }
     function toggleLadderProMode(){
-      if(state.simulationOn){ statusText.textContent='Detén la simulación antes de cambiar el modo Ladder.'; return; }
+      if(state.simulationOn){ statusText.textContent='Arrêtez la simulation avant de changer le mode Ladder.'; return; }
       state.ladderMode = isProMode() ? 'classic' : 'pro';
       state.proWireStart=null; state.proWirePreview=null; state.proHoveredPinId=null; state.selectedWireId=null;
       syncProModeUi(); draw();
@@ -2508,7 +2508,7 @@ body.ladder-pro-only .branch-panel {
 
         const type = document.createElement('div');
         type.className = 'var-type';
-        type.textContent = isInputLike(v.type) ? 'Entrada/Marca' : (isOutputLike(v.type) ? 'Salida' : 'Variable');
+        type.textContent = isInputLike(v.type) ? 'Entrée/Marca' : (isOutputLike(v.type) ? 'Sortie' : 'Variable');
 
         head.appendChild(name);
         head.appendChild(type);
@@ -2531,7 +2531,7 @@ body.ladder-pro-only .branch-panel {
           toggle.type = 'checkbox';
           toggle.className = 'toggle';
           toggle.checked = !!state.simValues[v.name];
-          toggle.title = 'Accionar ' + v.name + ' (' + behavior + ' ' + physicalType + ')';
+          toggle.title='Accionar ' + v.name + ' (' + behavior + ' ' + physicalType + ')';
           toggle.onchange = () => {
             state.simValues[v.name] = toggle.checked;
             draw();
@@ -2559,7 +2559,7 @@ body.ladder-pro-only .branch-panel {
       const activeOutputs = Object.values(state.coilStates).filter(Boolean).length;
       const diag = state.simDiagnostics || { passes: 0, coilCount: 0, stable: true };
       simMeta.innerHTML = ''
-        + '<span class="tag ' + (state.simulationOn ? 'on' : 'warn') + '">' + (state.simulationOn ? 'Simulación ON' : 'Simulación OFF') + '</span>'
+        + '<span class="tag ' + (state.simulationOn ? 'on' : 'warn') + '">' + (state.simulationOn ? 'Simulation ON' : 'Simulation OFF') + '</span>'
         + '<span class="tag">I: ' + ins + '</span>'
         + '<span class="tag">M: ' + marks + '</span>'
         + '<span class="tag">Q: ' + outs + '</span>'
@@ -2569,7 +2569,7 @@ body.ladder-pro-only .branch-panel {
     }
 
     function refreshSimButton() {
-      toggleSimBtn.textContent = state.simulationOn ? 'Detener simulación' : 'Simular';
+      toggleSimBtn.textContent = state.simulationOn ? 'Detener simulación' : 'Simuler';
       toggleSimBtn.classList.toggle('sim-on', state.simulationOn);
     }
 
@@ -2594,17 +2594,17 @@ body.ladder-pro-only .branch-panel {
       const selected = findSelected();
       if (state.dragInfo) {
         if (state.dragInfo.scope === 'main') {
-          statusText.textContent = 'Arrastrando en línea principal: suelta sobre una guía verde para reordenar.';
+          statusText.textContent = 'Glissement sur la ligne principale : déposez sur un guide vert pour réordonner.';
         } else {
-          statusText.textContent = 'Arrastrando en ramal: suelta sobre una guía azul para reordenar o mover entre arriba y abajo.';
+          statusText.textContent = 'Glissement dans une branche : déposez sur un guide bleu pour réordonner ou déplacer entre haut et bas.';
         }
         return;
       }
       if (state.pendingType) {
         if (state.pendingType === 'BRANCH') {
-          statusText.textContent = 'Modo inserción: haz clic sobre una línea principal para agregar una rama paralela.';
+          statusText.textContent = 'Mode insertion : cliquez sur une ligne principale pour ajouter une branche parallèle.';
         } else {
-          statusText.textContent = 'Modo inserción: clic en guía verde para insertar en línea principal, o en guía azul para insertar dentro del ramal.';
+          statusText.textContent = 'Mode insertion : clic sur le guide vert pour insérer sur la ligne principale, ou sur le guide bleu pour insérer dans la branche.';
         }
         return;
       }
@@ -2617,8 +2617,8 @@ body.ladder-pro-only .branch-panel {
         return;
       }
       statusText.textContent = state.simulationOn
-        ? 'Simulación activa: puedes pulsar I y M. La respuesta de contactos asociados a bobinas ahora se recalcula en el mismo instante.'
-        : 'Selecciona un elemento o agrega contactos, bobinas y ramas paralelas.';
+        ? 'Simulation active : vous pouvez appuyer sur I et M. La réponse des contacts associés aux bobines est recalculée instantanément.'
+        : 'Sélectionnez un elemento o agrega contactos, bobinas y ramas paralelas.';
     }
 
     function updateBranchPanel() {
@@ -2807,7 +2807,7 @@ body.ladder-pro-only .branch-panel {
     function addElementToSelectedBranch(lane, type) {
       const selected = findSelected();
       const branch = getBranchOwnerFromHit(selected);
-      if (!branch) { alert('Primero selecciona una rama paralela o un elemento dentro de ella.'); return; }
+      if (!branch) { alert('Sélectionnez d’abord une branche parallèle ou un élément dedans.'); return; }
       const laneIndex = lane === 'top' ? 0 : 1;
       branch.branches[laneIndex].push(makeElement(type, defaultLabelForType(type)));
       draw();
@@ -2816,7 +2816,7 @@ body.ladder-pro-only .branch-panel {
     function removeLastFromSelectedBranch(lane) {
       const selected = findSelected();
       const branch = getBranchOwnerFromHit(selected);
-      if (!branch) { alert('Primero selecciona una rama paralela o un elemento dentro de ella.'); return; }
+      if (!branch) { alert('Sélectionnez d’abord une branche parallèle ou un élément dedans.'); return; }
       const laneIndex = lane === 'top' ? 0 : 1;
       if (!branch.branches[laneIndex].length) { alert('Esa línea ya está vacía.'); return; }
       const removed = branch.branches[laneIndex].pop();
@@ -2960,7 +2960,7 @@ body.ladder-pro-only .branch-panel {
       if (!hit || !hit.element) return false;
       if (!toggleSimulationInput(hit.element.label, hit.element)) return false;
       state.selectedId = hit.id;
-      statusText.textContent = 'Entrada ' + hit.element.label + ' accionada: ' + (state.simValues[hit.element.label] ? 'SI' : 'NO') + ' | señal física: ' + (getPhysicalSignalForElement(hit.element, state.coilStates) ? 'ON' : 'OFF') + '.';
+      statusText.textContent = 'Entrée ' + hit.element.label + ' accionada: ' + (state.simValues[hit.element.label] ? 'SI' : 'NO') + ' | señal física: ' + (getPhysicalSignalForElement(hit.element, state.coilStates) ? 'ON' : 'OFF') + '.';
       return true;
     }
 
@@ -3081,7 +3081,7 @@ body.ladder-pro-only .branch-panel {
       const items = readSavedProjects();
       savedSlots.innerHTML = '';
       if (!items.length) {
-        savedSlots.innerHTML = '<div class="slot"><div class="slot-name">No hay proyectos guardados todavía.</div></div>';
+        savedSlots.innerHTML = '<div class="slot"><div class="slot-name">Il n’y a pas encore de projets enregistrés.</div></div>';
         return;
       }
 
@@ -3094,7 +3094,7 @@ body.ladder-pro-only .branch-panel {
 
         const name = document.createElement('div');
         name.className = 'slot-name';
-        name.textContent = item.name || ('Proyecto ' + (index + 1));
+        name.textContent = item.name || ('Projet ' + (index + 1));
 
         const date = document.createElement('div');
         date.className = 'slot-date';
@@ -3124,14 +3124,14 @@ body.ladder-pro-only .branch-panel {
 
         const exportBtn = document.createElement('button');
         exportBtn.className = 'btn secondary';
-        exportBtn.textContent = 'Exportar';
+        exportBtn.textContent = 'Exporter';
         exportBtn.onclick = () => {
           jsonBox.value = JSON.stringify(item.model, null, 2);
         };
 
         const deleteBtn = document.createElement('button');
         deleteBtn.className = 'btn secondary';
-        deleteBtn.textContent = 'Eliminar';
+        deleteBtn.textContent = 'Supprimer';
         deleteBtn.onclick = () => {
           const current = readSavedProjects();
           current.splice(index, 1);
@@ -3151,11 +3151,11 @@ body.ladder-pro-only .branch-panel {
 
     function nowLabel() {
       const d = new Date();
-      return d.toLocaleString('es-PE');
+      return d.toLocaleString('fr-FR');
     }
 
     function saveCurrentProject() {
-      const name = saveNameInput.value.trim() || 'Proyecto Ladder';
+      const name = saveNameInput.value.trim() || 'Projet Ladder';
       const model = getSerializableLadder();
       const list = readSavedProjects();
       list.unshift({
@@ -3167,7 +3167,7 @@ body.ladder-pro-only .branch-panel {
       refreshSavedSlots();
       refreshStorageMeta();
       jsonBox.value = JSON.stringify(model, null, 2);
-      statusText.textContent = 'Proyecto guardado en memoria local: ' + name + '.';
+      statusText.textContent = 'Projet enregistré en mémoire locale : ' + name + '.';
     }
 
     function tryLoadModel(model) {
@@ -3282,7 +3282,7 @@ body.ladder-pro-only .branch-panel {
       if (editPhysicalTypeSelect) editPhysicalTypeSelect.disabled = !canChooseBehavior;
       document.body.classList.add('ladder-edit-modal-open');
       editOverlay.classList.add('show');
-      // Cada apertura comienza arriba; el usuario puede desplazar el formulario hasta Guardar.
+      // Cada apertura comienza arriba; el usuario puede desplazar el formulario hasta Enregistrer.
       requestAnimationFrame(() => {
         try {
           editOverlay.scrollTop = 0;
@@ -3327,7 +3327,7 @@ body.ladder-pro-only .branch-panel {
 
     function blockIfSimulating() {
       if (state.simulationOn) {
-        statusText.textContent = 'Modo simulación activo: edición bloqueada.';
+        statusText.textContent = 'Mode simulation actif : édition verrouillée.';
         return true;
       }
       return false;
@@ -3337,11 +3337,11 @@ body.ladder-pro-only .branch-panel {
       if (blockIfSimulating()) return;
       const selected = findSelected();
       if (!selected) {
-        alert('Primero selecciona un contacto, bobina o rama.');
+        alert('Sélectionnez d’abord un contact, une bobine ou une branche.');
         return;
       }
       if (selected.element.type === 'BRANCH') {
-        alert('Selecciona un elemento dentro de la rama o usa el panel de edición de ramas.');
+        alert('Sélectionnez un elemento dentro de la rama o usa el panel de edición de ramas.');
         return;
       }
       const ref = getElementRef(selected);
@@ -3359,7 +3359,7 @@ body.ladder-pro-only .branch-panel {
       }
       const selected = findSelected();
       if (!selected) {
-        alert('Primero selecciona un elemento.');
+        alert('Sélectionnez d’abord un élément.');
         return;
       }
       const ref = getElementRef(selected);
@@ -3607,7 +3607,7 @@ body.ladder-pro-only .branch-panel {
     if(type==='RESET') return 'Bobina RESET';
     if(type==='TON') return 'Temporizador TON';
     if(type==='TOFF') return 'Temporizador TOFF';
-    if(type==='CTU') return 'Contador CTU';
+    if(type==='CTU') return 'Compteur CTU';
     if(type==='SR') return 'Bloque SET/RESET';
     return oldLabelForType(type);
   };
@@ -3899,7 +3899,7 @@ body.ladder-pro-only .branch-panel {
       var sec = Math.round((clampDelay(element.delayMs) / 1000) * 1000) / 1000;
       wrap.innerHTML='<label><div class="edit-label">Tiempo (segundos)</div><input class="edit-input" id="editDelaySeconds" type="number" min="0" step="0.1" value="'+sec+'"></label>';
     }else{
-      wrap.innerHTML='<label><div class="edit-label">Preset contador</div><input class="edit-input" id="editPreset" type="number" min="1" step="1" value="'+clampPreset(element.preset)+'"></label>';
+      wrap.innerHTML='<label><div class="edit-label">Preset compteur</div><input class="edit-input" id="editPreset" type="number" min="1" step="1" value="'+clampPreset(element.preset)+'"></label>';
     }
     grid.insertBefore(wrap, grid.querySelector('.storage-actions'));
   };
@@ -4282,7 +4282,7 @@ body.ladder-pro-only .branch-panel {
   flex: 0 0 8px;
 }
 
-/* 2) Biblioteca Ladder compacta: solo símbolos, sin nombres ni descripciones */
+/* 2) Bibliothèque Ladder compacta: solo símbolos, sin nombres ni descripciones */
 body.ladder-pro-only .workspace{
   grid-template-columns: 84px minmax(0, 1fr) !important;
   grid-template-rows: minmax(0, 1fr) !important;
@@ -4428,9 +4428,9 @@ body.ladder-pro-only .pro-badge{
   ready(function(){
     function compactToggle(){
       var t = document.getElementById('toggleLibraryBtn');
-      if(t){ t.textContent = '◀'; t.title = 'Ocultar biblioteca'; }
+      if(t){ t.textContent = '◀'; t.title='Masquer la bibliothèque'; }
       var o = document.getElementById('openLibraryFloatingBtn');
-      if(o){ o.textContent = '☰'; o.title = 'Abrir biblioteca'; }
+      if(o){ o.textContent = '☰'; o.title='Ouvrir la bibliothèque'; }
     }
     compactToggle();
     setTimeout(compactToggle, 300);
@@ -5436,7 +5436,7 @@ if ('serviceWorker' in navigator) {
     pointer-events: none !important;
   }
 
-  /* Oculta el botón azul flotante "Biblioteca" para que no tape el área de trabajo. */
+  /* Oculta el botón azul flotante "Bibliothèque" para que no tape el área de trabajo. */
   .ladder-library-open-floating,
   #openLibraryFloatingBtn,
   body.library-collapsed .ladder-library-open-floating,
@@ -5690,7 +5690,7 @@ if ('serviceWorker' in navigator) {
 
   function byId(id){ return document.getElementById(id); }
   function cleanName(s, fallback){
-    s = String(s || '').trim() || fallback || 'Proyecto SimuPLC';
+    s = String(s || '').trim() || fallback || 'Projet SimuPLC';
     return s.replace(/[<>:"/\\|?*\x00-\x1F]/g,'_').slice(0,80);
   }
   function downloadJson(obj, filename){
@@ -5755,7 +5755,7 @@ if ('serviceWorker' in navigator) {
         + '<div class="simuplc-native-body">'+inputHtml+noteHtml+'</div>'
         + '<div class="simuplc-native-actions"></div></div>';
       var actions = overlay.querySelector('.simuplc-native-actions');
-      (opts.buttons || [{text:'Aceptar', value:true, cls:'primary'}]).forEach(function(b){
+      (opts.buttons || [{text:'Accepter', value:true, cls:'primary'}]).forEach(function(b){
         var btn = document.createElement('button');
         btn.type='button'; btn.className='simuplc-native-btn '+(b.cls||''); btn.textContent=b.text;
         btn.addEventListener('click', function(){ finish(b.value); });
@@ -5788,8 +5788,8 @@ if ('serviceWorker' in navigator) {
   }
   window.SimuPLCModal = {
     alert:function(message,title){ return showNativeModal({icon:'⚠', title:title||'Aviso', message:String(message||''), buttons:[{text:'Entendido',value:true,cls:'primary'}]}); },
-    confirm:function(message,title){ return showNativeModal({icon:'⚡', title:title||'Confirmar acción', message:String(message||''), buttons:[{text:'Cancelar',value:false,cls:'ghost'},{text:'Continuar',value:true,cls:'primary'}]}); },
-    prompt:function(message,value,title){ return showNativeModal({icon:'💾', title:title||'Guardar proyecto', message:String(message||''), input:true, value:value||'', buttons:[{text:'Cancelar',value:null,cls:'ghost'},{text:'Guardar',value:true,cls:'success'}]}); }
+    confirm:function(message,title){ return showNativeModal({icon:'⚡', title:title||'Confirmar acción', message:String(message||''), buttons:[{text:'Annuler',value:false,cls:'ghost'},{text:'Continuar',value:true,cls:'primary'}]}); },
+    prompt:function(message,value,title){ return showNativeModal({icon:'💾', title:title||'Enregistrer le projet', message:String(message||''), input:true, value:value||'', buttons:[{text:'Annuler',value:null,cls:'ghost'},{text:'Enregistrer',value:true,cls:'success'}]}); }
   };
 
   var nativeAlert = window.alert;
@@ -5798,7 +5798,7 @@ if ('serviceWorker' in navigator) {
   };
 
   async function customNew(){
-    var ok = await window.SimuPLCModal.confirm('Se limpiará el editor actual. Tu otro modo no se tocará cuando sea posible.', 'Nuevo circuito');
+    var ok = await window.SimuPLCModal.confirm('L’éditeur actuel sera nettoyé. Votre autre mode ne sera pas touché lorsque c’est possible.', 'Nouveau circuit');
     if(!ok) return;
     try{ if(typeof window.hideSplash === 'function') window.hideSplash(); }catch(_){ }
     try{
@@ -5809,12 +5809,12 @@ if ('serviceWorker' in navigator) {
       if(typeof window.clearAllGraphics === 'function') window.clearAllGraphics();
       if(typeof window.clearAll === 'function') window.clearAll();
       if(typeof window.resetStateVariables === 'function') window.resetStateVariables();
-    }catch(e){ window.SimuPLCModal.alert('No se pudo crear un circuito nuevo: '+(e.message||e)); }
+    }catch(e){ window.SimuPLCModal.alert('Impossible de créer un nouveau circuit : '+(e.message||e)); }
   }
   async function customSave(){
-    var name = await window.SimuPLCModal.prompt('Escribe un nombre para guardar o descargar tu circuito.', 'Proyecto SimuPLC', 'Guardar circuito');
+    var name = await window.SimuPLCModal.prompt('Saisissez un nom pour enregistrer o descargar tu circuito.', 'Projet SimuPLC', 'Enregistrer circuito');
     if(name === null || name === false) return;
-    name = cleanName(name, 'Proyecto SimuPLC');
+    name = cleanName(name, 'Projet SimuPLC');
     try{
       var project = await getProjectData(name);
       project.name = project.name || name;
@@ -5824,9 +5824,9 @@ if ('serviceWorker' in navigator) {
         list.unshift({id:'p'+Date.now().toString(36),name:name,updatedAt:Date.now(),data:project});
         localStorage.setItem('simuplc_native_saved_projects_v1', JSON.stringify(list.slice(0,40)));
       }catch(_){ }
-      downloadJson(project, cleanName(name,'Proyecto') + '.json');
-      window.SimuPLCModal.alert('Proyecto guardado y descargado correctamente.', 'Guardado listo');
-    }catch(e){ window.SimuPLCModal.alert('No se pudo guardar: '+(e.message||e)); }
+      downloadJson(project, cleanName(name,'Projet') + '.json');
+      window.SimuPLCModal.alert('Projet guardado y descargado correctamente.', 'Guardado listo');
+    }catch(e){ window.SimuPLCModal.alert('Impossible d’enregistrer : '+(e.message||e)); }
   }
 
   function bindNativeButtons(){
@@ -6017,7 +6017,7 @@ if ('serviceWorker' in navigator) {
         var before = grid.querySelector('.storage-actions') || null;
         grid.insertBefore(box, before);
       }
-      box.innerHTML = '<label><div class="edit-label">Preset contador</div><input class="edit-input" id="editPreset" type="number" min="1" step="1"></label>';
+      box.innerHTML = '<label><div class="edit-label">Preset compteur</div><input class="edit-input" id="editPreset" type="number" min="1" step="1"></label>';
       input = document.getElementById('editPreset');
     }
     if(input){
@@ -6037,7 +6037,7 @@ if ('serviceWorker' in navigator) {
     }
   }
 
-  // Refuerzo del guardado: se ejecuta antes del handler original del boton Guardar.
+  // Refuerzo del guardado: se ejecuta antes del handler original del boton Enregistrer.
   ready(function(){
     var btn = document.getElementById('saveEditModal');
     if(btn){
@@ -6238,7 +6238,7 @@ if ('serviceWorker' in navigator) {
   if(window.__SIMUPLC_V24_4_LADDER_DELETE_KEY__) return;
   window.__SIMUPLC_V24_4_LADDER_DELETE_KEY__=true;
   document.addEventListener('keydown',function(ev){
-    if(ev.key!=='Delete') return;
+    if(ev.key!=='Supprimer') return;
     var t=ev.target||document.activeElement;
     if(t && ((t.matches && t.matches('input,textarea,select,button')) || t.isContentEditable)) return;
     try{ if(typeof state==='undefined'||!state||state.simulationOn) return; }catch(_){ return; }
@@ -6717,7 +6717,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     lines.push('/*');
     lines.push('  SimuPLC Lab - Arduino desde LADDER (Fase 4)');
     lines.push('  Soporta: NO, NC, BRANCH, COIL, SET, RESET, SR, TON, TOFF y CTU.');
-    lines.push('  Entradas con INPUT_PULLUP: contacto cerrado = LOW = logico 1.');
+    lines.push('  Entrées con INPUT_PULLUP: contacto cerrado = LOW = logico 1.');
     lines.push('*/'); lines.push('');
     labels.inputs.forEach(function(l){ lines.push('const byte PIN_' + safeName(l) + ' = ' + (stored.inputs[l] ?? dflt.inputs[l]) + ';'); });
     labels.outputs.forEach(function(l){ lines.push('const byte PIN_' + safeName(l) + ' = ' + (stored.outputs[l] ?? dflt.outputs[l]) + ';'); });
@@ -7052,7 +7052,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
         ensureSimValues();
         repairAndMigrateElectricalModel();
         markModelDirty(); draw();
-        statusText.textContent = 'Circuito Ladder PRO industrial cargado.';
+        statusText.textContent = 'Circuit Ladder PRO industrial cargado.';
         return;
       }
       classicTryLoad(model);
@@ -8501,7 +8501,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
         clearProWireInteraction();
         statusText.textContent='Detén la simulación antes de crear conexiones.';
         draw();
-        return {ok:false,reason:'Simulación activa'};
+        return {ok:false,reason:'Simulation activa'};
       }
       if((pinA&&pinA.kind==='junction')||(pinB&&pinB.kind==='junction')){
         return {ok:false,reason:'El nodo negro es solo una referencia de unión.'};
@@ -8513,7 +8513,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
         state.proWireTapPoint=null;
         statusText.textContent=successText || 'Cable creado automáticamente.';
       }else{
-        statusText.textContent='Conexión no permitida: ' + result.reason;
+        statusText.textContent='Connexion no permitida: ' + result.reason;
       }
       markModelDirty();
       draw();
@@ -8557,7 +8557,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
         // El cable se puede seleccionar para eliminarlo, pero no se arrastra
         // ni se usa para crear puntos o derivaciones manuales.
         if(state.proWireStart){
-          statusText.textContent='Selecciona un terminal de destino. Los nodos y derivaciones se generan automáticamente desde terminales compartidos.';
+          statusText.textContent='Sélectionnez un terminal de destino. Los nodos y derivaciones se generan automáticamente desde terminales compartidos.';
           draw();
           return true;
         }
@@ -8576,7 +8576,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       if(hit){
         if(state.proWireStart){
           clearProWireInteraction();
-          statusText.textContent='Conexión cancelada: seleccionaste el cuerpo del elemento.';
+          statusText.textContent='Connexion cancelada: seleccionaste el cuerpo del elemento.';
         }
         state.freeSelectedId=hit.id;
         state.selectedId=hit.id;
@@ -8674,7 +8674,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     window.validateProConnection = validateProConnection = function(pinA,pinB){
       var service=window.SimuPLCLadderWiring;
       if(service && typeof service.normalizeConnection==='function') return service.normalizeConnection(pinA,pinB,state.proWires||[]);
-      if(!pinA || !pinB) return {ok:false,reason:'Selecciona dos terminales válidos.'};
+      if(!pinA || !pinB) return {ok:false,reason:'Sélectionnez deux bornes valides.'};
       if(pinA.id===pinB.id) return {ok:false,reason:'No conectes un terminal consigo mismo.'};
       return {ok:true,from:pinA,to:pinB};
     };
@@ -8688,7 +8688,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
         cleanupProJunctions(); repairAllJunctionGeometry(); rebuildElectricalGraph(); markModelDirty(); draw(); return;
       }
       var id = state.freeSelectedId || state.selectedId;
-      if(!id){ alert('Selecciona un elemento o cable.'); return; }
+      if(!id){ alert('Sélectionnez un elemento o cable.'); return; }
       var list = freeElements(); var idx = list.findIndex(function(e){ return e.id===id; });
       if(idx>=0){
         var el=list[idx]; list.splice(idx,1);
@@ -8788,7 +8788,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
 </script>
 
 
-<!-- ===== CHATGPT PATCH: Biblioteca de componentes y modo PRO unico ===== -->
+<!-- ===== CHATGPT PATCH: Bibliothèque de componentes y modo PRO unico ===== -->
 <script id="chatgpt-pro-only-component-library">
 (function(){
   function ready(fn){ if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn, {once:true}); else fn(); }
@@ -8816,35 +8816,35 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       library.id = 'ladderComponentLibrary';
       library.innerHTML = [
         '<div class="ladder-library-head">',
-          '<h3 class="ladder-library-title">Biblioteca Ladder</h3>',
-          '<button type="button" class="ladder-library-toggle" id="toggleLibraryBtn" title="Ocultar biblioteca">◀ Ocultar</button>',
+          '<h3 class="ladder-library-title">Bibliothèque Ladder</h3>',
+          '<button type="button" class="ladder-library-toggle" id="toggleLibraryBtn" title="Masquer la bibliothèque">◀ Ocultar</button>',
           '<span class="ladder-library-badge">PRO</span>',
         '</div>',
         '<div class="ladder-lib-section">',
           '<p class="ladder-lib-section-title">Contactos</p>',
           '<div class="ladder-lib-grid">',
-            libBtn('NO','─| |─','Contacto NO','Entrada normalmente abierta'),
-            libBtn('NC','─|/|─','Contacto NC','Entrada normalmente cerrada'),
+            libBtn('NO','─| |─','Contacto NO','Entrée normalmente abierta'),
+            libBtn('NC','─|/|─','Contacto NC','Entrée normalmente cerrada'),
           '</div>',
         '</div>',
         '<div class="ladder-lib-section">',
-          '<p class="ladder-lib-section-title">Salidas</p>',
+          '<p class="ladder-lib-section-title">Sorties</p>',
           '<div class="ladder-lib-grid">',
-            libBtn('COIL','( )','Bobina','Salida digital Q/M'),
+            libBtn('COIL','( )','Bobina','Sortie digital Q/M'),
             libBtn('SET','(S)','SET','Enclavamiento de salida'),
             libBtn('RESET','(R)','RESET','Reset de salida'),
             libBtn('SR','SR','SET/RESET','Bloque biestable S/R'),
           '</div>',
         '</div>',
         '<div class="ladder-lib-section">',
-          '<p class="ladder-lib-section-title">Temporizadores</p>',
+          '<p class="ladder-lib-section-title">Temporisateurs</p>',
           '<div class="ladder-lib-grid">',
-            libBtn('TON','TON','TON','Retardo a la conexión'),
-            libBtn('TOFF','TOF','TOFF','Retardo a la desconexión'),
+            libBtn('TON','TON','TON','Temporisation à la connexion'),
+            libBtn('TOFF','TOF','TOFF','Temporisation à la déconnexion'),
           '</div>',
         '</div>',
         '<div class="ladder-lib-section">',
-          '<p class="ladder-lib-section-title">Contadores</p>',
+          '<p class="ladder-lib-section-title">Compteurs</p>',
           '<div class="ladder-lib-grid">',
             libBtn('CTU','CTU','CTU','Contador ascendente'),
           '</div>',
@@ -8867,7 +8867,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
         openLibraryBtn.type = 'button';
         openLibraryBtn.id = 'openLibraryFloatingBtn';
         openLibraryBtn.className = 'ladder-library-open-floating';
-        openLibraryBtn.textContent = '☰ Biblioteca';
+        openLibraryBtn.textContent = '☰ Bibliothèque';
         canvasWrap.appendChild(openLibraryBtn);
       }
       workspace.insertBefore(library, canvasWrap);
@@ -8916,7 +8916,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
       var toggle = document.getElementById('toggleLibraryBtn');
       if(toggle){
         toggle.textContent = state.libraryCollapsed ? '☰ Mostrar' : '◀ Ocultar';
-        toggle.title = state.libraryCollapsed ? 'Mostrar biblioteca' : 'Ocultar biblioteca';
+        toggle.title = state.libraryCollapsed ? 'Mostrar biblioteca' : 'Masquer la bibliothèque';
       }
     }
     window.setLadderLibraryCollapsed = setLibraryCollapsed;
@@ -9724,7 +9724,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
         const btn = document.createElement('button');
         btn.type='button';
         btn.className='native-modal-btn ' + (b.cls || '');
-        btn.textContent=b.text || 'Aceptar';
+        btn.textContent=b.text || 'Accepter';
         btn.addEventListener('click', function(){ close(opts.input && b.value === true ? input.value : b.value); }, {once:true});
         actions.appendChild(btn);
       });
@@ -9735,13 +9735,13 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
   }
   const api = {
     alert:function(message,title){ return modal({icon:'⚠️', title:title || 'Aviso', message:String(message || ''), buttons:[{text:'Entendido', value:true, cls:'primary'}]}); },
-    confirm:function(message,title){ return modal({icon:'⚡', title:title || 'Confirmar acción', message:String(message || ''), buttons:[{text:'Cancelar', value:false, cls:'ghost'},{text:'Continuar', value:true, cls:'primary'}]}); },
-    prompt:function(message,value,title){ return modal({icon:'💾', title:title || 'Guardar', message:String(message || ''), input:true, value:value || '', buttons:[{text:'Cancelar', value:null, cls:'ghost'},{text:'Guardar', value:true, cls:'success'}]}); }
+    confirm:function(message,title){ return modal({icon:'⚡', title:title || 'Confirmar acción', message:String(message || ''), buttons:[{text:'Annuler', value:false, cls:'ghost'},{text:'Continuar', value:true, cls:'primary'}]}); },
+    prompt:function(message,value,title){ return modal({icon:'💾', title:title || 'Enregistrer', message:String(message || ''), input:true, value:value || '', buttons:[{text:'Annuler', value:null, cls:'ghost'},{text:'Enregistrer', value:true, cls:'success'}]}); }
   };
   window.SimuPLCNativeModal = api;
   window.alert = function(msg){ api.alert(String(msg || '')); };
 
-  function safeName(name){ return String(name || 'Proyecto SimuPLC').trim().replace(/[<>:"/\\|?*\x00-\x1F]+/g,'_').replace(/\s+/g,'_') || 'Proyecto_SimuPLC'; }
+  function safeName(name){ return String(name || 'Projet SimuPLC').trim().replace(/[<>:"/\\|?*\x00-\x1F]+/g,'_').replace(/\s+/g,'_') || 'Proyecto_SimuPLC'; }
   function downloadJSON(obj, filename){
     const blob = new Blob([JSON.stringify(obj, null, 2)], {type:'application/json'});
     const a = document.createElement('a');
@@ -9772,27 +9772,27 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
 
   async function bindMainButtons(){
     cloneAndBind('btnSave', async function(oldBtn){
-      const name = await api.prompt('Escribe un nombre para guardar tu circuito. No se mostrará ningún dato del navegador ni del repositorio.', 'Proyecto SimuPLC', 'Guardar circuito');
+      const name = await api.prompt('Saisissez un nom pour enregistrer tu circuito. No se mostrará ningún dato del navegador ni del repositorio.', 'Projet SimuPLC', 'Enregistrer circuito');
       if(name === null) return;
       try{
         withTempDialog('prompt', name, function(){ oldBtn.dispatchEvent(new MouseEvent('click', {bubbles:true, cancelable:true, view:window})); });
         toast('Guardado correctamente');
-      }catch(e){ api.alert('No se pudo guardar: ' + (e.message || e), 'Error al guardar'); }
+      }catch(e){ api.alert('Impossible d’enregistrer : ' + (e.message || e), 'Error al guardar'); }
     });
 
     cloneAndBind('btnExportUnified', async function(){
-      const name = await api.prompt('Nombre del archivo para exportar el proyecto completo FBD/Ladder.', 'Proyecto SimuPLC', 'Exportar proyecto');
+      const name = await api.prompt('Nombre del archivo para exportar el proyecto completo FBD/Ladder.', 'Projet SimuPLC', 'Exporter le projet');
       if(name === null) return;
       try{
         if(window.SimuPLCProject && typeof window.SimuPLCProject.makeUnifiedProject === 'function'){
-          const project = await window.SimuPLCProject.makeUnifiedProject(String(name).trim() || 'Proyecto SimuPLC');
+          const project = await window.SimuPLCProject.makeUnifiedProject(String(name).trim() || 'Projet SimuPLC');
           try{ localStorage.setItem('simuplc_last_dual_project_v2', JSON.stringify(project)); }catch(_){ }
           downloadJSON(project, safeName(project.name) + '.json');
         }else{
           withTempDialog('prompt', name, function(){ document.getElementById('btnExportUnified') && document.getElementById('btnExportUnified').click(); });
         }
-        toast('Proyecto exportado');
-      }catch(e){ api.alert('No se pudo exportar: ' + (e.message || e), 'Error al exportar'); }
+        toast('Projet exportado');
+      }catch(e){ api.alert('Impossible d’exporterer : ' + (e.message || e), 'Error al exportar'); }
     });
 
     cloneAndBind('btnImportUnified', async function(oldBtn){
@@ -9800,16 +9800,16 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
         const input = document.getElementById('loadInput');
         if(input){ input.value=''; input.click(); }
         else oldBtn.dispatchEvent(new MouseEvent('click', {bubbles:true, cancelable:true, view:window}));
-      }catch(e){ api.alert('No se pudo abrir el importador: ' + (e.message || e), 'Importar'); }
+      }catch(e){ api.alert('Impossible d’ouvrir l’importateur : ' + (e.message || e), 'Importer'); }
     });
 
     cloneAndBind('btnNew', async function(oldBtn){
-      const ok = await api.confirm('Se limpiará el editor actual. Guarda o exporta tu proyecto antes de continuar si deseas conservarlo.', 'Nuevo circuito');
+      const ok = await api.confirm('L’éditeur actuel sera nettoyé. Enregistrez ou exportez votre projet avant de continuer si vous souhaitez le conserver.', 'Nouveau circuit');
       if(!ok) return;
       try{
         withTempDialog('confirm', true, function(){ oldBtn.dispatchEvent(new MouseEvent('click', {bubbles:true, cancelable:true, view:window})); });
-        toast('Nuevo circuito listo');
-      }catch(e){ api.alert('No se pudo crear un circuito nuevo: ' + (e.message || e), 'Nuevo circuito'); }
+        toast('Nouveau circuit prêt');
+      }catch(e){ api.alert('Impossible de créer un nouveau circuit : ' + (e.message || e), 'Nouveau circuit'); }
     });
 
     const list = document.getElementById('circuitsList');
@@ -9823,11 +9823,11 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
         ev.preventDefault(); ev.stopPropagation(); ev.stopImmediatePropagation && ev.stopImmediatePropagation();
         if(action === 'rename'){
           const current = btn.closest('[data-name]') ? btn.closest('[data-name]').getAttribute('data-name') : '';
-          const name = await api.prompt('Nuevo nombre para el circuito.', current || 'Mi circuito', 'Renombrar circuito');
+          const name = await api.prompt('Nouveau nom pour le circuit.', current || 'Mon circuit', 'Renommer le circuit');
           if(!name) return;
           withTempDialog('prompt', name, function(){ btn.dispatchEvent(new MouseEvent('click', {bubbles:true, cancelable:true, view:window})); });
         }else{
-          const ok = await api.confirm('¿Eliminar este circuito? Esta acción no se puede deshacer.', 'Eliminar circuito');
+          const ok = await api.confirm('Supprimer ce circuit ? Cette action est irréversible.', 'Supprimer circuito');
           if(!ok) return;
           withTempDialog('confirm', true, function(){ btn.dispatchEvent(new MouseEvent('click', {bubbles:true, cancelable:true, view:window})); });
         }
@@ -9953,9 +9953,9 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     }
     if(!onInput || !offInput){
       box.innerHTML = '' +
-        '<label><div class="edit-label">Preset ON / Activación</div><input class="edit-input" id="editPreset" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off"></label>' +
-        '<label><div class="edit-label">Preset OFF / Desactivación</div><input class="edit-input" id="editPresetOff" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off"></label>' +
-        '<div class="insert-note">CTU con histéresis: Q se activa cuando CV llega a ON y se apaga cuando CV baja hasta OFF. OFF debe ser menor que ON.</div>';
+        '<label><div class="edit-label">Preset ON / Activation</div><input class="edit-input" id="editPreset" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off"></label>' +
+        '<label><div class="edit-label">Preset OFF / Désactivation</div><input class="edit-input" id="editPresetOff" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off"></label>' +
+        '<div class="insert-note">CTU avec hystérésis : Q s’active quand CV atteint ON et s’éteint quand CV descend jusqu’à OFF. OFF doit être inférieur à ON.</div>';
       onInput = document.getElementById('editPreset');
       offInput = document.getElementById('editPresetOff');
     }
@@ -10138,7 +10138,7 @@ body.simuplc-ladder-pdf #simuplcLadderPdfBrand{display:block!important;position:
     btn.addEventListener('touchend', open, {capture:true, passive:false});
   }
 
-  /* Bloques premium: no abren modal desde Ladder, solo quedan bloqueados visualmente. */
+  /* Blocs premium: no abren modal desde Ladder, solo quedan bloqueados visualmente. */
   document.addEventListener('click', function(ev){
     var item = ev.target && ev.target.closest && ev.target.closest('.ladder-lib-item[data-premium="1"]');
     if(!item || isFull()) return;

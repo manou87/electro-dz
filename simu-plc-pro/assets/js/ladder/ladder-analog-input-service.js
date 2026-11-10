@@ -250,11 +250,11 @@
     const section = document.createElement('div');
     section.className = 'ladder-lib-section';
     section.dataset.family = 'analog';
-    section.innerHTML = '<p class="ladder-lib-section-title">Analógico</p>'
+    section.innerHTML = '<p class="ladder-lib-section-title">Analogique</p>'
       + '<div class="ladder-lib-grid">'
-      + '<button type="button" class="ladder-lib-item" data-premium="1" data-ladder-type="' + TYPE + '" title="Entrada analógica: simula una señal RAW o escalada">'
+      + '<button type="button" class="ladder-lib-item" data-premium="1" data-ladder-type="' + TYPE + '" title="Entrée analogique: simula una señal RAW o escalada">'
       + '<span class="ladder-lib-symbol">AI</span>'
-      + '<span class="ladder-lib-text"><strong>Entrada analógica</strong><span>Valor RAW o escalado</span></span>'
+      + '<span class="ladder-lib-text"><strong>Entrée analogique</strong><span>Valor RAW o escalado</span></span>'
       + '</button></div>';
     const note = library.querySelector('.ladder-lib-note');
     if (note) library.insertBefore(section, note);
@@ -350,7 +350,7 @@
 
       const head = document.createElement('div');
       head.className = 'var-head';
-      head.innerHTML = '<div class="var-name"></div><div class="var-type">Entrada analógica</div>';
+      head.innerHTML = '<div class="var-name"></div><div class="var-type">Entrée analogique</div>';
       head.querySelector('.var-name').textContent = element.label || 'AI';
       row.appendChild(head);
 
@@ -405,8 +405,8 @@
     overlay = document.createElement('div');
     overlay.id = 'ladderAiQuickOverlay';
     overlay.innerHTML = `
-      <div class="ladder-ai-quick-card" role="dialog" aria-modal="false" aria-label="Control rápido de entrada analógica">
-        <div class="ladder-ai-quick-head"><h3 id="ladderAiQuickTitle">Entrada analógica</h3><button class="ladder-ai-quick-close" id="ladderAiQuickClose" type="button" aria-label="Cerrar">×</button></div>
+      <div class="ladder-ai-quick-card" role="dialog" aria-modal="false" aria-label="Contrôle rapide d’entrée analogique">
+        <div class="ladder-ai-quick-head"><h3 id="ladderAiQuickTitle">Entrada analógica</h3><button class="ladder-ai-quick-close" id="ladderAiQuickClose" type="button" aria-label="Fermer">×</button></div>
         <div class="ladder-ai-quick-summary"><div class="ladder-ai-quick-display" id="ladderAiQuickDisplay"></div><div class="ladder-ai-quick-raw" id="ladderAiQuickRaw"></div></div>
         <div class="ladder-ai-controls"><input id="ladderAiQuickSlider" type="range" aria-label="Variar señal analógica"><input id="ladderAiQuickNumber" type="number" aria-label="Valor RAW"></div>
       </div>`;
@@ -521,7 +521,7 @@
     try {
       const previousLabel = window.labelForType || labelForType;
       window.labelForType = labelForType = function (type) {
-        if (isAI(type)) return 'Entrada analógica';
+        if (isAI(type)) return 'Entrée analogique';
         return previousLabel.apply(this, arguments);
       };
     } catch (_) {}

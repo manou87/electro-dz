@@ -248,10 +248,10 @@
       return '<strong>'+formatValue(node.analogValue,node,true)+'</strong><span>PV '+formatValue(node.pidPV,node,false)+' · SP '+formatValue(node.pidSP,node,false)+' · '+String(node.mode||'auto').toUpperCase()+'</span>';
     }
     if(node.type===TYPES.PWM){
-      return '<strong>'+Number(node.outputPercent||0).toFixed(node.decimals)+' %</strong><span>Entrada '+formatValue(node.lastAnalogInput,node,true)+' · '+node.frequency+' Hz</span>';
+      return '<strong>'+Number(node.outputPercent||0).toFixed(node.decimals)+' %</strong><span>Entrée '+formatValue(node.lastAnalogInput,node,true)+' · '+node.frequency+' Hz</span>';
     }
     if(node.type===TYPES.AO){
-      return '<strong>'+Number(node.outputVoltage||0).toFixed(2)+' '+String(node.outputUnit||'V')+'</strong><span>Entrada '+formatValue(node.lastAnalogInput,node,true)+' · salida proporcional</span>';
+      return '<strong>'+Number(node.outputVoltage||0).toFixed(2)+' '+String(node.outputUnit||'V')+'</strong><span>Entrée '+formatValue(node.lastAnalogInput,node,true)+' · salida proporcional</span>';
     }
     if(node.type===TYPES.HYST){
       return '<strong>'+formatValue(node.lastAnalogInput,node,true)+'</strong><span>OFF ≤ '+formatValue(node.low,node,true)+' · ON ≥ '+formatValue(node.high,node,true)+'</span>';
@@ -288,7 +288,7 @@
     if(!node || !node.el) return null;
     let button=node.el.querySelector('.analog-config-button');
     if(!button){
-      button=document.createElement('button');button.type='button';button.className='analog-config-button';button.title='Configurar bloque analógico';button.textContent='⚙';
+      button=document.createElement('button');button.type='button';button.className='analog-config-button';button.title='Configurer bloque analógico';button.textContent='⚙';
       ['pointerdown','mousedown','touchstart','click'].forEach(function(name){button.addEventListener(name,function(ev){ev.preventDefault();ev.stopPropagation();if(name==='click')openModal(node);},{passive:false});});
       node.el.appendChild(button);
     }

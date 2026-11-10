@@ -100,7 +100,7 @@
       schemaVersion: config.projectSchemaVersion,
       version: config.projectSchemaVersion,
       app: { name: config.appName, version: config.appVersion },
-      name: String(options.name || 'Proyecto SimuPLC'),
+      name: String(options.name || 'Projet SimuPLC'),
       createdAt: options.createdAt || options.savedAt || now,
       updatedAt: now,
       savedAt: now,
@@ -153,7 +153,7 @@
 
     if (Array.isArray(source.nodes) || (source.data && Array.isArray(source.data.nodes))) {
       return createProject({
-        name: source.name || 'Proyecto FBD importado',
+        name: source.name || 'Projet FBD importado',
         activeEditor: 'fbd',
         fbd: source.data && Array.isArray(source.data.nodes) ? source.data : source,
         ladder: fallbacks.ladder,
@@ -163,7 +163,7 @@
 
     if (Array.isArray(source.rungs) || source.type === 'ladder-phase9' || source.type === 'ladder-free-pro-industrial') {
       return createProject({
-        name: source.name || 'Proyecto Ladder importado',
+        name: source.name || 'Projet Ladder importado',
         activeEditor: 'ladder',
         fbd: fallbacks.fbd,
         ladder: source,

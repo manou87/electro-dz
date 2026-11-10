@@ -19,11 +19,11 @@
   function writeJson(key,value){try{localStorage.setItem(key,JSON.stringify(value));}catch(_){}}
   function getMode(){const mode=String(localStorage.getItem(MODE_KEY)||'both').toLowerCase();return VALID_MODES.includes(mode)?mode:'both';}
   function modeCommand(mode){return mode==='hmi'?'HMI':mode==='physical'?'PHYSICAL':'BOTH';}
-  function modeLabel(mode){return mode==='hmi'?'Control HMI':mode==='physical'?'Control físico':'HMI + físico';}
+  function modeLabel(mode){return mode==='hmi'?'Control HMI':mode==='physical'?'Contrôle physique':'HMI + physique';}
   function modeDescription(mode){
-    if(mode==='hmi')return 'Los mandos normales se controlan desde el HMI. Las entradas físicas NC de seguridad (STOP, emergencia y protecciones) conservan prioridad para detener.';
-    if(mode==='physical')return 'Todas las entradas se controlan desde el Arduino. El HMI solo visualiza los estados y no envía órdenes de mando.';
-    return 'HMI + físico: los contactos NO trabajan por OR (cualquiera activa) y los contactos NC por AND (cualquiera abre y detiene).';
+    if(mode==='hmi')return 'Les commandes normales sont pilotées depuis le HMI. Les entrées physiques NC de sécurité (STOP, urgence et protections) gardent la priorité pour arrêter.';
+    if(mode==='physical')return 'Toutes les entrées sont pilotées depuis l’Arduino. Le HMI visualise seulement les états et n’envoie pas d’ordres de commande.';
+    return 'HMI + physique : les contacts NO fonctionnent en OR (n’importe lequel active) et les contacts NC en AND (n’importe lequel ouvre et arrête).';
   }
 
   function getProject(){try{return window.SimuPLCHMI&&window.SimuPLCHMI.getProject?window.SimuPLCHMI.getProject():null;}catch(_){return null;}}
@@ -112,10 +112,10 @@
     wrap.className='hmi-global-control-v21';
     wrap.setAttribute('role','group');
     wrap.setAttribute('aria-label','Modo global de entradas');
-    wrap.innerHTML='<span class="hmi-global-caption">CONTROL</span>'+
-      '<button type="button" data-global-control-mode="hmi" title="Mandos desde HMI; STOP, emergencia y protecciones físicas NC conservan prioridad">HMI</button>'+
-      '<button type="button" data-global-control-mode="physical" title="Usar únicamente pulsadores, selectores y sensores físicos">FÍSICO</button>'+
-      '<button type="button" data-global-control-mode="both" title="NO: cualquiera activa · NC: cualquiera detiene">AMBOS</button>'+
+    wrap.innerHTML='<span class="hmi-global-caption">CONTRÔLE</span>'+
+      '<button type="button" data-global-control-mode="hmi" title="Commandes depuis HMI ; STOP, urgence et protections physiques NC gardent la priorité">HMI</button>'+
+      '<button type="button" data-global-control-mode="physical" title="Utiliser uniquement boutons-poussoirs, sélecteurs et capteurs physiques">PHYSIQUE</button>'+
+      '<button type="button" data-global-control-mode="both" title="NO: cualquiera activa · NC: cualquiera detiene">LES DEUX</button>'+
       '<b id="hmiGlobalModeBadgeV21"></b>';
     const connect=document.getElementById('hmiIoConnectBtn');
     if(connect&&connect.parentNode===toolbar)toolbar.insertBefore(wrap,connect);else toolbar.appendChild(wrap);
@@ -134,14 +134,14 @@
       global=document.createElement('div');
       global.id='arduinoGlobalControlBoxV21';
       global.className='arduino-global-control-v21';
-      global.innerHTML='<label>Fuente para todas las entradas<select id="arduinoGlobalControlModeV21">'+
-        '<option value="hmi">Control HMI (seguridad física NC activa)</option><option value="physical">Control físico</option><option value="both">HMI + físico</option></select></label>'+
-        '<p id="arduinoGlobalControlHelpV21"></p><small>Esta selección se integra en el .ino. En HMI + físico, NO usa OR y NC usa AND; cualquier STOP o emergencia puede detener.</small>';
+      global.innerHTML='<label>Source para todas las entradas<select id="arduinoGlobalControlModeV21">'+
+        '<option value="hmi">Contrôle HMI (sécurité physique NC active)</option><option value="physical">Contrôle physique</option><option value="both">HMI + physique</option></select></label>'+
+        '<p id="arduinoGlobalControlHelpV21"></p><small>Esta selección se integra en el .ino. En HMI + physique, NO usa OR y NC usa AND; cualquier STOP o emergencia puede detener.</small>';
       if(inputWrap&&inputWrap.parentNode)inputWrap.parentNode.insertBefore(global,inputWrap);else box.appendChild(global);
       global.querySelector('select').addEventListener('change',function(){setMode(this.value,{send:false});});
     }
     const sub=Array.from(box.querySelectorAll('.sub2')).find(function(el){return /Físico \+ HMI deja disponibles/i.test(el.textContent||'');});
-    if(sub)sub.textContent='Selecciona una sola vez cómo trabajarán todas las entradas. No necesitas configurar I1, I2, I3… una por una.';
+    if(sub)sub.textContent='Choisissez une seule fois comment toutes les entrées fonctionneront. Pas besoin de configurer I1, I2, I3… une par une.';
     const period=document.getElementById('arduinoHmiPeriod');
     if(period){period.value='250';period.disabled=true;}
     const status=document.getElementById('arduinoHmiStatus');
@@ -222,7 +222,7 @@
     return hmiInputIsNc[ix]?(physicalValue&&hmiInputValues[ix]):hmiInputValues[ix];
   }
   if(hmiControlMode==HMI_MODE_PHYSICAL)return physicalValue;
-  // En HMI + físico: NO = OR (cualquiera activa), NC = AND (cualquiera detiene).
+  // En HMI + physique: NO = OR (cualquiera activa), NC = AND (cualquiera detiene).
   return hmiInputIsNc[ix]?(physicalValue&&hmiInputValues[ix]):(physicalValue||hmiInputValues[ix]);
 }`);
 
@@ -316,7 +316,7 @@ void hmiSendState(){hmiTransportSend(hmiBuildState());hmiLastStateMs=millis();hm
     const angle=String(el.selectorType)==='3'?(pos===1?-55:(pos===2?55:0)):(pos===1?55:-55);
     node.style.setProperty('--selector-angle',angle+'deg');
     const knob=node.querySelector('.hmi-selector-knob');if(knob)knob.style.setProperty('--selector-angle',angle+'deg');
-    const label=node.querySelector('.hmi-selector-position');if(label)label.textContent=(getMode()==='physical'?'FÍSICO ':'POS ')+pos;
+    const label=node.querySelector('.hmi-selector-position');if(label)label.textContent=(getMode()==='physical'?'PHYSIQUE ':'POS ')+pos;
     node.classList.toggle('active',pos!==0);
   }
   function ensureObjectModeBadge(node){let badge=node.querySelector('.hmi-global-source-v21');if(!badge){badge=document.createElement('div');badge.className='hmi-global-source-v21';node.appendChild(badge);}return badge;}
@@ -329,7 +329,7 @@ void hmiSendState(){hmiTransportSend(hmiBuildState());hmiLastStateMs=millis();hm
       const node=document.querySelector('#hmiCanvas [data-id="'+el.id+'"]');if(!node)return;
       if(['pushbutton','sensor','photo-sensor','limit-sensor','universal-sensor','estop','selector'].includes(el.type)){
         const badge=ensureObjectModeBadge(node);
-        badge.textContent=mode==='hmi'?'HMI':mode==='physical'?'FÍSICO':'AMBOS';
+        badge.textContent=mode==='hmi'?'HMI':mode==='physical'?'PHYSIQUE':'AMBOS';
         badge.dataset.mode=mode;
       }
     });
