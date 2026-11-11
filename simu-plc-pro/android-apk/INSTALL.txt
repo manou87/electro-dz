@@ -1,0 +1,17 @@
+Simu PLC Pro — APK Android (debug, sideload)
+
+Package: dz.electro.simuplc
+App name: Simu PLC Pro
+File: SimuPLC-Pro-debug.apk
+
+Installation (Android):
+1. Transférez SimuPLC-Pro-debug.apk sur le téléphone.
+2. Paramètres → Sécurité → autoriser l’installation depuis des sources inconnues / ce gestionnaire de fichiers.
+3. Ouvrez le fichier APK et installez.
+4. Lancez « Simu PLC Pro ».
+
+Notes:
+- APK debug signé avec le keystore debug Android (non Play Store).
+- Contenu = clone local simu-plc-pro/ (FR + PRO débloqué hors-ligne).
+- WebView Capacitor ; USB/série matériel peut être limité selon l’appareil.
+- Pas de publication Google Play.

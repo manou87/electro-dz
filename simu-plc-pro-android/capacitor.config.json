@@ -1,0 +1,14 @@
+{
+  "appId": "dz.electro.simuplc",
+  "appName": "Simu PLC Pro",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": true,
+    "backgroundColor": "#095BD8",
+    "webContentsDebuggingEnabled": true
+  },
+  "server": {
+    "androidScheme": "https",
+    "cleartext": true
+  }
+}
