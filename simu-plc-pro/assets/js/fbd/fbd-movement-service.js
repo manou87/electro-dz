@@ -63,10 +63,23 @@
       document.removeEventListener('mousemove',onMouseMove);
       document.removeEventListener('mouseup',onMouseUp);
     }
+    function ensureSelected(){
+      try{
+        if(adapter.getSelectedNode()!==node){
+          if(global.SimuPLCFBDSelection && typeof global.SimuPLCFBDSelection.selectNode==='function'){
+            global.SimuPLCFBDSelection.selectNode(node);
+          }else if(typeof adapter.setSelectedNode==='function'){
+            adapter.setSelectedNode(node);
+          }
+        }
+      }catch(_e){}
+    }
+
     el.addEventListener('mousedown',function(event){
       if(event.target && event.target.closest && event.target.closest('.node-associated-description,.fbd-free-text')) return;
       if(event.target && event.target.classList && event.target.classList.contains('terminal')) return;
-      if(adapter.getSimulation() || adapter.getSelectedNode()!==node) return;
+      if(adapter.getSimulation()) return;
+      ensureSelected();
       event.preventDefault();
       begin(event.clientX,event.clientY);
       document.addEventListener('mousemove',onMouseMove);
@@ -91,9 +104,10 @@
     el.addEventListener('touchstart',function(event){
       if(event.target && event.target.closest && event.target.closest('.node-associated-description,.fbd-free-text')) return;
       if(event.target && event.target.classList && event.target.classList.contains('terminal')) return;
-      if(adapter.getSimulation() || adapter.getSelectedNode()!==node) return;
+      if(adapter.getSimulation()) return;
       var touch=event.changedTouches && event.changedTouches[0];
       if(!touch) return;
+      ensureSelected();
       begin(touch.clientX,touch.clientY);
       document.addEventListener('touchmove',onTouchMove,{passive:false});
       document.addEventListener('touchend',onTouchEnd);

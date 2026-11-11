@@ -3,6 +3,7 @@
 <html lang="fr" class="simuplc-booting"><head>
 <script>window.__SIMUPLC_MCU_CONTROLLER_ACTIVE__ = true;</script>
 <script src="./assets/js/unlock-pro-local.js"></script>
+<script src="./assets/js/capacitor-android-touch-fix.js"></script>
 <style id="simuplc-unlock-pro-local">
   /* Déblocage local : masquer le paywall / chrome de verrou ; garder les composants Pro utilisables. */
   body.show-premium #lockOverlay,
@@ -4283,7 +4284,7 @@ if (installBtn) {
   });
 }
 
-if ('serviceWorker' in navigator && !window.__logicsoftSwRegistered) {
+if ('serviceWorker' in navigator && !window.__logicsoftSwRegistered && !window.__SIMUPLC_ANDROID_WRAPPER__) {
   window.__logicsoftSwRegistered = true;
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./service-worker.js', { scope: './' }).catch(console.error);
@@ -23711,5 +23712,6 @@ html body.mode-ladder:not(.modular-external-editor){
 })();
 </script>
 <script src="./assets/js/unlock-pro-local.js"></script>
+<script src="./assets/js/capacitor-android-touch-fix.js"></script>
 </body>
 </html>
