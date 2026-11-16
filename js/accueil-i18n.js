@@ -27,6 +27,8 @@
       "quick.training": "Quiz NF C 15-100",
       "quick.training.hint":
         "472 questions pour maîtriser la norme NF C 15-100, pas à pas",
+      "quick.manoulab": "ManouLab simulation",
+      "quick.manoulab.hint": "Laboratoire virtuel de câblage industriel — Multimètre à pince, moteurs 6 bornes & automates",
       "quick.swissdz": "Atelier électrique SwissDZ",
       "quick.swissdz.hint":
         "Premier simulateur pour les électriciens en Algérie — tableau, atelier & schéma unifilaire professionnel",
@@ -162,6 +164,8 @@
       "quick.training": "اختبار NF C 15-100",
       "quick.training.hint":
         "472 سؤالاً لإتقان معيار NF C 15-100 خطوة بخطوة",
+      "quick.manoulab": "محاكاة ManouLab",
+      "quick.manoulab.hint": "مختبر افتراضي للتوصيلات الصناعية — ملقط قياس، محركات ومتحكمات",
       "quick.swissdz": "ورشة الكهرباء SwissDZ",
       "quick.swissdz.hint":
         "أول محاكي للكهربائيين في الجزائر — لوحة، ورشة ومخطط أحادي الطور احترافي",
@@ -298,6 +302,8 @@
       "quick.training": "Quiz NF C 15-100",
       "quick.training.hint":
         "472 questions to master NF C 15-100, step by step",
+      "quick.manoulab": "ManouLab simulation",
+      "quick.manoulab.hint": "Virtual industrial electrical wiring lab — Clamp meter, 6-terminal motors & PLCs",
       "quick.swissdz": "SwissDZ electrical workshop",
       "quick.swissdz.hint":
         "First simulator for electricians in Algeria — panel, workshop & professional single-line diagram",

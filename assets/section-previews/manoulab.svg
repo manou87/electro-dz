@@ -1,0 +1,177 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="960" height="640">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1120"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+
+    <radialGradient id="glowPulse" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.25"/>
+      <stop offset="45%" stop-color="#0284c7" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Grid Pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="1.2" stroke-opacity="0.6"/>
+      <circle cx="40" cy="40" r="1.5" fill="#38bdf8" fill-opacity="0.3"/>
+    </pattern>
+
+    <!-- Neon Glow Filter -->
+    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="cyanGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- 1. Background -->
+  <rect width="960" height="640" fill="url(#bgGrad)"/>
+  <rect width="960" height="640" fill="url(#grid)"/>
+  <circle cx="480" cy="280" r="420" fill="url(#glowPulse)"/>
+
+  <!-- Top Banner / Badge -->
+  <g transform="translate(480, 56)">
+    <rect x="-190" y="-20" width="380" height="40" rx="20" fill="#0f172a" stroke="#0284c7" stroke-width="1.5" opacity="0.95"/>
+    <circle cx="-160" cy="0" r="6" fill="#10b981" filter="url(#neonGlow)"/>
+    <text x="-140" y="5" font-family="'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="700" fill="#38bdf8" letter-spacing="3">SIMULATEUR ÉLECTRIQUE PRO</text>
+  </g>
+
+  <!-- Title & Subtitle -->
+  <text x="480" y="142" font-family="'Segoe UI', 'Inter', sans-serif" font-size="44" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1">
+    ManouLab <tspan fill="#38bdf8">Simulation</tspan>
+  </text>
+  <text x="480" y="174" font-family="'Segoe UI', 'Inter', sans-serif" font-size="16" font-weight="500" fill="#94a3b8" text-anchor="middle" letter-spacing="0.5">
+    Laboratoire virtuel de câblage industriel · Multimètre à pince · Moteurs & Automates
+  </text>
+
+  <!-- 2. Circuit Visual (Rail DIN, Moteur, Multimètre, Pince) -->
+  <g transform="translate(100, 210)">
+    <!-- Rail DIN Base -->
+    <rect x="0" y="180" width="760" height="32" rx="4" fill="#334155" stroke="#475569" stroke-width="2"/>
+    <line x1="0" y1="196" x2="760" y2="196" stroke="#1e293b" stroke-width="4"/>
+    <circle cx="50" cy="196" r="5" fill="#1e293b"/>
+    <circle cx="150" cy="196" r="5" fill="#1e293b"/>
+    <circle cx="350" cy="196" r="5" fill="#1e293b"/>
+    <circle cx="550" cy="196" r="5" fill="#1e293b"/>
+    <circle cx="710" cy="196" r="5" fill="#1e293b"/>
+
+    <!-- Disjoncteur 3P -->
+    <g transform="translate(60, 90)">
+      <rect x="0" y="0" width="70" height="120" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+      <rect x="15" y="45" width="40" height="30" rx="3" fill="#0f172a"/>
+      <rect x="25" y="40" width="20" height="20" rx="2" fill="#ef4444"/>
+      <text x="35" y="24" font-family="monospace" font-size="9" fill="#94a3b8" text-anchor="middle" font-weight="bold">Q1 · 3P</text>
+      <!-- Bornes -->
+      <circle cx="18" cy="10" r="5" fill="#475569"/>
+      <circle cx="35" cy="10" r="5" fill="#475569"/>
+      <circle cx="52" cy="10" r="5" fill="#475569"/>
+    </g>
+
+    <!-- Contacteur AC3 -->
+    <g transform="translate(160, 80)">
+      <rect x="0" y="0" width="85" height="130" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2" filter="url(#cyanGlow)"/>
+      <rect x="15" y="45" width="55" height="40" rx="4" fill="#0f172a"/>
+      <circle cx="42" cy="65" r="10" fill="#10b981" filter="url(#neonGlow)"/>
+      <text x="42" y="26" font-family="monospace" font-size="10" fill="#38bdf8" text-anchor="middle" font-weight="bold">KM1 · AC3</text>
+      <text x="42" y="105" font-family="sans-serif" font-size="8" fill="#10b981" text-anchor="middle" font-weight="bold">ACTIF</text>
+    </g>
+
+    <!-- Moteur Asynchrone 3~ Triphasé -->
+    <g transform="translate(285, 45)">
+      <!-- Body -->
+      <rect x="0" y="25" width="130" height="135" rx="14" fill="#1d4ed8" stroke="#3b82f6" stroke-width="2.5"/>
+      <!-- Fins -->
+      <line x1="15" y1="50" x2="115" y2="50" stroke="#1e40af" stroke-width="3"/>
+      <line x1="15" y1="70" x2="115" y2="70" stroke="#1e40af" stroke-width="3"/>
+      <line x1="15" y1="90" x2="115" y2="90" stroke="#1e40af" stroke-width="3"/>
+      <line x1="15" y1="110" x2="115" y2="110" stroke="#1e40af" stroke-width="3"/>
+      <line x1="15" y1="130" x2="115" y2="130" stroke="#1e40af" stroke-width="3"/>
+      <!-- Shaft -->
+      <rect x="130" y="75" width="22" height="35" rx="3" fill="#94a3b8"/>
+      <!-- LCD Screen -->
+      <rect x="25" y="45" width="80" height="30" rx="4" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
+      <text x="65" y="65" font-family="monospace" font-size="13" fill="#4ade80" text-anchor="middle" font-weight="bold" filter="url(#neonGlow)">▶ 1425 tr/m</text>
+      <text x="65" y="145" font-family="sans-serif" font-size="10" fill="#ffffff" text-anchor="middle" font-weight="bold">MOTEUR 3~ (Y-Δ)</text>
+    </g>
+
+    <!-- Multimètre Numérique Fluke Style -->
+    <g transform="translate(465, 30)">
+      <rect x="0" y="0" width="105" height="155" rx="14" fill="#f59e0b" stroke="#d97706" stroke-width="3"/>
+      <rect x="10" y="10" width="85" height="135" rx="10" fill="#1e293b"/>
+      <!-- LCD Screen -->
+      <rect x="18" y="20" width="69" height="34" rx="4" fill="#0f172a"/>
+      <text x="52" y="44" font-family="monospace" font-size="16" fill="#4ade80" text-anchor="middle" font-weight="bold" filter="url(#neonGlow)">400.2 V</text>
+      <!-- Dial -->
+      <circle cx="52" cy="85" r="22" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+      <line x1="52" y1="85" x2="52" y2="68" stroke="#facc15" stroke-width="3" stroke-linecap="round"/>
+      <text x="24" y="85" font-family="monospace" font-size="7" fill="#ffffff" font-weight="bold">V~</text>
+      <text x="76" y="85" font-family="monospace" font-size="7" fill="#ffffff" font-weight="bold">V⎓</text>
+      <!-- Sockets -->
+      <circle cx="32" cy="128" r="8" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+      <text x="32" y="120" font-family="sans-serif" font-size="6" fill="#94a3b8" text-anchor="middle" font-weight="bold">COM</text>
+      <circle cx="72" cy="128" r="8" fill="#dc2626" stroke="#b91c1c" stroke-width="2"/>
+      <text x="72" y="120" font-family="sans-serif" font-size="6" fill="#fca5a5" text-anchor="middle" font-weight="bold">V/Ω</text>
+    </g>
+
+    <!-- Pince Ampèremétrique Numérique en Biais -->
+    <g transform="translate(605, 10) rotate(-10)">
+      <!-- Clamp Jaws -->
+      <path d="M 35 45 C 10 15, 60 -15, 85 20 C 100 40, 75 75, 45 65" fill="none" stroke="#dc2626" stroke-width="12" stroke-linecap="round" filter="url(#neonGlow)"/>
+      <circle cx="60" cy="28" r="14" fill="#0284c7" fill-opacity="0.2"/>
+      <!-- Body -->
+      <rect x="25" y="55" width="60" height="130" rx="10" fill="#e11d48" stroke="#be123c" stroke-width="2.5"/>
+      <!-- LCD Screen -->
+      <rect x="35" y="75" width="40" height="24" rx="3" fill="#0f172a"/>
+      <text x="55" y="92" font-family="monospace" font-size="12" fill="#38bdf8" text-anchor="middle" font-weight="bold" filter="url(#cyanGlow)">4.60 A</text>
+      <!-- Sockets -->
+      <circle cx="40" cy="168" r="6" fill="#0f172a"/>
+      <circle cx="70" cy="168" r="6" fill="#b91c1c"/>
+      <text x="55" y="140" font-family="sans-serif" font-size="8" fill="#ffffff" text-anchor="middle" font-weight="bold">PINCE AC/DC</text>
+    </g>
+
+    <!-- Fils Électriques Fluos Lumineux (Câblage réel) -->
+    <!-- Fil Rouge Phase L1 -->
+    <path d="M 205 100 Q 240 40, 310 70" fill="none" stroke="#ef4444" stroke-width="4.5" stroke-linecap="round" filter="url(#neonGlow)"/>
+    <!-- Fil Jaune Phase L2 -->
+    <path d="M 215 100 Q 250 25, 335 70" fill="none" stroke="#eab308" stroke-width="4.5" stroke-linecap="round" filter="url(#neonGlow)"/>
+    <!-- Fil Bleu Phase L3 traversant la pince -->
+    <path d="M 225 100 Q 400 -20, 645 35 Q 750 60, 360 70" fill="none" stroke="#3b82f6" stroke-width="5" stroke-linecap="round" filter="url(#cyanGlow)"/>
+  </g>
+
+  <!-- Feature Tags / Highlights Bar (Bottom) -->
+  <g transform="translate(480, 565)">
+    <!-- Tag 1 -->
+    <g transform="translate(-320, 0)">
+      <rect x="-85" y="-18" width="170" height="36" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+      <text x="0" y="5" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="700" fill="#38bdf8" text-anchor="middle">⚡ Multimètre à Pince</text>
+    </g>
+    <!-- Tag 2 -->
+    <g transform="translate(-105, 0)">
+      <rect x="-85" y="-18" width="170" height="36" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+      <text x="0" y="5" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="700" fill="#10b981" text-anchor="middle">⚙️ Moteur 6 bornes Y-Δ</text>
+    </g>
+    <!-- Tag 3 -->
+    <g transform="translate(105, 0)">
+      <rect x="-85" y="-18" width="170" height="36" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+      <text x="0" y="5" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="700" fill="#facc15" text-anchor="middle">🔄 Inversion de sens</text>
+    </g>
+    <!-- Tag 4 -->
+    <g transform="translate(320, 0)">
+      <rect x="-85" y="-18" width="170" height="36" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+      <text x="0" y="5" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="700" fill="#f43f5e" text-anchor="middle">💻 Câblage temps réel</text>
+    </g>
+  </g>
+</svg>
