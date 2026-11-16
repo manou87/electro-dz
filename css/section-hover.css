@@ -40,6 +40,11 @@
   stroke-linejoin: round;
 }
 
+.quick-access--icons .quick-item--manoulab .ico-wrap {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.45);
+}
+
 .quick-access--icons .quick-item--sim .ico-wrap {
   background: rgba(227, 6, 19, 0.12);
   border-color: rgba(227, 6, 19, 0.38);
