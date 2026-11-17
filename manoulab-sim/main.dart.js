@@ -76138,7 +76138,7 @@ return r==null?s.h(0,a.a):r},
 G7(a){var s
 if(a.b==="rail"){s=A.eY(a.f.h(0,"width"))
 if(s==null)s=null
-return new A.D(s==null?780:s,35)}s=this.mt(a)
+return new A.D(s==null?684:s,35)}s=this.mt(a)
 s=s==null?null:s.e
 return s==null?B.O8:s},
 ig(a){var s,r,q=this.a.hp(a.a)
@@ -76165,8 +76165,8 @@ s.K7()
 s.nC()
 s.a7()},
 K7(){var s="isFixedChassisRail",r=t.N,q=t.z
-B.b.G(this.a.b,A.np("rail_fixed_top","rail",A.al(["width",780,s,!0],r,q),null,"",24,170))
-B.b.G(this.a.b,A.np("rail_fixed_bottom","rail",A.al(["width",780,s,!0],r,q),null,"",24,470))},
+B.b.G(this.a.b,A.np("rail_fixed_top","rail",A.al(["width",684,s,!0],r,q),null,"",72,170))
+B.b.G(this.a.b,A.np("rail_fixed_bottom","rail",A.al(["width",684,s,!0],r,q),null,"",72,470))},
 Ef(a){var s=this
 s.yO()
 s.a=a
@@ -76331,7 +76331,7 @@ p="row_"+Date.now()
 o=630+q*300
 r=t.N
 s=t.z
-n=A.np("rail_"+p,"rail",A.al(["width",780,"rowId",p,"isCustomRow",!0],r,s),null,"",24,o+140)
+n=A.np("rail_"+p,"rail",A.al(["width",684,"rowId",p,"isCustomRow",!0],r,s),null,"",72,o+140)
 m=A.np("duct_"+p,"trunking_h",A.al(["width",780,"height",48,"rowId",p,"isCustomRow",!0],r,s),null,"",24,o+300)
 B.b.kh(l.a.b,0,m)
 B.b.kh(l.a.b,0,n)
@@ -85131,8 +85131,8 @@ a7=A.a(["1"],b9)
 a3=A.a(["2"],b9)
 b1=A.al(["color",4288455599],o,n)
 a7=A.cw(a3,b3,"Montage",60,A.a(["borne","bornier"],b9),"terminal",10,"Borne de passage",b1,"X",a7,b3,18)
-n=A.al(["width",780],o,n)
-return A.a([c0,c1,c2,q,m,l,k,p,j,i,f,h,g,e,c,b,d,a,a1,a0,a4,a5,a6,a2,a8,a9,b0,a7,A.cw(B.aW,b3,"Montage",35,A.a(["rail","din"],b9),"rail",10,"Rail DIN 35 mm",n,"R",B.aW,b3,780)],A.as("A<d9>"))})
+n=A.al(["width",684],o,n)
+return A.a([c0,c1,c2,q,m,l,k,p,j,i,f,h,g,e,c,b,d,a,a1,a0,a4,a5,a6,a2,a8,a9,b0,a7,A.cw(B.aW,b3,"Montage",35,A.a(["rail","din"],b9),"rail",10,"Rail DIN 35 mm",n,"R",B.aW,b3,684)],A.as("A<d9>"))})
 s($,"aKc","apA",()=>A.a([A.Gc(48,"h0",780,24,30),A.Gc(48,"h1",780,24,330),A.Gc(48,"h2",780,24,630)],t.DE))
 s($,"aKd","awD",()=>A.a([A.Gc(648,"v0",48,24,30),A.Gc(648,"v1",48,780,30)],t.DE))
 s($,"aKe","awE",()=>A.aDi(null))
