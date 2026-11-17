@@ -75323,6 +75323,16 @@ d.lR(0,s,s)
 s=this.b
 $.mlWs=g
 self.__mlWs=g
+self.__mlZoom=function(fx,fy,nz,sx,sy,sqx,sqy,sz){var w=self.__mlWs,k
+if(!w||!(sz>0))return
+if(nz<0.4)nz=0.4
+if(nz>2.5)nz=2.5
+w._mlDomPinch=!0
+k=nz/sz
+w.a6(function(){w.z=nz
+w.Q=new A.d(fx-(sx-sqx)*k,fy-(sy-sqy)*k)})}
+self.__mlZoomEnd=function(){var w=self.__mlWs
+if(w)w._mlDomPinch=!1}
 d=A.a([A.ank(0,A.i1(B.bB,A.KL(h,A.eZ(h,h,h,new A.Ld(g.gaf().a,g.gaf(),h),new A.D(s.b,s.d)),h,d,!0),B.S,!1,h,h,new A.ajH(g),h,h,h,h,h,h,new A.ajI(g),new A.ajJ(g),new A.ajO(g),new A.ajP(g),h,h,h,h,h,new A.ajQ(g),h,h,h,new A.ajR(g),h,h,h))],t.p)
 if(g.gaf().c!=null)d.push(new A.ajS(g).$0())
 if(g.gaf().ax!=null)s=g.gaf().ay>0||g.gaf().ch
@@ -75352,7 +75362,8 @@ s._mlPinch=r
 s._mlPinchQ=s.Q},
 $S:460}
 A.ajM.prototype={
-$1(a){var s,r=a.d
+$1(a){if(this.a._mlDomPinch)return
+var s,r=a.d
 if(r!==1){s=this.a
 s.a6(new A.ajx(s,a.c,B.c.hT(s.as*r,0.4,2.5),a))}else{r=this.a
 if(r.at==null)r.a6(new A.ajy(r,a))}},
