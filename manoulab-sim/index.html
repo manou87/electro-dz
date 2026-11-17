@@ -33,6 +33,52 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
-  <script src="flutter_bootstrap.js?v=1794908199" async></script>
+  <script src="flutter_bootstrap.js?v=1794908407" async></script>
+  <script>
+    // Pinch zoom on iOS: Flutter scale updates stutter, so drive zoom from touch events.
+    (function () {
+      var startDist = 0, startZ = 1, startQ = null, focal = null, active = false;
+      function ws() { return self.__mlWs; }
+      function dist(a, b) {
+        var dx = a.clientX - b.clientX, dy = a.clientY - b.clientY;
+        return Math.sqrt(dx * dx + dy * dy);
+      }
+      function mid(a, b) { return { x: (a.clientX + b.clientX) / 2, y: (a.clientY + b.clientY) / 2 }; }
+      document.addEventListener("touchstart", function (e) {
+        var w = ws();
+        if (!w || e.touches.length < 2) return;
+        e.preventDefault();
+        active = true;
+        startDist = dist(e.touches[0], e.touches[1]);
+        if (!(startDist > 8)) startDist = 8;
+        startZ = w.z;
+        startQ = { a: w.Q.a, b: w.Q.b };
+        var m = mid(e.touches[0], e.touches[1]);
+        var r = document.documentElement.getBoundingClientRect();
+        focal = { a: m.x - r.left, b: m.y - r.top };
+      }, { capture: true, passive: false });
+      document.addEventListener("touchmove", function (e) {
+        var w = ws();
+        if (!active || !w || e.touches.length < 2 || !focal || !startQ) return;
+        e.preventDefault();
+        var d = dist(e.touches[0], e.touches[1]);
+        var z = startZ * (d / startDist);
+        if (z < 0.4) z = 0.4;
+        if (z > 2.5) z = 2.5;
+        var k = z / startZ;
+        w.a6(function () {
+          w.z = z;
+          w.Q = new A.d(focal.a - (focal.a - startQ.a) * k, focal.b - (focal.b - startQ.b) * k);
+        });
+      }, { capture: true, passive: false });
+      function end(e) {
+        if (e.touches && e.touches.length >= 2) return;
+        active = false;
+        startQ = focal = null;
+      }
+      document.addEventListener("touchend", end, { capture: true, passive: false });
+      document.addEventListener("touchcancel", end, { capture: true, passive: false });
+    })();
+  </script>
 </body>
 </html>
