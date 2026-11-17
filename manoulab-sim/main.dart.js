@@ -75364,7 +75364,11 @@ $0(){var s=this.a
 s.Q=s.Q.O(0,this.b.a)},
 $S:0}
 A.ajO.prototype={
-$1(a){var s,r,q,p,o,n,m,l,k,j=this.a,i=a.c.L(0,j.Q).df(0,j.z),h=j.pW(i,22)
+$1(a){var s,r,q,p,o,n,m,l,k,j=this.a,i=a.c.L(0,j.Q).df(0,j.z),h=j.pW(i,22),g,f,e
+if(j._mlDomUp){document.removeEventListener("pointermove",j._mlDomMove,!0)
+document.removeEventListener("pointerup",j._mlDomUp,!0)
+document.removeEventListener("pointercancel",j._mlDomUp,!0)
+j._mlDomMove=j._mlDomUp=null}j._mlDrag=null
 if(h!=null){j.at=h
 s=j.gaf()
 s.c=h
@@ -75377,7 +75381,60 @@ k=Math.sqrt(l*l+m*m)
 if(k<o){o=k
 p=n}}if(p!==-1)j.ax=p
 else{B.b.E(s,i)
-j.ax=s.length-1}j.a6(new A.ajF())}else j.ax=j.at=null},
+j.ax=s.length-1}j.a6(new A.ajF())
+g=j
+g._mlLX=null
+g._mlLY=null
+f=function(b){var a0,a1,a2,a3,a4,a5=g,a6,a7
+if(a5.at==null||a5.ax==null)return
+if(a5._mlLX==null){a5._mlLX=b.clientX
+a5._mlLY=b.clientY
+return}a6=b.clientX-a5._mlLX
+a7=b.clientY-a5._mlLY
+a5._mlLX=b.clientX
+a5._mlLY=b.clientY
+a0=B.b.i0(a5.gaf().a.c,new A.ajC(a5))
+a1=a5.ax
+a1.toString
+a2=a0.e
+if(a1<a2.length){a3=a2[a1]
+a4=new A.d(a6/a5.z,a7/a5.z)
+a1=a5.ax
+a1.toString
+a2[a1]=a3.O(0,a4)
+a5.a6(new A.ajD())}b.preventDefault()}
+e=function(b){g.at=g.ax=null
+document.removeEventListener("pointermove",f,!0)
+document.removeEventListener("pointerup",e,!0)
+document.removeEventListener("pointercancel",e,!0)
+g._mlDomMove=g._mlDomUp=null
+g.a6(new A.ajG())}
+j._mlDomMove=f
+j._mlDomUp=e
+document.addEventListener("pointermove",f,!0)
+document.addEventListener("pointerup",e,!0)
+document.addEventListener("pointercancel",e,!0)}else{j.ax=j.at=null
+g=j
+l=null
+k=null
+f=function(b){var x,y
+if(l==null){l=b.clientX
+k=b.clientY
+return}x=b.clientX-l
+y=b.clientY-k
+l=b.clientX
+k=b.clientY
+g.a6(new A.ajy(g,{a:new A.d(x,y)}))
+b.preventDefault()}
+e=function(b){document.removeEventListener("pointermove",f,!0)
+document.removeEventListener("pointerup",e,!0)
+document.removeEventListener("pointercancel",e,!0)
+g._mlDomMove=g._mlDomUp=null}
+j._mlDomMove=f
+j._mlDomUp=e
+document.addEventListener("pointermove",f,!0)
+document.addEventListener("pointerup",e,!0)
+document.addEventListener("pointercancel",e,!0)}},
 $S:27}
 A.ajE.prototype={
 $1(a){return a.a===this.a},
@@ -75406,6 +75463,7 @@ $0(){},
 $S:0}
 A.ajJ.prototype={
 $1(a){var s=this.a
+if(s._mlDomUp)return
 s.ax=s.at=null
 s.a6(new A.ajG())},
 $S:24}
@@ -75468,16 +75526,48 @@ $0(){var s=null,r=this.a,q=r.gaf().ax,p=r.Q,o=q.a,n=r.z,m=q.b
 return A.oq(s,A.jW(A.eZ(s,s,s,new A.G4(r.gaf().ch,s),B.x),!0,s),90,s,p.a+o*n-45,s,p.b+m*n-45,90)},
 $S:465}
 A.ajV.prototype={
-$1(a){var s,r=this.a
-if(r.gaf().w){s=this.b.b
+$1(a){var s,r=this.a,q=this.b,p,o,n,m,l,k
+if(r.gaf().w){s=q.b
 s=s==="clamp_meter"||s==="multimeter"}else s=!0
-if(s){r=r.gaf()
-r.b=this.b.a
-r.c=null
-r.ac()}},
+if(!s)return
+if(r._mlDomUp){document.removeEventListener("pointermove",r._mlDomMove,!0)
+document.removeEventListener("pointerup",r._mlDomUp,!0)
+document.removeEventListener("pointercancel",r._mlDomUp,!0)
+r._mlDomMove=r._mlDomUp=null}p=r
+o=q.a
+r.gaf().b=o
+r.gaf().c=null
+p._mlDrag=o
+l=null
+k=null
+n=function(b){var z,d
+if(p._mlDrag!==o)return
+if(l==null){l=b.clientX
+k=b.clientY
+return}z=p.z
+if(!(z>0))z=1
+d=new A.d((b.clientX-l)/z,(b.clientY-k)/z)
+l=b.clientX
+k=b.clientY
+if(d.a===0&&d.b===0)return
+p.gaf().afm(o,d)
+b.preventDefault()}
+m=function(b){if(p._mlDrag!==o)return
+p._mlDrag=null
+document.removeEventListener("pointermove",n,!0)
+document.removeEventListener("pointerup",m,!0)
+document.removeEventListener("pointercancel",m,!0)
+p._mlDomMove=p._mlDomUp=null
+p.gaf().acs(o)}
+p._mlDomMove=n
+p._mlDomUp=m
+document.addEventListener("pointermove",n,!0)
+document.addEventListener("pointerup",m,!0)
+document.addEventListener("pointercancel",m,!0)},
 $S:27}
 A.ajK.prototype={
 $1(a){var s,r,q=this.a
+if(q._mlDrag===this.b.a&&q._mlDomUp)return
 if(q.gaf().w){s=this.b.b
 s=s==="clamp_meter"||s==="multimeter"}else s=!0
 if(s){s=q.z
@@ -75487,6 +75577,7 @@ q.gaf().afm(this.b.a,r)}},
 $S:10}
 A.ajU.prototype={
 $1(a){var s,r=this.a
+if(r._mlDrag===this.b.a&&r._mlDomUp)return
 if(r.gaf().w){s=this.b.b
 s=s==="clamp_meter"||s==="multimeter"}else s=!0
 if(s)r.gaf().acs(this.b.a)},
