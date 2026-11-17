@@ -75331,6 +75331,8 @@ w._mlDomPinch=!0
 k=nz/sz
 w.a6(function(){w.z=nz
 w.Q=new A.d(fx-(sx-sqx)*k,fy-(sy-sqy)*k)})}
+self.__mlZoomStart=function(){var w=self.__mlWs
+if(w)w._mlDomPinch=!0}
 self.__mlZoomEnd=function(){var w=self.__mlWs
 if(w)w._mlDomPinch=!1}
 d=A.a([A.ank(0,A.i1(B.bB,A.KL(h,A.eZ(h,h,h,new A.Ld(g.gaf().a,g.gaf(),h),new A.D(s.b,s.d)),h,d,!0),B.S,!1,h,h,new A.ajH(g),h,h,h,h,h,h,new A.ajI(g),new A.ajJ(g),new A.ajO(g),new A.ajP(g),h,h,h,h,h,new A.ajQ(g),h,h,h,new A.ajR(g),h,h,h))],t.p)
@@ -75404,10 +75406,12 @@ g=j
 g._mlLX=null
 g._mlLY=null
 f=function(b){var a0,a1,a2,a3,a4,a5=g,a6,a7
-if(a5.at==null||a5.ax==null)return
+if(a5.at==null||a5.ax==null||a5._mlDomPinch)return
 if(a5._mlLX==null){a5._mlLX=b.clientX
 a5._mlLY=b.clientY
-return}a6=b.clientX-a5._mlLX
+a5._mlPid=b.pointerId
+return}if(b.pointerId!==a5._mlPid)return
+a6=b.clientX-a5._mlLX
 a7=b.clientY-a5._mlLY
 a5._mlLX=b.clientX
 a5._mlLY=b.clientY
@@ -75436,9 +75440,12 @@ g=j
 l=null
 k=null
 f=function(b){var x,y
-if(l==null){l=b.clientX
+if(g._mlDomPinch){l=null
+return}if(l==null){l=b.clientX
 k=b.clientY
-return}x=b.clientX-l
+g._mlPid=b.pointerId
+return}if(b.pointerId!==g._mlPid)return
+x=b.clientX-l
 y=b.clientY-k
 l=b.clientX
 k=b.clientY
@@ -75559,10 +75566,12 @@ p._mlDrag=o
 l=null
 k=null
 n=function(b){var z,d
-if(p._mlDrag!==o)return
+if(p._mlDrag!==o||p._mlDomPinch)return
 if(l==null){l=b.clientX
 k=b.clientY
-return}z=p.z
+p._mlPid=b.pointerId
+return}if(b.pointerId!==p._mlPid)return
+z=p.z
 if(!(z>0))z=1
 d=new A.d((b.clientX-l)/z,(b.clientY-k)/z)
 l=b.clientX

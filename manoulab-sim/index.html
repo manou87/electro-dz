@@ -33,7 +33,7 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
-  <script src="flutter_bootstrap.js?v=1794908576" async></script>
+  <script src="flutter_bootstrap.js?v=1794908770" async></script>
   <script>
     (function () {
       var startDist = 0, startZ = 1, startF = null, startQ = null, focal = null, active = false, lastDist = 0, frame = 0;
@@ -52,6 +52,7 @@
         if (!w || e.touches.length < 2) return;
         e.preventDefault();
         active = true;
+        if (typeof self.__mlZoomStart === "function") self.__mlZoomStart();
         startDist = dist(e.touches[0], e.touches[1]);
         if (!(startDist > 8)) startDist = 8;
         lastDist = startDist;
@@ -78,6 +79,10 @@
       }
       document.addEventListener("touchend", end, { capture: true, passive: false });
       document.addEventListener("touchcancel", end, { capture: true, passive: false });
+      // Safari fires its own page-zoom gesture events alongside touch events.
+      ["gesturestart", "gesturechange", "gestureend"].forEach(function (t) {
+        document.addEventListener(t, function (e) { e.preventDefault(); }, { capture: true, passive: false });
+      });
     })();
   </script>
 </body>
