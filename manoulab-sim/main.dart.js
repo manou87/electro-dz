@@ -73111,9 +73111,10 @@ $1(a){var s=this.a
 s.z=s.x},
 $S:454}
 A.agc.prototype={
-$1(a){var s=a.d,r=this.a
-if(s!==1)r.a9(new A.afZ(r,a.c,B.c.it(r.z*s,0.4,2.5),a))
-else r.a9(new A.ag_(r,a))},
+$1(a){var s,r=a.d
+if(r!==1){s=this.a
+s.a9(new A.afZ(s,a.c,B.c.it(s.z*r,0.4,2.5),a))}else{r=this.a
+if(r.Q==null)r.a9(new A.ag_(r,a))}},
 $S:455}
 A.afZ.prototype={
 $0(){var s=this,r=s.a,q=s.b,p=s.c
@@ -73140,7 +73141,7 @@ k=Math.sqrt(l*l+m*m)
 if(k<o){o=k
 p=n}}if(p!==-1)j.as=p
 else{s.push(i)
-j.as=s.length-1}j.a9(new A.ag6())}},
+j.as=s.length-1}j.a9(new A.ag6())}else j.as=j.Q=null},
 $S:24}
 A.ag5.prototype={
 $1(a){return a.a===this.a},
