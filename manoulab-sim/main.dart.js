@@ -75343,8 +75343,11 @@ if(t.Mj.b(a)){s=a.gna().b<0?1.15:0.87
 this.a.BU(a.gcS(),s)}},
 $S:90}
 A.ajL.prototype={
-$1(a){var s=this.a
-s.as=s.z},
+$1(a){var s=this.a,r
+s.as=s.z
+r=a.b
+s._mlPinch=r
+s._mlPinchQ=s.Q},
 $S:460}
 A.ajM.prototype={
 $1(a){var s,r=a.d
@@ -75353,8 +75356,10 @@ s.a6(new A.ajx(s,a.c,B.c.hT(s.as*r,0.4,2.5),a))}else{r=this.a
 if(r.at==null)r.a6(new A.ajy(r,a))}},
 $S:461}
 A.ajx.prototype={
-$0(){var s=this,r=s.a,q=s.b,p=s.c
-q=q.L(0,q.L(0,r.Q).ai(0,p/r.z))
+$0(){var s=this,r=s.a,q=s.b,p=s.c,o=r._mlPinch,n=r._mlPinchQ
+if(o!=null&&n!=null){r.Q=o.L(0,o.L(0,n).ai(0,p/r.as))
+r.z=p
+return}q=q.L(0,q.L(0,r.Q).ai(0,p/r.z))
 r.Q=q
 r.z=p
 r.Q=q.O(0,s.d.a)},
