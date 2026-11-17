@@ -44,6 +44,8 @@ jobs:
             --exclude='.github-token.local' \
             --exclude='.supabase-access-token' \
             --exclude='.DS_Store' \
+            --exclude='wirelabeduvolt2/index.restore.html' \
+            --exclude='wirelabeduvolt2/routage-goulottes-plus-tard.js' \
             ./ _site/
           # Domaine custom (si absent du dépôt)
           if [ ! -f _site/CNAME ]; then
