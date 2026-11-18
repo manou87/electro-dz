@@ -9,7 +9,7 @@ if (!window._flutter) {
 _flutter.buildConfig = {"engineRevision":"a18df97ca57a249df5d8d68cd0820600223ce262","builds":[{"compileTarget":"dart2js","renderer":"auto","mainJsPath":"main.dart.js"}]};
 
 
-if ('serviceWorker' in navigator) {
+if ("serviceWorker" in navigator) {
   navigator.serviceWorker.getRegistrations().then(function(registrations) {
     for (let registration of registrations) {
       registration.unregister();
