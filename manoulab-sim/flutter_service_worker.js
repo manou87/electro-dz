@@ -3,11 +3,11 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"flutter_bootstrap.js": "ef0058068dda2ad67a69071beb82594a",
+const RESOURCES = {"flutter_bootstrap.js": "7b141083520d9333a16efa0cbc535580",
 "version.json": "0c482aa0cc7c6f135b40f0c8ff7dc313",
-"index.html": "fd08a51d9c9d36de1332a05d9c56ddfd",
-"/": "fd08a51d9c9d36de1332a05d9c56ddfd",
-"main.dart.js": "be992a2c9ea6cd70a9549a46ad8fde1f",
+"index.html": "89e824af3c4815d4f5222e3802056145",
+"/": "89e824af3c4815d4f5222e3802056145",
+"main.dart.js": "05dc00abe7431b7037ed872b26c1848e",
 "flutter.js": "f393d3c16b631f36852323de8e583132",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
